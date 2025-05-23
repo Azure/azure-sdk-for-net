@@ -64,9 +64,25 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 deserialized = ShareFileSourceCheckpointDetails.Deserialize(stream);
             }
 
-            ShareFileSourceCheckpointDetails expected = new(ShareProtocol.Nfs);
+            Assert.That(deserialized.Version, Is.EqualTo(DataMovementShareConstants.SourceCheckpointDetails.SchemaVersion));
+            Assert.That(deserialized.ShareProtocol, Is.EqualTo(ShareProtocol.Nfs));
+        }
 
-            AssertEquals(deserialized, expected);
+        [Test]
+        public void Deserialize_Version0()
+        {
+            byte[] serialized = new byte[0]; // Version 0 has no data
+            ShareFileSourceCheckpointDetails deserialized;
+
+            using (MemoryStream stream = new(serialized))
+            {
+                deserialized = ShareFileSourceCheckpointDetails.Deserialize(stream);
+            }
+
+            // We are expecting that after deserialization, the version is bumped to latest version
+            Assert.That(deserialized.Version, Is.EqualTo(DataMovementShareConstants.SourceCheckpointDetails.SchemaVersion));
+            // We are expecting that after deserialization, the ShareProtocol is set to default value (SMB)
+            Assert.That(deserialized.ShareProtocol, Is.EqualTo(ShareProtocol.Smb));
         }
 
         [Test]

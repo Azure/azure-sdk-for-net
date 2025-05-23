@@ -474,25 +474,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         }
 
         [Test]
-        public void Serialize_Version3()
-        {
-            // Latest Version
-            byte[] expected = CreateSerializedSetValues_Version3();
-
-            ShareFileDestinationCheckpointDetails data = CreateSetSampleValues();
-            data.Version = DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion_3;
-
-            byte[] actual;
-            using (MemoryStream stream = new())
-            {
-                data.SerializeInternal(stream);
-                actual = stream.ToArray();
-            }
-
-            Assert.That(expected, Is.EqualTo(actual));
-        }
-
-        [Test]
         public void Deserialize_LatestVersion()
         {
             byte[] serialized = CreateSerializedSetValues_LatestVersion();
@@ -511,9 +492,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         {
             byte[] serialized = CreateSerializedSetValues_Version3();
             ShareFileDestinationCheckpointDetails expected = CreateSetSampleValues();
-            // We are expecting that after deserialization, the version is bumped to latest version
-            Assert.That(expected.Version, Is.EqualTo(DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion));
-            // We are expecting that after deserialization, the ShareProtocol is set to default value (SMB)
             expected.ShareProtocol = ShareProtocol.Smb;
 
             ShareFileDestinationCheckpointDetails deserialized;
@@ -524,6 +502,10 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // When deserializing, Version gets bumped to the latest version and ShareProtocol is set to default value (SMB)
             AssertEquals(deserialized, expected);
+            // We are expecting that after deserialization, the version is bumped to latest version
+            Assert.That(deserialized.Version, Is.EqualTo(DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion));
+            // We are expecting that after deserialization, the ShareProtocol is set to default value (SMB)
+            Assert.That(deserialized.ShareProtocol, Is.EqualTo(ShareProtocol.Smb));
         }
 
         [Test]
