@@ -12,13 +12,13 @@ using System.Linq;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The request payload for moving participant to the call. </summary>
-    internal partial class MoveParticipantsRequest
+    internal partial class MoveParticipantsRequestInternal
     {
-        /// <summary> Initializes a new instance of <see cref="MoveParticipantsRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoveParticipantsRequestInternal"/>. </summary>
         /// <param name="targetParticipants"> The participant to Move. </param>
         /// <param name="fromCall"> The CallConnectionId for the call you want to move the participant from. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipants"/> or <paramref name="fromCall"/> is null. </exception>
-        public MoveParticipantsRequest(IEnumerable<CommunicationIdentifierModel> targetParticipants, string fromCall)
+        public MoveParticipantsRequestInternal(IEnumerable<CommunicationIdentifierModel> targetParticipants, string fromCall)
         {
             Argument.AssertNotNull(targetParticipants, nameof(targetParticipants));
             Argument.AssertNotNull(fromCall, nameof(fromCall));
@@ -27,7 +27,7 @@ namespace Azure.Communication.CallAutomation
             FromCall = fromCall;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MoveParticipantsRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoveParticipantsRequestInternal"/>. </summary>
         /// <param name="targetParticipants"> The participant to Move. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="operationCallbackUri">
@@ -35,7 +35,7 @@ namespace Azure.Communication.CallAutomation
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </param>
         /// <param name="fromCall"> The CallConnectionId for the call you want to move the participant from. </param>
-        internal MoveParticipantsRequest(IList<CommunicationIdentifierModel> targetParticipants, string operationContext, string operationCallbackUri, string fromCall)
+        internal MoveParticipantsRequestInternal(IList<CommunicationIdentifierModel> targetParticipants, string operationContext, string operationCallbackUri, string fromCall)
         {
             TargetParticipants = targetParticipants;
             OperationContext = operationContext;

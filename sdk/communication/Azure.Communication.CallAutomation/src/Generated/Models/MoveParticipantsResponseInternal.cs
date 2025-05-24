@@ -10,19 +10,19 @@ using System.Collections.Generic;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The response payload for moving participants to the call. </summary>
-    internal partial class MoveParticipantsResponse
+    internal partial class MoveParticipantsResponseInternal
     {
-        /// <summary> Initializes a new instance of <see cref="MoveParticipantsResponse"/>. </summary>
-        internal MoveParticipantsResponse()
+        /// <summary> Initializes a new instance of <see cref="MoveParticipantsResponseInternal"/>. </summary>
+        internal MoveParticipantsResponseInternal()
         {
             Participants = new ChangeTrackingList<CallParticipantInternal>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MoveParticipantsResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoveParticipantsResponseInternal"/>. </summary>
         /// <param name="participants"> List of current participants in the call. </param>
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <param name="fromCall"> The CallConnectionId for the call you want to move the participant from. </param>
-        internal MoveParticipantsResponse(IReadOnlyList<CallParticipantInternal> participants, string operationContext, string fromCall)
+        internal MoveParticipantsResponseInternal(IReadOnlyList<CallParticipantInternal> participants, string operationContext, string fromCall)
         {
             Participants = participants;
             OperationContext = operationContext;
