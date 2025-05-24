@@ -23,6 +23,7 @@ using Azure.Storage.Shared;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Azure.Storage.Tests;
+using Azure.Storage.Tests.Shared;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
@@ -1805,7 +1806,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(container.GetBlobLeaseClient(id)).AcquireAsync(duration: duration),
-                e => StringAssert.Contains("InvalidHeaderValue", e.ErrorCode));
+                e => StringAssert.Contains(Constants.ErrorCodes.InvalidHeaderValue, e.ErrorCode));
         }
 
         [RecordedTest]
@@ -4463,6 +4464,23 @@ namespace Azure.Storage.Blobs.Test
             mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), Tenants.GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
             mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
             mock = new Mock<BlobContainerClient>(new Uri("https://test/test"), TestEnvironment.Credential, new BlobClientOptions()).Object;
+        }
+
+        [RecordedTest]
+        public async Task InvalidServiceVersion()
+        {
+            BlobClientOptions clientOptions = GetOptions();
+            clientOptions.AddPolicy(new InvalidServiceVersionPipelinePolicy(), HttpPipelinePosition.PerCall);
+            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_SharedKey(clientOptions);
+            BlobContainerClient containerClient = InstrumentClient(serviceClient.GetBlobContainerClient(GetNewContainerName()));
+
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                containerClient.CreateAsync(),
+                e =>
+                {
+                    Assert.AreEqual(Constants.ErrorCodes.InvalidHeaderValue, e.ErrorCode);
+                    Assert.IsTrue(e.Message.Contains(Constants.Errors.InvalidVersionHeaderMessage));
+                });
         }
 
         #region Secondary Storage

@@ -17,12 +17,24 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary> Initializes a new instance of <see cref="StorageError"/>. </summary>
         /// <param name="message"></param>
-        internal StorageError(string message)
+        /// <param name="copySourceStatusCode"></param>
+        /// <param name="copySourceErrorCode"></param>
+        /// <param name="copySourceErrorMessage"></param>
+        internal StorageError(string message, int? copySourceStatusCode, string copySourceErrorCode, string copySourceErrorMessage)
         {
             Message = message;
+            CopySourceStatusCode = copySourceStatusCode;
+            CopySourceErrorCode = copySourceErrorCode;
+            CopySourceErrorMessage = copySourceErrorMessage;
         }
 
         /// <summary> Gets the message. </summary>
         public string Message { get; }
+        /// <summary> Gets the copy source status code. </summary>
+        public int? CopySourceStatusCode { get; }
+        /// <summary> Gets the copy source error code. </summary>
+        public string CopySourceErrorCode { get; }
+        /// <summary> Gets the copy source error message. </summary>
+        public string CopySourceErrorMessage { get; }
     }
 }
