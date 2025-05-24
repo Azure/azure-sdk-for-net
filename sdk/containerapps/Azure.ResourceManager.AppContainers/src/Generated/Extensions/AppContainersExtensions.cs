@@ -34,6 +34,25 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
+        /// Gets an object representing an <see cref="AppResiliencyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppResiliencyResource.CreateResourceIdentifier" /> to create an <see cref="AppResiliencyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetAppResiliencyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppResiliencyResource"/> object. </returns>
+        public static AppResiliencyResource GetAppResiliencyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppContainersArmClient(client).GetAppResiliencyResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ContainerAppAuthConfigResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ContainerAppAuthConfigResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppAuthConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -50,6 +69,44 @@ namespace Azure.ResourceManager.AppContainers
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAppContainersArmClient(client).GetContainerAppAuthConfigResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BuilderResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BuilderResource.CreateResourceIdentifier" /> to create a <see cref="BuilderResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetBuilderResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BuilderResource"/> object. </returns>
+        public static BuilderResource GetBuilderResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppContainersArmClient(client).GetBuilderResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BuildResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BuildResource.CreateResourceIdentifier" /> to create a <see cref="BuildResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetBuildResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BuildResource"/> object. </returns>
+        public static BuildResource GetBuildResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppContainersArmClient(client).GetBuildResource(id);
         }
 
         /// <summary>
@@ -129,25 +186,6 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppManagedEnvironmentDaprComponentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppManagedEnvironmentDaprComponentResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedEnvironmentDaprComponentResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppManagedEnvironmentDaprComponentResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> object. </returns>
-        public static ContainerAppManagedEnvironmentDaprComponentResource GetContainerAppManagedEnvironmentDaprComponentResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppContainersArmClient(client).GetContainerAppManagedEnvironmentDaprComponentResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="ContainerAppConnectedEnvironmentStorageResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ContainerAppConnectedEnvironmentStorageResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppConnectedEnvironmentStorageResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -202,6 +240,63 @@ namespace Azure.ResourceManager.AppContainers
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAppContainersArmClient(client).GetContainerAppDetectorPropertyResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerAppsBuildResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppsBuildResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppsBuildResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppsBuildResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerAppsBuildResource"/> object. </returns>
+        public static ContainerAppsBuildResource GetContainerAppsBuildResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppContainersArmClient(client).GetContainerAppsBuildResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="LabelHistoryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LabelHistoryResource.CreateResourceIdentifier" /> to create a <see cref="LabelHistoryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetLabelHistoryResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="LabelHistoryResource"/> object. </returns>
+        public static LabelHistoryResource GetLabelHistoryResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppContainersArmClient(client).GetLabelHistoryResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerAppsPatchResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppsPatchResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppsPatchResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppsPatchResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerAppsPatchResource"/> object. </returns>
+        public static ContainerAppsPatchResource GetContainerAppsPatchResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppContainersArmClient(client).GetContainerAppsPatchResource(id);
         }
 
         /// <summary>
@@ -395,6 +490,25 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="DotNetComponentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DotNetComponentResource.CreateResourceIdentifier" /> to create a <see cref="DotNetComponentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetDotNetComponentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DotNetComponentResource"/> object. </returns>
+        public static DotNetComponentResource GetDotNetComponentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppContainersArmClient(client).GetDotNetComponentResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="JavaComponentResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="JavaComponentResource.CreateResourceIdentifier" /> to create a <see cref="JavaComponentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -433,6 +547,44 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="LogicAppResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicAppResource.CreateResourceIdentifier" /> to create a <see cref="LogicAppResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetLogicAppResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="LogicAppResource"/> object. </returns>
+        public static LogicAppResource GetLogicAppResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppContainersArmClient(client).GetLogicAppResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkflowEnvelopeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkflowEnvelopeResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowEnvelopeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetWorkflowEnvelopeResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="WorkflowEnvelopeResource"/> object. </returns>
+        public static WorkflowEnvelopeResource GetWorkflowEnvelopeResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppContainersArmClient(client).GetWorkflowEnvelopeResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ContainerAppManagedCertificateResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ContainerAppManagedCertificateResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -449,6 +601,120 @@ namespace Azure.ResourceManager.AppContainers
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAppContainersArmClient(client).GetContainerAppManagedCertificateResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AppContainersPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppContainersPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AppContainersPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetAppContainersPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppContainersPrivateEndpointConnectionResource"/> object. </returns>
+        public static AppContainersPrivateEndpointConnectionResource GetAppContainersPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppContainersArmClient(client).GetAppContainersPrivateEndpointConnectionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DaprComponentResiliencyPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DaprComponentResiliencyPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DaprComponentResiliencyPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetDaprComponentResiliencyPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DaprComponentResiliencyPolicyResource"/> object. </returns>
+        public static DaprComponentResiliencyPolicyResource GetDaprComponentResiliencyPolicyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppContainersArmClient(client).GetDaprComponentResiliencyPolicyResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerAppManagedEnvironmentDaprComponentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppManagedEnvironmentDaprComponentResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedEnvironmentDaprComponentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppManagedEnvironmentDaprComponentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> object. </returns>
+        public static ContainerAppManagedEnvironmentDaprComponentResource GetContainerAppManagedEnvironmentDaprComponentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppContainersArmClient(client).GetContainerAppManagedEnvironmentDaprComponentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DaprSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DaprSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="DaprSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetDaprSubscriptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DaprSubscriptionResource"/> object. </returns>
+        public static DaprSubscriptionResource GetDaprSubscriptionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppContainersArmClient(client).GetDaprSubscriptionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HttpRouteConfigResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HttpRouteConfigResource.CreateResourceIdentifier" /> to create a <see cref="HttpRouteConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetHttpRouteConfigResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HttpRouteConfigResource"/> object. </returns>
+        public static HttpRouteConfigResource GetHttpRouteConfigResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppContainersArmClient(client).GetHttpRouteConfigResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MaintenanceConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MaintenanceConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetMaintenanceConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MaintenanceConfigurationResource"/> object. </returns>
+        public static MaintenanceConfigurationResource GetMaintenanceConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppContainersArmClient(client).GetMaintenanceConfigurationResource(id);
         }
 
         /// <summary>
@@ -509,6 +775,99 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
+        /// Gets a collection of BuilderResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetBuilderResources()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of BuilderResources and their operations over a BuilderResource. </returns>
+        public static BuilderResourceCollection GetBuilderResources(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetBuilderResources();
+        }
+
+        /// <summary>
+        /// Get a BuilderResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Builders_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BuilderResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetBuilderResourceAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="builderName"> The name of the builder. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="builderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="builderName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<BuilderResource>> GetBuilderResourceAsync(this ResourceGroupResource resourceGroupResource, string builderName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetBuilderResourceAsync(builderName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a BuilderResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Builders_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BuilderResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetBuilderResource(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="builderName"> The name of the builder. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="builderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="builderName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<BuilderResource> GetBuilderResource(this ResourceGroupResource resourceGroupResource, string builderName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetBuilderResource(builderName, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets a collection of ContainerAppConnectedEnvironmentResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
@@ -538,7 +897,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -576,7 +935,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -631,7 +990,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -669,7 +1028,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -724,7 +1083,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -762,7 +1121,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -817,7 +1176,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -855,7 +1214,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -910,7 +1269,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -948,7 +1307,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -986,7 +1345,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1019,7 +1378,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1052,7 +1411,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1085,7 +1444,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1106,6 +1465,78 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
+        /// List BuilderResource resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/builders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Builders_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BuilderResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetBuilderResources(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="BuilderResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<BuilderResource> GetBuilderResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetBuilderResourcesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List BuilderResource resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/builders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Builders_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BuilderResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetBuilderResources(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="BuilderResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<BuilderResource> GetBuilderResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetBuilderResources(cancellationToken);
+        }
+
+        /// <summary>
         /// Get all connectedEnvironments for a subscription.
         /// <list type="bullet">
         /// <item>
@@ -1118,7 +1549,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1154,7 +1585,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1190,7 +1621,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1226,7 +1657,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1262,7 +1693,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1298,7 +1729,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1334,7 +1765,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1369,7 +1800,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1404,7 +1835,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1440,7 +1871,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1476,7 +1907,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1512,7 +1943,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1548,7 +1979,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1581,7 +2012,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-02-02-preview</description>
         /// </item>
         /// </list>
         /// <item>

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             string image = default;
+            ImageType? imageType = default;
             string name = default;
             IList<string> command = default;
             IList<string> args = default;
@@ -73,6 +74,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 if (property.NameEquals("image"u8))
                 {
                     image = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("imageType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    imageType = new ImageType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -153,6 +163,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppInitContainer(
                 image,
+                imageType,
                 name,
                 command ?? new ChangeTrackingList<string>(),
                 args ?? new ChangeTrackingList<string>(),
@@ -193,6 +204,21 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         builder.AppendLine($"'{Image}'");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ImageType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  imageType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ImageType))
+                {
+                    builder.Append("  imageType: ");
+                    builder.AppendLine($"'{ImageType.Value.ToString()}'");
                 }
             }
 

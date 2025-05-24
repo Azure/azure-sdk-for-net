@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: AppContainers
 namespace: Azure.ResourceManager.AppContainers
-require: https://github.com/Azure/azure-rest-api-specs/blob/24b224b17e698746d3c34e32f84dab7de5e4f2a8/specification/app/resource-manager/readme.md
-#tag: package-2025-01-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/be87218d7b0ae98a05d8dfaff1e40b9c68977f18/specification/app/resource-manager/readme.md
+tag: package-preview-2025-02-02-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,8 +20,8 @@ modelerfour:
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-#mgmt-debug:
-#  show-serialized-names: true
+# mgmt-debug:
+#   show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -246,6 +246,31 @@ rename-mapping:
   IdentitySettingsLifeCycle: ContainerAppIdentitySettingsLifeCycle 
   IdentitySettings: ContainerAppIdentitySettings
   CertificateKeyVaultProperties: ContainerAppCertificateKeyVaultProperties
+  BlobStorageTokenStore: ContainerAppBlobStorageTokenStore
+  BuildConfiguration: ContainerAppBuildConfiguration
+  BuilderProvisioningState: ContainerAppBuilderProvisioningState
+  BuilderResourceUpdate: ContainerAppBuilderResourcePatch
+  BuildProvisioningState: ContainerAppBuildProvisioningState
+  BuildStatus: ContainerAppBuildStatus
+  BuildToken: ContainerAppBuildToken
+  CertificateType: ContainerAppCertificateType
+  ContainerRegistry: ContainerAppContainerRegistry
+  EnvironmentVariable: ContainerAppSimpleEnvironmentVariable
+  JobRunningState: ContainerAppJobRunningState
+  ResourceTags: ContainerAppResourceTags
+  Runtime: ContainerAppRuntime
+  RuntimeJava: ContainerAppRuntimeJava
+  RuntimeJavaAgent: ContainerAppRuntimeJavaAgent
+  Status: LabelHistoryRecordItemStatus
+  TimeoutPolicy: ContainerAppTimeoutPolicy
+  WeekDay: ContainerAppWeekDay
+  WorkflowArtifacts: ContainerAppWorkflowArtifacts
+  WorkflowEnvelopeProperties: ContainerAppWorkflowEnvelopeProperties
+  WorkflowHealth: ContainerAppWorkflowHealth
+  WorkflowHealthState: ContainerAppWorkflowHealthState
+  WorkflowState: ContainerAppWorkflowState
+  # Build: ContainerAppBuild
+  # Builder: ContainerAppBuilder
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}: ContainerAppConnectedEnvironmentCertificate

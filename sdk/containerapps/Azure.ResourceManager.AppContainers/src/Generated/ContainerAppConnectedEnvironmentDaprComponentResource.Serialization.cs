@@ -11,19 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    public partial class ContainerAppConnectedEnvironmentDaprComponentResource : IJsonModel<ContainerAppDaprComponentData>
+    public partial class ContainerAppConnectedEnvironmentDaprComponentResource : IJsonModel<ConnectedEnvironmentDaprComponentData>
     {
-        private static ContainerAppDaprComponentData s_dataDeserializationInstance;
-        private static ContainerAppDaprComponentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static ConnectedEnvironmentDaprComponentData s_dataDeserializationInstance;
+        private static ConnectedEnvironmentDaprComponentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        void IJsonModel<ContainerAppDaprComponentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppDaprComponentData>)Data).Write(writer, options);
+        void IJsonModel<ConnectedEnvironmentDaprComponentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ConnectedEnvironmentDaprComponentData>)Data).Write(writer, options);
 
-        ContainerAppDaprComponentData IJsonModel<ContainerAppDaprComponentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppDaprComponentData>)DataDeserializationInstance).Create(ref reader, options);
+        ConnectedEnvironmentDaprComponentData IJsonModel<ConnectedEnvironmentDaprComponentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConnectedEnvironmentDaprComponentData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ContainerAppDaprComponentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerAppDaprComponentData>(Data, options, AzureResourceManagerAppContainersContext.Default);
+        BinaryData IPersistableModel<ConnectedEnvironmentDaprComponentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConnectedEnvironmentDaprComponentData>(Data, options, AzureResourceManagerAppContainersContext.Default);
 
-        ContainerAppDaprComponentData IPersistableModel<ContainerAppDaprComponentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerAppDaprComponentData>(data, options, AzureResourceManagerAppContainersContext.Default);
+        ConnectedEnvironmentDaprComponentData IPersistableModel<ConnectedEnvironmentDaprComponentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConnectedEnvironmentDaprComponentData>(data, options, AzureResourceManagerAppContainersContext.Default);
 
-        string IPersistableModel<ContainerAppDaprComponentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerAppDaprComponentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ConnectedEnvironmentDaprComponentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConnectedEnvironmentDaprComponentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
