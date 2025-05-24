@@ -78,7 +78,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                     };
                     Response<RemoveParticipantResult> removePartResponse = await response.CallConnection.RemoveParticipantAsync(removeParticipantsOptions);
                     Assert.IsTrue(!removePartResponse.GetRawResponse().IsError);
-                    Assert.AreEqual(operationContext1, removePartResponse.Value.OperationContext);
+                    string expectedOperationContext = Mode == RecordedTestMode.Playback ? "Sanitized" : operationContext1;
+                    Assert.AreEqual(expectedOperationContext, removePartResponse.Value.OperationContext);
 
                     // call should be disconnected after removing participant
                     var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
@@ -157,7 +158,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                     OperationContext = operationContext,
                 };
                 var addParticipantResponse = await callConnection.AddParticipantAsync(addParticipantOptions);
-                Assert.AreEqual(operationContext, addParticipantResponse.Value.OperationContext);
+
+                string expectedOperationContext = Mode == RecordedTestMode.Playback ? "Sanitized" : operationContext;
+                Assert.AreEqual(expectedOperationContext, addParticipantResponse.Value.OperationContext);
                 Assert.IsNotNull(addParticipantResponse.Value.InvitationId);
 
                 // ensure invitation has arrived
