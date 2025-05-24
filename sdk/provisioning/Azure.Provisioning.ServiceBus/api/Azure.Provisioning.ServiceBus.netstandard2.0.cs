@@ -245,6 +245,8 @@ namespace Azure.Provisioning.ServiceBus
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_09_01;
+            public static readonly string V2015_08_01;
             public static readonly string V2017_04_01;
             public static readonly string V2021_11_01;
             public static readonly string V2024_01_01;
@@ -396,6 +398,8 @@ namespace Azure.Provisioning.ServiceBus
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_09_01;
+            public static readonly string V2015_08_01;
             public static readonly string V2017_04_01;
             public static readonly string V2021_11_01;
             public static readonly string V2024_01_01;
@@ -417,6 +421,8 @@ namespace Azure.Provisioning.ServiceBus
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_09_01;
+            public static readonly string V2015_08_01;
             public static readonly string V2017_04_01;
             public static readonly string V2021_11_01;
             public static readonly string V2024_01_01;
@@ -438,6 +444,8 @@ namespace Azure.Provisioning.ServiceBus
         public static Azure.Provisioning.ServiceBus.ServiceBusRule FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_09_01;
+            public static readonly string V2015_08_01;
             public static readonly string V2017_04_01;
             public static readonly string V2021_11_01;
             public static readonly string V2024_01_01;
@@ -504,6 +512,8 @@ namespace Azure.Provisioning.ServiceBus
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_09_01;
+            public static readonly string V2015_08_01;
             public static readonly string V2017_04_01;
             public static readonly string V2021_11_01;
             public static readonly string V2024_01_01;
@@ -540,6 +550,8 @@ namespace Azure.Provisioning.ServiceBus
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_09_01;
+            public static readonly string V2015_08_01;
             public static readonly string V2017_04_01;
             public static readonly string V2021_11_01;
             public static readonly string V2024_01_01;
@@ -561,6 +573,8 @@ namespace Azure.Provisioning.ServiceBus
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_09_01;
+            public static readonly string V2015_08_01;
             public static readonly string V2017_04_01;
             public static readonly string V2021_11_01;
             public static readonly string V2024_01_01;

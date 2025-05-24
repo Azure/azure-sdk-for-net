@@ -74,10 +74,10 @@ public partial class KubernetesObjectStatusCondition : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _lastTransitionOn = DefineProperty<DateTimeOffset>("LastTransitionOn", ["lastTransitionTime"], isOutput: true);
-        _message = DefineProperty<string>("Message", ["message"], isOutput: true);
-        _reason = DefineProperty<string>("Reason", ["reason"], isOutput: true);
-        _status = DefineProperty<string>("Status", ["status"], isOutput: true);
-        _objectStatusConditionDefinitionType = DefineProperty<string>("ObjectStatusConditionDefinitionType", ["type"], isOutput: true);
+        _lastTransitionOn = DefineProperty<DateTimeOffset>("LastTransitionOn", ["LastTransitionOn"], isOutput: true);
+        _message = DefineProperty<string>("Message", ["Message"], isOutput: true);
+        _reason = DefineProperty<string>("Reason", ["Reason"], isOutput: true);
+        _status = DefineProperty<string>("Status", ["Status"], isOutput: true);
+        _objectStatusConditionDefinitionType = DefineProperty<string>("ObjectStatusConditionDefinitionType", ["ObjectStatusConditionDefinitionType"], isOutput: true);
     }
 }

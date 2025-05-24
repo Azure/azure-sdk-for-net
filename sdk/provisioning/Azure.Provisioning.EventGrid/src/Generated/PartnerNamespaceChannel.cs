@@ -63,24 +63,6 @@ public partial class PartnerNamespaceChannel : ProvisionableResource
     private BicepValue<string>? _messageForActivation;
 
     /// <summary>
-    /// This property should be populated when channelType is
-    /// PartnerDestination and represents information about the partner
-    /// destination resource corresponding to the channel.             Please
-    /// note Azure.ResourceManager.EventGrid.Models.PartnerDestinationInfo is
-    /// the base class. According to the scenario, a derived class of the base
-    /// class might need to be assigned here, or this property needs to be
-    /// casted to one of the possible derived classes.             The
-    /// available derived classes include
-    /// Azure.ResourceManager.EventGrid.Models.WebhookPartnerDestinationInfo.
-    /// </summary>
-    public PartnerDestinationInfo PartnerDestinationInfo 
-    {
-        get { Initialize(); return _partnerDestinationInfo!; }
-        set { Initialize(); AssignOrReplace(ref _partnerDestinationInfo, value); }
-    }
-    private PartnerDestinationInfo? _partnerDestinationInfo;
-
-    /// <summary>
     /// This property should be populated when channelType is PartnerTopic and
     /// represents information about the partner topic resource corresponding
     /// to the channel.
@@ -151,7 +133,7 @@ public partial class PartnerNamespaceChannel : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the PartnerNamespaceChannel.</param>
     public PartnerNamespaceChannel(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.EventGrid/partnerNamespaces/channels", resourceVersion ?? "2022-06-15")
+        : base(bicepIdentifier, "Microsoft.EventGrid/partnerNamespaces/channels", resourceVersion ?? "2025-02-15")
     {
     }
 
@@ -164,7 +146,6 @@ public partial class PartnerNamespaceChannel : ProvisionableResource
         _channelType = DefineProperty<PartnerNamespaceChannelType>("ChannelType", ["properties", "channelType"]);
         _expireOnIfNotActivated = DefineProperty<DateTimeOffset>("ExpireOnIfNotActivated", ["properties", "expirationTimeIfNotActivatedUtc"]);
         _messageForActivation = DefineProperty<string>("MessageForActivation", ["properties", "messageForActivation"]);
-        _partnerDestinationInfo = DefineModelProperty<PartnerDestinationInfo>("PartnerDestinationInfo", ["properties", "partnerDestinationInfo"]);
         _partnerTopicInfo = DefineModelProperty<PartnerTopicInfo>("PartnerTopicInfo", ["properties", "partnerTopicInfo"]);
         _provisioningState = DefineProperty<PartnerNamespaceChannelProvisioningState>("ProvisioningState", ["properties", "provisioningState"]);
         _readinessState = DefineProperty<PartnerTopicReadinessState>("ReadinessState", ["properties", "readinessState"]);
@@ -178,6 +159,11 @@ public partial class PartnerNamespaceChannel : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-02-15.
+        /// </summary>
+        public static readonly string V2025_02_15 = "2025-02-15";
+
         /// <summary>
         /// 2022-06-15.
         /// </summary>

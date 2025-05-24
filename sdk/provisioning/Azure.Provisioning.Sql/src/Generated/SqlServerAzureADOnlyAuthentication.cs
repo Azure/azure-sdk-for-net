@@ -75,7 +75,7 @@ public partial class SqlServerAzureADOnlyAuthentication : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the SqlServerAzureADOnlyAuthentication.</param>
     public SqlServerAzureADOnlyAuthentication(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Sql/servers/azureADOnlyAuthentications", resourceVersion ?? "2021-11-01")
+        : base(bicepIdentifier, "Microsoft.Sql/servers/azureADOnlyAuthentications", resourceVersion ?? "2023-08-01")
     {
     }
 
@@ -97,6 +97,11 @@ public partial class SqlServerAzureADOnlyAuthentication : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2023-08-01.
+        /// </summary>
+        public static readonly string V2023_08_01 = "2023-08-01";
+
         /// <summary>
         /// 2021-11-01.
         /// </summary>

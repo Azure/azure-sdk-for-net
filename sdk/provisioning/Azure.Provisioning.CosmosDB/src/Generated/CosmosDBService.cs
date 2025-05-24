@@ -6,7 +6,6 @@
 #nullable enable
 
 using Azure.Core;
-using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using System;
@@ -49,6 +48,27 @@ public partial class CosmosDBService : ProvisionableResource
     private BicepValue<CosmosDBServiceSize>? _instanceSize;
 
     /// <summary>
+    /// Properties in ServiceResourceCreateUpdateParameters.             Please
+    /// note
+    /// Azure.ResourceManager.CosmosDB.Models.ServiceResourceCreateUpdateProperties
+    /// is the base class. According to the scenario, a derived class of the
+    /// base class might need to be assigned here, or this property needs to
+    /// be casted to one of the possible derived classes.             The
+    /// available derived classes include
+    /// Azure.ResourceManager.CosmosDB.Models.DataTransferServiceResourceCreateUpdateProperties,
+    /// Azure.ResourceManager.CosmosDB.Models.GraphApiComputeServiceResourceCreateUpdateProperties,
+    /// Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderServiceResourceCreateUpdateProperties
+    /// and
+    /// Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceResourceCreateUpdateProperties.
+    /// </summary>
+    public ServiceResourceCreateUpdateProperties CreateOrUpdateProperties 
+    {
+        get { Initialize(); return _createOrUpdateProperties!; }
+        set { Initialize(); AssignOrReplace(ref _createOrUpdateProperties, value); }
+    }
+    private ServiceResourceCreateUpdateProperties? _createOrUpdateProperties;
+
+    /// <summary>
     /// ServiceType for the service.
     /// </summary>
     public BicepValue<CosmosDBServiceType> ServiceType 
@@ -66,25 +86,6 @@ public partial class CosmosDBService : ProvisionableResource
         get { Initialize(); return _id!; }
     }
     private BicepValue<ResourceIdentifier>? _id;
-
-    /// <summary>
-    /// Services response resource.             Please note
-    /// Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceProperties is the
-    /// base class. According to the scenario, a derived class of the base
-    /// class might need to be assigned here, or this property needs to be
-    /// casted to one of the possible derived classes.             The
-    /// available derived classes include
-    /// Azure.ResourceManager.CosmosDB.Models.DataTransferServiceProperties,
-    /// Azure.ResourceManager.CosmosDB.Models.GraphApiComputeServiceProperties,
-    /// Azure.ResourceManager.CosmosDB.Models.MaterializedViewsBuilderServiceProperties
-    /// and
-    /// Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceProperties.
-    /// </summary>
-    public CosmosDBServiceProperties Properties 
-    {
-        get { Initialize(); return _properties!; }
-    }
-    private CosmosDBServiceProperties? _properties;
 
     /// <summary>
     /// Gets the SystemData.
@@ -116,7 +117,7 @@ public partial class CosmosDBService : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBService.</param>
     public CosmosDBService(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/services", resourceVersion ?? "2024-08-15")
+        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/services", resourceVersion ?? "2025-04-15")
     {
     }
 
@@ -126,11 +127,11 @@ public partial class CosmosDBService : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _instanceCount = DefineProperty<int>("InstanceCount", ["properties", "instanceCount"]);
-        _instanceSize = DefineProperty<CosmosDBServiceSize>("InstanceSize", ["properties", "instanceSize"]);
-        _serviceType = DefineProperty<CosmosDBServiceType>("ServiceType", ["properties", "serviceType"]);
+        _instanceCount = DefineProperty<int>("InstanceCount", ["InstanceCount"]);
+        _instanceSize = DefineProperty<CosmosDBServiceSize>("InstanceSize", ["InstanceSize"]);
+        _createOrUpdateProperties = DefineModelProperty<ServiceResourceCreateUpdateProperties>("CreateOrUpdateProperties", ["properties"]);
+        _serviceType = DefineProperty<CosmosDBServiceType>("ServiceType", ["ServiceType"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
-        _properties = DefineModelProperty<CosmosDBServiceProperties>("Properties", ["properties"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<CosmosDBAccount>("Parent", ["parent"], isRequired: true);
     }
@@ -140,6 +141,16 @@ public partial class CosmosDBService : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-04-15.
+        /// </summary>
+        public static readonly string V2025_04_15 = "2025-04-15";
+
+        /// <summary>
+        /// 2024-11-15.
+        /// </summary>
+        public static readonly string V2024_11_15 = "2024-11-15";
+
         /// <summary>
         /// 2024-08-15.
         /// </summary>

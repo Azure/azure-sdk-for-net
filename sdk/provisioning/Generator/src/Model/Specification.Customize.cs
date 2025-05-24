@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Azure.Provisioning.Generator.Model;
 
@@ -94,4 +95,25 @@ public abstract partial class Specification : ModelBase
         bool period = false,
         bool parens = false) =>
         GetResource<T>().NameRequirements = new(max, min, lower, upper, digits, hyphen, underscore, period, parens);
+
+    public void OrderEnum<T>(params string[] names)
+    {
+        EnumModel model = GetEnum<T>();
+        for (int i = names.Length - 1; i >= 0; i--)
+        {
+            EnumValue val = model.Values.First(v => v.Name == names[i]);
+            model.Values.Remove(val);
+            model.Values.Insert(0, val);
+        }
+    }
+
+    public void IncludeVersions<T>(params string[] apiVersions)
+    {
+        Resource resource = GetResource<T>();
+        for (int i = apiVersions.Length - 1; i >= 0; i--)
+        {
+            if (resource.ResourceVersions!.Contains(apiVersions[i])) { continue; }
+            resource.ResourceVersions!.Insert(0, apiVersions[i]);
+        }
+    }
 }

@@ -101,6 +101,18 @@ public partial class ContainerAppJobConfiguration : ProvisionableConstruct
     private BicepList<ContainerAppRegistryCredentials>? _registries;
 
     /// <summary>
+    /// Optional settings for Managed Identities that are assigned to the
+    /// Container App Job. If a Managed Identity is not specified here,
+    /// default settings will be used.
+    /// </summary>
+    public BicepList<ContainerAppIdentitySettings> IdentitySettings 
+    {
+        get { Initialize(); return _identitySettings!; }
+        set { Initialize(); _identitySettings!.Assign(value); }
+    }
+    private BicepList<ContainerAppIdentitySettings>? _identitySettings;
+
+    /// <summary>
     /// Creates a new ContainerAppJobConfiguration.
     /// </summary>
     public ContainerAppJobConfiguration()
@@ -121,5 +133,6 @@ public partial class ContainerAppJobConfiguration : ProvisionableConstruct
         _scheduleTriggerConfig = DefineModelProperty<JobConfigurationScheduleTriggerConfig>("ScheduleTriggerConfig", ["scheduleTriggerConfig"]);
         _eventTriggerConfig = DefineModelProperty<EventTriggerConfiguration>("EventTriggerConfig", ["eventTriggerConfig"]);
         _registries = DefineListProperty<ContainerAppRegistryCredentials>("Registries", ["registries"]);
+        _identitySettings = DefineListProperty<ContainerAppIdentitySettings>("IdentitySettings", ["identitySettings"]);
     }
 }
