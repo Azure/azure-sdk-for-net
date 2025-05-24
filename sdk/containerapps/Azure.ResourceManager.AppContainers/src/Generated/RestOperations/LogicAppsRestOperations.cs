@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        internal RequestUriBuilder CreateDeployWorkflowArtifactsRequestUri(string subscriptionId, string resourceGroupName, string containerAppName, string logicAppName, WorkflowArtifacts workflowArtifacts)
+        internal RequestUriBuilder CreateDeployWorkflowArtifactsRequestUri(string subscriptionId, string resourceGroupName, string containerAppName, string logicAppName, ContainerAppWorkflowArtifacts workflowArtifacts)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.AppContainers
             return uri;
         }
 
-        internal HttpMessage CreateDeployWorkflowArtifactsRequest(string subscriptionId, string resourceGroupName, string containerAppName, string logicAppName, WorkflowArtifacts workflowArtifacts)
+        internal HttpMessage CreateDeployWorkflowArtifactsRequest(string subscriptionId, string resourceGroupName, string containerAppName, string logicAppName, ContainerAppWorkflowArtifacts workflowArtifacts)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="logicAppName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="logicAppName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeployWorkflowArtifactsAsync(string subscriptionId, string resourceGroupName, string containerAppName, string logicAppName, WorkflowArtifacts workflowArtifacts = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DeployWorkflowArtifactsAsync(string subscriptionId, string resourceGroupName, string containerAppName, string logicAppName, ContainerAppWorkflowArtifacts workflowArtifacts = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="logicAppName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="logicAppName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeployWorkflowArtifacts(string subscriptionId, string resourceGroupName, string containerAppName, string logicAppName, WorkflowArtifacts workflowArtifacts = null, CancellationToken cancellationToken = default)
+        public Response DeployWorkflowArtifacts(string subscriptionId, string resourceGroupName, string containerAppName, string logicAppName, ContainerAppWorkflowArtifacts workflowArtifacts = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

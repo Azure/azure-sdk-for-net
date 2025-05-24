@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppContainers
             }
             string kind = default;
             AzureLocation? location = default;
-            WorkflowEnvelopeProperties properties = default;
+            ContainerAppWorkflowEnvelopeProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         continue;
                     }
-                    properties = WorkflowEnvelopeProperties.DeserializeWorkflowEnvelopeProperties(property.Value, options);
+                    properties = ContainerAppWorkflowEnvelopeProperties.DeserializeContainerAppWorkflowEnvelopeProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

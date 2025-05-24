@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // invoke the operation
             MaintenanceConfigurationResourceData data = new MaintenanceConfigurationResourceData
             {
-                ScheduledEntries = { new ScheduledEntry(WeekDay.Sunday, 12, 9) },
+                ScheduledEntries = { new ScheduledEntry(ContainerAppWeekDay.Sunday, 12, 9) },
             };
             ArmOperation<MaintenanceConfigurationResource> lro = await maintenanceConfigurationResource.UpdateAsync(WaitUntil.Completed, data);
             MaintenanceConfigurationResource result = lro.Value;

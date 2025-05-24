@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="logStreamEndpoint"> Endpoint from which the build logs can be streamed. </param>
         /// <param name="tokenEndpoint"> Endpoint to use to retrieve an authentication token for log streaming and uploading source code. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BuildResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BuildProvisioningState? provisioningState, BuildStatus? buildStatus, ContainerRegistryWithCustomImage destinationContainerRegistry, BuildConfiguration configuration, string uploadEndpoint, string logStreamEndpoint, string tokenEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BuildResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerAppBuildProvisioningState? provisioningState, ContainerAppBuildStatus? buildStatus, ContainerRegistryWithCustomImage destinationContainerRegistry, ContainerAppBuildConfiguration configuration, string uploadEndpoint, string logStreamEndpoint, string tokenEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             BuildStatus = buildStatus;
@@ -83,16 +83,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Build provisioning state. </summary>
         [WirePath("properties.provisioningState")]
-        public BuildProvisioningState? ProvisioningState { get; }
+        public ContainerAppBuildProvisioningState? ProvisioningState { get; }
         /// <summary> Status of the build once it has been provisioned. </summary>
         [WirePath("properties.buildStatus")]
-        public BuildStatus? BuildStatus { get; }
+        public ContainerAppBuildStatus? BuildStatus { get; }
         /// <summary> Container registry that the final image will be uploaded to. </summary>
         [WirePath("properties.destinationContainerRegistry")]
         public ContainerRegistryWithCustomImage DestinationContainerRegistry { get; set; }
         /// <summary> Configuration of the build. </summary>
         [WirePath("properties.configuration")]
-        public BuildConfiguration Configuration { get; set; }
+        public ContainerAppBuildConfiguration Configuration { get; set; }
         /// <summary> Endpoint to which the source code should be uploaded. </summary>
         [WirePath("properties.uploadEndpoint")]
         public string UploadEndpoint { get; }

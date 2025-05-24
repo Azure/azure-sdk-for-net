@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             string thumbprint = default;
             bool? valid = default;
             string publicKeyHash = default;
-            CertificateType? certificateType = default;
+            ContainerAppCertificateType? certificateType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    certificateType = new CertificateType(property.Value.GetString());
+                    certificateType = new ContainerAppCertificateType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

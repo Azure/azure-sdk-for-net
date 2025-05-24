@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppContainers
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            TimeoutPolicy timeoutPolicy = default;
+            ContainerAppTimeoutPolicy timeoutPolicy = default;
             HttpRetryPolicy httpRetryPolicy = default;
             TcpRetryPolicy tcpRetryPolicy = default;
             CircuitBreakerPolicy circuitBreakerPolicy = default;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            timeoutPolicy = TimeoutPolicy.DeserializeTimeoutPolicy(property0.Value, options);
+                            timeoutPolicy = ContainerAppTimeoutPolicy.DeserializeContainerAppTimeoutPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("httpRetryPolicy"u8))

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // invoke the operation
             AppResiliencyData data = new AppResiliencyData
             {
-                TimeoutPolicy = new TimeoutPolicy
+                TimeoutPolicy = new ContainerAppTimeoutPolicy
                 {
                     ResponseTimeoutInSeconds = 30,
                     ConnectionTimeoutInSeconds = 40,

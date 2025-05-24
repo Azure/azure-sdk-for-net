@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            WeekDay weekDay = default;
+            ContainerAppWeekDay weekDay = default;
             int startHourUtc = default;
             int durationHours = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 if (property.NameEquals("weekDay"u8))
                 {
-                    weekDay = property.Value.GetString().ToWeekDay();
+                    weekDay = property.Value.GetString().ToContainerAppWeekDay();
                     continue;
                 }
                 if (property.NameEquals("startHourUtc"u8))

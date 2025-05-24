@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.AppContainers
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            BuildProvisioningState? provisioningState = default;
-            BuildStatus? buildStatus = default;
+            ContainerAppBuildProvisioningState? provisioningState = default;
+            ContainerAppBuildStatus? buildStatus = default;
             ContainerRegistryWithCustomImage destinationContainerRegistry = default;
             ContainerAppsBuildConfiguration configuration = default;
             string logStreamEndpoint = default;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            provisioningState = new BuildProvisioningState(property0.Value.GetString());
+                            provisioningState = new ContainerAppBuildProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("buildStatus"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            buildStatus = new BuildStatus(property0.Value.GetString());
+                            buildStatus = new ContainerAppBuildStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("destinationContainerRegistry"u8))

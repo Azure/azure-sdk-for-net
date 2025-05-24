@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="outboundIPAddresses"> Outbound IP Addresses of a container apps job. </param>
         /// <param name="eventStreamEndpoint"> The endpoint of the eventstream of the container apps job. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppExtendedLocation extendedLocation, ManagedServiceIdentity identity, ContainerAppJobProvisioningState? provisioningState, JobRunningState? runningState, string environmentId, string workloadProfileName, ContainerAppJobConfiguration configuration, ContainerAppJobTemplate template, IReadOnlyList<string> outboundIPAddresses, string eventStreamEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerAppJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppExtendedLocation extendedLocation, ManagedServiceIdentity identity, ContainerAppJobProvisioningState? provisioningState, ContainerAppJobRunningState? runningState, string environmentId, string workloadProfileName, ContainerAppJobConfiguration configuration, ContainerAppJobTemplate template, IReadOnlyList<string> outboundIPAddresses, string eventStreamEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Identity = identity;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppContainers
         public ContainerAppJobProvisioningState? ProvisioningState { get; }
         /// <summary> Current running state of the job. </summary>
         [WirePath("properties.runningState")]
-        public JobRunningState? RunningState { get; }
+        public ContainerAppJobRunningState? RunningState { get; }
         /// <summary> Resource ID of environment. </summary>
         [WirePath("properties.environmentId")]
         public string EnvironmentId { get; set; }

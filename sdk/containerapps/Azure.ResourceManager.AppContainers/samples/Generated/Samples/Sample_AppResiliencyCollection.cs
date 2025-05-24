@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
             string name = "resiliency-policy-1";
             AppResiliencyData data = new AppResiliencyData
             {
-                TimeoutPolicy = new TimeoutPolicy
+                TimeoutPolicy = new ContainerAppTimeoutPolicy
                 {
                     ResponseTimeoutInSeconds = 15,
                     ConnectionTimeoutInSeconds = 5,

@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             string os = default;
             string runtimeStack = default;
             string runtimeVersion = default;
-            IList<EnvironmentVariable> buildEnvironmentVariables = default;
+            IList<ContainerAppSimpleEnvironmentVariable> buildEnvironmentVariables = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,10 +212,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    List<EnvironmentVariable> array = new List<EnvironmentVariable>();
+                    List<ContainerAppSimpleEnvironmentVariable> array = new List<ContainerAppSimpleEnvironmentVariable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EnvironmentVariable.DeserializeEnvironmentVariable(item, options));
+                        array.Add(ContainerAppSimpleEnvironmentVariable.DeserializeContainerAppSimpleEnvironmentVariable(item, options));
                     }
                     buildEnvironmentVariables = array;
                     continue;
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 os,
                 runtimeStack,
                 runtimeVersion,
-                buildEnvironmentVariables ?? new ChangeTrackingList<EnvironmentVariable>(),
+                buildEnvironmentVariables ?? new ChangeTrackingList<ContainerAppSimpleEnvironmentVariable>(),
                 serializedAdditionalRawData);
         }
 

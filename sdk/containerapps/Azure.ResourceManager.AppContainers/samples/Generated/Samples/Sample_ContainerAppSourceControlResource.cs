@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
                     DockerfilePath = "./Dockerfile",
                     GitHubPersonalAccessToken = "test",
                     Image = "image/tag",
-                    BuildEnvironmentVariables = { new EnvironmentVariable("foo1", "bar1"), new EnvironmentVariable("foo2", "bar2") },
+                    BuildEnvironmentVariables = { new ContainerAppSimpleEnvironmentVariable("foo1", "bar1"), new ContainerAppSimpleEnvironmentVariable("foo2", "bar2") },
                 },
             };
             string xMsGitHubAuxiliary = "githubaccesstoken";

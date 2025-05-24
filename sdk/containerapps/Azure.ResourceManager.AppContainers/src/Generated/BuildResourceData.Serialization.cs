@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.AppContainers
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            BuildProvisioningState? provisioningState = default;
-            BuildStatus? buildStatus = default;
+            ContainerAppBuildProvisioningState? provisioningState = default;
+            ContainerAppBuildStatus? buildStatus = default;
             ContainerRegistryWithCustomImage destinationContainerRegistry = default;
-            BuildConfiguration configuration = default;
+            ContainerAppBuildConfiguration configuration = default;
             string uploadEndpoint = default;
             string logStreamEndpoint = default;
             string tokenEndpoint = default;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            provisioningState = new BuildProvisioningState(property0.Value.GetString());
+                            provisioningState = new ContainerAppBuildProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("buildStatus"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            buildStatus = new BuildStatus(property0.Value.GetString());
+                            buildStatus = new ContainerAppBuildStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("destinationContainerRegistry"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            configuration = BuildConfiguration.DeserializeBuildConfiguration(property0.Value, options);
+                            configuration = ContainerAppBuildConfiguration.DeserializeContainerAppBuildConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("uploadEndpoint"u8))

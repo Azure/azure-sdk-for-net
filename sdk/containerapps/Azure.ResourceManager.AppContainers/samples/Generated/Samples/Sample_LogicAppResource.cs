@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
             LogicAppResource logicApp = client.GetLogicAppResource(logicAppResourceId);
 
             // invoke the operation
-            WorkflowArtifacts workflowArtifacts = new WorkflowArtifacts
+            ContainerAppWorkflowArtifacts workflowArtifacts = new ContainerAppWorkflowArtifacts
             {
                 FilesToDelete = { "test/workflow.json", "test/" },
             };
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
             LogicAppResource logicApp = client.GetLogicAppResource(logicAppResourceId);
 
             // invoke the operation
-            WorkflowArtifacts workflowArtifacts = new WorkflowArtifacts
+            ContainerAppWorkflowArtifacts workflowArtifacts = new ContainerAppWorkflowArtifacts
             {
                 AppSettings = BinaryData.FromObjectAsJson(new
                 {

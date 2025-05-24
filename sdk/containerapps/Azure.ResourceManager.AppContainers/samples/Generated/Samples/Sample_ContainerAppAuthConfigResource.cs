@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
                 {
                     TokenStore = new ContainerAppTokenStore
                     {
-                        AzureBlobStorage = new BlobStorageTokenStore
+                        AzureBlobStorage = new ContainerAppBlobStorageTokenStore
                         {
                             BlobContainerUri = new Uri("https://test.blob.core.windows.net/container1"),
                             ClientId = "00000000-0000-0000-0000-000000000000",
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
                 {
                     TokenStore = new ContainerAppTokenStore
                     {
-                        AzureBlobStorage = new BlobStorageTokenStore
+                        AzureBlobStorage = new ContainerAppBlobStorageTokenStore
                         {
                             BlobContainerUri = new Uri("https://test.blob.core.windows.net/container1"),
                             ManagedIdentityResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity1",

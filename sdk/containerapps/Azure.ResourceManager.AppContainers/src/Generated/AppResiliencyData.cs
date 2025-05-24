@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="httpConnectionPool"> Defines parameters for http connection pooling. </param>
         /// <param name="tcpConnectionPool"> Defines parameters for tcp connection pooling. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppResiliencyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TimeoutPolicy timeoutPolicy, HttpRetryPolicy httpRetryPolicy, TcpRetryPolicy tcpRetryPolicy, CircuitBreakerPolicy circuitBreakerPolicy, HttpConnectionPool httpConnectionPool, TcpConnectionPool tcpConnectionPool, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppResiliencyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerAppTimeoutPolicy timeoutPolicy, HttpRetryPolicy httpRetryPolicy, TcpRetryPolicy tcpRetryPolicy, CircuitBreakerPolicy circuitBreakerPolicy, HttpConnectionPool httpConnectionPool, TcpConnectionPool tcpConnectionPool, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             TimeoutPolicy = timeoutPolicy;
             HttpRetryPolicy = httpRetryPolicy;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Policy to set request timeouts. </summary>
         [WirePath("properties.timeoutPolicy")]
-        public TimeoutPolicy TimeoutPolicy { get; set; }
+        public ContainerAppTimeoutPolicy TimeoutPolicy { get; set; }
         /// <summary> Policy that defines http request retry conditions. </summary>
         [WirePath("properties.httpRetryPolicy")]
         public HttpRetryPolicy HttpRetryPolicy { get; set; }

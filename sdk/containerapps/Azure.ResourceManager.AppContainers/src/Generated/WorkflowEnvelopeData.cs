@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="location"> The resource location. </param>
         /// <param name="properties"> Additional workflow properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowEnvelopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, WorkflowEnvelopeProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WorkflowEnvelopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, ContainerAppWorkflowEnvelopeProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Location = location;
@@ -81,6 +81,6 @@ namespace Azure.ResourceManager.AppContainers
         public AzureLocation? Location { get; }
         /// <summary> Additional workflow properties. </summary>
         [WirePath("properties")]
-        public WorkflowEnvelopeProperties Properties { get; }
+        public ContainerAppWorkflowEnvelopeProperties Properties { get; }
     }
 }

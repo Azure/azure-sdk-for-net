@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="workflowArtifacts"> Application settings and files of the workflow. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeployWorkflowArtifactsAsync(WorkflowArtifacts workflowArtifacts = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeployWorkflowArtifactsAsync(ContainerAppWorkflowArtifacts workflowArtifacts = null, CancellationToken cancellationToken = default)
         {
             using var scope = _logicAppClientDiagnostics.CreateScope("LogicAppResource.DeployWorkflowArtifacts");
             scope.Start();
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="workflowArtifacts"> Application settings and files of the workflow. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeployWorkflowArtifacts(WorkflowArtifacts workflowArtifacts = null, CancellationToken cancellationToken = default)
+        public virtual Response DeployWorkflowArtifacts(ContainerAppWorkflowArtifacts workflowArtifacts = null, CancellationToken cancellationToken = default)
         {
             using var scope = _logicAppClientDiagnostics.CreateScope("LogicAppResource.DeployWorkflowArtifacts");
             scope.Start();

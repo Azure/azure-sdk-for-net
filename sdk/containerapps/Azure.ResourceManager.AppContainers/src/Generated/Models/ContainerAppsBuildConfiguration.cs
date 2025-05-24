@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of <see cref="ContainerAppsBuildConfiguration"/>. </summary>
         internal ContainerAppsBuildConfiguration()
         {
-            EnvironmentVariables = new ChangeTrackingList<EnvironmentVariable>();
+            EnvironmentVariables = new ChangeTrackingList<ContainerAppSimpleEnvironmentVariable>();
             PreBuildSteps = new ChangeTrackingList<PreBuildStep>();
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="environmentVariables"> List of environment variables to be passed to the build, secrets should not be used in environment variable. </param>
         /// <param name="preBuildSteps"> List of steps to perform before the build. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppsBuildConfiguration(string baseOS, string platform, string platformVersion, IReadOnlyList<EnvironmentVariable> environmentVariables, IReadOnlyList<PreBuildStep> preBuildSteps, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppsBuildConfiguration(string baseOS, string platform, string platformVersion, IReadOnlyList<ContainerAppSimpleEnvironmentVariable> environmentVariables, IReadOnlyList<PreBuildStep> preBuildSteps, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BaseOS = baseOS;
             Platform = platform;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public string PlatformVersion { get; }
         /// <summary> List of environment variables to be passed to the build, secrets should not be used in environment variable. </summary>
         [WirePath("environmentVariables")]
-        public IReadOnlyList<EnvironmentVariable> EnvironmentVariables { get; }
+        public IReadOnlyList<ContainerAppSimpleEnvironmentVariable> EnvironmentVariables { get; }
         /// <summary> List of steps to perform before the build. </summary>
         [WirePath("preBuildSteps")]
         public IReadOnlyList<PreBuildStep> PreBuildSteps { get; }

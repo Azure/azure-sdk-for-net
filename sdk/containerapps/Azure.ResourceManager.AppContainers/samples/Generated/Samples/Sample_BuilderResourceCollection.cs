@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 },
                 },
                 EnvironmentId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg/providers/Microsoft.App/managedEnvironments/testEnv"),
-                ContainerRegistries = { new ContainerRegistry("test.azurecr.io", new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity1")), new ContainerRegistry("test2.azurecr.io", new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity1")) },
+                ContainerRegistries = { new ContainerAppContainerRegistry("test.azurecr.io", new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity1")), new ContainerAppContainerRegistry("test2.azurecr.io", new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity1")) },
                 Tags =
 {
 ["company"] = "Microsoft"

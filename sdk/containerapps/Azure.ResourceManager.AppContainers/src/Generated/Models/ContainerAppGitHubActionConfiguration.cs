@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of <see cref="ContainerAppGitHubActionConfiguration"/>. </summary>
         public ContainerAppGitHubActionConfiguration()
         {
-            BuildEnvironmentVariables = new ChangeTrackingList<EnvironmentVariable>();
+            BuildEnvironmentVariables = new ChangeTrackingList<ContainerAppSimpleEnvironmentVariable>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppGitHubActionConfiguration"/>. </summary>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="runtimeVersion"> Runtime version. </param>
         /// <param name="buildEnvironmentVariables"> List of environment variables to be passed to the build. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppGitHubActionConfiguration(ContainerAppRegistryInfo registryInfo, ContainerAppCredentials azureCredentials, string contextPath, string dockerfilePath, string gitHubPersonalAccessToken, string image, string publishType, string os, string runtimeStack, string runtimeVersion, IList<EnvironmentVariable> buildEnvironmentVariables, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppGitHubActionConfiguration(ContainerAppRegistryInfo registryInfo, ContainerAppCredentials azureCredentials, string contextPath, string dockerfilePath, string gitHubPersonalAccessToken, string image, string publishType, string os, string runtimeStack, string runtimeVersion, IList<ContainerAppSimpleEnvironmentVariable> buildEnvironmentVariables, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RegistryInfo = registryInfo;
             AzureCredentials = azureCredentials;
@@ -112,6 +112,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         public string RuntimeVersion { get; set; }
         /// <summary> List of environment variables to be passed to the build. </summary>
         [WirePath("buildEnvironmentVariables")]
-        public IList<EnvironmentVariable> BuildEnvironmentVariables { get; }
+        public IList<ContainerAppSimpleEnvironmentVariable> BuildEnvironmentVariables { get; }
     }
 }

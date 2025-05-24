@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="service"> Container App to be a dev Container App Service. </param>
         /// <param name="identitySettings"> Optional settings for Managed Identities that are assigned to the Container App. If a Managed Identity is not specified here, default settings will be used. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppConfiguration(IList<ContainerAppWritableSecret> secrets, ContainerAppActiveRevisionsMode? activeRevisionsMode, string targetLabel, ContainerAppIngressConfiguration ingress, IList<ContainerAppRegistryCredentials> registries, ContainerAppDaprConfiguration dapr, Runtime runtime, int? maxInactiveRevisions, int? revisionTransitionThreshold, Service service, IList<ContainerAppIdentitySettings> identitySettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppConfiguration(IList<ContainerAppWritableSecret> secrets, ContainerAppActiveRevisionsMode? activeRevisionsMode, string targetLabel, ContainerAppIngressConfiguration ingress, IList<ContainerAppRegistryCredentials> registries, ContainerAppDaprConfiguration dapr, ContainerAppRuntime runtime, int? maxInactiveRevisions, int? revisionTransitionThreshold, Service service, IList<ContainerAppIdentitySettings> identitySettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Secrets = secrets;
             ActiveRevisionsMode = activeRevisionsMode;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public ContainerAppDaprConfiguration Dapr { get; set; }
         /// <summary> App runtime configuration for the Container App. </summary>
         [WirePath("runtime")]
-        public Runtime Runtime { get; set; }
+        public ContainerAppRuntime Runtime { get; set; }
         /// <summary> Optional. Max inactive revisions a Container App can have. </summary>
         [WirePath("maxInactiveRevisions")]
         public int? MaxInactiveRevisions { get; set; }

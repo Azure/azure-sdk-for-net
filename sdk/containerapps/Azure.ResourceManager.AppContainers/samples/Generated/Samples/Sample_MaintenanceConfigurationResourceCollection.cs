@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
             string configName = "default";
             MaintenanceConfigurationResourceData data = new MaintenanceConfigurationResourceData
             {
-                ScheduledEntries = { new ScheduledEntry(WeekDay.Sunday, 12, 9) },
+                ScheduledEntries = { new ScheduledEntry(ContainerAppWeekDay.Sunday, 12, 9) },
             };
             ArmOperation<MaintenanceConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configName, data);
             MaintenanceConfigurationResource result = lro.Value;

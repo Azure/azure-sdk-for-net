@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppContainers
             ResourceType type = default;
             SystemData systemData = default;
             ContainerAppJobProvisioningState? provisioningState = default;
-            JobRunningState? runningState = default;
+            ContainerAppJobRunningState? runningState = default;
             string environmentId = default;
             string workloadProfileName = default;
             ContainerAppJobConfiguration configuration = default;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            runningState = new JobRunningState(property0.Value.GetString());
+                            runningState = new ContainerAppJobRunningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("environmentId"u8))

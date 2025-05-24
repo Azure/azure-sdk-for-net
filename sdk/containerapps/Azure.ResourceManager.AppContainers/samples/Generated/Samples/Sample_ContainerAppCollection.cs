@@ -173,12 +173,12 @@ ExposedPort = 3456,
                         LogLevel = ContainerAppDaprLogLevel.Debug,
                         IsApiLoggingEnabled = true,
                     },
-                    Runtime = new Runtime
+                    Runtime = new ContainerAppRuntime
                     {
-                        Java = new RuntimeJava
+                        Java = new ContainerAppRuntimeJava
                         {
                             EnableMetrics = true,
-                            JavaAgent = new RuntimeJavaAgent
+                            JavaAgent = new ContainerAppRuntimeJavaAgent
                             {
                                 IsEnabled = true,
                                 LoggingLoggerSettings = { new LoggerSetting("org.springframework.boot", Level.Debug) },
@@ -347,12 +347,12 @@ ExposedPort = 3456,
                         },
                         MaxConcurrency = 10,
                     },
-                    Runtime = new Runtime
+                    Runtime = new ContainerAppRuntime
                     {
-                        Java = new RuntimeJava
+                        Java = new ContainerAppRuntimeJava
                         {
                             EnableMetrics = true,
-                            JavaAgent = new RuntimeJavaAgent
+                            JavaAgent = new ContainerAppRuntimeJavaAgent
                             {
                                 IsEnabled = true,
                                 LoggingLoggerSettings = { new LoggerSetting("org.springframework.boot", Level.Debug) },

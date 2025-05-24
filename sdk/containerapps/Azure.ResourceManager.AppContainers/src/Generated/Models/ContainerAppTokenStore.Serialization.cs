@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             bool? enabled = default;
             double? tokenRefreshExtensionHours = default;
-            BlobStorageTokenStore azureBlobStorage = default;
+            ContainerAppBlobStorageTokenStore azureBlobStorage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    azureBlobStorage = BlobStorageTokenStore.DeserializeBlobStorageTokenStore(property.Value, options);
+                    azureBlobStorage = ContainerAppBlobStorageTokenStore.DeserializeContainerAppBlobStorageTokenStore(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

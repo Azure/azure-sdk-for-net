@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             ContainerAppIngressConfiguration ingress = default;
             IList<ContainerAppRegistryCredentials> registries = default;
             ContainerAppDaprConfiguration dapr = default;
-            Runtime runtime = default;
+            ContainerAppRuntime runtime = default;
             int? maxInactiveRevisions = default;
             int? revisionTransitionThreshold = default;
             Service service = default;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    runtime = Runtime.DeserializeRuntime(property.Value, options);
+                    runtime = ContainerAppRuntime.DeserializeContainerAppRuntime(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("maxInactiveRevisions"u8))

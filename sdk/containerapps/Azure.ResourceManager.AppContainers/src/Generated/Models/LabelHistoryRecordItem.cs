@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="stop"> Timestamp describing when the label was removed from the revision. Only meaningful when the label is currently applied to the revision. </param>
         /// <param name="status"> Status of the label history record. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LabelHistoryRecordItem(string revision, DateTimeOffset? start, DateTimeOffset? stop, Status? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LabelHistoryRecordItem(string revision, DateTimeOffset? start, DateTimeOffset? stop, LabelHistoryRecordItemStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Revision = revision;
             Start = start;
@@ -76,6 +76,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         public DateTimeOffset? Stop { get; }
         /// <summary> Status of the label history record. </summary>
         [WirePath("status")]
-        public Status? Status { get; }
+        public LabelHistoryRecordItemStatus? Status { get; }
     }
 }

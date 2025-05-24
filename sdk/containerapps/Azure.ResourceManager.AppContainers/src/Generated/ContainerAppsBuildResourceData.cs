@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="configuration"> Configuration of the build. </param>
         /// <param name="logStreamEndpoint"> Endpoint from which the build logs can be streamed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppsBuildResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BuildProvisioningState? provisioningState, BuildStatus? buildStatus, ContainerRegistryWithCustomImage destinationContainerRegistry, ContainerAppsBuildConfiguration configuration, string logStreamEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ContainerAppsBuildResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerAppBuildProvisioningState? provisioningState, ContainerAppBuildStatus? buildStatus, ContainerRegistryWithCustomImage destinationContainerRegistry, ContainerAppsBuildConfiguration configuration, string logStreamEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             BuildStatus = buildStatus;
@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Build provisioning state. </summary>
         [WirePath("properties.provisioningState")]
-        public BuildProvisioningState? ProvisioningState { get; }
+        public ContainerAppBuildProvisioningState? ProvisioningState { get; }
         /// <summary> Status of the build once it has been provisioned. </summary>
         [WirePath("properties.buildStatus")]
-        public BuildStatus? BuildStatus { get; }
+        public ContainerAppBuildStatus? BuildStatus { get; }
         /// <summary> Container registry that the final image will be uploaded to. </summary>
         [WirePath("properties.destinationContainerRegistry")]
         public ContainerRegistryWithCustomImage DestinationContainerRegistry { get; }

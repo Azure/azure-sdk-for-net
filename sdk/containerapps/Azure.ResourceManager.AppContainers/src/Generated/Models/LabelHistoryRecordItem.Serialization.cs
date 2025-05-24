@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             string revision = default;
             DateTimeOffset? start = default;
             DateTimeOffset? stop = default;
-            Status? status = default;
+            LabelHistoryRecordItemStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    status = new Status(property.Value.GetString());
+                    status = new LabelHistoryRecordItemStatus(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

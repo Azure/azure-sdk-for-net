@@ -144,12 +144,12 @@ Description = "Allowing all IP's within the subnet below to access containerapp"
                         },
                         MaxConcurrency = 10,
                     },
-                    Runtime = new Runtime
+                    Runtime = new ContainerAppRuntime
                     {
-                        Java = new RuntimeJava
+                        Java = new ContainerAppRuntimeJava
                         {
                             EnableMetrics = true,
-                            JavaAgent = new RuntimeJavaAgent
+                            JavaAgent = new ContainerAppRuntimeJavaAgent
                             {
                                 IsEnabled = true,
                                 LoggingLoggerSettings = { new LoggerSetting("org.springframework.boot", Level.Debug) },

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
                 {
                     Password = "private key password",
                     Value = Encoding.UTF8.GetBytes("Y2VydA=="),
-                    CertificateType = CertificateType.ImagePullTrustedCA,
+                    CertificateType = ContainerAppCertificateType.ImagePullTrustedCA,
                 },
             };
             ArmOperation<ContainerAppManagedEnvironmentCertificateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, certificateName, data);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
                         Identity = "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/test-rg/providers/microsoft.managedidentity/userassignedidentities/test-user-mi",
                         KeyVaultUri = new Uri("https://xxxxxxxx.vault.azure.net/certificates/certName"),
                     },
-                    CertificateType = CertificateType.ServerSSLCertificate,
+                    CertificateType = ContainerAppCertificateType.ServerSSLCertificate,
                 },
             };
             ArmOperation<ContainerAppManagedEnvironmentCertificateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, certificateName, data);

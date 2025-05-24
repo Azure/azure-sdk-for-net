@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BuildToken>> GetBuildAuthTokenAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppBuildToken>> GetBuildAuthTokenAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _buildAuthTokenClientDiagnostics.CreateScope("BuildResource.GetBuildAuthToken");
             scope.Start();
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BuildToken> GetBuildAuthToken(CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppBuildToken> GetBuildAuthToken(CancellationToken cancellationToken = default)
         {
             using var scope = _buildAuthTokenClientDiagnostics.CreateScope("BuildResource.GetBuildAuthToken");
             scope.Start();

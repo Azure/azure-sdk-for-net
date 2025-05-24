@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// </param>
         /// <param name="azureBlobStorage"> The configuration settings of the storage of the tokens if blob storage is used. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppTokenStore(bool? isEnabled, double? tokenRefreshExtensionHours, BlobStorageTokenStore azureBlobStorage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppTokenStore(bool? isEnabled, double? tokenRefreshExtensionHours, ContainerAppBlobStorageTokenStore azureBlobStorage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             TokenRefreshExtensionHours = tokenRefreshExtensionHours;
@@ -83,6 +83,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         public double? TokenRefreshExtensionHours { get; set; }
         /// <summary> The configuration settings of the storage of the tokens if blob storage is used. </summary>
         [WirePath("azureBlobStorage")]
-        public BlobStorageTokenStore AzureBlobStorage { get; set; }
+        public ContainerAppBlobStorageTokenStore AzureBlobStorage { get; set; }
     }
 }

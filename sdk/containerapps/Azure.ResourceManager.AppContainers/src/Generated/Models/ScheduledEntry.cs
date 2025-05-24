@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="weekDay"> Day of the week when a managed environment can be patched. </param>
         /// <param name="startHourUtc"> Start hour after which managed environment maintenance can start from 0 to 23 hour. </param>
         /// <param name="durationHours"> Length of maintenance window range from 8 to 24 hours. </param>
-        public ScheduledEntry(WeekDay weekDay, int startHourUtc, int durationHours)
+        public ScheduledEntry(ContainerAppWeekDay weekDay, int startHourUtc, int durationHours)
         {
             WeekDay = weekDay;
             StartHourUtc = startHourUtc;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="startHourUtc"> Start hour after which managed environment maintenance can start from 0 to 23 hour. </param>
         /// <param name="durationHours"> Length of maintenance window range from 8 to 24 hours. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledEntry(WeekDay weekDay, int startHourUtc, int durationHours, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScheduledEntry(ContainerAppWeekDay weekDay, int startHourUtc, int durationHours, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WeekDay = weekDay;
             StartHourUtc = startHourUtc;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Day of the week when a managed environment can be patched. </summary>
         [WirePath("weekDay")]
-        public WeekDay WeekDay { get; set; }
+        public ContainerAppWeekDay WeekDay { get; set; }
         /// <summary> Start hour after which managed environment maintenance can start from 0 to 23 hour. </summary>
         [WirePath("startHourUtc")]
         public int StartHourUtc { get; set; }

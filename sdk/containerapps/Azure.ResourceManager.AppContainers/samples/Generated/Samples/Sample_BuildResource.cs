@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.AppContainers.Samples
                 {
                     Image = "test.azurecr.io/repo:tag",
                 },
-                Configuration = new BuildConfiguration
+                Configuration = new ContainerAppBuildConfiguration
                 {
                     BaseOS = "DebianBullseye",
                     Platform = "dotnetcore",
                     PlatformVersion = "7.0",
-                    EnvironmentVariables = { new EnvironmentVariable("foo1", "bar1"), new EnvironmentVariable("foo2", "bar2") },
+                    EnvironmentVariables = { new ContainerAppSimpleEnvironmentVariable("foo1", "bar1"), new ContainerAppSimpleEnvironmentVariable("foo2", "bar2") },
                     PreBuildSteps = {new PreBuildStep
 {
 Description = "First pre build step.",
@@ -194,7 +194,7 @@ Headers = {"foo"},
             BuildResource buildResource = client.GetBuildResource(buildResourceId);
 
             // invoke the operation
-            BuildToken result = await buildResource.GetBuildAuthTokenAsync();
+            ContainerAppBuildToken result = await buildResource.GetBuildAuthTokenAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
