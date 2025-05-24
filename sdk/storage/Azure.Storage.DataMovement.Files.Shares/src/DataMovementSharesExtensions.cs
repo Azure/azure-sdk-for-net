@@ -59,9 +59,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
             StorageResourceItemProperties sourceProperties)
         {
             bool setPermissions = options?.FilePermissions ?? false;
-            ShareProtocols protocol = options?.ShareProtocol ?? ShareProtocols.Smb;
+            ShareProtocol protocol = options?.ShareProtocol ?? ShareProtocol.Smb;
 
-            if (protocol == ShareProtocols.Smb && setPermissions)
+            if (protocol == ShareProtocol.Smb && setPermissions)
             {
                 return sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FilePermissions, out object permission) == true
                     ? (string)permission
@@ -76,9 +76,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             // Only set permissions if Copy transfer and FilePermissions is on.
             bool setPermissions = options?.FilePermissions ?? false;
-            ShareProtocols protocol = options?.ShareProtocol ?? ShareProtocols.Smb;
+            ShareProtocol protocol = options?.ShareProtocol ?? ShareProtocol.Smb;
 
-            if (protocol == ShareProtocols.Smb && setPermissions)
+            if (protocol == ShareProtocol.Smb && setPermissions)
             {
                 return sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FilePermissions, out object permission) == true
                         ? (string)permission
@@ -126,7 +126,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 FileAttributes = options?.ShareProtocol switch
                 {
-                    ShareProtocols.Nfs => default,
+                    ShareProtocol.Nfs => default,
                     _ => GetPropertyValue<NtfsFileAttributes>(
                         options?._isFileAttributesSet ?? false,
                         options?.FileAttributes,
@@ -135,7 +135,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 },
                 FilePermissionKey = options?.ShareProtocol switch
                 {
-                    ShareProtocols.Nfs => default,
+                    ShareProtocol.Nfs => default,
                     _ => permissionKeyValue
                 },
                 FileCreatedOn = GetPropertyValue<DateTimeOffset>(
@@ -150,7 +150,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     DataMovementConstants.ResourceProperties.LastWrittenOn),
                 FileChangedOn = options?.ShareProtocol switch
                 {
-                    ShareProtocols.Nfs => default,
+                    ShareProtocol.Nfs => default,
                     _ => GetPropertyValue<DateTimeOffset>(
                         options?._isFileChangedOnSet ?? false,
                         options?.FileChangedOn,
@@ -176,7 +176,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 FileAttributes = options?.ShareProtocol switch
                 {
-                    ShareProtocols.Nfs => default,
+                    ShareProtocol.Nfs => default,
                     _ => GetPropertyValue<NtfsFileAttributes>(
                         options?._isFileAttributesSet ?? false,
                         options?.FileAttributes,
@@ -185,7 +185,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 },
                 FilePermissionKey = options?.ShareProtocol switch
                 {
-                    ShareProtocols.Nfs => default,
+                    ShareProtocol.Nfs => default,
                     _ => permissionKeyValue
                 },
                 FileCreatedOn = GetPropertyValue<DateTimeOffset>(
@@ -200,7 +200,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     DataMovementConstants.ResourceProperties.LastWrittenOn),
                 FileChangedOn = options?.ShareProtocol switch
                 {
-                    ShareProtocols.Nfs => default,
+                    ShareProtocol.Nfs => default,
                     _ => GetPropertyValue<DateTimeOffset>(
                         options?._isFileChangedOnSet ?? false,
                         options?.FileChangedOn,
@@ -232,9 +232,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             // Only set NFS permissions if Copy transfer and FilePermissions is on.
             bool setPermissions = options?.FilePermissions ?? false;
-            ShareProtocols protocol = options?.ShareProtocol ?? ShareProtocols.Smb;
+            ShareProtocol protocol = options?.ShareProtocol ?? ShareProtocol.Smb;
 
-            if (protocol == ShareProtocols.Nfs)
+            if (protocol == ShareProtocol.Nfs)
             {
                 NfsFileMode FileMode = default;
                 string Owner = default;
@@ -274,9 +274,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
             // Only set NFS permissions if Copy transfer and FilePermissions is on.
             bool setPermissions = options?.FilePermissions ?? false;
-            ShareProtocols protocol = options?.ShareProtocol ?? ShareProtocols.Smb;
+            ShareProtocol protocol = options?.ShareProtocol ?? ShareProtocol.Smb;
 
-            if (protocol == ShareProtocols.Nfs && setPermissions)
+            if (protocol == ShareProtocol.Nfs && setPermissions)
             {
                 FileMode = sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileMode, out object fileMode) == true
                         ? (NfsFileMode)fileMode
@@ -728,8 +728,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 try
                 {
                     ShareProperties properties = await parentShareClient.GetPropertiesAsync(cancellationToken).ConfigureAwait(false);
-                    ShareProtocols expectedProtocol = options?.ShareProtocol ?? ShareProtocols.Smb;
-                    ShareProtocols actualProtocol = properties.Protocols ?? ShareProtocols.Smb;
+                    ShareProtocol expectedProtocol = options?.ShareProtocol ?? ShareProtocol.Smb;
+                    ShareProtocols effectiveProtocol = properties.Protocols ?? ShareProtocols.Smb;
+                    ShareProtocol actualProtocol = effectiveProtocol == ShareProtocols.Smb ? ShareProtocol.Smb : ShareProtocol.Nfs;
 
                     if (actualProtocol != expectedProtocol)
                     {
