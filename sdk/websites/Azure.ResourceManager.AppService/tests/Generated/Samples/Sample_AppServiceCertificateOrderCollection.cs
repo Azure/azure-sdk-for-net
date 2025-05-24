@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateCertificateOrder()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2024-04-01/examples/CreateAppServiceCertificateOrder.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2024-11-01/examples/CreateAppServiceCertificateOrder.json
             // this example is just showing the usage of "AppServiceCertificateOrders_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ KeyVaultSecretName = "SampleSecretName2",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAppServiceCertificateOrder()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2024-04-01/examples/GetAppServiceCertificateOrder.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2024-11-01/examples/GetAppServiceCertificateOrder.json
             // this example is just showing the usage of "AppServiceCertificateOrders_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -109,7 +109,7 @@ KeyVaultSecretName = "SampleSecretName2",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAppServiceCertificateOrdersByResourceGroup()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2024-04-01/examples/ListAppServiceCertificateOrdersByResourceGroup.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2024-11-01/examples/ListAppServiceCertificateOrdersByResourceGroup.json
             // this example is just showing the usage of "AppServiceCertificateOrders_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -144,7 +144,7 @@ KeyVaultSecretName = "SampleSecretName2",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAppServiceCertificateOrder()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2024-04-01/examples/GetAppServiceCertificateOrder.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2024-11-01/examples/GetAppServiceCertificateOrder.json
             // this example is just showing the usage of "AppServiceCertificateOrders_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -173,7 +173,7 @@ KeyVaultSecretName = "SampleSecretName2",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAppServiceCertificateOrder()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2024-04-01/examples/GetAppServiceCertificateOrder.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2024-11-01/examples/GetAppServiceCertificateOrder.json
             // this example is just showing the usage of "AppServiceCertificateOrders_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

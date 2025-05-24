@@ -127,7 +127,7 @@ namespace Azure.Generator.Management
 
             var body = model.FullConstructor.BodyStatements;
             var statement = rawDataField.Assign(model.FullConstructor.Signature.Parameters.Single(f => f.Name.Equals(RawDataParameterName))).Terminate();
-            MethodBodyStatement[] updatedBody = [statement, .. body!.Flatten()];
+            MethodBodyStatement[] updatedBody = [statement, .. body!];
             model.FullConstructor.Update(bodyStatements: updatedBody);
         }
 
