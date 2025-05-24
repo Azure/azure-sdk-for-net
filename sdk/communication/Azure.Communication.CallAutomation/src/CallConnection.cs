@@ -555,24 +555,17 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                Argument.AssertNotNull(options, nameof(options));
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
 
-                MoveParticipantsRequestInternal request = new MoveParticipantsRequestInternal(
-                    options.TargetParticipants.Select(p => CommunicationIdentifierSerializer.Serialize(p)),
-                    options.FromCall);
-
-                request.OperationContext = options.OperationContext ?? Guid.NewGuid().ToString();
-                if (options.OperationCallbackUri != null)
-                {
-                    request.OperationCallbackUri = options.OperationCallbackUri.AbsoluteUri;
-                }
+                MoveParticipantsRequestInternal request = CreateMoveParticipantsRequest(options);
 
                 var response = await RestClient.MoveParticipantsAsync(
                     callConnectionId: CallConnectionId,
                     request,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
-                var result = new MoveParticipantsResult(response.Value);
+                var result = new MoveParticipantsResult(response);
 
                 if (EventProcessor != null)
                 {
@@ -602,24 +595,17 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                Argument.AssertNotNull(options, nameof(options));
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
 
-                MoveParticipantsRequestInternal request = new MoveParticipantsRequestInternal(
-                    options.TargetParticipants.Select(p => CommunicationIdentifierSerializer.Serialize(p)),
-                    options.FromCall);
-
-                request.OperationContext = options.OperationContext ?? Guid.NewGuid().ToString();
-                if (options.OperationCallbackUri != null)
-                {
-                    request.OperationCallbackUri = options.OperationCallbackUri.AbsoluteUri;
-                }
+                MoveParticipantsRequestInternal request = CreateMoveParticipantsRequest(options);
 
                 var response = RestClient.MoveParticipants(
                     callConnectionId: CallConnectionId,
                     request,
                     cancellationToken: cancellationToken);
 
-                var result = new MoveParticipantsResult(response.Value);
+                var result = new MoveParticipantsResult(response);
 
                 if (EventProcessor != null)
                 {
@@ -633,6 +619,21 @@ namespace Azure.Communication.CallAutomation
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        private static MoveParticipantsRequestInternal CreateMoveParticipantsRequest(MoveParticipantsOptions options)
+        {
+            // validate TargetParticipants is not null
+            Argument.AssertNotNull(options.TargetParticipants, nameof(options.TargetParticipants));
+            Argument.AssertNotNull(options.FromCall, nameof(options.FromCall));
+            MoveParticipantsRequestInternal request = new MoveParticipantsRequestInternal(
+                options.TargetParticipants.Select(p => CommunicationIdentifierSerializer.Serialize(p)),
+                options.FromCall)
+            {
+                OperationContext = options.OperationContext ?? Guid.NewGuid().ToString(),
+                OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri
+            };
+            return request;
         }
 
         /// <summary> Remove participants from the call. </summary>
