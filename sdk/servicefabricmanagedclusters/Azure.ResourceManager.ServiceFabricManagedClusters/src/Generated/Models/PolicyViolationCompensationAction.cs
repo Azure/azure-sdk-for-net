@@ -10,12 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary>
-    /// The compensating action to perform when a Monitored upgrade encounters monitoring policy or health policy violations.
-    /// Rollback specifies that the upgrade will start rolling back automatically.
-    /// Manual indicates that the upgrade will switch to UnmonitoredManual upgrade mode.
-    ///
-    /// </summary>
+    /// <summary> The compensating action to perform when a Monitored upgrade encounters monitoring policy or health policy violations. Invalid indicates the failure action is invalid. Rollback specifies that the upgrade will start rolling back automatically. Manual indicates that the upgrade will switch to UnmonitoredManual upgrade mode. </summary>
     public readonly partial struct PolicyViolationCompensationAction : IEquatable<PolicyViolationCompensationAction>
     {
         private readonly string _value;
@@ -30,9 +25,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         private const string RollbackValue = "Rollback";
         private const string ManualValue = "Manual";
 
-        /// <summary> The upgrade will start rolling back automatically. The value is 0. </summary>
+        /// <summary> Indicates that a rollback of the upgrade will be performed by Service Fabric if the upgrade fails. </summary>
         public static PolicyViolationCompensationAction Rollback { get; } = new PolicyViolationCompensationAction(RollbackValue);
-        /// <summary> The upgrade will switch to UnmonitoredManual upgrade mode. The value is 1. </summary>
+        /// <summary> Indicates that a manual repair will need to be performed by the administrator if the upgrade fails. Service Fabric will not proceed to the next upgrade domain automatically. </summary>
         public static PolicyViolationCompensationAction Manual { get; } = new PolicyViolationCompensationAction(ManualValue);
         /// <summary> Determines if two <see cref="PolicyViolationCompensationAction"/> values are the same. </summary>
         public static bool operator ==(PolicyViolationCompensationAction left, PolicyViolationCompensationAction right) => left.Equals(right);

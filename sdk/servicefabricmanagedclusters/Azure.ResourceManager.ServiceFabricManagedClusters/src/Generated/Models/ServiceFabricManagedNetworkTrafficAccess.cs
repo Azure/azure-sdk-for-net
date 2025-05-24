@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         private const string AllowValue = "allow";
         private const string DenyValue = "deny";
 
-        /// <summary> allow. </summary>
+        /// <summary> The network traffic is allowed. </summary>
         public static ServiceFabricManagedNetworkTrafficAccess Allow { get; } = new ServiceFabricManagedNetworkTrafficAccess(AllowValue);
-        /// <summary> deny. </summary>
+        /// <summary> The network traffic is denied. </summary>
         public static ServiceFabricManagedNetworkTrafficAccess Deny { get; } = new ServiceFabricManagedNetworkTrafficAccess(DenyValue);
         /// <summary> Determines if two <see cref="ServiceFabricManagedNetworkTrafficAccess"/> values are the same. </summary>
         public static bool operator ==(ServiceFabricManagedNetworkTrafficAccess left, ServiceFabricManagedNetworkTrafficAccess right) => left.Equals(right);
