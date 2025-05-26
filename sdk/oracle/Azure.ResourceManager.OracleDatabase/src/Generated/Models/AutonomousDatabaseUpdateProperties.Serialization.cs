@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("isAutoScalingForStorageEnabled"u8);
                 writer.WriteBooleanValue(IsAutoScalingForStorageEnabled.Value);
             }
-            if (Optional.IsDefined(PeerDbId))
+            if (Optional.IsDefined(PeerDBId))
             {
                 writer.WritePropertyName("peerDbId"u8);
-                writer.WriteStringValue(PeerDbId);
+                writer.WriteStringValue(PeerDBId);
             }
             if (Optional.IsDefined(IsLocalDataGuardEnabled))
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType = default;
             float? computeCount = default;
             int? cpuCoreCount = default;
-            IList<CustomerContact> customerContacts = default;
+            IList<OracleCustomerContact> customerContacts = default;
             int? dataStorageSizeInTbs = default;
             int? dataStorageSizeInGbs = default;
             string displayName = default;
@@ -209,14 +209,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string peerDbId = default;
             bool? isLocalDataGuardEnabled = default;
             bool? isMtlsConnectionRequired = default;
-            LicenseModel? licenseModel = default;
+            OracleLicenseModel? licenseModel = default;
             ScheduledOperationsType scheduledOperations = default;
-            DatabaseEditionType? databaseEdition = default;
+            OracleDatabaseEditionType? databaseEdition = default;
             LongTermBackUpScheduleDetails longTermBackupSchedule = default;
             int? localAdgAutoFailoverMaxDataLossLimit = default;
-            OpenModeType? openMode = default;
-            PermissionLevelType? permissionLevel = default;
-            RoleType? role = default;
+            AutonomousDatabaseModeType? openMode = default;
+            AutonomousDatabasePermissionLevelType? permissionLevel = default;
+            DataGuardRoleType? role = default;
             int? backupRetentionPeriodInDays = default;
             IList<string> whitelistedIPs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -261,10 +261,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    List<CustomerContact> array = new List<CustomerContact>();
+                    List<OracleCustomerContact> array = new List<OracleCustomerContact>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomerContact.DeserializeCustomerContact(item, options));
+                        array.Add(OracleCustomerContact.DeserializeOracleCustomerContact(item, options));
                     }
                     customerContacts = array;
                     continue;
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    licenseModel = new LicenseModel(property.Value.GetString());
+                    licenseModel = new OracleLicenseModel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("scheduledOperations"u8))
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    databaseEdition = new DatabaseEditionType(property.Value.GetString());
+                    databaseEdition = new OracleDatabaseEditionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("longTermBackupSchedule"u8))
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    openMode = new OpenModeType(property.Value.GetString());
+                    openMode = new AutonomousDatabaseModeType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("permissionLevel"u8))
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    permissionLevel = new PermissionLevelType(property.Value.GetString());
+                    permissionLevel = new AutonomousDatabasePermissionLevelType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("role"u8))
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    role = new RoleType(property.Value.GetString());
+                    role = new DataGuardRoleType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("backupRetentionPeriodInDays"u8))
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 autonomousMaintenanceScheduleType,
                 computeCount,
                 cpuCoreCount,
-                customerContacts ?? new ChangeTrackingList<CustomerContact>(),
+                customerContacts ?? new ChangeTrackingList<OracleCustomerContact>(),
                 dataStorageSizeInTbs,
                 dataStorageSizeInGbs,
                 displayName,

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="flexComponentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="flexComponentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FlexComponentData>> GetAsync(string subscriptionId, AzureLocation location, string flexComponentName, CancellationToken cancellationToken = default)
+        public async Task<Response<OracleFlexComponentData>> GetAsync(string subscriptionId, AzureLocation location, string flexComponentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(flexComponentName, nameof(flexComponentName));
@@ -88,13 +88,13 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 case 200:
                     {
-                        FlexComponentData value = default;
+                        OracleFlexComponentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = FlexComponentData.DeserializeFlexComponentData(document.RootElement);
+                        value = OracleFlexComponentData.DeserializeOracleFlexComponentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FlexComponentData)null, message.Response);
+                    return Response.FromValue((OracleFlexComponentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="flexComponentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="flexComponentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FlexComponentData> Get(string subscriptionId, AzureLocation location, string flexComponentName, CancellationToken cancellationToken = default)
+        public Response<OracleFlexComponentData> Get(string subscriptionId, AzureLocation location, string flexComponentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(flexComponentName, nameof(flexComponentName));
@@ -118,13 +118,13 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 case 200:
                     {
-                        FlexComponentData value = default;
+                        OracleFlexComponentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = FlexComponentData.DeserializeFlexComponentData(document.RootElement);
+                        value = OracleFlexComponentData.DeserializeOracleFlexComponentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FlexComponentData)null, message.Response);
+                    return Response.FromValue((OracleFlexComponentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 isPaidEnabled,
                 serializedAdditionalRawData: null);
         }
-
+/*
         /// <summary> Initializes a new instance of <see cref="Models.CloudVmClusterDBNodeProperties"/>. </summary>
         /// <param name="ocid"> DbNode OCID. </param>
         /// <param name="additionalDetails"> Additional information about the planned maintenance. </param>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CloudVmClusterDBNodeProperties CloudVmClusterDBNodeProperties(ResourceIdentifier ocid = null, string additionalDetails = null, ResourceIdentifier backupIPId = null, ResourceIdentifier backupVnic2Id = null, ResourceIdentifier backupVnicId = null, int? cpuCoreCount = null, int? dbNodeStorageSizeInGbs = null, ResourceIdentifier dbServerId = null, ResourceIdentifier dbSystemId = null, string faultDomain = null, ResourceIdentifier hostIPId = null, string hostname = null, DBNodeProvisioningState? lifecycleState = null, string lifecycleDetails = null, DBNodeMaintenanceType? maintenanceType = null, int? memorySizeInGbs = null, int? softwareStorageSizeInGb = null, DateTimeOffset? timeCreated = null, DateTimeOffset? timeMaintenanceWindowEnd = null, DateTimeOffset? timeMaintenanceWindowStart = null, ResourceIdentifier vnic2Id = null, ResourceIdentifier vnicId = null, OracleDatabaseResourceProvisioningState? provisioningState = null)
             => CloudVmClusterDBNodeProperties(ocid, additionalDetails, backupIPId, backupVnic2Id, backupVnicId, cpuCoreCount, dbNodeStorageSizeInGbs, dbServerId, dbSystemId, faultDomain, hostIPId, hostname, (DBNodeProvisioningState)lifecycleState, lifecycleDetails, maintenanceType, memorySizeInGbs, softwareStorageSizeInGb, (DateTimeOffset)timeCreated, timeMaintenanceWindowEnd, timeMaintenanceWindowStart, vnic2Id, vnicId, provisioningState);
-
+*/
         /// <summary> Initializes a new instance of <see cref="Models.OracleDBSystemShapeProperties"/>. </summary>
         /// <param name="shapeFamily"> The family of the shape used for the DB system. </param>
         /// <param name="availableCoreCount"> The maximum number of CPU cores that can be enabled on the DB system for this shape. </param>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 default,
                 null);
         }
-
+/*
         /// <summary> Initializes a new instance of <see cref="Models.OracleDnsPrivateViewProperties"/>. </summary>
         /// <param name="ocid"> The OCID of the view. </param>
         /// <param name="displayName"> The display name of the view resource. </param>
@@ -138,6 +138,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <returns> A new <see cref="Models.OracleDnsPrivateZoneProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static OracleDnsPrivateZoneProperties OracleDnsPrivateZoneProperties(ResourceIdentifier ocid = null, bool isProtected = default, DnsPrivateZonesLifecycleState? lifecycleState = null, string self = null, int serial = default, string version = null, ResourceIdentifier viewId = null, OracleDnsPrivateZoneType zoneType = default, DateTimeOffset createdOn = default, OracleDatabaseResourceProvisioningState? provisioningState = null)
-         => OracleDnsPrivateZoneProperties(ocid, isProtected, (DnsPrivateZonesLifecycleState)lifecycleState, self, serial, version, viewId, zoneType, createdOn, provisioningState);
+         => OracleDnsPrivateZoneProperties(ocid, isProtected, (DnsPrivateZonesLifecycleState)lifecycleState, self, serial, version, viewId, zoneType, createdOn, provisioningState);*/
     }
 }

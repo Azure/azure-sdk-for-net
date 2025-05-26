@@ -309,11 +309,11 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
             return GetExadbVmClusters().Get(exadbVmClusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ExascaleDbStorageVaultResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ExascaleDbStorageVaultResources and their operations over a ExascaleDbStorageVaultResource. </returns>
-        public virtual ExascaleDbStorageVaultCollection GetExascaleDbStorageVaults()
+        /// <summary> Gets a collection of ExascaleDBStorageVaultResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ExascaleDBStorageVaultResources and their operations over a ExascaleDBStorageVaultResource. </returns>
+        public virtual ExascaleDBStorageVaultCollection GetExascaleDBStorageVaults()
         {
-            return GetCachedClient(client => new ExascaleDbStorageVaultCollection(client, Id));
+            return GetCachedClient(client => new ExascaleDBStorageVaultCollection(client, Id));
         }
 
         /// <summary>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ExascaleDbStorageVaultResource"/></description>
+        /// <description><see cref="ExascaleDBStorageVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -342,9 +342,9 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="exascaleDbStorageVaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="exascaleDbStorageVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ExascaleDbStorageVaultResource>> GetExascaleDbStorageVaultAsync(string exascaleDbStorageVaultName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExascaleDBStorageVaultResource>> GetExascaleDBStorageVaultAsync(string exascaleDbStorageVaultName, CancellationToken cancellationToken = default)
         {
-            return await GetExascaleDbStorageVaults().GetAsync(exascaleDbStorageVaultName, cancellationToken).ConfigureAwait(false);
+            return await GetExascaleDBStorageVaults().GetAsync(exascaleDbStorageVaultName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ExascaleDbStorageVaultResource"/></description>
+        /// <description><see cref="ExascaleDBStorageVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,9 +373,9 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="exascaleDbStorageVaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="exascaleDbStorageVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ExascaleDbStorageVaultResource> GetExascaleDbStorageVault(string exascaleDbStorageVaultName, CancellationToken cancellationToken = default)
+        public virtual Response<ExascaleDBStorageVaultResource> GetExascaleDBStorageVault(string exascaleDbStorageVaultName, CancellationToken cancellationToken = default)
         {
-            return GetExascaleDbStorageVaults().Get(exascaleDbStorageVaultName, cancellationToken);
+            return GetExascaleDBStorageVaults().Get(exascaleDbStorageVaultName, cancellationToken);
         }
     }
 }

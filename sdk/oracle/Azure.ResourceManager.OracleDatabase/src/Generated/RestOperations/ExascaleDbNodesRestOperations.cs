@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="exadbVmClusterName"/> or <paramref name="exascaleDbNodeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="exadbVmClusterName"/> or <paramref name="exascaleDbNodeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExascaleDbNodeData>> GetAsync(string subscriptionId, string resourceGroupName, string exadbVmClusterName, string exascaleDbNodeName, CancellationToken cancellationToken = default)
+        public async Task<Response<ExascaleDBNodeData>> GetAsync(string subscriptionId, string resourceGroupName, string exadbVmClusterName, string exascaleDbNodeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 case 200:
                     {
-                        ExascaleDbNodeData value = default;
+                        ExascaleDBNodeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ExascaleDbNodeData.DeserializeExascaleDbNodeData(document.RootElement);
+                        value = ExascaleDBNodeData.DeserializeExascaleDBNodeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ExascaleDbNodeData)null, message.Response);
+                    return Response.FromValue((ExascaleDBNodeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="exadbVmClusterName"/> or <paramref name="exascaleDbNodeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="exadbVmClusterName"/> or <paramref name="exascaleDbNodeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExascaleDbNodeData> Get(string subscriptionId, string resourceGroupName, string exadbVmClusterName, string exascaleDbNodeName, CancellationToken cancellationToken = default)
+        public Response<ExascaleDBNodeData> Get(string subscriptionId, string resourceGroupName, string exadbVmClusterName, string exascaleDbNodeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -128,13 +128,13 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 case 200:
                     {
-                        ExascaleDbNodeData value = default;
+                        ExascaleDBNodeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ExascaleDbNodeData.DeserializeExascaleDbNodeData(document.RootElement);
+                        value = ExascaleDBNodeData.DeserializeExascaleDBNodeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ExascaleDbNodeData)null, message.Response);
+                    return Response.FromValue((ExascaleDBNodeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

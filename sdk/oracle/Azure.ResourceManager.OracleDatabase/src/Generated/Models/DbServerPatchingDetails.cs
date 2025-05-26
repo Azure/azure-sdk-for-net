@@ -53,15 +53,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Initializes a new instance of <see cref="DbServerPatchingDetails"/>. </summary>
         /// <param name="estimatedPatchDuration"> Estimated Patch Duration. </param>
         /// <param name="patchingStatus"> Patching Status. </param>
-        /// <param name="timePatchingEnded"> Time Patching Ended. </param>
-        /// <param name="timePatchingStarted"> Time Patching Started. </param>
+        /// <param name="patchingEndedOn"> Time Patching Ended. </param>
+        /// <param name="patchingStartedOn"> Time Patching Started. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DbServerPatchingDetails(int? estimatedPatchDuration, DbServerPatchingStatus? patchingStatus, DateTimeOffset? timePatchingEnded, DateTimeOffset? timePatchingStarted, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DbServerPatchingDetails(int? estimatedPatchDuration, DbServerPatchingStatus? patchingStatus, DateTimeOffset? patchingEndedOn, DateTimeOffset? patchingStartedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EstimatedPatchDuration = estimatedPatchDuration;
             PatchingStatus = patchingStatus;
-            TimePatchingEnded = timePatchingEnded;
-            TimePatchingStarted = timePatchingStarted;
+            PatchingEndedOn = patchingEndedOn;
+            PatchingStartedOn = patchingStartedOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Patching Status. </summary>
         public DbServerPatchingStatus? PatchingStatus { get; }
         /// <summary> Time Patching Ended. </summary>
-        public DateTimeOffset? TimePatchingEnded { get; }
+        public DateTimeOffset? PatchingEndedOn { get; }
         /// <summary> Time Patching Started. </summary>
-        public DateTimeOffset? TimePatchingStarted { get; }
+        public DateTimeOffset? PatchingStartedOn { get; }
     }
 }

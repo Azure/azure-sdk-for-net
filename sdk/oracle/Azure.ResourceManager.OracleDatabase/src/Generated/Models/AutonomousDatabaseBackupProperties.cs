@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="backupType"> The type of backup. </param>
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutonomousDatabaseBackupProperties(string autonomousDatabaseOcid, double? databaseSizeInTbs, string dbVersion, string displayName, string ocid, bool? isAutomatic, bool? isRestorable, string lifecycleDetails, AutonomousDatabaseBackupLifecycleState? lifecycleState, int? retentionPeriodInDays, double? sizeInTbs, DateTimeOffset? timeAvailableTil, string timeStarted, string timeEnded, AutonomousDatabaseBackupType? backupType, AzureResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutonomousDatabaseBackupProperties(string autonomousDatabaseOcid, double? databaseSizeInTbs, string dbVersion, string displayName, string ocid, bool? isAutomatic, bool? isRestorable, string lifecycleDetails, AutonomousDatabaseBackupLifecycleState? lifecycleState, int? retentionPeriodInDays, double? sizeInTbs, DateTimeOffset? timeAvailableTil, string timeStarted, string timeEnded, AutonomousDatabaseBackupType? backupType, OracleDatabaseProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AutonomousDatabaseOcid = autonomousDatabaseOcid;
             DatabaseSizeInTbs = databaseSizeInTbs;
-            DbVersion = dbVersion;
+            DBVersion = dbVersion;
             DisplayName = displayName;
             Ocid = ocid;
             IsAutomatic = isAutomatic;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The size of the database in terabytes at the time the backup was taken. </summary>
         public double? DatabaseSizeInTbs { get; }
         /// <summary> A valid Oracle Database version for Autonomous Database. </summary>
-        public string DbVersion { get; }
+        public string DBVersion { get; }
         /// <summary> The user-friendly name for the backup. The name does not have to be unique. </summary>
         public string DisplayName { get; set; }
         /// <summary> The OCID of the Autonomous Database backup. </summary>
@@ -120,6 +120,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The type of backup. </summary>
         public AutonomousDatabaseBackupType? BackupType { get; }
         /// <summary> Azure resource provisioning state. </summary>
-        public AzureResourceProvisioningState? ProvisioningState { get; }
+        public OracleDatabaseProvisioningState? ProvisioningState { get; }
     }
 }

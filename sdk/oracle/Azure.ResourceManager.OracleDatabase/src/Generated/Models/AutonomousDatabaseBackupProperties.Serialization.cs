@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("databaseSizeInTbs"u8);
                 writer.WriteNumberValue(DatabaseSizeInTbs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DbVersion))
+            if (options.Format != "W" && Optional.IsDefined(DBVersion))
             {
                 writer.WritePropertyName("dbVersion"u8);
-                writer.WriteStringValue(DbVersion);
+                writer.WriteStringValue(DBVersion);
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string timeStarted = default;
             string timeEnded = default;
             AutonomousDatabaseBackupType? backupType = default;
-            AzureResourceProvisioningState? provisioningState = default;
+            OracleDatabaseProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    provisioningState = new AzureResourceProvisioningState(property.Value.GetString());
+                    provisioningState = new OracleDatabaseProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

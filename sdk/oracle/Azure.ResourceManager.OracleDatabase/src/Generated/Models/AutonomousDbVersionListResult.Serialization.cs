@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            IReadOnlyList<AutonomousDbVersionData> value = default;
+            IReadOnlyList<AutonomousDBVersionData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<AutonomousDbVersionData> array = new List<AutonomousDbVersionData>();
+                    List<AutonomousDBVersionData> array = new List<AutonomousDBVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutonomousDbVersionData.DeserializeAutonomousDbVersionData(item, options));
+                        array.Add(AutonomousDBVersionData.DeserializeAutonomousDBVersionData(item, options));
                     }
                     value = array;
                     continue;

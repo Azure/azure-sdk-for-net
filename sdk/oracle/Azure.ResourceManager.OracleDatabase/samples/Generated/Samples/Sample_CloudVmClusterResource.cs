@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             CloudVmClusterResource cloudVmCluster = client.GetCloudVmClusterResource(cloudVmClusterResourceId);
 
             // invoke the operation
-            AddRemoveDbNode body = new AddRemoveDbNode(new string[] { "ocid1..aaaa", "ocid1..aaaaaa" });
-            ArmOperation<CloudVmClusterResource> lro = await cloudVmCluster.AddVmsAsync(WaitUntil.Completed, body);
+            CloudVmClusterDBNodeContent content = new CloudVmClusterDBNodeContent(new string[] { "ocid1..aaaa", "ocid1..aaaaaa" });
+            ArmOperation<CloudVmClusterResource> lro = await cloudVmCluster.AddVmsAsync(WaitUntil.Completed, content);
             CloudVmClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             CloudVmClusterResource cloudVmCluster = client.GetCloudVmClusterResource(cloudVmClusterResourceId);
 
             // invoke the operation
-            AddRemoveDbNode body = new AddRemoveDbNode(new string[] { "ocid1..aaaa" });
-            ArmOperation<CloudVmClusterResource> lro = await cloudVmCluster.RemoveVmsAsync(WaitUntil.Completed, body);
+            CloudVmClusterDBNodeContent content = new CloudVmClusterDBNodeContent(new string[] { "ocid1..aaaa" });
+            ArmOperation<CloudVmClusterResource> lro = await cloudVmCluster.RemoveVmsAsync(WaitUntil.Completed, content);
             CloudVmClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             CloudVmClusterResource cloudVmCluster = client.GetCloudVmClusterResource(cloudVmClusterResourceId);
 
             // invoke the operation and iterate over the result
-            PrivateIPAddressesFilter body = new PrivateIPAddressesFilter("ocid1..aaaaaa", "ocid1..aaaaa");
-            await foreach (PrivateIPAddressProperties item in cloudVmCluster.GetPrivateIPAddressesAsync(body))
+            PrivateIPAddressesContent content = new PrivateIPAddressesContent("ocid1..aaaaaa", "ocid1..aaaaa");
+            await foreach (PrivateIPAddressResult item in cloudVmCluster.GetPrivateIPAddressesAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

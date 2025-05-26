@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             Argument.AssertNotNull(displayName, nameof(displayName));
 
             DefinedFileSystemConfiguration = new ChangeTrackingList<DefinedFileSystemConfiguration>();
-            CustomerContacts = new ChangeTrackingList<CustomerContact>();
+            CustomerContacts = new ChangeTrackingList<OracleCustomerContact>();
             Shape = shape;
             DisplayName = displayName;
         }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="storageCount"> The number of storage servers for the cloud Exadata infrastructure. </param>
         /// <param name="totalStorageSizeInGbs"> The total storage allocated to the cloud Exadata infrastructure resource, in gigabytes (GB). </param>
         /// <param name="availableStorageSizeInGbs"> The available storage can be allocated to the cloud Exadata infrastructure resource, in gigabytes (GB). </param>
-        /// <param name="timeCreated"> The date and time the cloud Exadata infrastructure resource was created. </param>
+        /// <param name="createdOn"> The date and time the cloud Exadata infrastructure resource was created. </param>
         /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
         /// <param name="maintenanceWindow"> maintenanceWindow property. </param>
         /// <param name="estimatedPatchingTime"> The estimated total time required in minutes for all patching operations (database server, storage server, and network switch patching). </param>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="storageServerType"> The storage server model type of the cloud Exadata infrastructure resource. </param>
         /// <param name="computeModel"> The compute model of the Exadata Infrastructure. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudExadataInfrastructureProperties(IReadOnlyList<DefinedFileSystemConfiguration> definedFileSystemConfiguration, string ocid, int? computeCount, int? storageCount, int? totalStorageSizeInGbs, int? availableStorageSizeInGbs, string timeCreated, string lifecycleDetails, MaintenanceWindow maintenanceWindow, EstimatedPatchingTime estimatedPatchingTime, IList<CustomerContact> customerContacts, AzureResourceProvisioningState? provisioningState, CloudExadataInfrastructureLifecycleState? lifecycleState, string shape, Uri ociUri, int? cpuCount, int? maxCpuCount, int? memorySizeInGbs, int? maxMemoryInGbs, int? dbNodeStorageSizeInGbs, int? maxDbNodeStorageSizeInGbs, double? dataStorageSizeInTbs, double? maxDataStorageInTbs, string dbServerVersion, string storageServerVersion, int? activatedStorageCount, int? additionalStorageCount, string displayName, string lastMaintenanceRunId, string nextMaintenanceRunId, string monthlyDbServerVersion, string monthlyStorageServerVersion, string databaseServerType, string storageServerType, ComputeModel? computeModel, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudExadataInfrastructureProperties(IReadOnlyList<DefinedFileSystemConfiguration> definedFileSystemConfiguration, string ocid, int? computeCount, int? storageCount, int? totalStorageSizeInGbs, int? availableStorageSizeInGbs, DateTimeOffset? createdOn, string lifecycleDetails, MaintenanceWindow maintenanceWindow, EstimatedPatchingTime estimatedPatchingTime, IList<OracleCustomerContact> customerContacts, OracleDatabaseProvisioningState? provisioningState, CloudExadataInfrastructureLifecycleState? lifecycleState, string shape, Uri ociUri, int? cpuCount, int? maxCpuCount, int? memorySizeInGbs, int? maxMemoryInGbs, int? dbNodeStorageSizeInGbs, int? maxDbNodeStorageSizeInGbs, double? dataStorageSizeInTbs, double? maxDataStorageInTbs, string dbServerVersion, string storageServerVersion, int? activatedStorageCount, int? additionalStorageCount, string displayName, string lastMaintenanceRunId, string nextMaintenanceRunId, string monthlyDbServerVersion, string monthlyStorageServerVersion, string databaseServerType, string storageServerType, AutonomousDatabaseComputeModel? computeModel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DefinedFileSystemConfiguration = definedFileSystemConfiguration;
             Ocid = ocid;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             StorageCount = storageCount;
             TotalStorageSizeInGbs = totalStorageSizeInGbs;
             AvailableStorageSizeInGbs = availableStorageSizeInGbs;
-            TimeCreated = timeCreated;
+            CreatedOn = createdOn;
             LifecycleDetails = lifecycleDetails;
             MaintenanceWindow = maintenanceWindow;
             EstimatedPatchingTime = estimatedPatchingTime;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The available storage can be allocated to the cloud Exadata infrastructure resource, in gigabytes (GB). </summary>
         public int? AvailableStorageSizeInGbs { get; }
         /// <summary> The date and time the cloud Exadata infrastructure resource was created. </summary>
-        public string TimeCreated { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> Additional information about the current lifecycle state. </summary>
         public string LifecycleDetails { get; }
         /// <summary> maintenanceWindow property. </summary>
@@ -163,9 +163,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The estimated total time required in minutes for all patching operations (database server, storage server, and network switch patching). </summary>
         public EstimatedPatchingTime EstimatedPatchingTime { get; }
         /// <summary> The list of customer email addresses that receive information from Oracle about the specified OCI Database service resource. Oracle uses these email addresses to send notifications about planned and unplanned software maintenance updates, information about system hardware, and other information needed by administrators. Up to 10 email addresses can be added to the customer contacts for a cloud Exadata infrastructure instance. </summary>
-        public IList<CustomerContact> CustomerContacts { get; }
+        public IList<OracleCustomerContact> CustomerContacts { get; }
         /// <summary> CloudExadataInfrastructure provisioning state. </summary>
-        public AzureResourceProvisioningState? ProvisioningState { get; }
+        public OracleDatabaseProvisioningState? ProvisioningState { get; }
         /// <summary> CloudExadataInfrastructure lifecycle state. </summary>
         public CloudExadataInfrastructureLifecycleState? LifecycleState { get; }
         /// <summary> The model name of the cloud Exadata infrastructure resource. </summary>
@@ -211,6 +211,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The storage server model type of the cloud Exadata infrastructure resource. </summary>
         public string StorageServerType { get; set; }
         /// <summary> The compute model of the Exadata Infrastructure. </summary>
-        public ComputeModel? ComputeModel { get; }
+        public AutonomousDatabaseComputeModel? ComputeModel { get; }
     }
 }

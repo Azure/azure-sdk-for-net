@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            IReadOnlyList<ExascaleDbStorageVaultData> value = default;
+            IReadOnlyList<ExascaleDBStorageVaultData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ExascaleDbStorageVaultData> array = new List<ExascaleDbStorageVaultData>();
+                    List<ExascaleDBStorageVaultData> array = new List<ExascaleDBStorageVaultData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExascaleDbStorageVaultData.DeserializeExascaleDbStorageVaultData(item, options));
+                        array.Add(ExascaleDBStorageVaultData.DeserializeExascaleDBStorageVaultData(item, options));
                     }
                     value = array;
                     continue;

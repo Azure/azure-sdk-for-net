@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             OracleSubscriptionResource oracleSubscription = client.GetOracleSubscriptionResource(oracleSubscriptionResourceId);
 
             // invoke the operation
-            AzureSubscriptions body = new AzureSubscriptions(new string[] { "00000000-0000-0000-0000-000000000001" });
-            await oracleSubscription.AddAzureSubscriptionsAsync(WaitUntil.Completed, body);
+            OracleAzureSubscriptionsContent content = new OracleAzureSubscriptionsContent(new string[] { "00000000-0000-0000-0000-000000000001" });
+            await oracleSubscription.AddAzureSubscriptionsAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");
         }

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            IReadOnlyList<FlexComponentData> value = default;
+            IReadOnlyList<OracleFlexComponentData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<FlexComponentData> array = new List<FlexComponentData>();
+                    List<OracleFlexComponentData> array = new List<OracleFlexComponentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FlexComponentData.DeserializeFlexComponentData(item, options));
+                        array.Add(OracleFlexComponentData.DeserializeOracleFlexComponentData(item, options));
                     }
                     value = array;
                     continue;

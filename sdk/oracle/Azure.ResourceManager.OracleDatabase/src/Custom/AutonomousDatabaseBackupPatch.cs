@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    public partial class AutonomousDatabaseBackupPatch
+/*    public partial class AutonomousDatabaseBackupPatch
     {
         /// <summary> Retention period, in days, for long-term backups. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -19,5 +19,5 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 Properties.RetentionPeriodInDays = value;
             }
         }
-    }
+    }*/
 }

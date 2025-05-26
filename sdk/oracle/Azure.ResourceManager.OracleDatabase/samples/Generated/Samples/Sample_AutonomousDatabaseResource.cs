@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             AutonomousDatabaseResource autonomousDatabase = client.GetAutonomousDatabaseResource(autonomousDatabaseResourceId);
 
             // invoke the operation
-            PeerDbDetails details = new PeerDbDetails
+            AutonomousDatabaseActionContent content = new AutonomousDatabaseActionContent
             {
-                PeerDbId = "peerDbId",
+                PeerDBId = "peerDbId",
             };
-            ArmOperation<AutonomousDatabaseResource> lro = await autonomousDatabase.SwitchoverAsync(WaitUntil.Completed, details);
+            ArmOperation<AutonomousDatabaseResource> lro = await autonomousDatabase.SwitchoverAsync(WaitUntil.Completed, content);
             AutonomousDatabaseResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             AutonomousDatabaseResource autonomousDatabase = client.GetAutonomousDatabaseResource(autonomousDatabaseResourceId);
 
             // invoke the operation
-            PeerDbDetails details = new PeerDbDetails
+            AutonomousDatabaseActionContent content = new AutonomousDatabaseActionContent
             {
-                PeerDbId = "peerDbId",
+                PeerDBId = "peerDbId",
             };
-            ArmOperation<AutonomousDatabaseResource> lro = await autonomousDatabase.FailoverAsync(WaitUntil.Completed, details);
+            ArmOperation<AutonomousDatabaseResource> lro = await autonomousDatabase.FailoverAsync(WaitUntil.Completed, content);
             AutonomousDatabaseResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             // invoke the operation
             GenerateAutonomousDatabaseWalletDetails details = new GenerateAutonomousDatabaseWalletDetails("********")
             {
-                GenerateType = GenerateType.Single,
+                GenerateType = WalletGenerateType.Single,
                 IsRegional = false,
             };
             AutonomousDatabaseWalletFile result = await autonomousDatabase.GenerateWalletAsync(details);

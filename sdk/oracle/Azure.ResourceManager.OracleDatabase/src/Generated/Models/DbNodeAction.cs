@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Initializes a new instance of <see cref="DbNodeAction"/>. </summary>
         /// <param name="action"> Db action. </param>
-        public DbNodeAction(DbNodeActionEnum action)
+        public DbNodeAction(DBNodeActionType action)
         {
             Action = action;
         }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Initializes a new instance of <see cref="DbNodeAction"/>. </summary>
         /// <param name="action"> Db action. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DbNodeAction(DbNodeActionEnum action, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DbNodeAction(DBNodeActionType action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Action = action;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -67,6 +67,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Db action. </summary>
-        public DbNodeActionEnum Action { get; }
+        public DBNodeActionType Action { get; }
     }
 }

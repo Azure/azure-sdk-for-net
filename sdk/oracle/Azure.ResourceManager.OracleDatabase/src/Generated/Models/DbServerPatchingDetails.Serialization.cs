@@ -44,15 +44,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("patchingStatus"u8);
                 writer.WriteStringValue(PatchingStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TimePatchingEnded))
+            if (options.Format != "W" && Optional.IsDefined(PatchingEndedOn))
             {
                 writer.WritePropertyName("timePatchingEnded"u8);
-                writer.WriteStringValue(TimePatchingEnded.Value, "O");
+                writer.WriteStringValue(PatchingEndedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(TimePatchingStarted))
+            if (options.Format != "W" && Optional.IsDefined(PatchingStartedOn))
             {
                 writer.WritePropertyName("timePatchingStarted"u8);
-                writer.WriteStringValue(TimePatchingStarted.Value, "O");
+                writer.WriteStringValue(PatchingStartedOn.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

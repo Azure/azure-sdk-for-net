@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudexadatainfrastructurename"/> or <paramref name="dbserverocid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudexadatainfrastructurename"/> or <paramref name="dbserverocid"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DbServerData>> GetAsync(string subscriptionId, string resourceGroupName, string cloudexadatainfrastructurename, string dbserverocid, CancellationToken cancellationToken = default)
+        public async Task<Response<OracleDBServerData>> GetAsync(string subscriptionId, string resourceGroupName, string cloudexadatainfrastructurename, string dbserverocid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 case 200:
                     {
-                        DbServerData value = default;
+                        OracleDBServerData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DbServerData.DeserializeDbServerData(document.RootElement);
+                        value = OracleDBServerData.DeserializeOracleDBServerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DbServerData)null, message.Response);
+                    return Response.FromValue((OracleDBServerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudexadatainfrastructurename"/> or <paramref name="dbserverocid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudexadatainfrastructurename"/> or <paramref name="dbserverocid"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DbServerData> Get(string subscriptionId, string resourceGroupName, string cloudexadatainfrastructurename, string dbserverocid, CancellationToken cancellationToken = default)
+        public Response<OracleDBServerData> Get(string subscriptionId, string resourceGroupName, string cloudexadatainfrastructurename, string dbserverocid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -128,13 +128,13 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 case 200:
                     {
-                        DbServerData value = default;
+                        OracleDBServerData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DbServerData.DeserializeDbServerData(document.RootElement);
+                        value = OracleDBServerData.DeserializeOracleDBServerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DbServerData)null, message.Response);
+                    return Response.FromValue((OracleDBServerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

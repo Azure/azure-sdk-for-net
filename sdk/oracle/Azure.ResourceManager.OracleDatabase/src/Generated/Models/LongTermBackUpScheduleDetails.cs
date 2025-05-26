@@ -52,14 +52,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Initializes a new instance of <see cref="LongTermBackUpScheduleDetails"/>. </summary>
         /// <param name="repeatCadence"> The frequency of the long-term backup schedule. </param>
-        /// <param name="timeOfBackup"> The timestamp for the long-term backup schedule. For a MONTHLY cadence, months having fewer days than the provided date will have the backup taken on the last day of that month. </param>
+        /// <param name="backupOn"> The timestamp for the long-term backup schedule. For a MONTHLY cadence, months having fewer days than the provided date will have the backup taken on the last day of that month. </param>
         /// <param name="retentionPeriodInDays"> Retention period, in days, for backups. </param>
         /// <param name="isDisabled"> Indicates if the long-term backup schedule should be deleted. The default value is `FALSE`. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LongTermBackUpScheduleDetails(RepeatCadenceType? repeatCadence, DateTimeOffset? timeOfBackup, int? retentionPeriodInDays, bool? isDisabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LongTermBackUpScheduleDetails(RepeatCadenceType? repeatCadence, DateTimeOffset? backupOn, int? retentionPeriodInDays, bool? isDisabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RepeatCadence = repeatCadence;
-            TimeOfBackup = timeOfBackup;
+            BackupOn = backupOn;
             RetentionPeriodInDays = retentionPeriodInDays;
             IsDisabled = isDisabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The frequency of the long-term backup schedule. </summary>
         public RepeatCadenceType? RepeatCadence { get; set; }
         /// <summary> The timestamp for the long-term backup schedule. For a MONTHLY cadence, months having fewer days than the provided date will have the backup taken on the last day of that month. </summary>
-        public DateTimeOffset? TimeOfBackup { get; set; }
+        public DateTimeOffset? BackupOn { get; set; }
         /// <summary> Retention period, in days, for backups. </summary>
         public int? RetentionPeriodInDays { get; set; }
         /// <summary> Indicates if the long-term backup schedule should be deleted. The default value is `FALSE`. </summary>

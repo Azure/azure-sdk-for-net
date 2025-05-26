@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             VnetId = vnetId;
             GiVersion = giVersion;
             SubnetId = subnetId;
-            NsgCidrs = new ChangeTrackingList<NsgCidr>();
+            NsgCidrs = new ChangeTrackingList<CloudVmClusterNsgCidr>();
             DisplayName = displayName;
             ComputeNodes = new ChangeTrackingList<string>();
             DbServers = new ChangeTrackingList<string>();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="dataStorageSizeInTbs"> The data disk group size to be allocated in TBs. </param>
         /// <param name="dbNodeStorageSizeInGbs"> The local node storage to be allocated in GBs. </param>
         /// <param name="memorySizeInGbs"> The memory to be allocated in GBs. </param>
-        /// <param name="timeCreated"> The date and time that the cloud VM cluster was created. </param>
+        /// <param name="createdOn"> The date and time that the cloud VM cluster was created. </param>
         /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
         /// <param name="timeZone"> The time zone of the cloud VM cluster. For details, see [Exadata Infrastructure Time Zones](/Content/Database/References/timezones.htm). </param>
         /// <param name="zoneId"> The OCID of the zone the cloud VM cluster is associated with. </param>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="subnetOcid"> Cluster subnet ocid. </param>
         /// <param name="computeModel"> The compute model of the VM Cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudVmClusterProperties(string ocid, long? listenerPort, int? nodeCount, int? storageSizeInGbs, IList<FileSystemConfigurationDetails> fileSystemConfigurationDetails, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, DateTimeOffset? timeCreated, string lifecycleDetails, string timeZone, string zoneId, string hostname, string domain, int cpuCoreCount, float? ocpuCount, string clusterName, int? dataStoragePercentage, bool? isLocalBackupEnabled, ResourceIdentifier cloudExadataInfrastructureId, bool? isSparseDiskgroupEnabled, string systemVersion, IList<string> sshPublicKeys, LicenseModel? licenseModel, DiskRedundancy? diskRedundancy, IReadOnlyList<string> scanIPIds, IReadOnlyList<string> vipIds, string scanDnsName, int? scanListenerPortTcp, int? scanListenerPortTcpSsl, string scanDnsRecordId, string shape, AzureResourceProvisioningState? provisioningState, CloudVmClusterLifecycleState? lifecycleState, ResourceIdentifier vnetId, string giVersion, Uri ociUri, Uri nsgUri, ResourceIdentifier subnetId, string backupSubnetCidr, IList<NsgCidr> nsgCidrs, DataCollectionOptions dataCollectionOptions, string displayName, IList<string> computeNodes, ExadataIormConfig iormConfigCache, string lastUpdateHistoryEntryId, IList<string> dbServers, string compartmentId, string subnetOcid, ComputeModel? computeModel, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudVmClusterProperties(string ocid, long? listenerPort, int? nodeCount, int? storageSizeInGbs, IList<FileSystemConfigurationDetails> fileSystemConfigurationDetails, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, DateTimeOffset? createdOn, string lifecycleDetails, string timeZone, string zoneId, string hostname, string domain, int cpuCoreCount, float? ocpuCount, string clusterName, int? dataStoragePercentage, bool? isLocalBackupEnabled, ResourceIdentifier cloudExadataInfrastructureId, bool? isSparseDiskgroupEnabled, string systemVersion, IList<string> sshPublicKeys, OracleLicenseModel? licenseModel, CloudVmClusterDiskRedundancy? diskRedundancy, IReadOnlyList<string> scanIPIds, IReadOnlyList<string> vipIds, string scanDnsName, int? scanListenerPortTcp, int? scanListenerPortTcpSsl, string scanDnsRecordId, string shape, OracleDatabaseProvisioningState? provisioningState, CloudVmClusterLifecycleState? lifecycleState, ResourceIdentifier vnetId, string giVersion, Uri ociUri, Uri nsgUri, ResourceIdentifier subnetId, string backupSubnetCidr, IList<CloudVmClusterNsgCidr> nsgCidrs, DiagnosticCollectionConfig dataCollectionOptions, string displayName, IList<string> computeNodes, ExadataIormConfig iormConfigCache, string lastUpdateHistoryEntryId, IList<string> dbServers, string compartmentId, string subnetOcid, AutonomousDatabaseComputeModel? computeModel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Ocid = ocid;
             ListenerPort = listenerPort;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             DataStorageSizeInTbs = dataStorageSizeInTbs;
             DbNodeStorageSizeInGbs = dbNodeStorageSizeInGbs;
             MemorySizeInGbs = memorySizeInGbs;
-            TimeCreated = timeCreated;
+            CreatedOn = createdOn;
             LifecycleDetails = lifecycleDetails;
             TimeZone = timeZone;
             ZoneId = zoneId;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The memory to be allocated in GBs. </summary>
         public int? MemorySizeInGbs { get; set; }
         /// <summary> The date and time that the cloud VM cluster was created. </summary>
-        public DateTimeOffset? TimeCreated { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> Additional information about the current lifecycle state. </summary>
         public string LifecycleDetails { get; }
         /// <summary> The time zone of the cloud VM cluster. For details, see [Exadata Infrastructure Time Zones](/Content/Database/References/timezones.htm). </summary>
@@ -242,9 +242,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The public key portion of one or more key pairs used for SSH access to the cloud VM cluster. </summary>
         public IList<string> SshPublicKeys { get; }
         /// <summary> The Oracle license model that applies to the cloud VM cluster. The default is LICENSE_INCLUDED. </summary>
-        public LicenseModel? LicenseModel { get; set; }
+        public OracleLicenseModel? LicenseModel { get; set; }
         /// <summary> The type of redundancy configured for the cloud Vm cluster. NORMAL is 2-way redundancy. HIGH is 3-way redundancy. </summary>
-        public DiskRedundancy? DiskRedundancy { get; }
+        public CloudVmClusterDiskRedundancy? DiskRedundancy { get; }
         /// <summary> The Single Client Access Name (SCAN) IP addresses associated with the cloud VM cluster. SCAN IP addresses are typically used for load balancing and are not assigned to any interface. Oracle Clusterware directs the requests to the appropriate nodes in the cluster. **Note:** For a single-node DB system, this list is empty. </summary>
         public IReadOnlyList<string> ScanIPIds { get; }
         /// <summary> The virtual IP (VIP) addresses associated with the cloud VM cluster. The Cluster Ready Services (CRS) creates and maintains one VIP address for each node in the Exadata Cloud Service instance to enable failover. If one node fails, the VIP is reassigned to another active node in the cluster. **Note:** For a single-node DB system, this list is empty. </summary>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The model name of the Exadata hardware running the cloud VM cluster. </summary>
         public string Shape { get; }
         /// <summary> CloudVmCluster provisioning state. </summary>
-        public AzureResourceProvisioningState? ProvisioningState { get; }
+        public OracleDatabaseProvisioningState? ProvisioningState { get; }
         /// <summary> CloudVmCluster lifecycle state. </summary>
         public CloudVmClusterLifecycleState? LifecycleState { get; }
         /// <summary> VNET for network connectivity. </summary>
@@ -276,9 +276,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Client OCI backup subnet CIDR, default is 192.168.252.0/22. </summary>
         public string BackupSubnetCidr { get; set; }
         /// <summary> CIDR blocks for additional NSG ingress rules. The VNET CIDRs used to provision the VM Cluster will be added by default. </summary>
-        public IList<NsgCidr> NsgCidrs { get; }
+        public IList<CloudVmClusterNsgCidr> NsgCidrs { get; }
         /// <summary> Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS. </summary>
-        public DataCollectionOptions DataCollectionOptions { get; set; }
+        public DiagnosticCollectionConfig DataCollectionOptions { get; set; }
         /// <summary> Display Name. </summary>
         public string DisplayName { get; set; }
         /// <summary> The list of compute servers to be added to the cloud VM cluster. </summary>
@@ -294,6 +294,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Cluster subnet ocid. </summary>
         public string SubnetOcid { get; }
         /// <summary> The compute model of the VM Cluster. </summary>
-        public ComputeModel? ComputeModel { get; }
+        public AutonomousDatabaseComputeModel? ComputeModel { get; }
     }
 }

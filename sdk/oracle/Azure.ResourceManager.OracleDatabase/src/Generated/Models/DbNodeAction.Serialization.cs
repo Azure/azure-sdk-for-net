@@ -73,14 +73,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            DbNodeActionEnum action = default;
+            DBNodeActionType action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))
                 {
-                    action = new DbNodeActionEnum(property.Value.GetString());
+                    action = new DBNodeActionType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -6,7 +6,7 @@ using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
-{
+{/*
     public partial class CloudVmClusterDBNodeProperties
     {
         /// <summary> Initializes a new instance of <see cref="CloudVmClusterDBNodeProperties"/>. </summary>
@@ -23,5 +23,5 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The date and time that the database node was created. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public DateTimeOffset? TimeCreated { get; }
-    }
+    }*/
 }

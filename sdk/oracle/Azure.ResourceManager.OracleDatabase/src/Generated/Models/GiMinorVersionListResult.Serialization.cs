@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            IReadOnlyList<GiMinorVersionData> value = default;
+            IReadOnlyList<OracleGIMinorVersionData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<GiMinorVersionData> array = new List<GiMinorVersionData>();
+                    List<OracleGIMinorVersionData> array = new List<OracleGIMinorVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GiMinorVersionData.DeserializeGiMinorVersionData(item, options));
+                        array.Add(OracleGIMinorVersionData.DeserializeOracleGIMinorVersionData(item, options));
                     }
                     value = array;
                     continue;

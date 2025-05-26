@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        internal RequestUriBuilder CreateAddVmsRequestUri(string subscriptionId, string resourceGroupName, string cloudvmclustername, AddRemoveDbNode body)
+        internal RequestUriBuilder CreateAddVmsRequestUri(string subscriptionId, string resourceGroupName, string cloudvmclustername, CloudVmClusterDBNodeContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return uri;
         }
 
-        internal HttpMessage CreateAddVmsRequest(string subscriptionId, string resourceGroupName, string cloudvmclustername, AddRemoveDbNode body)
+        internal HttpMessage CreateAddVmsRequest(string subscriptionId, string resourceGroupName, string cloudvmclustername, CloudVmClusterDBNodeContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -598,9 +598,9 @@ namespace Azure.ResourceManager.OracleDatabase
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -609,18 +609,18 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudvmclustername"> CloudVmCluster name. </param>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudvmclustername"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> AddVmsAsync(string subscriptionId, string resourceGroupName, string cloudvmclustername, AddRemoveDbNode body, CancellationToken cancellationToken = default)
+        public async Task<Response> AddVmsAsync(string subscriptionId, string resourceGroupName, string cloudvmclustername, CloudVmClusterDBNodeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudvmclustername, nameof(cloudvmclustername));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateAddVmsRequest(subscriptionId, resourceGroupName, cloudvmclustername, body);
+            using var message = CreateAddVmsRequest(subscriptionId, resourceGroupName, cloudvmclustername, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -636,18 +636,18 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudvmclustername"> CloudVmCluster name. </param>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudvmclustername"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response AddVms(string subscriptionId, string resourceGroupName, string cloudvmclustername, AddRemoveDbNode body, CancellationToken cancellationToken = default)
+        public Response AddVms(string subscriptionId, string resourceGroupName, string cloudvmclustername, CloudVmClusterDBNodeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudvmclustername, nameof(cloudvmclustername));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateAddVmsRequest(subscriptionId, resourceGroupName, cloudvmclustername, body);
+            using var message = CreateAddVmsRequest(subscriptionId, resourceGroupName, cloudvmclustername, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        internal RequestUriBuilder CreateRemoveVmsRequestUri(string subscriptionId, string resourceGroupName, string cloudvmclustername, AddRemoveDbNode body)
+        internal RequestUriBuilder CreateRemoveVmsRequestUri(string subscriptionId, string resourceGroupName, string cloudvmclustername, CloudVmClusterDBNodeContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return uri;
         }
 
-        internal HttpMessage CreateRemoveVmsRequest(string subscriptionId, string resourceGroupName, string cloudvmclustername, AddRemoveDbNode body)
+        internal HttpMessage CreateRemoveVmsRequest(string subscriptionId, string resourceGroupName, string cloudvmclustername, CloudVmClusterDBNodeContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -692,9 +692,9 @@ namespace Azure.ResourceManager.OracleDatabase
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -703,18 +703,18 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudvmclustername"> CloudVmCluster name. </param>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudvmclustername"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RemoveVmsAsync(string subscriptionId, string resourceGroupName, string cloudvmclustername, AddRemoveDbNode body, CancellationToken cancellationToken = default)
+        public async Task<Response> RemoveVmsAsync(string subscriptionId, string resourceGroupName, string cloudvmclustername, CloudVmClusterDBNodeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudvmclustername, nameof(cloudvmclustername));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRemoveVmsRequest(subscriptionId, resourceGroupName, cloudvmclustername, body);
+            using var message = CreateRemoveVmsRequest(subscriptionId, resourceGroupName, cloudvmclustername, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -730,18 +730,18 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudvmclustername"> CloudVmCluster name. </param>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudvmclustername"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RemoveVms(string subscriptionId, string resourceGroupName, string cloudvmclustername, AddRemoveDbNode body, CancellationToken cancellationToken = default)
+        public Response RemoveVms(string subscriptionId, string resourceGroupName, string cloudvmclustername, CloudVmClusterDBNodeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudvmclustername, nameof(cloudvmclustername));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRemoveVmsRequest(subscriptionId, resourceGroupName, cloudvmclustername, body);
+            using var message = CreateRemoveVmsRequest(subscriptionId, resourceGroupName, cloudvmclustername, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -753,7 +753,7 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        internal RequestUriBuilder CreateListPrivateIPAddressesRequestUri(string subscriptionId, string resourceGroupName, string cloudvmclustername, PrivateIPAddressesFilter body)
+        internal RequestUriBuilder CreateListPrivateIPAddressesRequestUri(string subscriptionId, string resourceGroupName, string cloudvmclustername, PrivateIPAddressesContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return uri;
         }
 
-        internal HttpMessage CreateListPrivateIPAddressesRequest(string subscriptionId, string resourceGroupName, string cloudvmclustername, PrivateIPAddressesFilter body)
+        internal HttpMessage CreateListPrivateIPAddressesRequest(string subscriptionId, string resourceGroupName, string cloudvmclustername, PrivateIPAddressesContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -786,9 +786,9 @@ namespace Azure.ResourceManager.OracleDatabase
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -797,29 +797,29 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudvmclustername"> CloudVmCluster name. </param>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudvmclustername"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<PrivateIPAddressProperties>>> ListPrivateIPAddressesAsync(string subscriptionId, string resourceGroupName, string cloudvmclustername, PrivateIPAddressesFilter body, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<PrivateIPAddressResult>>> ListPrivateIPAddressesAsync(string subscriptionId, string resourceGroupName, string cloudvmclustername, PrivateIPAddressesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudvmclustername, nameof(cloudvmclustername));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListPrivateIPAddressesRequest(subscriptionId, resourceGroupName, cloudvmclustername, body);
+            using var message = CreateListPrivateIPAddressesRequest(subscriptionId, resourceGroupName, cloudvmclustername, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        IReadOnlyList<PrivateIPAddressProperties> value = default;
+                        IReadOnlyList<PrivateIPAddressResult> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        List<PrivateIPAddressProperties> array = new List<PrivateIPAddressProperties>();
+                        List<PrivateIPAddressResult> array = new List<PrivateIPAddressResult>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(PrivateIPAddressProperties.DeserializePrivateIPAddressProperties(item));
+                            array.Add(PrivateIPAddressResult.DeserializePrivateIPAddressResult(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -833,29 +833,29 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudvmclustername"> CloudVmCluster name. </param>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudvmclustername"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<PrivateIPAddressProperties>> ListPrivateIPAddresses(string subscriptionId, string resourceGroupName, string cloudvmclustername, PrivateIPAddressesFilter body, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<PrivateIPAddressResult>> ListPrivateIPAddresses(string subscriptionId, string resourceGroupName, string cloudvmclustername, PrivateIPAddressesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudvmclustername, nameof(cloudvmclustername));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListPrivateIPAddressesRequest(subscriptionId, resourceGroupName, cloudvmclustername, body);
+            using var message = CreateListPrivateIPAddressesRequest(subscriptionId, resourceGroupName, cloudvmclustername, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        IReadOnlyList<PrivateIPAddressProperties> value = default;
+                        IReadOnlyList<PrivateIPAddressResult> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        List<PrivateIPAddressProperties> array = new List<PrivateIPAddressProperties>();
+                        List<PrivateIPAddressResult> array = new List<PrivateIPAddressResult>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(PrivateIPAddressProperties.DeserializePrivateIPAddressProperties(item));
+                            array.Add(PrivateIPAddressResult.DeserializePrivateIPAddressResult(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

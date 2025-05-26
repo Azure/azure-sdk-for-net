@@ -154,8 +154,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             int? cpuCoreCount = default;
             float? ocpuCount = default;
             IList<string> sshPublicKeys = default;
-            LicenseModel? licenseModel = default;
-            DataCollectionOptions dataCollectionOptions = default;
+            OracleLicenseModel? licenseModel = default;
+            DiagnosticCollectionConfig dataCollectionOptions = default;
             string displayName = default;
             IList<string> computeNodes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    licenseModel = new LicenseModel(property.Value.GetString());
+                    licenseModel = new OracleLicenseModel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataCollectionOptions"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    dataCollectionOptions = DataCollectionOptions.DeserializeDataCollectionOptions(property.Value, options);
+                    dataCollectionOptions = DiagnosticCollectionConfig.DeserializeDiagnosticCollectionConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))

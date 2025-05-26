@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetExascaleDbStorageVaults_ExascaleDbStorageVaultsListBySubscriptionMaximumSet()
+        public async Task GetExascaleDBStorageVaults_ExascaleDbStorageVaultsListBySubscriptionMaximumSet()
         {
             // Generated from example definition: 2025-03-01/ExascaleDbStorageVaults_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "ExascaleDbStorageVault_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ExascaleDbStorageVaultResource item in subscriptionResource.GetExascaleDbStorageVaultsAsync())
+            await foreach (ExascaleDBStorageVaultResource item in subscriptionResource.GetExascaleDBStorageVaultsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ExascaleDbStorageVaultData resourceData = item.Data;
+                ExascaleDBStorageVaultData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

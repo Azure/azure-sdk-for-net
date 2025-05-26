@@ -36,15 +36,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
             writer.WritePropertyName("dayOfWeek"u8);
             writer.WriteObjectValue(DayOfWeek, options);
-            if (Optional.IsDefined(ScheduledStartTime))
+            if (Optional.IsDefined(AutoStartOn))
             {
                 writer.WritePropertyName("scheduledStartTime"u8);
-                writer.WriteStringValue(ScheduledStartTime);
+                writer.WriteStringValue(AutoStartOn.Value.ToString());
             }
-            if (Optional.IsDefined(ScheduledStopTime))
+            if (Optional.IsDefined(AutoStopOn))
             {
                 writer.WritePropertyName("scheduledStopTime"u8);
-                writer.WriteStringValue(ScheduledStopTime);
+                writer.WriteStringValue(AutoStopOn.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 return null;
             }
             DayOfWeek dayOfWeek = default;
-            string scheduledStartTime = default;
-            string scheduledStopTime = default;
+            ScheduledOperationsTypeAutoStartOn? scheduledStartTime = default;
+            ScheduledOperationsTypeAutoStopOn? scheduledStopTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,12 +97,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("scheduledStartTime"u8))
                 {
-                    scheduledStartTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scheduledStartTime = new ScheduledOperationsTypeAutoStartOn(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("scheduledStopTime"u8))
                 {
-                    scheduledStopTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scheduledStopTime = new ScheduledOperationsTypeAutoStopOn(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

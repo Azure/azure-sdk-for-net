@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("memorySizeInGbs"u8);
                 writer.WriteNumberValue(MemorySizeInGbs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("timeCreated"u8);
-                writer.WriteStringValue(TimeCreated.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LifecycleDetails))
             {
@@ -355,8 +355,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             bool? isSparseDiskgroupEnabled = default;
             string systemVersion = default;
             IList<string> sshPublicKeys = default;
-            LicenseModel? licenseModel = default;
-            DiskRedundancy? diskRedundancy = default;
+            OracleLicenseModel? licenseModel = default;
+            CloudVmClusterDiskRedundancy? diskRedundancy = default;
             IReadOnlyList<string> scanIPIds = default;
             IReadOnlyList<string> vipIds = default;
             string scanDnsName = default;
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             int? scanListenerPortTcpSsl = default;
             string scanDnsRecordId = default;
             string shape = default;
-            AzureResourceProvisioningState? provisioningState = default;
+            OracleDatabaseProvisioningState? provisioningState = default;
             CloudVmClusterLifecycleState? lifecycleState = default;
             ResourceIdentifier vnetId = default;
             string giVersion = default;
@@ -372,8 +372,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             Uri nsgUrl = default;
             ResourceIdentifier subnetId = default;
             string backupSubnetCidr = default;
-            IList<NsgCidr> nsgCidrs = default;
-            DataCollectionOptions dataCollectionOptions = default;
+            IList<CloudVmClusterNsgCidr> nsgCidrs = default;
+            DiagnosticCollectionConfig dataCollectionOptions = default;
             string displayName = default;
             IList<string> computeNodes = default;
             ExadataIormConfig iormConfigCache = default;
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             IList<string> dbServers = default;
             string compartmentId = default;
             string subnetOcid = default;
-            ComputeModel? computeModel = default;
+            AutonomousDatabaseComputeModel? computeModel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    licenseModel = new LicenseModel(property.Value.GetString());
+                    licenseModel = new OracleLicenseModel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("diskRedundancy"u8))
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    diskRedundancy = new DiskRedundancy(property.Value.GetString());
+                    diskRedundancy = new CloudVmClusterDiskRedundancy(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("scanIpIds"u8))
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    provisioningState = new AzureResourceProvisioningState(property.Value.GetString());
+                    provisioningState = new OracleDatabaseProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lifecycleState"u8))
@@ -700,10 +700,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    List<NsgCidr> array = new List<NsgCidr>();
+                    List<CloudVmClusterNsgCidr> array = new List<CloudVmClusterNsgCidr>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NsgCidr.DeserializeNsgCidr(item, options));
+                        array.Add(CloudVmClusterNsgCidr.DeserializeCloudVmClusterNsgCidr(item, options));
                     }
                     nsgCidrs = array;
                     continue;
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    dataCollectionOptions = DataCollectionOptions.DeserializeDataCollectionOptions(property.Value, options);
+                    dataCollectionOptions = DiagnosticCollectionConfig.DeserializeDiagnosticCollectionConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))
@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    computeModel = new ComputeModel(property.Value.GetString());
+                    computeModel = new AutonomousDatabaseComputeModel(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -830,7 +830,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 nsgUrl,
                 subnetId,
                 backupSubnetCidr,
-                nsgCidrs ?? new ChangeTrackingList<NsgCidr>(),
+                nsgCidrs ?? new ChangeTrackingList<CloudVmClusterNsgCidr>(),
                 dataCollectionOptions,
                 displayName,
                 computeNodes ?? new ChangeTrackingList<string>(),

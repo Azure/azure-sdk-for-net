@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="lifecycleState"> The current state of IORM configuration for the Exadata DB system. </param>
         /// <param name="objective"> The current value for the IORM objective. The default is AUTO. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExadataIormConfig(IReadOnlyList<DbIormConfig> dbPlans, string lifecycleDetails, IormLifecycleState? lifecycleState, Objective? objective, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExadataIormConfig(IReadOnlyList<DbIormConfig> dbPlans, string lifecycleDetails, IormLifecycleState? lifecycleState, IormObjective? objective, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DbPlans = dbPlans;
             LifecycleDetails = lifecycleDetails;
@@ -73,6 +73,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The current state of IORM configuration for the Exadata DB system. </summary>
         public IormLifecycleState? LifecycleState { get; }
         /// <summary> The current value for the IORM objective. The default is AUTO. </summary>
-        public Objective? Objective { get; }
+        public IormObjective? Objective { get; }
     }
 }

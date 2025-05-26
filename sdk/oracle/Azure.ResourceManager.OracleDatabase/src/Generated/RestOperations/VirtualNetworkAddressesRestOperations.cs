@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.OracleDatabase
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string cloudvmclustername, string virtualnetworkaddressname, VirtualNetworkAddressData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string cloudvmclustername, string virtualnetworkaddressname, CloudVmClusterVirtualNetworkAddressData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string cloudvmclustername, string virtualnetworkaddressname, VirtualNetworkAddressData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string cloudvmclustername, string virtualnetworkaddressname, CloudVmClusterVirtualNetworkAddressData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/>, <paramref name="virtualnetworkaddressname"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="virtualnetworkaddressname"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string cloudvmclustername, string virtualnetworkaddressname, VirtualNetworkAddressData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string cloudvmclustername, string virtualnetworkaddressname, CloudVmClusterVirtualNetworkAddressData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/>, <paramref name="virtualnetworkaddressname"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="virtualnetworkaddressname"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string cloudvmclustername, string virtualnetworkaddressname, VirtualNetworkAddressData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string cloudvmclustername, string virtualnetworkaddressname, CloudVmClusterVirtualNetworkAddressData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="virtualnetworkaddressname"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="virtualnetworkaddressname"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualNetworkAddressData>> GetAsync(string subscriptionId, string resourceGroupName, string cloudvmclustername, string virtualnetworkaddressname, CancellationToken cancellationToken = default)
+        public async Task<Response<CloudVmClusterVirtualNetworkAddressData>> GetAsync(string subscriptionId, string resourceGroupName, string cloudvmclustername, string virtualnetworkaddressname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -195,13 +195,13 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 case 200:
                     {
-                        VirtualNetworkAddressData value = default;
+                        CloudVmClusterVirtualNetworkAddressData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = VirtualNetworkAddressData.DeserializeVirtualNetworkAddressData(document.RootElement);
+                        value = CloudVmClusterVirtualNetworkAddressData.DeserializeCloudVmClusterVirtualNetworkAddressData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VirtualNetworkAddressData)null, message.Response);
+                    return Response.FromValue((CloudVmClusterVirtualNetworkAddressData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="virtualnetworkaddressname"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="virtualnetworkaddressname"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualNetworkAddressData> Get(string subscriptionId, string resourceGroupName, string cloudvmclustername, string virtualnetworkaddressname, CancellationToken cancellationToken = default)
+        public Response<CloudVmClusterVirtualNetworkAddressData> Get(string subscriptionId, string resourceGroupName, string cloudvmclustername, string virtualnetworkaddressname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -228,13 +228,13 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 case 200:
                     {
-                        VirtualNetworkAddressData value = default;
+                        CloudVmClusterVirtualNetworkAddressData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = VirtualNetworkAddressData.DeserializeVirtualNetworkAddressData(document.RootElement);
+                        value = CloudVmClusterVirtualNetworkAddressData.DeserializeCloudVmClusterVirtualNetworkAddressData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VirtualNetworkAddressData)null, message.Response);
+                    return Response.FromValue((CloudVmClusterVirtualNetworkAddressData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

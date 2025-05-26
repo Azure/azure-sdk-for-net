@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GiVersionResource created on azure
-            // for more information of creating GiVersionResource, please refer to the document of GiVersionResource
+            // this example assumes you already have this OracleGIVersionResource created on azure
+            // for more information of creating OracleGIVersionResource, please refer to the document of OracleGIVersionResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation location = new AzureLocation("eastus");
             string giversionname = "giVersionName";
-            ResourceIdentifier giVersionResourceId = GiVersionResource.CreateResourceIdentifier(subscriptionId, location, giversionname);
-            GiVersionResource giVersion = client.GetGiVersionResource(giVersionResourceId);
+            ResourceIdentifier oracleGIVersionResourceId = OracleGIVersionResource.CreateResourceIdentifier(subscriptionId, location, giversionname);
+            OracleGIVersionResource oracleGIVersion = client.GetOracleGIVersionResource(oracleGIVersionResourceId);
 
             // get the collection of this GiMinorVersionResource
-            GiMinorVersionCollection collection = giVersion.GetGiMinorVersions();
+            GiMinorVersionCollection collection = oracleGIVersion.GetGiMinorVersions();
 
             // invoke the operation
             string giMinorVersionName = "giMinorVersionName";
@@ -62,16 +62,16 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GiVersionResource created on azure
-            // for more information of creating GiVersionResource, please refer to the document of GiVersionResource
+            // this example assumes you already have this OracleGIVersionResource created on azure
+            // for more information of creating OracleGIVersionResource, please refer to the document of OracleGIVersionResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation location = new AzureLocation("eastus");
             string giversionname = "giVersionName";
-            ResourceIdentifier giVersionResourceId = GiVersionResource.CreateResourceIdentifier(subscriptionId, location, giversionname);
-            GiVersionResource giVersion = client.GetGiVersionResource(giVersionResourceId);
+            ResourceIdentifier oracleGIVersionResourceId = OracleGIVersionResource.CreateResourceIdentifier(subscriptionId, location, giversionname);
+            OracleGIVersionResource oracleGIVersion = client.GetOracleGIVersionResource(oracleGIVersionResourceId);
 
             // get the collection of this GiMinorVersionResource
-            GiMinorVersionCollection collection = giVersion.GetGiMinorVersions();
+            GiMinorVersionCollection collection = oracleGIVersion.GetGiMinorVersions();
 
             // invoke the operation and iterate over the result
             ShapeFamily? shapeFamily = new ShapeFamily("rtfcosvtlpeeqoicsjqggtgc");
@@ -99,16 +99,16 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GiVersionResource created on azure
-            // for more information of creating GiVersionResource, please refer to the document of GiVersionResource
+            // this example assumes you already have this OracleGIVersionResource created on azure
+            // for more information of creating OracleGIVersionResource, please refer to the document of OracleGIVersionResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation location = new AzureLocation("eastus");
             string giversionname = "giVersionName";
-            ResourceIdentifier giVersionResourceId = GiVersionResource.CreateResourceIdentifier(subscriptionId, location, giversionname);
-            GiVersionResource giVersion = client.GetGiVersionResource(giVersionResourceId);
+            ResourceIdentifier oracleGIVersionResourceId = OracleGIVersionResource.CreateResourceIdentifier(subscriptionId, location, giversionname);
+            OracleGIVersionResource oracleGIVersion = client.GetOracleGIVersionResource(oracleGIVersionResourceId);
 
             // get the collection of this GiMinorVersionResource
-            GiMinorVersionCollection collection = giVersion.GetGiMinorVersions();
+            GiMinorVersionCollection collection = oracleGIVersion.GetGiMinorVersions();
 
             // invoke the operation
             string giMinorVersionName = "giMinorVersionName";
@@ -129,16 +129,16 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GiVersionResource created on azure
-            // for more information of creating GiVersionResource, please refer to the document of GiVersionResource
+            // this example assumes you already have this OracleGIVersionResource created on azure
+            // for more information of creating OracleGIVersionResource, please refer to the document of OracleGIVersionResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation location = new AzureLocation("eastus");
             string giversionname = "giVersionName";
-            ResourceIdentifier giVersionResourceId = GiVersionResource.CreateResourceIdentifier(subscriptionId, location, giversionname);
-            GiVersionResource giVersion = client.GetGiVersionResource(giVersionResourceId);
+            ResourceIdentifier oracleGIVersionResourceId = OracleGIVersionResource.CreateResourceIdentifier(subscriptionId, location, giversionname);
+            OracleGIVersionResource oracleGIVersion = client.GetOracleGIVersionResource(oracleGIVersionResourceId);
 
             // get the collection of this GiMinorVersionResource
-            GiMinorVersionCollection collection = giVersion.GetGiMinorVersions();
+            GiMinorVersionCollection collection = oracleGIVersion.GetGiMinorVersions();
 
             // invoke the operation
             string giMinorVersionName = "giMinorVersionName";

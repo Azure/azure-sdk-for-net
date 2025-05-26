@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("availableStorageSizeInGbs"u8);
                 writer.WriteNumberValue(AvailableStorageSizeInGbs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("timeCreated"u8);
-                writer.WriteStringValue(TimeCreated);
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LifecycleDetails))
             {
@@ -256,12 +256,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             int? storageCount = default;
             int? totalStorageSizeInGbs = default;
             int? availableStorageSizeInGbs = default;
-            string timeCreated = default;
+            DateTimeOffset? timeCreated = default;
             string lifecycleDetails = default;
             MaintenanceWindow maintenanceWindow = default;
             EstimatedPatchingTime estimatedPatchingTime = default;
-            IList<CustomerContact> customerContacts = default;
-            AzureResourceProvisioningState? provisioningState = default;
+            IList<OracleCustomerContact> customerContacts = default;
+            OracleDatabaseProvisioningState? provisioningState = default;
             CloudExadataInfrastructureLifecycleState? lifecycleState = default;
             string shape = default;
             Uri ociUrl = default;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string monthlyStorageServerVersion = default;
             string databaseServerType = default;
             string storageServerType = default;
-            ComputeModel? computeModel = default;
+            AutonomousDatabaseComputeModel? computeModel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -346,7 +346,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("timeCreated"u8))
                 {
-                    timeCreated = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timeCreated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lifecycleDetails"u8))
@@ -378,10 +382,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    List<CustomerContact> array = new List<CustomerContact>();
+                    List<OracleCustomerContact> array = new List<OracleCustomerContact>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomerContact.DeserializeCustomerContact(item, options));
+                        array.Add(OracleCustomerContact.DeserializeOracleCustomerContact(item, options));
                     }
                     customerContacts = array;
                     continue;
@@ -392,7 +396,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    provisioningState = new AzureResourceProvisioningState(property.Value.GetString());
+                    provisioningState = new OracleDatabaseProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lifecycleState"u8))
@@ -559,7 +563,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    computeModel = new ComputeModel(property.Value.GetString());
+                    computeModel = new AutonomousDatabaseComputeModel(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -579,7 +583,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 lifecycleDetails,
                 maintenanceWindow,
                 estimatedPatchingTime,
-                customerContacts ?? new ChangeTrackingList<CustomerContact>(),
+                customerContacts ?? new ChangeTrackingList<OracleCustomerContact>(),
                 provisioningState,
                 lifecycleState,
                 shape,

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="systemversionname"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="systemversionname"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SystemVersionData>> GetAsync(string subscriptionId, AzureLocation location, string systemversionname, CancellationToken cancellationToken = default)
+        public async Task<Response<OracleSystemVersionData>> GetAsync(string subscriptionId, AzureLocation location, string systemversionname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(systemversionname, nameof(systemversionname));
@@ -88,13 +88,13 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 case 200:
                     {
-                        SystemVersionData value = default;
+                        OracleSystemVersionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SystemVersionData.DeserializeSystemVersionData(document.RootElement);
+                        value = OracleSystemVersionData.DeserializeOracleSystemVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SystemVersionData)null, message.Response);
+                    return Response.FromValue((OracleSystemVersionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="systemversionname"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="systemversionname"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SystemVersionData> Get(string subscriptionId, AzureLocation location, string systemversionname, CancellationToken cancellationToken = default)
+        public Response<OracleSystemVersionData> Get(string subscriptionId, AzureLocation location, string systemversionname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(systemversionname, nameof(systemversionname));
@@ -118,13 +118,13 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 case 200:
                     {
-                        SystemVersionData value = default;
+                        OracleSystemVersionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SystemVersionData.DeserializeSystemVersionData(document.RootElement);
+                        value = OracleSystemVersionData.DeserializeOracleSystemVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SystemVersionData)null, message.Response);
+                    return Response.FromValue((OracleSystemVersionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

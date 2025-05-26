@@ -709,19 +709,19 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation> AddAzureSubscriptionsAsync(WaitUntil waitUntil, AzureSubscriptions body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> AddAzureSubscriptionsAsync(WaitUntil waitUntil, OracleAzureSubscriptionsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _oracleSubscriptionClientDiagnostics.CreateScope("OracleSubscriptionResource.AddAzureSubscriptions");
             scope.Start();
             try
             {
-                var response = await _oracleSubscriptionRestClient.AddAzureSubscriptionsAsync(Id.SubscriptionId, body, cancellationToken).ConfigureAwait(false);
-                var operation = new OracleDatabaseArmOperation(_oracleSubscriptionClientDiagnostics, Pipeline, _oracleSubscriptionRestClient.CreateAddAzureSubscriptionsRequest(Id.SubscriptionId, body).Request, response, OperationFinalStateVia.Location);
+                var response = await _oracleSubscriptionRestClient.AddAzureSubscriptionsAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                var operation = new OracleDatabaseArmOperation(_oracleSubscriptionClientDiagnostics, Pipeline, _oracleSubscriptionRestClient.CreateAddAzureSubscriptionsRequest(Id.SubscriptionId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -755,19 +755,19 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation AddAzureSubscriptions(WaitUntil waitUntil, AzureSubscriptions body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation AddAzureSubscriptions(WaitUntil waitUntil, OracleAzureSubscriptionsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _oracleSubscriptionClientDiagnostics.CreateScope("OracleSubscriptionResource.AddAzureSubscriptions");
             scope.Start();
             try
             {
-                var response = _oracleSubscriptionRestClient.AddAzureSubscriptions(Id.SubscriptionId, body, cancellationToken);
-                var operation = new OracleDatabaseArmOperation(_oracleSubscriptionClientDiagnostics, Pipeline, _oracleSubscriptionRestClient.CreateAddAzureSubscriptionsRequest(Id.SubscriptionId, body).Request, response, OperationFinalStateVia.Location);
+                var response = _oracleSubscriptionRestClient.AddAzureSubscriptions(Id.SubscriptionId, content, cancellationToken);
+                var operation = new OracleDatabaseArmOperation(_oracleSubscriptionClientDiagnostics, Pipeline, _oracleSubscriptionRestClient.CreateAddAzureSubscriptionsRequest(Id.SubscriptionId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

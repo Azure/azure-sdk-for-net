@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             ExascaleDbStorageVaultId = exascaleDbStorageVaultId;
             Hostname = hostname;
             NodeCount = nodeCount;
-            NsgCidrs = new ChangeTrackingList<NsgCidr>();
+            NsgCidrs = new ChangeTrackingList<CloudVmClusterNsgCidr>();
             Shape = shape;
             SshPublicKeys = sshPublicKeys.ToList();
             TotalEcpuCount = totalEcpuCount;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="backupSubnetOcid"> Cluster backup subnet ocid. </param>
         /// <param name="subnetOcid"> Cluster subnet ocid. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExadbVmClusterProperties(string ocid, string clusterName, string backupSubnetCidr, Uri nsgUri, AzureResourceProvisioningState? provisioningState, ExadbVmClusterLifecycleState? lifecycleState, ResourceIdentifier vnetId, ResourceIdentifier subnetId, DataCollectionOptions dataCollectionOptions, string displayName, string domain, int enabledEcpuCount, ResourceIdentifier exascaleDbStorageVaultId, string gridImageOcid, GridImageType? gridImageType, string giVersion, string hostname, LicenseModel? licenseModel, int? memorySizeInGbs, int nodeCount, IList<NsgCidr> nsgCidrs, string zoneOcid, string privateZoneOcid, int? scanListenerPortTcp, int? scanListenerPortTcpSsl, int? listenerPort, string shape, IList<string> sshPublicKeys, string systemVersion, string timeZone, int totalEcpuCount, ExadbVmClusterStorageDetails vmFileSystemStorage, string lifecycleDetails, string scanDnsName, IReadOnlyList<string> scanIPIds, string scanDnsRecordId, ExadbVmClusterStorageDetails snapshotFileSystemStorage, ExadbVmClusterStorageDetails totalFileSystemStorage, IReadOnlyList<string> vipIds, Uri ociUri, ExadataIormConfig iormConfigCache, string backupSubnetOcid, string subnetOcid, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExadbVmClusterProperties(string ocid, string clusterName, string backupSubnetCidr, Uri nsgUri, OracleDatabaseProvisioningState? provisioningState, ExadbVmClusterLifecycleState? lifecycleState, ResourceIdentifier vnetId, ResourceIdentifier subnetId, DiagnosticCollectionConfig dataCollectionOptions, string displayName, string domain, int enabledEcpuCount, ResourceIdentifier exascaleDbStorageVaultId, string gridImageOcid, GridImageType? gridImageType, string giVersion, string hostname, OracleLicenseModel? licenseModel, int? memorySizeInGbs, int nodeCount, IList<CloudVmClusterNsgCidr> nsgCidrs, string zoneOcid, string privateZoneOcid, int? scanListenerPortTcp, int? scanListenerPortTcpSsl, int? listenerPort, string shape, IList<string> sshPublicKeys, string systemVersion, string timeZone, int totalEcpuCount, ExadbVmClusterStorageDetails vmFileSystemStorage, string lifecycleDetails, string scanDnsName, IReadOnlyList<string> scanIPIds, string scanDnsRecordId, ExadbVmClusterStorageDetails snapshotFileSystemStorage, ExadbVmClusterStorageDetails totalFileSystemStorage, IReadOnlyList<string> vipIds, Uri ociUri, ExadataIormConfig iormConfigCache, string backupSubnetOcid, string subnetOcid, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Ocid = ocid;
             ClusterName = clusterName;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> HTTPS link to OCI Network Security Group exposed to Azure Customer via the Azure Interface. </summary>
         public Uri NsgUri { get; }
         /// <summary> Exadata VM cluster on Exascale Infrastructure provisioning state. </summary>
-        public AzureResourceProvisioningState? ProvisioningState { get; }
+        public OracleDatabaseProvisioningState? ProvisioningState { get; }
         /// <summary> CloudVmCluster lifecycle state. </summary>
         public ExadbVmClusterLifecycleState? LifecycleState { get; }
         /// <summary> VNET for network connectivity. </summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Client subnet. </summary>
         public ResourceIdentifier SubnetId { get; set; }
         /// <summary> Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS. </summary>
-        public DataCollectionOptions DataCollectionOptions { get; set; }
+        public DiagnosticCollectionConfig DataCollectionOptions { get; set; }
         /// <summary> Display Name. </summary>
         public string DisplayName { get; set; }
         /// <summary> A domain name used for the Exadata VM cluster on Exascale Infrastructure. </summary>
@@ -220,13 +220,13 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The hostname for the  Exadata VM cluster on Exascale Infrastructure. </summary>
         public string Hostname { get; set; }
         /// <summary> The Oracle license model that applies to the Exadata VM cluster on Exascale Infrastructure. The default is LICENSE_INCLUDED. </summary>
-        public LicenseModel? LicenseModel { get; set; }
+        public OracleLicenseModel? LicenseModel { get; set; }
         /// <summary> The memory that you want to be allocated in GBs. Memory is calculated based on 11 GB per VM core reserved. </summary>
         public int? MemorySizeInGbs { get; }
         /// <summary> The number of nodes in the Exadata VM cluster on Exascale Infrastructure. </summary>
         public int NodeCount { get; set; }
         /// <summary> CIDR blocks for additional NSG ingress rules. The VNET CIDRs used to provision the VM Cluster will be added by default. </summary>
-        public IList<NsgCidr> NsgCidrs { get; }
+        public IList<CloudVmClusterNsgCidr> NsgCidrs { get; }
         /// <summary> The OCID of the zone the Exadata VM cluster on Exascale Infrastructure is associated with. </summary>
         public string ZoneOcid { get; }
         /// <summary> The OCID of the zone the Exadata VM cluster on Exascale Infrastructure is associated with. </summary>

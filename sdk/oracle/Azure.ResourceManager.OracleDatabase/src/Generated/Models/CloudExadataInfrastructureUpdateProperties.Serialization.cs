@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             int? computeCount = default;
             int? storageCount = default;
             MaintenanceWindow maintenanceWindow = default;
-            IList<CustomerContact> customerContacts = default;
+            IList<OracleCustomerContact> customerContacts = default;
             string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    List<CustomerContact> array = new List<CustomerContact>();
+                    List<OracleCustomerContact> array = new List<OracleCustomerContact>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomerContact.DeserializeCustomerContact(item, options));
+                        array.Add(OracleCustomerContact.DeserializeOracleCustomerContact(item, options));
                     }
                     customerContacts = array;
                     continue;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 computeCount,
                 storageCount,
                 maintenanceWindow,
-                customerContacts ?? new ChangeTrackingList<CustomerContact>(),
+                customerContacts ?? new ChangeTrackingList<OracleCustomerContact>(),
                 displayName,
                 serializedAdditionalRawData);
         }

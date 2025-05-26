@@ -141,13 +141,13 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            Preference? preference = default;
-            IList<Month> months = default;
+            MaintenancePreference? preference = default;
+            IList<MaintenanceMonth> months = default;
             IList<int> weeksOfMonth = default;
             IList<DayOfWeek> daysOfWeek = default;
             IList<int> hoursOfDay = default;
             int? leadTimeInWeeks = default;
-            PatchingMode? patchingMode = default;
+            MaintenancePatchingMode? patchingMode = default;
             int? customActionTimeoutInMins = default;
             bool? isCustomActionTimeoutEnabled = default;
             bool? isMonthlyPatchingEnabled = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    preference = new Preference(property.Value.GetString());
+                    preference = new MaintenancePreference(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("months"u8))
@@ -170,10 +170,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    List<Month> array = new List<Month>();
+                    List<MaintenanceMonth> array = new List<MaintenanceMonth>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Month.DeserializeMonth(item, options));
+                        array.Add(MaintenanceMonth.DeserializeMaintenanceMonth(item, options));
                     }
                     months = array;
                     continue;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    patchingMode = new PatchingMode(property.Value.GetString());
+                    patchingMode = new MaintenancePatchingMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("customActionTimeoutInMins"u8))
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new MaintenanceWindow(
                 preference,
-                months ?? new ChangeTrackingList<Month>(),
+                months ?? new ChangeTrackingList<MaintenanceMonth>(),
                 weeksOfMonth ?? new ChangeTrackingList<int>(),
                 daysOfWeek ?? new ChangeTrackingList<DayOfWeek>(),
                 hoursOfDay ?? new ChangeTrackingList<int>(),

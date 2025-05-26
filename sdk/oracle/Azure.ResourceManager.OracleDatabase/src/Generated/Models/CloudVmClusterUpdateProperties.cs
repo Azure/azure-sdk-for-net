@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="displayName"> Display Name. </param>
         /// <param name="computeNodes"> The list of compute servers to be added to the cloud VM cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudVmClusterUpdateProperties(int? storageSizeInGbs, IList<FileSystemConfigurationDetails> fileSystemConfigurationDetails, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, int? cpuCoreCount, float? ocpuCount, IList<string> sshPublicKeys, LicenseModel? licenseModel, DataCollectionOptions dataCollectionOptions, string displayName, IList<string> computeNodes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudVmClusterUpdateProperties(int? storageSizeInGbs, IList<FileSystemConfigurationDetails> fileSystemConfigurationDetails, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, int? cpuCoreCount, float? ocpuCount, IList<string> sshPublicKeys, OracleLicenseModel? licenseModel, DiagnosticCollectionConfig dataCollectionOptions, string displayName, IList<string> computeNodes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageSizeInGbs = storageSizeInGbs;
             FileSystemConfigurationDetails = fileSystemConfigurationDetails;
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The public key portion of one or more key pairs used for SSH access to the cloud VM cluster. </summary>
         public IList<string> SshPublicKeys { get; }
         /// <summary> The Oracle license model that applies to the cloud VM cluster. The default is LICENSE_INCLUDED. </summary>
-        public LicenseModel? LicenseModel { get; set; }
+        public OracleLicenseModel? LicenseModel { get; set; }
         /// <summary> Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS. </summary>
-        public DataCollectionOptions DataCollectionOptions { get; set; }
+        public DiagnosticCollectionConfig DataCollectionOptions { get; set; }
         /// <summary> Display Name. </summary>
         public string DisplayName { get; set; }
         /// <summary> The list of compute servers to be added to the cloud VM cluster. </summary>

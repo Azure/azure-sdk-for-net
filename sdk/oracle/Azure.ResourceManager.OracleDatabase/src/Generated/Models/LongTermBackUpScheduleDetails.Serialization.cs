@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("repeatCadence"u8);
                 writer.WriteStringValue(RepeatCadence.Value.ToString());
             }
-            if (Optional.IsDefined(TimeOfBackup))
+            if (Optional.IsDefined(BackupOn))
             {
                 writer.WritePropertyName("timeOfBackup"u8);
-                writer.WriteStringValue(TimeOfBackup.Value, "O");
+                writer.WriteStringValue(BackupOn.Value, "O");
             }
             if (Optional.IsDefined(RetentionPeriodInDays))
             {

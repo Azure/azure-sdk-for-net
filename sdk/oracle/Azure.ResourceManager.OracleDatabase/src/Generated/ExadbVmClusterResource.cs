@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.OracleDatabase
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ExascaleDbNodeResources in the ExadbVmCluster. </summary>
-        /// <returns> An object representing collection of ExascaleDbNodeResources and their operations over a ExascaleDbNodeResource. </returns>
-        public virtual ExascaleDbNodeCollection GetExascaleDbNodes()
+        /// <summary> Gets a collection of ExascaleDBNodeResources in the ExadbVmCluster. </summary>
+        /// <returns> An object representing collection of ExascaleDBNodeResources and their operations over a ExascaleDBNodeResource. </returns>
+        public virtual ExascaleDBNodeCollection GetExascaleDBNodes()
         {
-            return GetCachedClient(client => new ExascaleDbNodeCollection(client, Id));
+            return GetCachedClient(client => new ExascaleDBNodeCollection(client, Id));
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ExascaleDbNodeResource"/></description>
+        /// <description><see cref="ExascaleDBNodeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <exception cref="ArgumentNullException"> <paramref name="exascaleDbNodeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="exascaleDbNodeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ExascaleDbNodeResource>> GetExascaleDbNodeAsync(string exascaleDbNodeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExascaleDBNodeResource>> GetExascaleDBNodeAsync(string exascaleDbNodeName, CancellationToken cancellationToken = default)
         {
-            return await GetExascaleDbNodes().GetAsync(exascaleDbNodeName, cancellationToken).ConfigureAwait(false);
+            return await GetExascaleDBNodes().GetAsync(exascaleDbNodeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ExascaleDbNodeResource"/></description>
+        /// <description><see cref="ExascaleDBNodeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <exception cref="ArgumentNullException"> <paramref name="exascaleDbNodeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="exascaleDbNodeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ExascaleDbNodeResource> GetExascaleDbNode(string exascaleDbNodeName, CancellationToken cancellationToken = default)
+        public virtual Response<ExascaleDBNodeResource> GetExascaleDBNode(string exascaleDbNodeName, CancellationToken cancellationToken = default)
         {
-            return GetExascaleDbNodes().Get(exascaleDbNodeName, cancellationToken);
+            return GetExascaleDBNodes().Get(exascaleDbNodeName, cancellationToken);
         }
 
         /// <summary>

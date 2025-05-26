@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             CloudAccountProvisioningState? cloudAccountState = default;
             string termUnit = default;
             string productCode = default;
-            Intent? intent = default;
+            OracleSubscriptionUpdateIntent? intent = default;
             IReadOnlyList<string> azureSubscriptionIds = default;
             AddSubscriptionOperationState? addSubscriptionOperationState = default;
             string lastOperationStatusDetail = default;
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    intent = new Intent(property.Value.GetString());
+                    intent = new OracleSubscriptionUpdateIntent(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("azureSubscriptionIds"u8))

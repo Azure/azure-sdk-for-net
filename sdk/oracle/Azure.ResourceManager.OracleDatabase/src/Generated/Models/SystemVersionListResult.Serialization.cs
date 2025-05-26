@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            IReadOnlyList<SystemVersionData> value = default;
+            IReadOnlyList<OracleSystemVersionData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<SystemVersionData> array = new List<SystemVersionData>();
+                    List<OracleSystemVersionData> array = new List<OracleSystemVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SystemVersionData.DeserializeSystemVersionData(item, options));
+                        array.Add(OracleSystemVersionData.DeserializeOracleSystemVersionData(item, options));
                     }
                     value = array;
                     continue;

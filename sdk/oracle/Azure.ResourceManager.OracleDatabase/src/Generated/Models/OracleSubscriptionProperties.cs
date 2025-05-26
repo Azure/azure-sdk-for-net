@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="addSubscriptionOperationState"> State of the add Azure subscription operation on Oracle subscription. </param>
         /// <param name="lastOperationStatusDetail"> Status details of the last operation on Oracle subscription. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OracleSubscriptionProperties(OracleSubscriptionProvisioningState? provisioningState, string saasSubscriptionId, string cloudAccountId, CloudAccountProvisioningState? cloudAccountState, string termUnit, string productCode, Intent? intent, IReadOnlyList<string> azureSubscriptionIds, AddSubscriptionOperationState? addSubscriptionOperationState, string lastOperationStatusDetail, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OracleSubscriptionProperties(OracleSubscriptionProvisioningState? provisioningState, string saasSubscriptionId, string cloudAccountId, CloudAccountProvisioningState? cloudAccountState, string termUnit, string productCode, OracleSubscriptionUpdateIntent? intent, IReadOnlyList<string> azureSubscriptionIds, AddSubscriptionOperationState? addSubscriptionOperationState, string lastOperationStatusDetail, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             SaasSubscriptionId = saasSubscriptionId;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Product code for the term unit. </summary>
         public string ProductCode { get; set; }
         /// <summary> Intent for the update operation. </summary>
-        public Intent? Intent { get; set; }
+        public OracleSubscriptionUpdateIntent? Intent { get; set; }
         /// <summary> Azure subscriptions to be added. </summary>
         public IReadOnlyList<string> AzureSubscriptionIds { get; }
         /// <summary> State of the add Azure subscription operation on Oracle subscription. </summary>

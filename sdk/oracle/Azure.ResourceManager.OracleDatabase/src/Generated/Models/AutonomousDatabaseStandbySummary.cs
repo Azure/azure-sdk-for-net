@@ -54,16 +54,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="lagTimeInSeconds"> The amount of time, in seconds, that the data of the standby database lags the data of the primary database. Can be used to determine the potential data loss in the event of a failover. </param>
         /// <param name="lifecycleState"> The current state of the Autonomous Database. </param>
         /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
-        /// <param name="timeDataGuardRoleChanged"> The date and time the Autonomous Data Guard role was switched for the standby Autonomous Database. </param>
-        /// <param name="timeDisasterRecoveryRoleChanged"> The date and time the Disaster Recovery role was switched for the standby Autonomous Database. </param>
+        /// <param name="dataGuardRoleChangedOn"> The date and time the Autonomous Data Guard role was switched for the standby Autonomous Database. </param>
+        /// <param name="disasterRecoveryRoleChangedOn"> The date and time the Disaster Recovery role was switched for the standby Autonomous Database. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutonomousDatabaseStandbySummary(int? lagTimeInSeconds, AutonomousDatabaseLifecycleState? lifecycleState, string lifecycleDetails, string timeDataGuardRoleChanged, string timeDisasterRecoveryRoleChanged, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutonomousDatabaseStandbySummary(int? lagTimeInSeconds, AutonomousDatabaseLifecycleState? lifecycleState, string lifecycleDetails, DateTimeOffset? dataGuardRoleChangedOn, DateTimeOffset? disasterRecoveryRoleChangedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LagTimeInSeconds = lagTimeInSeconds;
             LifecycleState = lifecycleState;
             LifecycleDetails = lifecycleDetails;
-            TimeDataGuardRoleChanged = timeDataGuardRoleChanged;
-            TimeDisasterRecoveryRoleChanged = timeDisasterRecoveryRoleChanged;
+            DataGuardRoleChangedOn = dataGuardRoleChangedOn;
+            DisasterRecoveryRoleChangedOn = disasterRecoveryRoleChangedOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Additional information about the current lifecycle state. </summary>
         public string LifecycleDetails { get; }
         /// <summary> The date and time the Autonomous Data Guard role was switched for the standby Autonomous Database. </summary>
-        public string TimeDataGuardRoleChanged { get; }
+        public DateTimeOffset? DataGuardRoleChangedOn { get; }
         /// <summary> The date and time the Disaster Recovery role was switched for the standby Autonomous Database. </summary>
-        public string TimeDisasterRecoveryRoleChanged { get; }
+        public DateTimeOffset? DisasterRecoveryRoleChangedOn { get; }
     }
 }

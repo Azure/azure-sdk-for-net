@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Initializes a new instance of <see cref="CloudExadataInfrastructureUpdateProperties"/>. </summary>
         public CloudExadataInfrastructureUpdateProperties()
         {
-            CustomerContacts = new ChangeTrackingList<CustomerContact>();
+            CustomerContacts = new ChangeTrackingList<OracleCustomerContact>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudExadataInfrastructureUpdateProperties"/>. </summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="customerContacts"> The list of customer email addresses that receive information from Oracle about the specified OCI Database service resource. Oracle uses these email addresses to send notifications about planned and unplanned software maintenance updates, information about system hardware, and other information needed by administrators. Up to 10 email addresses can be added to the customer contacts for a cloud Exadata infrastructure instance. </param>
         /// <param name="displayName"> The name for the Exadata infrastructure. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudExadataInfrastructureUpdateProperties(int? computeCount, int? storageCount, MaintenanceWindow maintenanceWindow, IList<CustomerContact> customerContacts, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudExadataInfrastructureUpdateProperties(int? computeCount, int? storageCount, MaintenanceWindow maintenanceWindow, IList<OracleCustomerContact> customerContacts, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ComputeCount = computeCount;
             StorageCount = storageCount;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> maintenanceWindow property. </summary>
         public MaintenanceWindow MaintenanceWindow { get; set; }
         /// <summary> The list of customer email addresses that receive information from Oracle about the specified OCI Database service resource. Oracle uses these email addresses to send notifications about planned and unplanned software maintenance updates, information about system hardware, and other information needed by administrators. Up to 10 email addresses can be added to the customer contacts for a cloud Exadata infrastructure instance. </summary>
-        public IList<CustomerContact> CustomerContacts { get; }
+        public IList<OracleCustomerContact> CustomerContacts { get; }
         /// <summary> The name for the Exadata infrastructure. </summary>
         public string DisplayName { get; set; }
     }
