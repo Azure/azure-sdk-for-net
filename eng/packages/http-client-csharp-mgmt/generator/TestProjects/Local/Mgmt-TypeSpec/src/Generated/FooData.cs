@@ -8,26 +8,48 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
+using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Models
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class FooData : TrackedResource
+    public partial class FooData : TrackedResourceData
     {
-        internal FooData(string location) : base(location)
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="FooData"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public FooData(string location) : base(location)
         {
+            Argument.AssertNotNull(location, nameof(location));
+
         }
 
-        internal FooData(ResourceIdentifier id, string name, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, string location, FooProperties properties, ExtendedLocation extendedLocation) : base(id, name, @type, systemData, additionalBinaryDataProperties, tags, location)
+        /// <summary> Initializes a new instance of <see cref="FooData"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name"> The name of the Foo. </param>
+        /// <param name="extendedLocation"></param>
+        internal FooData(ResourceIdentifier id, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, string location, FooProperties properties, string name, ExtendedLocation extendedLocation) : base(id, name, @type, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ExtendedLocation = extendedLocation;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public FooProperties Properties { get; }
+        public FooProperties Properties { get; set; }
 
-        /// <summary> Gets the ExtendedLocation. </summary>
-        public ExtendedLocation ExtendedLocation { get; }
+        /// <summary> Gets or sets the ExtendedLocation. </summary>
+        public ExtendedLocation ExtendedLocation { get; set; }
     }
 }

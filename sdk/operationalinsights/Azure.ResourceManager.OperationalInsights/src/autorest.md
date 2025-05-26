@@ -7,15 +7,16 @@ azure-arm: true
 csharp: true
 library-name: OperationalInsights
 namespace: Azure.ResourceManager.OperationalInsights
-require: https://github.com/Azure/azure-rest-api-specs/blob/d402f685809d6d08be9c0b45065cadd7d78ab870/specification/operationalinsights/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/b713df239eb640a56fb4b4db9648ad4bf1388e3b/specification/operationalinsights/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 use-model-reader-writer: true
 enable-bicep-serialization: true
 # mgmt-debug:
@@ -69,6 +70,8 @@ prepend-rp-prefix:
   - BillingType
   - CapacityReservationProperties
   - ClusterEntityStatus
+  - ClusterReplicationProperties
+  - ClusterReplicationState
   - ClusterSku
   - Column
   - DataIngestionStatus
@@ -88,7 +91,11 @@ prepend-rp-prefix:
   - UsageMetric
   - WorkspaceCapping
   - WorkspaceEntityStatus
+  - WorkspaceFailoverProperties
+  - WorkspaceFailoverState
   - WorkspaceFeatures
+  - WorkspaceReplicationProperties
+  - WorkspaceReplicationState
   - WorkspaceSku
 
 rename-mapping:
@@ -112,6 +119,7 @@ rename-mapping:
   WorkspaceFeatures.disableLocalAuth: IsLocalAuthDisabled
   WorkspaceFeatures.enableDataExport: IsDataExportEnabled
   WorkspaceFeatures.enableLogAccessUsingOnlyResourcePermissions: IsLogAccessUsingOnlyResourcePermissionsEnabled
+  WorkspaceFeatures.unifiedSentinelBillingOnly: IsUnifiedSentinelBillingOnly
   PrivateLinkScopedResource: OperationalInsightsPrivateLinkScopedResourceInfo
   LogAnalyticsQueryPack.properties.timeCreated: CreatedOn
   LogAnalyticsQueryPack.properties.timeModified: ModifiedOn
@@ -119,6 +127,7 @@ rename-mapping:
   LogAnalyticsQueryPackQuery.properties.timeCreated: CreatedOn
   LogAnalyticsQueryPackQuery.properties.timeModified: ModifiedOn
   LogAnalyticsQueryPackQuery: LogAnalyticsQuery
+  ClusterReplicationProperties.enabled: IsReplicationEnabled
   ClusterSkuNameEnum: OperationalInsightsClusterSkuName
   ColumnDataTypeHintEnum: OperationalInsightsColumnDataTypeHint
   ColumnTypeEnum: OperationalInsightsColumnType
@@ -138,6 +147,7 @@ rename-mapping:
   SharedKeys: OperationalInsightsWorkspaceSharedKeys
   WorkspacePurgeResponse: OperationalInsightsWorkspacePurgeResult
   WorkspacePurgeStatusResponse: OperationalInsightsWorkspacePurgeStatusResult
+  WorkspaceReplicationProperties.enabled: IsReplicationEnabled
   RestoredLogs: OperationalInsightsTableRestoredLogs
   SearchResults: OperationalInsightsTableSearchResults
   ResultStatistics: OperationalInsightsTableResultStatistics
@@ -169,13 +179,6 @@ operations-to-skip-lro-api-version-override:
 
 directive:
   - remove-operation: OperationStatuses_Get
-  # Dup model `SystemData` in this RP, should use the common type
-  - from: QueryPackQueries.json
-    where: $.definitions
-    transform: >
-      delete $.SystemData;
-      delete $.IdentityType;
-      $.AzureResourceProperties.properties.systemData['$ref'] = '../../../../../common-types/resource-management/v2/types.json#/definitions/systemData';
   # The `type` is reserved name
   - from: Tables.json
     where: $.definitions

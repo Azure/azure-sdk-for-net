@@ -29,6 +29,8 @@ namespace Azure.Generator.Primitives
         private const string ETagId = "Azure.Core.eTag";
         private const string AzureLocationId = "Azure.Core.azureLocation";
         private const string ArmIdId = "Azure.Core.armResourceIdentifier";
+        private const string AzureError = "Azure.Core.Foundations.Error";
+        private const string EmbeddingVector = "Azure.Core.EmbeddingVector";
 
         private static MethodBodyStatement SerializeTypeWithImplicitOperatorToString(ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
             => writer.WriteStringValue(value);
@@ -42,7 +44,15 @@ namespace Azure.Generator.Primitives
         private static ValueExpression DeserializeParsableStringLikeType(CSharpType valueType, ScopedApi<JsonElement> element, SerializationFormat format)
             => Static(valueType).Invoke("Parse", element.GetString());
 
-        private static readonly IReadOnlyDictionary<string, CSharpType> _idToTypes = new Dictionary<string, CSharpType>
+        private static MethodBodyStatement SerializeResponseError(ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
+            => Static(typeof(JsonSerializer)).Invoke(nameof(JsonSerializer.Serialize), writer, value).Terminate();
+
+        private static ValueExpression DeserializeResponseError(CSharpType valueType,
+            ScopedApi<JsonElement> element,
+            SerializationFormat format)
+            => Static(typeof(JsonSerializer)).Invoke(nameof(JsonSerializer.Deserialize), arguments: [element.GetRawText()], typeArguments: [valueType], callAsAsync: false);
+
+        private static readonly IReadOnlyDictionary<string, Type> _idToTypes = new Dictionary<string, Type>
         {
             [UuidId] = typeof(Guid),
             [IPv4AddressId] = typeof(IPAddress),
@@ -50,6 +60,8 @@ namespace Azure.Generator.Primitives
             [ETagId] = typeof(ETag),
             [AzureLocationId] = typeof(AzureLocation),
             [ArmIdId] = typeof(ResourceIdentifier),
+            [AzureError] = typeof(ResponseError),
+            [EmbeddingVector] = typeof(ReadOnlyMemory<>)
         };
 
         private static readonly IReadOnlyDictionary<Type, SerializationExpression> _typeToSerializationExpression = new Dictionary<Type, SerializationExpression>
@@ -59,6 +71,7 @@ namespace Azure.Generator.Primitives
             [typeof(ETag)] = SerializeTypeWithToString,
             [typeof(AzureLocation)] = SerializeTypeWithImplicitOperatorToString,
             [typeof(ResourceIdentifier)] = SerializeTypeWithImplicitOperatorToString,
+            [typeof(ResponseError)] = SerializeResponseError,
         };
 
         private static readonly IReadOnlyDictionary<Type, DeserializationExpression> _typeToDeserializationExpression = new Dictionary<Type, DeserializationExpression>
@@ -68,9 +81,10 @@ namespace Azure.Generator.Primitives
             [typeof(ETag)] = DeserializeNewInstanceStringLikeType,
             [typeof(AzureLocation)] = DeserializeNewInstanceStringLikeType,
             [typeof(ResourceIdentifier)] = DeserializeNewInstanceStringLikeType,
+            [typeof(ResponseError)] = DeserializeResponseError,
         };
 
-        public static bool TryGetPrimitiveType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToTypes.TryGetValue(id, out type);
+        public static bool TryGetKnownType(string id, [MaybeNullWhen(false)] out Type type) => _idToTypes.TryGetValue(id, out type);
 
         public static bool TryGetJsonSerializationExpression(Type type, [MaybeNullWhen(false)] out SerializationExpression expression) => _typeToSerializationExpression.TryGetValue(type, out expression);
 

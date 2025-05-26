@@ -110,6 +110,7 @@ jobs:
             $generateUnifiedWeekly = 'true'
           }
           "net" {
+            $generatePublicCIPipeline = 'false'
             $internalVariableGroups = '$(AzureSDK_Nuget_Release_Pipeline_Secrets) $(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations)'
             $testVariableGroups = '$(Secrets_for_Resource_Provisioner)'
             $internalServiceConnections += ' "Azure SDK Symbols Publishing" Nuget.org'
@@ -121,6 +122,7 @@ jobs:
             $internalVariableGroups = '$(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations) $(Secrets_for_Resource_Provisioner) $(AzureSDK_CocoaPods_Release_Pipeline_Secrets)'
           }
           "go" {
+            $generatePublicCIPipeline = 'false'
             $internalVariableGroups = '$(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations) $(Secrets_for_Resource_Provisioner)'
             $generateUnifiedWeekly = 'true'
           }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiManagementGlobalSchemaResource : IJsonModel<ApiManagementGlobalSchemaData>
     {
+        private static ApiManagementGlobalSchemaData s_dataDeserializationInstance;
+        private static ApiManagementGlobalSchemaData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApiManagementGlobalSchemaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementGlobalSchemaData>)Data).Write(writer, options);
 
-        ApiManagementGlobalSchemaData IJsonModel<ApiManagementGlobalSchemaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementGlobalSchemaData>)Data).Create(ref reader, options);
+        ApiManagementGlobalSchemaData IJsonModel<ApiManagementGlobalSchemaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementGlobalSchemaData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApiManagementGlobalSchemaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApiManagementGlobalSchemaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementGlobalSchemaData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
-        ApiManagementGlobalSchemaData IPersistableModel<ApiManagementGlobalSchemaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementGlobalSchemaData>(data, options);
+        ApiManagementGlobalSchemaData IPersistableModel<ApiManagementGlobalSchemaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementGlobalSchemaData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiManagementGlobalSchemaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementGlobalSchemaData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApiManagementGlobalSchemaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementGlobalSchemaData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

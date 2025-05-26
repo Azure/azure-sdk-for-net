@@ -351,7 +351,7 @@ model RadiologyInsightsResult
   @doc("The body of the Radiology Insights request.")
   model RadiologyInsightsData {
     ...Request;
-  
+
     @doc("Configuration affecting the Radiology Insights model's inference.")
     configuration?: string;
   }
@@ -377,7 +377,7 @@ interface LegacyLro {
     @route("/radiology-insights/jobs/{id}")
     @convenientAPI(false)
     getJob is HealthInsightsLongRunningPollOperation<RadiologyInsightsResult>;
-  
+
     #suppress "@azure-tools/typespec-azure-core/long-running-polling-operation-required" "Polling through operation-location"
     #suppress "@azure-tools/typespec-azure-core/use-standard-operations" "There is no long-running RPC template in Azure.Core"
     @summary("Create Radiology Insights job")
@@ -409,4 +409,3 @@ interface LegacyLro {
     //strictEqual(radiologyInsightsInferenceResult.usage, UsageFlags.Output | UsageFlags.Json);
   });
 });
-//# sourceMappingURL=usage.test.js.map

@@ -2,8 +2,7 @@
 param(
     $filter,
     [bool]$Stubbed = $true,
-    [bool]$LaunchOnly = $false,
-    [switch]$ForceNewProject = $false
+    [bool]$LaunchOnly = $false
 )
 
 Import-Module "$PSScriptRoot\Generation.psm1" -DisableNameChecking -Force;
@@ -22,7 +21,7 @@ if (-not $LaunchOnly) {
 
         $basicTypespecTestProject = Join-Path $testProjectsLocalDir "Basic-TypeSpec"
 
-        Invoke (Get-TspCommand "$basicTypespecTestProject/Basic-TypeSpec.tsp" $basicTypespecTestProject -forceNewProject $ForceNewProject)
+        Invoke (Get-TspCommand "$basicTypespecTestProject/Basic-TypeSpec.tsp" $basicTypespecTestProject)
 
         # exit if the generation failed
         if ($LASTEXITCODE -ne 0) {
@@ -54,17 +53,8 @@ function IsSpecDir {
 $failingSpecs = @(
     Join-Path 'http' 'payload' 'pageable'
     Join-Path 'http' 'payload' 'xml'
-    Join-Path 'http' 'type' 'model' 'flatten'
-    Join-Path 'http' 'type' 'model' 'templated'
-    Join-Path 'http' 'payload' 'multipart'
     Join-Path 'http' 'server' 'path' 'multiple'
     Join-Path 'http' 'server' 'versions' 'versioned'
-    Join-Path 'http' 'type' 'union'
-    Join-Path 'http' 'type' 'enum' 'extensible'
-    Join-Path 'http' 'type' 'model' 'inheritance' 'enum-discriminator'
-    Join-Path 'http' 'type' 'property' 'additional-properties'
-    Join-Path 'http' 'type' 'property' 'optionality'
-    Join-Path 'http' 'type' 'property' 'value-types'
     Join-Path 'http' 'versioning' 'added'
     Join-Path 'http' 'versioning' 'madeOptional'
     Join-Path 'http' 'versioning' 'removed'
@@ -77,25 +67,27 @@ $failingSpecs = @(
     Join-Path 'http' 'client' 'structure' 'renamed-operation'
     Join-Path 'http' 'client' 'structure' 'multi-client'
     Join-Path 'http' 'client' 'structure' 'two-operation-group'
-    Join-Path 'http' 'encode' 'bytes'
-    Join-Path 'http' 'encode' 'datetime'
-    Join-Path 'http' 'encode' 'duration'
-    Join-Path 'http' 'parameters' 'collection-format'
     Join-Path 'http' 'response' 'status-code-range' # Response namespace conflicts with Azure.Response
-    Join-Path 'http' 'routes'
-    Join-Path 'http' 'type' 'array'
-    Join-Path 'http' 'type' 'dictionary'
-    Join-Path 'http' 'type' 'scalar'
-)
+    # Azure scenarios not yet buildable
+    Join-Path 'http' 'client' 'namespace'
+    Join-Path 'http' 'azure' 'client-generator-core' 'access'
+    Join-Path 'http' 'azure' 'client-generator-core' 'client-initialization'
+    Join-Path 'http' 'azure' 'client-generator-core' 'deserialize-empty-string-as-null'
+    Join-Path 'http' 'azure' 'client-generator-core' 'api-version' 'header'
+    Join-Path 'http' 'azure' 'client-generator-core' 'api-version' 'path'
+    Join-Path 'http' 'azure' 'client-generator-core' 'api-version' 'query'
+    Join-Path 'http' 'azure' 'core' 'basic'
+    Join-Path 'http' 'azure' 'core' 'page'
+    Join-Path 'http' 'azure' 'core' 'scalar'
+    Join-Path 'http' 'azure' 'core' 'traits'
+    Join-Path 'http' 'azure' 'encode' 'duration'
+    Join-Path 'http' 'azure' 'payload' 'pageable'
+    # These scenarios will be covered in Azure.Generator.Management
+    Join-Path 'http' 'azure' 'resource-manager' 'common-properties'
+    Join-Path 'http' 'azure' 'resource-manager' 'non-resource'
+    Join-Path 'http' 'azure' 'resource-manager' 'operation-templates'
+    Join-Path 'http' 'azure' 'resource-manager' 'resources'
 
-$azureAllowSpecs = @(
-    Join-Path 'http' 'client' 'naming'
-    Join-Path 'http' 'client' 'structure' 'client-operation-group'
-    Join-Path 'http' 'client' 'structure' 'default'
-    Join-Path 'http' 'client' 'structure' 'multi-client'
-    Join-Path 'http' 'client' 'structure' 'renamed-operation'
-    Join-Path 'http' 'client' 'structure' 'two-operation-group'
-    Join-Path 'http' 'resiliency' 'srv-driven'
 )
 
 $spectorLaunchProjects = @{}
@@ -119,10 +111,6 @@ foreach ($directory in $directories) {
     $folders = $subPath.Split([System.IO.Path]::DirectorySeparatorChar)
 
     if (-not (Compare-Paths $subPath $filter)) {
-        continue
-    }
-
-    if ($fromAzure -eq $true -and !$azureAllowSpecs.Contains($subPath)) {
         continue
     }
 
@@ -162,7 +150,7 @@ foreach ($directory in $directories) {
     }
 
     Write-Host "Generating $subPath" -ForegroundColor Cyan
-    Invoke (Get-TspCommand $specFile $generationDir $stubbed -forceNewProject $ForceNewProject)
+    Invoke (Get-TspCommand $specFile $generationDir $stubbed)
 
     # exit if the generation failed
     if ($LASTEXITCODE -ne 0) {
@@ -185,7 +173,7 @@ if ($null -eq $filter) {
 
     foreach ($kvp in $spectorLaunchProjects.GetEnumerator()) {
         $launchSettings["profiles"].Add($kvp.Key, @{})
-        $launchSettings["profiles"][$kvp.Key].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll `$(SolutionDir)/$($kvp.Value) -g AzureClientGenerator")
+        $launchSettings["profiles"][$kvp.Key].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll `$(SolutionDir)/$($kvp.Value) -g AzureStubGenerator")
         $launchSettings["profiles"][$kvp.Key].Add("commandName", "Executable")
         $launchSettings["profiles"][$kvp.Key].Add("executablePath", "dotnet")
     }

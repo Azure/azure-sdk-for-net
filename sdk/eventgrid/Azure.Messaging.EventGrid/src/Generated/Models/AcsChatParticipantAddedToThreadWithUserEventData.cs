@@ -13,8 +13,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatParticipantAddedToThreadWithUserEventData : AcsChatThreadEventBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatParticipantAddedToThreadWithUserEventData"/>. </summary>
-        internal AcsChatParticipantAddedToThreadWithUserEventData()
+        /// <param name="addedByCommunicationIdentifier"> The communication identifier of the user who added the user. </param>
+        /// <param name="participantAdded"> The details of the user who was added. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="addedByCommunicationIdentifier"/> or <paramref name="participantAdded"/> is null. </exception>
+        internal AcsChatParticipantAddedToThreadWithUserEventData(CommunicationIdentifierModel addedByCommunicationIdentifier, AcsChatThreadParticipantProperties participantAdded)
         {
+            Argument.AssertNotNull(addedByCommunicationIdentifier, nameof(addedByCommunicationIdentifier));
+            Argument.AssertNotNull(participantAdded, nameof(participantAdded));
+
+            AddedByCommunicationIdentifier = addedByCommunicationIdentifier;
+            ParticipantAdded = participantAdded;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsChatParticipantAddedToThreadWithUserEventData"/>. </summary>

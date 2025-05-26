@@ -14,6 +14,7 @@ pr:
     - sdk/storage/Azure.Storage.DataMovement/
     - sdk/storage/Azure.Storage.DataMovement.Blobs/
     - sdk/storage/Azure.Storage.DataMovement.Files.Shares/
+    - sdk/storage/Azure.Storage.DataMovement.Blobs.Files.Shares/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -31,6 +32,9 @@ extends:
       skipSmokeTests: true
     - name: Azure.Storage.DataMovement.Files.Shares
       safeName: AzureStorageDataMovementFilesShares
+      skipSmokeTests: true
+    - name: Azure.Storage.DataMovement.Blobs.Files.Shares
+      safeName: AzureStorageDataMovementBlobsFilesShares
       skipSmokeTests: true
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml

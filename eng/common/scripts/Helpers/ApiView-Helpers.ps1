@@ -1,3 +1,5 @@
+. ${PSScriptRoot}\..\logging.ps1
+
 function MapLanguageToRequestParam($language)
 {
     $lang = $language
@@ -132,8 +134,9 @@ function Set-ApiViewCommentForRelatedIssues {
   try {
     $issuesForCommit = Search-GitHubIssues -CommitHash $HeadCommitish
     if ($issuesForCommit.items.Count -eq 0) {
-      LogError "No issues found for commit: $HeadCommitish"
-      exit 1
+      LogInfo "No issues found for commit: $HeadCommitish"
+      Write-Host "##vso[task.complete result=SucceededWithIssues;]DONE"
+      exit 0
     }
   } catch {
     LogError "No issues found for commit: $HeadCommitish"
@@ -165,14 +168,20 @@ function Set-ApiViewCommentForPR {
   $apiviewEndpoint = "$APIViewHost/api/pullrequests?pullRequestNumber=$PrNumber&repoName=$repoFullName&commitSHA=$HeadCommitish"
   LogDebug "Get APIView information for PR using endpoint: $apiviewEndpoint"
 
+  $correlationId = [System.Guid]::NewGuid().ToString()
+  $headers = @{
+    "x-correlation-id" = $correlationId
+  }
+  LogInfo "Correlation ID: $correlationId"
+
   $commentText = @()
   $commentText += "## API Change Check"
   try {
-    $response = Invoke-WebRequest -Uri $apiviewEndpoint -Method Get -MaximumRetryCount 3
+    $response = Invoke-WebRequest -Uri $apiviewEndpoint -Method Get -Headers $headers -MaximumRetryCount 3
+    LogInfo "OperationId: $($response.Headers['X-Operation-Id'])"
     if ($response.StatusCode -ne 200) {
-      LogWarning "API changes are not detected in this pull request."
-      $commentText += ""
-      $commentText += "API changes are not detected in this pull request."
+      LogInfo "API changes are not detected in this pull request."
+      exit 0
     }
     else {
       LogSuccess "APIView identified API level changes in this PR and created $($response.Count) API reviews"
@@ -194,7 +203,7 @@ function Set-ApiViewCommentForPR {
       }
     }
   } catch{
-    LogError "Failed to get API View information for PR: $PrNumber in repo: $repoFullName with commitSHA: $Commitish. Error: $_"
+    LogError "Failed to get API View information for PR: $PrNumber in repo: $repoFullName with commitSHA: $HeadCommitish. Error: $_"
     exit 1
   }
 
@@ -226,5 +235,71 @@ function Set-ApiViewCommentForPR {
   } catch {
     LogError "Failed to set PR comment for APIView. Error: $_"
     exit 1
+  }
+}
+
+# Helper function used to create API review requests for Spec generation SDKs pipelines
+function Create-API-Review {
+  param (
+    [string]$apiviewEndpoint = "https://apiview.dev/PullRequest/DetectAPIChanges",
+    [string]$specGenSDKArtifactPath,
+    [string]$apiviewArtifactName,
+    [string]$buildId,
+    [string]$commitish,
+    [string]$repoName,
+    [string]$pullRequestNumber
+  )
+  $specGenSDKContent = Get-Content -Path $SpecGenSDKArtifactPath -Raw | ConvertFrom-Json
+  $language = ($specGenSDKContent.language -split "-")[-1]
+  
+  foreach ($requestData in $specGenSDKContent.apiViewRequestData) {
+    $requestUri = [System.UriBuilder]$apiviewEndpoint
+    $requestParam = [System.Web.HttpUtility]::ParseQueryString('')
+    $requestParam.Add('artifactName', $apiviewArtifactName)
+    $requestParam.Add('buildId', $buildId)
+    $requestParam.Add('commitSha', $commitish)
+    $requestParam.Add('repoName', $repoName)
+    $requestParam.Add('pullRequestNumber', $pullRequestNumber)
+    $requestParam.Add('packageName', $requestData.packageName)
+    $requestParam.Add('filePath', $requestData.filePath)
+    $requestParam.Add('language', $language)
+    $requestUri.query = $requestParam.toString()
+    $correlationId = [System.Guid]::NewGuid().ToString()
+
+    $headers = @{
+      "x-correlation-id" = $correlationId
+    }
+
+    LogInfo "Request URI: $($requestUri.Uri.OriginalString)"
+    LogInfo "Correlation ID: $correlationId"
+
+    try
+    {
+      $response = Invoke-WebRequest -Method 'GET' -Uri $requestUri.Uri -Headers $headers -MaximumRetryCount 3
+      if ($response.StatusCode -eq 201 -or $response.StatusCode -eq 208) {
+        if ($response.StatusCode -eq 201) {
+          LogSuccess "Status Code: $($response.StatusCode)`nAPI review request created successfully"
+        }
+        elseif ($response.StatusCode -eq 208) {
+          LogSuccess "Status Code: $($response.StatusCode)`nThere is no API change compared with the previous version."
+        }
+        if ($response.Headers['Content-Type'] -like 'application/json*') {
+          $responseContent = $response.Content | ConvertFrom-Json | ConvertTo-Json -Depth 10
+          LogSuccess "Response:`n$($responseContent)"
+        }
+        else {
+          LogSuccess "Response: $($response.Content)"
+        }
+      }
+      else {
+        LogError "Failed to create API review request. $($response)"
+        exit 1
+      }
+    }
+    catch
+    {
+      LogError "Error : $($_.Exception)"
+      exit 1
+    }
   }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     public partial class CognitiveServicesAccountDeploymentResource : IJsonModel<CognitiveServicesAccountDeploymentData>
     {
+        private static CognitiveServicesAccountDeploymentData s_dataDeserializationInstance;
+        private static CognitiveServicesAccountDeploymentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CognitiveServicesAccountDeploymentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CognitiveServicesAccountDeploymentData>)Data).Write(writer, options);
 
-        CognitiveServicesAccountDeploymentData IJsonModel<CognitiveServicesAccountDeploymentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CognitiveServicesAccountDeploymentData>)Data).Create(ref reader, options);
+        CognitiveServicesAccountDeploymentData IJsonModel<CognitiveServicesAccountDeploymentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CognitiveServicesAccountDeploymentData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CognitiveServicesAccountDeploymentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CognitiveServicesAccountDeploymentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CognitiveServicesAccountDeploymentData>(Data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
-        CognitiveServicesAccountDeploymentData IPersistableModel<CognitiveServicesAccountDeploymentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CognitiveServicesAccountDeploymentData>(data, options);
+        CognitiveServicesAccountDeploymentData IPersistableModel<CognitiveServicesAccountDeploymentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CognitiveServicesAccountDeploymentData>(data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
-        string IPersistableModel<CognitiveServicesAccountDeploymentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CognitiveServicesAccountDeploymentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CognitiveServicesAccountDeploymentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CognitiveServicesAccountDeploymentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

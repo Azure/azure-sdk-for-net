@@ -307,6 +307,12 @@ namespace Azure.Core
         public override bool Equals(object? obj) { throw null; }
         public override int GetHashCode() { throw null; }
     }
+    public partial class AzureCoreContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureCoreContext() { }
+        public static Azure.Core.AzureCoreContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AzureLocation : System.IEquatable<Azure.Core.AzureLocation>
     {
@@ -765,11 +771,14 @@ namespace Azure.Core
         public void Apply(Azure.Core.HttpMessage message) { }
         public override string ToString() { throw null; }
     }
-    public abstract partial class TokenCredential
+    public abstract partial class TokenCredential : System.ClientModel.AuthenticationTokenProvider
     {
         protected TokenCredential() { }
+        public override System.ClientModel.Primitives.GetTokenOptions? CreateTokenOptions(System.Collections.Generic.IReadOnlyDictionary<string, object> properties) { throw null; }
         public abstract Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken);
+        public override System.ClientModel.Primitives.AuthenticationToken GetToken(System.ClientModel.Primitives.GetTokenOptions properties, System.Threading.CancellationToken cancellationToken) { throw null; }
         public abstract System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken);
+        public override System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.AuthenticationToken> GetTokenAsync(System.ClientModel.Primitives.GetTokenOptions properties, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TokenRequestContext
