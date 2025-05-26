@@ -13,7 +13,7 @@ namespace Azure.AI.Agents.Persistent
     /// <summary>
     /// An abstract representation of an annotation to text thread message content.
     /// Please note <see cref="MessageTextAnnotation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="MessageTextFileCitationAnnotation"/>, <see cref="MessageTextFilePathAnnotation"/> and <see cref="MessageTextUrlCitationAnnotation"/>.
+    /// The available derived classes include <see cref="MessageTextFileCitationAnnotation"/>, <see cref="MessageTextFilePathAnnotation"/> and <see cref="MessageTextUriCitationAnnotation"/>.
     /// </summary>
     public abstract partial class MessageTextAnnotation
     {

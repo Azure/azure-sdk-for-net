@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppContainers
 {
     public partial class ContainerAppManagedCertificateResource : IJsonModel<ContainerAppManagedCertificateData>
     {
+        private static ContainerAppManagedCertificateData s_dataDeserializationInstance;
+        private static ContainerAppManagedCertificateData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ContainerAppManagedCertificateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppManagedCertificateData>)Data).Write(writer, options);
 
-        ContainerAppManagedCertificateData IJsonModel<ContainerAppManagedCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppManagedCertificateData>)Data).Create(ref reader, options);
+        ContainerAppManagedCertificateData IJsonModel<ContainerAppManagedCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppManagedCertificateData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ContainerAppManagedCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerAppManagedCertificateData>(Data, options, AzureResourceManagerAppContainersContext.Default);
 
         ContainerAppManagedCertificateData IPersistableModel<ContainerAppManagedCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerAppManagedCertificateData>(data, options, AzureResourceManagerAppContainersContext.Default);
 
-        string IPersistableModel<ContainerAppManagedCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerAppManagedCertificateData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ContainerAppManagedCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerAppManagedCertificateData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

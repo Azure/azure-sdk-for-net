@@ -16,7 +16,7 @@ namespace _Type.Dictionary
 
         public DictionaryClient(Uri endpoint, DictionaryClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Int32Value GetInt32ValueClient() => throw null;
 

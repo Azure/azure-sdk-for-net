@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ExpressRouteCircuitConnectionResource : IJsonModel<ExpressRouteCircuitConnectionData>
     {
+        private static ExpressRouteCircuitConnectionData s_dataDeserializationInstance;
+        private static ExpressRouteCircuitConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ExpressRouteCircuitConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRouteCircuitConnectionData>)Data).Write(writer, options);
 
-        ExpressRouteCircuitConnectionData IJsonModel<ExpressRouteCircuitConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRouteCircuitConnectionData>)Data).Create(ref reader, options);
+        ExpressRouteCircuitConnectionData IJsonModel<ExpressRouteCircuitConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRouteCircuitConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ExpressRouteCircuitConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExpressRouteCircuitConnectionData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         ExpressRouteCircuitConnectionData IPersistableModel<ExpressRouteCircuitConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExpressRouteCircuitConnectionData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<ExpressRouteCircuitConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExpressRouteCircuitConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ExpressRouteCircuitConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExpressRouteCircuitConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

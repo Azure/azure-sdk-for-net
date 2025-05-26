@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
     public partial class ServiceFabricManagedApplicationTypeVersionResource : IJsonModel<ServiceFabricManagedApplicationTypeVersionData>
     {
+        private static ServiceFabricManagedApplicationTypeVersionData s_dataDeserializationInstance;
+        private static ServiceFabricManagedApplicationTypeVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ServiceFabricManagedApplicationTypeVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ServiceFabricManagedApplicationTypeVersionData>)Data).Write(writer, options);
 
-        ServiceFabricManagedApplicationTypeVersionData IJsonModel<ServiceFabricManagedApplicationTypeVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceFabricManagedApplicationTypeVersionData>)Data).Create(ref reader, options);
+        ServiceFabricManagedApplicationTypeVersionData IJsonModel<ServiceFabricManagedApplicationTypeVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceFabricManagedApplicationTypeVersionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ServiceFabricManagedApplicationTypeVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceFabricManagedApplicationTypeVersionData>(Data, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
 
         ServiceFabricManagedApplicationTypeVersionData IPersistableModel<ServiceFabricManagedApplicationTypeVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceFabricManagedApplicationTypeVersionData>(data, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
 
-        string IPersistableModel<ServiceFabricManagedApplicationTypeVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceFabricManagedApplicationTypeVersionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ServiceFabricManagedApplicationTypeVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceFabricManagedApplicationTypeVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PineconeVectorDB
 {
     public partial class PineconeVectorDBOrganizationResource : IJsonModel<PineconeVectorDBOrganizationData>
     {
+        private static PineconeVectorDBOrganizationData s_dataDeserializationInstance;
+        private static PineconeVectorDBOrganizationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PineconeVectorDBOrganizationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PineconeVectorDBOrganizationData>)Data).Write(writer, options);
 
-        PineconeVectorDBOrganizationData IJsonModel<PineconeVectorDBOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PineconeVectorDBOrganizationData>)Data).Create(ref reader, options);
+        PineconeVectorDBOrganizationData IJsonModel<PineconeVectorDBOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PineconeVectorDBOrganizationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PineconeVectorDBOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PineconeVectorDBOrganizationData>(Data, options, AzureResourceManagerPineconeVectorDBContext.Default);
 
         PineconeVectorDBOrganizationData IPersistableModel<PineconeVectorDBOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PineconeVectorDBOrganizationData>(data, options, AzureResourceManagerPineconeVectorDBContext.Default);
 
-        string IPersistableModel<PineconeVectorDBOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PineconeVectorDBOrganizationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PineconeVectorDBOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PineconeVectorDBOrganizationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2025-06-02)
 
 ### Features Added
 
@@ -10,10 +10,6 @@
 ### Breaking Changes
 
 - Renamed models as per previous API/SDK review instructions to align with standard naming conventions
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.1 (2025-03-11)
 

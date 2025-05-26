@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HybridNetwork
 {
     public partial class ComponentResource : IJsonModel<ComponentData>
     {
+        private static ComponentData s_dataDeserializationInstance;
+        private static ComponentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ComponentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ComponentData>)Data).Write(writer, options);
 
-        ComponentData IJsonModel<ComponentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ComponentData>)Data).Create(ref reader, options);
+        ComponentData IJsonModel<ComponentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ComponentData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ComponentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ComponentData>(Data, options, AzureResourceManagerHybridNetworkContext.Default);
 
         ComponentData IPersistableModel<ComponentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ComponentData>(data, options, AzureResourceManagerHybridNetworkContext.Default);
 
-        string IPersistableModel<ComponentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ComponentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ComponentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ComponentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

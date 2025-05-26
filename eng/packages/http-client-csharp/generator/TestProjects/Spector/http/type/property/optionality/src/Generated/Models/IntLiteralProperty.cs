@@ -11,7 +11,7 @@ namespace _Type.Property.Optional
     {
         public IntLiteralProperty() => throw null;
 
-        public IntLiteralPropertyProperty? Property
+        public int? Property
         {
             get => throw null;
             set => throw null;

@@ -14,9 +14,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRouterJobWaitingForActivationEventData : AcsRouterJobEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobWaitingForActivationEventData"/>. </summary>
+        /// <param name="labels"> Router Job events Labels. </param>
+        /// <param name="tags"> Router Jobs events Tags. </param>
         /// <param name="unavailableForMatching"> Router Job Waiting For Activation Unavailable For Matching. </param>
-        internal AcsRouterJobWaitingForActivationEventData(bool unavailableForMatching)
+        /// <exception cref="ArgumentNullException"> <paramref name="labels"/> or <paramref name="tags"/> is null. </exception>
+        internal AcsRouterJobWaitingForActivationEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, bool unavailableForMatching) : base(labels, tags)
         {
+            Argument.AssertNotNull(labels, nameof(labels));
+            Argument.AssertNotNull(tags, nameof(tags));
+
             ExpiredAttachedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
             ExpiredRequestedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
             UnavailableForMatching = unavailableForMatching;

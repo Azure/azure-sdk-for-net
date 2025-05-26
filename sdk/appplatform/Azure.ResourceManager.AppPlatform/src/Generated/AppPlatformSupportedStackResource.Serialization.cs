@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppPlatform
 {
     public partial class AppPlatformSupportedStackResource : IJsonModel<AppPlatformSupportedStackData>
     {
+        private static AppPlatformSupportedStackData s_dataDeserializationInstance;
+        private static AppPlatformSupportedStackData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AppPlatformSupportedStackData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformSupportedStackData>)Data).Write(writer, options);
 
-        AppPlatformSupportedStackData IJsonModel<AppPlatformSupportedStackData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformSupportedStackData>)Data).Create(ref reader, options);
+        AppPlatformSupportedStackData IJsonModel<AppPlatformSupportedStackData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformSupportedStackData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AppPlatformSupportedStackData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppPlatformSupportedStackData>(Data, options, AzureResourceManagerAppPlatformContext.Default);
 
         AppPlatformSupportedStackData IPersistableModel<AppPlatformSupportedStackData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppPlatformSupportedStackData>(data, options, AzureResourceManagerAppPlatformContext.Default);
 
-        string IPersistableModel<AppPlatformSupportedStackData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppPlatformSupportedStackData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AppPlatformSupportedStackData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppPlatformSupportedStackData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

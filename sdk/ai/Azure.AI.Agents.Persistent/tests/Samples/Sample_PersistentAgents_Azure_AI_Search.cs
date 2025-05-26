@@ -30,7 +30,7 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
 #endif
         #endregion
         #region Snippet:AgentsCreateAgentWithAzureAISearchTool
-        AzureAISearchResource searchResource = new(
+        AzureAISearchToolResource searchResource = new(
             connectionID,
             "sample_index",
             5,
@@ -56,7 +56,7 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
         PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
         // Create message to thread
-        ThreadMessage message = await client.Messages.CreateMessageAsync(
+        PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
             thread.Id,
             MessageRole.User,
             "What is the temperature rating of the cozynights sleeping bag?");
@@ -78,12 +78,12 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
             run.LastError?.Message);
         #endregion
         #region Snippet:AgentsPopulateReferencesAgentWithAzureAISearchTool
-        AsyncPageable<ThreadMessage> messages = client.Messages.GetMessagesAsync(
+        AsyncPageable<PersistentThreadMessage> messages = client.Messages.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
 
-        await foreach (ThreadMessage threadMessage in messages)
+        await foreach (PersistentThreadMessage threadMessage in messages)
         {
             Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
             foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -96,11 +96,11 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
                         string annotatedText = textItem.Text;
                         foreach (MessageTextAnnotation annotation in textItem.Annotations)
                         {
-                            if (annotation is MessageTextUrlCitationAnnotation urlAnnotation)
+                            if (annotation is MessageTextUriCitationAnnotation uriAnnotation)
                             {
                                 annotatedText = annotatedText.Replace(
-                                    urlAnnotation.Text,
-                                    $" [see {urlAnnotation.UrlCitation.Title}] ({urlAnnotation.UrlCitation.Url})");
+                                    uriAnnotation.Text,
+                                    $" [see {uriAnnotation.UriCitation.Title}] ({uriAnnotation.UriCitation.Uri})");
                             }
                         }
                         Console.Write(annotatedText);
@@ -138,7 +138,7 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
         var connectionID = TestEnvironment.AI_SEARCH_CONNECTION_ID;
 #endif
         #region Snippet:AgentsCreateAgentWithAzureAISearchTool_Sync
-        AzureAISearchResource searchResource = new(
+        AzureAISearchToolResource searchResource = new(
             connectionID,
             "sample_index",
             5,
@@ -164,7 +164,7 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
         PersistentAgentThread thread = client.Threads.CreateThread();
 
         // Create message to thread
-        ThreadMessage message = client.Messages.CreateMessage(
+        PersistentThreadMessage message = client.Messages.CreateMessage(
             thread.Id,
             MessageRole.User,
             "What is the temperature rating of the cozynights sleeping bag?");
@@ -186,12 +186,12 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
             runResponse.Value.LastError?.Message);
         #endregion
         #region Snippet:AgentsPopulateReferencesAgentWithAzureAISearchTool_Sync
-        Pageable<ThreadMessage> messages = client.Messages.GetMessages(
+        Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
 
-        foreach (ThreadMessage threadMessage in messages)
+        foreach (PersistentThreadMessage threadMessage in messages)
         {
             Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
             foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -204,11 +204,11 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
                         string annotatedText = textItem.Text;
                         foreach (MessageTextAnnotation annotation in textItem.Annotations)
                         {
-                            if (annotation is MessageTextUrlCitationAnnotation urlAnnotation)
+                            if (annotation is MessageTextUriCitationAnnotation uriAnnotation)
                             {
                                 annotatedText = annotatedText.Replace(
-                                    urlAnnotation.Text,
-                                    $" [see {urlAnnotation.UrlCitation.Title}] ({urlAnnotation.UrlCitation.Url})");
+                                    uriAnnotation.Text,
+                                    $" [see {uriAnnotation.UriCitation.Title}] ({uriAnnotation.UriCitation.Uri})");
                             }
                         }
                         Console.Write(annotatedText);

@@ -11,7 +11,7 @@ namespace _Type.Property.AdditionalProperties
     {
         public WidgetData0(string fooProp) => throw null;
 
-        public WidgetData0Kind Kind => throw null;
+        public string Kind => throw null;
 
         public string FooProp
         {

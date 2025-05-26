@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Communication
 {
     public partial class CommunicationDomainResource : IJsonModel<CommunicationDomainResourceData>
     {
+        private static CommunicationDomainResourceData s_dataDeserializationInstance;
+        private static CommunicationDomainResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CommunicationDomainResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CommunicationDomainResourceData>)Data).Write(writer, options);
 
-        CommunicationDomainResourceData IJsonModel<CommunicationDomainResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CommunicationDomainResourceData>)Data).Create(ref reader, options);
+        CommunicationDomainResourceData IJsonModel<CommunicationDomainResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CommunicationDomainResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<CommunicationDomainResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CommunicationDomainResourceData>(Data, options, AzureResourceManagerCommunicationContext.Default);
 
         CommunicationDomainResourceData IPersistableModel<CommunicationDomainResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CommunicationDomainResourceData>(data, options, AzureResourceManagerCommunicationContext.Default);
 
-        string IPersistableModel<CommunicationDomainResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CommunicationDomainResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CommunicationDomainResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CommunicationDomainResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

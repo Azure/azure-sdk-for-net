@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Automation
 {
     public partial class AutomationJobScheduleResource : IJsonModel<AutomationJobScheduleData>
     {
+        private static AutomationJobScheduleData s_dataDeserializationInstance;
+        private static AutomationJobScheduleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AutomationJobScheduleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutomationJobScheduleData>)Data).Write(writer, options);
 
-        AutomationJobScheduleData IJsonModel<AutomationJobScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationJobScheduleData>)Data).Create(ref reader, options);
+        AutomationJobScheduleData IJsonModel<AutomationJobScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationJobScheduleData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AutomationJobScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutomationJobScheduleData>(Data, options, AzureResourceManagerAutomationContext.Default);
 
         AutomationJobScheduleData IPersistableModel<AutomationJobScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationJobScheduleData>(data, options, AzureResourceManagerAutomationContext.Default);
 
-        string IPersistableModel<AutomationJobScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationJobScheduleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AutomationJobScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationJobScheduleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

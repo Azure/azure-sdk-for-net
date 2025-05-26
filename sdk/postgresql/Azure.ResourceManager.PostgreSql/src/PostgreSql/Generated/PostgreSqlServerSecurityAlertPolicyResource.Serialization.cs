@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PostgreSql
 {
     public partial class PostgreSqlServerSecurityAlertPolicyResource : IJsonModel<PostgreSqlServerSecurityAlertPolicyData>
     {
+        private static PostgreSqlServerSecurityAlertPolicyData s_dataDeserializationInstance;
+        private static PostgreSqlServerSecurityAlertPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PostgreSqlServerSecurityAlertPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlServerSecurityAlertPolicyData>)Data).Write(writer, options);
 
-        PostgreSqlServerSecurityAlertPolicyData IJsonModel<PostgreSqlServerSecurityAlertPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlServerSecurityAlertPolicyData>)Data).Create(ref reader, options);
+        PostgreSqlServerSecurityAlertPolicyData IJsonModel<PostgreSqlServerSecurityAlertPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlServerSecurityAlertPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PostgreSqlServerSecurityAlertPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlServerSecurityAlertPolicyData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
         PostgreSqlServerSecurityAlertPolicyData IPersistableModel<PostgreSqlServerSecurityAlertPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlServerSecurityAlertPolicyData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        string IPersistableModel<PostgreSqlServerSecurityAlertPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlServerSecurityAlertPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PostgreSqlServerSecurityAlertPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlServerSecurityAlertPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -20,6 +20,7 @@ namespace Azure.Search.Documents.Models
             }
             double searchScore = default;
             double? searchRerankerScore = default;
+            double? searchRerankerBoostedScore = default;
             IReadOnlyDictionary<string, IList<string>> searchHighlights = default;
             IReadOnlyList<QueryCaptionResult> searchCaptions = default;
             DocumentDebugInfo searchDocumentDebugInfo = default;
@@ -40,6 +41,16 @@ namespace Azure.Search.Documents.Models
                         continue;
                     }
                     searchRerankerScore = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("@search.rerankerBoostedScore"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        searchRerankerBoostedScore = null;
+                        continue;
+                    }
+                    searchRerankerBoostedScore = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("@search.highlights"u8))
@@ -99,6 +110,7 @@ namespace Azure.Search.Documents.Models
             return new SearchResult(
                 searchScore,
                 searchRerankerScore,
+                searchRerankerBoostedScore,
                 searchHighlights ?? new ChangeTrackingDictionary<string, IList<string>>(),
                 searchCaptions ?? new ChangeTrackingList<QueryCaptionResult>(),
                 searchDocumentDebugInfo,

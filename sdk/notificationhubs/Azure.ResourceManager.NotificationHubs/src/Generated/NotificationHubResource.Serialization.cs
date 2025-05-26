@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.NotificationHubs
 {
     public partial class NotificationHubResource : IJsonModel<NotificationHubData>
     {
+        private static NotificationHubData s_dataDeserializationInstance;
+        private static NotificationHubData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NotificationHubData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NotificationHubData>)Data).Write(writer, options);
 
-        NotificationHubData IJsonModel<NotificationHubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NotificationHubData>)Data).Create(ref reader, options);
+        NotificationHubData IJsonModel<NotificationHubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NotificationHubData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NotificationHubData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NotificationHubData>(Data, options, AzureResourceManagerNotificationHubsContext.Default);
 
         NotificationHubData IPersistableModel<NotificationHubData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NotificationHubData>(data, options, AzureResourceManagerNotificationHubsContext.Default);
 
-        string IPersistableModel<NotificationHubData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NotificationHubData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NotificationHubData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NotificationHubData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

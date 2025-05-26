@@ -22,28 +22,28 @@ namespace Azure.AI.Agents.Persistent
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ThreadRunStepCreatedValue = "thread.run.step.created";
-        private const string ThreadRunStepInProgressValue = "thread.run.step.in_progress";
-        private const string ThreadRunStepDeltaValue = "thread.run.step.delta";
-        private const string ThreadRunStepCompletedValue = "thread.run.step.completed";
-        private const string ThreadRunStepFailedValue = "thread.run.step.failed";
-        private const string ThreadRunStepCancelledValue = "thread.run.step.cancelled";
-        private const string ThreadRunStepExpiredValue = "thread.run.step.expired";
+        private const string RunStepCreatedValue = "thread.run.step.created";
+        private const string RunStepInProgressValue = "thread.run.step.in_progress";
+        private const string RunStepDeltaValue = "thread.run.step.delta";
+        private const string RunStepCompletedValue = "thread.run.step.completed";
+        private const string RunStepFailedValue = "thread.run.step.failed";
+        private const string RunStepCancelledValue = "thread.run.step.cancelled";
+        private const string RunStepExpiredValue = "thread.run.step.expired";
 
         /// <summary> Event sent when a new thread run step is created. The data of this event is of type RunStep. </summary>
-        public static RunStepStreamEvent ThreadRunStepCreated { get; } = new RunStepStreamEvent(ThreadRunStepCreatedValue);
+        public static RunStepStreamEvent RunStepCreated { get; } = new RunStepStreamEvent(RunStepCreatedValue);
         /// <summary> Event sent when a run step moves to `in_progress` status. The data of this event is of type RunStep. </summary>
-        public static RunStepStreamEvent ThreadRunStepInProgress { get; } = new RunStepStreamEvent(ThreadRunStepInProgressValue);
+        public static RunStepStreamEvent RunStepInProgress { get; } = new RunStepStreamEvent(RunStepInProgressValue);
         /// <summary> Event sent when a run step is being streamed. The data of this event is of type RunStepDeltaChunk. </summary>
-        public static RunStepStreamEvent ThreadRunStepDelta { get; } = new RunStepStreamEvent(ThreadRunStepDeltaValue);
+        public static RunStepStreamEvent RunStepDelta { get; } = new RunStepStreamEvent(RunStepDeltaValue);
         /// <summary> Event sent when a run step is completed. The data of this event is of type RunStep. </summary>
-        public static RunStepStreamEvent ThreadRunStepCompleted { get; } = new RunStepStreamEvent(ThreadRunStepCompletedValue);
+        public static RunStepStreamEvent RunStepCompleted { get; } = new RunStepStreamEvent(RunStepCompletedValue);
         /// <summary> Event sent when a run step fails. The data of this event is of type RunStep. </summary>
-        public static RunStepStreamEvent ThreadRunStepFailed { get; } = new RunStepStreamEvent(ThreadRunStepFailedValue);
+        public static RunStepStreamEvent RunStepFailed { get; } = new RunStepStreamEvent(RunStepFailedValue);
         /// <summary> Event sent when a run step is cancelled. The data of this event is of type RunStep. </summary>
-        public static RunStepStreamEvent ThreadRunStepCancelled { get; } = new RunStepStreamEvent(ThreadRunStepCancelledValue);
+        public static RunStepStreamEvent RunStepCancelled { get; } = new RunStepStreamEvent(RunStepCancelledValue);
         /// <summary> Event sent when a run step is expired. The data of this event is of type RunStep. </summary>
-        public static RunStepStreamEvent ThreadRunStepExpired { get; } = new RunStepStreamEvent(ThreadRunStepExpiredValue);
+        public static RunStepStreamEvent RunStepExpired { get; } = new RunStepStreamEvent(RunStepExpiredValue);
         /// <summary> Determines if two <see cref="RunStepStreamEvent"/> values are the same. </summary>
         public static bool operator ==(RunStepStreamEvent left, RunStepStreamEvent right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RunStepStreamEvent"/> values are not the same. </summary>

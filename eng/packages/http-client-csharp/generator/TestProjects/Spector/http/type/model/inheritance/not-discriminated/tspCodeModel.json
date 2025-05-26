@@ -3,9 +3,75 @@
  "name": "Type.Model.Inheritance.NotDiscriminated",
  "apiVersions": [],
  "enums": [],
- "models": [
+ "constants": [
   {
    "$id": "2",
+   "kind": "constant",
+   "name": "postValidContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "3",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "4",
+   "kind": "constant",
+   "name": "getValidContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "5",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "6",
+   "kind": "constant",
+   "name": "putValidContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "7",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "8",
+   "kind": "constant",
+   "name": "putValidContentType1",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "9",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  }
+ ],
+ "models": [
+  {
+   "$id": "10",
    "kind": "model",
    "name": "Siamese",
    "namespace": "Type.Model.Inheritance.NotDiscriminated",
@@ -14,7 +80,7 @@
    "doc": "The third level model in the normal multiple levels inheritance.",
    "decorators": [],
    "baseModel": {
-    "$id": "3",
+    "$id": "11",
     "kind": "model",
     "name": "Cat",
     "namespace": "Type.Model.Inheritance.NotDiscriminated",
@@ -23,7 +89,7 @@
     "doc": "The second level model in the normal multiple levels inheritance.",
     "decorators": [],
     "baseModel": {
-     "$id": "4",
+     "$id": "12",
      "kind": "model",
      "name": "Pet",
      "namespace": "Type.Model.Inheritance.NotDiscriminated",
@@ -33,12 +99,12 @@
      "decorators": [],
      "properties": [
       {
-       "$id": "5",
+       "$id": "13",
        "kind": "property",
        "name": "name",
        "serializedName": "name",
        "type": {
-        "$id": "6",
+        "$id": "14",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -51,9 +117,9 @@
        "decorators": [],
        "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.Pet.name",
        "serializationOptions": {
-        "$id": "7",
+        "$id": "15",
         "json": {
-         "$id": "8",
+         "$id": "16",
          "name": "name"
         }
        }
@@ -62,12 +128,12 @@
     },
     "properties": [
      {
-      "$id": "9",
+      "$id": "17",
       "kind": "property",
       "name": "age",
       "serializedName": "age",
       "type": {
-       "$id": "10",
+       "$id": "18",
        "kind": "int32",
        "name": "int32",
        "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -80,9 +146,9 @@
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.Cat.age",
       "serializationOptions": {
-       "$id": "11",
+       "$id": "19",
        "json": {
-        "$id": "12",
+        "$id": "20",
         "name": "age"
        }
       }
@@ -91,12 +157,12 @@
    },
    "properties": [
     {
-     "$id": "13",
+     "$id": "21",
      "kind": "property",
      "name": "smart",
      "serializedName": "smart",
      "type": {
-      "$id": "14",
+      "$id": "22",
       "kind": "boolean",
       "name": "boolean",
       "crossLanguageDefinitionId": "TypeSpec.boolean",
@@ -109,9 +175,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.Siamese.smart",
      "serializationOptions": {
-      "$id": "15",
+      "$id": "23",
       "json": {
-       "$id": "16",
+       "$id": "24",
        "name": "smart"
       }
      }
@@ -119,49 +185,39 @@
    ]
   },
   {
-   "$ref": "3"
+   "$ref": "11"
   },
   {
-   "$ref": "4"
+   "$ref": "12"
   }
  ],
  "clients": [
   {
-   "$id": "17",
+   "$id": "25",
    "kind": "client",
    "name": "NotDiscriminatedClient",
    "namespace": "Type.Model.Inheritance.NotDiscriminated",
    "doc": "Illustrates not-discriminated inheritance model.",
    "methods": [
     {
-     "$id": "18",
+     "$id": "26",
      "kind": "basic",
      "name": "postValid",
      "accessibility": "public",
      "apiVersions": [],
      "operation": {
-      "$id": "19",
+      "$id": "27",
       "name": "postValid",
       "resourceName": "NotDiscriminated",
       "accessibility": "public",
       "parameters": [
        {
-        "$id": "20",
+        "$id": "28",
         "name": "contentType",
         "nameInRequest": "Content-Type",
         "doc": "Body parameter's content type. Known values are application/json",
         "type": {
-         "$id": "21",
-         "kind": "constant",
-         "valueType": {
-          "$id": "22",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "value": "application/json",
-         "decorators": []
+         "$ref": "2"
         },
         "location": "Header",
         "isApiVersion": false,
@@ -174,11 +230,11 @@
         "skipUrlEncoding": false
        },
        {
-        "$id": "23",
+        "$id": "29",
         "name": "input",
         "nameInRequest": "input",
         "type": {
-         "$ref": "2"
+         "$ref": "10"
         },
         "location": "Body",
         "isApiVersion": false,
@@ -193,7 +249,7 @@
       ],
       "responses": [
        {
-        "$id": "24",
+        "$id": "30",
         "statusCodes": [
          204
         ],
@@ -215,11 +271,11 @@
      },
      "parameters": [
       {
-       "$id": "25",
+       "$id": "31",
        "name": "input",
        "nameInRequest": "input",
        "type": {
-        "$ref": "2"
+        "$ref": "10"
        },
        "location": "Body",
        "isApiVersion": false,
@@ -232,12 +288,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "26",
+       "$id": "32",
        "name": "contentType",
        "nameInRequest": "contentType",
        "doc": "Body parameter's content type. Known values are application/json",
        "type": {
-        "$ref": "21"
+        "$ref": "2"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -251,7 +307,7 @@
       }
      ],
      "response": {
-      "$id": "27"
+      "$id": "33"
      },
      "isOverride": false,
      "generateConvenient": true,
@@ -259,33 +315,23 @@
      "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.postValid"
     },
     {
-     "$id": "28",
+     "$id": "34",
      "kind": "basic",
      "name": "getValid",
      "accessibility": "public",
      "apiVersions": [],
      "operation": {
-      "$id": "29",
+      "$id": "35",
       "name": "getValid",
       "resourceName": "NotDiscriminated",
       "accessibility": "public",
       "parameters": [
        {
-        "$id": "30",
+        "$id": "36",
         "name": "accept",
         "nameInRequest": "Accept",
         "type": {
-         "$id": "31",
-         "kind": "constant",
-         "valueType": {
-          "$id": "32",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "value": "application/json",
-         "decorators": []
+         "$ref": "4"
         },
         "location": "Header",
         "isApiVersion": false,
@@ -300,12 +346,12 @@
       ],
       "responses": [
        {
-        "$id": "33",
+        "$id": "37",
         "statusCodes": [
          200
         ],
         "bodyType": {
-         "$ref": "2"
+         "$ref": "10"
         },
         "headers": [],
         "isErrorResponse": false,
@@ -325,11 +371,11 @@
      },
      "parameters": [
       {
-       "$id": "34",
+       "$id": "38",
        "name": "accept",
        "nameInRequest": "accept",
        "type": {
-        "$ref": "31"
+        "$ref": "4"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -343,9 +389,9 @@
       }
      ],
      "response": {
-      "$id": "35",
+      "$id": "39",
       "type": {
-       "$ref": "2"
+       "$ref": "10"
       }
      },
      "isOverride": false,
@@ -354,34 +400,24 @@
      "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.getValid"
     },
     {
-     "$id": "36",
+     "$id": "40",
      "kind": "basic",
      "name": "putValid",
      "accessibility": "public",
      "apiVersions": [],
      "operation": {
-      "$id": "37",
+      "$id": "41",
       "name": "putValid",
       "resourceName": "NotDiscriminated",
       "accessibility": "public",
       "parameters": [
        {
-        "$id": "38",
+        "$id": "42",
         "name": "contentType",
         "nameInRequest": "Content-Type",
         "doc": "Body parameter's content type. Known values are application/json",
         "type": {
-         "$id": "39",
-         "kind": "constant",
-         "valueType": {
-          "$id": "40",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "value": "application/json",
-         "decorators": []
+         "$ref": "6"
         },
         "location": "Header",
         "isApiVersion": false,
@@ -394,21 +430,11 @@
         "skipUrlEncoding": false
        },
        {
-        "$id": "41",
+        "$id": "43",
         "name": "accept",
         "nameInRequest": "Accept",
         "type": {
-         "$id": "42",
-         "kind": "constant",
-         "valueType": {
-          "$id": "43",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "value": "application/json",
-         "decorators": []
+         "$ref": "8"
         },
         "location": "Header",
         "isApiVersion": false,
@@ -425,7 +451,7 @@
         "name": "input",
         "nameInRequest": "input",
         "type": {
-         "$ref": "2"
+         "$ref": "10"
         },
         "location": "Body",
         "isApiVersion": false,
@@ -445,7 +471,7 @@
          200
         ],
         "bodyType": {
-         "$ref": "2"
+         "$ref": "10"
         },
         "headers": [],
         "isErrorResponse": false,
@@ -472,7 +498,7 @@
        "name": "input",
        "nameInRequest": "input",
        "type": {
-        "$ref": "2"
+        "$ref": "10"
        },
        "location": "Body",
        "isApiVersion": false,
@@ -490,7 +516,7 @@
        "nameInRequest": "contentType",
        "doc": "Body parameter's content type. Known values are application/json",
        "type": {
-        "$ref": "39"
+        "$ref": "6"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -507,7 +533,7 @@
        "name": "accept",
        "nameInRequest": "accept",
        "type": {
-        "$ref": "42"
+        "$ref": "8"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -523,7 +549,7 @@
      "response": {
       "$id": "49",
       "type": {
-       "$ref": "2"
+       "$ref": "10"
       }
      },
      "isOverride": false,

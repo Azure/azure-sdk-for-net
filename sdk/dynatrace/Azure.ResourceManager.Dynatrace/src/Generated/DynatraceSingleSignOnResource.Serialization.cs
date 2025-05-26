@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Dynatrace
 {
     public partial class DynatraceSingleSignOnResource : IJsonModel<DynatraceSingleSignOnData>
     {
+        private static DynatraceSingleSignOnData s_dataDeserializationInstance;
+        private static DynatraceSingleSignOnData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DynatraceSingleSignOnData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DynatraceSingleSignOnData>)Data).Write(writer, options);
 
-        DynatraceSingleSignOnData IJsonModel<DynatraceSingleSignOnData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DynatraceSingleSignOnData>)Data).Create(ref reader, options);
+        DynatraceSingleSignOnData IJsonModel<DynatraceSingleSignOnData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DynatraceSingleSignOnData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DynatraceSingleSignOnData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DynatraceSingleSignOnData>(Data, options, AzureResourceManagerDynatraceContext.Default);
 
         DynatraceSingleSignOnData IPersistableModel<DynatraceSingleSignOnData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DynatraceSingleSignOnData>(data, options, AzureResourceManagerDynatraceContext.Default);
 
-        string IPersistableModel<DynatraceSingleSignOnData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DynatraceSingleSignOnData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DynatraceSingleSignOnData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DynatraceSingleSignOnData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

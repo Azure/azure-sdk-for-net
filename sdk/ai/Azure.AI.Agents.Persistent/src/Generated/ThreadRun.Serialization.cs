@@ -312,11 +312,11 @@ namespace Azure.AI.Agents.Persistent
             float? topP = default;
             int? maxPromptTokens = default;
             int? maxCompletionTokens = default;
-            TruncationObject truncationStrategy = default;
+            Truncation truncationStrategy = default;
             BinaryData toolChoice = default;
             BinaryData responseFormat = default;
             IReadOnlyDictionary<string, string> metadata = default;
-            UpdateToolResourcesOptions toolResources = default;
+            ToolResources toolResources = default;
             bool parallelToolCalls = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -484,7 +484,7 @@ namespace Azure.AI.Agents.Persistent
                         truncationStrategy = null;
                         continue;
                     }
-                    truncationStrategy = TruncationObject.DeserializeTruncationObject(property.Value, options);
+                    truncationStrategy = Truncation.DeserializeTruncation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tool_choice"u8))
@@ -529,7 +529,7 @@ namespace Azure.AI.Agents.Persistent
                         toolResources = null;
                         continue;
                     }
-                    toolResources = UpdateToolResourcesOptions.DeserializeUpdateToolResourcesOptions(property.Value, options);
+                    toolResources = ToolResources.DeserializeToolResources(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("parallel_tool_calls"u8))
