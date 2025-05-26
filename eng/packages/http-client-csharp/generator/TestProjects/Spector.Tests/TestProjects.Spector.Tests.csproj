@@ -20,6 +20,7 @@
     <ProjectReference Include="..\Spector\http\azure\special-headers\client-request-id\src\Azure.SpecialHeaders.XmsClientRequestId.csproj" />
     <ProjectReference Include="..\Spector\http\azure\core\lro\standard\src\_Specs_.Azure.Core.Lro.Standard.csproj" />
     <ProjectReference Include="..\Spector\http\azure\core\lro\rpc\src\_Specs_.Azure.Core.Lro.Rpc.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\core\model\src\_Specs_.Azure.Core.Model.csproj" />
     <ProjectReference Include="..\Spector\http\type\array\src\Type.Array.csproj" />
     <ProjectReference Include="..\Spector\http\type\enum\extensible\src\Type.Enum.Extensible.csproj" />
     <ProjectReference Include="..\Spector\http\type\enum\fixed\src\Type.Enum.Fixed.csproj" />

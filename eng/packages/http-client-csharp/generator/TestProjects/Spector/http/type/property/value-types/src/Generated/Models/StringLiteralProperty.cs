@@ -11,6 +11,6 @@ namespace _Type.Property.ValueTypes
     {
         public StringLiteralProperty() => throw null;
 
-        public StringLiteralPropertyProperty Property => throw null;
+        public string Property => throw null;
     }
 }

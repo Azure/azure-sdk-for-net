@@ -34,19 +34,17 @@ namespace Azure.Generator.Management.Providers
         private IReadOnlyCollection<InputServiceMethod> _resourceServiceMethods;
 
         private FieldProvider _dataField;
-        private FieldProvider _resourcetypeField;
+        private FieldProvider _resourceTypeField;
         protected ClientProvider _clientProvider;
         protected FieldProvider _clientDiagonosticsField;
         protected FieldProvider _restClientField;
 
-        public ResourceClientProvider(InputClient inputClient)
+        public ResourceClientProvider(InputClient inputClient, ResourceMetadata resourceMetadata)
         {
-            var resourceMetadata = inputClient.Decorators.Single(d => d.Name.Equals(KnownDecorators.ResourceMetadata));
-            var codeModelId = resourceMetadata.Arguments?[KnownDecorators.ResourceModel].ToObjectFromJson<string>()!;
-            IsSingleton = resourceMetadata.Arguments?.TryGetValue("isSingleton", out var isSingleton) == true ? isSingleton.ToObjectFromJson<bool>() : false;
-            var resourceType = resourceMetadata.Arguments?[KnownDecorators.ResourceType].ToObjectFromJson<string>()!;
-            _resourcetypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(resourceType));
-            var resourceModel = ManagementClientGenerator.Instance.InputLibrary.GetModelByCrossLanguageDefinitionId(codeModelId)!;
+            IsSingleton = resourceMetadata.IsSingleton;
+            var resourceType = resourceMetadata.ResourceType;
+            _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(resourceType));
+            var resourceModel = resourceMetadata.ResourceModel;
             SpecName = resourceModel.Name;
 
             // We should be able to assume that all operations in the resource client are for the same resource
@@ -90,7 +88,7 @@ namespace Azure.Generator.Management.Providers
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
-        protected override FieldProvider[] BuildFields() => [_clientDiagonosticsField, _restClientField, _dataField, _resourcetypeField];
+        protected override FieldProvider[] BuildFields() => [_clientDiagonosticsField, _restClientField, _dataField, _resourceTypeField];
 
         protected override PropertyProvider[] BuildProperties()
         {
@@ -119,6 +117,8 @@ namespace Azure.Generator.Management.Providers
 
             return [hasDataProperty, dataProperty];
         }
+
+        protected override TypeProvider[] BuildSerializationProviders() => [new ResourceSerializationProvider(this)];
 
         protected override ConstructorProvider[] BuildConstructors()
             => [ConstructorProviderHelper.BuildMockingConstructor(this), BuildResourceDataConstructor(), BuildResourceIdentifierConstructor()];
@@ -196,9 +196,9 @@ namespace Azure.Generator.Management.Providers
             return new MethodProvider(signature, bodyStatements, this);
         }
 
-        protected virtual ValueExpression ResourceTypeExpression => _resourcetypeField;
+        protected virtual ValueExpression ResourceTypeExpression => _resourceTypeField;
 
-        protected virtual ValueExpression ExpectedResourceTypeForValidation => _resourcetypeField;
+        protected virtual ValueExpression ExpectedResourceTypeForValidation => _resourceTypeField;
 
         protected virtual CSharpType ResourceClientCSharpType => this.Type;
 
@@ -317,30 +317,30 @@ namespace Azure.Generator.Management.Providers
             return isAsync ? new CSharpType(typeof(Task<>), new CSharpType(typeof(Response<>), ResourceClientCSharpType)) : new CSharpType(typeof(Response<>), ResourceClientCSharpType);
         }
 
-        private TryStatement BuildOperationMethodTryStatement(InputServiceMethod method, MethodProvider convenienceMethod, MethodSignature signature, bool isAsync, bool isGeneric)
+        private TryExpression BuildOperationMethodTryStatement(InputServiceMethod method, MethodProvider convenienceMethod, MethodSignature signature, bool isAsync, bool isGeneric)
         {
             var operation = method.Operation;
             var cancellationToken = convenienceMethod.Signature.Parameters.Single(p => p.Type.Equals(typeof(CancellationToken)));
 
-            var tryStatement = new TryStatement();
+            var tryStatements = new List<MethodBodyStatement>();
             var contextDeclaration = Declare("context", typeof(RequestContext), New.Instance(typeof(RequestContext), new Dictionary<ValueExpression, ValueExpression> { { Identifier(nameof(RequestContext.CancellationToken)), cancellationToken } }), out var contextVariable);
-            tryStatement.Add(contextDeclaration);
+            tryStatements.Add(contextDeclaration);
             var requestMethod = GetCorrespondingRequestMethod(operation);
             var messageDeclaration = Declare("message", typeof(HttpMessage), _restClientField.Invoke(requestMethod.Signature.Name, PopulateArguments(requestMethod.Signature.Parameters, convenienceMethod, contextVariable)), out var messageVariable);
-            tryStatement.Add(messageDeclaration);
+            tryStatements.Add(messageDeclaration);
             var responseType = GetResponseType(convenienceMethod, isAsync);
             VariableExpression responseVariable;
             if (!responseType.Equals(typeof(Response)))
             {
                 var resultDeclaration = Declare("result", typeof(Response), This.Property("Pipeline").Invoke(isAsync ? "ProcessMessageAsync" : "ProcessMessage", [messageVariable, contextVariable], null, isAsync), out var resultVariable);
-                tryStatement.Add(resultDeclaration);
+                tryStatements.Add(resultDeclaration);
                 var responseDeclaration = Declare("response", responseType, Static(typeof(Response)).Invoke(nameof(Response.FromValue), [resultVariable.CastTo(ResourceData.Type), resultVariable]), out responseVariable);
-                tryStatement.Add(responseDeclaration);
+                tryStatements.Add(responseDeclaration);
             }
             else
             {
                 var responseDeclaration = Declare("response", typeof(Response), This.Property("Pipeline").Invoke(isAsync ? "ProcessMessageAsync" : "ProcessMessage", [messageVariable, contextVariable], null, isAsync), out responseVariable);
-                tryStatement.Add(responseDeclaration);
+                tryStatements.Add(responseDeclaration);
             }
 
             if (method is InputLongRunningServiceMethod || method is InputLongRunningPagingServiceMethod)
@@ -359,21 +359,21 @@ namespace Azure.Generator.Management.Providers
                 ValueExpression[] armOperationArguments = [_clientDiagonosticsField, This.Property("Pipeline"), messageVariable.Property("Request"), isGeneric ? responseVariable.Invoke("GetRawResponse") : responseVariable, Static(typeof(OperationFinalStateVia)).Property(finalStateVia.ToString())];
                 var operationDeclaration = Declare("operation", armOperationType, New.Instance(armOperationType, isGeneric ? [New.Instance(Source.Type, This.Property("Client")), .. armOperationArguments] : armOperationArguments), out var operationVariable);
 
-                tryStatement.Add(operationDeclaration);
-                tryStatement.Add(new IfStatement(KnownAzureParameters.WaitUntil.Equal(Static(typeof(WaitUntil)).Property(nameof(WaitUntil.Completed))))
+                tryStatements.Add(operationDeclaration);
+                tryStatements.Add(new IfStatement(KnownAzureParameters.WaitUntil.Equal(Static(typeof(WaitUntil)).Property(nameof(WaitUntil.Completed))))
                 {
                     isAsync
                     ? operationVariable.Invoke(isGeneric ? "WaitForCompletionAsync" : "WaitForCompletionResponseAsync", [cancellationToken], null, isAsync).Terminate()
                     : operationVariable.Invoke(isGeneric ? "WaitForCompletion" : "WaitForCompletionResponse", cancellationToken).Terminate()
                 });
-                tryStatement.Add(Return(operationVariable));
+                tryStatements.Add(Return(operationVariable));
             }
             else
             {
-                tryStatement.Add(BuildReturnStatements(responseVariable, signature));
+                tryStatements.Add(BuildReturnStatements(responseVariable, signature));
             }
 
-            return tryStatement;
+            return new TryExpression(tryStatements);
         }
 
         protected virtual MethodBodyStatement BuildReturnStatements(ValueExpression responseVariable, MethodSignature signature)
