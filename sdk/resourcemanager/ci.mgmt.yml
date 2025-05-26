@@ -164,6 +164,7 @@ trigger:
     - sdk/postgresql/Azure.ResourceManager.PostgreSql
     - sdk/powerbidedicated/Azure.ResourceManager.PowerBIDedicated
     - sdk/privatedns/Azure.ResourceManager.PrivateDns
+    - sdk/programmableconnectivity/Azure.ResourceManager.ProgrammableConnectivity
     - sdk/providerhub/Azure.ResourceManager.ProviderHub
     - sdk/purestorageblock/Azure.ResourceManager.PureStorageBlock
     - sdk/purview/Azure.ResourceManager.Purview
@@ -386,6 +387,7 @@ pr:
     - sdk/postgresql/Azure.ResourceManager.PostgreSql
     - sdk/powerbidedicated/Azure.ResourceManager.PowerBIDedicated
     - sdk/privatedns/Azure.ResourceManager.PrivateDns
+    - sdk/programmableconnectivity/Azure.ResourceManager.ProgrammableConnectivity
     - sdk/providerhub/Azure.ResourceManager.ProviderHub
     - sdk/purestorageblock/Azure.ResourceManager.PureStorageBlock
     - sdk/purview/Azure.ResourceManager.Purview
