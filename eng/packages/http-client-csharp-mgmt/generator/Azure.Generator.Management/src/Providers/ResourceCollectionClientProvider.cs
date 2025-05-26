@@ -52,6 +52,8 @@ namespace Azure.Generator.Management.Providers
             }
         }
 
+        protected override TypeProvider[] BuildSerializationProviders() => [];
+
         protected override string BuildName() => $"{SpecName}Collection";
 
         protected override CSharpType[] BuildImplements() =>
