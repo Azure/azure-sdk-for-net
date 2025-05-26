@@ -1,6 +1,7 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
 trigger: none
+
 pr:
   branches:
     include:
@@ -12,6 +13,7 @@ pr:
     include:
     - sdk/purestorageblock/ci.mgmt.yml
     - sdk/purestorageblock/Azure.ResourceManager.PureStorageBlock/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
