@@ -99,7 +99,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Use the hardlink to create the source file
             StorageResource sourceResource = new ShareFileStorageResource(hardlinkClient,
-                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocols.Nfs });
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Nfs });
 
             // Create destination local file
             string destFile = Path.Combine(destination.DirectoryPath, GetNewObjectName());
@@ -159,7 +159,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Use the symlink to create the source file
             StorageResourceItem sourceResource = new ShareFileStorageResource(symlinkClient,
-                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocols.Nfs });
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Nfs });
 
             // Create destination local file
             string destFile = Path.Combine(destination.DirectoryPath, GetNewObjectName());

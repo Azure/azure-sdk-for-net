@@ -763,14 +763,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 createResource: true,
                 options: sharefileCreateOptions);
             StorageResourceItem sourceResource = new ShareFileStorageResource(sourceClient,
-                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocols.Nfs });
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Nfs });
 
             // Create destination file
             ShareFileClient destinationClient = await CreateFileClientWithOptionsAsync(
                 container: destination.Container,
                 createResource: false);
             StorageResourceItem destinationResource = new ShareFileStorageResource(destinationClient,
-                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocols.Nfs, FilePermissions = filePermissions });
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Nfs, FilePermissions = filePermissions });
 
             TransferOptions options = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
@@ -817,9 +817,9 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [TestCase(ShareProtocols.Nfs, ShareProtocols.Nfs)]
-        [TestCase(ShareProtocols.Smb, ShareProtocols.Smb)]
-        public async Task ValidateProtocolAsync_SmbShareFileToSmbShareFile_CompareProtocolSetToActual(ShareProtocols sourceProtocol, ShareProtocols destProtocol)
+        [TestCase(ShareProtocol.Nfs, ShareProtocol.Nfs)]
+        [TestCase(ShareProtocol.Smb, ShareProtocol.Smb)]
+        public async Task ValidateProtocolAsync_SmbShareFileToSmbShareFile_CompareProtocolSetToActual(ShareProtocol sourceProtocol, ShareProtocol destProtocol)
         {
             // Arrange
             await using IDisposingContainer<ShareClient> source = await GetSourceDisposingContainerAsync();
@@ -845,7 +845,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             TransferManager transferManager = new TransferManager();
 
             // Act and Assert
-            if (sourceProtocol == ShareProtocols.Smb && destProtocol == ShareProtocols.Smb)
+            if (sourceProtocol == ShareProtocol.Smb && destProtocol == ShareProtocol.Smb)
             {
                 // Act - Start transfer and await for completion.
                 TransferOperation transfer = await transferManager.StartTransferAsync(
@@ -876,9 +876,9 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [TestCase(ShareProtocols.Nfs, ShareProtocols.Nfs)]
-        [TestCase(ShareProtocols.Smb, ShareProtocols.Smb)]
-        public async Task ValidateProtocolAsync_NfsShareFileToNfsShareFile_CompareProtocolSetToActual(ShareProtocols sourceProtocol, ShareProtocols destProtocol)
+        [TestCase(ShareProtocol.Nfs, ShareProtocol.Nfs)]
+        [TestCase(ShareProtocol.Smb, ShareProtocol.Smb)]
+        public async Task ValidateProtocolAsync_NfsShareFileToNfsShareFile_CompareProtocolSetToActual(ShareProtocol sourceProtocol, ShareProtocol destProtocol)
         {
             // Arrange
             await using IDisposingContainer<ShareClient> source = await SourceClientBuilder.GetTestShareSasNfsAsync();
@@ -904,7 +904,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             TransferManager transferManager = new TransferManager();
 
             // Act and Assert
-            if (sourceProtocol == ShareProtocols.Nfs && destProtocol == ShareProtocols.Nfs)
+            if (sourceProtocol == ShareProtocol.Nfs && destProtocol == ShareProtocol.Nfs)
             {
                 // Act - Start transfer and await for completion.
                 TransferOperation transfer = await transferManager.StartTransferAsync(
@@ -995,9 +995,9 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [TestCase(ShareProtocols.Nfs, ShareProtocols.Smb)]
-        [TestCase(ShareProtocols.Smb, ShareProtocols.Nfs)]
-        public async Task ValidateProtocolAsync_ShareFileToShareFile_ShareTransferNotSupported(ShareProtocols sourceProtocol, ShareProtocols destProtocol)
+        [TestCase(ShareProtocol.Nfs, ShareProtocol.Smb)]
+        [TestCase(ShareProtocol.Smb, ShareProtocol.Nfs)]
+        public async Task ValidateProtocolAsync_ShareFileToShareFile_ShareTransferNotSupported(ShareProtocol sourceProtocol, ShareProtocol destProtocol)
         {
             // Arrange
             await using IDisposingContainer<ShareClient> source = await GetSourceDisposingContainerAsync();
@@ -1074,14 +1074,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Use the hardlink to create the source file
             StorageResourceItem sourceResource = new ShareFileStorageResource(hardlinkClient,
-                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocols.Nfs });
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Nfs });
 
             // Create destination file
             ShareFileClient destinationClient = await CreateFileClientWithOptionsAsync(
                 container: destination.Container,
                 createResource: false);
             StorageResourceItem destinationResource = new ShareFileStorageResource(destinationClient,
-                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocols.Nfs, FilePermissions = true });
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Nfs, FilePermissions = true });
 
             TransferOptions options = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
@@ -1144,14 +1144,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Use the symlink to create the source file
             StorageResourceItem sourceResource = new ShareFileStorageResource(symlinkClient,
-                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocols.Nfs });
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Nfs });
 
             // Create destination file
             ShareFileClient destinationClient = await CreateFileClientWithOptionsAsync(
                 container: destination.Container,
                 createResource: false);
             StorageResourceItem destinationResource = new ShareFileStorageResource(destinationClient,
-                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocols.Nfs });
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Nfs });
 
             TransferOptions options = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);

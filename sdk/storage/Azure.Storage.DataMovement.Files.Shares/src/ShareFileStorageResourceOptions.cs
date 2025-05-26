@@ -63,7 +63,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// For NFS Share-to-Share Copy and Download transfers, Hardlinks will be copied as regular files and Symbolic links are skipped.
         /// For NFS Upload transfers, Hardlinks will be copied as regular files and Symbolic links are not supported.
         /// </summary>
-        public ShareProtocols ShareProtocol { get; set; } = ShareProtocols.Smb;
+        public ShareProtocol ShareProtocol { get; set; } = ShareProtocol.Smb;
 
         /// <summary>
         /// Optional. See <see cref="ShareFileRequestConditions"/>.
@@ -194,12 +194,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
         }
 
         /// <summary>
-        /// To preserve the key of the file permission.
-        /// If set to true, the permission key will be preserved from the source Share to the destination Share.
-        /// This requires a <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/create-permission">Create Share Permissions</see> operation,
+        /// To preserve the file permissions. This is intended to be set on the destination Share.
+        /// If set to true, the permissions will be preserved from the source Share to the destination Share.
+        /// For SMB, this requires a <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/create-permission">Create Share Permissions</see> operation,
         /// which is a operation called on the Destination Share, which requires Share level permissions.
         ///
-        /// By default the permission key will not be preserved from the source Share to the destination Share. If explicitly set to null, the File Permissions will not be preserved.
+        /// By default the file permissions will not be preserved from the source Share to the destination Share. If explicitly set to null, the File Permissions will not be preserved.
         /// Applies only to copy transfers.
         /// </summary>
         public bool? FilePermissions { get; set; }
@@ -321,7 +321,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             FileMetadata = options?.FileMetadata;
             _isFileMetadataSet = options?._isFileMetadataSet ?? false;
             SkipProtocolValidation = options?.SkipProtocolValidation ?? false;
-            ShareProtocol = options?.ShareProtocol ?? ShareProtocols.Smb;
+            ShareProtocol = options?.ShareProtocol ?? ShareProtocol.Smb;
         }
     }
 }
