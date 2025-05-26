@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.OracleDatabase
 {
     public partial class ExadbVmClusterResource : IJsonModel<ExadbVmClusterData>
     {
+        private static ExadbVmClusterData s_dataDeserializationInstance;
+        private static ExadbVmClusterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ExadbVmClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ExadbVmClusterData>)Data).Write(writer, options);
 
-        ExadbVmClusterData IJsonModel<ExadbVmClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExadbVmClusterData>)Data).Create(ref reader, options);
+        ExadbVmClusterData IJsonModel<ExadbVmClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExadbVmClusterData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ExadbVmClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ExadbVmClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExadbVmClusterData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        ExadbVmClusterData IPersistableModel<ExadbVmClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExadbVmClusterData>(data, options);
+        ExadbVmClusterData IPersistableModel<ExadbVmClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExadbVmClusterData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        string IPersistableModel<ExadbVmClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExadbVmClusterData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ExadbVmClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExadbVmClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

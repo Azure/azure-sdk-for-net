@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.OracleDatabase
 
         ExascaleDBStorageVaultResource IOperationSource<ExascaleDBStorageVaultResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ExascaleDBStorageVaultData>(response.Content);
+            var data = ModelReaderWriter.Read<ExascaleDBStorageVaultData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
             return new ExascaleDBStorageVaultResource(_client, data);
         }
 
         async ValueTask<ExascaleDBStorageVaultResource> IOperationSource<ExascaleDBStorageVaultResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ExascaleDBStorageVaultData>(response.Content);
+            var data = ModelReaderWriter.Read<ExascaleDBStorageVaultData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
             return await Task.FromResult(new ExascaleDBStorageVaultResource(_client, data)).ConfigureAwait(false);
         }
     }

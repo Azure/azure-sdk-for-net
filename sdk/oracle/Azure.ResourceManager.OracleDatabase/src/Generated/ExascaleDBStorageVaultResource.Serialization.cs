@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.OracleDatabase
 {
     public partial class ExascaleDBStorageVaultResource : IJsonModel<ExascaleDBStorageVaultData>
     {
+        private static ExascaleDBStorageVaultData s_dataDeserializationInstance;
+        private static ExascaleDBStorageVaultData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ExascaleDBStorageVaultData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ExascaleDBStorageVaultData>)Data).Write(writer, options);
 
-        ExascaleDBStorageVaultData IJsonModel<ExascaleDBStorageVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExascaleDBStorageVaultData>)Data).Create(ref reader, options);
+        ExascaleDBStorageVaultData IJsonModel<ExascaleDBStorageVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExascaleDBStorageVaultData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ExascaleDBStorageVaultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ExascaleDBStorageVaultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExascaleDBStorageVaultData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        ExascaleDBStorageVaultData IPersistableModel<ExascaleDBStorageVaultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExascaleDBStorageVaultData>(data, options);
+        ExascaleDBStorageVaultData IPersistableModel<ExascaleDBStorageVaultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExascaleDBStorageVaultData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        string IPersistableModel<ExascaleDBStorageVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExascaleDBStorageVaultData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ExascaleDBStorageVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExascaleDBStorageVaultData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

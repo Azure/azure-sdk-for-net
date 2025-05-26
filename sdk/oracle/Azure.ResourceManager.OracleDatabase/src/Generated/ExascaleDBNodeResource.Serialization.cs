@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.OracleDatabase
 {
     public partial class ExascaleDBNodeResource : IJsonModel<ExascaleDBNodeData>
     {
+        private static ExascaleDBNodeData s_dataDeserializationInstance;
+        private static ExascaleDBNodeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ExascaleDBNodeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ExascaleDBNodeData>)Data).Write(writer, options);
 
-        ExascaleDBNodeData IJsonModel<ExascaleDBNodeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExascaleDBNodeData>)Data).Create(ref reader, options);
+        ExascaleDBNodeData IJsonModel<ExascaleDBNodeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExascaleDBNodeData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ExascaleDBNodeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ExascaleDBNodeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExascaleDBNodeData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        ExascaleDBNodeData IPersistableModel<ExascaleDBNodeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExascaleDBNodeData>(data, options);
+        ExascaleDBNodeData IPersistableModel<ExascaleDBNodeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExascaleDBNodeData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        string IPersistableModel<ExascaleDBNodeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExascaleDBNodeData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ExascaleDBNodeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExascaleDBNodeData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

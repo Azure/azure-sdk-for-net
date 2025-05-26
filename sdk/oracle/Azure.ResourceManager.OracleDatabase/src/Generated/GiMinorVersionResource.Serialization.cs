@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.OracleDatabase
 {
     public partial class GiMinorVersionResource : IJsonModel<GiMinorVersionData>
     {
+        private static GiMinorVersionData s_dataDeserializationInstance;
+        private static GiMinorVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<GiMinorVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GiMinorVersionData>)Data).Write(writer, options);
 
-        GiMinorVersionData IJsonModel<GiMinorVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GiMinorVersionData>)Data).Create(ref reader, options);
+        GiMinorVersionData IJsonModel<GiMinorVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GiMinorVersionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<GiMinorVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<GiMinorVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GiMinorVersionData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        GiMinorVersionData IPersistableModel<GiMinorVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GiMinorVersionData>(data, options);
+        GiMinorVersionData IPersistableModel<GiMinorVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GiMinorVersionData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        string IPersistableModel<GiMinorVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GiMinorVersionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<GiMinorVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GiMinorVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
