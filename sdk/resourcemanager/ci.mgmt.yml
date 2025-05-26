@@ -85,7 +85,6 @@ trigger:
     - sdk/durabletask/Azure.ResourceManager.DurableTask
     - sdk/dynatrace/Azure.ResourceManager.Dynatrace
     - sdk/edgeorder/Azure.ResourceManager.EdgeOrder
-    - sdk/secretsstoreextension/Azure.ResourceManager.SecretsStoreExtension
     - sdk/edgezones/Azure.ResourceManager.EdgeZones
     - sdk/elastic/Azure.ResourceManager.Elastic
     - sdk/elasticsan/Azure.ResourceManager.ElasticSan
@@ -139,6 +138,7 @@ trigger:
     - sdk/mixedreality/Azure.ResourceManager.MixedReality
     - sdk/mobilenetwork/Azure.ResourceManager.MobileNetwork
     - sdk/mongocluster/Azure.ResourceManager.MongoCluster
+    - sdk/mongodbatlas/Azure.ResourceManager.MongoDBAtlas
     - sdk/monitor/Azure.ResourceManager.Monitor
     - sdk/mysql/Azure.ResourceManager.MySql
     - sdk/neonpostgres/Azure.ResourceManager.NeonPostgres
@@ -184,6 +184,7 @@ trigger:
     - sdk/resourcemover/Azure.ResourceManager.ResourceMover
     - sdk/resources/Azure.ResourceManager.Resources
     - sdk/search/Azure.ResourceManager.Search
+    - sdk/secretsstoreextension/Azure.ResourceManager.SecretsStoreExtension
     - sdk/securitycenter/Azure.ResourceManager.SecurityCenter
     - sdk/securitydevops/Azure.ResourceManager.SecurityDevOps
     - sdk/securityinsights/Azure.ResourceManager.SecurityInsights
@@ -307,7 +308,6 @@ pr:
     - sdk/durabletask/Azure.ResourceManager.DurableTask
     - sdk/dynatrace/Azure.ResourceManager.Dynatrace
     - sdk/edgeorder/Azure.ResourceManager.EdgeOrder
-    - sdk/secretsstoreextension/Azure.ResourceManager.SecretsStoreExtension
     - sdk/edgezones/Azure.ResourceManager.EdgeZones
     - sdk/elastic/Azure.ResourceManager.Elastic
     - sdk/elasticsan/Azure.ResourceManager.ElasticSan
@@ -361,6 +361,7 @@ pr:
     - sdk/mixedreality/Azure.ResourceManager.MixedReality
     - sdk/mobilenetwork/Azure.ResourceManager.MobileNetwork
     - sdk/mongocluster/Azure.ResourceManager.MongoCluster
+    - sdk/mongodbatlas/Azure.ResourceManager.MongoDBAtlas
     - sdk/monitor/Azure.ResourceManager.Monitor
     - sdk/mysql/Azure.ResourceManager.MySql
     - sdk/neonpostgres/Azure.ResourceManager.NeonPostgres
@@ -406,6 +407,7 @@ pr:
     - sdk/resourcemover/Azure.ResourceManager.ResourceMover
     - sdk/resources/Azure.ResourceManager.Resources
     - sdk/search/Azure.ResourceManager.Search
+    - sdk/secretsstoreextension/Azure.ResourceManager.SecretsStoreExtension
     - sdk/securitycenter/Azure.ResourceManager.SecurityCenter
     - sdk/securitydevops/Azure.ResourceManager.SecurityDevOps
     - sdk/securityinsights/Azure.ResourceManager.SecurityInsights

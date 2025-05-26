@@ -11,6 +11,8 @@ trigger:
     - sdk/onlineexperimentation
     - sdk/onlineexperimentation/ci.yml
     - sdk/onlineexperimentation/Azure.Analytics.OnlineExperimentation
+    exclude:
+    - sdk/onlineexperimentation/Azure.ResourceManager.OnlineExperimentation/
 
 pr:
   branches:
@@ -24,6 +26,8 @@ pr:
     - sdk/onlineexperimentation
     - sdk/onlineexperimentation/ci.yml
     - sdk/onlineexperimentation/Azure.Analytics.OnlineExperimentation
+    exclude:
+    - sdk/onlineexperimentation/Azure.ResourceManager.OnlineExperimentation/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
