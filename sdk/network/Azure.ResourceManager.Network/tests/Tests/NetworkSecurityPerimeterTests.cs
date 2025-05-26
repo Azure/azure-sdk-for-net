@@ -195,23 +195,12 @@ namespace Azure.ResourceManager.Network.Tests
             // Create NSP, Profile
             NetworkSecurityPerimeterResource nsp = await CreateRandomNsp();
             NetworkSecurityPerimeterProfileResource profile = await CreateRandomProfile(nsp);
-            ResourceIdentifier storageAccountId = null;
-            if (Mode == RecordedTestMode.Playback)
-            {
-                var storageAccountName = Recording.GenerateAssetName(_saNamePrefix);
-                storageAccountId = StorageAccountResource.CreateResourceIdentifier(_resourceGroup.Id.SubscriptionId, _resourceGroup.Id.Name, storageAccountName);
-            }
-            else
-            {
-                using (Recording.DisableRecording())
-                {
-                    var storageAccount = await CreateRandomStorageAccount();
-                    storageAccountId = storageAccount.Id;
-                }
-            }
+            var associationName = Recording.GenerateAssetName(_associationNamePrefix);
+
+            var storageAccount = await CreateRandomStorageAccount();
+            ResourceIdentifier storageAccountId = storageAccount.Id;
 
             // Create Association
-            var associationName = Recording.GenerateAssetName(_associationNamePrefix);
             var createAssociationReqData = new NetworkSecurityPerimeterAssociationData()
             {
                 ProfileId = profile.Id,
