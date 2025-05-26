@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             Guid? perimeterGuid = default;
             AzureLocation? location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -95,7 +95,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("perimeterGuid"u8))
