@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary>
-    /// Information on an entity (distinguished name) in a cryptographic certificate.
-    /// Serialized Name: CryptoCertificateEntity
-    /// </summary>
+    /// <summary> Information on an entity (distinguished name) in a cryptographic certificate. </summary>
     public partial class CryptoCertificateEntity
     {
         /// <summary>
@@ -54,26 +51,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CryptoCertificateEntity"/>. </summary>
-        /// <param name="commonName">
-        /// Common name of the certificate entity.
-        /// Serialized Name: CryptoCertificateEntity.commonName
-        /// </param>
-        /// <param name="organization">
-        /// Organization of the certificate entity.
-        /// Serialized Name: CryptoCertificateEntity.organization
-        /// </param>
-        /// <param name="organizationalUnit">
-        /// The organizational unit of the certificate entity.
-        /// Serialized Name: CryptoCertificateEntity.organizationalUnit
-        /// </param>
-        /// <param name="state">
-        /// Geographical state or province of the certificate entity.
-        /// Serialized Name: CryptoCertificateEntity.state
-        /// </param>
-        /// <param name="country">
-        /// Country code of the certificate entity.
-        /// Serialized Name: CryptoCertificateEntity.country
-        /// </param>
+        /// <param name="commonName"> Common name of the certificate entity. </param>
+        /// <param name="organization"> Organization of the certificate entity. </param>
+        /// <param name="organizationalUnit"> The organizational unit of the certificate entity. </param>
+        /// <param name="state"> Geographical state or province of the certificate entity. </param>
+        /// <param name="country"> Country code of the certificate entity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CryptoCertificateEntity(string commonName, string organization, string organizationalUnit, string state, string country, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -85,30 +67,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Common name of the certificate entity.
-        /// Serialized Name: CryptoCertificateEntity.commonName
-        /// </summary>
+        /// <summary> Common name of the certificate entity. </summary>
         public string CommonName { get; set; }
-        /// <summary>
-        /// Organization of the certificate entity.
-        /// Serialized Name: CryptoCertificateEntity.organization
-        /// </summary>
+        /// <summary> Organization of the certificate entity. </summary>
         public string Organization { get; set; }
-        /// <summary>
-        /// The organizational unit of the certificate entity.
-        /// Serialized Name: CryptoCertificateEntity.organizationalUnit
-        /// </summary>
+        /// <summary> The organizational unit of the certificate entity. </summary>
         public string OrganizationalUnit { get; set; }
-        /// <summary>
-        /// Geographical state or province of the certificate entity.
-        /// Serialized Name: CryptoCertificateEntity.state
-        /// </summary>
+        /// <summary> Geographical state or province of the certificate entity. </summary>
         public string State { get; set; }
-        /// <summary>
-        /// Country code of the certificate entity.
-        /// Serialized Name: CryptoCertificateEntity.country
-        /// </summary>
+        /// <summary> Country code of the certificate entity. </summary>
         public string Country { get; set; }
     }
 }
