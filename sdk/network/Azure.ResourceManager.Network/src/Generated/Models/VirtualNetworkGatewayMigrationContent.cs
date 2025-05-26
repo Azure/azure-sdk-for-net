@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The NSP logging configuration properties. </summary>
-    public partial class NetworkSecurityPerimeterLoggingConfigurationProperties
+    /// <summary> Virtual network gateway migration parameters. </summary>
+    public partial class VirtualNetworkGatewayMigrationContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,32 @@ namespace Azure.ResourceManager.Network.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterLoggingConfigurationProperties"/>. </summary>
-        public NetworkSecurityPerimeterLoggingConfigurationProperties()
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayMigrationContent"/>. </summary>
+        /// <param name="migrationType"> MigrationType for the virtual network gateway. </param>
+        public VirtualNetworkGatewayMigrationContent(VirtualNetworkGatewayMigrationType migrationType)
         {
-            EnabledLogCategories = new ChangeTrackingList<string>();
+            MigrationType = migrationType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterLoggingConfigurationProperties"/>. </summary>
-        /// <param name="enabledLogCategories"> The log categories to enable in the NSP logging configuration. </param>
-        /// <param name="version"> The version of the NSP logging configuration. </param>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayMigrationContent"/>. </summary>
+        /// <param name="migrationType"> MigrationType for the virtual network gateway. </param>
+        /// <param name="resourceUri"> Resource url that needs to be passed in to migration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterLoggingConfigurationProperties(IList<string> enabledLogCategories, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualNetworkGatewayMigrationContent(VirtualNetworkGatewayMigrationType migrationType, Uri resourceUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            EnabledLogCategories = enabledLogCategories;
-            Version = version;
+            MigrationType = migrationType;
+            ResourceUri = resourceUri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The log categories to enable in the NSP logging configuration. </summary>
-        public IList<string> EnabledLogCategories { get; }
-        /// <summary> The version of the NSP logging configuration. </summary>
-        public string Version { get; set; }
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayMigrationContent"/> for deserialization. </summary>
+        internal VirtualNetworkGatewayMigrationContent()
+        {
+        }
+
+        /// <summary> MigrationType for the virtual network gateway. </summary>
+        public VirtualNetworkGatewayMigrationType MigrationType { get; }
+        /// <summary> Resource url that needs to be passed in to migration. </summary>
+        public Uri ResourceUri { get; set; }
     }
 }
