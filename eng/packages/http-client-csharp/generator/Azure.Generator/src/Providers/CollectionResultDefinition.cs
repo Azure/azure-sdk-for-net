@@ -66,11 +66,9 @@ namespace Azure.Generator.Providers
                 "_client",
                 this);
             _operation = serviceMethod.Operation;
+            _isProtocol = itemModelType == null;
             _itemModelType = itemModelType ?? new CSharpType(typeof(BinaryData));
             _isAsync = isAsync;
-
-            // Model type is BinaryData for protocol methods
-            _isProtocol = _itemModelType.Equals(typeof(BinaryData));
 
             var createRequestMethodSignature = _client.RestClient.GetCreateRequestMethod(_operation).Signature;
             _createRequestMethodName = createRequestMethodSignature.Name;
@@ -160,14 +158,13 @@ namespace Azure.Generator.Providers
                 [ContinuationTokenParameter, PageSizeHintParameter]);
 
             return
-                new MethodProvider(signature,
-                    new MethodBodyStatement[]
-                    {
-                        BuildAsPagesMethodBody()
-                    }, this);
+                new MethodProvider(
+                    signature,
+                    BuildAsPagesMethodBody(),
+                    this);
         }
 
-        private MethodBodyStatement BuildAsPagesMethodBody()
+        private MethodBodyStatement[] BuildAsPagesMethodBody()
         {
             if (_paging.NextLink == null && _paging.ContinuationToken == null)
             {
@@ -219,7 +216,7 @@ namespace Azure.Generator.Providers
                 doWhileStatement.Add(YieldReturn(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [responseWithTypeVariable.Property(_itemsPropertyName).CastTo(new CSharpType(typeof(IReadOnlyList<>), _itemModelType)), nextPageExpression, responseVariable])));
             }
             statements.Add(doWhileStatement);
-            return statements;
+            return [.. statements];
         }
 
         private MethodBodyStatement[] ConvertItemsToListOfBinaryData(VariableExpression responseVariable, out VariableExpression itemsVariable)
