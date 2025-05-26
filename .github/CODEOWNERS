@@ -1130,6 +1130,12 @@
 # ServiceLabel: %Service Fabric
 # ServiceOwners:                                                   @QingChenmsft @vaishnavk @juhacket
 
+# PRLabel: %SiteManager
+/sdk/sitemanager/Azure.ResourceManager.*/                          @bsomeshekar
+
+# ServiceLabel: %SiteManager %Mgmt
+# ServiceOwners:                                                   @bsomeshekar
+
 # PRLabel: %Spring App Discovery
 /sdk/springappdiscovery/Azure.ResourceManager.*/                   @sunkun99 @ArcturusZhang @ArthurMa1978
 
@@ -1147,6 +1153,7 @@
 
 # ServiceLabel: %Weights & Biases %Mgmt
 # ServiceOwners:                                                   @aggarwalsw
+
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp

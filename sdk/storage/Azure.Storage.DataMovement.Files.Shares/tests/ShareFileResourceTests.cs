@@ -620,7 +620,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 resourceOptions: new ShareFileStorageResourceOptions()
                 {
                     FilePermissions = true,
-                    ShareProtocol = ShareProtocols.Nfs
+                    ShareProtocol = ShareProtocol.Nfs
                 },
                 sourceProperties: sourceProperties);
 
@@ -1164,7 +1164,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Tuple<Mock<StorageResourceItem>, Mock<ShareFileClient>> mockTuple =
                 await CopyFromUriAsyncPreserveProperties_Internal(
                     length,
-                    resourceOptions: new() { FilePermissions = true, ShareProtocol = ShareProtocols.Nfs },
+                    resourceOptions: new() { FilePermissions = true, ShareProtocol = ShareProtocol.Nfs },
                     new StorageResourceItemProperties()
                     {
                         ResourceLength = length,
@@ -1730,7 +1730,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Tuple<Mock<StorageResourceItem>, Mock<ShareFileClient>> mockTuple =
                 await CopyBlockFromUriAsyncPreserveProperties_Internal(
                     length,
-                    resourceOptions: new() { FilePermissions = true, ShareProtocol = ShareProtocols.Nfs },
+                    resourceOptions: new() { FilePermissions = true, ShareProtocol = ShareProtocol.Nfs },
                     new StorageResourceItemProperties()
                     {
                         ResourceLength = length,
@@ -2564,7 +2564,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 new()
                 {
                     FilePermissions = true,
-                    ShareProtocol = ShareProtocols.Nfs
+                    ShareProtocol = ShareProtocol.Nfs
                 });
             StorageResourceItemProperties properties = new()
             {
