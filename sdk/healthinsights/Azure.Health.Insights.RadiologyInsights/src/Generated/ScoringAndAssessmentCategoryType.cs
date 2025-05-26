@@ -22,109 +22,109 @@ namespace Azure.Health.Insights.RadiologyInsights
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string BIRADSValue = "BIRADS";
-        private const string CRADSCOLONICFINDINGSValue = "C-RADS COLONIC FINDINGS";
-        private const string CADRADSValue = "CAD-RADS";
-        private const string LIRADSValue = "LI-RADS";
-        private const string LUNGRADSValue = "LUNG-RADS";
-        private const string NIRADSValue = "NI-RADS";
-        private const string ORADSValue = "O-RADS";
-        private const string PIRADSValue = "PI-RADS";
-        private const string TIRADSValue = "TI-RADS";
-        private const string CRADSEXTRACOLONICFINDINGSValue = "C-RADS EXTRACOLONIC FINDINGS";
-        private const string LIFETIMEBREASTCANCERRISKValue = "LIFETIME BREAST CANCER RISK";
-        private const string ASCVDRISKValue = "ASCVD RISK";
-        private const string MODIFIEDGAILMODELRISKValue = "MODIFIED GAIL MODEL RISK";
-        private const string TYRERCUSICKMODELRISKValue = "TYRER CUSICK MODEL RISK";
-        private const string AGATSTONSCOREValue = "AGATSTON SCORE";
-        private const string TENYEARCHDRISKValue = "10 YEAR CHD RISK";
-        private const string ZSCOREValue = "Z-SCORE";
-        private const string TSCOREValue = "T-SCORE";
-        private const string CALCIUMVOLUMESCOREValue = "CALCIUM VOLUME SCORE";
-        private const string USLIRADSVISUALIZATIONSCOREValue = "US LI-RADS VISUALIZATION SCORE";
-        private const string USLIRADSValue = "US LI-RADS";
-        private const string CEUSLIRADSValue = "CEUS LI-RADS";
-        private const string TREATMENTRESPONSELIRADSValue = "TREATMENT RESPONSE LI-RADS";
-        private const string ORADSMRIValue = "O-RADS MRI";
-        private const string CALCIUMMASSSCOREValue = "CALCIUM MASS SCORE";
-        private const string RISKOFMALIGNANCYINDEXValue = "RISK OF MALIGNANCY INDEX";
-        private const string HNPCCMUTATIONRISKValue = "HNPCC MUTATION RISK";
-        private const string ALBERTASTROKEPROGRAMEARLYCTSCOREValue = "ALBERTA STROKE PROGRAM EARLY CT SCORE";
-        private const string KELLGRENLAWRENCEGRADINGSCALEValue = "KELLGREN-LAWRENCE GRADING SCALE";
-        private const string TONNISCLASSIFICATIONValue = "TONNIS CLASSIFICATION";
-        private const string CALCIUMSCOREUNSPECIFIEDValue = "CALCIUM SCORE (UNSPECIFIED)";
-        private const string TENYEARCHDRISKOBSERVEDAGEValue = "10 YEAR CHD RISK (OBSERVED AGE)";
-        private const string TENYEARCHDRISKARTERIALAGEValue = "10 YEAR CHD RISK (ARTERIAL AGE)";
-        private const string FRAXSCOREValue = "FRAX SCORE";
+        private const string BiradsValue = "BIRADS";
+        private const string CRadsColonicFindingsValue = "C-RADS COLONIC FINDINGS";
+        private const string CadRadsValue = "CAD-RADS";
+        private const string LiRadsValue = "LI-RADS";
+        private const string LungRadsValue = "LUNG-RADS";
+        private const string NiRadsValue = "NI-RADS";
+        private const string ORadsValue = "O-RADS";
+        private const string PiRadsValue = "PI-RADS";
+        private const string TiRadsValue = "TI-RADS";
+        private const string CRadsExtracolonicFindingsValue = "C-RADS EXTRACOLONIC FINDINGS";
+        private const string LifetimeBreastCancerRiskValue = "LIFETIME BREAST CANCER RISK";
+        private const string AscvdRiskValue = "ASCVD RISK";
+        private const string ModifiedGailModelRiskValue = "MODIFIED GAIL MODEL RISK";
+        private const string TyrerCusickModelRiskValue = "TYRER CUSICK MODEL RISK";
+        private const string AgatstonScoreValue = "AGATSTON SCORE";
+        private const string TenYearChdRiskValue = "10 YEAR CHD RISK";
+        private const string ZScoreValue = "Z-SCORE";
+        private const string TScoreValue = "T-SCORE";
+        private const string CalciumVolumeScoreValue = "CALCIUM VOLUME SCORE";
+        private const string UsLiRadsVisualizationScoreValue = "US LI-RADS VISUALIZATION SCORE";
+        private const string UsLiRadsValue = "US LI-RADS";
+        private const string CeusLiRadsValue = "CEUS LI-RADS";
+        private const string TreatmentResponseLiRadsValue = "TREATMENT RESPONSE LI-RADS";
+        private const string ORadsMriValue = "O-RADS MRI";
+        private const string CalciumMassScoreValue = "CALCIUM MASS SCORE";
+        private const string RiskOfMalignancyIndexValue = "RISK OF MALIGNANCY INDEX";
+        private const string HnpccMutationRiskValue = "HNPCC MUTATION RISK";
+        private const string AlbertaStrokeProgramEarlyCtScoreValue = "ALBERTA STROKE PROGRAM EARLY CT SCORE";
+        private const string KellgrenLawrenceGradingScaleValue = "KELLGREN-LAWRENCE GRADING SCALE";
+        private const string TonnisClassificationValue = "TONNIS CLASSIFICATION";
+        private const string CalciumScoreUnspecifiedValue = "CALCIUM SCORE (UNSPECIFIED)";
+        private const string TenYearChdRiskObservedAgeValue = "10 YEAR CHD RISK (OBSERVED AGE)";
+        private const string TenYearChdRiskArterialAgeValue = "10 YEAR CHD RISK (ARTERIAL AGE)";
+        private const string FraxScoreValue = "FRAX SCORE";
 
         /// <summary> BIRADS. </summary>
-        public static ScoringAndAssessmentCategoryType BIRADS { get; } = new ScoringAndAssessmentCategoryType(BIRADSValue);
+        public static ScoringAndAssessmentCategoryType Birads { get; } = new ScoringAndAssessmentCategoryType(BiradsValue);
         /// <summary> C-RADS COLONIC FINDINGS. </summary>
-        public static ScoringAndAssessmentCategoryType CRADSCOLONICFINDINGS { get; } = new ScoringAndAssessmentCategoryType(CRADSCOLONICFINDINGSValue);
+        public static ScoringAndAssessmentCategoryType CRadsColonicFindings { get; } = new ScoringAndAssessmentCategoryType(CRadsColonicFindingsValue);
         /// <summary> CAD-RADS. </summary>
-        public static ScoringAndAssessmentCategoryType CADRADS { get; } = new ScoringAndAssessmentCategoryType(CADRADSValue);
+        public static ScoringAndAssessmentCategoryType CadRads { get; } = new ScoringAndAssessmentCategoryType(CadRadsValue);
         /// <summary> LI-RADS. </summary>
-        public static ScoringAndAssessmentCategoryType LIRADS { get; } = new ScoringAndAssessmentCategoryType(LIRADSValue);
+        public static ScoringAndAssessmentCategoryType LiRads { get; } = new ScoringAndAssessmentCategoryType(LiRadsValue);
         /// <summary> LUNG-RADS. </summary>
-        public static ScoringAndAssessmentCategoryType LUNGRADS { get; } = new ScoringAndAssessmentCategoryType(LUNGRADSValue);
+        public static ScoringAndAssessmentCategoryType LungRads { get; } = new ScoringAndAssessmentCategoryType(LungRadsValue);
         /// <summary> NI-RADS. </summary>
-        public static ScoringAndAssessmentCategoryType NIRADS { get; } = new ScoringAndAssessmentCategoryType(NIRADSValue);
+        public static ScoringAndAssessmentCategoryType NiRads { get; } = new ScoringAndAssessmentCategoryType(NiRadsValue);
         /// <summary> O-RADS. </summary>
-        public static ScoringAndAssessmentCategoryType ORADS { get; } = new ScoringAndAssessmentCategoryType(ORADSValue);
+        public static ScoringAndAssessmentCategoryType ORads { get; } = new ScoringAndAssessmentCategoryType(ORadsValue);
         /// <summary> PI-RADS. </summary>
-        public static ScoringAndAssessmentCategoryType PIRADS { get; } = new ScoringAndAssessmentCategoryType(PIRADSValue);
+        public static ScoringAndAssessmentCategoryType PiRads { get; } = new ScoringAndAssessmentCategoryType(PiRadsValue);
         /// <summary> TI-RADS. </summary>
-        public static ScoringAndAssessmentCategoryType TIRADS { get; } = new ScoringAndAssessmentCategoryType(TIRADSValue);
+        public static ScoringAndAssessmentCategoryType TiRads { get; } = new ScoringAndAssessmentCategoryType(TiRadsValue);
         /// <summary> C-RADS EXTRACOLONIC FINDINGS. </summary>
-        public static ScoringAndAssessmentCategoryType CRADSEXTRACOLONICFINDINGS { get; } = new ScoringAndAssessmentCategoryType(CRADSEXTRACOLONICFINDINGSValue);
+        public static ScoringAndAssessmentCategoryType CRadsExtracolonicFindings { get; } = new ScoringAndAssessmentCategoryType(CRadsExtracolonicFindingsValue);
         /// <summary> LIFETIME BREAST CANCER RISK. </summary>
-        public static ScoringAndAssessmentCategoryType LIFETIMEBREASTCANCERRISK { get; } = new ScoringAndAssessmentCategoryType(LIFETIMEBREASTCANCERRISKValue);
+        public static ScoringAndAssessmentCategoryType LifetimeBreastCancerRisk { get; } = new ScoringAndAssessmentCategoryType(LifetimeBreastCancerRiskValue);
         /// <summary> ASCVD RISK. </summary>
-        public static ScoringAndAssessmentCategoryType ASCVDRISK { get; } = new ScoringAndAssessmentCategoryType(ASCVDRISKValue);
+        public static ScoringAndAssessmentCategoryType AscvdRisk { get; } = new ScoringAndAssessmentCategoryType(AscvdRiskValue);
         /// <summary> MODIFIED GAIL MODEL RISK. </summary>
-        public static ScoringAndAssessmentCategoryType MODIFIEDGAILMODELRISK { get; } = new ScoringAndAssessmentCategoryType(MODIFIEDGAILMODELRISKValue);
+        public static ScoringAndAssessmentCategoryType ModifiedGailModelRisk { get; } = new ScoringAndAssessmentCategoryType(ModifiedGailModelRiskValue);
         /// <summary> TYRER CUSICK MODEL RISK. </summary>
-        public static ScoringAndAssessmentCategoryType TYRERCUSICKMODELRISK { get; } = new ScoringAndAssessmentCategoryType(TYRERCUSICKMODELRISKValue);
+        public static ScoringAndAssessmentCategoryType TyrerCusickModelRisk { get; } = new ScoringAndAssessmentCategoryType(TyrerCusickModelRiskValue);
         /// <summary> AGATSTON SCORE. </summary>
-        public static ScoringAndAssessmentCategoryType AGATSTONSCORE { get; } = new ScoringAndAssessmentCategoryType(AGATSTONSCOREValue);
+        public static ScoringAndAssessmentCategoryType AgatstonScore { get; } = new ScoringAndAssessmentCategoryType(AgatstonScoreValue);
         /// <summary> 10 YEAR CHD RISK. </summary>
-        public static ScoringAndAssessmentCategoryType TENYEARCHDRISK { get; } = new ScoringAndAssessmentCategoryType(TENYEARCHDRISKValue);
+        public static ScoringAndAssessmentCategoryType TenYearChdRisk { get; } = new ScoringAndAssessmentCategoryType(TenYearChdRiskValue);
         /// <summary> Z-SCORE. </summary>
-        public static ScoringAndAssessmentCategoryType ZSCORE { get; } = new ScoringAndAssessmentCategoryType(ZSCOREValue);
+        public static ScoringAndAssessmentCategoryType ZScore { get; } = new ScoringAndAssessmentCategoryType(ZScoreValue);
         /// <summary> T-SCORE. </summary>
-        public static ScoringAndAssessmentCategoryType TSCORE { get; } = new ScoringAndAssessmentCategoryType(TSCOREValue);
+        public static ScoringAndAssessmentCategoryType TScore { get; } = new ScoringAndAssessmentCategoryType(TScoreValue);
         /// <summary> CALCIUM VOLUME SCORE. </summary>
-        public static ScoringAndAssessmentCategoryType CALCIUMVOLUMESCORE { get; } = new ScoringAndAssessmentCategoryType(CALCIUMVOLUMESCOREValue);
+        public static ScoringAndAssessmentCategoryType CalciumVolumeScore { get; } = new ScoringAndAssessmentCategoryType(CalciumVolumeScoreValue);
         /// <summary> US LI-RADS VISUALIZATION SCORE. </summary>
-        public static ScoringAndAssessmentCategoryType USLIRADSVISUALIZATIONSCORE { get; } = new ScoringAndAssessmentCategoryType(USLIRADSVISUALIZATIONSCOREValue);
+        public static ScoringAndAssessmentCategoryType UsLiRadsVisualizationScore { get; } = new ScoringAndAssessmentCategoryType(UsLiRadsVisualizationScoreValue);
         /// <summary> US LI-RADS. </summary>
-        public static ScoringAndAssessmentCategoryType USLIRADS { get; } = new ScoringAndAssessmentCategoryType(USLIRADSValue);
+        public static ScoringAndAssessmentCategoryType UsLiRads { get; } = new ScoringAndAssessmentCategoryType(UsLiRadsValue);
         /// <summary> CEUS LI-RADS. </summary>
-        public static ScoringAndAssessmentCategoryType CEUSLIRADS { get; } = new ScoringAndAssessmentCategoryType(CEUSLIRADSValue);
+        public static ScoringAndAssessmentCategoryType CeusLiRads { get; } = new ScoringAndAssessmentCategoryType(CeusLiRadsValue);
         /// <summary> TREATMENT RESPONSE LI-RADS. </summary>
-        public static ScoringAndAssessmentCategoryType TREATMENTRESPONSELIRADS { get; } = new ScoringAndAssessmentCategoryType(TREATMENTRESPONSELIRADSValue);
+        public static ScoringAndAssessmentCategoryType TreatmentResponseLiRads { get; } = new ScoringAndAssessmentCategoryType(TreatmentResponseLiRadsValue);
         /// <summary> O-RADS MRI. </summary>
-        public static ScoringAndAssessmentCategoryType ORADSMRI { get; } = new ScoringAndAssessmentCategoryType(ORADSMRIValue);
+        public static ScoringAndAssessmentCategoryType ORadsMri { get; } = new ScoringAndAssessmentCategoryType(ORadsMriValue);
         /// <summary> CALCIUM MASS SCORE. </summary>
-        public static ScoringAndAssessmentCategoryType CALCIUMMASSSCORE { get; } = new ScoringAndAssessmentCategoryType(CALCIUMMASSSCOREValue);
+        public static ScoringAndAssessmentCategoryType CalciumMassScore { get; } = new ScoringAndAssessmentCategoryType(CalciumMassScoreValue);
         /// <summary> RISK OF MALIGNANCY INDEX. </summary>
-        public static ScoringAndAssessmentCategoryType RISKOFMALIGNANCYINDEX { get; } = new ScoringAndAssessmentCategoryType(RISKOFMALIGNANCYINDEXValue);
+        public static ScoringAndAssessmentCategoryType RiskOfMalignancyIndex { get; } = new ScoringAndAssessmentCategoryType(RiskOfMalignancyIndexValue);
         /// <summary> HNPCC MUTATION RISK. </summary>
-        public static ScoringAndAssessmentCategoryType HNPCCMUTATIONRISK { get; } = new ScoringAndAssessmentCategoryType(HNPCCMUTATIONRISKValue);
+        public static ScoringAndAssessmentCategoryType HnpccMutationRisk { get; } = new ScoringAndAssessmentCategoryType(HnpccMutationRiskValue);
         /// <summary> ALBERTA STROKE PROGRAM EARLY CT SCORE. </summary>
-        public static ScoringAndAssessmentCategoryType ALBERTASTROKEPROGRAMEARLYCTSCORE { get; } = new ScoringAndAssessmentCategoryType(ALBERTASTROKEPROGRAMEARLYCTSCOREValue);
+        public static ScoringAndAssessmentCategoryType AlbertaStrokeProgramEarlyCtScore { get; } = new ScoringAndAssessmentCategoryType(AlbertaStrokeProgramEarlyCtScoreValue);
         /// <summary> KELLGREN-LAWRENCE GRADING SCALE. </summary>
-        public static ScoringAndAssessmentCategoryType KELLGRENLAWRENCEGRADINGSCALE { get; } = new ScoringAndAssessmentCategoryType(KELLGRENLAWRENCEGRADINGSCALEValue);
+        public static ScoringAndAssessmentCategoryType KellgrenLawrenceGradingScale { get; } = new ScoringAndAssessmentCategoryType(KellgrenLawrenceGradingScaleValue);
         /// <summary> TONNIS CLASSIFICATION. </summary>
-        public static ScoringAndAssessmentCategoryType TONNISCLASSIFICATION { get; } = new ScoringAndAssessmentCategoryType(TONNISCLASSIFICATIONValue);
+        public static ScoringAndAssessmentCategoryType TonnisClassification { get; } = new ScoringAndAssessmentCategoryType(TonnisClassificationValue);
         /// <summary> CALCIUM SCORE (UNSPECIFIED). </summary>
-        public static ScoringAndAssessmentCategoryType CALCIUMSCOREUNSPECIFIED { get; } = new ScoringAndAssessmentCategoryType(CALCIUMSCOREUNSPECIFIEDValue);
+        public static ScoringAndAssessmentCategoryType CalciumScoreUnspecified { get; } = new ScoringAndAssessmentCategoryType(CalciumScoreUnspecifiedValue);
         /// <summary> 10 YEAR CHD RISK (OBSERVED AGE). </summary>
-        public static ScoringAndAssessmentCategoryType TENYEARCHDRISKOBSERVEDAGE { get; } = new ScoringAndAssessmentCategoryType(TENYEARCHDRISKOBSERVEDAGEValue);
+        public static ScoringAndAssessmentCategoryType TenYearChdRiskObservedAge { get; } = new ScoringAndAssessmentCategoryType(TenYearChdRiskObservedAgeValue);
         /// <summary> 10 YEAR CHD RISK (ARTERIAL AGE). </summary>
-        public static ScoringAndAssessmentCategoryType TENYEARCHDRISKARTERIALAGE { get; } = new ScoringAndAssessmentCategoryType(TENYEARCHDRISKARTERIALAGEValue);
+        public static ScoringAndAssessmentCategoryType TenYearChdRiskArterialAge { get; } = new ScoringAndAssessmentCategoryType(TenYearChdRiskArterialAgeValue);
         /// <summary> FRAX SCORE. </summary>
-        public static ScoringAndAssessmentCategoryType FRAXSCORE { get; } = new ScoringAndAssessmentCategoryType(FRAXSCOREValue);
+        public static ScoringAndAssessmentCategoryType FraxScore { get; } = new ScoringAndAssessmentCategoryType(FraxScoreValue);
         /// <summary> Determines if two <see cref="ScoringAndAssessmentCategoryType"/> values are the same. </summary>
         public static bool operator ==(ScoringAndAssessmentCategoryType left, ScoringAndAssessmentCategoryType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScoringAndAssessmentCategoryType"/> values are not the same. </summary>
