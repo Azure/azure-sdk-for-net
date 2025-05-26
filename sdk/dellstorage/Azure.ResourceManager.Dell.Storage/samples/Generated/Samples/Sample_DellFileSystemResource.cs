@@ -152,12 +152,11 @@ namespace Azure.ResourceManager.Dell.Storage.Samples
             // invoke the operation
             DellFileSystemPatch patch = new DellFileSystemPatch
             {
-                Identity = new ManagedServiceIdentityUpdate
+                Identity = new ManagedServiceIdentity("SystemAssigned,UserAssigned")
                 {
-                    Type = Models.ManagedServiceIdentityType.SystemAssignedUserAssigned,
                     UserAssignedIdentities =
 {
-["key7645"] = new UserAssignedIdentity()
+[new ResourceIdentifier("key7645")] = new UserAssignedIdentity()
 },
                 },
                 Tags =
@@ -166,7 +165,7 @@ namespace Azure.ResourceManager.Dell.Storage.Samples
 },
                 Properties = new DellFileSystemPatchProperties
                 {
-                    DelegatedSubnetId = "bfpuabdz",
+                    DelegatedSubnetId = new ResourceIdentifier("bfpuabdz"),
                     Capacity = new DellFileSystemCapacity
                     {
                         Current = "5",
@@ -217,7 +216,7 @@ namespace Azure.ResourceManager.Dell.Storage.Samples
             {
                 Properties = new DellFileSystemPatchProperties
                 {
-                    DelegatedSubnetId = "uqfvajvyltgmqvdnxhbrfqbpuey",
+                    DelegatedSubnetId = new ResourceIdentifier("uqfvajvyltgmqvdnxhbrfqbpuey"),
                     Capacity = new DellFileSystemCapacity
                     {
                         Current = "5",

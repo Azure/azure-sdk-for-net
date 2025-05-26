@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Dell.Storage.Models
 {
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The updatable properties of the FileSystemResource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DellFileSystemPatch(ManagedServiceIdentityUpdate identity, IDictionary<string, string> tags, DellFileSystemPatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DellFileSystemPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, DellFileSystemPatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identity = identity;
             Tags = tags;
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public ManagedServiceIdentityUpdate Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The updatable properties of the FileSystemResource. </summary>

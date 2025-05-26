@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
             if (Optional.IsDefined(OneFsUri))
             {
                 writer.WritePropertyName("oneFsUrl"u8);
-                writer.WriteStringValue(OneFsUri);
+                writer.WriteStringValue(OneFsUri.AbsoluteUri);
             }
             writer.WritePropertyName("dellReferenceNumber"u8);
             writer.WriteStringValue(DellReferenceNumber);
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.Dell.Storage.Models
             DellFileSystemCapacity capacity = default;
             DellFileSystemMarketplaceDetails marketplace = default;
             DellFileSystemProvisioningState? provisioningState = default;
-            string delegatedSubnetId = default;
+            ResourceIdentifier delegatedSubnetId = default;
             string delegatedSubnetCidr = default;
             DellFileSystemUserDetails user = default;
             string fileSystemId = default;
             string smartConnectFqdn = default;
-            string oneFsUrl = default;
+            Uri oneFsUrl = default;
             string dellReferenceNumber = default;
             DellFileSystemEncryptionProperties encryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
                 }
                 if (property.NameEquals("delegatedSubnetId"u8))
                 {
-                    delegatedSubnetId = property.Value.GetString();
+                    delegatedSubnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("delegatedSubnetCidr"u8))
@@ -173,7 +173,11 @@ namespace Azure.ResourceManager.Dell.Storage.Models
                 }
                 if (property.NameEquals("oneFsUrl"u8))
                 {
-                    oneFsUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    oneFsUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dellReferenceNumber"u8))

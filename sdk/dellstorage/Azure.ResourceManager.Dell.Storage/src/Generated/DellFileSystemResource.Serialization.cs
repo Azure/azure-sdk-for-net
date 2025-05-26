@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Dell.Storage
 {
     public partial class DellFileSystemResource : IJsonModel<DellFileSystemData>
     {
+        private static DellFileSystemData s_dataDeserializationInstance;
+        private static DellFileSystemData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DellFileSystemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DellFileSystemData>)Data).Write(writer, options);
 
-        DellFileSystemData IJsonModel<DellFileSystemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DellFileSystemData>)Data).Create(ref reader, options);
+        DellFileSystemData IJsonModel<DellFileSystemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DellFileSystemData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DellFileSystemData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DellFileSystemData>(Data, options, AzureResourceManagerDellStorageContext.Default);
 
         DellFileSystemData IPersistableModel<DellFileSystemData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DellFileSystemData>(data, options, AzureResourceManagerDellStorageContext.Default);
 
-        string IPersistableModel<DellFileSystemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DellFileSystemData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DellFileSystemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DellFileSystemData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

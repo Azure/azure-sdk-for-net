@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
     {
         public static Azure.ResourceManager.Dell.Storage.DellFileSystemData DellFileSystemData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemMarketplaceDetails DellFileSystemMarketplaceDetails(string marketplaceSubscriptionId = null, string planId = null, string offerId = null, string publisherId = null, string privateOfferId = null, string planName = null, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemMarketplaceSubscriptionStatus?), string endDate = null, string termUnit = null) { throw null; }
-        public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProperties DellFileSystemProperties(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemCapacity capacity = null, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemMarketplaceDetails marketplace = null, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProvisioningState? provisioningState = default(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProvisioningState?), string delegatedSubnetId = null, string delegatedSubnetCidr = null, string userEmail = null, string fileSystemId = null, string smartConnectFqdn = null, string oneFsUri = null, string dellReferenceNumber = null, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionProperties encryption = null) { throw null; }
+        public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProperties DellFileSystemProperties(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemCapacity capacity = null, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemMarketplaceDetails marketplace = null, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProvisioningState? provisioningState = default(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProvisioningState?), Azure.Core.ResourceIdentifier delegatedSubnetId = null, string delegatedSubnetCidr = null, string userEmail = null, string fileSystemId = null, string smartConnectFqdn = null, System.Uri oneFsUri = null, string dellReferenceNumber = null, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionProperties encryption = null) { throw null; }
     }
     public partial class DellFileSystemCapacity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dell.Storage.Models.DellFileSystemCapacity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dell.Storage.Models.DellFileSystemCapacity>
     {
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
     public partial class DellFileSystemPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dell.Storage.Models.DellFileSystemPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dell.Storage.Models.DellFileSystemPatch>
     {
         public DellFileSystemPatch() { }
-        public Azure.ResourceManager.Dell.Storage.Models.ManagedServiceIdentityUpdate Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Dell.Storage.Models.DellFileSystemPatchProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
     {
         public DellFileSystemPatchProperties() { }
         public Azure.ResourceManager.Dell.Storage.Models.DellFileSystemCapacity Capacity { get { throw null; } set { } }
-        public string DelegatedSubnetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DelegatedSubnetId { get { throw null; } set { } }
         public Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionPatchProperties Encryption { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Dell.Storage.Models.DellFileSystemPatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dell.Storage.Models.DellFileSystemPatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -266,15 +266,15 @@ namespace Azure.ResourceManager.Dell.Storage.Models
     }
     public partial class DellFileSystemProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProperties>
     {
-        public DellFileSystemProperties(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemMarketplaceDetails marketplace, string delegatedSubnetId, string delegatedSubnetCidr, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemUserDetails user, string dellReferenceNumber, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionProperties encryption) { }
+        public DellFileSystemProperties(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemMarketplaceDetails marketplace, Azure.Core.ResourceIdentifier delegatedSubnetId, string delegatedSubnetCidr, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemUserDetails user, string dellReferenceNumber, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionProperties encryption) { }
         public Azure.ResourceManager.Dell.Storage.Models.DellFileSystemCapacity Capacity { get { throw null; } set { } }
         public string DelegatedSubnetCidr { get { throw null; } set { } }
-        public string DelegatedSubnetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DelegatedSubnetId { get { throw null; } set { } }
         public string DellReferenceNumber { get { throw null; } set { } }
         public Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionProperties Encryption { get { throw null; } set { } }
         public string FileSystemId { get { throw null; } set { } }
         public Azure.ResourceManager.Dell.Storage.Models.DellFileSystemMarketplaceDetails Marketplace { get { throw null; } set { } }
-        public string OneFsUri { get { throw null; } set { } }
+        public System.Uri OneFsUri { get { throw null; } set { } }
         public Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProvisioningState? ProvisioningState { get { throw null; } }
         public string SmartConnectFqdn { get { throw null; } set { } }
         public string UserEmail { get { throw null; } set { } }
@@ -320,37 +320,5 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         Azure.ResourceManager.Dell.Storage.Models.DellFileSystemUserDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dell.Storage.Models.DellFileSystemUserDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dell.Storage.Models.DellFileSystemUserDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dell.Storage.Models.DellFileSystemUserDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ManagedServiceIdentityType : System.IEquatable<Azure.ResourceManager.Dell.Storage.Models.ManagedServiceIdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ManagedServiceIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.Dell.Storage.Models.ManagedServiceIdentityType None { get { throw null; } }
-        public static Azure.ResourceManager.Dell.Storage.Models.ManagedServiceIdentityType SystemAssigned { get { throw null; } }
-        public static Azure.ResourceManager.Dell.Storage.Models.ManagedServiceIdentityType SystemAssignedUserAssigned { get { throw null; } }
-        public static Azure.ResourceManager.Dell.Storage.Models.ManagedServiceIdentityType UserAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Dell.Storage.Models.ManagedServiceIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Dell.Storage.Models.ManagedServiceIdentityType left, Azure.ResourceManager.Dell.Storage.Models.ManagedServiceIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Dell.Storage.Models.ManagedServiceIdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Dell.Storage.Models.ManagedServiceIdentityType left, Azure.ResourceManager.Dell.Storage.Models.ManagedServiceIdentityType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ManagedServiceIdentityUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dell.Storage.Models.ManagedServiceIdentityUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dell.Storage.Models.ManagedServiceIdentityUpdate>
-    {
-        public ManagedServiceIdentityUpdate() { }
-        public Azure.ResourceManager.Dell.Storage.Models.ManagedServiceIdentityType? Type { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Dell.Storage.Models.ManagedServiceIdentityUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dell.Storage.Models.ManagedServiceIdentityUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dell.Storage.Models.ManagedServiceIdentityUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Dell.Storage.Models.ManagedServiceIdentityUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dell.Storage.Models.ManagedServiceIdentityUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dell.Storage.Models.ManagedServiceIdentityUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dell.Storage.Models.ManagedServiceIdentityUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

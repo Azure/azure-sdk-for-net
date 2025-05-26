@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Dell.Storage.Models
 {
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <param name="dellReferenceNumber"> DellReferenceNumber of the resource. </param>
         /// <param name="encryption"> EncryptionProperties of the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="marketplace"/>, <paramref name="delegatedSubnetId"/>, <paramref name="delegatedSubnetCidr"/>, <paramref name="user"/>, <paramref name="dellReferenceNumber"/> or <paramref name="encryption"/> is null. </exception>
-        public DellFileSystemProperties(DellFileSystemMarketplaceDetails marketplace, string delegatedSubnetId, string delegatedSubnetCidr, DellFileSystemUserDetails user, string dellReferenceNumber, DellFileSystemEncryptionProperties encryption)
+        public DellFileSystemProperties(DellFileSystemMarketplaceDetails marketplace, ResourceIdentifier delegatedSubnetId, string delegatedSubnetCidr, DellFileSystemUserDetails user, string dellReferenceNumber, DellFileSystemEncryptionProperties encryption)
         {
             Argument.AssertNotNull(marketplace, nameof(marketplace));
             Argument.AssertNotNull(delegatedSubnetId, nameof(delegatedSubnetId));
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <param name="dellReferenceNumber"> DellReferenceNumber of the resource. </param>
         /// <param name="encryption"> EncryptionProperties of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DellFileSystemProperties(DellFileSystemCapacity capacity, DellFileSystemMarketplaceDetails marketplace, DellFileSystemProvisioningState? provisioningState, string delegatedSubnetId, string delegatedSubnetCidr, DellFileSystemUserDetails user, string fileSystemId, string smartConnectFqdn, string oneFsUri, string dellReferenceNumber, DellFileSystemEncryptionProperties encryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DellFileSystemProperties(DellFileSystemCapacity capacity, DellFileSystemMarketplaceDetails marketplace, DellFileSystemProvisioningState? provisioningState, ResourceIdentifier delegatedSubnetId, string delegatedSubnetCidr, DellFileSystemUserDetails user, string fileSystemId, string smartConnectFqdn, Uri oneFsUri, string dellReferenceNumber, DellFileSystemEncryptionProperties encryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Capacity = capacity;
             Marketplace = marketplace;
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <summary> Provisioning State of the resource. </summary>
         public DellFileSystemProvisioningState? ProvisioningState { get; }
         /// <summary> Delegated subnet id for Vnet injection. </summary>
-        public string DelegatedSubnetId { get; set; }
+        public ResourceIdentifier DelegatedSubnetId { get; set; }
         /// <summary> Domain range for the delegated subnet. </summary>
         public string DelegatedSubnetCidr { get; set; }
         /// <summary> User Details. </summary>
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <summary> Smart Connect FQDN of the resource. </summary>
         public string SmartConnectFqdn { get; set; }
         /// <summary> OneFS url. </summary>
-        public string OneFsUri { get; set; }
+        public Uri OneFsUri { get; set; }
         /// <summary> DellReferenceNumber of the resource. </summary>
         public string DellReferenceNumber { get; set; }
         /// <summary> EncryptionProperties of the resource. </summary>

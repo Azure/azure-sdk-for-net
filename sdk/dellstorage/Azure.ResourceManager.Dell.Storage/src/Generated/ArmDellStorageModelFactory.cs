@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <param name="dellReferenceNumber"> DellReferenceNumber of the resource. </param>
         /// <param name="encryption"> EncryptionProperties of the resource. </param>
         /// <returns> A new <see cref="Models.DellFileSystemProperties"/> instance for mocking. </returns>
-        public static DellFileSystemProperties DellFileSystemProperties(DellFileSystemCapacity capacity = null, DellFileSystemMarketplaceDetails marketplace = null, DellFileSystemProvisioningState? provisioningState = null, string delegatedSubnetId = null, string delegatedSubnetCidr = null, string userEmail = null, string fileSystemId = null, string smartConnectFqdn = null, string oneFsUri = null, string dellReferenceNumber = null, DellFileSystemEncryptionProperties encryption = null)
+        public static DellFileSystemProperties DellFileSystemProperties(DellFileSystemCapacity capacity = null, DellFileSystemMarketplaceDetails marketplace = null, DellFileSystemProvisioningState? provisioningState = null, ResourceIdentifier delegatedSubnetId = null, string delegatedSubnetCidr = null, string userEmail = null, string fileSystemId = null, string smartConnectFqdn = null, Uri oneFsUri = null, string dellReferenceNumber = null, DellFileSystemEncryptionProperties encryption = null)
         {
             return new DellFileSystemProperties(
                 capacity,

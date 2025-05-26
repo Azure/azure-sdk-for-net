@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Dell.Storage.Samples
                     PublisherId = "trdzykoeskmcwpo",
                     PrivateOfferId = "privateOfferId",
                 },
-                "rqkpvczbtqcxiaivtbuixblb",
+                new ResourceIdentifier("rqkpvczbtqcxiaivtbuixblb"),
                 "10.0.0.1/24",
                 new DellFileSystemUserDetails("jwogfgznmjabdbcjcljjlkxdpc"),
                 "fhewkj",
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Dell.Storage.Samples
                 })
                 {
                     SmartConnectFqdn = "fqdn",
-                    OneFsUri = "oneFsUrl",
+                    OneFsUri = new Uri("oneFsUrl"),
                 },
                 Identity = new ManagedServiceIdentity("UserAssigned")
                 {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Dell.Storage.Samples
                 {
                     PrivateOfferId = "privateOfferId",
                 },
-                "yp",
+                new ResourceIdentifier("yp"),
                 "10.0.0.1/24",
                 new DellFileSystemUserDetails("hoznewwtzmyjzctzosfuh"),
                 "fhewkj",

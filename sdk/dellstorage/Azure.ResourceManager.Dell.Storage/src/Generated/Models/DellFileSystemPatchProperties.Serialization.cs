@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
             {
                 return null;
             }
-            string delegatedSubnetId = default;
+            ResourceIdentifier delegatedSubnetId = default;
             DellFileSystemCapacity capacity = default;
             DellFileSystemEncryptionPatchProperties encryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -95,7 +95,11 @@ namespace Azure.ResourceManager.Dell.Storage.Models
             {
                 if (property.NameEquals("delegatedSubnetId"u8))
                 {
-                    delegatedSubnetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    delegatedSubnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
