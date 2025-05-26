@@ -17,8 +17,6 @@ namespace Azure.Communication
     /// </summary>
     internal sealed class EntraTokenCredential : ICommunicationTokenCredential
     {
-        private const string TeamsExtensionScopePrefix = "https://auth.msft.communication.azure.com/";
-        private const string CommunicationClientsScopePrefix = "https://communication.azure.com/clients/";
         private const string TeamsExtensionEndpoint = "/access/teamsExtension/:exchangeAccessToken";
         private const string TeamsExtensionApiVersion = "2025-06-30";
         private const string CommunicationClientsEndpoint = "/access/entra/:exchangeAccessToken";
@@ -134,21 +132,17 @@ namespace Azure.Communication
 
         private (string Endpoint, string ApiVersion) DetermineEndpointAndApiVersion()
         {
-            if (_scopes == null || !_scopes.Any())
-            {
-                throw new ArgumentException($"Scopes validation failed. Ensure all scopes start with either {TeamsExtensionScopePrefix} or {CommunicationClientsScopePrefix}.", nameof(_scopes));
-            }
-            else if (_scopes.All(item => item.StartsWith(TeamsExtensionScopePrefix)))
+            if (_scopes.All(item => item.StartsWith(EntraCommunicationTokenScopes.TeamsExtensionScopePrefix)))
             {
                 return (TeamsExtensionEndpoint, TeamsExtensionApiVersion);
             }
-            else if (_scopes.All(item => item.StartsWith(CommunicationClientsScopePrefix)))
+            else if (_scopes.All(item => item.StartsWith(EntraCommunicationTokenScopes.CommunicationClientsScopePrefix)))
             {
                 return (CommunicationClientsEndpoint, CommunicationClientsApiVersion);
             }
             else
             {
-                throw new ArgumentException($"Scopes validation failed. Ensure all scopes start with either {TeamsExtensionScopePrefix} or {CommunicationClientsScopePrefix}.", nameof(_scopes));
+                throw new ArgumentException($"Scopes validation failed. Ensure all scopes start with either {EntraCommunicationTokenScopes.TeamsExtensionScopePrefix} or {EntraCommunicationTokenScopes.CommunicationClientsScopePrefix}.", nameof(_scopes));
             }
         }
 

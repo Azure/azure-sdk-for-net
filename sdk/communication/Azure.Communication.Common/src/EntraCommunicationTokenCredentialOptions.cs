@@ -11,7 +11,9 @@ namespace Azure.Communication
     /// </summary>
     public class EntraCommunicationTokenCredentialOptions
     {
-        private static string[] DefaultScopes = { "https://communication.azure.com/clients/.default" };
+        private static string[] DefaultScopes = { EntraCommunicationTokenScopes.DefaultScopes };
+        private string[] _scopes;
+
         /// <summary>
         /// The URI of the Azure Communication Services resource.
         /// </summary>
@@ -25,7 +27,21 @@ namespace Azure.Communication
         /// <summary>
         /// The scopes required for the Entra user token. These scopes determine the permissions granted to the token. For example, ["https://communication.azure.com/clients/VoIP"].
         /// </summary>
-        public string[] Scopes { get; set; }
+        public string[] Scopes {
+            get => _scopes;
+            set
+            {
+                if (value == null || value.Length == 0)
+                {
+                    throw new ArgumentException(
+                        $"Scopes must not be null or empty. Ensure all scopes start with either {EntraCommunicationTokenScopes.TeamsExtensionScopePrefix} or {EntraCommunicationTokenScopes.CommunicationClientsScopePrefix}.", nameof(Scopes));
+                }
+                else
+                {
+                    _scopes = value;
+                }
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of <see cref="EntraCommunicationTokenCredentialOptions"/>.

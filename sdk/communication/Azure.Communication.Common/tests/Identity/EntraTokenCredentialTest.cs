@@ -43,7 +43,6 @@ namespace Azure.Communication.Identity
             new object[] { new string[] { teamsExtensionScope, communicationClientsScope } },
             new object[] { new string[] { "invalidScope" } },
             new object[] { new string[] { "" } },
-            new object[] { new string[] { } }
         };
 
         [SetUp]
@@ -78,6 +77,24 @@ namespace Azure.Communication.Identity
                 null)
             {
                 Scopes = scopes
+            });
+        }
+
+        [Test]
+        public void EntraCommunicationTokenCredentialOptions_NullOrEmptyScopes_ThrowsError()
+        {
+            Assert.Throws<ArgumentException>(() => new EntraCommunicationTokenCredentialOptions(
+                _resourceEndpoint,
+                _mockTokenCredential.Object)
+            {
+                Scopes = null
+            });
+
+            Assert.Throws<ArgumentException>(() => new EntraCommunicationTokenCredentialOptions(
+                _resourceEndpoint,
+                _mockTokenCredential.Object)
+            {
+                Scopes = new string[] { }
             });
         }
 
