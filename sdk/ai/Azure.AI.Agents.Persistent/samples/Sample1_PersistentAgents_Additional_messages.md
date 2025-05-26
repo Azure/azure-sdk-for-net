@@ -37,7 +37,7 @@ PersistentAgent agent = await agentClient.Administration.CreateAgentAsync(
 Synchronous sample:
 ```C# Snippet:Sample_PersistentAgent_Multiple_Messages_Run
 PersistentAgentThread thread = agentClient.Threads.CreateThread();
-ThreadMessage message = agentClient.Messages.CreateMessage(
+PersistentThreadMessage message = agentClient.Messages.CreateMessage(
     thread.Id,
     MessageRole.User,
     "What is the impedance formula?");
@@ -69,7 +69,7 @@ while (agentRun.Status == RunStatus.Queued
 Asynchronous sample:
 ```C# Snippet:Sample_PersistentAgent_Multiple_Messages_RunAsync
 PersistentAgentThread thread = await agentClient.Threads.CreateThreadAsync();
-ThreadMessage message = await agentClient.Messages.CreateMessageAsync(
+PersistentThreadMessage message = await agentClient.Messages.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
     "What is the impedance formula?");
@@ -102,9 +102,9 @@ while (agentRun.Status == RunStatus.Queued
 
 Synchronous sample:
 ```C# Snippet:Sample_PersistentAgent_Multiple_Messages_Print
-Pageable<ThreadMessage> messages = agentClient.Messages.GetMessages(thread.Id, order: ListSortOrder.Ascending);
+Pageable<PersistentThreadMessage> messages = agentClient.Messages.GetMessages(thread.Id, order: ListSortOrder.Ascending);
 
-foreach (ThreadMessage threadMessage in messages)
+foreach (PersistentThreadMessage threadMessage in messages)
 {
     Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
     foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -124,9 +124,9 @@ foreach (ThreadMessage threadMessage in messages)
 
 Asynchronous sample:
 ```C# Snippet:Sample_PersistentAgent_Multiple_Messages_PrintAsync
-AsyncPageable<ThreadMessage> messages = agentClient.Messages.GetMessagesAsync(thread.Id, order:ListSortOrder.Ascending);
+AsyncPageable<PersistentThreadMessage> messages = agentClient.Messages.GetMessagesAsync(thread.Id, order:ListSortOrder.Ascending);
 
-await foreach (ThreadMessage threadMessage in messages)
+await foreach (PersistentThreadMessage threadMessage in messages)
 {
     Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
     foreach (MessageContent contentItem in threadMessage.ContentItems)

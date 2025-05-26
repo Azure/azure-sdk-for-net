@@ -59,7 +59,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 return null;
             }
-            ToolConnectionList sharepointGrounding = default;
+            SharepointGroundingToolParameters sharepointGrounding = default;
             string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -67,7 +67,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (property.NameEquals("sharepoint_grounding"u8))
                 {
-                    sharepointGrounding = ToolConnectionList.DeserializeToolConnectionList(property.Value, options);
+                    sharepointGrounding = SharepointGroundingToolParameters.DeserializeSharepointGroundingToolParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

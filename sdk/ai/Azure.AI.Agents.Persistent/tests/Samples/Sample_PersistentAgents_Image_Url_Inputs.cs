@@ -56,17 +56,17 @@ namespace Azure.AI.Agents.Persistent.Tests
             // Step 3: Create a message using multiple content blocks.
             // Here we combine a short text and an image URL in a single user message.
             #region Snippet:AgentImageUrlInMessageCreateMessage
-            MessageImageUrlParam imageUrlParam = new MessageImageUrlParam(
-                url: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg"
+            MessageImageUriParam imageUrlParam = new(
+                uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg"
             );
             imageUrlParam.Detail = ImageDetailLevel.High;
             var contentBlocks = new List<MessageInputContentBlock>
             {
                 new MessageInputTextBlock("Could you describe this image?"),
-                new MessageInputImageUrlBlock(imageUrlParam)
+                new MessageInputImageUriBlock(imageUrlParam)
             };
 
-            ThreadMessage imageMessage = await client.Messages.CreateMessageAsync(
+            PersistentThreadMessage imageMessage = await client.Messages.CreateMessageAsync(
                 threadId: thread.Id,
                 role: MessageRole.User,
                 contentBlocks: contentBlocks
@@ -98,9 +98,9 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // Step 6: Retrieve messages (including how the agent responds) and print their contents.
             #region Snippet:AgentImageUrlInMessageReview
-            AsyncPageable<ThreadMessage> messages = client.Messages.GetMessagesAsync(thread.Id);
+            AsyncPageable<PersistentThreadMessage> messages = client.Messages.GetMessagesAsync(thread.Id);
 
-            await foreach (ThreadMessage msg in messages)
+            await foreach (PersistentThreadMessage msg in messages)
             {
                 Console.WriteLine($"{msg.CreatedAt:yyyy-MM-dd HH:mm:ss} - {msg.Role,10}:");
 
@@ -158,18 +158,18 @@ namespace Azure.AI.Agents.Persistent.Tests
             // Step 3: Create a message using multiple content blocks.
             // Here we combine a short text and an image URL in a single user message.
             #region Snippet:AgentImageUrlInMessageCreateMessage_Sync
-            MessageImageUrlParam imageUrlParam = new MessageImageUrlParam(
-                url: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg"
+            MessageImageUriParam imageUrlParam = new(
+                uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg"
             );
             imageUrlParam.Detail = ImageDetailLevel.High;
 
             var contentBlocks = new List<MessageInputContentBlock>
             {
                 new MessageInputTextBlock("Could you describe this image?"),
-                new MessageInputImageUrlBlock(imageUrlParam)
+                new MessageInputImageUriBlock(imageUrlParam)
             };
 
-            ThreadMessage imageMessage = client.Messages.CreateMessage(
+            PersistentThreadMessage imageMessage = client.Messages.CreateMessage(
                 threadId: thread.Id,
                 role: MessageRole.User,
                 contentBlocks: contentBlocks
@@ -201,9 +201,9 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // Step 6: Retrieve messages (including how the agent responds) and print their contents.
             #region Snippet:AgentImageUrlInMessageReview_Sync
-            Pageable<ThreadMessage> messages = client.Messages.GetMessages(thread.Id);
+            Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(thread.Id);
 
-            foreach (ThreadMessage msg in messages)
+            foreach (PersistentThreadMessage msg in messages)
             {
                 Console.WriteLine($"{msg.CreatedAt:yyyy-MM-dd HH:mm:ss} - {msg.Role,10}:");
 

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.NetworkFunction
 {
     public partial class AzureTrafficCollectorResource : IJsonModel<AzureTrafficCollectorData>
     {
+        private static AzureTrafficCollectorData s_dataDeserializationInstance;
+        private static AzureTrafficCollectorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AzureTrafficCollectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AzureTrafficCollectorData>)Data).Write(writer, options);
 
-        AzureTrafficCollectorData IJsonModel<AzureTrafficCollectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AzureTrafficCollectorData>)Data).Create(ref reader, options);
+        AzureTrafficCollectorData IJsonModel<AzureTrafficCollectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AzureTrafficCollectorData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AzureTrafficCollectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AzureTrafficCollectorData>(Data, options, AzureResourceManagerNetworkFunctionContext.Default);
 
         AzureTrafficCollectorData IPersistableModel<AzureTrafficCollectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AzureTrafficCollectorData>(data, options, AzureResourceManagerNetworkFunctionContext.Default);
 
-        string IPersistableModel<AzureTrafficCollectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AzureTrafficCollectorData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AzureTrafficCollectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AzureTrafficCollectorData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

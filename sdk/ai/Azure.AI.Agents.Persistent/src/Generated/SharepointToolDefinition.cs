@@ -14,9 +14,9 @@ namespace Azure.AI.Agents.Persistent
     public partial class SharepointToolDefinition : ToolDefinition
     {
         /// <summary> Initializes a new instance of <see cref="SharepointToolDefinition"/>. </summary>
-        /// <param name="sharepointGrounding"> The list of connections used by the SharePoint tool. </param>
+        /// <param name="sharepointGrounding"> The sharepoint grounding tool parameters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharepointGrounding"/> is null. </exception>
-        public SharepointToolDefinition(ToolConnectionList sharepointGrounding)
+        public SharepointToolDefinition(SharepointGroundingToolParameters sharepointGrounding)
         {
             Argument.AssertNotNull(sharepointGrounding, nameof(sharepointGrounding));
 
@@ -27,8 +27,8 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Initializes a new instance of <see cref="SharepointToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="sharepointGrounding"> The list of connections used by the SharePoint tool. </param>
-        internal SharepointToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, ToolConnectionList sharepointGrounding) : base(type, serializedAdditionalRawData)
+        /// <param name="sharepointGrounding"> The sharepoint grounding tool parameters. </param>
+        internal SharepointToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, SharepointGroundingToolParameters sharepointGrounding) : base(type, serializedAdditionalRawData)
         {
             SharepointGrounding = sharepointGrounding;
         }
@@ -38,7 +38,7 @@ namespace Azure.AI.Agents.Persistent
         {
         }
 
-        /// <summary> The list of connections used by the SharePoint tool. </summary>
-        public ToolConnectionList SharepointGrounding { get; set; }
+        /// <summary> The sharepoint grounding tool parameters. </summary>
+        public SharepointGroundingToolParameters SharepointGrounding { get; set; }
     }
 }

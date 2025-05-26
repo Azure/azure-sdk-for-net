@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsWatchlistItemResource : IJsonModel<SecurityInsightsWatchlistItemData>
     {
+        private static SecurityInsightsWatchlistItemData s_dataDeserializationInstance;
+        private static SecurityInsightsWatchlistItemData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityInsightsWatchlistItemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsWatchlistItemData>)Data).Write(writer, options);
 
-        SecurityInsightsWatchlistItemData IJsonModel<SecurityInsightsWatchlistItemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsWatchlistItemData>)Data).Create(ref reader, options);
+        SecurityInsightsWatchlistItemData IJsonModel<SecurityInsightsWatchlistItemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsWatchlistItemData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SecurityInsightsWatchlistItemData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsWatchlistItemData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
         SecurityInsightsWatchlistItemData IPersistableModel<SecurityInsightsWatchlistItemData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsWatchlistItemData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityInsightsWatchlistItemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsWatchlistItemData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityInsightsWatchlistItemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsWatchlistItemData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

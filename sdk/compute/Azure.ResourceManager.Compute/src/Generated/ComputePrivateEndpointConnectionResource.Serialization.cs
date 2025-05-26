@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class ComputePrivateEndpointConnectionResource : IJsonModel<ComputePrivateEndpointConnectionData>
     {
+        private static ComputePrivateEndpointConnectionData s_dataDeserializationInstance;
+        private static ComputePrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ComputePrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ComputePrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        ComputePrivateEndpointConnectionData IJsonModel<ComputePrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ComputePrivateEndpointConnectionData>)Data).Create(ref reader, options);
+        ComputePrivateEndpointConnectionData IJsonModel<ComputePrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ComputePrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ComputePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ComputePrivateEndpointConnectionData>(Data, options, AzureResourceManagerComputeContext.Default);
 
         ComputePrivateEndpointConnectionData IPersistableModel<ComputePrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ComputePrivateEndpointConnectionData>(data, options, AzureResourceManagerComputeContext.Default);
 
-        string IPersistableModel<ComputePrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ComputePrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ComputePrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ComputePrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

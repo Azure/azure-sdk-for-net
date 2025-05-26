@@ -46,8 +46,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AcsChatEventInThreadBaseProperties"/>. </summary>
-        internal AcsChatEventInThreadBaseProperties()
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
+        internal AcsChatEventInThreadBaseProperties(string threadId)
         {
+            Argument.AssertNotNull(threadId, nameof(threadId));
+
+            ThreadId = threadId;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsChatEventInThreadBaseProperties"/>. </summary>
@@ -59,6 +64,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             TransactionId = transactionId;
             ThreadId = threadId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AcsChatEventInThreadBaseProperties"/> for deserialization. </summary>
+        internal AcsChatEventInThreadBaseProperties()
+        {
         }
 
         /// <summary> The transaction id will be used as co-relation vector. </summary>

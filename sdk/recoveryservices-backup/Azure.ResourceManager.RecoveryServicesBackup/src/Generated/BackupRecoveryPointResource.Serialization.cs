@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     public partial class BackupRecoveryPointResource : IJsonModel<BackupRecoveryPointData>
     {
+        private static BackupRecoveryPointData s_dataDeserializationInstance;
+        private static BackupRecoveryPointData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<BackupRecoveryPointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BackupRecoveryPointData>)Data).Write(writer, options);
 
-        BackupRecoveryPointData IJsonModel<BackupRecoveryPointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BackupRecoveryPointData>)Data).Create(ref reader, options);
+        BackupRecoveryPointData IJsonModel<BackupRecoveryPointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BackupRecoveryPointData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<BackupRecoveryPointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BackupRecoveryPointData>(Data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
         BackupRecoveryPointData IPersistableModel<BackupRecoveryPointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BackupRecoveryPointData>(data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
-        string IPersistableModel<BackupRecoveryPointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BackupRecoveryPointData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<BackupRecoveryPointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BackupRecoveryPointData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

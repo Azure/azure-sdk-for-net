@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.LabServices
 {
     public partial class LabPlanResource : IJsonModel<LabPlanData>
     {
+        private static LabPlanData s_dataDeserializationInstance;
+        private static LabPlanData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<LabPlanData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LabPlanData>)Data).Write(writer, options);
 
-        LabPlanData IJsonModel<LabPlanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LabPlanData>)Data).Create(ref reader, options);
+        LabPlanData IJsonModel<LabPlanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LabPlanData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<LabPlanData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LabPlanData>(Data, options, AzureResourceManagerLabServicesContext.Default);
 
         LabPlanData IPersistableModel<LabPlanData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LabPlanData>(data, options, AzureResourceManagerLabServicesContext.Default);
 
-        string IPersistableModel<LabPlanData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LabPlanData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<LabPlanData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LabPlanData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

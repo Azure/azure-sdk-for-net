@@ -51,13 +51,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             writer.WritePropertyName("innererror"u8);
             writer.WriteObjectValue(Innererror, options);
-            writer.WritePropertyName("details"u8);
-            writer.WriteStartArray();
-            foreach (var item in Details)
+            if (options.Format != "W")
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("details"u8);
+                writer.WriteStartArray();
+                foreach (var item in Details)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

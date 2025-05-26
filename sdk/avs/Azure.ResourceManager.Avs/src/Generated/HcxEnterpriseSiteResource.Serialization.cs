@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Avs
 {
     public partial class HcxEnterpriseSiteResource : IJsonModel<HcxEnterpriseSiteData>
     {
+        private static HcxEnterpriseSiteData s_dataDeserializationInstance;
+        private static HcxEnterpriseSiteData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<HcxEnterpriseSiteData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HcxEnterpriseSiteData>)Data).Write(writer, options);
 
-        HcxEnterpriseSiteData IJsonModel<HcxEnterpriseSiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HcxEnterpriseSiteData>)Data).Create(ref reader, options);
+        HcxEnterpriseSiteData IJsonModel<HcxEnterpriseSiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HcxEnterpriseSiteData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<HcxEnterpriseSiteData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HcxEnterpriseSiteData>(Data, options, AzureResourceManagerAvsContext.Default);
 
         HcxEnterpriseSiteData IPersistableModel<HcxEnterpriseSiteData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HcxEnterpriseSiteData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<HcxEnterpriseSiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HcxEnterpriseSiteData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<HcxEnterpriseSiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HcxEnterpriseSiteData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
