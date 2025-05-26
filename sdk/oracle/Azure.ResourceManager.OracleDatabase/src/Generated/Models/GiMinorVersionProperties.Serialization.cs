@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 return null;
             }
             string version = default;
-            ResourceIdentifier gridImageOcid = default;
+            string gridImageOcid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,11 +91,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("gridImageOcid"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    gridImageOcid = new ResourceIdentifier(property.Value.GetString());
+                    gridImageOcid = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

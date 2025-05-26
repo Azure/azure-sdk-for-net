@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <summary> Initializes a new instance of FlexComponentsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public FlexComponentsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
@@ -34,100 +34,6 @@ namespace Azure.ResourceManager.OracleDatabase
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2025-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
-        }
-
-        internal RequestUriBuilder CreateListByParentRequestUri(string subscriptionId, AzureLocation location, SystemShape? shape)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Oracle.Database/locations/", false);
-            uri.AppendPath(location, true);
-            uri.AppendPath("/flexComponents", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (shape != null)
-            {
-                uri.AppendQuery("shape", shape.Value.ToString(), true);
-            }
-            return uri;
-        }
-
-        internal HttpMessage CreateListByParentRequest(string subscriptionId, AzureLocation location, SystemShape? shape)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Oracle.Database/locations/", false);
-            uri.AppendPath(location, true);
-            uri.AppendPath("/flexComponents", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (shape != null)
-            {
-                uri.AppendQuery("shape", shape.Value.ToString(), true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List FlexComponent resources by SubscriptionLocationResource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="shape"> If provided, filters the results for the given shape. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FlexComponentListResult>> ListByParentAsync(string subscriptionId, AzureLocation location, SystemShape? shape = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListByParentRequest(subscriptionId, location, shape);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        FlexComponentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = FlexComponentListResult.DeserializeFlexComponentListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List FlexComponent resources by SubscriptionLocationResource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="shape"> If provided, filters the results for the given shape. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FlexComponentListResult> ListByParent(string subscriptionId, AzureLocation location, SystemShape? shape = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListByParentRequest(subscriptionId, location, shape);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        FlexComponentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = FlexComponentListResult.DeserializeFlexComponentListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
 
         internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation location, string flexComponentName)
@@ -219,6 +125,100 @@ namespace Azure.ResourceManager.OracleDatabase
                     }
                 case 404:
                     return Response.FromValue((FlexComponentData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListByParentRequestUri(string subscriptionId, AzureLocation location, SystemShape? shape)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Oracle.Database/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/flexComponents", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (shape != null)
+            {
+                uri.AppendQuery("shape", shape.Value.ToString(), true);
+            }
+            return uri;
+        }
+
+        internal HttpMessage CreateListByParentRequest(string subscriptionId, AzureLocation location, SystemShape? shape)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Oracle.Database/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/flexComponents", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (shape != null)
+            {
+                uri.AppendQuery("shape", shape.Value.ToString(), true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> List FlexComponent resources by SubscriptionLocationResource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="shape"> If provided, filters the results for the given shape. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<FlexComponentListResult>> ListByParentAsync(string subscriptionId, AzureLocation location, SystemShape? shape = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateListByParentRequest(subscriptionId, location, shape);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        FlexComponentListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = FlexComponentListResult.DeserializeFlexComponentListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> List FlexComponent resources by SubscriptionLocationResource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="shape"> If provided, filters the results for the given shape. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<FlexComponentListResult> ListByParent(string subscriptionId, AzureLocation location, SystemShape? shape = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateListByParentRequest(subscriptionId, location, shape);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        FlexComponentListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = FlexComponentListResult.DeserializeFlexComponentListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }

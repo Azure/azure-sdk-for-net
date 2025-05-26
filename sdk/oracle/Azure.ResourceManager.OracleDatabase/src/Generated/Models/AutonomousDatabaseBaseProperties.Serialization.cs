@@ -86,15 +86,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("dataStorageSizeInGbs"u8);
                 writer.WriteNumberValue(DataStorageSizeInGbs.Value);
             }
-            if (Optional.IsDefined(DBVersion))
+            if (Optional.IsDefined(DbVersion))
             {
                 writer.WritePropertyName("dbVersion"u8);
-                writer.WriteStringValue(DBVersion);
+                writer.WriteStringValue(DbVersion);
             }
-            if (Optional.IsDefined(DBWorkload))
+            if (Optional.IsDefined(DbWorkload))
             {
                 writer.WritePropertyName("dbWorkload"u8);
-                writer.WriteStringValue(DBWorkload.Value.ToString());
+                writer.WriteStringValue(DbWorkload.Value.ToString());
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -111,20 +111,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("isAutoScalingForStorageEnabled"u8);
                 writer.WriteBooleanValue(IsAutoScalingForStorageEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PeerDBIds))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PeerDbIds))
             {
                 writer.WritePropertyName("peerDbIds"u8);
                 writer.WriteStartArray();
-                foreach (var item in PeerDBIds)
+                foreach (var item in PeerDbIds)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PeerDBId))
+            if (Optional.IsDefined(PeerDbId))
             {
                 writer.WritePropertyName("peerDbId"u8);
-                writer.WriteStringValue(PeerDBId);
+                writer.WriteStringValue(PeerDbId);
             }
             if (Optional.IsDefined(IsLocalDataGuardEnabled))
             {
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("remoteDisasterRecoveryConfiguration"u8);
                 writer.WriteObjectValue(RemoteDisasterRecoveryConfiguration, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(LocalStandbyDB))
+            if (options.Format != "W" && Optional.IsDefined(LocalStandbyDb))
             {
                 writer.WritePropertyName("localStandbyDb"u8);
-                writer.WriteObjectValue(LocalStandbyDB, options);
+                writer.WriteObjectValue(LocalStandbyDb, options);
             }
             if (options.Format != "W" && Optional.IsDefined(FailedDataRecoveryInSeconds))
             {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             if (options.Format != "W" && Optional.IsDefined(OciUri))
             {
                 writer.WritePropertyName("ociUrl"u8);
-                writer.WriteStringValue(OciUri.AbsoluteUri);
+                writer.WriteStringValue(OciUri);
             }
             if (Optional.IsDefined(SubnetId))
             {
@@ -226,20 +226,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("vnetId"u8);
                 writer.WriteStringValue(VnetId);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
             {
                 writer.WritePropertyName("timeCreated"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(TimeCreated.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(MaintenanceBeginOn))
+            if (options.Format != "W" && Optional.IsDefined(TimeMaintenanceBegin))
             {
                 writer.WritePropertyName("timeMaintenanceBegin"u8);
-                writer.WriteStringValue(MaintenanceBeginOn.Value, "O");
+                writer.WriteStringValue(TimeMaintenanceBegin.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(MaintenanceEndOn))
+            if (options.Format != "W" && Optional.IsDefined(TimeMaintenanceEnd))
             {
                 writer.WritePropertyName("timeMaintenanceEnd"u8);
-                writer.WriteStringValue(MaintenanceEndOn.Value, "O");
+                writer.WriteStringValue(TimeMaintenanceEnd.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ActualUsedDataStorageSizeInTbs))
             {
@@ -296,10 +296,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("inMemoryAreaInGbs"u8);
                 writer.WriteNumberValue(InMemoryAreaInGbs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLongTermBackupCreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(NextLongTermBackupTimeStamp))
             {
                 writer.WritePropertyName("nextLongTermBackupTimeStamp"u8);
-                writer.WriteStringValue(NextLongTermBackupCreatedOn.Value, "O");
+                writer.WriteStringValue(NextLongTermBackupTimeStamp.Value, "O");
             }
             if (Optional.IsDefined(LongTermBackupSchedule))
             {
@@ -359,12 +359,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             if (options.Format != "W" && Optional.IsDefined(ServiceConsoleUri))
             {
                 writer.WritePropertyName("serviceConsoleUrl"u8);
-                writer.WriteStringValue(ServiceConsoleUri.AbsoluteUri);
+                writer.WriteStringValue(ServiceConsoleUri);
             }
             if (options.Format != "W" && Optional.IsDefined(SqlWebDeveloperUri))
             {
                 writer.WritePropertyName("sqlWebDeveloperUrl"u8);
-                writer.WriteStringValue(SqlWebDeveloperUri.AbsoluteUri);
+                writer.WriteStringValue(SqlWebDeveloperUri);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedRegionsToCloneTo))
             {
@@ -376,45 +376,45 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(DataGuardRoleChangedOn))
+            if (options.Format != "W" && Optional.IsDefined(TimeDataGuardRoleChanged))
             {
                 writer.WritePropertyName("timeDataGuardRoleChanged"u8);
-                writer.WriteStringValue(DataGuardRoleChangedOn.Value, "O");
+                writer.WriteStringValue(TimeDataGuardRoleChanged);
             }
-            if (options.Format != "W" && Optional.IsDefined(FreeAutonomousDatabaseDeletedOn))
+            if (options.Format != "W" && Optional.IsDefined(TimeDeletionOfFreeAutonomousDatabase))
             {
                 writer.WritePropertyName("timeDeletionOfFreeAutonomousDatabase"u8);
-                writer.WriteStringValue(FreeAutonomousDatabaseDeletedOn.Value, "O");
+                writer.WriteStringValue(TimeDeletionOfFreeAutonomousDatabase);
             }
             if (options.Format != "W" && Optional.IsDefined(TimeLocalDataGuardEnabled))
             {
                 writer.WritePropertyName("timeLocalDataGuardEnabled"u8);
                 writer.WriteStringValue(TimeLocalDataGuardEnabled);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastFailoverHappenedOn))
+            if (options.Format != "W" && Optional.IsDefined(TimeOfLastFailover))
             {
                 writer.WritePropertyName("timeOfLastFailover"u8);
-                writer.WriteStringValue(LastFailoverHappenedOn.Value, "O");
+                writer.WriteStringValue(TimeOfLastFailover);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastRefreshHappenedOn))
+            if (options.Format != "W" && Optional.IsDefined(TimeOfLastRefresh))
             {
                 writer.WritePropertyName("timeOfLastRefresh"u8);
-                writer.WriteStringValue(LastRefreshHappenedOn.Value, "O");
+                writer.WriteStringValue(TimeOfLastRefresh);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastRefreshPointTimestamp))
+            if (options.Format != "W" && Optional.IsDefined(TimeOfLastRefreshPoint))
             {
                 writer.WritePropertyName("timeOfLastRefreshPoint"u8);
-                writer.WriteStringValue(LastRefreshPointTimestamp.Value, "O");
+                writer.WriteStringValue(TimeOfLastRefreshPoint);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSwitchoverHappenedOn))
+            if (options.Format != "W" && Optional.IsDefined(TimeOfLastSwitchover))
             {
                 writer.WritePropertyName("timeOfLastSwitchover"u8);
-                writer.WriteStringValue(LastSwitchoverHappenedOn.Value, "O");
+                writer.WriteStringValue(TimeOfLastSwitchover);
             }
-            if (options.Format != "W" && Optional.IsDefined(FreeAutonomousDatabaseStoppedOn))
+            if (options.Format != "W" && Optional.IsDefined(TimeReclamationOfFreeAutonomousDatabase))
             {
                 writer.WritePropertyName("timeReclamationOfFreeAutonomousDatabase"u8);
-                writer.WriteStringValue(FreeAutonomousDatabaseStoppedOn.Value, "O");
+                writer.WriteStringValue(TimeReclamationOfFreeAutonomousDatabase);
             }
             if (options.Format != "W" && Optional.IsDefined(UsedDataStorageSizeInGbs))
             {

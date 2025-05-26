@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("availableCoreCount"u8);
                 writer.WriteNumberValue(AvailableCoreCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AvailableDBStorageInGbs))
+            if (options.Format != "W" && Optional.IsDefined(AvailableDbStorageInGbs))
             {
                 writer.WritePropertyName("availableDbStorageInGbs"u8);
-                writer.WriteNumberValue(AvailableDBStorageInGbs.Value);
+                writer.WriteNumberValue(AvailableDbStorageInGbs.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(RuntimeMinimumCoreCount))
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
             int? minimumCoreCount = default;
             int? availableCoreCount = default;
-            int? availableDBStorageInGbs = default;
+            int? availableDbStorageInGbs = default;
             int? runtimeMinimumCoreCount = default;
             string shape = default;
             int? availableMemoryInGbs = default;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    availableDBStorageInGbs = property.Value.GetInt32();
+                    availableDbStorageInGbs = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("runtimeMinimumCoreCount"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             return new FlexComponentProperties(
                 minimumCoreCount,
                 availableCoreCount,
-                availableDBStorageInGbs,
+                availableDbStorageInGbs,
                 runtimeMinimumCoreCount,
                 shape,
                 availableMemoryInGbs,

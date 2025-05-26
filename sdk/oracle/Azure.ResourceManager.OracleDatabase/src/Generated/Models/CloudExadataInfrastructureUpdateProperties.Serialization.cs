@@ -103,8 +103,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
             int? computeCount = default;
             int? storageCount = default;
-            OracleDatabaseMaintenanceWindow maintenanceWindow = default;
-            IList<OracleCustomerContact> customerContacts = default;
+            MaintenanceWindow maintenanceWindow = default;
+            IList<CustomerContact> customerContacts = default;
             string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    maintenanceWindow = OracleDatabaseMaintenanceWindow.DeserializeOracleDatabaseMaintenanceWindow(property.Value, options);
+                    maintenanceWindow = MaintenanceWindow.DeserializeMaintenanceWindow(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("customerContacts"u8))
@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    List<OracleCustomerContact> array = new List<OracleCustomerContact>();
+                    List<CustomerContact> array = new List<CustomerContact>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OracleCustomerContact.DeserializeOracleCustomerContact(item, options));
+                        array.Add(CustomerContact.DeserializeCustomerContact(item, options));
                     }
                     customerContacts = array;
                     continue;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 computeCount,
                 storageCount,
                 maintenanceWindow,
-                customerContacts ?? new ChangeTrackingList<OracleCustomerContact>(),
+                customerContacts ?? new ChangeTrackingList<CustomerContact>(),
                 displayName,
                 serializedAdditionalRawData);
         }

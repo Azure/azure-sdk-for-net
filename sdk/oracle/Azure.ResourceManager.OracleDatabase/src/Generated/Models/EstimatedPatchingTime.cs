@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EstimatedPatchingTime"/>. </summary>
-        /// <param name="estimatedDBServerPatchingTime"> The estimated time required in minutes for database server patching. </param>
+        /// <param name="estimatedDbServerPatchingTime"> The estimated time required in minutes for database server patching. </param>
         /// <param name="estimatedNetworkSwitchesPatchingTime"> The estimated time required in minutes for network switch patching. </param>
         /// <param name="estimatedStorageServerPatchingTime"> The estimated time required in minutes for storage server patching. </param>
         /// <param name="totalEstimatedPatchingTime"> The estimated total time required in minutes for all patching operations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EstimatedPatchingTime(int? estimatedDBServerPatchingTime, int? estimatedNetworkSwitchesPatchingTime, int? estimatedStorageServerPatchingTime, int? totalEstimatedPatchingTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EstimatedPatchingTime(int? estimatedDbServerPatchingTime, int? estimatedNetworkSwitchesPatchingTime, int? estimatedStorageServerPatchingTime, int? totalEstimatedPatchingTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            EstimatedDBServerPatchingTime = estimatedDBServerPatchingTime;
+            EstimatedDbServerPatchingTime = estimatedDbServerPatchingTime;
             EstimatedNetworkSwitchesPatchingTime = estimatedNetworkSwitchesPatchingTime;
             EstimatedStorageServerPatchingTime = estimatedStorageServerPatchingTime;
             TotalEstimatedPatchingTime = totalEstimatedPatchingTime;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> The estimated time required in minutes for database server patching. </summary>
-        public int? EstimatedDBServerPatchingTime { get; }
+        public int? EstimatedDbServerPatchingTime { get; }
         /// <summary> The estimated time required in minutes for network switch patching. </summary>
         public int? EstimatedNetworkSwitchesPatchingTime { get; }
         /// <summary> The estimated time required in minutes for storage server patching. </summary>

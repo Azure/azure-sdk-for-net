@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("dataStorageSizeInTbs"u8);
                 writer.WriteNumberValue(DataStorageSizeInTbs.Value);
             }
-            if (Optional.IsDefined(DBNodeStorageSizeInGbs))
+            if (Optional.IsDefined(DbNodeStorageSizeInGbs))
             {
                 writer.WritePropertyName("dbNodeStorageSizeInGbs"u8);
-                writer.WriteNumberValue(DBNodeStorageSizeInGbs.Value);
+                writer.WriteNumberValue(DbNodeStorageSizeInGbs.Value);
             }
             if (Optional.IsDefined(MemorySizeInGbs))
             {
@@ -105,11 +105,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WriteStartArray();
                 foreach (var item in ComputeNodes)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -159,10 +154,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             int? cpuCoreCount = default;
             float? ocpuCount = default;
             IList<string> sshPublicKeys = default;
-            OracleLicenseModel? licenseModel = default;
-            DiagnosticCollectionConfig dataCollectionOptions = default;
+            LicenseModel? licenseModel = default;
+            DataCollectionOptions dataCollectionOptions = default;
             string displayName = default;
-            IList<ResourceIdentifier> computeNodes = default;
+            IList<string> computeNodes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -255,7 +250,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    licenseModel = new OracleLicenseModel(property.Value.GetString());
+                    licenseModel = new LicenseModel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataCollectionOptions"u8))
@@ -264,7 +259,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    dataCollectionOptions = DiagnosticCollectionConfig.DeserializeDiagnosticCollectionConfig(property.Value, options);
+                    dataCollectionOptions = DataCollectionOptions.DeserializeDataCollectionOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))
@@ -278,17 +273,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(new ResourceIdentifier(item.GetString()));
-                        }
+                        array.Add(item.GetString());
                     }
                     computeNodes = array;
                     continue;
@@ -311,7 +299,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 licenseModel,
                 dataCollectionOptions,
                 displayName,
-                computeNodes ?? new ChangeTrackingList<ResourceIdentifier>(),
+                computeNodes ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }
 

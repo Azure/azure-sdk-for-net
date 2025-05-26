@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="isRegional"> True when requesting regional connection strings in PDB connect info, applicable to cross-region DG only. </param>
         /// <param name="password"> The password to encrypt the keys inside the wallet. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GenerateAutonomousDatabaseWalletDetails(WalletGenerateType? generateType, bool? isRegional, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GenerateAutonomousDatabaseWalletDetails(GenerateType? generateType, bool? isRegional, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GenerateType = generateType;
             IsRegional = isRegional;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> The type of wallet to generate. </summary>
-        public WalletGenerateType? GenerateType { get; set; }
+        public GenerateType? GenerateType { get; set; }
         /// <summary> True when requesting regional connection strings in PDB connect info, applicable to cross-region DG only. </summary>
         public bool? IsRegional { get; set; }
         /// <summary> The password to encrypt the keys inside the wallet. </summary>

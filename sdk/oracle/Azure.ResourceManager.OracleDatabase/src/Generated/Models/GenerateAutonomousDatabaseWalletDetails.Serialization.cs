@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            WalletGenerateType? generateType = default;
+            GenerateType? generateType = default;
             bool? isRegional = default;
             string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    generateType = new WalletGenerateType(property.Value.GetString());
+                    generateType = new GenerateType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isRegional"u8))

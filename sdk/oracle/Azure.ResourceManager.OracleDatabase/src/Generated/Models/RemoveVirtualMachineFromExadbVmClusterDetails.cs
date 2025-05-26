@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Initializes a new instance of <see cref="RemoveVirtualMachineFromExadbVmClusterDetails"/>. </summary>
         /// <param name="dbNodes"> The list of ExaCS DB nodes for the Exadata VM cluster on Exascale Infrastructure to be removed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dbNodes"/> is null. </exception>
-        public RemoveVirtualMachineFromExadbVmClusterDetails(IEnumerable<DBNodeDetails> dbNodes)
+        public RemoveVirtualMachineFromExadbVmClusterDetails(IEnumerable<DbNodeDetails> dbNodes)
         {
             Argument.AssertNotNull(dbNodes, nameof(dbNodes));
 
-            DBNodes = dbNodes.ToList();
+            DbNodes = dbNodes.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="RemoveVirtualMachineFromExadbVmClusterDetails"/>. </summary>
         /// <param name="dbNodes"> The list of ExaCS DB nodes for the Exadata VM cluster on Exascale Infrastructure to be removed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RemoveVirtualMachineFromExadbVmClusterDetails(IList<DBNodeDetails> dbNodes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RemoveVirtualMachineFromExadbVmClusterDetails(IList<DbNodeDetails> dbNodes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            DBNodes = dbNodes;
+            DbNodes = dbNodes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -71,6 +71,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> The list of ExaCS DB nodes for the Exadata VM cluster on Exascale Infrastructure to be removed. </summary>
-        public IList<DBNodeDetails> DBNodes { get; }
+        public IList<DbNodeDetails> DbNodes { get; }
     }
 }

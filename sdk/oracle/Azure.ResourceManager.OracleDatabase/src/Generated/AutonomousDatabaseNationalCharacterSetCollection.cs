@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AutonomousDatabaseNationalCharacterSets_Get</description>
+        /// <description>AutonomousDatabaseNationalCharacterSet_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AutonomousDatabaseNationalCharacterSets_Get</description>
+        /// <description>AutonomousDatabaseNationalCharacterSet_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AutonomousDatabaseNationalCharacterSets_ListByLocation</description>
+        /// <description>AutonomousDatabaseNationalCharacterSet_ListByLocation</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AutonomousDatabaseNationalCharacterSets_ListByLocation</description>
+        /// <description>AutonomousDatabaseNationalCharacterSet_ListByLocation</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AutonomousDatabaseNationalCharacterSets_Get</description>
+        /// <description>AutonomousDatabaseNationalCharacterSet_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AutonomousDatabaseNationalCharacterSets_Get</description>
+        /// <description>AutonomousDatabaseNationalCharacterSet_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AutonomousDatabaseNationalCharacterSets_Get</description>
+        /// <description>AutonomousDatabaseNationalCharacterSet_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AutonomousDatabaseNationalCharacterSets_Get</description>
+        /// <description>AutonomousDatabaseNationalCharacterSet_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

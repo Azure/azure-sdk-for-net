@@ -49,15 +49,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("lifecycleDetails"u8);
                 writer.WriteStringValue(LifecycleDetails);
             }
-            if (Optional.IsDefined(DataGuardRoleChangedOn))
+            if (Optional.IsDefined(TimeDataGuardRoleChanged))
             {
                 writer.WritePropertyName("timeDataGuardRoleChanged"u8);
-                writer.WriteStringValue(DataGuardRoleChangedOn.Value, "O");
+                writer.WriteStringValue(TimeDataGuardRoleChanged);
             }
-            if (Optional.IsDefined(DisasterRecoveryRoleChangedOn))
+            if (Optional.IsDefined(TimeDisasterRecoveryRoleChanged))
             {
                 writer.WritePropertyName("timeDisasterRecoveryRoleChanged"u8);
-                writer.WriteStringValue(DisasterRecoveryRoleChangedOn.Value, "O");
+                writer.WriteStringValue(TimeDisasterRecoveryRoleChanged);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             int? lagTimeInSeconds = default;
             AutonomousDatabaseLifecycleState? lifecycleState = default;
             string lifecycleDetails = default;
-            DateTimeOffset? timeDataGuardRoleChanged = default;
-            DateTimeOffset? timeDisasterRecoveryRoleChanged = default;
+            string timeDataGuardRoleChanged = default;
+            string timeDisasterRecoveryRoleChanged = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,20 +130,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("timeDataGuardRoleChanged"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    timeDataGuardRoleChanged = property.Value.GetDateTimeOffset("O");
+                    timeDataGuardRoleChanged = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("timeDisasterRecoveryRoleChanged"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    timeDisasterRecoveryRoleChanged = property.Value.GetDateTimeOffset("O");
+                    timeDisasterRecoveryRoleChanged = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

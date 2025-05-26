@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="productCode"> Product code for the term unit. </param>
         /// <param name="intent"> Intent for the update operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OracleSubscriptionUpdateProperties(string productCode, OracleSubscriptionUpdateIntent? intent, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OracleSubscriptionUpdateProperties(string productCode, Intent? intent, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProductCode = productCode;
             Intent = intent;
@@ -64,6 +64,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Product code for the term unit. </summary>
         public string ProductCode { get; set; }
         /// <summary> Intent for the update operation. </summary>
-        public OracleSubscriptionUpdateIntent? Intent { get; set; }
+        public Intent? Intent { get; set; }
     }
 }

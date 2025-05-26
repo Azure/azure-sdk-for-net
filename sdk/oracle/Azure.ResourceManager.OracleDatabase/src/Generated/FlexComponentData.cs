@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FlexComponentData"/>. </summary>
-        public FlexComponentData()
+        internal FlexComponentData()
         {
         }
 
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.OracleDatabase
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public FlexComponentProperties Properties { get; set; }
+        public FlexComponentProperties Properties { get; }
     }
 }

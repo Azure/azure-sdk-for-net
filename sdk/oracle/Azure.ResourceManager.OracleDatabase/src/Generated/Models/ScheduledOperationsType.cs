@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Initializes a new instance of <see cref="ScheduledOperationsType"/>. </summary>
         /// <param name="dayOfWeek"> Day of week. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dayOfWeek"/> is null. </exception>
-        public ScheduledOperationsType(OracleDatabaseDayOfWeek dayOfWeek)
+        public ScheduledOperationsType(DayOfWeek dayOfWeek)
         {
             Argument.AssertNotNull(dayOfWeek, nameof(dayOfWeek));
 
@@ -57,14 +57,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Initializes a new instance of <see cref="ScheduledOperationsType"/>. </summary>
         /// <param name="dayOfWeek"> Day of week. </param>
-        /// <param name="autoStartOn"> auto start time. value must be of ISO-8601 format HH:mm. </param>
-        /// <param name="autoStopOn"> auto stop time. value must be of ISO-8601 format HH:mm. </param>
+        /// <param name="scheduledStartTime"> auto start time. value must be of ISO-8601 format HH:mm. </param>
+        /// <param name="scheduledStopTime"> auto stop time. value must be of ISO-8601 format HH:mm. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledOperationsType(OracleDatabaseDayOfWeek dayOfWeek, DateTimeOffset? autoStartOn, DateTimeOffset? autoStopOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScheduledOperationsType(DayOfWeek dayOfWeek, string scheduledStartTime, string scheduledStopTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DayOfWeek = dayOfWeek;
-            AutoStartOn = autoStartOn;
-            AutoStopOn = autoStopOn;
+            ScheduledStartTime = scheduledStartTime;
+            ScheduledStopTime = scheduledStopTime;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -74,20 +74,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Day of week. </summary>
-        internal OracleDatabaseDayOfWeek DayOfWeek { get; set; }
+        internal DayOfWeek DayOfWeek { get; set; }
         /// <summary> Name of the day of the week. </summary>
-        public OracleDatabaseDayOfWeekName? DayOfWeekName
+        public DayOfWeekName? DayOfWeekName
         {
-            get => DayOfWeek is null ? default(OracleDatabaseDayOfWeekName?) : DayOfWeek.Name;
+            get => DayOfWeek is null ? default(DayOfWeekName?) : DayOfWeek.Name;
             set
             {
-                DayOfWeek = value.HasValue ? new OracleDatabaseDayOfWeek(value.Value) : null;
+                DayOfWeek = value.HasValue ? new DayOfWeek(value.Value) : null;
             }
         }
 
         /// <summary> auto start time. value must be of ISO-8601 format HH:mm. </summary>
-        public DateTimeOffset? AutoStartOn { get; set; }
+        public string ScheduledStartTime { get; set; }
         /// <summary> auto stop time. value must be of ISO-8601 format HH:mm. </summary>
-        public DateTimeOffset? AutoStopOn { get; set; }
+        public string ScheduledStopTime { get; set; }
     }
 }

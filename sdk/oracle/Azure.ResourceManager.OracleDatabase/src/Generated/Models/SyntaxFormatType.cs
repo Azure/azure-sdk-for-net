@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         private const string LongValue = "Long";
         private const string EzconnectValue = "Ezconnect";
-        private const string EzconnectPlusValue = "Ezconnectplus";
+        private const string EzconnectplusValue = "Ezconnectplus";
 
         /// <summary> Long format. </summary>
         public static SyntaxFormatType Long { get; } = new SyntaxFormatType(LongValue);
         /// <summary> Ezconnect format. </summary>
         public static SyntaxFormatType Ezconnect { get; } = new SyntaxFormatType(EzconnectValue);
         /// <summary> Ezconnectplus format. </summary>
-        public static SyntaxFormatType EzconnectPlus { get; } = new SyntaxFormatType(EzconnectPlusValue);
+        public static SyntaxFormatType Ezconnectplus { get; } = new SyntaxFormatType(EzconnectplusValue);
         /// <summary> Determines if two <see cref="SyntaxFormatType"/> values are the same. </summary>
         public static bool operator ==(SyntaxFormatType left, SyntaxFormatType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SyntaxFormatType"/> values are not the same. </summary>

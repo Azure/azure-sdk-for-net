@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseCharacterSetData"/>. </summary>
-        public AutonomousDatabaseCharacterSetData()
+        internal AutonomousDatabaseCharacterSetData()
         {
         }
 
@@ -70,12 +70,11 @@ namespace Azure.ResourceManager.OracleDatabase
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        internal AutonomousDatabaseCharacterSetProperties Properties { get; set; }
+        internal AutonomousDatabaseCharacterSetProperties Properties { get; }
         /// <summary> The Oracle Autonomous Database supported character sets. </summary>
         public string AutonomousDatabaseCharacterSet
         {
-            get => Properties is null ? default : Properties.CharacterSet;
-            set => Properties = new AutonomousDatabaseCharacterSetProperties(value);
+            get => Properties?.CharacterSet;
         }
     }
 }

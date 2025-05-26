@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         private const string ExadataX9MValue = "Exadata.X9M";
         private const string ExadataX11MValue = "Exadata.X11M";
-        private const string ExaDBXsValue = "ExaDbXS";
+        private const string ExaDbXsValue = "ExaDbXS";
 
         /// <summary> Exadata X9M shape. </summary>
         public static SystemShape ExadataX9M { get; } = new SystemShape(ExadataX9MValue);
         /// <summary> Exadata X11M shape. </summary>
         public static SystemShape ExadataX11M { get; } = new SystemShape(ExadataX11MValue);
         /// <summary> Exadata DB on Exascale Infrastructure shape. </summary>
-        public static SystemShape ExaDBXs { get; } = new SystemShape(ExaDBXsValue);
+        public static SystemShape ExaDbXs { get; } = new SystemShape(ExaDbXsValue);
         /// <summary> Determines if two <see cref="SystemShape"/> values are the same. </summary>
         public static bool operator ==(SystemShape left, SystemShape right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SystemShape"/> values are not the same. </summary>

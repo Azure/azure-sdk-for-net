@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FlexComponents_Get</description>
+        /// <description>FlexComponent_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FlexComponents_Get</description>
+        /// <description>FlexComponent_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

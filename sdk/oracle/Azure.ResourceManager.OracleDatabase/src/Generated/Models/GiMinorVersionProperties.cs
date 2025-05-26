@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Initializes a new instance of <see cref="GiMinorVersionProperties"/>. </summary>
         /// <param name="version"> A valid Oracle Grid Infrastructure (GI) software version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        public GiMinorVersionProperties(string version)
+        internal GiMinorVersionProperties(string version)
         {
             Argument.AssertNotNull(version, nameof(version));
 
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="version"> A valid Oracle Grid Infrastructure (GI) software version. </param>
         /// <param name="gridImageOcid"> Grid Infrastructure Image Id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GiMinorVersionProperties(string version, ResourceIdentifier gridImageOcid, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GiMinorVersionProperties(string version, string gridImageOcid, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Version = version;
             GridImageOcid = gridImageOcid;
@@ -73,8 +72,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> A valid Oracle Grid Infrastructure (GI) software version. </summary>
-        public string Version { get; set; }
+        public string Version { get; }
         /// <summary> Grid Infrastructure Image Id. </summary>
-        public ResourceIdentifier GridImageOcid { get; set; }
+        public string GridImageOcid { get; }
     }
 }

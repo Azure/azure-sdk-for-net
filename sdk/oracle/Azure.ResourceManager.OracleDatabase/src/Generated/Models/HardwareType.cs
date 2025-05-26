@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ComputeValue = "COMPUTE";
-        private const string CellValue = "CELL";
+        private const string COMPUTEValue = "COMPUTE";
+        private const string CELLValue = "CELL";
 
         /// <summary> Hardware type is Database Server. </summary>
-        public static HardwareType Compute { get; } = new HardwareType(ComputeValue);
+        public static HardwareType COMPUTE { get; } = new HardwareType(COMPUTEValue);
         /// <summary> Hardware type is Storage Server. </summary>
-        public static HardwareType Cell { get; } = new HardwareType(CellValue);
+        public static HardwareType CELL { get; } = new HardwareType(CELLValue);
         /// <summary> Determines if two <see cref="HardwareType"/> values are the same. </summary>
         public static bool operator ==(HardwareType left, HardwareType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HardwareType"/> values are not the same. </summary>

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.OracleDatabase
 {
     /// <summary>
     /// A class representing a collection of <see cref="GiMinorVersionResource"/> and their operations.
-    /// Each <see cref="GiMinorVersionResource"/> in the collection will belong to the same instance of <see cref="OracleGIVersionResource"/>.
-    /// To get a <see cref="GiMinorVersionCollection"/> instance call the GetGiMinorVersions method from an instance of <see cref="OracleGIVersionResource"/>.
+    /// Each <see cref="GiMinorVersionResource"/> in the collection will belong to the same instance of <see cref="GiVersionResource"/>.
+    /// To get a <see cref="GiMinorVersionCollection"/> instance call the GetGiMinorVersions method from an instance of <see cref="GiVersionResource"/>.
     /// </summary>
     public partial class GiMinorVersionCollection : ArmCollection, IEnumerable<GiMinorVersionResource>, IAsyncEnumerable<GiMinorVersionResource>
     {
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.OracleDatabase
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != OracleGIVersionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, OracleGIVersionResource.ResourceType), nameof(id));
+            if (id.ResourceType != GiVersionResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, GiVersionResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GiMinorVersions_Get</description>
+        /// <description>GiMinorVersion_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GiMinorVersions_Get</description>
+        /// <description>GiMinorVersion_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GiMinorVersions_ListByParent</description>
+        /// <description>GiMinorVersion_ListByParent</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GiMinorVersions_ListByParent</description>
+        /// <description>GiMinorVersion_ListByParent</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GiMinorVersions_Get</description>
+        /// <description>GiMinorVersion_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GiMinorVersions_Get</description>
+        /// <description>GiMinorVersion_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GiMinorVersions_Get</description>
+        /// <description>GiMinorVersion_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GiMinorVersions_Get</description>
+        /// <description>GiMinorVersion_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

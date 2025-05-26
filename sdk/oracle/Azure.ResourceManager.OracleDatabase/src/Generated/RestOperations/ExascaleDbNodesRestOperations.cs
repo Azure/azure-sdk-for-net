@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <summary> Initializes a new instance of ExascaleDbNodesRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public ExascaleDbNodesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
@@ -34,6 +34,110 @@ namespace Azure.ResourceManager.OracleDatabase
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2025-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string exadbVmClusterName, string exascaleDbNodeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Oracle.Database/exadbVmClusters/", false);
+            uri.AppendPath(exadbVmClusterName, true);
+            uri.AppendPath("/dbNodes/", false);
+            uri.AppendPath(exascaleDbNodeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string exadbVmClusterName, string exascaleDbNodeName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Oracle.Database/exadbVmClusters/", false);
+            uri.AppendPath(exadbVmClusterName, true);
+            uri.AppendPath("/dbNodes/", false);
+            uri.AppendPath(exascaleDbNodeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get a ExascaleDbNode. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="exadbVmClusterName"> The name of the ExadbVmCluster. </param>
+        /// <param name="exascaleDbNodeName"> The name of the ExascaleDbNode. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="exadbVmClusterName"/> or <paramref name="exascaleDbNodeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="exadbVmClusterName"/> or <paramref name="exascaleDbNodeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ExascaleDbNodeData>> GetAsync(string subscriptionId, string resourceGroupName, string exadbVmClusterName, string exascaleDbNodeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(exadbVmClusterName, nameof(exadbVmClusterName));
+            Argument.AssertNotNullOrEmpty(exascaleDbNodeName, nameof(exascaleDbNodeName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, exadbVmClusterName, exascaleDbNodeName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ExascaleDbNodeData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ExascaleDbNodeData.DeserializeExascaleDbNodeData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((ExascaleDbNodeData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get a ExascaleDbNode. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="exadbVmClusterName"> The name of the ExadbVmCluster. </param>
+        /// <param name="exascaleDbNodeName"> The name of the ExascaleDbNode. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="exadbVmClusterName"/> or <paramref name="exascaleDbNodeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="exadbVmClusterName"/> or <paramref name="exascaleDbNodeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ExascaleDbNodeData> Get(string subscriptionId, string resourceGroupName, string exadbVmClusterName, string exascaleDbNodeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(exadbVmClusterName, nameof(exadbVmClusterName));
+            Argument.AssertNotNullOrEmpty(exascaleDbNodeName, nameof(exascaleDbNodeName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, exadbVmClusterName, exascaleDbNodeName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ExascaleDbNodeData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ExascaleDbNodeData.DeserializeExascaleDbNodeData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((ExascaleDbNodeData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
         }
 
         internal RequestUriBuilder CreateListByParentRequestUri(string subscriptionId, string resourceGroupName, string exadbVmClusterName)
@@ -79,7 +183,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="exadbVmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="exadbVmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExascaleDBNodeListResult>> ListByParentAsync(string subscriptionId, string resourceGroupName, string exadbVmClusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<ExascaleDbNodeListResult>> ListByParentAsync(string subscriptionId, string resourceGroupName, string exadbVmClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -91,9 +195,9 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 case 200:
                     {
-                        ExascaleDBNodeListResult value = default;
+                        ExascaleDbNodeListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ExascaleDBNodeListResult.DeserializeExascaleDBNodeListResult(document.RootElement);
+                        value = ExascaleDbNodeListResult.DeserializeExascaleDbNodeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -108,7 +212,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="exadbVmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="exadbVmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExascaleDBNodeListResult> ListByParent(string subscriptionId, string resourceGroupName, string exadbVmClusterName, CancellationToken cancellationToken = default)
+        public Response<ExascaleDbNodeListResult> ListByParent(string subscriptionId, string resourceGroupName, string exadbVmClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,9 +224,9 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 case 200:
                     {
-                        ExascaleDBNodeListResult value = default;
+                        ExascaleDbNodeListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ExascaleDBNodeListResult.DeserializeExascaleDBNodeListResult(document.RootElement);
+                        value = ExascaleDbNodeListResult.DeserializeExascaleDbNodeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -130,7 +234,7 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string exadbVmClusterName, string exascaleDBNodeName)
+        internal RequestUriBuilder CreateActionRequestUri(string subscriptionId, string resourceGroupName, string exadbVmClusterName, string exascaleDbNodeName, DbNodeAction body)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -141,117 +245,13 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath("/providers/Oracle.Database/exadbVmClusters/", false);
             uri.AppendPath(exadbVmClusterName, true);
             uri.AppendPath("/dbNodes/", false);
-            uri.AppendPath(exascaleDBNodeName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string exadbVmClusterName, string exascaleDBNodeName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Oracle.Database/exadbVmClusters/", false);
-            uri.AppendPath(exadbVmClusterName, true);
-            uri.AppendPath("/dbNodes/", false);
-            uri.AppendPath(exascaleDBNodeName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get a ExascaleDbNode. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="exadbVmClusterName"> The name of the ExadbVmCluster. </param>
-        /// <param name="exascaleDBNodeName"> The name of the ExascaleDbNode. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="exadbVmClusterName"/> or <paramref name="exascaleDBNodeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="exadbVmClusterName"/> or <paramref name="exascaleDBNodeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExascaleDBNodeData>> GetAsync(string subscriptionId, string resourceGroupName, string exadbVmClusterName, string exascaleDBNodeName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(exadbVmClusterName, nameof(exadbVmClusterName));
-            Argument.AssertNotNullOrEmpty(exascaleDBNodeName, nameof(exascaleDBNodeName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, exadbVmClusterName, exascaleDBNodeName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ExascaleDBNodeData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ExascaleDBNodeData.DeserializeExascaleDBNodeData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((ExascaleDBNodeData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get a ExascaleDbNode. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="exadbVmClusterName"> The name of the ExadbVmCluster. </param>
-        /// <param name="exascaleDBNodeName"> The name of the ExascaleDbNode. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="exadbVmClusterName"/> or <paramref name="exascaleDBNodeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="exadbVmClusterName"/> or <paramref name="exascaleDBNodeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExascaleDBNodeData> Get(string subscriptionId, string resourceGroupName, string exadbVmClusterName, string exascaleDBNodeName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(exadbVmClusterName, nameof(exadbVmClusterName));
-            Argument.AssertNotNullOrEmpty(exascaleDBNodeName, nameof(exascaleDBNodeName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, exadbVmClusterName, exascaleDBNodeName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ExascaleDBNodeData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ExascaleDBNodeData.DeserializeExascaleDBNodeData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((ExascaleDBNodeData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateActionRequestUri(string subscriptionId, string resourceGroupName, string exadbVmClusterName, string exascaleDBNodeName, DBNodeAction body)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Oracle.Database/exadbVmClusters/", false);
-            uri.AppendPath(exadbVmClusterName, true);
-            uri.AppendPath("/dbNodes/", false);
-            uri.AppendPath(exascaleDBNodeName, true);
+            uri.AppendPath(exascaleDbNodeName, true);
             uri.AppendPath("/action", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateActionRequest(string subscriptionId, string resourceGroupName, string exadbVmClusterName, string exascaleDBNodeName, DBNodeAction body)
+        internal HttpMessage CreateActionRequest(string subscriptionId, string resourceGroupName, string exadbVmClusterName, string exascaleDbNodeName, DbNodeAction body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath("/providers/Oracle.Database/exadbVmClusters/", false);
             uri.AppendPath(exadbVmClusterName, true);
             uri.AppendPath("/dbNodes/", false);
-            uri.AppendPath(exascaleDBNodeName, true);
+            uri.AppendPath(exascaleDbNodeName, true);
             uri.AppendPath("/action", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -282,25 +282,25 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="exadbVmClusterName"> The name of the ExadbVmCluster. </param>
-        /// <param name="exascaleDBNodeName"> The name of the ExascaleDbNode. </param>
+        /// <param name="exascaleDbNodeName"> The name of the ExascaleDbNode. </param>
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="exadbVmClusterName"/>, <paramref name="exascaleDBNodeName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="exadbVmClusterName"/> or <paramref name="exascaleDBNodeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ActionAsync(string subscriptionId, string resourceGroupName, string exadbVmClusterName, string exascaleDBNodeName, DBNodeAction body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="exadbVmClusterName"/>, <paramref name="exascaleDbNodeName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="exadbVmClusterName"/> or <paramref name="exascaleDbNodeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> ActionAsync(string subscriptionId, string resourceGroupName, string exadbVmClusterName, string exascaleDbNodeName, DbNodeAction body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(exadbVmClusterName, nameof(exadbVmClusterName));
-            Argument.AssertNotNullOrEmpty(exascaleDBNodeName, nameof(exascaleDBNodeName));
+            Argument.AssertNotNullOrEmpty(exascaleDbNodeName, nameof(exascaleDbNodeName));
             Argument.AssertNotNull(body, nameof(body));
 
-            using var message = CreateActionRequest(subscriptionId, resourceGroupName, exadbVmClusterName, exascaleDBNodeName, body);
+            using var message = CreateActionRequest(subscriptionId, resourceGroupName, exadbVmClusterName, exascaleDbNodeName, body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -311,25 +311,25 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="exadbVmClusterName"> The name of the ExadbVmCluster. </param>
-        /// <param name="exascaleDBNodeName"> The name of the ExascaleDbNode. </param>
+        /// <param name="exascaleDbNodeName"> The name of the ExascaleDbNode. </param>
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="exadbVmClusterName"/>, <paramref name="exascaleDBNodeName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="exadbVmClusterName"/> or <paramref name="exascaleDBNodeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Action(string subscriptionId, string resourceGroupName, string exadbVmClusterName, string exascaleDBNodeName, DBNodeAction body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="exadbVmClusterName"/>, <paramref name="exascaleDbNodeName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="exadbVmClusterName"/> or <paramref name="exascaleDbNodeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Action(string subscriptionId, string resourceGroupName, string exadbVmClusterName, string exascaleDbNodeName, DbNodeAction body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(exadbVmClusterName, nameof(exadbVmClusterName));
-            Argument.AssertNotNullOrEmpty(exascaleDBNodeName, nameof(exascaleDBNodeName));
+            Argument.AssertNotNullOrEmpty(exascaleDbNodeName, nameof(exascaleDbNodeName));
             Argument.AssertNotNull(body, nameof(body));
 
-            using var message = CreateActionRequest(subscriptionId, resourceGroupName, exadbVmClusterName, exascaleDBNodeName, body);
+            using var message = CreateActionRequest(subscriptionId, resourceGroupName, exadbVmClusterName, exascaleDbNodeName, body);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="exadbVmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="exadbVmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExascaleDBNodeListResult>> ListByParentNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string exadbVmClusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<ExascaleDbNodeListResult>> ListByParentNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string exadbVmClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -379,9 +379,9 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 case 200:
                     {
-                        ExascaleDBNodeListResult value = default;
+                        ExascaleDbNodeListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ExascaleDBNodeListResult.DeserializeExascaleDBNodeListResult(document.RootElement);
+                        value = ExascaleDbNodeListResult.DeserializeExascaleDbNodeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="exadbVmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="exadbVmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExascaleDBNodeListResult> ListByParentNextPage(string nextLink, string subscriptionId, string resourceGroupName, string exadbVmClusterName, CancellationToken cancellationToken = default)
+        public Response<ExascaleDbNodeListResult> ListByParentNextPage(string nextLink, string subscriptionId, string resourceGroupName, string exadbVmClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -410,9 +410,9 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 case 200:
                     {
-                        ExascaleDBNodeListResult value = default;
+                        ExascaleDbNodeListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ExascaleDBNodeListResult.DeserializeExascaleDBNodeListResult(document.RootElement);
+                        value = ExascaleDbNodeListResult.DeserializeExascaleDbNodeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.OracleDatabase
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ExascaleDBNodeResources in the ExadbVmCluster. </summary>
-        /// <returns> An object representing collection of ExascaleDBNodeResources and their operations over a ExascaleDBNodeResource. </returns>
-        public virtual ExascaleDBNodeCollection GetExascaleDBNodes()
+        /// <summary> Gets a collection of ExascaleDbNodeResources in the ExadbVmCluster. </summary>
+        /// <returns> An object representing collection of ExascaleDbNodeResources and their operations over a ExascaleDbNodeResource. </returns>
+        public virtual ExascaleDbNodeCollection GetExascaleDbNodes()
         {
-            return GetCachedClient(client => new ExascaleDBNodeCollection(client, Id));
+            return GetCachedClient(client => new ExascaleDbNodeCollection(client, Id));
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExascaleDbNodes_Get</description>
+        /// <description>ExascaleDbNode_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -114,18 +114,18 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ExascaleDBNodeResource"/></description>
+        /// <description><see cref="ExascaleDbNodeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="exascaleDBNodeName"> The name of the ExascaleDbNode. </param>
+        /// <param name="exascaleDbNodeName"> The name of the ExascaleDbNode. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exascaleDBNodeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="exascaleDBNodeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="exascaleDbNodeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exascaleDbNodeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ExascaleDBNodeResource>> GetExascaleDBNodeAsync(string exascaleDBNodeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExascaleDbNodeResource>> GetExascaleDbNodeAsync(string exascaleDbNodeName, CancellationToken cancellationToken = default)
         {
-            return await GetExascaleDBNodes().GetAsync(exascaleDBNodeName, cancellationToken).ConfigureAwait(false);
+            return await GetExascaleDbNodes().GetAsync(exascaleDbNodeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExascaleDbNodes_Get</description>
+        /// <description>ExascaleDbNode_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -145,18 +145,18 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ExascaleDBNodeResource"/></description>
+        /// <description><see cref="ExascaleDbNodeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="exascaleDBNodeName"> The name of the ExascaleDbNode. </param>
+        /// <param name="exascaleDbNodeName"> The name of the ExascaleDbNode. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exascaleDBNodeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="exascaleDBNodeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="exascaleDbNodeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exascaleDbNodeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ExascaleDBNodeResource> GetExascaleDBNode(string exascaleDBNodeName, CancellationToken cancellationToken = default)
+        public virtual Response<ExascaleDbNodeResource> GetExascaleDbNode(string exascaleDbNodeName, CancellationToken cancellationToken = default)
         {
-            return GetExascaleDBNodes().Get(exascaleDBNodeName, cancellationToken);
+            return GetExascaleDbNodes().Get(exascaleDbNodeName, cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExadbVmClusters_Get</description>
+        /// <description>ExadbVmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExadbVmClusters_Get</description>
+        /// <description>ExadbVmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExadbVmClusters_Delete</description>
+        /// <description>ExadbVmCluster_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExadbVmClusters_Delete</description>
+        /// <description>ExadbVmCluster_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExadbVmClusters_Update</description>
+        /// <description>ExadbVmCluster_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExadbVmClusters_Update</description>
+        /// <description>ExadbVmCluster_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExadbVmClusters_Get</description>
+        /// <description>ExadbVmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExadbVmClusters_Get</description>
+        /// <description>ExadbVmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExadbVmClusters_Get</description>
+        /// <description>ExadbVmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExadbVmClusters_Get</description>
+        /// <description>ExadbVmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExadbVmClusters_Get</description>
+        /// <description>ExadbVmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExadbVmClusters_Get</description>
+        /// <description>ExadbVmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

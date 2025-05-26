@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("availableStorageSizeInGbs"u8);
                 writer.WriteNumberValue(AvailableStorageSizeInGbs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
             {
                 writer.WritePropertyName("timeCreated"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(TimeCreated);
             }
             if (options.Format != "W" && Optional.IsDefined(LifecycleDetails))
             {
@@ -136,15 +136,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("maxMemoryInGbs"u8);
                 writer.WriteNumberValue(MaxMemoryInGbs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DBNodeStorageSizeInGbs))
+            if (options.Format != "W" && Optional.IsDefined(DbNodeStorageSizeInGbs))
             {
                 writer.WritePropertyName("dbNodeStorageSizeInGbs"u8);
-                writer.WriteNumberValue(DBNodeStorageSizeInGbs.Value);
+                writer.WriteNumberValue(DbNodeStorageSizeInGbs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxDBNodeStorageSizeInGbs))
+            if (options.Format != "W" && Optional.IsDefined(MaxDbNodeStorageSizeInGbs))
             {
                 writer.WritePropertyName("maxDbNodeStorageSizeInGbs"u8);
-                writer.WriteNumberValue(MaxDBNodeStorageSizeInGbs.Value);
+                writer.WriteNumberValue(MaxDbNodeStorageSizeInGbs.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(DataStorageSizeInTbs))
             {
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("maxDataStorageInTbs"u8);
                 writer.WriteNumberValue(MaxDataStorageInTbs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DBServerVersion))
+            if (options.Format != "W" && Optional.IsDefined(DbServerVersion))
             {
                 writer.WritePropertyName("dbServerVersion"u8);
-                writer.WriteStringValue(DBServerVersion);
+                writer.WriteStringValue(DbServerVersion);
             }
             if (options.Format != "W" && Optional.IsDefined(StorageServerVersion))
             {
@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("nextMaintenanceRunId"u8);
                 writer.WriteStringValue(NextMaintenanceRunId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MonthlyDBServerVersion))
+            if (options.Format != "W" && Optional.IsDefined(MonthlyDbServerVersion))
             {
                 writer.WritePropertyName("monthlyDbServerVersion"u8);
-                writer.WriteStringValue(MonthlyDBServerVersion);
+                writer.WriteStringValue(MonthlyDbServerVersion);
             }
             if (options.Format != "W" && Optional.IsDefined(MonthlyStorageServerVersion))
             {
@@ -251,17 +251,17 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 return null;
             }
             IReadOnlyList<DefinedFileSystemConfiguration> definedFileSystemConfiguration = default;
-            ResourceIdentifier ocid = default;
+            string ocid = default;
             int? computeCount = default;
             int? storageCount = default;
             int? totalStorageSizeInGbs = default;
             int? availableStorageSizeInGbs = default;
-            DateTimeOffset? timeCreated = default;
+            string timeCreated = default;
             string lifecycleDetails = default;
-            OracleDatabaseMaintenanceWindow maintenanceWindow = default;
+            MaintenanceWindow maintenanceWindow = default;
             EstimatedPatchingTime estimatedPatchingTime = default;
-            IList<OracleCustomerContact> customerContacts = default;
-            OracleDatabaseProvisioningState? provisioningState = default;
+            IList<CustomerContact> customerContacts = default;
+            AzureResourceProvisioningState? provisioningState = default;
             CloudExadataInfrastructureLifecycleState? lifecycleState = default;
             string shape = default;
             Uri ociUrl = default;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             int? memorySizeInGbs = default;
             int? maxMemoryInGbs = default;
             int? dbNodeStorageSizeInGbs = default;
-            int? maxDBNodeStorageSizeInGbs = default;
+            int? maxDbNodeStorageSizeInGbs = default;
             double? dataStorageSizeInTbs = default;
             double? maxDataStorageInTbs = default;
             string dbServerVersion = default;
@@ -278,13 +278,13 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             int? activatedStorageCount = default;
             int? additionalStorageCount = default;
             string displayName = default;
-            ResourceIdentifier lastMaintenanceRunId = default;
-            ResourceIdentifier nextMaintenanceRunId = default;
-            string monthlyDBServerVersion = default;
+            string lastMaintenanceRunId = default;
+            string nextMaintenanceRunId = default;
+            string monthlyDbServerVersion = default;
             string monthlyStorageServerVersion = default;
             string databaseServerType = default;
             string storageServerType = default;
-            AutonomousDatabaseComputeModel? computeModel = default;
+            ComputeModel? computeModel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -305,11 +305,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("ocid"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    ocid = new ResourceIdentifier(property.Value.GetString());
+                    ocid = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("computeCount"u8))
@@ -350,11 +346,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("timeCreated"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    timeCreated = property.Value.GetDateTimeOffset("O");
+                    timeCreated = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("lifecycleDetails"u8))
@@ -368,7 +360,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    maintenanceWindow = OracleDatabaseMaintenanceWindow.DeserializeOracleDatabaseMaintenanceWindow(property.Value, options);
+                    maintenanceWindow = MaintenanceWindow.DeserializeMaintenanceWindow(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("estimatedPatchingTime"u8))
@@ -386,10 +378,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    List<OracleCustomerContact> array = new List<OracleCustomerContact>();
+                    List<CustomerContact> array = new List<CustomerContact>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OracleCustomerContact.DeserializeOracleCustomerContact(item, options));
+                        array.Add(CustomerContact.DeserializeCustomerContact(item, options));
                     }
                     customerContacts = array;
                     continue;
@@ -400,7 +392,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    provisioningState = new OracleDatabaseProvisioningState(property.Value.GetString());
+                    provisioningState = new AzureResourceProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lifecycleState"u8))
@@ -477,7 +469,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    maxDBNodeStorageSizeInGbs = property.Value.GetInt32();
+                    maxDbNodeStorageSizeInGbs = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("dataStorageSizeInTbs"u8))
@@ -533,25 +525,17 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("lastMaintenanceRunId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    lastMaintenanceRunId = new ResourceIdentifier(property.Value.GetString());
+                    lastMaintenanceRunId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("nextMaintenanceRunId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nextMaintenanceRunId = new ResourceIdentifier(property.Value.GetString());
+                    nextMaintenanceRunId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("monthlyDbServerVersion"u8))
                 {
-                    monthlyDBServerVersion = property.Value.GetString();
+                    monthlyDbServerVersion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("monthlyStorageServerVersion"u8))
@@ -575,7 +559,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    computeModel = new AutonomousDatabaseComputeModel(property.Value.GetString());
+                    computeModel = new ComputeModel(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -595,7 +579,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 lifecycleDetails,
                 maintenanceWindow,
                 estimatedPatchingTime,
-                customerContacts ?? new ChangeTrackingList<OracleCustomerContact>(),
+                customerContacts ?? new ChangeTrackingList<CustomerContact>(),
                 provisioningState,
                 lifecycleState,
                 shape,
@@ -605,7 +589,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 memorySizeInGbs,
                 maxMemoryInGbs,
                 dbNodeStorageSizeInGbs,
-                maxDBNodeStorageSizeInGbs,
+                maxDbNodeStorageSizeInGbs,
                 dataStorageSizeInTbs,
                 maxDataStorageInTbs,
                 dbServerVersion,
@@ -615,7 +599,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 displayName,
                 lastMaintenanceRunId,
                 nextMaintenanceRunId,
-                monthlyDBServerVersion,
+                monthlyDbServerVersion,
                 monthlyStorageServerVersion,
                 databaseServerType,
                 storageServerType,

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             writer.WritePropertyName("enabledEcpuCount"u8);
             writer.WriteNumberValue(EnabledEcpuCount);
             writer.WritePropertyName("exascaleDbStorageVaultId"u8);
-            writer.WriteStringValue(ExascaleDBStorageVaultId);
+            writer.WriteStringValue(ExascaleDbStorageVaultId);
             if (Optional.IsDefined(GridImageOcid))
             {
                 writer.WritePropertyName("gridImageOcid"u8);
@@ -273,29 +273,29 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            ResourceIdentifier ocid = default;
+            string ocid = default;
             string clusterName = default;
             string backupSubnetCidr = default;
             Uri nsgUrl = default;
-            OracleDatabaseProvisioningState? provisioningState = default;
+            AzureResourceProvisioningState? provisioningState = default;
             ExadbVmClusterLifecycleState? lifecycleState = default;
             ResourceIdentifier vnetId = default;
             ResourceIdentifier subnetId = default;
-            DiagnosticCollectionConfig dataCollectionOptions = default;
+            DataCollectionOptions dataCollectionOptions = default;
             string displayName = default;
             string domain = default;
             int enabledEcpuCount = default;
-            ResourceIdentifier exascaleDBStorageVaultId = default;
-            ResourceIdentifier gridImageOcid = default;
+            ResourceIdentifier exascaleDbStorageVaultId = default;
+            string gridImageOcid = default;
             GridImageType? gridImageType = default;
             string giVersion = default;
             string hostname = default;
-            OracleLicenseModel? licenseModel = default;
+            LicenseModel? licenseModel = default;
             int? memorySizeInGbs = default;
             int nodeCount = default;
-            IList<CloudVmClusterNsgCidr> nsgCidrs = default;
-            ResourceIdentifier zoneOcid = default;
-            ResourceIdentifier privateZoneOcid = default;
+            IList<NsgCidr> nsgCidrs = default;
+            string zoneOcid = default;
+            string privateZoneOcid = default;
             int? scanListenerPortTcp = default;
             int? scanListenerPortTcpSsl = default;
             int? listenerPort = default;
@@ -308,25 +308,21 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string lifecycleDetails = default;
             string scanDnsName = default;
             IReadOnlyList<string> scanIPIds = default;
-            ResourceIdentifier scanDnsRecordId = default;
+            string scanDnsRecordId = default;
             ExadbVmClusterStorageDetails snapshotFileSystemStorage = default;
             ExadbVmClusterStorageDetails totalFileSystemStorage = default;
             IReadOnlyList<string> vipIds = default;
             Uri ociUrl = default;
             ExadataIormConfig iormConfigCache = default;
-            ResourceIdentifier backupSubnetOcid = default;
-            ResourceIdentifier subnetOcid = default;
+            string backupSubnetOcid = default;
+            string subnetOcid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ocid"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    ocid = new ResourceIdentifier(property.Value.GetString());
+                    ocid = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("clusterName"u8))
@@ -354,7 +350,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    provisioningState = new OracleDatabaseProvisioningState(property.Value.GetString());
+                    provisioningState = new AzureResourceProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lifecycleState"u8))
@@ -382,7 +378,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    dataCollectionOptions = DiagnosticCollectionConfig.DeserializeDiagnosticCollectionConfig(property.Value, options);
+                    dataCollectionOptions = DataCollectionOptions.DeserializeDataCollectionOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))
@@ -402,16 +398,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("exascaleDbStorageVaultId"u8))
                 {
-                    exascaleDBStorageVaultId = new ResourceIdentifier(property.Value.GetString());
+                    exascaleDbStorageVaultId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("gridImageOcid"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    gridImageOcid = new ResourceIdentifier(property.Value.GetString());
+                    gridImageOcid = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("gridImageType"u8))
@@ -439,7 +431,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    licenseModel = new OracleLicenseModel(property.Value.GetString());
+                    licenseModel = new LicenseModel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("memorySizeInGbs"u8))
@@ -462,30 +454,22 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    List<CloudVmClusterNsgCidr> array = new List<CloudVmClusterNsgCidr>();
+                    List<NsgCidr> array = new List<NsgCidr>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudVmClusterNsgCidr.DeserializeCloudVmClusterNsgCidr(item, options));
+                        array.Add(NsgCidr.DeserializeNsgCidr(item, options));
                     }
                     nsgCidrs = array;
                     continue;
                 }
                 if (property.NameEquals("zoneOcid"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    zoneOcid = new ResourceIdentifier(property.Value.GetString());
+                    zoneOcid = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("privateZoneOcid"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    privateZoneOcid = new ResourceIdentifier(property.Value.GetString());
+                    privateZoneOcid = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("scanListenerPortTcp"u8))
@@ -576,11 +560,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("scanDnsRecordId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    scanDnsRecordId = new ResourceIdentifier(property.Value.GetString());
+                    scanDnsRecordId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("snapshotFileSystemStorage"u8))
@@ -635,20 +615,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("backupSubnetOcid"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    backupSubnetOcid = new ResourceIdentifier(property.Value.GetString());
+                    backupSubnetOcid = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("subnetOcid"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    subnetOcid = new ResourceIdentifier(property.Value.GetString());
+                    subnetOcid = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -670,7 +642,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 displayName,
                 domain,
                 enabledEcpuCount,
-                exascaleDBStorageVaultId,
+                exascaleDbStorageVaultId,
                 gridImageOcid,
                 gridImageType,
                 giVersion,
@@ -678,7 +650,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 licenseModel,
                 memorySizeInGbs,
                 nodeCount,
-                nsgCidrs ?? new ChangeTrackingList<CloudVmClusterNsgCidr>(),
+                nsgCidrs ?? new ChangeTrackingList<NsgCidr>(),
                 zoneOcid,
                 privateZoneOcid,
                 scanListenerPortTcp,

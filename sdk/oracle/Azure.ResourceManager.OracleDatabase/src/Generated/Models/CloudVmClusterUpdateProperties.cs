@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
             FileSystemConfigurationDetails = new ChangeTrackingList<FileSystemConfigurationDetails>();
             SshPublicKeys = new ChangeTrackingList<string>();
-            ComputeNodes = new ChangeTrackingList<ResourceIdentifier>();
+            ComputeNodes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudVmClusterUpdateProperties"/>. </summary>
@@ -68,12 +67,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="displayName"> Display Name. </param>
         /// <param name="computeNodes"> The list of compute servers to be added to the cloud VM cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudVmClusterUpdateProperties(int? storageSizeInGbs, IList<FileSystemConfigurationDetails> fileSystemConfigurationDetails, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, int? cpuCoreCount, float? ocpuCount, IList<string> sshPublicKeys, OracleLicenseModel? licenseModel, DiagnosticCollectionConfig dataCollectionOptions, string displayName, IList<ResourceIdentifier> computeNodes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudVmClusterUpdateProperties(int? storageSizeInGbs, IList<FileSystemConfigurationDetails> fileSystemConfigurationDetails, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, int? cpuCoreCount, float? ocpuCount, IList<string> sshPublicKeys, LicenseModel? licenseModel, DataCollectionOptions dataCollectionOptions, string displayName, IList<string> computeNodes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageSizeInGbs = storageSizeInGbs;
             FileSystemConfigurationDetails = fileSystemConfigurationDetails;
             DataStorageSizeInTbs = dataStorageSizeInTbs;
-            DBNodeStorageSizeInGbs = dbNodeStorageSizeInGbs;
+            DbNodeStorageSizeInGbs = dbNodeStorageSizeInGbs;
             MemorySizeInGbs = memorySizeInGbs;
             CpuCoreCount = cpuCoreCount;
             OcpuCount = ocpuCount;
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The data disk group size to be allocated in TBs. </summary>
         public double? DataStorageSizeInTbs { get; set; }
         /// <summary> The local node storage to be allocated in GBs. </summary>
-        public int? DBNodeStorageSizeInGbs { get; set; }
+        public int? DbNodeStorageSizeInGbs { get; set; }
         /// <summary> The memory to be allocated in GBs. </summary>
         public int? MemorySizeInGbs { get; set; }
         /// <summary> The number of CPU cores enabled on the cloud VM cluster. </summary>
@@ -102,12 +101,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The public key portion of one or more key pairs used for SSH access to the cloud VM cluster. </summary>
         public IList<string> SshPublicKeys { get; }
         /// <summary> The Oracle license model that applies to the cloud VM cluster. The default is LICENSE_INCLUDED. </summary>
-        public OracleLicenseModel? LicenseModel { get; set; }
+        public LicenseModel? LicenseModel { get; set; }
         /// <summary> Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS. </summary>
-        public DiagnosticCollectionConfig DataCollectionOptions { get; set; }
+        public DataCollectionOptions DataCollectionOptions { get; set; }
         /// <summary> Display Name. </summary>
         public string DisplayName { get; set; }
         /// <summary> The list of compute servers to be added to the cloud VM cluster. </summary>
-        public IList<ResourceIdentifier> ComputeNodes { get; }
+        public IList<string> ComputeNodes { get; }
     }
 }

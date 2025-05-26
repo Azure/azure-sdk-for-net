@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_CreateOrUpdate</description>
+        /// <description>CloudVmCluster_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_CreateOrUpdate</description>
+        /// <description>CloudVmCluster_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_Get</description>
+        /// <description>CloudVmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_Get</description>
+        /// <description>CloudVmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_ListByResourceGroup</description>
+        /// <description>CloudVmCluster_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_ListByResourceGroup</description>
+        /// <description>CloudVmCluster_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_Get</description>
+        /// <description>CloudVmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_Get</description>
+        /// <description>CloudVmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_Get</description>
+        /// <description>CloudVmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_Get</description>
+        /// <description>CloudVmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

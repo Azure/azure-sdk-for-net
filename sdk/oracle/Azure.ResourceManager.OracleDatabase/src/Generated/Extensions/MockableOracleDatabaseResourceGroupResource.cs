@@ -33,75 +33,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of AutonomousDatabaseResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AutonomousDatabaseResources and their operations over a AutonomousDatabaseResource. </returns>
-        public virtual AutonomousDatabaseCollection GetAutonomousDatabases()
-        {
-            return GetCachedClient(client => new AutonomousDatabaseCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a AutonomousDatabase
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutonomousDatabases_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutonomousDatabaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="autonomousdatabasename"> The database name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autonomousdatabasename"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="autonomousdatabasename"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AutonomousDatabaseResource>> GetAutonomousDatabaseAsync(string autonomousdatabasename, CancellationToken cancellationToken = default)
-        {
-            return await GetAutonomousDatabases().GetAsync(autonomousdatabasename, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a AutonomousDatabase
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutonomousDatabases_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutonomousDatabaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="autonomousdatabasename"> The database name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autonomousdatabasename"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="autonomousdatabasename"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AutonomousDatabaseResource> GetAutonomousDatabase(string autonomousdatabasename, CancellationToken cancellationToken = default)
-        {
-            return GetAutonomousDatabases().Get(autonomousdatabasename, cancellationToken);
-        }
-
         /// <summary> Gets a collection of CloudExadataInfrastructureResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of CloudExadataInfrastructureResources and their operations over a CloudExadataInfrastructureResource. </returns>
         public virtual CloudExadataInfrastructureCollection GetCloudExadataInfrastructures()
@@ -118,7 +49,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudExadataInfrastructures_Get</description>
+        /// <description>CloudExadataInfrastructure_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -149,7 +80,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudExadataInfrastructures_Get</description>
+        /// <description>CloudExadataInfrastructure_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -187,7 +118,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_Get</description>
+        /// <description>CloudVmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -218,7 +149,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_Get</description>
+        /// <description>CloudVmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -240,6 +171,75 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
             return GetCloudVmClusters().Get(cloudvmclustername, cancellationToken);
         }
 
+        /// <summary> Gets a collection of AutonomousDatabaseResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of AutonomousDatabaseResources and their operations over a AutonomousDatabaseResource. </returns>
+        public virtual AutonomousDatabaseCollection GetAutonomousDatabases()
+        {
+            return GetCachedClient(client => new AutonomousDatabaseCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a AutonomousDatabase
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutonomousDatabase_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutonomousDatabaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="autonomousdatabasename"> The database name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="autonomousdatabasename"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autonomousdatabasename"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AutonomousDatabaseResource>> GetAutonomousDatabaseAsync(string autonomousdatabasename, CancellationToken cancellationToken = default)
+        {
+            return await GetAutonomousDatabases().GetAsync(autonomousdatabasename, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a AutonomousDatabase
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutonomousDatabase_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutonomousDatabaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="autonomousdatabasename"> The database name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="autonomousdatabasename"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autonomousdatabasename"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AutonomousDatabaseResource> GetAutonomousDatabase(string autonomousdatabasename, CancellationToken cancellationToken = default)
+        {
+            return GetAutonomousDatabases().Get(autonomousdatabasename, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ExadbVmClusterResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ExadbVmClusterResources and their operations over a ExadbVmClusterResource. </returns>
         public virtual ExadbVmClusterCollection GetExadbVmClusters()
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExadbVmClusters_Get</description>
+        /// <description>ExadbVmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExadbVmClusters_Get</description>
+        /// <description>ExadbVmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -309,11 +309,11 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
             return GetExadbVmClusters().Get(exadbVmClusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ExascaleDBStorageVaultResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ExascaleDBStorageVaultResources and their operations over a ExascaleDBStorageVaultResource. </returns>
-        public virtual ExascaleDBStorageVaultCollection GetExascaleDBStorageVaults()
+        /// <summary> Gets a collection of ExascaleDbStorageVaultResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ExascaleDbStorageVaultResources and their operations over a ExascaleDbStorageVaultResource. </returns>
+        public virtual ExascaleDbStorageVaultCollection GetExascaleDbStorageVaults()
         {
-            return GetCachedClient(client => new ExascaleDBStorageVaultCollection(client, Id));
+            return GetCachedClient(client => new ExascaleDbStorageVaultCollection(client, Id));
         }
 
         /// <summary>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExascaleDbStorageVaults_Get</description>
+        /// <description>ExascaleDbStorageVault_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -333,18 +333,18 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ExascaleDBStorageVaultResource"/></description>
+        /// <description><see cref="ExascaleDbStorageVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="exascaleDBStorageVaultName"> The name of the ExascaleDbStorageVault. </param>
+        /// <param name="exascaleDbStorageVaultName"> The name of the ExascaleDbStorageVault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exascaleDBStorageVaultName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="exascaleDBStorageVaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="exascaleDbStorageVaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exascaleDbStorageVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ExascaleDBStorageVaultResource>> GetExascaleDBStorageVaultAsync(string exascaleDBStorageVaultName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExascaleDbStorageVaultResource>> GetExascaleDbStorageVaultAsync(string exascaleDbStorageVaultName, CancellationToken cancellationToken = default)
         {
-            return await GetExascaleDBStorageVaults().GetAsync(exascaleDBStorageVaultName, cancellationToken).ConfigureAwait(false);
+            return await GetExascaleDbStorageVaults().GetAsync(exascaleDbStorageVaultName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExascaleDbStorageVaults_Get</description>
+        /// <description>ExascaleDbStorageVault_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -364,18 +364,18 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ExascaleDBStorageVaultResource"/></description>
+        /// <description><see cref="ExascaleDbStorageVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="exascaleDBStorageVaultName"> The name of the ExascaleDbStorageVault. </param>
+        /// <param name="exascaleDbStorageVaultName"> The name of the ExascaleDbStorageVault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exascaleDBStorageVaultName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="exascaleDBStorageVaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="exascaleDbStorageVaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exascaleDbStorageVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ExascaleDBStorageVaultResource> GetExascaleDBStorageVault(string exascaleDBStorageVaultName, CancellationToken cancellationToken = default)
+        public virtual Response<ExascaleDbStorageVaultResource> GetExascaleDbStorageVault(string exascaleDbStorageVaultName, CancellationToken cancellationToken = default)
         {
-            return GetExascaleDBStorageVaults().Get(exascaleDBStorageVaultName, cancellationToken);
+            return GetExascaleDbStorageVaults().Get(exascaleDbStorageVaultName, cancellationToken);
         }
     }
 }

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            IReadOnlyList<CloudVmClusterVirtualNetworkAddressData> value = default;
+            IReadOnlyList<VirtualNetworkAddressData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<CloudVmClusterVirtualNetworkAddressData> array = new List<CloudVmClusterVirtualNetworkAddressData>();
+                    List<VirtualNetworkAddressData> array = new List<VirtualNetworkAddressData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudVmClusterVirtualNetworkAddressData.DeserializeCloudVmClusterVirtualNetworkAddressData(item, options));
+                        array.Add(VirtualNetworkAddressData.DeserializeVirtualNetworkAddressData(item, options));
                     }
                     value = array;
                     continue;

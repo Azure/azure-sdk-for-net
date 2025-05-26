@@ -46,14 +46,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FlexComponentProperties"/>. </summary>
-        public FlexComponentProperties()
+        internal FlexComponentProperties()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="FlexComponentProperties"/>. </summary>
         /// <param name="minimumCoreCount"> The minimum number of CPU cores that can be enabled on the DB Server for this Flex Component. </param>
         /// <param name="availableCoreCount"> The maximum number of CPU cores that can be enabled on the DB Server for this Flex Component. </param>
-        /// <param name="availableDBStorageInGbs"> The maximum storage that can be enabled on the Storage Server for this Flex Component. </param>
+        /// <param name="availableDbStorageInGbs"> The maximum storage that can be enabled on the Storage Server for this Flex Component. </param>
         /// <param name="runtimeMinimumCoreCount"> The runtime minimum number of CPU cores that can be enabled for this Flex Component. </param>
         /// <param name="shape"> The name of the DB system shape for this Flex Component. </param>
         /// <param name="availableMemoryInGbs"> The maximum memory size that can be enabled on the DB Server for this Flex Component. </param>
@@ -62,11 +62,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="hardwareType"> The hardware type of the DB (Compute) or Storage (Cell) Server for this Flex Component. </param>
         /// <param name="descriptionSummary"> The description summary for this Flex Component. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FlexComponentProperties(int? minimumCoreCount, int? availableCoreCount, int? availableDBStorageInGbs, int? runtimeMinimumCoreCount, string shape, int? availableMemoryInGbs, int? availableLocalStorageInGbs, string computeModel, HardwareType? hardwareType, string descriptionSummary, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FlexComponentProperties(int? minimumCoreCount, int? availableCoreCount, int? availableDbStorageInGbs, int? runtimeMinimumCoreCount, string shape, int? availableMemoryInGbs, int? availableLocalStorageInGbs, string computeModel, HardwareType? hardwareType, string descriptionSummary, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MinimumCoreCount = minimumCoreCount;
             AvailableCoreCount = availableCoreCount;
-            AvailableDBStorageInGbs = availableDBStorageInGbs;
+            AvailableDbStorageInGbs = availableDbStorageInGbs;
             RuntimeMinimumCoreCount = runtimeMinimumCoreCount;
             Shape = shape;
             AvailableMemoryInGbs = availableMemoryInGbs;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The maximum number of CPU cores that can be enabled on the DB Server for this Flex Component. </summary>
         public int? AvailableCoreCount { get; }
         /// <summary> The maximum storage that can be enabled on the Storage Server for this Flex Component. </summary>
-        public int? AvailableDBStorageInGbs { get; }
+        public int? AvailableDbStorageInGbs { get; }
         /// <summary> The runtime minimum number of CPU cores that can be enabled for this Flex Component. </summary>
         public int? RuntimeMinimumCoreCount { get; }
         /// <summary> The name of the DB system shape for this Flex Component. </summary>

@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AutonomousDatabaseCharacterSets_Get</description>
+        /// <description>AutonomousDatabaseCharacterSet_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AutonomousDatabaseCharacterSets_Get</description>
+        /// <description>AutonomousDatabaseCharacterSet_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
