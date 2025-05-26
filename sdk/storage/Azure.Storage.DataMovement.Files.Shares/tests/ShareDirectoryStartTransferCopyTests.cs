@@ -589,11 +589,11 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Create storage resource containers
             StorageResourceContainer sourceResource = new ShareDirectoryStorageResourceContainer(
                 source.Container.GetDirectoryClient(sourcePrefix),
-                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocols.Smb, });
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Smb, });
 
             StorageResourceContainer destinationResource = new ShareDirectoryStorageResourceContainer(
                 destination.Container.GetDirectoryClient(destPrefix),
-                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocols.Smb, FilePermissions = filePermissions });
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Smb, FilePermissions = filePermissions });
 
             // Create Transfer Manager with single threaded operation
             TransferManagerOptions managerOptions = new TransferManagerOptions()
@@ -671,11 +671,11 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Create storage resource containers
             StorageResourceContainer sourceResource = new ShareDirectoryStorageResourceContainer(
                 source.Container.GetDirectoryClient(sourcePrefix),
-                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocols.Nfs });
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Nfs });
 
             StorageResourceContainer destinationResource = new ShareDirectoryStorageResourceContainer(
                 destination.Container.GetDirectoryClient(destPrefix),
-                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocols.Nfs, FilePermissions = filePermissions });
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Nfs, FilePermissions = filePermissions });
 
             // Create Transfer Manager with single threaded operation
             TransferManagerOptions managerOptions = new TransferManagerOptions()
@@ -715,9 +715,9 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [TestCase(ShareProtocols.Nfs, ShareProtocols.Nfs)]
-        [TestCase(ShareProtocols.Smb, ShareProtocols.Smb)]
-        public async Task ValidateProtocolAsync_SmbShareDirectoryToSmbShareDirectory_CompareProtocolSetToActual(ShareProtocols sourceProtocol, ShareProtocols destProtocol)
+        [TestCase(ShareProtocol.Nfs, ShareProtocol.Nfs)]
+        [TestCase(ShareProtocol.Smb, ShareProtocol.Smb)]
+        public async Task ValidateProtocolAsync_SmbShareDirectoryToSmbShareDirectory_CompareProtocolSetToActual(ShareProtocol sourceProtocol, ShareProtocol destProtocol)
         {
             // Arrange
             await using IDisposingContainer<ShareClient> source = await GetSourceDisposingContainerAsync();
@@ -765,7 +765,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             TransferManager transferManager = new TransferManager(managerOptions);
 
             // Act and Assert
-            if (sourceProtocol == ShareProtocols.Smb && destProtocol == ShareProtocols.Smb)
+            if (sourceProtocol == ShareProtocol.Smb && destProtocol == ShareProtocol.Smb)
             {
                 // Start transfer and await for completion.
                 TransferOperation transfer = await transferManager.StartTransferAsync(
@@ -802,9 +802,9 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [TestCase(ShareProtocols.Nfs, ShareProtocols.Nfs)]
-        [TestCase(ShareProtocols.Smb, ShareProtocols.Smb)]
-        public async Task ValidateProtocolAsync_NfsShareDirectoryToNfsShareDirectory_CompareProtocolSetToActual(ShareProtocols sourceProtocol, ShareProtocols destProtocol)
+        [TestCase(ShareProtocol.Nfs, ShareProtocol.Nfs)]
+        [TestCase(ShareProtocol.Smb, ShareProtocol.Smb)]
+        public async Task ValidateProtocolAsync_NfsShareDirectoryToNfsShareDirectory_CompareProtocolSetToActual(ShareProtocol sourceProtocol, ShareProtocol destProtocol)
         {
             // Arrange
             await using IDisposingContainer<ShareClient> source = await SourceClientBuilder.GetTestShareSasNfsAsync();
@@ -853,7 +853,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             TransferManager transferManager = new TransferManager(managerOptions);
 
             // Act and Assert
-            if (sourceProtocol == ShareProtocols.Nfs && destProtocol == ShareProtocols.Nfs)
+            if (sourceProtocol == ShareProtocol.Nfs && destProtocol == ShareProtocol.Nfs)
             {
                 // Start transfer and await for completion.
                 TransferOperation transfer = await transferManager.StartTransferAsync(
@@ -890,9 +890,9 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [TestCase(ShareProtocols.Nfs, ShareProtocols.Smb)]
-        [TestCase(ShareProtocols.Smb, ShareProtocols.Nfs)]
-        public async Task ValidateProtocolAsync_ShareDirectoryToShareDirectory_ShareTransferNotSupported(ShareProtocols sourceProtocol, ShareProtocols destProtocol)
+        [TestCase(ShareProtocol.Nfs, ShareProtocol.Smb)]
+        [TestCase(ShareProtocol.Smb, ShareProtocol.Nfs)]
+        public async Task ValidateProtocolAsync_ShareDirectoryToShareDirectory_ShareTransferNotSupported(ShareProtocol sourceProtocol, ShareProtocol destProtocol)
         {
             // Arrange
             await using IDisposingContainer<ShareClient> source = await GetSourceDisposingContainerAsync();
@@ -969,11 +969,11 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Create storage resource containers
             StorageResourceContainer sourceResource = new ShareDirectoryStorageResourceContainer(
                 source.Container.GetDirectoryClient(sourcePrefix),
-                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocols.Nfs });
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Nfs });
 
             StorageResourceContainer destinationResource = new ShareDirectoryStorageResourceContainer(
                 destination.Container.GetDirectoryClient(destPrefix),
-                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocols.Nfs, FilePermissions = true });
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Nfs, FilePermissions = true });
 
             // Create Transfer Manager with single threaded operation
             TransferManagerOptions managerOptions = new TransferManagerOptions()
@@ -1038,11 +1038,11 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Create storage resource containers
             StorageResourceContainer sourceResource = new ShareDirectoryStorageResourceContainer(
                 source.Container.GetDirectoryClient(sourcePrefix),
-                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocols.Nfs });
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Nfs });
 
             StorageResourceContainer destinationResource = new ShareDirectoryStorageResourceContainer(
                 destination.Container.GetDirectoryClient(destPrefix),
-                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocols.Nfs });
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Nfs });
 
             // Create Transfer Manager with single threaded operation
             TransferManagerOptions managerOptions = new TransferManagerOptions()
