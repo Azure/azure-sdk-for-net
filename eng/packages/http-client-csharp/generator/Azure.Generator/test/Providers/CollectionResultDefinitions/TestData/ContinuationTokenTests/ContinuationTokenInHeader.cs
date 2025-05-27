@@ -25,7 +25,7 @@ namespace Samples
         /// <param name="myToken"> myToken description. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="global::System.ArgumentNullException"> <paramref name="myToken"/> is null. </exception>
-        public CatClientGetCatsCollectionResult(global::Samples.CatClient client, string myToken, global::Azure.RequestContext context)
+        public CatClientGetCatsCollectionResult(global::Samples.CatClient client, string myToken, global::Azure.RequestContext context) : base((context?.CancellationToken ?? default))
         {
             global::Samples.Argument.AssertNotNull(myToken, nameof(myToken));
 
@@ -40,9 +40,10 @@ namespace Samples
         /// <returns> The pages of CatClientGetCatsCollectionResult as an enumerable collection. </returns>
         public override global::System.Collections.Generic.IEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
+            string nextPage = (continuationToken ?? _myToken);
             do
             {
-                global::Azure.Response response = this.GetNextResponse(pageSizeHint, continuationToken);
+                global::Azure.Response response = this.GetNextResponse(pageSizeHint, nextPage);
                 if ((response is null))
                 {
                     yield break;
@@ -53,13 +54,13 @@ namespace Samples
                 {
                     items.Add(global::System.BinaryData.FromObjectAsJson(item));
                 }
-                continuationToken = response.Headers.TryGetValue("nextPage", out string value) ? value : null;
-                yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, continuationToken, response);
+                nextPage = response.Headers.TryGetValue("nextPage", out string value) ? value : null;
+                yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, nextPage, response);
             }
-            while (!string.IsNullOrEmpty(continuationToken));
+            while (!string.IsNullOrEmpty(nextPage));
         }
 
-        /// <summary> Get response from next link. </summary>
+        /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         private global::Azure.Response GetNextResponse(int? pageSizeHint, string continuationToken)
@@ -69,7 +70,7 @@ namespace Samples
             scope.Start();
             try
             {
-                _client.Pipeline.Send(message, _context.CancellationToken);
+                _client.Pipeline.Send(message, this.CancellationToken);
                 if ((message.Response.IsError && (_context.ErrorOptions != global::Azure.ErrorOptions.NoThrow)))
                 {
                     throw new global::Azure.RequestFailedException(message.Response);

@@ -25,7 +25,7 @@ namespace Samples
         /// <param name="client"> The CatClient client used to send requests. </param>
         /// <param name="nextPage"> The url of the next page of responses. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public CatClientGetCatsAsyncCollectionResult(global::Samples.CatClient client, global::System.Uri nextPage, global::Azure.RequestContext context)
+        public CatClientGetCatsAsyncCollectionResult(global::Samples.CatClient client, global::System.Uri nextPage, global::Azure.RequestContext context) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _nextPage = nextPage;
@@ -38,9 +38,10 @@ namespace Samples
         /// <returns> The pages of CatClientGetCatsAsyncCollectionResult as an enumerable collection. </returns>
         public override async global::System.Collections.Generic.IAsyncEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : _nextPage;
             do
             {
-                global::Azure.Response response = await this.GetNextResponse(pageSizeHint, continuationToken).ConfigureAwait(false);
+                global::Azure.Response response = await this.GetNextResponse(pageSizeHint, nextPage).ConfigureAwait(false);
                 if ((response is null))
                 {
                     yield break;
@@ -51,23 +52,23 @@ namespace Samples
                 {
                     items.Add(global::System.BinaryData.FromObjectAsJson(item));
                 }
-                continuationToken = response.Headers.TryGetValue("nextCat", out string value) ? value : null;
-                yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, continuationToken, response);
+                nextPage = response.Headers.TryGetValue("nextCat", out string value) ? value : null;
+                yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
             }
-            while (!string.IsNullOrEmpty(continuationToken));
+            while ((nextPage != null));
         }
 
-        /// <summary> Get response from next link. </summary>
+        /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
-        private async global::System.Threading.Tasks.ValueTask<global::Azure.Response> GetNextResponse(int? pageSizeHint, string continuationToken)
+        /// <param name="nextLink"> The next link to use for the next page of results. </param>
+        private async global::System.Threading.Tasks.ValueTask<global::Azure.Response> GetNextResponse(int? pageSizeHint, global::System.Uri nextLink)
         {
-            global::Azure.Core.HttpMessage message = _client.CreateGetCatsRequest(_nextPage, _context);
+            global::Azure.Core.HttpMessage message = _client.CreateGetCatsRequest(nextLink, _context);
             using global::Azure.Core.Pipeline.DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CatClient.GetCats");
             scope.Start();
             try
             {
-                await _client.Pipeline.SendAsync(message, _context.CancellationToken).ConfigureAwait(false);
+                await _client.Pipeline.SendAsync(message, this.CancellationToken).ConfigureAwait(false);
                 if ((message.Response.IsError && (_context.ErrorOptions != global::Azure.ErrorOptions.NoThrow)))
                 {
                     throw new global::Azure.RequestFailedException(message.Response);
