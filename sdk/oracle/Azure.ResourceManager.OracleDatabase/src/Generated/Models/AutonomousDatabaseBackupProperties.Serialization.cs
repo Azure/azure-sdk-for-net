@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 throw new FormatException($"The model {nameof(AutonomousDatabaseBackupProperties)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(AutonomousDatabaseOcid))
+            if (options.Format != "W" && Optional.IsDefined(DatabaseOcid))
             {
                 writer.WritePropertyName("autonomousDatabaseOcid"u8);
-                writer.WriteStringValue(AutonomousDatabaseOcid);
+                writer.WriteStringValue(DatabaseOcid);
             }
             if (options.Format != "W" && Optional.IsDefined(DatabaseSizeInTbs))
             {
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Ocid))
+            if (options.Format != "W" && Optional.IsDefined(DatabaseBackupOcid))
             {
                 writer.WritePropertyName("ocid"u8);
-                writer.WriteStringValue(Ocid);
+                writer.WriteStringValue(DatabaseBackupOcid);
             }
             if (options.Format != "W" && Optional.IsDefined(IsAutomatic))
             {

@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("computeCount"u8);
                 writer.WriteNumberValue(ComputeCount.Value);
             }
-            if (Optional.IsDefined(ComputeModel))
+            if (Optional.IsDefined(DatabaseComputeModel))
             {
                 writer.WritePropertyName("computeModel"u8);
-                writer.WriteStringValue(ComputeModel.Value.ToString());
+                writer.WriteStringValue(DatabaseComputeModel.Value.ToString());
             }
             if (Optional.IsDefined(CpuCoreCount))
             {
@@ -426,10 +426,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("usedDataStorageSizeInTbs"u8);
                 writer.WriteNumberValue(UsedDataStorageSizeInTbs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Ocid))
+            if (options.Format != "W" && Optional.IsDefined(DatabaseOcid))
             {
                 writer.WritePropertyName("ocid"u8);
-                writer.WriteStringValue(Ocid);
+                writer.WriteStringValue(DatabaseOcid);
             }
             if (Optional.IsDefined(BackupRetentionPeriodInDays))
             {

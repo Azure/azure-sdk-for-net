@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("licenseModel"u8);
                 writer.WriteStringValue(LicenseModel.Value.ToString());
             }
-            if (Optional.IsDefined(ScheduledOperations))
+            if (Optional.IsDefined(AutonomousDatabaseScheduledOperations))
             {
                 writer.WritePropertyName("scheduledOperations"u8);
-                writer.WriteObjectValue(ScheduledOperations, options);
+                writer.WriteObjectValue<ScheduledOperationsType>(AutonomousDatabaseScheduledOperations, options);
             }
             if (Optional.IsDefined(DatabaseEdition))
             {

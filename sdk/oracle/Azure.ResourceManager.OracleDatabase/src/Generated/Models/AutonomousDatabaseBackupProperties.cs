@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseBackupProperties"/>. </summary>
-        /// <param name="autonomousDatabaseOcid"> The OCID of the Autonomous Database. </param>
+        /// <param name="databaseOcid"> The OCID of the Autonomous Database. </param>
         /// <param name="databaseSizeInTbs"> The size of the database in terabytes at the time the backup was taken. </param>
         /// <param name="dbVersion"> A valid Oracle Database version for Autonomous Database. </param>
         /// <param name="displayName"> The user-friendly name for the backup. The name does not have to be unique. </param>
-        /// <param name="ocid"> The OCID of the Autonomous Database backup. </param>
+        /// <param name="databaseBackupOcid"> The OCID of the Autonomous Database backup. </param>
         /// <param name="isAutomatic"> Indicates whether the backup is user-initiated or automatic. </param>
         /// <param name="isRestorable"> Indicates whether the backup can be used to restore the associated Autonomous Database. </param>
         /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
@@ -68,13 +68,13 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="backupType"> The type of backup. </param>
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutonomousDatabaseBackupProperties(string autonomousDatabaseOcid, double? databaseSizeInTbs, string dbVersion, string displayName, string ocid, bool? isAutomatic, bool? isRestorable, string lifecycleDetails, AutonomousDatabaseBackupLifecycleState? lifecycleState, int? retentionPeriodInDays, double? sizeInTbs, DateTimeOffset? timeAvailableTil, string timeStarted, string timeEnded, AutonomousDatabaseBackupType? backupType, OracleDatabaseProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutonomousDatabaseBackupProperties(string databaseOcid, double? databaseSizeInTbs, string dbVersion, string displayName, string databaseBackupOcid, bool? isAutomatic, bool? isRestorable, string lifecycleDetails, AutonomousDatabaseBackupLifecycleState? lifecycleState, int? retentionPeriodInDays, double? sizeInTbs, DateTimeOffset? timeAvailableTil, string timeStarted, string timeEnded, AutonomousDatabaseBackupType? backupType, OracleDatabaseProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AutonomousDatabaseOcid = autonomousDatabaseOcid;
+            DatabaseOcid = databaseOcid;
             DatabaseSizeInTbs = databaseSizeInTbs;
             DBVersion = dbVersion;
             DisplayName = displayName;
-            Ocid = ocid;
+            DatabaseBackupOcid = databaseBackupOcid;
             IsAutomatic = isAutomatic;
             IsRestorable = isRestorable;
             LifecycleDetails = lifecycleDetails;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> The OCID of the Autonomous Database. </summary>
-        public string AutonomousDatabaseOcid { get; }
+        public string DatabaseOcid { get; }
         /// <summary> The size of the database in terabytes at the time the backup was taken. </summary>
         public double? DatabaseSizeInTbs { get; }
         /// <summary> A valid Oracle Database version for Autonomous Database. </summary>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The user-friendly name for the backup. The name does not have to be unique. </summary>
         public string DisplayName { get; set; }
         /// <summary> The OCID of the Autonomous Database backup. </summary>
-        public string Ocid { get; }
+        public string DatabaseBackupOcid { get; }
         /// <summary> Indicates whether the backup is user-initiated or automatic. </summary>
         public bool? IsAutomatic { get; }
         /// <summary> Indicates whether the backup can be used to restore the associated Autonomous Database. </summary>

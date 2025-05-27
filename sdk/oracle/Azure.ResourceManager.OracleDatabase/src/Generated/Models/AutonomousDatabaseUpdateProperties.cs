@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="isLocalDataGuardEnabled"> Indicates whether the Autonomous Database has local or called in-region Data Guard enabled. </param>
         /// <param name="isMtlsConnectionRequired"> Specifies if the Autonomous Database requires mTLS connections. </param>
         /// <param name="licenseModel"> The Oracle license model that applies to the Oracle Autonomous Database. The default is LICENSE_INCLUDED. </param>
-        /// <param name="scheduledOperations"> The list of scheduled operations. </param>
+        /// <param name="autonomousDatabaseScheduledOperations"> The list of scheduled operations. </param>
         /// <param name="databaseEdition"> The Oracle Database Edition that applies to the Autonomous databases. </param>
         /// <param name="longTermBackupSchedule"> Details for the long-term backup schedule. </param>
         /// <param name="localAdgAutoFailoverMaxDataLossLimit"> Parameter that allows users to select an acceptable maximum data loss limit in seconds, up to which Automatic Failover will be triggered when necessary for a Local Autonomous Data Guard. </param>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="backupRetentionPeriodInDays"> Retention period, in days, for long-term backups. </param>
         /// <param name="whitelistedIPs"> The client IP access control list (ACL). This is an array of CIDR notations and/or IP addresses. Values should be separate strings, separated by commas. Example: ['1.1.1.1','1.1.1.0/24','1.1.2.25']. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutonomousDatabaseUpdateProperties(string adminPassword, AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType, float? computeCount, int? cpuCoreCount, IList<OracleCustomerContact> customerContacts, int? dataStorageSizeInTbs, int? dataStorageSizeInGbs, string displayName, bool? isAutoScalingEnabled, bool? isAutoScalingForStorageEnabled, string peerDBId, bool? isLocalDataGuardEnabled, bool? isMtlsConnectionRequired, OracleLicenseModel? licenseModel, ScheduledOperationsType scheduledOperations, OracleDatabaseEditionType? databaseEdition, LongTermBackUpScheduleDetails longTermBackupSchedule, int? localAdgAutoFailoverMaxDataLossLimit, AutonomousDatabaseModeType? openMode, AutonomousDatabasePermissionLevelType? permissionLevel, DataGuardRoleType? role, int? backupRetentionPeriodInDays, IList<string> whitelistedIPs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutonomousDatabaseUpdateProperties(string adminPassword, AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType, float? computeCount, int? cpuCoreCount, IList<OracleCustomerContact> customerContacts, int? dataStorageSizeInTbs, int? dataStorageSizeInGbs, string displayName, bool? isAutoScalingEnabled, bool? isAutoScalingForStorageEnabled, string peerDBId, bool? isLocalDataGuardEnabled, bool? isMtlsConnectionRequired, OracleLicenseModel? licenseModel, ScheduledOperationsType autonomousDatabaseScheduledOperations, OracleDatabaseEditionType? databaseEdition, LongTermBackUpScheduleDetails longTermBackupSchedule, int? localAdgAutoFailoverMaxDataLossLimit, AutonomousDatabaseModeType? openMode, AutonomousDatabasePermissionLevelType? permissionLevel, DataGuardRoleType? role, int? backupRetentionPeriodInDays, IList<string> whitelistedIPs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdminPassword = adminPassword;
             AutonomousMaintenanceScheduleType = autonomousMaintenanceScheduleType;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             IsLocalDataGuardEnabled = isLocalDataGuardEnabled;
             IsMtlsConnectionRequired = isMtlsConnectionRequired;
             LicenseModel = licenseModel;
-            ScheduledOperations = scheduledOperations;
+            AutonomousDatabaseScheduledOperations = autonomousDatabaseScheduledOperations;
             DatabaseEdition = databaseEdition;
             LongTermBackupSchedule = longTermBackupSchedule;
             LocalAdgAutoFailoverMaxDataLossLimit = localAdgAutoFailoverMaxDataLossLimit;
@@ -133,8 +133,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public bool? IsMtlsConnectionRequired { get; set; }
         /// <summary> The Oracle license model that applies to the Oracle Autonomous Database. The default is LICENSE_INCLUDED. </summary>
         public OracleLicenseModel? LicenseModel { get; set; }
-        /// <summary> The list of scheduled operations. </summary>
-        public ScheduledOperationsType ScheduledOperations { get; set; }
         /// <summary> The Oracle Database Edition that applies to the Autonomous databases. </summary>
         public OracleDatabaseEditionType? DatabaseEdition { get; set; }
         /// <summary> Details for the long-term backup schedule. </summary>
