@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("availableCoreCount"u8);
                 writer.WriteNumberValue(AvailableCoreCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AvailableDbStorageInGbs))
+            if (options.Format != "W" && Optional.IsDefined(AvailableDBStorageInGbs))
             {
                 writer.WritePropertyName("availableDbStorageInGbs"u8);
-                writer.WriteNumberValue(AvailableDbStorageInGbs.Value);
+                writer.WriteNumberValue(AvailableDBStorageInGbs.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(RuntimeMinimumCoreCount))
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             int? availableMemoryInGbs = default;
             int? availableLocalStorageInGbs = default;
             string computeModel = default;
-            HardwareType? hardwareType = default;
+            FlexComponentHardwareType? hardwareType = default;
             string descriptionSummary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    hardwareType = new HardwareType(property.Value.GetString());
+                    hardwareType = new FlexComponentHardwareType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("descriptionSummary"u8))

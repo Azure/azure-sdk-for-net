@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OracleGIMinorVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OracleGIMinorVersionResource> GetAllAsync(ShapeFamily? shapeFamily = null, string zone = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<OracleGIMinorVersionResource> GetAllAsync(GIMinorVersionShapeFamily? shapeFamily = null, string zone = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleGIMinorVersionGiMinorVersionsRestClient.CreateListByParentRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, shapeFamily, zone);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleGIMinorVersionGiMinorVersionsRestClient.CreateListByParentNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, shapeFamily, zone);
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OracleGIMinorVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OracleGIMinorVersionResource> GetAll(ShapeFamily? shapeFamily = null, string zone = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<OracleGIMinorVersionResource> GetAll(GIMinorVersionShapeFamily? shapeFamily = null, string zone = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleGIMinorVersionGiMinorVersionsRestClient.CreateListByParentRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, shapeFamily, zone);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleGIMinorVersionGiMinorVersionsRestClient.CreateListByParentNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, shapeFamily, zone);

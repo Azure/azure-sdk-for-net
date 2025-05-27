@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Initializes a new instance of <see cref="OracleSystemVersionProperties"/>. </summary>
         /// <param name="systemVersion"> A valid Oracle System Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="systemVersion"/> is null. </exception>
-        internal OracleSystemVersionProperties(string systemVersion)
+        public OracleSystemVersionProperties(string systemVersion)
         {
             Argument.AssertNotNull(systemVersion, nameof(systemVersion));
 
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> A valid Oracle System Version. </summary>
-        public string SystemVersion { get; }
+        public string SystemVersion { get; set; }
     }
 }

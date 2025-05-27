@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             string exascaleDbStorageVaultName = "vmClusterName";
             ExascaleDBStorageVaultData data = new ExascaleDBStorageVaultData(new AzureLocation("ltguhzffucaytqg"))
             {
-                Properties = new ExascaleDBStorageVaultProperties("hbsybtelyvhpalemszcvartlhwvskrnpiveqfblvkdihoytqaotdgsgauvgivzaftfgeiwlyeqzssicwrrnlxtsmeakbcsxabjlt", new ExascaleDbStorageInputDetails(21))
+                Properties = new ExascaleDBStorageVaultProperties("hbsybtelyvhpalemszcvartlhwvskrnpiveqfblvkdihoytqaotdgsgauvgivzaftfgeiwlyeqzssicwrrnlxtsmeakbcsxabjlt", new ExascaleDBStorageInputDetails(21))
                 {
                     AdditionalFlashCacheInPercent = 0,
                     Description = "dmnvnnduldfmrmkkvvsdtuvmsmruxzzpsfdydgytlckutfozephjygjetrauvbdfcwmti",

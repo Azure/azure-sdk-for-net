@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Initializes a new instance of <see cref="ScheduledOperationsType"/>. </summary>
         /// <param name="dayOfWeek"> Day of week. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dayOfWeek"/> is null. </exception>
-        public ScheduledOperationsType(DayOfWeek dayOfWeek)
+        public ScheduledOperationsType(OracleDatabaseDayOfWeek dayOfWeek)
         {
             Argument.AssertNotNull(dayOfWeek, nameof(dayOfWeek));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="autoStartOn"> auto start time. value must be of ISO-8601 format HH:mm. </param>
         /// <param name="autoStopOn"> auto stop time. value must be of ISO-8601 format HH:mm. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledOperationsType(DayOfWeek dayOfWeek, ScheduledOperationsTypeAutoStartOn? autoStartOn, ScheduledOperationsTypeAutoStopOn? autoStopOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScheduledOperationsType(OracleDatabaseDayOfWeek dayOfWeek, DateTimeOffset? autoStartOn, DateTimeOffset? autoStopOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DayOfWeek = dayOfWeek;
             AutoStartOn = autoStartOn;
@@ -74,20 +74,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Day of week. </summary>
-        internal DayOfWeek DayOfWeek { get; set; }
+        internal OracleDatabaseDayOfWeek DayOfWeek { get; set; }
         /// <summary> Name of the day of the week. </summary>
-        public DayOfWeekName? DayOfWeekName
+        public OracleDatabaseDayOfWeekName? DayOfWeekName
         {
-            get => DayOfWeek is null ? default(DayOfWeekName?) : DayOfWeek.Name;
+            get => DayOfWeek is null ? default(OracleDatabaseDayOfWeekName?) : DayOfWeek.Name;
             set
             {
-                DayOfWeek = value.HasValue ? new DayOfWeek(value.Value) : null;
+                DayOfWeek = value.HasValue ? new OracleDatabaseDayOfWeek(value.Value) : null;
             }
         }
 
         /// <summary> auto start time. value must be of ISO-8601 format HH:mm. </summary>
-        public ScheduledOperationsTypeAutoStartOn? AutoStartOn { get; set; }
+        public DateTimeOffset? AutoStartOn { get; set; }
         /// <summary> auto stop time. value must be of ISO-8601 format HH:mm. </summary>
-        public ScheduledOperationsTypeAutoStopOn? AutoStopOn { get; set; }
+        public DateTimeOffset? AutoStopOn { get; set; }
     }
 }

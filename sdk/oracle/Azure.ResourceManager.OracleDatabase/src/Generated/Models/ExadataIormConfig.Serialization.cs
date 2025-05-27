@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 throw new FormatException($"The model {nameof(ExadataIormConfig)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(DbPlans))
+            if (Optional.IsCollectionDefined(DBPlans))
             {
                 writer.WritePropertyName("dbPlans"u8);
                 writer.WriteStartArray();
-                foreach (var item in DbPlans)
+                foreach (var item in DBPlans)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            IReadOnlyList<DbIormConfig> dbPlans = default;
+            IReadOnlyList<DBIormConfig> dbPlans = default;
             string lifecycleDetails = default;
             IormLifecycleState? lifecycleState = default;
             IormObjective? objective = default;
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    List<DbIormConfig> array = new List<DbIormConfig>();
+                    List<DBIormConfig> array = new List<DBIormConfig>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DbIormConfig.DeserializeDbIormConfig(item, options));
+                        array.Add(DBIormConfig.DeserializeDBIormConfig(item, options));
                     }
                     dbPlans = array;
                     continue;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ExadataIormConfig(dbPlans ?? new ChangeTrackingList<DbIormConfig>(), lifecycleDetails, lifecycleState, objective, serializedAdditionalRawData);
+            return new ExadataIormConfig(dbPlans ?? new ChangeTrackingList<DBIormConfig>(), lifecycleDetails, lifecycleState, objective, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExadataIormConfig>.Write(ModelReaderWriterOptions options)

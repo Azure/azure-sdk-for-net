@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("cpuCoreCount"u8);
                 writer.WriteNumberValue(CpuCoreCount.Value);
             }
-            if (Optional.IsDefined(DbNodeStorageSizeInGbs))
+            if (Optional.IsDefined(DBNodeStorageSizeInGbs))
             {
                 writer.WritePropertyName("dbNodeStorageSizeInGbs"u8);
-                writer.WriteNumberValue(DbNodeStorageSizeInGbs.Value);
+                writer.WriteNumberValue(DBNodeStorageSizeInGbs.Value);
             }
             if (Optional.IsDefined(FaultDomain))
             {
@@ -81,15 +81,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("softwareStorageSizeInGb"u8);
                 writer.WriteNumberValue(SoftwareStorageSizeInGb.Value);
             }
-            if (Optional.IsDefined(TimeMaintenanceWindowEnd))
+            if (Optional.IsDefined(MaintenanceWindowEndOn))
             {
                 writer.WritePropertyName("timeMaintenanceWindowEnd"u8);
-                writer.WriteStringValue(TimeMaintenanceWindowEnd.Value, "O");
+                writer.WriteStringValue(MaintenanceWindowEndOn.Value, "O");
             }
-            if (Optional.IsDefined(TimeMaintenanceWindowStart))
+            if (Optional.IsDefined(MaintenanceWindowStartOn))
             {
                 writer.WritePropertyName("timeMaintenanceWindowStart"u8);
-                writer.WriteStringValue(TimeMaintenanceWindowStart.Value, "O");
+                writer.WriteStringValue(MaintenanceWindowStartOn.Value, "O");
             }
             if (Optional.IsDefined(TotalCpuCoreCount))
             {

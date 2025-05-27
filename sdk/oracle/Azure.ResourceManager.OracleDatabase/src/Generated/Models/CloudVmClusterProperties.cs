@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             NsgCidrs = new ChangeTrackingList<CloudVmClusterNsgCidr>();
             DisplayName = displayName;
             ComputeNodes = new ChangeTrackingList<string>();
-            DbServers = new ChangeTrackingList<string>();
+            DBServers = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudVmClusterProperties"/>. </summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="subnetOcid"> Cluster subnet ocid. </param>
         /// <param name="computeModel"> The compute model of the VM Cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudVmClusterProperties(string ocid, long? listenerPort, int? nodeCount, int? storageSizeInGbs, IList<FileSystemConfigurationDetails> fileSystemConfigurationDetails, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, DateTimeOffset? createdOn, string lifecycleDetails, string timeZone, string zoneId, string hostname, string domain, int cpuCoreCount, float? ocpuCount, string clusterName, int? dataStoragePercentage, bool? isLocalBackupEnabled, ResourceIdentifier cloudExadataInfrastructureId, bool? isSparseDiskgroupEnabled, string systemVersion, IList<string> sshPublicKeys, OracleLicenseModel? licenseModel, CloudVmClusterDiskRedundancy? diskRedundancy, IReadOnlyList<string> scanIPIds, IReadOnlyList<string> vipIds, string scanDnsName, int? scanListenerPortTcp, int? scanListenerPortTcpSsl, string scanDnsRecordId, string shape, OracleDatabaseProvisioningState? provisioningState, CloudVmClusterLifecycleState? lifecycleState, ResourceIdentifier vnetId, string giVersion, Uri ociUri, Uri nsgUri, ResourceIdentifier subnetId, string backupSubnetCidr, IList<CloudVmClusterNsgCidr> nsgCidrs, DiagnosticCollectionConfig dataCollectionOptions, string displayName, IList<string> computeNodes, ExadataIormConfig iormConfigCache, string lastUpdateHistoryEntryId, IList<string> dbServers, string compartmentId, string subnetOcid, AutonomousDatabaseComputeModel? computeModel, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudVmClusterProperties(string ocid, long? listenerPort, int? nodeCount, int? storageSizeInGbs, IList<FileSystemConfigurationDetails> fileSystemConfigurationDetails, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, DateTimeOffset? createdOn, string lifecycleDetails, string timeZone, string zoneId, string hostname, string domain, int cpuCoreCount, float? ocpuCount, string clusterName, int? dataStoragePercentage, bool? isLocalBackupEnabled, ResourceIdentifier cloudExadataInfrastructureId, bool? isSparseDiskgroupEnabled, string systemVersion, IList<string> sshPublicKeys, OracleLicenseModel? licenseModel, CloudVmClusterDiskRedundancy? diskRedundancy, IReadOnlyList<string> scanIPIds, IReadOnlyList<string> vipIds, string scanDnsName, int? scanListenerPortTcp, int? scanListenerPortTcpSsl, string scanDnsRecordId, string shape, OracleDatabaseProvisioningState? provisioningState, CloudVmClusterLifecycleState? lifecycleState, ResourceIdentifier vnetId, string giVersion, Uri ociUri, Uri nsgUri, ResourceIdentifier subnetId, string backupSubnetCidr, IList<CloudVmClusterNsgCidr> nsgCidrs, DiagnosticCollectionConfig dataCollectionOptions, string displayName, IList<string> computeNodes, ExadataIormConfig iormConfigCache, string lastUpdateHistoryEntryId, IList<string> dbServers, string compartmentId, string subnetOcid, OracleDatabaseComputeModel? computeModel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Ocid = ocid;
             ListenerPort = listenerPort;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             StorageSizeInGbs = storageSizeInGbs;
             FileSystemConfigurationDetails = fileSystemConfigurationDetails;
             DataStorageSizeInTbs = dataStorageSizeInTbs;
-            DbNodeStorageSizeInGbs = dbNodeStorageSizeInGbs;
+            DBNodeStorageSizeInGbs = dbNodeStorageSizeInGbs;
             MemorySizeInGbs = memorySizeInGbs;
             CreatedOn = createdOn;
             LifecycleDetails = lifecycleDetails;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             ComputeNodes = computeNodes;
             IormConfigCache = iormConfigCache;
             LastUpdateHistoryEntryId = lastUpdateHistoryEntryId;
-            DbServers = dbServers;
+            DBServers = dbServers;
             CompartmentId = compartmentId;
             SubnetOcid = subnetOcid;
             ComputeModel = computeModel;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The data disk group size to be allocated in TBs. </summary>
         public double? DataStorageSizeInTbs { get; set; }
         /// <summary> The local node storage to be allocated in GBs. </summary>
-        public int? DbNodeStorageSizeInGbs { get; set; }
+        public int? DBNodeStorageSizeInGbs { get; set; }
         /// <summary> The memory to be allocated in GBs. </summary>
         public int? MemorySizeInGbs { get; set; }
         /// <summary> The date and time that the cloud VM cluster was created. </summary>
@@ -288,12 +288,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The OCID of the last maintenance update history entry. </summary>
         public string LastUpdateHistoryEntryId { get; }
         /// <summary> The list of DB servers. </summary>
-        public IList<string> DbServers { get; }
+        public IList<string> DBServers { get; }
         /// <summary> Cluster compartmentId. </summary>
         public string CompartmentId { get; }
         /// <summary> Cluster subnet ocid. </summary>
         public string SubnetOcid { get; }
         /// <summary> The compute model of the VM Cluster. </summary>
-        public AutonomousDatabaseComputeModel? ComputeModel { get; }
+        public OracleDatabaseComputeModel? ComputeModel { get; }
     }
 }

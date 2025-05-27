@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("dataStorageSizeInTbs"u8);
                 writer.WriteNumberValue(DataStorageSizeInTbs.Value);
             }
-            if (Optional.IsDefined(DbNodeStorageSizeInGbs))
+            if (Optional.IsDefined(DBNodeStorageSizeInGbs))
             {
                 writer.WritePropertyName("dbNodeStorageSizeInGbs"u8);
-                writer.WriteNumberValue(DbNodeStorageSizeInGbs.Value);
+                writer.WriteNumberValue(DBNodeStorageSizeInGbs.Value);
             }
             if (Optional.IsDefined(MemorySizeInGbs))
             {
@@ -270,11 +270,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("lastUpdateHistoryEntryId"u8);
                 writer.WriteStringValue(LastUpdateHistoryEntryId);
             }
-            if (Optional.IsCollectionDefined(DbServers))
+            if (Optional.IsCollectionDefined(DBServers))
             {
                 writer.WritePropertyName("dbServers"u8);
                 writer.WriteStartArray();
-                foreach (var item in DbServers)
+                foreach (var item in DBServers)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             IList<string> dbServers = default;
             string compartmentId = default;
             string subnetOcid = default;
-            AutonomousDatabaseComputeModel? computeModel = default;
+            OracleDatabaseComputeModel? computeModel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    computeModel = new AutonomousDatabaseComputeModel(property.Value.GetString());
+                    computeModel = new OracleDatabaseComputeModel(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

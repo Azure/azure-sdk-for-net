@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        internal RequestUriBuilder CreateListByLocationRequestUri(string subscriptionId, AzureLocation location, SystemShape? shape, string zone)
+        internal RequestUriBuilder CreateListByLocationRequestUri(string subscriptionId, AzureLocation location, OracleDatabaseSystemShape? shape, string zone)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return uri;
         }
 
-        internal HttpMessage CreateListByLocationRequest(string subscriptionId, AzureLocation location, SystemShape? shape, string zone)
+        internal HttpMessage CreateListByLocationRequest(string subscriptionId, AzureLocation location, OracleDatabaseSystemShape? shape, string zone)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GiVersionListResult>> ListByLocationAsync(string subscriptionId, AzureLocation location, SystemShape? shape = null, string zone = null, CancellationToken cancellationToken = default)
+        public async Task<Response<GiVersionListResult>> ListByLocationAsync(string subscriptionId, AzureLocation location, OracleDatabaseSystemShape? shape = null, string zone = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GiVersionListResult> ListByLocation(string subscriptionId, AzureLocation location, SystemShape? shape = null, string zone = null, CancellationToken cancellationToken = default)
+        public Response<GiVersionListResult> ListByLocation(string subscriptionId, AzureLocation location, OracleDatabaseSystemShape? shape = null, string zone = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        internal RequestUriBuilder CreateListByLocationNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation location, SystemShape? shape, string zone)
+        internal RequestUriBuilder CreateListByLocationNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation location, OracleDatabaseSystemShape? shape, string zone)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return uri;
         }
 
-        internal HttpMessage CreateListByLocationNextPageRequest(string nextLink, string subscriptionId, AzureLocation location, SystemShape? shape, string zone)
+        internal HttpMessage CreateListByLocationNextPageRequest(string nextLink, string subscriptionId, AzureLocation location, OracleDatabaseSystemShape? shape, string zone)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GiVersionListResult>> ListByLocationNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, SystemShape? shape = null, string zone = null, CancellationToken cancellationToken = default)
+        public async Task<Response<GiVersionListResult>> ListByLocationNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, OracleDatabaseSystemShape? shape = null, string zone = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GiVersionListResult> ListByLocationNextPage(string nextLink, string subscriptionId, AzureLocation location, SystemShape? shape = null, string zone = null, CancellationToken cancellationToken = default)
+        public Response<GiVersionListResult> ListByLocationNextPage(string nextLink, string subscriptionId, AzureLocation location, OracleDatabaseSystemShape? shape = null, string zone = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

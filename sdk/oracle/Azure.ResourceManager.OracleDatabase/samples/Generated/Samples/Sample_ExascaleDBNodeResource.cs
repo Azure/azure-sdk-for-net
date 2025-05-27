@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             ExascaleDBNodeResource exascaleDBNode = client.GetExascaleDBNodeResource(exascaleDBNodeResourceId);
 
             // invoke the operation
-            DbNodeAction body = new DbNodeAction(DBNodeActionType.Start);
-            ArmOperation<DBActionResult> lro = await exascaleDBNode.ActionAsync(WaitUntil.Completed, body);
-            DBActionResult result = lro.Value;
+            DBNodeAction body = new DBNodeAction(DBNodeActionType.Start);
+            ArmOperation<ExascaleDBNodeActionResult> lro = await exascaleDBNode.ActionAsync(WaitUntil.Completed, body);
+            ExascaleDBNodeActionResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

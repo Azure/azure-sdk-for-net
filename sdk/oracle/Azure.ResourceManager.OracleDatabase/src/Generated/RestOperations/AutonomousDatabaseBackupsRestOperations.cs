@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string autonomousdatabasename, string adbbackupid, AutonomousDatabaseBackupData data)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string autonomousdatabasename, string adbbackupid, AutonomousDatabaseBackupPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string autonomousdatabasename, string adbbackupid, AutonomousDatabaseBackupData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string autonomousdatabasename, string adbbackupid, AutonomousDatabaseBackupPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.OracleDatabase
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -379,19 +379,19 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="autonomousdatabasename"> The database name. </param>
         /// <param name="adbbackupid"> AutonomousDatabaseBackup id. </param>
-        /// <param name="data"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="autonomousdatabasename"/>, <paramref name="adbbackupid"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="autonomousdatabasename"/>, <paramref name="adbbackupid"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="autonomousdatabasename"/> or <paramref name="adbbackupid"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string autonomousdatabasename, string adbbackupid, AutonomousDatabaseBackupData data, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string autonomousdatabasename, string adbbackupid, AutonomousDatabaseBackupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(autonomousdatabasename, nameof(autonomousdatabasename));
             Argument.AssertNotNullOrEmpty(adbbackupid, nameof(adbbackupid));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, autonomousdatabasename, adbbackupid, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, autonomousdatabasename, adbbackupid, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -408,19 +408,19 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="autonomousdatabasename"> The database name. </param>
         /// <param name="adbbackupid"> AutonomousDatabaseBackup id. </param>
-        /// <param name="data"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="autonomousdatabasename"/>, <paramref name="adbbackupid"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="autonomousdatabasename"/>, <paramref name="adbbackupid"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="autonomousdatabasename"/> or <paramref name="adbbackupid"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string autonomousdatabasename, string adbbackupid, AutonomousDatabaseBackupData data, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string autonomousdatabasename, string adbbackupid, AutonomousDatabaseBackupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(autonomousdatabasename, nameof(autonomousdatabasename));
             Argument.AssertNotNullOrEmpty(adbbackupid, nameof(adbbackupid));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, autonomousdatabasename, adbbackupid, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, autonomousdatabasename, adbbackupid, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

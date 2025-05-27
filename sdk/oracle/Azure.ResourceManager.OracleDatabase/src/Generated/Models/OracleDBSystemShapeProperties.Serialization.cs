@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("availableMemoryPerNodeInGbs"u8);
                 writer.WriteNumberValue(AvailableMemoryPerNodeInGbs.Value);
             }
-            if (Optional.IsDefined(AvailableDbNodePerNodeInGbs))
+            if (Optional.IsDefined(AvailableDBNodePerNodeInGbs))
             {
                 writer.WritePropertyName("availableDbNodePerNodeInGbs"u8);
-                writer.WriteNumberValue(AvailableDbNodePerNodeInGbs.Value);
+                writer.WriteNumberValue(AvailableDBNodePerNodeInGbs.Value);
             }
             if (Optional.IsDefined(MinCoreCountPerNode))
             {
@@ -98,15 +98,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("minMemoryPerNodeInGbs"u8);
                 writer.WriteNumberValue(MinMemoryPerNodeInGbs.Value);
             }
-            if (Optional.IsDefined(AvailableDbNodeStorageInGbs))
+            if (Optional.IsDefined(AvailableDBNodeStorageInGbs))
             {
                 writer.WritePropertyName("availableDbNodeStorageInGbs"u8);
-                writer.WriteNumberValue(AvailableDbNodeStorageInGbs.Value);
+                writer.WriteNumberValue(AvailableDBNodeStorageInGbs.Value);
             }
-            if (Optional.IsDefined(MinDbNodeStoragePerNodeInGbs))
+            if (Optional.IsDefined(MinDBNodeStoragePerNodeInGbs))
             {
                 writer.WritePropertyName("minDbNodeStoragePerNodeInGbs"u8);
-                writer.WriteNumberValue(MinDbNodeStoragePerNodeInGbs.Value);
+                writer.WriteNumberValue(MinDBNodeStoragePerNodeInGbs.Value);
             }
             if (Optional.IsDefined(AvailableDataStorageInTbs))
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             int? minimumNodeCount = default;
             int? maximumNodeCount = default;
             int? availableCoreCountPerNode = default;
-            AutonomousDatabaseComputeModel? computeModel = default;
+            OracleDatabaseComputeModel? computeModel = default;
             bool? areServerTypesSupported = default;
             string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    computeModel = new AutonomousDatabaseComputeModel(property.Value.GetString());
+                    computeModel = new OracleDatabaseComputeModel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("areServerTypesSupported"u8))

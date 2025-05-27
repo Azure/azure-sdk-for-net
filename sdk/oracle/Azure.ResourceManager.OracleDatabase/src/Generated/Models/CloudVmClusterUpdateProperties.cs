@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             StorageSizeInGbs = storageSizeInGbs;
             FileSystemConfigurationDetails = fileSystemConfigurationDetails;
             DataStorageSizeInTbs = dataStorageSizeInTbs;
-            DbNodeStorageSizeInGbs = dbNodeStorageSizeInGbs;
+            DBNodeStorageSizeInGbs = dbNodeStorageSizeInGbs;
             MemorySizeInGbs = memorySizeInGbs;
             CpuCoreCount = cpuCoreCount;
             OcpuCount = ocpuCount;
@@ -90,8 +90,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public IList<FileSystemConfigurationDetails> FileSystemConfigurationDetails { get; }
         /// <summary> The data disk group size to be allocated in TBs. </summary>
         public double? DataStorageSizeInTbs { get; set; }
-        /// <summary> The local node storage to be allocated in GBs. </summary>
-        public int? DbNodeStorageSizeInGbs { get; set; }
         /// <summary> The memory to be allocated in GBs. </summary>
         public int? MemorySizeInGbs { get; set; }
         /// <summary> The number of CPU cores enabled on the cloud VM cluster. </summary>

@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             OracleFlexComponentCollection collection = subscriptionResource.GetOracleFlexComponents(location);
 
             // invoke the operation and iterate over the result
-            SystemShape? shape = SystemShape.ExadataX11M;
+            OracleDatabaseSystemShape? shape = OracleDatabaseSystemShape.ExadataX11M;
             await foreach (OracleFlexComponentResource item in collection.GetAllAsync(shape: shape))
             {
                 // the variable item is a resource, you could call other operations on this instance as well

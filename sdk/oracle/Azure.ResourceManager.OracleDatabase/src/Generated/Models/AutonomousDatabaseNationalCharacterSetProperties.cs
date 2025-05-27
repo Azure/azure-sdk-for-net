@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseNationalCharacterSetProperties"/>. </summary>
         /// <param name="characterSet"> The Oracle Autonomous Database supported national character sets. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="characterSet"/> is null. </exception>
-        internal AutonomousDatabaseNationalCharacterSetProperties(string characterSet)
+        public AutonomousDatabaseNationalCharacterSetProperties(string characterSet)
         {
             Argument.AssertNotNull(characterSet, nameof(characterSet));
 
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> The Oracle Autonomous Database supported national character sets. </summary>
-        public string CharacterSet { get; }
+        public string CharacterSet { get; set; }
     }
 }

@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("dataStorageSizeInTbs"u8);
                 writer.WriteNumberValue(DataStorageSizeInTbs.Value);
             }
-            if (Optional.IsDefined(DbNodeStorageSizeInGbs))
+            if (Optional.IsDefined(DBNodeStorageSizeInGbs))
             {
                 writer.WritePropertyName("dbNodeStorageSizeInGbs"u8);
-                writer.WriteNumberValue(DbNodeStorageSizeInGbs.Value);
+                writer.WriteNumberValue(DBNodeStorageSizeInGbs.Value);
             }
             if (Optional.IsDefined(MemorySizeInGbs))
             {

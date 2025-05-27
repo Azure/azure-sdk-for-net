@@ -458,16 +458,16 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> GetCloudAccountDetailsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CloudAccountDetails>> GetCloudAccountDetailsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _oracleSubscriptionClientDiagnostics.CreateScope("OracleSubscriptionResource.GetCloudAccountDetails");
             scope.Start();
             try
             {
                 var response = await _oracleSubscriptionRestClient.ListCloudAccountDetailsAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
-                var operation = new OracleDatabaseArmOperation(_oracleSubscriptionClientDiagnostics, Pipeline, _oracleSubscriptionRestClient.CreateListCloudAccountDetailsRequest(Id.SubscriptionId).Request, response, OperationFinalStateVia.Location);
+                var operation = new OracleDatabaseArmOperation<CloudAccountDetails>(new CloudAccountDetailsOperationSource(), _oracleSubscriptionClientDiagnostics, Pipeline, _oracleSubscriptionRestClient.CreateListCloudAccountDetailsRequest(Id.SubscriptionId).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -500,16 +500,16 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation GetCloudAccountDetails(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CloudAccountDetails> GetCloudAccountDetails(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _oracleSubscriptionClientDiagnostics.CreateScope("OracleSubscriptionResource.GetCloudAccountDetails");
             scope.Start();
             try
             {
                 var response = _oracleSubscriptionRestClient.ListCloudAccountDetails(Id.SubscriptionId, cancellationToken);
-                var operation = new OracleDatabaseArmOperation(_oracleSubscriptionClientDiagnostics, Pipeline, _oracleSubscriptionRestClient.CreateListCloudAccountDetailsRequest(Id.SubscriptionId).Request, response, OperationFinalStateVia.Location);
+                var operation = new OracleDatabaseArmOperation<CloudAccountDetails>(new CloudAccountDetailsOperationSource(), _oracleSubscriptionClientDiagnostics, Pipeline, _oracleSubscriptionRestClient.CreateListCloudAccountDetailsRequest(Id.SubscriptionId).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -542,16 +542,16 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> GetSaasSubscriptionDetailsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SaasSubscriptionDetails>> GetSaasSubscriptionDetailsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _oracleSubscriptionClientDiagnostics.CreateScope("OracleSubscriptionResource.GetSaasSubscriptionDetails");
             scope.Start();
             try
             {
                 var response = await _oracleSubscriptionRestClient.ListSaasSubscriptionDetailsAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
-                var operation = new OracleDatabaseArmOperation(_oracleSubscriptionClientDiagnostics, Pipeline, _oracleSubscriptionRestClient.CreateListSaasSubscriptionDetailsRequest(Id.SubscriptionId).Request, response, OperationFinalStateVia.Location);
+                var operation = new OracleDatabaseArmOperation<SaasSubscriptionDetails>(new SaasSubscriptionDetailsOperationSource(), _oracleSubscriptionClientDiagnostics, Pipeline, _oracleSubscriptionRestClient.CreateListSaasSubscriptionDetailsRequest(Id.SubscriptionId).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -584,16 +584,16 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation GetSaasSubscriptionDetails(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SaasSubscriptionDetails> GetSaasSubscriptionDetails(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _oracleSubscriptionClientDiagnostics.CreateScope("OracleSubscriptionResource.GetSaasSubscriptionDetails");
             scope.Start();
             try
             {
                 var response = _oracleSubscriptionRestClient.ListSaasSubscriptionDetails(Id.SubscriptionId, cancellationToken);
-                var operation = new OracleDatabaseArmOperation(_oracleSubscriptionClientDiagnostics, Pipeline, _oracleSubscriptionRestClient.CreateListSaasSubscriptionDetailsRequest(Id.SubscriptionId).Request, response, OperationFinalStateVia.Location);
+                var operation = new OracleDatabaseArmOperation<SaasSubscriptionDetails>(new SaasSubscriptionDetailsOperationSource(), _oracleSubscriptionClientDiagnostics, Pipeline, _oracleSubscriptionRestClient.CreateListSaasSubscriptionDetailsRequest(Id.SubscriptionId).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -626,16 +626,16 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> GetActivationLinksAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CloudAccountActivationLinks>> GetActivationLinksAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _oracleSubscriptionClientDiagnostics.CreateScope("OracleSubscriptionResource.GetActivationLinks");
             scope.Start();
             try
             {
                 var response = await _oracleSubscriptionRestClient.ListActivationLinksAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
-                var operation = new OracleDatabaseArmOperation(_oracleSubscriptionClientDiagnostics, Pipeline, _oracleSubscriptionRestClient.CreateListActivationLinksRequest(Id.SubscriptionId).Request, response, OperationFinalStateVia.Location);
+                var operation = new OracleDatabaseArmOperation<CloudAccountActivationLinks>(new CloudAccountActivationLinksOperationSource(), _oracleSubscriptionClientDiagnostics, Pipeline, _oracleSubscriptionRestClient.CreateListActivationLinksRequest(Id.SubscriptionId).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -668,16 +668,16 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation GetActivationLinks(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CloudAccountActivationLinks> GetActivationLinks(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _oracleSubscriptionClientDiagnostics.CreateScope("OracleSubscriptionResource.GetActivationLinks");
             scope.Start();
             try
             {
                 var response = _oracleSubscriptionRestClient.ListActivationLinks(Id.SubscriptionId, cancellationToken);
-                var operation = new OracleDatabaseArmOperation(_oracleSubscriptionClientDiagnostics, Pipeline, _oracleSubscriptionRestClient.CreateListActivationLinksRequest(Id.SubscriptionId).Request, response, OperationFinalStateVia.Location);
+                var operation = new OracleDatabaseArmOperation<CloudAccountActivationLinks>(new CloudAccountActivationLinksOperationSource(), _oracleSubscriptionClientDiagnostics, Pipeline, _oracleSubscriptionRestClient.CreateListActivationLinksRequest(Id.SubscriptionId).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)

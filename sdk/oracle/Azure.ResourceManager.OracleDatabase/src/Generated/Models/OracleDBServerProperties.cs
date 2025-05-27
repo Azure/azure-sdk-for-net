@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         internal OracleDBServerProperties()
         {
             VmClusterIds = new ChangeTrackingList<string>();
-            DbNodeIds = new ChangeTrackingList<string>();
+            DBNodeIds = new ChangeTrackingList<string>();
             AutonomousVmClusterIds = new ChangeTrackingList<string>();
             AutonomousVirtualMachineIds = new ChangeTrackingList<string>();
         }
@@ -71,31 +71,31 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="maxCpuCount"> The total number of CPU cores available. </param>
         /// <param name="autonomousVmClusterIds"> The list of OCIDs of the Autonomous VM Clusters associated with the Db server. </param>
         /// <param name="autonomousVirtualMachineIds"> The list of OCIDs of the Autonomous Virtual Machines associated with the Db server. </param>
-        /// <param name="maxDbNodeStorageInGbs"> The total max dbNode storage in GBs. </param>
+        /// <param name="maxDBNodeStorageInGbs"> The total max dbNode storage in GBs. </param>
         /// <param name="memorySizeInGbs"> The total memory size in GBs. </param>
         /// <param name="shape"> The shape of the Db server. The shape determines the amount of CPU, storage, and memory resources available. </param>
         /// <param name="createdOn"> The date and time that the Db Server was created. </param>
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
         /// <param name="computeModel"> The compute model of the Exadata Infrastructure. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OracleDBServerProperties(string ocid, string displayName, string compartmentId, ResourceIdentifier exadataInfrastructureId, int? cpuCoreCount, DbServerPatchingDetails dbServerPatchingDetails, int? maxMemoryInGbs, int? dbNodeStorageSizeInGbs, IReadOnlyList<string> vmClusterIds, IReadOnlyList<string> dbNodeIds, string lifecycleDetails, DbServerProvisioningState? lifecycleState, int? maxCpuCount, IReadOnlyList<string> autonomousVmClusterIds, IReadOnlyList<string> autonomousVirtualMachineIds, int? maxDbNodeStorageInGbs, int? memorySizeInGbs, string shape, DateTimeOffset? createdOn, OracleDatabaseResourceProvisioningState? provisioningState, AutonomousDatabaseComputeModel? computeModel, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OracleDBServerProperties(string ocid, string displayName, string compartmentId, ResourceIdentifier exadataInfrastructureId, int? cpuCoreCount, DBServerPatchingDetails dbServerPatchingDetails, int? maxMemoryInGbs, int? dbNodeStorageSizeInGbs, IReadOnlyList<string> vmClusterIds, IReadOnlyList<string> dbNodeIds, string lifecycleDetails, DBServerProvisioningState? lifecycleState, int? maxCpuCount, IReadOnlyList<string> autonomousVmClusterIds, IReadOnlyList<string> autonomousVirtualMachineIds, int? maxDBNodeStorageInGbs, int? memorySizeInGbs, string shape, DateTimeOffset? createdOn, OracleDatabaseResourceProvisioningState? provisioningState, OracleDatabaseComputeModel? computeModel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Ocid = ocid;
             DisplayName = displayName;
             CompartmentId = compartmentId;
             ExadataInfrastructureId = exadataInfrastructureId;
             CpuCoreCount = cpuCoreCount;
-            DbServerPatchingDetails = dbServerPatchingDetails;
+            DBServerPatchingDetails = dbServerPatchingDetails;
             MaxMemoryInGbs = maxMemoryInGbs;
-            DbNodeStorageSizeInGbs = dbNodeStorageSizeInGbs;
+            DBNodeStorageSizeInGbs = dbNodeStorageSizeInGbs;
             VmClusterIds = vmClusterIds;
-            DbNodeIds = dbNodeIds;
+            DBNodeIds = dbNodeIds;
             LifecycleDetails = lifecycleDetails;
             LifecycleState = lifecycleState;
             MaxCpuCount = maxCpuCount;
             AutonomousVmClusterIds = autonomousVmClusterIds;
             AutonomousVirtualMachineIds = autonomousVirtualMachineIds;
-            MaxDbNodeStorageInGbs = maxDbNodeStorageInGbs;
+            MaxDBNodeStorageInGbs = maxDBNodeStorageInGbs;
             MemorySizeInGbs = memorySizeInGbs;
             Shape = shape;
             CreatedOn = createdOn;
@@ -115,19 +115,19 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The number of CPU cores enabled on the Db server. </summary>
         public int? CpuCoreCount { get; }
         /// <summary> dbServerPatching details of the Db server. </summary>
-        public DbServerPatchingDetails DbServerPatchingDetails { get; }
+        public DBServerPatchingDetails DBServerPatchingDetails { get; }
         /// <summary> The total memory available in GBs. </summary>
         public int? MaxMemoryInGbs { get; }
         /// <summary> The allocated local node storage in GBs on the Db server. </summary>
-        public int? DbNodeStorageSizeInGbs { get; }
+        public int? DBNodeStorageSizeInGbs { get; }
         /// <summary> The OCID of the VM Clusters associated with the Db server. </summary>
         public IReadOnlyList<string> VmClusterIds { get; }
         /// <summary> The OCID of the Db nodes associated with the Db server. </summary>
-        public IReadOnlyList<string> DbNodeIds { get; }
+        public IReadOnlyList<string> DBNodeIds { get; }
         /// <summary> Lifecycle details of dbServer. </summary>
         public string LifecycleDetails { get; }
         /// <summary> DbServer provisioning state. </summary>
-        public DbServerProvisioningState? LifecycleState { get; }
+        public DBServerProvisioningState? LifecycleState { get; }
         /// <summary> The total number of CPU cores available. </summary>
         public int? MaxCpuCount { get; }
         /// <summary> The list of OCIDs of the Autonomous VM Clusters associated with the Db server. </summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The list of OCIDs of the Autonomous Virtual Machines associated with the Db server. </summary>
         public IReadOnlyList<string> AutonomousVirtualMachineIds { get; }
         /// <summary> The total max dbNode storage in GBs. </summary>
-        public int? MaxDbNodeStorageInGbs { get; }
+        public int? MaxDBNodeStorageInGbs { get; }
         /// <summary> The total memory size in GBs. </summary>
         public int? MemorySizeInGbs { get; }
         /// <summary> The shape of the Db server. The shape determines the amount of CPU, storage, and memory resources available. </summary>
@@ -145,6 +145,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Azure resource provisioning state. </summary>
         public OracleDatabaseResourceProvisioningState? ProvisioningState { get; }
         /// <summary> The compute model of the Exadata Infrastructure. </summary>
-        public AutonomousDatabaseComputeModel? ComputeModel { get; }
+        public OracleDatabaseComputeModel? ComputeModel { get; }
     }
 }

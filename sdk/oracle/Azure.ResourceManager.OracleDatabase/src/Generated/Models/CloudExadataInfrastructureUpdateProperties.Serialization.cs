@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
             int? computeCount = default;
             int? storageCount = default;
-            MaintenanceWindow maintenanceWindow = default;
+            OracleDatabaseMaintenanceWindow maintenanceWindow = default;
             IList<OracleCustomerContact> customerContacts = default;
             string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    maintenanceWindow = MaintenanceWindow.DeserializeMaintenanceWindow(property.Value, options);
+                    maintenanceWindow = OracleDatabaseMaintenanceWindow.DeserializeOracleDatabaseMaintenanceWindow(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("customerContacts"u8))

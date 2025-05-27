@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="isFreeTierEnabled"> True if this version of the Oracle Database software can be used for Always-Free Autonomous Databases. </param>
         /// <param name="isPaidEnabled"> True if this version of the Oracle Database software has payments enabled. </param>
         /// <returns> A new <see cref="Models.AutonomousDBVersionProperties"/> instance for mocking. </returns>
-        public static AutonomousDBVersionProperties AutonomousDBVersionProperties(string version = null, AutonomousDatabaseWorkloadType? dbWorkload = null, bool? isDefaultForFree = null, bool? isDefaultForPaid = null, bool? isFreeTierEnabled = null, bool? isPaidEnabled = null)
+        public static AutonomousDBVersionProperties AutonomousDBVersionProperties(string version, AutonomousDatabaseWorkloadType? dbWorkload, bool? isDefaultForFree, bool? isDefaultForPaid, bool? isFreeTierEnabled, bool? isPaidEnabled)
         {
             return new AutonomousDBVersionProperties(
                 version,
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
         /// <returns> A new <see cref="Models.CloudVmClusterDBNodeProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CloudVmClusterDBNodeProperties CloudVmClusterDBNodeProperties(ResourceIdentifier ocid = null, string additionalDetails = null, ResourceIdentifier backupIPId = null, ResourceIdentifier backupVnic2Id = null, ResourceIdentifier backupVnicId = null, int? cpuCoreCount = null, int? dbNodeStorageSizeInGbs = null, ResourceIdentifier dbServerId = null, ResourceIdentifier dbSystemId = null, string faultDomain = null, ResourceIdentifier hostIPId = null, string hostname = null, DBNodeProvisioningState? lifecycleState = null, string lifecycleDetails = null, DBNodeMaintenanceType? maintenanceType = null, int? memorySizeInGbs = null, int? softwareStorageSizeInGb = null, DateTimeOffset? timeCreated = null, DateTimeOffset? timeMaintenanceWindowEnd = null, DateTimeOffset? timeMaintenanceWindowStart = null, ResourceIdentifier vnic2Id = null, ResourceIdentifier vnicId = null, OracleDatabaseResourceProvisioningState? provisioningState = null)
+        public static CloudVmClusterDBNodeProperties CloudVmClusterDBNodeProperties(ResourceIdentifier ocid, string additionalDetails, ResourceIdentifier backupIPId, ResourceIdentifier backupVnic2Id, ResourceIdentifier backupVnicId, int? cpuCoreCount, int? dbNodeStorageSizeInGbs, ResourceIdentifier dbServerId, ResourceIdentifier dbSystemId, string faultDomain, ResourceIdentifier hostIPId, string hostname, DBNodeProvisioningState? lifecycleState, string lifecycleDetails, DBNodeMaintenanceType? maintenanceType, int? memorySizeInGbs, int? softwareStorageSizeInGb, DateTimeOffset? timeCreated, DateTimeOffset? timeMaintenanceWindowEnd, DateTimeOffset? timeMaintenanceWindowStart, ResourceIdentifier vnic2Id, ResourceIdentifier vnicId, OracleDatabaseResourceProvisioningState? provisioningState)
             => CloudVmClusterDBNodeProperties(ocid, additionalDetails, backupIPId, backupVnic2Id, backupVnicId, cpuCoreCount, dbNodeStorageSizeInGbs, dbServerId, dbSystemId, faultDomain, hostIPId, hostname, (DBNodeProvisioningState)lifecycleState, lifecycleDetails, maintenanceType, memorySizeInGbs, softwareStorageSizeInGb, (DateTimeOffset)timeCreated, timeMaintenanceWindowEnd, timeMaintenanceWindowStart, vnic2Id, vnicId, provisioningState);
 */
         /// <summary> Initializes a new instance of <see cref="Models.OracleDBSystemShapeProperties"/>. </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="maximumNodeCount"> The maximum number of database nodes available for this shape. </param>
         /// <param name="availableCoreCountPerNode"> The maximum number of CPU cores per database node that can be enabled for this shape. Only applicable to the flex Exadata shape and ExaCC Elastic shapes. </param>
         /// <returns> A new <see cref="Models.OracleDBSystemShapeProperties"/> instance for mocking. </returns>
-        public static OracleDBSystemShapeProperties OracleDBSystemShapeProperties(string shapeFamily = null, int availableCoreCount = default, int? minimumCoreCount = null, int? runtimeMinimumCoreCount = null, int? coreCountIncrement = null, int? minStorageCount = null, int? maxStorageCount = null, double? availableDataStoragePerServerInTbs = null, int? availableMemoryPerNodeInGbs = null, int? availableDBNodePerNodeInGbs = null, int? minCoreCountPerNode = null, int? availableMemoryInGbs = null, int? minMemoryPerNodeInGbs = null, int? availableDBNodeStorageInGbs = null, int? minDBNodeStoragePerNodeInGbs = null, int? availableDataStorageInTbs = null, int? minDataStorageInTbs = null, int? minimumNodeCount = null, int? maximumNodeCount = null, int? availableCoreCountPerNode = null)
+        public static OracleDBSystemShapeProperties OracleDBSystemShapeProperties(string shapeFamily, int availableCoreCount, int? minimumCoreCount, int? runtimeMinimumCoreCount, int? coreCountIncrement, int? minStorageCount, int? maxStorageCount, double? availableDataStoragePerServerInTbs, int? availableMemoryPerNodeInGbs, int? availableDBNodePerNodeInGbs, int? minCoreCountPerNode, int? availableMemoryInGbs, int? minMemoryPerNodeInGbs, int? availableDBNodeStorageInGbs, int? minDBNodeStoragePerNodeInGbs, int? availableDataStorageInTbs, int? minDataStorageInTbs, int? minimumNodeCount, int? maximumNodeCount, int? availableCoreCountPerNode)
         {
             return new OracleDBSystemShapeProperties(
                 shapeFamily,
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 default,
                 null);
         }
-/*
+
         /// <summary> Initializes a new instance of <see cref="Models.OracleDnsPrivateViewProperties"/>. </summary>
         /// <param name="ocid"> The OCID of the view. </param>
         /// <param name="displayName"> The display name of the view resource. </param>
@@ -121,8 +121,19 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
         /// <returns> A new <see cref="Models.OracleDnsPrivateViewProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static OracleDnsPrivateViewProperties OracleDnsPrivateViewProperties(ResourceIdentifier ocid = null, string displayName = null, bool isProtected = default, DnsPrivateViewsLifecycleState? lifecycleState = null, string self = null, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default, OracleDatabaseResourceProvisioningState? provisioningState = null)
-         => OracleDnsPrivateViewProperties(ocid, displayName, isProtected, (DnsPrivateViewsLifecycleState)lifecycleState, self, createdOn, updatedOn, provisioningState);
+        public static OracleDnsPrivateViewProperties OracleDnsPrivateViewProperties(ResourceIdentifier ocid, string displayName, bool isProtected, DnsPrivateViewsLifecycleState? lifecycleState, string self, DateTimeOffset createdOn, DateTimeOffset updatedOn, OracleDatabaseResourceProvisioningState? provisioningState)
+        {
+            return new OracleDnsPrivateViewProperties(
+                ocid,
+                displayName,
+                isProtected,
+                (DnsPrivateViewsLifecycleState)lifecycleState,
+                self,
+                createdOn,
+                updatedOn,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
 
         /// <summary> Initializes a new instance of <see cref="Models.OracleDnsPrivateZoneProperties"/>. </summary>
         /// <param name="ocid"> The OCID of the Zone. </param>
@@ -137,7 +148,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
         /// <returns> A new <see cref="Models.OracleDnsPrivateZoneProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static OracleDnsPrivateZoneProperties OracleDnsPrivateZoneProperties(ResourceIdentifier ocid = null, bool isProtected = default, DnsPrivateZonesLifecycleState? lifecycleState = null, string self = null, int serial = default, string version = null, ResourceIdentifier viewId = null, OracleDnsPrivateZoneType zoneType = default, DateTimeOffset createdOn = default, OracleDatabaseResourceProvisioningState? provisioningState = null)
-         => OracleDnsPrivateZoneProperties(ocid, isProtected, (DnsPrivateZonesLifecycleState)lifecycleState, self, serial, version, viewId, zoneType, createdOn, provisioningState);*/
+        public static OracleDnsPrivateZoneProperties OracleDnsPrivateZoneProperties(ResourceIdentifier ocid, bool isProtected, DnsPrivateZonesLifecycleState? lifecycleState, string self, int serial, string version, ResourceIdentifier viewId, OracleDnsPrivateZoneType zoneType, DateTimeOffset createdOn, OracleDatabaseResourceProvisioningState? provisioningState)
+        {
+            return new OracleDnsPrivateZoneProperties(
+                ocid,
+                isProtected,
+                (DnsPrivateZonesLifecycleState)lifecycleState,
+                self,
+                serial,
+                version,
+                viewId?.ToString(),
+                zoneType,
+                createdOn,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
     }
 }

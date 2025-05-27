@@ -66,24 +66,24 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="maintenanceType"> The type of database node maintenance. </param>
         /// <param name="memorySizeInGbs"> The allocated memory in GBs on the Db node. </param>
         /// <param name="softwareStorageSizeInGb"> The size (in GB) of the block storage volume allocation for the DB system. This attribute applies only for virtual machine DB systems. </param>
-        /// <param name="timeMaintenanceWindowEnd"> End date and time of maintenance window. </param>
-        /// <param name="timeMaintenanceWindowStart"> Start date and time of maintenance window. </param>
+        /// <param name="maintenanceWindowEndOn"> End date and time of maintenance window. </param>
+        /// <param name="maintenanceWindowStartOn"> Start date and time of maintenance window. </param>
         /// <param name="totalCpuCoreCount"> The total number of CPU cores reserved on the Db node. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExascaleDBNodeProperties(string ocid, string additionalDetails, int? cpuCoreCount, int? dbNodeStorageSizeInGbs, string faultDomain, string hostname, DBNodeProvisioningState? lifecycleState, string maintenanceType, int? memorySizeInGbs, int? softwareStorageSizeInGb, DateTimeOffset? timeMaintenanceWindowEnd, DateTimeOffset? timeMaintenanceWindowStart, int? totalCpuCoreCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExascaleDBNodeProperties(string ocid, string additionalDetails, int? cpuCoreCount, int? dbNodeStorageSizeInGbs, string faultDomain, string hostname, DBNodeProvisioningState? lifecycleState, string maintenanceType, int? memorySizeInGbs, int? softwareStorageSizeInGb, DateTimeOffset? maintenanceWindowEndOn, DateTimeOffset? maintenanceWindowStartOn, int? totalCpuCoreCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Ocid = ocid;
             AdditionalDetails = additionalDetails;
             CpuCoreCount = cpuCoreCount;
-            DbNodeStorageSizeInGbs = dbNodeStorageSizeInGbs;
+            DBNodeStorageSizeInGbs = dbNodeStorageSizeInGbs;
             FaultDomain = faultDomain;
             Hostname = hostname;
             LifecycleState = lifecycleState;
             MaintenanceType = maintenanceType;
             MemorySizeInGbs = memorySizeInGbs;
             SoftwareStorageSizeInGb = softwareStorageSizeInGb;
-            TimeMaintenanceWindowEnd = timeMaintenanceWindowEnd;
-            TimeMaintenanceWindowStart = timeMaintenanceWindowStart;
+            MaintenanceWindowEndOn = maintenanceWindowEndOn;
+            MaintenanceWindowStartOn = maintenanceWindowStartOn;
             TotalCpuCoreCount = totalCpuCoreCount;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The number of CPU cores enabled on the Db node. </summary>
         public int? CpuCoreCount { get; }
         /// <summary> The allocated local node storage in GBs on the Db node. </summary>
-        public int? DbNodeStorageSizeInGbs { get; }
+        public int? DBNodeStorageSizeInGbs { get; }
         /// <summary> The name of the Fault Domain the instance is contained in. </summary>
         public string FaultDomain { get; }
         /// <summary> The host name for the database node. </summary>
@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The size (in GB) of the block storage volume allocation for the DB system. This attribute applies only for virtual machine DB systems. </summary>
         public int? SoftwareStorageSizeInGb { get; }
         /// <summary> End date and time of maintenance window. </summary>
-        public DateTimeOffset? TimeMaintenanceWindowEnd { get; }
+        public DateTimeOffset? MaintenanceWindowEndOn { get; }
         /// <summary> Start date and time of maintenance window. </summary>
-        public DateTimeOffset? TimeMaintenanceWindowStart { get; }
+        public DateTimeOffset? MaintenanceWindowStartOn { get; }
         /// <summary> The total number of CPU cores reserved on the Db node. </summary>
         public int? TotalCpuCoreCount { get; }
     }

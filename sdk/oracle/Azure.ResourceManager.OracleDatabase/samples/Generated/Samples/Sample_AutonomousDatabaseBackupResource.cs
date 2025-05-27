@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.OracleDatabase.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.OracleDatabase.Samples
@@ -37,8 +38,8 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             AutonomousDatabaseBackupResource autonomousDatabaseBackup = client.GetAutonomousDatabaseBackupResource(autonomousDatabaseBackupResourceId);
 
             // invoke the operation
-            AutonomousDatabaseBackupData data = new AutonomousDatabaseBackupData();
-            ArmOperation<AutonomousDatabaseBackupResource> lro = await autonomousDatabaseBackup.UpdateAsync(WaitUntil.Completed, data);
+            AutonomousDatabaseBackupPatch patch = new AutonomousDatabaseBackupPatch();
+            ArmOperation<AutonomousDatabaseBackupResource> lro = await autonomousDatabaseBackup.UpdateAsync(WaitUntil.Completed, patch);
             AutonomousDatabaseBackupResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

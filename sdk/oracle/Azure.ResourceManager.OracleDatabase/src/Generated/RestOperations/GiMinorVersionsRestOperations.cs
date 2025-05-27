@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.OracleDatabase
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListByParentRequestUri(string subscriptionId, AzureLocation location, string giversionname, ShapeFamily? shapeFamily, string zone)
+        internal RequestUriBuilder CreateListByParentRequestUri(string subscriptionId, AzureLocation location, string giversionname, GIMinorVersionShapeFamily? shapeFamily, string zone)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return uri;
         }
 
-        internal HttpMessage CreateListByParentRequest(string subscriptionId, AzureLocation location, string giversionname, ShapeFamily? shapeFamily, string zone)
+        internal HttpMessage CreateListByParentRequest(string subscriptionId, AzureLocation location, string giversionname, GIMinorVersionShapeFamily? shapeFamily, string zone)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="giversionname"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="giversionname"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GiMinorVersionListResult>> ListByParentAsync(string subscriptionId, AzureLocation location, string giversionname, ShapeFamily? shapeFamily = null, string zone = null, CancellationToken cancellationToken = default)
+        public async Task<Response<GiMinorVersionListResult>> ListByParentAsync(string subscriptionId, AzureLocation location, string giversionname, GIMinorVersionShapeFamily? shapeFamily = null, string zone = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(giversionname, nameof(giversionname));
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="giversionname"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="giversionname"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GiMinorVersionListResult> ListByParent(string subscriptionId, AzureLocation location, string giversionname, ShapeFamily? shapeFamily = null, string zone = null, CancellationToken cancellationToken = default)
+        public Response<GiMinorVersionListResult> ListByParent(string subscriptionId, AzureLocation location, string giversionname, GIMinorVersionShapeFamily? shapeFamily = null, string zone = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(giversionname, nameof(giversionname));
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        internal RequestUriBuilder CreateListByParentNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation location, string giversionname, ShapeFamily? shapeFamily, string zone)
+        internal RequestUriBuilder CreateListByParentNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation location, string giversionname, GIMinorVersionShapeFamily? shapeFamily, string zone)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return uri;
         }
 
-        internal HttpMessage CreateListByParentNextPageRequest(string nextLink, string subscriptionId, AzureLocation location, string giversionname, ShapeFamily? shapeFamily, string zone)
+        internal HttpMessage CreateListByParentNextPageRequest(string nextLink, string subscriptionId, AzureLocation location, string giversionname, GIMinorVersionShapeFamily? shapeFamily, string zone)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="giversionname"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="giversionname"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GiMinorVersionListResult>> ListByParentNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, string giversionname, ShapeFamily? shapeFamily = null, string zone = null, CancellationToken cancellationToken = default)
+        public async Task<Response<GiMinorVersionListResult>> ListByParentNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, string giversionname, GIMinorVersionShapeFamily? shapeFamily = null, string zone = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="giversionname"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="giversionname"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GiMinorVersionListResult> ListByParentNextPage(string nextLink, string subscriptionId, AzureLocation location, string giversionname, ShapeFamily? shapeFamily = null, string zone = null, CancellationToken cancellationToken = default)
+        public Response<GiMinorVersionListResult> ListByParentNextPage(string nextLink, string subscriptionId, AzureLocation location, string giversionname, GIMinorVersionShapeFamily? shapeFamily = null, string zone = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

@@ -46,25 +46,25 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PrivateIPAddressesContent"/>. </summary>
-        /// <param name="subnetId"> Subnet OCID. </param>
+        /// <param name="subnetOcid"> Subnet OCID. </param>
         /// <param name="vnicId"> VCN OCID. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> or <paramref name="vnicId"/> is null. </exception>
-        public PrivateIPAddressesContent(string subnetId, string vnicId)
+        /// <exception cref="ArgumentNullException"> <paramref name="subnetOcid"/> or <paramref name="vnicId"/> is null. </exception>
+        public PrivateIPAddressesContent(string subnetOcid, string vnicId)
         {
-            Argument.AssertNotNull(subnetId, nameof(subnetId));
+            Argument.AssertNotNull(subnetOcid, nameof(subnetOcid));
             Argument.AssertNotNull(vnicId, nameof(vnicId));
 
-            SubnetId = subnetId;
+            SubnetOcid = subnetOcid;
             VnicId = vnicId;
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateIPAddressesContent"/>. </summary>
-        /// <param name="subnetId"> Subnet OCID. </param>
+        /// <param name="subnetOcid"> Subnet OCID. </param>
         /// <param name="vnicId"> VCN OCID. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateIPAddressesContent(string subnetId, string vnicId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateIPAddressesContent(string subnetOcid, string vnicId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SubnetId = subnetId;
+            SubnetOcid = subnetOcid;
             VnicId = vnicId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Subnet OCID. </summary>
-        public string SubnetId { get; }
+        public string SubnetOcid { get; }
         /// <summary> VCN OCID. </summary>
         public string VnicId { get; }
     }

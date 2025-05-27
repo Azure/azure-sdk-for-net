@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="displayName"> The user-friendly name for the Exadata Database Storage Vault. The name does not need to be unique. </param>
         /// <param name="highCapacityDatabaseStorageInput"> Create exadata Database Storage Details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> or <paramref name="highCapacityDatabaseStorageInput"/> is null. </exception>
-        public ExascaleDBStorageVaultProperties(string displayName, ExascaleDbStorageInputDetails highCapacityDatabaseStorageInput)
+        public ExascaleDBStorageVaultProperties(string displayName, ExascaleDBStorageInputDetails highCapacityDatabaseStorageInput)
         {
             Argument.AssertNotNull(displayName, nameof(displayName));
             Argument.AssertNotNull(highCapacityDatabaseStorageInput, nameof(highCapacityDatabaseStorageInput));
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="ocid"> The OCID of the Exadata Database Storage Vault. </param>
         /// <param name="ociUri"> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExascaleDBStorageVaultProperties(int? additionalFlashCacheInPercent, string description, string displayName, ExascaleDbStorageInputDetails highCapacityDatabaseStorageInput, ExascaleDbStorageDetails highCapacityDatabaseStorage, string timeZone, OracleDatabaseProvisioningState? provisioningState, ExascaleDbStorageVaultLifecycleState? lifecycleState, string lifecycleDetails, int? vmClusterCount, string ocid, Uri ociUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExascaleDBStorageVaultProperties(int? additionalFlashCacheInPercent, string description, string displayName, ExascaleDBStorageInputDetails highCapacityDatabaseStorageInput, ExascaleDBStorageDetails highCapacityDatabaseStorage, string timeZone, OracleDatabaseProvisioningState? provisioningState, ExascaleDBStorageVaultLifecycleState? lifecycleState, string lifecycleDetails, int? vmClusterCount, string ocid, Uri ociUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdditionalFlashCacheInPercent = additionalFlashCacheInPercent;
             Description = description;
@@ -101,25 +101,25 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The user-friendly name for the Exadata Database Storage Vault. The name does not need to be unique. </summary>
         public string DisplayName { get; set; }
         /// <summary> Create exadata Database Storage Details. </summary>
-        internal ExascaleDbStorageInputDetails HighCapacityDatabaseStorageInput { get; set; }
+        internal ExascaleDBStorageInputDetails HighCapacityDatabaseStorageInput { get; set; }
         /// <summary> Total Capacity. </summary>
         public int? HighCapacityDatabaseStorageInputTotalSizeInGbs
         {
             get => HighCapacityDatabaseStorageInput is null ? default(int?) : HighCapacityDatabaseStorageInput.TotalSizeInGbs;
             set
             {
-                HighCapacityDatabaseStorageInput = value.HasValue ? new ExascaleDbStorageInputDetails(value.Value) : null;
+                HighCapacityDatabaseStorageInput = value.HasValue ? new ExascaleDBStorageInputDetails(value.Value) : null;
             }
         }
 
         /// <summary> Response exadata Database Storage Details. </summary>
-        public ExascaleDbStorageDetails HighCapacityDatabaseStorage { get; }
+        public ExascaleDBStorageDetails HighCapacityDatabaseStorage { get; }
         /// <summary> The time zone that you want to use for the Exadata Database Storage Vault. </summary>
         public string TimeZone { get; set; }
         /// <summary> Exadata Database Storage Vault provisioning state. </summary>
         public OracleDatabaseProvisioningState? ProvisioningState { get; }
         /// <summary> Exadata Database Storage Vault lifecycle state. </summary>
-        public ExascaleDbStorageVaultLifecycleState? LifecycleState { get; }
+        public ExascaleDBStorageVaultLifecycleState? LifecycleState { get; }
         /// <summary> Additional information about the current lifecycle state. </summary>
         public string LifecycleDetails { get; }
         /// <summary> The number of Exadata VM clusters used the Exadata Database Storage Vault. </summary>

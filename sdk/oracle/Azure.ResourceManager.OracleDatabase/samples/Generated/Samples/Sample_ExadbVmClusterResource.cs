@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             ExadbVmClusterResource exadbVmCluster = client.GetExadbVmClusterResource(exadbVmClusterResourceId);
 
             // invoke the operation
-            RemoveVirtualMachineFromExadbVmClusterDetails details = new RemoveVirtualMachineFromExadbVmClusterDetails(new DbNodeDetails[]
+            RemoveVirtualMachineFromExadbVmClusterDetails details = new RemoveVirtualMachineFromExadbVmClusterDetails(new DBNodeDetails[]
             {
-new DbNodeDetails(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Oracle.Database/exadbVmClusters/vmCluster/dbNodes/dbNodeName"))
+new DBNodeDetails(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Oracle.Database/exadbVmClusters/vmCluster/dbNodes/dbNodeName"))
             });
             ArmOperation<ExadbVmClusterResource> lro = await exadbVmCluster.RemoveVmsAsync(WaitUntil.Completed, details);
             ExadbVmClusterResource result = lro.Value;

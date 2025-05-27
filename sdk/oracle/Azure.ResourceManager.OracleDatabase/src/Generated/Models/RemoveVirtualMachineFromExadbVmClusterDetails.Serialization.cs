@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
             writer.WritePropertyName("dbNodes"u8);
             writer.WriteStartArray();
-            foreach (var item in DbNodes)
+            foreach (var item in DBNodes)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            IList<DbNodeDetails> dbNodes = default;
+            IList<DBNodeDetails> dbNodes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dbNodes"u8))
                 {
-                    List<DbNodeDetails> array = new List<DbNodeDetails>();
+                    List<DBNodeDetails> array = new List<DBNodeDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DbNodeDetails.DeserializeDbNodeDetails(item, options));
+                        array.Add(DBNodeDetails.DeserializeDBNodeDetails(item, options));
                     }
                     dbNodes = array;
                     continue;

@@ -136,15 +136,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("maxMemoryInGbs"u8);
                 writer.WriteNumberValue(MaxMemoryInGbs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DbNodeStorageSizeInGbs))
+            if (options.Format != "W" && Optional.IsDefined(DBNodeStorageSizeInGbs))
             {
                 writer.WritePropertyName("dbNodeStorageSizeInGbs"u8);
-                writer.WriteNumberValue(DbNodeStorageSizeInGbs.Value);
+                writer.WriteNumberValue(DBNodeStorageSizeInGbs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxDbNodeStorageSizeInGbs))
+            if (options.Format != "W" && Optional.IsDefined(MaxDBNodeStorageSizeInGbs))
             {
                 writer.WritePropertyName("maxDbNodeStorageSizeInGbs"u8);
-                writer.WriteNumberValue(MaxDbNodeStorageSizeInGbs.Value);
+                writer.WriteNumberValue(MaxDBNodeStorageSizeInGbs.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(DataStorageSizeInTbs))
             {
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("maxDataStorageInTbs"u8);
                 writer.WriteNumberValue(MaxDataStorageInTbs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DbServerVersion))
+            if (options.Format != "W" && Optional.IsDefined(DBServerVersion))
             {
                 writer.WritePropertyName("dbServerVersion"u8);
-                writer.WriteStringValue(DbServerVersion);
+                writer.WriteStringValue(DBServerVersion);
             }
             if (options.Format != "W" && Optional.IsDefined(StorageServerVersion))
             {
@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("nextMaintenanceRunId"u8);
                 writer.WriteStringValue(NextMaintenanceRunId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MonthlyDbServerVersion))
+            if (options.Format != "W" && Optional.IsDefined(MonthlyDBServerVersion))
             {
                 writer.WritePropertyName("monthlyDbServerVersion"u8);
-                writer.WriteStringValue(MonthlyDbServerVersion);
+                writer.WriteStringValue(MonthlyDBServerVersion);
             }
             if (options.Format != "W" && Optional.IsDefined(MonthlyStorageServerVersion))
             {
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             int? availableStorageSizeInGbs = default;
             DateTimeOffset? timeCreated = default;
             string lifecycleDetails = default;
-            MaintenanceWindow maintenanceWindow = default;
+            OracleDatabaseMaintenanceWindow maintenanceWindow = default;
             EstimatedPatchingTime estimatedPatchingTime = default;
             IList<OracleCustomerContact> customerContacts = default;
             OracleDatabaseProvisioningState? provisioningState = default;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string monthlyStorageServerVersion = default;
             string databaseServerType = default;
             string storageServerType = default;
-            AutonomousDatabaseComputeModel? computeModel = default;
+            OracleDatabaseComputeModel? computeModel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    maintenanceWindow = MaintenanceWindow.DeserializeMaintenanceWindow(property.Value, options);
+                    maintenanceWindow = OracleDatabaseMaintenanceWindow.DeserializeOracleDatabaseMaintenanceWindow(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("estimatedPatchingTime"u8))
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    computeModel = new AutonomousDatabaseComputeModel(property.Value.GetString());
+                    computeModel = new OracleDatabaseComputeModel(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType = default;
             string characterSet = default;
             float? computeCount = default;
-            AutonomousDatabaseComputeModel? computeModel = default;
+            OracleDatabaseComputeModel? computeModel = default;
             int? cpuCoreCount = default;
             IList<OracleCustomerContact> customerContacts = default;
             int? dataStorageSizeInTbs = default;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    computeModel = new AutonomousDatabaseComputeModel(property.Value.GetString());
+                    computeModel = new OracleDatabaseComputeModel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("cpuCoreCount"u8))

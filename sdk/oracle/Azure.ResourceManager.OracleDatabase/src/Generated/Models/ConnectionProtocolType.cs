@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         private const string TcpValue = "TCP";
-        private const string TCPSValue = "TCPS";
+        private const string TcpsValue = "TCPS";
 
         /// <summary> TCP protocol. </summary>
         public static ConnectionProtocolType Tcp { get; } = new ConnectionProtocolType(TcpValue);
         /// <summary> TCPS protocol. </summary>
-        public static ConnectionProtocolType TCPS { get; } = new ConnectionProtocolType(TCPSValue);
+        public static ConnectionProtocolType Tcps { get; } = new ConnectionProtocolType(TcpsValue);
         /// <summary> Determines if two <see cref="ConnectionProtocolType"/> values are the same. </summary>
         public static bool operator ==(ConnectionProtocolType left, ConnectionProtocolType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectionProtocolType"/> values are not the same. </summary>

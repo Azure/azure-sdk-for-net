@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             OracleGIMinorVersionCollection collection = oracleGIVersion.GetOracleGIMinorVersions();
 
             // invoke the operation and iterate over the result
-            ShapeFamily? shapeFamily = new ShapeFamily("rtfcosvtlpeeqoicsjqggtgc");
+            GIMinorVersionShapeFamily? shapeFamily = new GIMinorVersionShapeFamily("rtfcosvtlpeeqoicsjqggtgc");
             await foreach (OracleGIMinorVersionResource item in collection.GetAllAsync(shapeFamily: shapeFamily))
             {
                 // the variable item is a resource, you could call other operations on this instance as well

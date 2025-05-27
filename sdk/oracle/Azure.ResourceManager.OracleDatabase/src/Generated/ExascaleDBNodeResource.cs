@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<DBActionResult>> ActionAsync(WaitUntil waitUntil, DbNodeAction body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ExascaleDBNodeActionResult>> ActionAsync(WaitUntil waitUntil, DBNodeAction body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.OracleDatabase
             try
             {
                 var response = await _exascaleDBNodeExascaleDbNodesRestClient.ActionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new OracleDatabaseArmOperation<DBActionResult>(new DBActionResultOperationSource(), _exascaleDBNodeExascaleDbNodesClientDiagnostics, Pipeline, _exascaleDBNodeExascaleDbNodesRestClient.CreateActionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new OracleDatabaseArmOperation<ExascaleDBNodeActionResult>(new ExascaleDBNodeActionResultOperationSource(), _exascaleDBNodeExascaleDbNodesClientDiagnostics, Pipeline, _exascaleDBNodeExascaleDbNodesRestClient.CreateActionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<DBActionResult> Action(WaitUntil waitUntil, DbNodeAction body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ExascaleDBNodeActionResult> Action(WaitUntil waitUntil, DBNodeAction body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.OracleDatabase
             try
             {
                 var response = _exascaleDBNodeExascaleDbNodesRestClient.Action(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken);
-                var operation = new OracleDatabaseArmOperation<DBActionResult>(new DBActionResultOperationSource(), _exascaleDBNodeExascaleDbNodesClientDiagnostics, Pipeline, _exascaleDBNodeExascaleDbNodesRestClient.CreateActionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new OracleDatabaseArmOperation<ExascaleDBNodeActionResult>(new ExascaleDBNodeActionResultOperationSource(), _exascaleDBNodeExascaleDbNodesClientDiagnostics, Pipeline, _exascaleDBNodeExascaleDbNodesRestClient.CreateActionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

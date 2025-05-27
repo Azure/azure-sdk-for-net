@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="shape"> If provided, filters the results for the given shape. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OracleFlexComponentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OracleFlexComponentResource> GetAllAsync(SystemShape? shape = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<OracleFlexComponentResource> GetAllAsync(OracleDatabaseSystemShape? shape = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleFlexComponentFlexComponentsRestClient.CreateListByParentRequest(Id.SubscriptionId, new AzureLocation(_location), shape);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleFlexComponentFlexComponentsRestClient.CreateListByParentNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location), shape);
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="shape"> If provided, filters the results for the given shape. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OracleFlexComponentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OracleFlexComponentResource> GetAll(SystemShape? shape = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<OracleFlexComponentResource> GetAll(OracleDatabaseSystemShape? shape = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleFlexComponentFlexComponentsRestClient.CreateListByParentRequest(Id.SubscriptionId, new AzureLocation(_location), shape);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleFlexComponentFlexComponentsRestClient.CreateListByParentNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location), shape);

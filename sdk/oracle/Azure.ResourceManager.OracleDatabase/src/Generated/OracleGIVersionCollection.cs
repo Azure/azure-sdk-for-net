@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OracleGIVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OracleGIVersionResource> GetAllAsync(SystemShape? shape = null, string zone = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<OracleGIVersionResource> GetAllAsync(OracleDatabaseSystemShape? shape = null, string zone = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleGIVersionGiVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_location), shape, zone);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleGIVersionGiVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location), shape, zone);
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OracleGIVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OracleGIVersionResource> GetAll(SystemShape? shape = null, string zone = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<OracleGIVersionResource> GetAll(OracleDatabaseSystemShape? shape = null, string zone = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleGIVersionGiVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_location), shape, zone);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleGIVersionGiVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location), shape, zone);

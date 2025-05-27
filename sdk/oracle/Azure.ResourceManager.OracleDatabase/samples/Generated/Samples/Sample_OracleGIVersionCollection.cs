@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             OracleGIVersionCollection collection = subscriptionResource.GetOracleGIVersions(location);
 
             // invoke the operation and iterate over the result
-            SystemShape? shape = new SystemShape("osixsklyaauhoqnkxvnvsqeqenhzogntqnpubldrrfvqncwetdtwqwjjcvspwhgecbimdlulwcubikebrdzmidrucgtsuqvytkqutmbyrvvyioxpocpmuwiivyanjzucaegihztluuvpznzaoakfsselumhhsvrtrbzwpjhcihsvyouonlxdluwhqfxoqvgthkaxppbydtqjntscgzbivfdcaobbkthrbdjwpejirqmbly");
+            OracleDatabaseSystemShape? shape = new OracleDatabaseSystemShape("osixsklyaauhoqnkxvnvsqeqenhzogntqnpubldrrfvqncwetdtwqwjjcvspwhgecbimdlulwcubikebrdzmidrucgtsuqvytkqutmbyrvvyioxpocpmuwiivyanjzucaegihztluuvpznzaoakfsselumhhsvrtrbzwpjhcihsvyouonlxdluwhqfxoqvgthkaxppbydtqjntscgzbivfdcaobbkthrbdjwpejirqmbly");
             await foreach (OracleGIVersionResource item in collection.GetAllAsync(shape: shape))
             {
                 // the variable item is a resource, you could call other operations on this instance as well

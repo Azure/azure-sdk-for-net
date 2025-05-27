@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             writer.WritePropertyName("ipAddress"u8);
             writer.WriteStringValue(IPAddress);
             writer.WritePropertyName("subnetId"u8);
-            writer.WriteStringValue(SubnetId);
+            writer.WriteStringValue(SubnetOcid);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string hostnameLabel = default;
             string ocid = default;
             string ipAddress = default;
-            ResourceIdentifier subnetId = default;
+            string subnetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("subnetId"u8))
                 {
-                    subnetId = new ResourceIdentifier(property.Value.GetString());
+                    subnetId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

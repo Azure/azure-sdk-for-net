@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<CloudVmClusterDBNodeResource>> ActionAsync(WaitUntil waitUntil, DbNodeAction body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CloudVmClusterDBNodeResource>> ActionAsync(WaitUntil waitUntil, DBNodeAction body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<CloudVmClusterDBNodeResource> Action(WaitUntil waitUntil, DbNodeAction body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CloudVmClusterDBNodeResource> Action(WaitUntil waitUntil, DBNodeAction body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 

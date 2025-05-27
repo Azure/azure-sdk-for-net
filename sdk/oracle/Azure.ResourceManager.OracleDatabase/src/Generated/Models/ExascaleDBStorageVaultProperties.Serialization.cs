@@ -128,11 +128,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             int? additionalFlashCacheInPercent = default;
             string description = default;
             string displayName = default;
-            ExascaleDbStorageInputDetails highCapacityDatabaseStorageInput = default;
-            ExascaleDbStorageDetails highCapacityDatabaseStorage = default;
+            ExascaleDBStorageInputDetails highCapacityDatabaseStorageInput = default;
+            ExascaleDBStorageDetails highCapacityDatabaseStorage = default;
             string timeZone = default;
             OracleDatabaseProvisioningState? provisioningState = default;
-            ExascaleDbStorageVaultLifecycleState? lifecycleState = default;
+            ExascaleDBStorageVaultLifecycleState? lifecycleState = default;
             string lifecycleDetails = default;
             int? vmClusterCount = default;
             string ocid = default;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("highCapacityDatabaseStorageInput"u8))
                 {
-                    highCapacityDatabaseStorageInput = ExascaleDbStorageInputDetails.DeserializeExascaleDbStorageInputDetails(property.Value, options);
+                    highCapacityDatabaseStorageInput = ExascaleDBStorageInputDetails.DeserializeExascaleDBStorageInputDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("highCapacityDatabaseStorage"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    highCapacityDatabaseStorage = ExascaleDbStorageDetails.DeserializeExascaleDbStorageDetails(property.Value, options);
+                    highCapacityDatabaseStorage = ExascaleDBStorageDetails.DeserializeExascaleDBStorageDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("timeZone"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    lifecycleState = new ExascaleDbStorageVaultLifecycleState(property.Value.GetString());
+                    lifecycleState = new ExascaleDBStorageVaultLifecycleState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lifecycleDetails"u8))

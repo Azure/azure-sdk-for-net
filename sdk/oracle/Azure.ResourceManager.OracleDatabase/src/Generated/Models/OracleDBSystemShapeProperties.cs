@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="maxStorageCount"> The maximum number of Exadata storage servers available for the Exadata infrastructure. </param>
         /// <param name="availableDataStoragePerServerInTbs"> The maximum data storage available per storage server for this shape. Only applicable to ExaCC Elastic shapes. </param>
         /// <param name="availableMemoryPerNodeInGbs"> The maximum memory available per database node for this shape. Only applicable to ExaCC Elastic shapes. </param>
-        /// <param name="availableDbNodePerNodeInGbs"> The maximum Db Node storage available per database node for this shape. Only applicable to ExaCC Elastic shapes. </param>
+        /// <param name="availableDBNodePerNodeInGbs"> The maximum Db Node storage available per database node for this shape. Only applicable to ExaCC Elastic shapes. </param>
         /// <param name="minCoreCountPerNode"> The minimum number of CPU cores that can be enabled per node for this shape. </param>
         /// <param name="availableMemoryInGbs"> The maximum memory that can be enabled for this shape. </param>
         /// <param name="minMemoryPerNodeInGbs"> The minimum memory that need be allocated per node for this shape. </param>
-        /// <param name="availableDbNodeStorageInGbs"> The maximum Db Node storage that can be enabled for this shape. </param>
-        /// <param name="minDbNodeStoragePerNodeInGbs"> The minimum Db Node storage that need be allocated per node for this shape. </param>
+        /// <param name="availableDBNodeStorageInGbs"> The maximum Db Node storage that can be enabled for this shape. </param>
+        /// <param name="minDBNodeStoragePerNodeInGbs"> The minimum Db Node storage that need be allocated per node for this shape. </param>
         /// <param name="availableDataStorageInTbs"> The maximum DATA storage that can be enabled for this shape. </param>
         /// <param name="minDataStorageInTbs"> The minimum data storage that need be allocated for this shape. </param>
         /// <param name="minimumNodeCount"> The minimum number of database nodes available for this shape. </param>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="areServerTypesSupported"> Indicates if the shape supports database and storage server types. </param>
         /// <param name="displayName"> The display name of the shape used for the DB system. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OracleDBSystemShapeProperties(string shapeFamily, string shapeName, int availableCoreCount, int? minimumCoreCount, int? runtimeMinimumCoreCount, int? coreCountIncrement, int? minStorageCount, int? maxStorageCount, double? availableDataStoragePerServerInTbs, int? availableMemoryPerNodeInGbs, int? availableDbNodePerNodeInGbs, int? minCoreCountPerNode, int? availableMemoryInGbs, int? minMemoryPerNodeInGbs, int? availableDbNodeStorageInGbs, int? minDbNodeStoragePerNodeInGbs, int? availableDataStorageInTbs, int? minDataStorageInTbs, int? minimumNodeCount, int? maximumNodeCount, int? availableCoreCountPerNode, AutonomousDatabaseComputeModel? computeModel, bool? areServerTypesSupported, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OracleDBSystemShapeProperties(string shapeFamily, string shapeName, int availableCoreCount, int? minimumCoreCount, int? runtimeMinimumCoreCount, int? coreCountIncrement, int? minStorageCount, int? maxStorageCount, double? availableDataStoragePerServerInTbs, int? availableMemoryPerNodeInGbs, int? availableDBNodePerNodeInGbs, int? minCoreCountPerNode, int? availableMemoryInGbs, int? minMemoryPerNodeInGbs, int? availableDBNodeStorageInGbs, int? minDBNodeStoragePerNodeInGbs, int? availableDataStorageInTbs, int? minDataStorageInTbs, int? minimumNodeCount, int? maximumNodeCount, int? availableCoreCountPerNode, OracleDatabaseComputeModel? computeModel, bool? areServerTypesSupported, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ShapeFamily = shapeFamily;
             ShapeName = shapeName;
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             MaxStorageCount = maxStorageCount;
             AvailableDataStoragePerServerInTbs = availableDataStoragePerServerInTbs;
             AvailableMemoryPerNodeInGbs = availableMemoryPerNodeInGbs;
-            AvailableDbNodePerNodeInGbs = availableDbNodePerNodeInGbs;
+            AvailableDBNodePerNodeInGbs = availableDBNodePerNodeInGbs;
             MinCoreCountPerNode = minCoreCountPerNode;
             AvailableMemoryInGbs = availableMemoryInGbs;
             MinMemoryPerNodeInGbs = minMemoryPerNodeInGbs;
-            AvailableDbNodeStorageInGbs = availableDbNodeStorageInGbs;
-            MinDbNodeStoragePerNodeInGbs = minDbNodeStoragePerNodeInGbs;
+            AvailableDBNodeStorageInGbs = availableDBNodeStorageInGbs;
+            MinDBNodeStoragePerNodeInGbs = minDBNodeStoragePerNodeInGbs;
             AvailableDataStorageInTbs = availableDataStorageInTbs;
             MinDataStorageInTbs = minDataStorageInTbs;
             MinimumNodeCount = minimumNodeCount;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The maximum memory available per database node for this shape. Only applicable to ExaCC Elastic shapes. </summary>
         public int? AvailableMemoryPerNodeInGbs { get; }
         /// <summary> The maximum Db Node storage available per database node for this shape. Only applicable to ExaCC Elastic shapes. </summary>
-        public int? AvailableDbNodePerNodeInGbs { get; }
+        public int? AvailableDBNodePerNodeInGbs { get; }
         /// <summary> The minimum number of CPU cores that can be enabled per node for this shape. </summary>
         public int? MinCoreCountPerNode { get; }
         /// <summary> The maximum memory that can be enabled for this shape. </summary>
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The minimum memory that need be allocated per node for this shape. </summary>
         public int? MinMemoryPerNodeInGbs { get; }
         /// <summary> The maximum Db Node storage that can be enabled for this shape. </summary>
-        public int? AvailableDbNodeStorageInGbs { get; }
+        public int? AvailableDBNodeStorageInGbs { get; }
         /// <summary> The minimum Db Node storage that need be allocated per node for this shape. </summary>
-        public int? MinDbNodeStoragePerNodeInGbs { get; }
+        public int? MinDBNodeStoragePerNodeInGbs { get; }
         /// <summary> The maximum DATA storage that can be enabled for this shape. </summary>
         public int? AvailableDataStorageInTbs { get; }
         /// <summary> The minimum data storage that need be allocated for this shape. </summary>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The maximum number of CPU cores per database node that can be enabled for this shape. Only applicable to the flex Exadata shape and ExaCC Elastic shapes. </summary>
         public int? AvailableCoreCountPerNode { get; }
         /// <summary> The compute model of the Exadata Infrastructure. </summary>
-        public AutonomousDatabaseComputeModel? ComputeModel { get; }
+        public OracleDatabaseComputeModel? ComputeModel { get; }
         /// <summary> Indicates if the shape supports database and storage server types. </summary>
         public bool? AreServerTypesSupported { get; }
         /// <summary> The display name of the shape used for the DB system. </summary>

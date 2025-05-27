@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 throw new FormatException($"The model {nameof(EstimatedPatchingTime)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(EstimatedDbServerPatchingTime))
+            if (options.Format != "W" && Optional.IsDefined(EstimatedDBServerPatchingTime))
             {
                 writer.WritePropertyName("estimatedDbServerPatchingTime"u8);
-                writer.WriteNumberValue(EstimatedDbServerPatchingTime.Value);
+                writer.WriteNumberValue(EstimatedDBServerPatchingTime.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(EstimatedNetworkSwitchesPatchingTime))
             {

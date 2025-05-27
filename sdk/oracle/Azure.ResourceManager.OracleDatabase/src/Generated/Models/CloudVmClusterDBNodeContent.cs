@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
             Argument.AssertNotNull(dbServers, nameof(dbServers));
 
-            DbServers = dbServers.ToList();
+            DBServers = dbServers.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudVmClusterDBNodeContent"/>. </summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CloudVmClusterDBNodeContent(IList<string> dbServers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            DbServers = dbServers;
+            DBServers = dbServers;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -71,6 +71,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Db servers ocids. </summary>
-        public IList<string> DbServers { get; }
+        public IList<string> DBServers { get; }
     }
 }

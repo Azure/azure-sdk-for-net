@@ -59,20 +59,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("cpuCoreCount"u8);
                 writer.WriteNumberValue(CpuCoreCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DbServerPatchingDetails))
+            if (options.Format != "W" && Optional.IsDefined(DBServerPatchingDetails))
             {
                 writer.WritePropertyName("dbServerPatchingDetails"u8);
-                writer.WriteObjectValue(DbServerPatchingDetails, options);
+                writer.WriteObjectValue(DBServerPatchingDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MaxMemoryInGbs))
             {
                 writer.WritePropertyName("maxMemoryInGbs"u8);
                 writer.WriteNumberValue(MaxMemoryInGbs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DbNodeStorageSizeInGbs))
+            if (options.Format != "W" && Optional.IsDefined(DBNodeStorageSizeInGbs))
             {
                 writer.WritePropertyName("dbNodeStorageSizeInGbs"u8);
-                writer.WriteNumberValue(DbNodeStorageSizeInGbs.Value);
+                writer.WriteNumberValue(DBNodeStorageSizeInGbs.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(VmClusterIds))
             {
@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DbNodeIds))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DBNodeIds))
             {
                 writer.WritePropertyName("dbNodeIds"u8);
                 writer.WriteStartArray();
-                foreach (var item in DbNodeIds)
+                foreach (var item in DBNodeIds)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxDbNodeStorageInGbs))
+            if (options.Format != "W" && Optional.IsDefined(MaxDBNodeStorageInGbs))
             {
                 writer.WritePropertyName("maxDbNodeStorageInGbs"u8);
-                writer.WriteNumberValue(MaxDbNodeStorageInGbs.Value);
+                writer.WriteNumberValue(MaxDBNodeStorageInGbs.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(MemorySizeInGbs))
             {
@@ -201,13 +201,13 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string compartmentId = default;
             ResourceIdentifier exadataInfrastructureId = default;
             int? cpuCoreCount = default;
-            DbServerPatchingDetails dbServerPatchingDetails = default;
+            DBServerPatchingDetails dbServerPatchingDetails = default;
             int? maxMemoryInGbs = default;
             int? dbNodeStorageSizeInGbs = default;
             IReadOnlyList<string> vmClusterIds = default;
             IReadOnlyList<string> dbNodeIds = default;
             string lifecycleDetails = default;
-            DbServerProvisioningState? lifecycleState = default;
+            DBServerProvisioningState? lifecycleState = default;
             int? maxCpuCount = default;
             IReadOnlyList<string> autonomousVmClusterIds = default;
             IReadOnlyList<string> autonomousVirtualMachineIds = default;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string shape = default;
             DateTimeOffset? timeCreated = default;
             OracleDatabaseResourceProvisioningState? provisioningState = default;
-            AutonomousDatabaseComputeModel? computeModel = default;
+            OracleDatabaseComputeModel? computeModel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    dbServerPatchingDetails = DbServerPatchingDetails.DeserializeDbServerPatchingDetails(property.Value, options);
+                    dbServerPatchingDetails = DBServerPatchingDetails.DeserializeDBServerPatchingDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("maxMemoryInGbs"u8))
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    lifecycleState = new DbServerProvisioningState(property.Value.GetString());
+                    lifecycleState = new DBServerProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("maxCpuCount"u8))
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    computeModel = new AutonomousDatabaseComputeModel(property.Value.GetString());
+                    computeModel = new OracleDatabaseComputeModel(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

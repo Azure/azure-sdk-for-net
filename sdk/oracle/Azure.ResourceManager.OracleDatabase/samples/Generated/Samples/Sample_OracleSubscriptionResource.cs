@@ -65,9 +65,10 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             OracleSubscriptionResource oracleSubscription = client.GetOracleSubscriptionResource(oracleSubscriptionResourceId);
 
             // invoke the operation
-            await oracleSubscription.GetCloudAccountDetailsAsync(WaitUntil.Completed);
+            ArmOperation<CloudAccountDetails> lro = await oracleSubscription.GetCloudAccountDetailsAsync(WaitUntil.Completed);
+            CloudAccountDetails result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
@@ -89,9 +90,10 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             OracleSubscriptionResource oracleSubscription = client.GetOracleSubscriptionResource(oracleSubscriptionResourceId);
 
             // invoke the operation
-            await oracleSubscription.GetSaasSubscriptionDetailsAsync(WaitUntil.Completed);
+            ArmOperation<SaasSubscriptionDetails> lro = await oracleSubscription.GetSaasSubscriptionDetailsAsync(WaitUntil.Completed);
+            SaasSubscriptionDetails result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
@@ -113,9 +115,10 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             OracleSubscriptionResource oracleSubscription = client.GetOracleSubscriptionResource(oracleSubscriptionResourceId);
 
             // invoke the operation
-            await oracleSubscription.GetActivationLinksAsync(WaitUntil.Completed);
+            ArmOperation<CloudAccountActivationLinks> lro = await oracleSubscription.GetActivationLinksAsync(WaitUntil.Completed);
+            CloudAccountActivationLinks result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]

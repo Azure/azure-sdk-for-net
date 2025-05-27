@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             writer.WritePropertyName("enabledEcpuCount"u8);
             writer.WriteNumberValue(EnabledEcpuCount);
             writer.WritePropertyName("exascaleDbStorageVaultId"u8);
-            writer.WriteStringValue(ExascaleDbStorageVaultId);
+            writer.WriteStringValue(ExascaleDBStorageVaultId);
             if (Optional.IsDefined(GridImageOcid))
             {
                 writer.WritePropertyName("gridImageOcid"u8);

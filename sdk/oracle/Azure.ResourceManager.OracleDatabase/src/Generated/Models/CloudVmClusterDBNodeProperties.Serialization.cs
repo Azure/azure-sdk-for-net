@@ -61,18 +61,18 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("cpuCoreCount"u8);
                 writer.WriteNumberValue(CpuCoreCount.Value);
             }
-            if (Optional.IsDefined(DbNodeStorageSizeInGbs))
+            if (Optional.IsDefined(DBNodeStorageSizeInGbs))
             {
                 writer.WritePropertyName("dbNodeStorageSizeInGbs"u8);
-                writer.WriteNumberValue(DbNodeStorageSizeInGbs.Value);
+                writer.WriteNumberValue(DBNodeStorageSizeInGbs.Value);
             }
-            if (Optional.IsDefined(DbServerId))
+            if (Optional.IsDefined(DBServerId))
             {
                 writer.WritePropertyName("dbServerId"u8);
-                writer.WriteStringValue(DbServerId);
+                writer.WriteStringValue(DBServerId);
             }
             writer.WritePropertyName("dbSystemId"u8);
-            writer.WriteStringValue(DbSystemId);
+            writer.WriteStringValue(DBSystemId);
             if (Optional.IsDefined(FaultDomain))
             {
                 writer.WritePropertyName("faultDomain"u8);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WriteNumberValue(SoftwareStorageSizeInGb.Value);
             }
             writer.WritePropertyName("timeCreated"u8);
-            writer.WriteStringValue(DBNodeTimeCreated, "O");
+            writer.WriteStringValue(CreatedOn, "O");
             if (Optional.IsDefined(TimeMaintenanceWindowEnd))
             {
                 writer.WritePropertyName("timeMaintenanceWindowEnd"u8);

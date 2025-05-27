@@ -52,20 +52,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="subnetId"> Client subnet. </param>
         /// <param name="displayName"> Display Name. </param>
         /// <param name="enabledEcpuCount"> The number of ECPUs to enable for an Exadata VM cluster on Exascale Infrastructure. </param>
-        /// <param name="exascaleDbStorageVaultId"> The Azure Resource ID of the Exadata Database Storage Vault. </param>
+        /// <param name="exascaleDBStorageVaultId"> The Azure Resource ID of the Exadata Database Storage Vault. </param>
         /// <param name="hostname"> The hostname for the  Exadata VM cluster on Exascale Infrastructure. </param>
         /// <param name="nodeCount"> The number of nodes in the Exadata VM cluster on Exascale Infrastructure. </param>
         /// <param name="shape"> The shape of the Exadata VM cluster on Exascale Infrastructure resource. </param>
         /// <param name="sshPublicKeys"> The public key portion of one or more key pairs used for SSH access to the Exadata VM cluster on Exascale Infrastructure. </param>
         /// <param name="totalEcpuCount"> The number of Total ECPUs for an Exadata VM cluster on Exascale Infrastructure. </param>
         /// <param name="vmFileSystemStorage"> Filesystem storage details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vnetId"/>, <paramref name="subnetId"/>, <paramref name="displayName"/>, <paramref name="exascaleDbStorageVaultId"/>, <paramref name="hostname"/>, <paramref name="shape"/>, <paramref name="sshPublicKeys"/> or <paramref name="vmFileSystemStorage"/> is null. </exception>
-        public ExadbVmClusterProperties(ResourceIdentifier vnetId, ResourceIdentifier subnetId, string displayName, int enabledEcpuCount, ResourceIdentifier exascaleDbStorageVaultId, string hostname, int nodeCount, string shape, IEnumerable<string> sshPublicKeys, int totalEcpuCount, ExadbVmClusterStorageDetails vmFileSystemStorage)
+        /// <exception cref="ArgumentNullException"> <paramref name="vnetId"/>, <paramref name="subnetId"/>, <paramref name="displayName"/>, <paramref name="exascaleDBStorageVaultId"/>, <paramref name="hostname"/>, <paramref name="shape"/>, <paramref name="sshPublicKeys"/> or <paramref name="vmFileSystemStorage"/> is null. </exception>
+        public ExadbVmClusterProperties(ResourceIdentifier vnetId, ResourceIdentifier subnetId, string displayName, int enabledEcpuCount, ResourceIdentifier exascaleDBStorageVaultId, string hostname, int nodeCount, string shape, IEnumerable<string> sshPublicKeys, int totalEcpuCount, ExadbVmClusterStorageDetails vmFileSystemStorage)
         {
             Argument.AssertNotNull(vnetId, nameof(vnetId));
             Argument.AssertNotNull(subnetId, nameof(subnetId));
             Argument.AssertNotNull(displayName, nameof(displayName));
-            Argument.AssertNotNull(exascaleDbStorageVaultId, nameof(exascaleDbStorageVaultId));
+            Argument.AssertNotNull(exascaleDBStorageVaultId, nameof(exascaleDBStorageVaultId));
             Argument.AssertNotNull(hostname, nameof(hostname));
             Argument.AssertNotNull(shape, nameof(shape));
             Argument.AssertNotNull(sshPublicKeys, nameof(sshPublicKeys));
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             SubnetId = subnetId;
             DisplayName = displayName;
             EnabledEcpuCount = enabledEcpuCount;
-            ExascaleDbStorageVaultId = exascaleDbStorageVaultId;
+            ExascaleDBStorageVaultId = exascaleDBStorageVaultId;
             Hostname = hostname;
             NodeCount = nodeCount;
             NsgCidrs = new ChangeTrackingList<CloudVmClusterNsgCidr>();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="displayName"> Display Name. </param>
         /// <param name="domain"> A domain name used for the Exadata VM cluster on Exascale Infrastructure. </param>
         /// <param name="enabledEcpuCount"> The number of ECPUs to enable for an Exadata VM cluster on Exascale Infrastructure. </param>
-        /// <param name="exascaleDbStorageVaultId"> The Azure Resource ID of the Exadata Database Storage Vault. </param>
+        /// <param name="exascaleDBStorageVaultId"> The Azure Resource ID of the Exadata Database Storage Vault. </param>
         /// <param name="gridImageOcid"> Grid Setup will be done using this Grid Image OCID. Can be obtained using giMinorVersions API. </param>
         /// <param name="gridImageType"> The type of Grid Image. </param>
         /// <param name="giVersion"> Oracle Grid Infrastructure (GI) software version. </param>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="backupSubnetOcid"> Cluster backup subnet ocid. </param>
         /// <param name="subnetOcid"> Cluster subnet ocid. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExadbVmClusterProperties(string ocid, string clusterName, string backupSubnetCidr, Uri nsgUri, OracleDatabaseProvisioningState? provisioningState, ExadbVmClusterLifecycleState? lifecycleState, ResourceIdentifier vnetId, ResourceIdentifier subnetId, DiagnosticCollectionConfig dataCollectionOptions, string displayName, string domain, int enabledEcpuCount, ResourceIdentifier exascaleDbStorageVaultId, string gridImageOcid, GridImageType? gridImageType, string giVersion, string hostname, OracleLicenseModel? licenseModel, int? memorySizeInGbs, int nodeCount, IList<CloudVmClusterNsgCidr> nsgCidrs, string zoneOcid, string privateZoneOcid, int? scanListenerPortTcp, int? scanListenerPortTcpSsl, int? listenerPort, string shape, IList<string> sshPublicKeys, string systemVersion, string timeZone, int totalEcpuCount, ExadbVmClusterStorageDetails vmFileSystemStorage, string lifecycleDetails, string scanDnsName, IReadOnlyList<string> scanIPIds, string scanDnsRecordId, ExadbVmClusterStorageDetails snapshotFileSystemStorage, ExadbVmClusterStorageDetails totalFileSystemStorage, IReadOnlyList<string> vipIds, Uri ociUri, ExadataIormConfig iormConfigCache, string backupSubnetOcid, string subnetOcid, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExadbVmClusterProperties(string ocid, string clusterName, string backupSubnetCidr, Uri nsgUri, OracleDatabaseProvisioningState? provisioningState, ExadbVmClusterLifecycleState? lifecycleState, ResourceIdentifier vnetId, ResourceIdentifier subnetId, DiagnosticCollectionConfig dataCollectionOptions, string displayName, string domain, int enabledEcpuCount, ResourceIdentifier exascaleDBStorageVaultId, string gridImageOcid, GridImageType? gridImageType, string giVersion, string hostname, OracleLicenseModel? licenseModel, int? memorySizeInGbs, int nodeCount, IList<CloudVmClusterNsgCidr> nsgCidrs, string zoneOcid, string privateZoneOcid, int? scanListenerPortTcp, int? scanListenerPortTcpSsl, int? listenerPort, string shape, IList<string> sshPublicKeys, string systemVersion, string timeZone, int totalEcpuCount, ExadbVmClusterStorageDetails vmFileSystemStorage, string lifecycleDetails, string scanDnsName, IReadOnlyList<string> scanIPIds, string scanDnsRecordId, ExadbVmClusterStorageDetails snapshotFileSystemStorage, ExadbVmClusterStorageDetails totalFileSystemStorage, IReadOnlyList<string> vipIds, Uri ociUri, ExadataIormConfig iormConfigCache, string backupSubnetOcid, string subnetOcid, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Ocid = ocid;
             ClusterName = clusterName;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             DisplayName = displayName;
             Domain = domain;
             EnabledEcpuCount = enabledEcpuCount;
-            ExascaleDbStorageVaultId = exascaleDbStorageVaultId;
+            ExascaleDBStorageVaultId = exascaleDBStorageVaultId;
             GridImageOcid = gridImageOcid;
             GridImageType = gridImageType;
             GiVersion = giVersion;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The number of ECPUs to enable for an Exadata VM cluster on Exascale Infrastructure. </summary>
         public int EnabledEcpuCount { get; set; }
         /// <summary> The Azure Resource ID of the Exadata Database Storage Vault. </summary>
-        public ResourceIdentifier ExascaleDbStorageVaultId { get; set; }
+        public ResourceIdentifier ExascaleDBStorageVaultId { get; set; }
         /// <summary> Grid Setup will be done using this Grid Image OCID. Can be obtained using giMinorVersions API. </summary>
         public string GridImageOcid { get; set; }
         /// <summary> The type of Grid Image. </summary>
