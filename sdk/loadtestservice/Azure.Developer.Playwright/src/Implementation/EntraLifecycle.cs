@@ -27,12 +27,11 @@ internal class EntraLifecycle: IEntraLifecycle
         _tokenCredential = tokenCredential;
         _jsonWebTokenHandler = jsonWebTokenHandler ?? new JsonWebTokenHandler();
         _environment = environment ?? new EnvironmentHandler();
+        SetEntraIdAccessTokenFromEnvironment();
         if (_tokenCredential == null)
         {
             noOpFlag = true;
-            return;
         }
-        SetEntraIdAccessTokenFromEnvironment();
     }
 
     public async Task FetchEntraIdAccessTokenAsync(CancellationToken cancellationToken = default)

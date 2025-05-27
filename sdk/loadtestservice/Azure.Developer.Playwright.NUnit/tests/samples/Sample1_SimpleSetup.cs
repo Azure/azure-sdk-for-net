@@ -3,6 +3,7 @@
 
 #region Snippet:NUnit_Sample1_SimpleSetup
 using Azure.Developer.Playwright.NUnit;
+using Azure.Identity;
 
 #if SNIPPET
 namespace PlaywrightService.SampleTests; // Remember to change this as per your project namespace
@@ -14,6 +15,16 @@ namespace PlaywrightTests.Sample1; // Remember to change this as per your projec
 #if SNIPPET
 public class PlaywrightServiceNUnitSetup : PlaywrightServiceBrowserNUnit { }
 #else
-public class Sample1ServiceSetup : PlaywrightServiceBrowserNUnit { }
+public class Sample1ServiceSetup : PlaywrightServiceBrowserNUnit
+{
+#if SNIPPET
+    public PlaywrightServiceNUnitSetup() : base(
+#else
+    public Sample1ServiceSetup() : base(
+#endif
+        credential: new DefaultAzureCredential()
+    )
+    { }
+}
 #endif
 #endregion

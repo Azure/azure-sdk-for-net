@@ -17,6 +17,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace PlaywrightService.SampleTests; // Remember to change this as per your project namespace
 
+[TestClass]
 public class PlaywrightServiceMSTestSetup
 {
     private static PlaywrightServiceBrowserMSTest playwrightClient = null!;

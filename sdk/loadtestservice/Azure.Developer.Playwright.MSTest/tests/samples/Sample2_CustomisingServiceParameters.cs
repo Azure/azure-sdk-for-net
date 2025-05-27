@@ -15,6 +15,7 @@ namespace PlaywrightService.SampleTests; // Remember to change this as per your 
 namespace PlaywrightTests.Sample2; // Remember to change this as per your project namespace
 #endif
 
+[TestClass]
 #if SNIPPET
 public class PlaywrightServiceMSTestSetup
 #else

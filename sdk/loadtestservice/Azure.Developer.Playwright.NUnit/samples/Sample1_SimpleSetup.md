@@ -9,6 +9,7 @@ The below snippet demonstrates the minimal configuration required to setup Azure
 
 ```C# Snippet:NUnit_Sample1_SimpleSetup
 using Azure.Developer.Playwright.NUnit;
+using Azure.Identity;
 
 namespace PlaywrightService.SampleTests; // Remember to change this as per your project namespace
 

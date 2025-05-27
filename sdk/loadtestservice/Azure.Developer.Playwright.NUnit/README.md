@@ -56,6 +56,7 @@ Create a file `PlaywrightServiceSetup.cs` in the root directory with the below c
 
 ```C# Snippet:NUnit_Sample1_SimpleSetup
 using Azure.Developer.Playwright.NUnit;
+using Azure.Identity;
 
 namespace PlaywrightService.SampleTests; // Remember to change this as per your project namespace
 

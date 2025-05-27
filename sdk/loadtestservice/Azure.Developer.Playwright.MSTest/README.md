@@ -57,6 +57,7 @@ Create a file `PlaywrightServiceSetup.cs` in the root directory with the below c
 ```C# Snippet:MSTest_Sample1_SimpleSetup
 using System.Threading.Tasks;
 using Azure.Developer.Playwright.MSTest;
+using Azure.Identity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace PlaywrightService.SampleTests; // Remember to change this as per your project namespace
@@ -68,7 +69,7 @@ public class PlaywrightServiceMSTestSetup
     [AssemblyInitialize]
     public static async Task AssemblyInitialize(TestContext testContext)
     {
-        playwrightClient = new PlaywrightServiceBrowserMSTest(testContext);
+        playwrightClient = new PlaywrightServiceBrowserMSTest(context: testContext, credential: new DefaultAzureCredential());
         await playwrightClient.InitializeAsync();
     }
 

@@ -4,6 +4,7 @@
 #region Snippet:MSTest_Sample1_SimpleSetup
 using System.Threading.Tasks;
 using Azure.Developer.Playwright.MSTest;
+using Azure.Identity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 #if SNIPPET
@@ -23,7 +24,7 @@ public class Sample1ServiceSetup
     [AssemblyInitialize]
     public static async Task AssemblyInitialize(TestContext testContext)
     {
-        playwrightClient = new PlaywrightServiceBrowserMSTest(testContext);
+        playwrightClient = new PlaywrightServiceBrowserMSTest(context: testContext, credential: new DefaultAzureCredential());
         await playwrightClient.InitializeAsync();
     }
 
