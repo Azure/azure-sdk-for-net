@@ -33,7 +33,7 @@ namespace Azure.Core.Pipeline
                 // Try the ErrorResponse format and fallback to the ResponseError format.
 
 #if NET6_0_OR_GREATER
-                error = System.Text.Json.JsonSerializer.Deserialize<RequestFailedException.ErrorResponse>(content, ResponseErrorSourceGenerationContext.Default.ErrorResponse)?.Error;
+                error = System.Text.Json.JsonSerializer.Deserialize<RequestFailedException.ErrorResponse>(content, RequestFailedExceptionSourceGenerationContext.Default.ErrorResponse)?.Error;
 #else
                 error = System.Text.Json.JsonSerializer.Deserialize<RequestFailedException.ErrorResponse>(content)?.Error;
 #endif
