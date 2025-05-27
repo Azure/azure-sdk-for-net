@@ -1,0 +1,35 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/carbonoptimization
+    - sdk/carbonoptimization/ci.yml
+    - sdk/carbonoptimization/Azure.ResourceManager.CarbonOptimization
+
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/carbonoptimization
+    - sdk/carbonoptimization/ci.yml
+    - sdk/carbonoptimization/Azure.ResourceManager.CarbonOptimization
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: carbonoptimization
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.ResourceManager.CarbonOptimization
+      safeName: AzureResourceManagerCarbonOptimization
