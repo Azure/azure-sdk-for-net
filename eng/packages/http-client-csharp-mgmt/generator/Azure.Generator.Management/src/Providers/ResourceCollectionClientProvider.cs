@@ -27,7 +27,7 @@ namespace Azure.Generator.Management.Providers
         private InputServiceMethod? _create;
         private InputServiceMethod? _get;
 
-        public ResourceCollectionClientProvider(InputClient inputClient, ResourceMetadata resourceMetadata, ResourceClientProvider resource) : base(inputClient, resourceMetadata)
+        internal ResourceCollectionClientProvider(InputClient inputClient, ResourceMetadata resourceMetadata, ResourceClientProvider resource) : base(inputClient, resourceMetadata)
         {
             _resource = resource;
 
@@ -56,10 +56,12 @@ namespace Azure.Generator.Management.Providers
 
         protected override string BuildName() => $"{SpecName}Collection";
 
+        protected override CSharpType? GetBaseType() => typeof(ArmCollection);
+
         protected override CSharpType[] BuildImplements() =>
             _getAll is null
-            ? [typeof(ArmCollection)]
-            : [typeof(ArmCollection), new CSharpType(typeof(IEnumerable<>), _resource.Type), new CSharpType(typeof(IAsyncEnumerable<>), _resource.Type)];
+            ? []
+            : [new CSharpType(typeof(IEnumerable<>), _resource.Type), new CSharpType(typeof(IAsyncEnumerable<>), _resource.Type)];
 
         protected override PropertyProvider[] BuildProperties() => [];
 

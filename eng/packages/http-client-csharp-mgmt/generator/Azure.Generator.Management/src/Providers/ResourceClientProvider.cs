@@ -31,34 +31,51 @@ namespace Azure.Generator.Management.Providers
     /// </summary>
     internal class ResourceClientProvider : TypeProvider
     {
+        public static ResourceClientProvider Create(InputClient inputClient, ResourceMetadata resourceMetadata)
+        {
+            var resource = new ResourceClientProvider(inputClient, resourceMetadata);
+            if (!resource.IsSingleton)
+            {
+                var collection = new ResourceCollectionClientProvider(inputClient, resourceMetadata, resource);
+                resource.ResourceCollection = collection;
+            }
+
+            return resource;
+        }
+
         private IReadOnlyCollection<InputServiceMethod> _resourceServiceMethods;
 
         private FieldProvider _dataField;
         private FieldProvider _resourceTypeField;
-        protected ClientProvider _clientProvider;
+        protected ClientProvider _restClientProvider;
         protected FieldProvider _clientDiagonosticsField;
         protected FieldProvider _restClientField;
 
-        public ResourceClientProvider(InputClient inputClient, ResourceMetadata resourceMetadata)
+        private protected ResourceClientProvider(InputClient inputClient, ResourceMetadata resourceMetadata)
         {
             IsSingleton = resourceMetadata.IsSingleton;
+            ResourceScope = resourceMetadata.ResourceScope;
             var resourceType = resourceMetadata.ResourceType;
             _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(resourceType));
             var resourceModel = resourceMetadata.ResourceModel;
-            SpecName = resourceModel.Name;
+            SpecName = resourceModel.Name; // TODO -- here we need to call the ToCleanName
 
             // We should be able to assume that all operations in the resource client are for the same resource
             var requestPath = new RequestPath(inputClient.Methods.First().Operation.Path);
             _resourceServiceMethods = inputClient.Methods;
             ResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(resourceModel)!;
-            _clientProvider = ManagementClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
+            _restClientProvider = ManagementClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
 
             ContextualParameters = GetContextualParameters(requestPath);
 
             _dataField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, ResourceData.Type, "_data", this);
             _clientDiagonosticsField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(ClientDiagnostics), $"_{SpecName.ToLower()}ClientDiagnostics", this);
-            _restClientField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, _clientProvider.Type, $"_{SpecName.ToLower()}RestClient", this);
+            _restClientField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, _restClientProvider.Type, $"_{SpecName.ToLower()}RestClient", this);
         }
+
+        internal ResourceScope ResourceScope { get; }
+
+        internal ResourceCollectionClientProvider? ResourceCollection { get; private set; }
 
         private IReadOnlyList<string> GetContextualParameters(string contextualRequestPath)
         {
@@ -168,7 +185,7 @@ namespace Azure.Generator.Management.Providers
             {
                 _clientDiagonosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), ResourceTypeExpression.Property(nameof(ResourceType.Namespace)), This.Property("Diagnostics"))).Terminate(),
                 TryGetApiVersion(out var apiVersion).Terminate(),
-                _restClientField.Assign(New.Instance(_clientProvider.Type, _clientDiagonosticsField, This.Property("Pipeline"), This.Property("Endpoint"), apiVersion)).Terminate(),
+                _restClientField.Assign(New.Instance(_restClientProvider.Type, _clientDiagonosticsField, This.Property("Pipeline"), This.Property("Endpoint"), apiVersion)).Terminate(),
                 Static(Type).Invoke(ValidateResourceIdMethodName, idParameter).Terminate()
             };
 
@@ -202,7 +219,7 @@ namespace Azure.Generator.Management.Providers
 
         protected virtual CSharpType ResourceClientCSharpType => this.Type;
 
-        protected override CSharpType[] BuildImplements() => [typeof(ArmResource)];
+        protected override CSharpType? GetBaseType() => typeof(ArmResource);
 
         protected override MethodProvider[] BuildMethods()
         {
@@ -431,10 +448,10 @@ namespace Azure.Generator.Management.Providers
 
         // TODO: get clean name of operation Name
         protected MethodProvider GetCorrespondingConvenienceMethod(InputOperation operation, bool isAsync)
-            => _clientProvider.CanonicalView.Methods.Single(m => m.Signature.Name.Equals(isAsync ? $"{operation.Name}Async" : operation.Name, StringComparison.OrdinalIgnoreCase) && m.Signature.Parameters.Any(p => p.Type.Equals(typeof(CancellationToken))));
+            => _restClientProvider.CanonicalView.Methods.Single(m => m.Signature.Name.Equals(isAsync ? $"{operation.Name}Async" : operation.Name, StringComparison.OrdinalIgnoreCase) && m.Signature.Parameters.Any(p => p.Type.Equals(typeof(CancellationToken))));
 
         private MethodProvider GetCorrespondingRequestMethod(InputOperation operation)
-            => _clientProvider.RestClient.Methods.Single(m => m.Signature.Name.Equals($"Create{operation.Name}Request", StringComparison.OrdinalIgnoreCase));
+            => _restClientProvider.RestClient.Methods.Single(m => m.Signature.Name.Equals($"Create{operation.Name}Request", StringComparison.OrdinalIgnoreCase));
 
         public ScopedApi<bool> TryGetApiVersion(out ScopedApi<string> apiVersion)
         {

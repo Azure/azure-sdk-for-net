@@ -24,6 +24,24 @@ namespace Azure.Generator.Management
     /// <inheritdoc/>
     public class ManagementTypeFactory : AzureTypeFactory
     {
+        private string? _resourceProviderName;
+
+        /// <summary>
+        /// The name for this resource provider.
+        /// For instance, if the namespace is "Azure.ResourceManager.Compute", the resource provider name will be "Compute".
+        /// </summary>
+        public string ResourceProviderName => _resourceProviderName ??= BuildResourceProviderName();
+
+        private string BuildResourceProviderName()
+        {
+            const string armNamespacePrefix = "Azure.ResourceManager.";
+            if (PrimaryNamespace.StartsWith(armNamespacePrefix))
+            {
+                return PrimaryNamespace[(armNamespacePrefix.Length + 1)..]; // TODO -- we need to call ToCleanName here to trim off invalid characters
+            }
+            return PrimaryNamespace;
+        }
+
         /// <inheritdoc/>
         public override IClientPipelineApi ClientPipelineApi => MgmtHttpPipelineProvider.Instance;
 
