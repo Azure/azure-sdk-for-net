@@ -17,5 +17,14 @@
   <ItemGroup Condition="'$(AssemblyName)' != 'Generator'">
     <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared\Core" />
   </ItemGroup>
-  
+  <ItemGroup>
+    <!--
+    Azure.Core isn't being found on builds with
+    dotnet build .\Azure.Provisioning.sln /p:UseProjectReferenceToAzureClients=true
+    for some reason.  Temporarily adding an explicit Azure.Core reference so
+    it's correctly replaced in all projects for those build targets.
+    -->
+    <PackageReference Include="Azure.Core" Condition="$(UseProjectReferenceToAzureClients) == 'true'" />
+  </ItemGroup>
+
 </Project>
