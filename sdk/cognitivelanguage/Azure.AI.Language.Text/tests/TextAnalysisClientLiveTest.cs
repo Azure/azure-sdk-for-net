@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.Language.Text;
 using Azure.AI.Language.Text.Tests;
@@ -762,6 +764,95 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                     }
                 }
             }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalysisClientOptions.ServiceVersion.V2025_05_15_Preview)]
+        public async Task AnalyzeText_RecognizePii_WithValueExclusion()
+        {
+            string text = "My SSN is 859-98-0987.";
+
+            AnalyzeTextInput body = new TextPiiEntitiesRecognitionInput()
+            {
+                TextInput = new MultiLanguageTextInput()
+                {
+                    MultiLanguageInputs =
+                    {
+                        new MultiLanguageInput("3", text) { Language = "en" },
+                    }
+                },
+                ActionContent = new PiiActionContent()
+                {
+                    ModelVersion = "latest",
+                    ValueExclusionPolicy = new ValueExclusionPolicy(
+                        caseSensitive: false,
+                        excludedValues: new[] { "859-98-0987" }
+                    )
+                }
+            };
+
+            Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
+            Assert.IsNotNull(response?.Value);
+
+            AnalyzeTextPiiResult piiTaskResult = (AnalyzeTextPiiResult)response.Value;
+
+            foreach (PiiActionResult result in piiTaskResult.Results.Documents)
+            {
+                Assert.AreEqual("3", result.Id);
+                Assert.IsNotNull(result.Entities);
+                Assert.AreEqual(0, result.Entities.Count, "Expected no PII entities due to exclusion.");
+                Assert.AreEqual(text, result.RedactedText, "Expected redacted text to remain unchanged.");
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalysisClientOptions.ServiceVersion.V2025_05_15_Preview)]
+        public async Task AnalyzeText_RecognizePii_WithPhoneNumberSynonyms()
+        {
+            var category = EntityCategory.PhoneNumber;
+            Console.WriteLine($"Using EntityCategory: {category}");
+
+            AnalyzeTextInput input = new TextPiiEntitiesRecognitionInput()
+            {
+                TextInput = new MultiLanguageTextInput()
+                {
+                    MultiLanguageInputs =
+                    {
+                        new MultiLanguageInput("1", "Call my cell at 800-555-1212.") { Language = "en" },
+                        new MultiLanguageInput("2", "Tom's mobile is 800-123-4567.") { Language = "en" },
+                        new MultiLanguageInput("3", "My phone number is 800-999-0000.") { Language = "en" },
+                    }
+                },
+                ActionContent = new PiiActionContent()
+                {
+                    EntitySynonyms = new EntitySynonyms(
+                        category,
+                        new List<EntitySynonym>
+                        {
+                            new EntitySynonym("cell") { Language = "en" },
+                            new EntitySynonym("mobile") { Language = "en" }
+                        }
+                    )
+                }
+            };
+
+            Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(input);
+            Assert.IsNotNull(response?.Value);
+
+            AnalyzeTextPiiResult result = (AnalyzeTextPiiResult)response.Value;
+            Assert.AreEqual(3, result.Results.Documents.Count);
+
+            var doc1 = result.Results.Documents.First(d => d.Id == "1");
+            Assert.AreEqual("Call my cell at ************.", doc1.RedactedText);
+            Assert.IsTrue(doc1.Entities.Any(e => e.Text == "800-555-1212" && e.Category == "PhoneNumber"));
+
+            var doc2 = result.Results.Documents.First(d => d.Id == "2");
+            Assert.AreEqual("Tom's mobile is ************.", doc2.RedactedText);
+            Assert.IsTrue(doc2.Entities.Any(e => e.Text == "800-123-4567" && e.Category == "PhoneNumber"));
+
+            var doc3 = result.Results.Documents.First(d => d.Id == "3");
+            Assert.AreEqual("My phone number is ************.", doc3.RedactedText);
+            Assert.IsTrue(doc3.Entities.Any(e => e.Text == "800-999-0000" && e.Category == "PhoneNumber"));
         }
     }
 }
