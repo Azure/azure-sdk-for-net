@@ -167,22 +167,22 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppConnectedEnvironmentDaprComponentResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ConnectedEnvironmentDaprComponentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConnectedEnvironmentDaprComponentResource.CreateResourceIdentifier" /> to create a <see cref="ConnectedEnvironmentDaprComponentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppConnectedEnvironmentDaprComponentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetConnectedEnvironmentDaprComponentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/> object. </returns>
-        public static ContainerAppConnectedEnvironmentDaprComponentResource GetContainerAppConnectedEnvironmentDaprComponentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ConnectedEnvironmentDaprComponentResource"/> object. </returns>
+        public static ConnectedEnvironmentDaprComponentResource GetConnectedEnvironmentDaprComponentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppContainersArmClient(client).GetContainerAppConnectedEnvironmentDaprComponentResource(id);
+            return GetMockableAppContainersArmClient(client).GetConnectedEnvironmentDaprComponentResource(id);
         }
 
         /// <summary>

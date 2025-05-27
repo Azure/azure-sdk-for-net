@@ -17,14 +17,14 @@ using Azure.ResourceManager.AppContainers.Models;
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
-    /// A Class representing a ContainerAppConnectedEnvironmentDaprComponent along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetContainerAppConnectedEnvironmentDaprComponentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerAppConnectedEnvironmentResource"/> using the GetContainerAppConnectedEnvironmentDaprComponent method.
+    /// A Class representing a ConnectedEnvironmentDaprComponent along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ConnectedEnvironmentDaprComponentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetConnectedEnvironmentDaprComponentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerAppConnectedEnvironmentResource"/> using the GetConnectedEnvironmentDaprComponent method.
     /// </summary>
-    public partial class ContainerAppConnectedEnvironmentDaprComponentResource : ArmResource
+    public partial class ConnectedEnvironmentDaprComponentResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ConnectedEnvironmentDaprComponentResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="connectedEnvironmentName"> The connectedEnvironmentName. </param>
@@ -35,35 +35,35 @@ namespace Azure.ResourceManager.AppContainers
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics;
-        private readonly ConnectedEnvironmentsDaprComponentsRestOperations _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient;
+        private readonly ClientDiagnostics _connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics;
+        private readonly ConnectedEnvironmentsDaprComponentsRestOperations _connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient;
         private readonly ConnectedEnvironmentDaprComponentData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.App/connectedEnvironments/daprComponents";
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/> class for mocking. </summary>
-        protected ContainerAppConnectedEnvironmentDaprComponentResource()
+        /// <summary> Initializes a new instance of the <see cref="ConnectedEnvironmentDaprComponentResource"/> class for mocking. </summary>
+        protected ConnectedEnvironmentDaprComponentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ConnectedEnvironmentDaprComponentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ContainerAppConnectedEnvironmentDaprComponentResource(ArmClient client, ConnectedEnvironmentDaprComponentData data) : this(client, data.Id)
+        internal ConnectedEnvironmentDaprComponentResource(ArmClient client, ConnectedEnvironmentDaprComponentData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ConnectedEnvironmentDaprComponentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ContainerAppConnectedEnvironmentDaprComponentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ConnectedEnvironmentDaprComponentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsApiVersion);
-            _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient = new ConnectedEnvironmentsDaprComponentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsApiVersion);
+            _connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsApiVersion);
+            _connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient = new ConnectedEnvironmentsDaprComponentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -107,21 +107,21 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/></description>
+        /// <description><see cref="ConnectedEnvironmentDaprComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ContainerAppConnectedEnvironmentDaprComponentResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConnectedEnvironmentDaprComponentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentDaprComponentResource.Get");
+            using var scope = _connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics.CreateScope("ConnectedEnvironmentDaprComponentResource.Get");
             scope.Start();
             try
             {
-                var response = await _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerAppConnectedEnvironmentDaprComponentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConnectedEnvironmentDaprComponentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,21 +147,21 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/></description>
+        /// <description><see cref="ConnectedEnvironmentDaprComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ContainerAppConnectedEnvironmentDaprComponentResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ConnectedEnvironmentDaprComponentResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentDaprComponentResource.Get");
+            using var scope = _connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics.CreateScope("ConnectedEnvironmentDaprComponentResource.Get");
             scope.Start();
             try
             {
-                var response = _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerAppConnectedEnvironmentDaprComponentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConnectedEnvironmentDaprComponentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/></description>
+        /// <description><see cref="ConnectedEnvironmentDaprComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,12 +195,12 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentDaprComponentResource.Delete");
+            using var scope = _connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics.CreateScope("ConnectedEnvironmentDaprComponentResource.Delete");
             scope.Start();
             try
             {
-                var response = await _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation(_containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics, Pipeline, _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AppContainersArmOperation(_connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics, Pipeline, _connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/></description>
+        /// <description><see cref="ConnectedEnvironmentDaprComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,12 +237,12 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentDaprComponentResource.Delete");
+            using var scope = _connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics.CreateScope("ConnectedEnvironmentDaprComponentResource.Delete");
             scope.Start();
             try
             {
-                var response = _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AppContainersArmOperation(_containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics, Pipeline, _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new AppContainersArmOperation(_connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics, Pipeline, _connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/></description>
+        /// <description><see cref="ConnectedEnvironmentDaprComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -279,16 +279,16 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="data"> Configuration details of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ContainerAppConnectedEnvironmentDaprComponentResource>> UpdateAsync(WaitUntil waitUntil, ConnectedEnvironmentDaprComponentData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ConnectedEnvironmentDaprComponentResource>> UpdateAsync(WaitUntil waitUntil, ConnectedEnvironmentDaprComponentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentDaprComponentResource.Update");
+            using var scope = _connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics.CreateScope("ConnectedEnvironmentDaprComponentResource.Update");
             scope.Start();
             try
             {
-                var response = await _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentDaprComponentResource>(new ContainerAppConnectedEnvironmentDaprComponentOperationSource(Client), _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics, Pipeline, _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppContainersArmOperation<ConnectedEnvironmentDaprComponentResource>(new ConnectedEnvironmentDaprComponentOperationSource(Client), _connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics, Pipeline, _connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/></description>
+        /// <description><see cref="ConnectedEnvironmentDaprComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -325,16 +325,16 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="data"> Configuration details of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ContainerAppConnectedEnvironmentDaprComponentResource> Update(WaitUntil waitUntil, ConnectedEnvironmentDaprComponentData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ConnectedEnvironmentDaprComponentResource> Update(WaitUntil waitUntil, ConnectedEnvironmentDaprComponentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentDaprComponentResource.Update");
+            using var scope = _connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics.CreateScope("ConnectedEnvironmentDaprComponentResource.Update");
             scope.Start();
             try
             {
-                var response = _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentDaprComponentResource>(new ContainerAppConnectedEnvironmentDaprComponentOperationSource(Client), _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics, Pipeline, _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new AppContainersArmOperation<ConnectedEnvironmentDaprComponentResource>(new ConnectedEnvironmentDaprComponentOperationSource(Client), _connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics, Pipeline, _connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/></description>
+        /// <description><see cref="ConnectedEnvironmentDaprComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,8 +371,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppDaprSecret"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppDaprSecret> GetSecretsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateListSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ContainerAppDaprSecret.DeserializeContainerAppDaprSecret(e), _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics, Pipeline, "ContainerAppConnectedEnvironmentDaprComponentResource.GetSecrets", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateListSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ContainerAppDaprSecret.DeserializeContainerAppDaprSecret(e), _connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics, Pipeline, "ConnectedEnvironmentDaprComponentResource.GetSecrets", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/></description>
+        /// <description><see cref="ConnectedEnvironmentDaprComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -400,8 +400,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppDaprSecret"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppDaprSecret> GetSecrets(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateListSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ContainerAppDaprSecret.DeserializeContainerAppDaprSecret(e), _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics, Pipeline, "ContainerAppConnectedEnvironmentDaprComponentResource.GetSecrets", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateListSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ContainerAppDaprSecret.DeserializeContainerAppDaprSecret(e), _connectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics, Pipeline, "ConnectedEnvironmentDaprComponentResource.GetSecrets", "value", null, cancellationToken);
         }
     }
 }

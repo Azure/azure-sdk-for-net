@@ -159,11 +159,11 @@ namespace Azure.ResourceManager.AppContainers
             return GetContainerAppConnectedEnvironmentCertificates().Get(certificateName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ContainerAppConnectedEnvironmentDaprComponentResources in the ContainerAppConnectedEnvironment. </summary>
-        /// <returns> An object representing collection of ContainerAppConnectedEnvironmentDaprComponentResources and their operations over a ContainerAppConnectedEnvironmentDaprComponentResource. </returns>
-        public virtual ContainerAppConnectedEnvironmentDaprComponentCollection GetContainerAppConnectedEnvironmentDaprComponents()
+        /// <summary> Gets a collection of ConnectedEnvironmentDaprComponentResources in the ContainerAppConnectedEnvironment. </summary>
+        /// <returns> An object representing collection of ConnectedEnvironmentDaprComponentResources and their operations over a ConnectedEnvironmentDaprComponentResource. </returns>
+        public virtual ConnectedEnvironmentDaprComponentCollection GetConnectedEnvironmentDaprComponents()
         {
-            return GetCachedClient(client => new ContainerAppConnectedEnvironmentDaprComponentCollection(client, Id));
+            return GetCachedClient(client => new ConnectedEnvironmentDaprComponentCollection(client, Id));
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/></description>
+        /// <description><see cref="ConnectedEnvironmentDaprComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,9 +192,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerAppConnectedEnvironmentDaprComponentResource>> GetContainerAppConnectedEnvironmentDaprComponentAsync(string componentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConnectedEnvironmentDaprComponentResource>> GetConnectedEnvironmentDaprComponentAsync(string componentName, CancellationToken cancellationToken = default)
         {
-            return await GetContainerAppConnectedEnvironmentDaprComponents().GetAsync(componentName, cancellationToken).ConfigureAwait(false);
+            return await GetConnectedEnvironmentDaprComponents().GetAsync(componentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/></description>
+        /// <description><see cref="ConnectedEnvironmentDaprComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,9 +223,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ContainerAppConnectedEnvironmentDaprComponentResource> GetContainerAppConnectedEnvironmentDaprComponent(string componentName, CancellationToken cancellationToken = default)
+        public virtual Response<ConnectedEnvironmentDaprComponentResource> GetConnectedEnvironmentDaprComponent(string componentName, CancellationToken cancellationToken = default)
         {
-            return GetContainerAppConnectedEnvironmentDaprComponents().Get(componentName, cancellationToken);
+            return GetConnectedEnvironmentDaprComponents().Get(componentName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContainerAppConnectedEnvironmentStorageResources in the ContainerAppConnectedEnvironment. </summary>

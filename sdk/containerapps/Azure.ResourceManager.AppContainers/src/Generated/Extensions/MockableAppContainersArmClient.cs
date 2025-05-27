@@ -119,15 +119,15 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppConnectedEnvironmentDaprComponentResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ConnectedEnvironmentDaprComponentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConnectedEnvironmentDaprComponentResource.CreateResourceIdentifier" /> to create a <see cref="ConnectedEnvironmentDaprComponentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/> object. </returns>
-        public virtual ContainerAppConnectedEnvironmentDaprComponentResource GetContainerAppConnectedEnvironmentDaprComponentResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ConnectedEnvironmentDaprComponentResource"/> object. </returns>
+        public virtual ConnectedEnvironmentDaprComponentResource GetConnectedEnvironmentDaprComponentResource(ResourceIdentifier id)
         {
-            ContainerAppConnectedEnvironmentDaprComponentResource.ValidateResourceId(id);
-            return new ContainerAppConnectedEnvironmentDaprComponentResource(Client, id);
+            ConnectedEnvironmentDaprComponentResource.ValidateResourceId(id);
+            return new ConnectedEnvironmentDaprComponentResource(Client, id);
         }
 
         /// <summary>

@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    public partial class ContainerAppConnectedEnvironmentDaprComponentResource : IJsonModel<ConnectedEnvironmentDaprComponentData>
+    public partial class ConnectedEnvironmentDaprComponentResource : IJsonModel<ConnectedEnvironmentDaprComponentData>
     {
         private static ConnectedEnvironmentDaprComponentData s_dataDeserializationInstance;
         private static ConnectedEnvironmentDaprComponentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
