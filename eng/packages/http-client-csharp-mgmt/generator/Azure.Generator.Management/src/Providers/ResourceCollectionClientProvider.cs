@@ -253,11 +253,24 @@ namespace Azure.Generator.Management.Providers
             [
                 new IfStatement(responseVariable.Property("Value").Equal(Null))
                         {
-                            Return(New.Instance(new CSharpType(typeof(NoValueResponse<>), _resource.Type), responseVariable.Invoke("GetRawResponse")))
+                            Return(
+                                New.Instance(
+                                    new CSharpType(typeof(NoValueResponse<>), _resource.Type),
+                                    responseVariable.Invoke("GetRawResponse")
+                                )
+                            )
                         }
             ];
             var returnValueExpression =  New.Instance(ResourceClientCSharpType, This.Property("Client"), responseVariable.Property("Value"));
-            statements.Add(Return(Static(typeof(Response)).Invoke(nameof(Response.FromValue), returnValueExpression, responseVariable.Invoke("GetRawResponse"))));
+            statements.Add(
+                Return(
+                    Static(typeof(Response)).Invoke(
+                        nameof(Response.FromValue),
+                        returnValueExpression,
+                        responseVariable.Invoke("GetRawResponse")
+                    )
+                )
+            );
 
             return statements;
         }
@@ -265,7 +278,15 @@ namespace Azure.Generator.Management.Providers
         private IReadOnlyList<MethodBodyStatement> BuildReturnStatementsForExists(ValueExpression responseVariable)
         {
             var returnValueExpression = responseVariable.Property("Value").NotEqual(Null);
-            return [Return(Static(typeof(Response)).Invoke(nameof(Response.FromValue), returnValueExpression, responseVariable.Invoke("GetRawResponse")))];
+            return [
+                Return(
+                    Static(typeof(Response)).Invoke(
+                        nameof(Response.FromValue),
+                        returnValueExpression,
+                        responseVariable.Invoke("GetRawResponse")
+                    )
+                )
+            ];
         }
     }
 }

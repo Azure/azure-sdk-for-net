@@ -40,33 +40,36 @@ namespace Azure.Generator.Management.Utilities
         {
             bool isLongRunningOperation = method.IsLongRunningOperation();
             var responseBodyCSharpType = method.GetResponseBodyType();
-            CSharpType rawReturnType = method.GetOperationMethodRawReturnType(resourceClientCSharpType, resourceDataType);
 
+            // Determine the content type for the operation
+            CSharpType? contentType = DetermineContentType(responseBodyCSharpType, resourceClientCSharpType, resourceDataType);
+
+            // Determine the appropriate wrapper type based on operation characteristics
+            CSharpType wrapperType;
             if (isLongRunningOperation)
             {
-                if (responseBodyCSharpType is not null)
-                {
-                    return isAsync ? new CSharpType(typeof(System.Threading.Tasks.Task<>), new CSharpType(typeof(Azure.ResourceManager.ArmOperation<>), rawReturnType)) : new CSharpType(typeof(Azure.ResourceManager.ArmOperation<>), rawReturnType);
-                }
-                else
-                {
-                    return isAsync ? new CSharpType(typeof(System.Threading.Tasks.Task<>), typeof(Azure.ResourceManager.ArmOperation)) : typeof(Azure.ResourceManager.ArmOperation);
-                }
+                wrapperType = contentType is not null
+                    ? new CSharpType(typeof(Azure.ResourceManager.ArmOperation<>), contentType)
+                    : typeof(Azure.ResourceManager.ArmOperation);
             }
-            return isAsync ? new CSharpType(typeof(System.Threading.Tasks.Task<>), new CSharpType(typeof(Azure.Response<>), rawReturnType)) : new CSharpType(typeof(Azure.Response<>), rawReturnType);
+            else
+            {
+                wrapperType = contentType is not null ? new CSharpType(typeof(Azure.Response<>), contentType) : typeof(Azure.Response);
+            }
+
+            // Add Task<> wrapper if async
+            return isAsync
+                ? new CSharpType(typeof(System.Threading.Tasks.Task<>), wrapperType)
+                : wrapperType;
         }
 
-        private static CSharpType GetOperationMethodRawReturnType(this InputServiceMethod method, CSharpType resourceClientCSharpType, CSharpType resourceDataType)
+        private static CSharpType? DetermineContentType(CSharpType? responseBodyCSharpType, CSharpType resourceClientCSharpType, CSharpType resourceDataType)
         {
-            var responseBodyCSharpType = method.GetResponseBodyType();
-            CSharpType genericReturnType = resourceClientCSharpType;
-
-            if (responseBodyCSharpType is not null && responseBodyCSharpType != resourceDataType)
-            {
-                genericReturnType = responseBodyCSharpType;
-            }
-
-            return genericReturnType;
+            // Use response body type if it exists and differs from the resource data type,
+            // otherwise use the resource client type
+            return (responseBodyCSharpType != resourceDataType)
+                ? responseBodyCSharpType
+                : resourceClientCSharpType;
         }
     }
 }
