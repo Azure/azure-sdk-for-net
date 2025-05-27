@@ -3,22 +3,440 @@
  "name": "Type.Scalar",
  "apiVersions": [],
  "enums": [],
+ "constants": [
+  {
+   "$id": "2",
+   "kind": "constant",
+   "name": "getContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "3",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "4",
+   "kind": "constant",
+   "name": "GetResponseContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "5",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "6",
+   "kind": "constant",
+   "name": "GetResponseContentType1",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "7",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "8",
+   "kind": "constant",
+   "name": "GetResponseContentType2",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "9",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "10",
+   "kind": "constant",
+   "name": "getContentType1",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "11",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "12",
+   "kind": "constant",
+   "name": "GetResponseContentType3",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "13",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "14",
+   "kind": "constant",
+   "name": "GetResponseContentType4",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "15",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "16",
+   "kind": "constant",
+   "name": "GetResponseContentType5",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "17",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "18",
+   "kind": "constant",
+   "name": "getContentType2",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "19",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "20",
+   "kind": "constant",
+   "name": "GetResponseContentType6",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "21",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "22",
+   "kind": "constant",
+   "name": "GetResponseContentType7",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "23",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "24",
+   "kind": "constant",
+   "name": "GetResponseContentType8",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "25",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "26",
+   "kind": "constant",
+   "name": "responseBodyContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "27",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "28",
+   "kind": "constant",
+   "name": "GetResponseContentType9",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "29",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "30",
+   "kind": "constant",
+   "name": "GetResponseContentType10",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "31",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "32",
+   "kind": "constant",
+   "name": "GetResponseContentType11",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "33",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "34",
+   "kind": "constant",
+   "name": "responseBodyContentType1",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "35",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "36",
+   "kind": "constant",
+   "name": "GetResponseContentType12",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "37",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "38",
+   "kind": "constant",
+   "name": "GetResponseContentType13",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "39",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "40",
+   "kind": "constant",
+   "name": "GetResponseContentType14",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "41",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "42",
+   "kind": "constant",
+   "name": "prepareVerifyContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "43",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "44",
+   "kind": "constant",
+   "name": "GetResponseContentType15",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "45",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "46",
+   "kind": "constant",
+   "name": "GetResponseContentType16",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "47",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "48",
+   "kind": "constant",
+   "name": "prepareVerifyContentType1",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "49",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "50",
+   "kind": "constant",
+   "name": "GetResponseContentType17",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "51",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "52",
+   "kind": "constant",
+   "name": "GetResponseContentType18",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "53",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  }
+ ],
  "models": [],
  "clients": [
   {
-   "$id": "2",
+   "$id": "54",
    "kind": "client",
    "name": "ScalarClient",
    "namespace": "Type.Scalar",
    "methods": [],
    "parameters": [
     {
-     "$id": "3",
+     "$id": "55",
      "name": "endpoint",
      "nameInRequest": "endpoint",
      "doc": "Service host",
      "type": {
-      "$id": "4",
+      "$id": "56",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -32,9 +450,9 @@
      "explode": false,
      "kind": "Client",
      "defaultValue": {
-      "$id": "5",
+      "$id": "57",
       "type": {
-       "$id": "6",
+       "$id": "58",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string"
@@ -48,41 +466,31 @@
    "apiVersions": [],
    "children": [
     {
-     "$id": "7",
+     "$id": "59",
      "kind": "client",
      "name": "String",
      "namespace": "Type.Scalar",
      "methods": [
       {
-       "$id": "8",
+       "$id": "60",
        "kind": "basic",
        "name": "get",
        "accessibility": "public",
        "apiVersions": [],
        "doc": "get string value",
        "operation": {
-        "$id": "9",
+        "$id": "61",
         "name": "get",
         "resourceName": "String",
         "doc": "get string value",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "10",
+          "$id": "62",
           "name": "accept",
           "nameInRequest": "Accept",
           "type": {
-           "$id": "11",
-           "kind": "constant",
-           "valueType": {
-            "$id": "12",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "2"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -97,12 +505,12 @@
         ],
         "responses": [
          {
-          "$id": "13",
+          "$id": "63",
           "statusCodes": [
            200
           ],
           "bodyType": {
-           "$id": "14",
+           "$id": "64",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -110,21 +518,11 @@
           },
           "headers": [
            {
-            "$id": "15",
+            "$id": "65",
             "name": "contentType",
             "nameInResponse": "content-type",
             "type": {
-             "$id": "16",
-             "kind": "constant",
-             "valueType": {
-              "$id": "17",
-              "kind": "string",
-              "name": "string",
-              "crossLanguageDefinitionId": "TypeSpec.string",
-              "decorators": []
-             },
-             "value": "application/json",
-             "decorators": []
+             "$ref": "4"
             }
            }
           ],
@@ -145,11 +543,11 @@
        },
        "parameters": [
         {
-         "$id": "18",
+         "$id": "66",
          "name": "accept",
          "nameInRequest": "accept",
          "type": {
-          "$ref": "11"
+          "$ref": "2"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -163,9 +561,9 @@
         }
        ],
        "response": {
-        "$id": "19",
+        "$id": "67",
         "type": {
-         "$ref": "14"
+         "$ref": "64"
         }
        },
        "isOverride": false,
@@ -174,35 +572,25 @@
        "crossLanguageDefinitionId": "Type.Scalar.String.get"
       },
       {
-       "$id": "20",
+       "$id": "68",
        "kind": "basic",
        "name": "put",
        "accessibility": "public",
        "apiVersions": [],
        "doc": "put string value",
        "operation": {
-        "$id": "21",
+        "$id": "69",
         "name": "put",
         "resourceName": "String",
         "doc": "put string value",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "22",
+          "$id": "70",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "type": {
-           "$id": "23",
-           "kind": "constant",
-           "valueType": {
-            "$id": "24",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "6"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -215,12 +603,12 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "25",
+          "$id": "71",
           "name": "body",
           "nameInRequest": "body",
           "doc": "_",
           "type": {
-           "$id": "26",
+           "$id": "72",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -239,7 +627,7 @@
         ],
         "responses": [
          {
-          "$id": "27",
+          "$id": "73",
           "statusCodes": [
            204
           ],
@@ -261,21 +649,11 @@
        },
        "parameters": [
         {
-         "$id": "28",
+         "$id": "74",
          "name": "contentType",
          "nameInRequest": "content-type",
          "type": {
-          "$id": "29",
-          "kind": "constant",
-          "valueType": {
-           "$id": "30",
-           "kind": "string",
-           "name": "string",
-           "crossLanguageDefinitionId": "TypeSpec.string",
-           "decorators": []
-          },
-          "value": "application/json",
-          "decorators": []
+          "$ref": "8"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -288,12 +666,12 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "31",
+         "$id": "75",
          "name": "body",
          "nameInRequest": "body",
          "doc": "_",
          "type": {
-          "$id": "32",
+          "$id": "76",
           "kind": "string",
           "name": "string",
           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -311,7 +689,7 @@
         }
        ],
        "response": {
-        "$id": "33"
+        "$id": "77"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -321,12 +699,12 @@
      ],
      "parameters": [
       {
-       "$id": "34",
+       "$id": "78",
        "name": "endpoint",
        "nameInRequest": "endpoint",
        "doc": "Service host",
        "type": {
-        "$id": "35",
+        "$id": "79",
         "kind": "url",
         "name": "url",
         "crossLanguageDefinitionId": "TypeSpec.url"
@@ -340,9 +718,9 @@
        "explode": false,
        "kind": "Client",
        "defaultValue": {
-        "$id": "36",
+        "$id": "80",
         "type": {
-         "$id": "37",
+         "$id": "81",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -355,45 +733,35 @@
      "crossLanguageDefinitionId": "Type.Scalar.String",
      "apiVersions": [],
      "parent": {
-      "$ref": "2"
+      "$ref": "54"
      }
     },
     {
-     "$id": "38",
+     "$id": "82",
      "kind": "client",
      "name": "Boolean",
      "namespace": "Type.Scalar",
      "methods": [
       {
-       "$id": "39",
+       "$id": "83",
        "kind": "basic",
        "name": "get",
        "accessibility": "public",
        "apiVersions": [],
        "doc": "get boolean value",
        "operation": {
-        "$id": "40",
+        "$id": "84",
         "name": "get",
         "resourceName": "Boolean",
         "doc": "get boolean value",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "41",
+          "$id": "85",
           "name": "accept",
           "nameInRequest": "Accept",
           "type": {
-           "$id": "42",
-           "kind": "constant",
-           "valueType": {
-            "$id": "43",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "10"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -408,12 +776,12 @@
         ],
         "responses": [
          {
-          "$id": "44",
+          "$id": "86",
           "statusCodes": [
            200
           ],
           "bodyType": {
-           "$id": "45",
+           "$id": "87",
            "kind": "boolean",
            "name": "boolean",
            "crossLanguageDefinitionId": "TypeSpec.boolean",
@@ -421,21 +789,11 @@
           },
           "headers": [
            {
-            "$id": "46",
+            "$id": "88",
             "name": "contentType",
             "nameInResponse": "content-type",
             "type": {
-             "$id": "47",
-             "kind": "constant",
-             "valueType": {
-              "$id": "48",
-              "kind": "string",
-              "name": "string",
-              "crossLanguageDefinitionId": "TypeSpec.string",
-              "decorators": []
-             },
-             "value": "application/json",
-             "decorators": []
+             "$ref": "12"
             }
            }
           ],
@@ -456,11 +814,11 @@
        },
        "parameters": [
         {
-         "$id": "49",
+         "$id": "89",
          "name": "accept",
          "nameInRequest": "accept",
          "type": {
-          "$ref": "42"
+          "$ref": "10"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -474,9 +832,9 @@
         }
        ],
        "response": {
-        "$id": "50",
+        "$id": "90",
         "type": {
-         "$ref": "45"
+         "$ref": "87"
         }
        },
        "isOverride": false,
@@ -485,35 +843,25 @@
        "crossLanguageDefinitionId": "Type.Scalar.Boolean.get"
       },
       {
-       "$id": "51",
+       "$id": "91",
        "kind": "basic",
        "name": "put",
        "accessibility": "public",
        "apiVersions": [],
        "doc": "put boolean value",
        "operation": {
-        "$id": "52",
+        "$id": "92",
         "name": "put",
         "resourceName": "Boolean",
         "doc": "put boolean value",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "53",
+          "$id": "93",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "type": {
-           "$id": "54",
-           "kind": "constant",
-           "valueType": {
-            "$id": "55",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "14"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -526,12 +874,12 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "56",
+          "$id": "94",
           "name": "body",
           "nameInRequest": "body",
           "doc": "_",
           "type": {
-           "$id": "57",
+           "$id": "95",
            "kind": "boolean",
            "name": "boolean",
            "crossLanguageDefinitionId": "TypeSpec.boolean",
@@ -550,7 +898,7 @@
         ],
         "responses": [
          {
-          "$id": "58",
+          "$id": "96",
           "statusCodes": [
            204
           ],
@@ -572,21 +920,11 @@
        },
        "parameters": [
         {
-         "$id": "59",
+         "$id": "97",
          "name": "contentType",
          "nameInRequest": "content-type",
          "type": {
-          "$id": "60",
-          "kind": "constant",
-          "valueType": {
-           "$id": "61",
-           "kind": "string",
-           "name": "string",
-           "crossLanguageDefinitionId": "TypeSpec.string",
-           "decorators": []
-          },
-          "value": "application/json",
-          "decorators": []
+          "$ref": "16"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -599,12 +937,12 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "62",
+         "$id": "98",
          "name": "body",
          "nameInRequest": "body",
          "doc": "_",
          "type": {
-          "$id": "63",
+          "$id": "99",
           "kind": "boolean",
           "name": "boolean",
           "crossLanguageDefinitionId": "TypeSpec.boolean",
@@ -622,7 +960,7 @@
         }
        ],
        "response": {
-        "$id": "64"
+        "$id": "100"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -632,12 +970,12 @@
      ],
      "parameters": [
       {
-       "$id": "65",
+       "$id": "101",
        "name": "endpoint",
        "nameInRequest": "endpoint",
        "doc": "Service host",
        "type": {
-        "$id": "66",
+        "$id": "102",
         "kind": "url",
         "name": "url",
         "crossLanguageDefinitionId": "TypeSpec.url"
@@ -651,9 +989,9 @@
        "explode": false,
        "kind": "Client",
        "defaultValue": {
-        "$id": "67",
+        "$id": "103",
         "type": {
-         "$id": "68",
+         "$id": "104",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -666,45 +1004,35 @@
      "crossLanguageDefinitionId": "Type.Scalar.Boolean",
      "apiVersions": [],
      "parent": {
-      "$ref": "2"
+      "$ref": "54"
      }
     },
     {
-     "$id": "69",
+     "$id": "105",
      "kind": "client",
      "name": "Unknown",
      "namespace": "Type.Scalar",
      "methods": [
       {
-       "$id": "70",
+       "$id": "106",
        "kind": "basic",
        "name": "get",
        "accessibility": "public",
        "apiVersions": [],
        "doc": "get unknown value",
        "operation": {
-        "$id": "71",
+        "$id": "107",
         "name": "get",
         "resourceName": "Unknown",
         "doc": "get unknown value",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "72",
+          "$id": "108",
           "name": "accept",
           "nameInRequest": "Accept",
           "type": {
-           "$id": "73",
-           "kind": "constant",
-           "valueType": {
-            "$id": "74",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "18"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -719,12 +1047,12 @@
         ],
         "responses": [
          {
-          "$id": "75",
+          "$id": "109",
           "statusCodes": [
            200
           ],
           "bodyType": {
-           "$id": "76",
+           "$id": "110",
            "kind": "unknown",
            "name": "unknown",
            "crossLanguageDefinitionId": "",
@@ -732,21 +1060,11 @@
           },
           "headers": [
            {
-            "$id": "77",
+            "$id": "111",
             "name": "contentType",
             "nameInResponse": "content-type",
             "type": {
-             "$id": "78",
-             "kind": "constant",
-             "valueType": {
-              "$id": "79",
-              "kind": "string",
-              "name": "string",
-              "crossLanguageDefinitionId": "TypeSpec.string",
-              "decorators": []
-             },
-             "value": "application/json",
-             "decorators": []
+             "$ref": "20"
             }
            }
           ],
@@ -767,11 +1085,11 @@
        },
        "parameters": [
         {
-         "$id": "80",
+         "$id": "112",
          "name": "accept",
          "nameInRequest": "accept",
          "type": {
-          "$ref": "73"
+          "$ref": "18"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -785,9 +1103,9 @@
         }
        ],
        "response": {
-        "$id": "81",
+        "$id": "113",
         "type": {
-         "$ref": "76"
+         "$ref": "110"
         }
        },
        "isOverride": false,
@@ -796,35 +1114,25 @@
        "crossLanguageDefinitionId": "Type.Scalar.Unknown.get"
       },
       {
-       "$id": "82",
+       "$id": "114",
        "kind": "basic",
        "name": "put",
        "accessibility": "public",
        "apiVersions": [],
        "doc": "put unknown value",
        "operation": {
-        "$id": "83",
+        "$id": "115",
         "name": "put",
         "resourceName": "Unknown",
         "doc": "put unknown value",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "84",
+          "$id": "116",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "type": {
-           "$id": "85",
-           "kind": "constant",
-           "valueType": {
-            "$id": "86",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "22"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -837,12 +1145,12 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "87",
+          "$id": "117",
           "name": "body",
           "nameInRequest": "body",
           "doc": "_",
           "type": {
-           "$id": "88",
+           "$id": "118",
            "kind": "unknown",
            "name": "unknown",
            "crossLanguageDefinitionId": "",
@@ -861,7 +1169,7 @@
         ],
         "responses": [
          {
-          "$id": "89",
+          "$id": "119",
           "statusCodes": [
            204
           ],
@@ -883,21 +1191,11 @@
        },
        "parameters": [
         {
-         "$id": "90",
+         "$id": "120",
          "name": "contentType",
          "nameInRequest": "content-type",
          "type": {
-          "$id": "91",
-          "kind": "constant",
-          "valueType": {
-           "$id": "92",
-           "kind": "string",
-           "name": "string",
-           "crossLanguageDefinitionId": "TypeSpec.string",
-           "decorators": []
-          },
-          "value": "application/json",
-          "decorators": []
+          "$ref": "24"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -910,12 +1208,12 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "93",
+         "$id": "121",
          "name": "body",
          "nameInRequest": "body",
          "doc": "_",
          "type": {
-          "$id": "94",
+          "$id": "122",
           "kind": "unknown",
           "name": "unknown",
           "crossLanguageDefinitionId": "",
@@ -933,7 +1231,7 @@
         }
        ],
        "response": {
-        "$id": "95"
+        "$id": "123"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -943,12 +1241,12 @@
      ],
      "parameters": [
       {
-       "$id": "96",
+       "$id": "124",
        "name": "endpoint",
        "nameInRequest": "endpoint",
        "doc": "Service host",
        "type": {
-        "$id": "97",
+        "$id": "125",
         "kind": "url",
         "name": "url",
         "crossLanguageDefinitionId": "TypeSpec.url"
@@ -962,9 +1260,9 @@
        "explode": false,
        "kind": "Client",
        "defaultValue": {
-        "$id": "98",
+        "$id": "126",
         "type": {
-         "$id": "99",
+         "$id": "127",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -977,44 +1275,34 @@
      "crossLanguageDefinitionId": "Type.Scalar.Unknown",
      "apiVersions": [],
      "parent": {
-      "$ref": "2"
+      "$ref": "54"
      }
     },
     {
-     "$id": "100",
+     "$id": "128",
      "kind": "client",
      "name": "DecimalType",
      "namespace": "Type.Scalar",
      "doc": "Decimal type",
      "methods": [
       {
-       "$id": "101",
+       "$id": "129",
        "kind": "basic",
        "name": "responseBody",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "102",
+        "$id": "130",
         "name": "responseBody",
         "resourceName": "DecimalType",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "103",
+          "$id": "131",
           "name": "accept",
           "nameInRequest": "Accept",
           "type": {
-           "$id": "104",
-           "kind": "constant",
-           "valueType": {
-            "$id": "105",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "26"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -1029,12 +1317,12 @@
         ],
         "responses": [
          {
-          "$id": "106",
+          "$id": "132",
           "statusCodes": [
            200
           ],
           "bodyType": {
-           "$id": "107",
+           "$id": "133",
            "kind": "decimal",
            "name": "decimal",
            "crossLanguageDefinitionId": "TypeSpec.decimal",
@@ -1042,21 +1330,11 @@
           },
           "headers": [
            {
-            "$id": "108",
+            "$id": "134",
             "name": "contentType",
             "nameInResponse": "content-type",
             "type": {
-             "$id": "109",
-             "kind": "constant",
-             "valueType": {
-              "$id": "110",
-              "kind": "string",
-              "name": "string",
-              "crossLanguageDefinitionId": "TypeSpec.string",
-              "decorators": []
-             },
-             "value": "application/json",
-             "decorators": []
+             "$ref": "28"
             }
            }
           ],
@@ -1077,11 +1355,11 @@
        },
        "parameters": [
         {
-         "$id": "111",
+         "$id": "135",
          "name": "accept",
          "nameInRequest": "accept",
          "type": {
-          "$ref": "104"
+          "$ref": "26"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -1095,9 +1373,9 @@
         }
        ],
        "response": {
-        "$id": "112",
+        "$id": "136",
         "type": {
-         "$ref": "107"
+         "$ref": "133"
         }
        },
        "isOverride": false,
@@ -1106,33 +1384,23 @@
        "crossLanguageDefinitionId": "Type.Scalar.DecimalType.responseBody"
       },
       {
-       "$id": "113",
+       "$id": "137",
        "kind": "basic",
        "name": "requestBody",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "114",
+        "$id": "138",
         "name": "requestBody",
         "resourceName": "DecimalType",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "115",
+          "$id": "139",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "type": {
-           "$id": "116",
-           "kind": "constant",
-           "valueType": {
-            "$id": "117",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "30"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -1145,11 +1413,11 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "118",
+          "$id": "140",
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$id": "119",
+           "$id": "141",
            "kind": "decimal",
            "name": "decimal",
            "crossLanguageDefinitionId": "TypeSpec.decimal",
@@ -1168,7 +1436,7 @@
         ],
         "responses": [
          {
-          "$id": "120",
+          "$id": "142",
           "statusCodes": [
            204
           ],
@@ -1190,21 +1458,11 @@
        },
        "parameters": [
         {
-         "$id": "121",
+         "$id": "143",
          "name": "contentType",
          "nameInRequest": "content-type",
          "type": {
-          "$id": "122",
-          "kind": "constant",
-          "valueType": {
-           "$id": "123",
-           "kind": "string",
-           "name": "string",
-           "crossLanguageDefinitionId": "TypeSpec.string",
-           "decorators": []
-          },
-          "value": "application/json",
-          "decorators": []
+          "$ref": "32"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -1217,11 +1475,11 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "124",
+         "$id": "144",
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$id": "125",
+          "$id": "145",
           "kind": "decimal",
           "name": "decimal",
           "crossLanguageDefinitionId": "TypeSpec.decimal",
@@ -1239,7 +1497,7 @@
         }
        ],
        "response": {
-        "$id": "126"
+        "$id": "146"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -1247,23 +1505,23 @@
        "crossLanguageDefinitionId": "Type.Scalar.DecimalType.requestBody"
       },
       {
-       "$id": "127",
+       "$id": "147",
        "kind": "basic",
        "name": "requestParameter",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "128",
+        "$id": "148",
         "name": "requestParameter",
         "resourceName": "DecimalType",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "129",
+          "$id": "149",
           "name": "value",
           "nameInRequest": "value",
           "type": {
-           "$id": "130",
+           "$id": "150",
            "kind": "decimal",
            "name": "decimal",
            "crossLanguageDefinitionId": "TypeSpec.decimal",
@@ -1282,7 +1540,7 @@
         ],
         "responses": [
          {
-          "$id": "131",
+          "$id": "151",
           "statusCodes": [
            204
           ],
@@ -1301,11 +1559,11 @@
        },
        "parameters": [
         {
-         "$id": "132",
+         "$id": "152",
          "name": "value",
          "nameInRequest": "value",
          "type": {
-          "$id": "133",
+          "$id": "153",
           "kind": "decimal",
           "name": "decimal",
           "crossLanguageDefinitionId": "TypeSpec.decimal",
@@ -1323,7 +1581,7 @@
         }
        ],
        "response": {
-        "$id": "134"
+        "$id": "154"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -1333,12 +1591,12 @@
      ],
      "parameters": [
       {
-       "$id": "135",
+       "$id": "155",
        "name": "endpoint",
        "nameInRequest": "endpoint",
        "doc": "Service host",
        "type": {
-        "$id": "136",
+        "$id": "156",
         "kind": "url",
         "name": "url",
         "crossLanguageDefinitionId": "TypeSpec.url"
@@ -1352,9 +1610,9 @@
        "explode": false,
        "kind": "Client",
        "defaultValue": {
-        "$id": "137",
+        "$id": "157",
         "type": {
-         "$id": "138",
+         "$id": "158",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1367,44 +1625,34 @@
      "crossLanguageDefinitionId": "Type.Scalar.DecimalType",
      "apiVersions": [],
      "parent": {
-      "$ref": "2"
+      "$ref": "54"
      }
     },
     {
-     "$id": "139",
+     "$id": "159",
      "kind": "client",
      "name": "Decimal128Type",
      "namespace": "Type.Scalar",
      "doc": "Decimal128 type",
      "methods": [
       {
-       "$id": "140",
+       "$id": "160",
        "kind": "basic",
        "name": "responseBody",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "141",
+        "$id": "161",
         "name": "responseBody",
         "resourceName": "Decimal128Type",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "142",
+          "$id": "162",
           "name": "accept",
           "nameInRequest": "Accept",
           "type": {
-           "$id": "143",
-           "kind": "constant",
-           "valueType": {
-            "$id": "144",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "34"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -1419,12 +1667,12 @@
         ],
         "responses": [
          {
-          "$id": "145",
+          "$id": "163",
           "statusCodes": [
            200
           ],
           "bodyType": {
-           "$id": "146",
+           "$id": "164",
            "kind": "decimal128",
            "name": "decimal128",
            "crossLanguageDefinitionId": "TypeSpec.decimal128",
@@ -1432,21 +1680,11 @@
           },
           "headers": [
            {
-            "$id": "147",
+            "$id": "165",
             "name": "contentType",
             "nameInResponse": "content-type",
             "type": {
-             "$id": "148",
-             "kind": "constant",
-             "valueType": {
-              "$id": "149",
-              "kind": "string",
-              "name": "string",
-              "crossLanguageDefinitionId": "TypeSpec.string",
-              "decorators": []
-             },
-             "value": "application/json",
-             "decorators": []
+             "$ref": "36"
             }
            }
           ],
@@ -1467,11 +1705,11 @@
        },
        "parameters": [
         {
-         "$id": "150",
+         "$id": "166",
          "name": "accept",
          "nameInRequest": "accept",
          "type": {
-          "$ref": "143"
+          "$ref": "34"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -1485,9 +1723,9 @@
         }
        ],
        "response": {
-        "$id": "151",
+        "$id": "167",
         "type": {
-         "$ref": "146"
+         "$ref": "164"
         }
        },
        "isOverride": false,
@@ -1496,33 +1734,23 @@
        "crossLanguageDefinitionId": "Type.Scalar.Decimal128Type.responseBody"
       },
       {
-       "$id": "152",
+       "$id": "168",
        "kind": "basic",
        "name": "requestBody",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "153",
+        "$id": "169",
         "name": "requestBody",
         "resourceName": "Decimal128Type",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "154",
+          "$id": "170",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "type": {
-           "$id": "155",
-           "kind": "constant",
-           "valueType": {
-            "$id": "156",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "38"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -1535,11 +1763,11 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "157",
+          "$id": "171",
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$id": "158",
+           "$id": "172",
            "kind": "decimal128",
            "name": "decimal128",
            "crossLanguageDefinitionId": "TypeSpec.decimal128",
@@ -1558,7 +1786,7 @@
         ],
         "responses": [
          {
-          "$id": "159",
+          "$id": "173",
           "statusCodes": [
            204
           ],
@@ -1580,21 +1808,11 @@
        },
        "parameters": [
         {
-         "$id": "160",
+         "$id": "174",
          "name": "contentType",
          "nameInRequest": "content-type",
          "type": {
-          "$id": "161",
-          "kind": "constant",
-          "valueType": {
-           "$id": "162",
-           "kind": "string",
-           "name": "string",
-           "crossLanguageDefinitionId": "TypeSpec.string",
-           "decorators": []
-          },
-          "value": "application/json",
-          "decorators": []
+          "$ref": "40"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -1607,11 +1825,11 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "163",
+         "$id": "175",
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$id": "164",
+          "$id": "176",
           "kind": "decimal128",
           "name": "decimal128",
           "crossLanguageDefinitionId": "TypeSpec.decimal128",
@@ -1629,7 +1847,7 @@
         }
        ],
        "response": {
-        "$id": "165"
+        "$id": "177"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -1637,23 +1855,23 @@
        "crossLanguageDefinitionId": "Type.Scalar.Decimal128Type.requestBody"
       },
       {
-       "$id": "166",
+       "$id": "178",
        "kind": "basic",
        "name": "requestParameter",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "167",
+        "$id": "179",
         "name": "requestParameter",
         "resourceName": "Decimal128Type",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "168",
+          "$id": "180",
           "name": "value",
           "nameInRequest": "value",
           "type": {
-           "$id": "169",
+           "$id": "181",
            "kind": "decimal128",
            "name": "decimal128",
            "crossLanguageDefinitionId": "TypeSpec.decimal128",
@@ -1672,7 +1890,7 @@
         ],
         "responses": [
          {
-          "$id": "170",
+          "$id": "182",
           "statusCodes": [
            204
           ],
@@ -1691,11 +1909,11 @@
        },
        "parameters": [
         {
-         "$id": "171",
+         "$id": "183",
          "name": "value",
          "nameInRequest": "value",
          "type": {
-          "$id": "172",
+          "$id": "184",
           "kind": "decimal128",
           "name": "decimal128",
           "crossLanguageDefinitionId": "TypeSpec.decimal128",
@@ -1713,7 +1931,7 @@
         }
        ],
        "response": {
-        "$id": "173"
+        "$id": "185"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -1723,12 +1941,12 @@
      ],
      "parameters": [
       {
-       "$id": "174",
+       "$id": "186",
        "name": "endpoint",
        "nameInRequest": "endpoint",
        "doc": "Service host",
        "type": {
-        "$id": "175",
+        "$id": "187",
         "kind": "url",
         "name": "url",
         "crossLanguageDefinitionId": "TypeSpec.url"
@@ -1742,9 +1960,9 @@
        "explode": false,
        "kind": "Client",
        "defaultValue": {
-        "$id": "176",
+        "$id": "188",
         "type": {
-         "$id": "177",
+         "$id": "189",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1757,44 +1975,34 @@
      "crossLanguageDefinitionId": "Type.Scalar.Decimal128Type",
      "apiVersions": [],
      "parent": {
-      "$ref": "2"
+      "$ref": "54"
      }
     },
     {
-     "$id": "178",
+     "$id": "190",
      "kind": "client",
      "name": "DecimalVerify",
      "namespace": "Type.Scalar",
      "doc": "Decimal type verification",
      "methods": [
       {
-       "$id": "179",
+       "$id": "191",
        "kind": "basic",
        "name": "prepareVerify",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "180",
+        "$id": "192",
         "name": "prepareVerify",
         "resourceName": "DecimalVerify",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "181",
+          "$id": "193",
           "name": "accept",
           "nameInRequest": "Accept",
           "type": {
-           "$id": "182",
-           "kind": "constant",
-           "valueType": {
-            "$id": "183",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "42"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -1809,16 +2017,16 @@
         ],
         "responses": [
          {
-          "$id": "184",
+          "$id": "194",
           "statusCodes": [
            200
           ],
           "bodyType": {
-           "$id": "185",
+           "$id": "195",
            "kind": "array",
            "name": "Array",
            "valueType": {
-            "$id": "186",
+            "$id": "196",
             "kind": "decimal",
             "name": "decimal",
             "crossLanguageDefinitionId": "TypeSpec.decimal",
@@ -1845,11 +2053,11 @@
        },
        "parameters": [
         {
-         "$id": "187",
+         "$id": "197",
          "name": "accept",
          "nameInRequest": "accept",
          "type": {
-          "$ref": "182"
+          "$ref": "42"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -1863,9 +2071,9 @@
         }
        ],
        "response": {
-        "$id": "188",
+        "$id": "198",
         "type": {
-         "$ref": "185"
+         "$ref": "195"
         }
        },
        "isOverride": false,
@@ -1874,33 +2082,23 @@
        "crossLanguageDefinitionId": "Type.Scalar.DecimalVerify.prepareVerify"
       },
       {
-       "$id": "189",
+       "$id": "199",
        "kind": "basic",
        "name": "verify",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "190",
+        "$id": "200",
         "name": "verify",
         "resourceName": "DecimalVerify",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "191",
+          "$id": "201",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "type": {
-           "$id": "192",
-           "kind": "constant",
-           "valueType": {
-            "$id": "193",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "44"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -1913,11 +2111,11 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "194",
+          "$id": "202",
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$id": "195",
+           "$id": "203",
            "kind": "decimal",
            "name": "decimal",
            "crossLanguageDefinitionId": "TypeSpec.decimal",
@@ -1936,7 +2134,7 @@
         ],
         "responses": [
          {
-          "$id": "196",
+          "$id": "204",
           "statusCodes": [
            204
           ],
@@ -1958,21 +2156,11 @@
        },
        "parameters": [
         {
-         "$id": "197",
+         "$id": "205",
          "name": "contentType",
          "nameInRequest": "content-type",
          "type": {
-          "$id": "198",
-          "kind": "constant",
-          "valueType": {
-           "$id": "199",
-           "kind": "string",
-           "name": "string",
-           "crossLanguageDefinitionId": "TypeSpec.string",
-           "decorators": []
-          },
-          "value": "application/json",
-          "decorators": []
+          "$ref": "46"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -1985,11 +2173,11 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "200",
+         "$id": "206",
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$id": "201",
+          "$id": "207",
           "kind": "decimal",
           "name": "decimal",
           "crossLanguageDefinitionId": "TypeSpec.decimal",
@@ -2007,7 +2195,7 @@
         }
        ],
        "response": {
-        "$id": "202"
+        "$id": "208"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -2017,12 +2205,12 @@
      ],
      "parameters": [
       {
-       "$id": "203",
+       "$id": "209",
        "name": "endpoint",
        "nameInRequest": "endpoint",
        "doc": "Service host",
        "type": {
-        "$id": "204",
+        "$id": "210",
         "kind": "url",
         "name": "url",
         "crossLanguageDefinitionId": "TypeSpec.url"
@@ -2036,9 +2224,9 @@
        "explode": false,
        "kind": "Client",
        "defaultValue": {
-        "$id": "205",
+        "$id": "211",
         "type": {
-         "$id": "206",
+         "$id": "212",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -2051,44 +2239,34 @@
      "crossLanguageDefinitionId": "Type.Scalar.DecimalVerify",
      "apiVersions": [],
      "parent": {
-      "$ref": "2"
+      "$ref": "54"
      }
     },
     {
-     "$id": "207",
+     "$id": "213",
      "kind": "client",
      "name": "Decimal128Verify",
      "namespace": "Type.Scalar",
      "doc": "Decimal128 type verification",
      "methods": [
       {
-       "$id": "208",
+       "$id": "214",
        "kind": "basic",
        "name": "prepareVerify",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "209",
+        "$id": "215",
         "name": "prepareVerify",
         "resourceName": "Decimal128Verify",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "210",
+          "$id": "216",
           "name": "accept",
           "nameInRequest": "Accept",
           "type": {
-           "$id": "211",
-           "kind": "constant",
-           "valueType": {
-            "$id": "212",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "48"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -2103,16 +2281,16 @@
         ],
         "responses": [
          {
-          "$id": "213",
+          "$id": "217",
           "statusCodes": [
            200
           ],
           "bodyType": {
-           "$id": "214",
+           "$id": "218",
            "kind": "array",
            "name": "Array",
            "valueType": {
-            "$id": "215",
+            "$id": "219",
             "kind": "decimal",
             "name": "decimal",
             "crossLanguageDefinitionId": "TypeSpec.decimal",
@@ -2139,11 +2317,11 @@
        },
        "parameters": [
         {
-         "$id": "216",
+         "$id": "220",
          "name": "accept",
          "nameInRequest": "accept",
          "type": {
-          "$ref": "211"
+          "$ref": "48"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -2157,9 +2335,9 @@
         }
        ],
        "response": {
-        "$id": "217",
+        "$id": "221",
         "type": {
-         "$ref": "214"
+         "$ref": "218"
         }
        },
        "isOverride": false,
@@ -2168,33 +2346,23 @@
        "crossLanguageDefinitionId": "Type.Scalar.Decimal128Verify.prepareVerify"
       },
       {
-       "$id": "218",
+       "$id": "222",
        "kind": "basic",
        "name": "verify",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "219",
+        "$id": "223",
         "name": "verify",
         "resourceName": "Decimal128Verify",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "220",
+          "$id": "224",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "type": {
-           "$id": "221",
-           "kind": "constant",
-           "valueType": {
-            "$id": "222",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "50"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -2207,11 +2375,11 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "223",
+          "$id": "225",
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$id": "224",
+           "$id": "226",
            "kind": "decimal",
            "name": "decimal",
            "crossLanguageDefinitionId": "TypeSpec.decimal",
@@ -2230,7 +2398,7 @@
         ],
         "responses": [
          {
-          "$id": "225",
+          "$id": "227",
           "statusCodes": [
            204
           ],
@@ -2252,21 +2420,11 @@
        },
        "parameters": [
         {
-         "$id": "226",
+         "$id": "228",
          "name": "contentType",
          "nameInRequest": "content-type",
          "type": {
-          "$id": "227",
-          "kind": "constant",
-          "valueType": {
-           "$id": "228",
-           "kind": "string",
-           "name": "string",
-           "crossLanguageDefinitionId": "TypeSpec.string",
-           "decorators": []
-          },
-          "value": "application/json",
-          "decorators": []
+          "$ref": "52"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -2345,7 +2503,7 @@
      "crossLanguageDefinitionId": "Type.Scalar.Decimal128Verify",
      "apiVersions": [],
      "parent": {
-      "$ref": "2"
+      "$ref": "54"
      }
     }
    ]

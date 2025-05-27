@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -306,201 +306,6 @@ namespace Azure.ResourceManager.Sql
         public virtual Response<ManagedBackupShortTermRetentionPolicyResource> GetManagedBackupShortTermRetentionPolicy(ManagedShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
             return GetManagedBackupShortTermRetentionPolicies().Get(policyName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ManagedDatabaseSecurityAlertPolicyResources in the ManagedDatabase. </summary>
-        /// <returns> An object representing collection of ManagedDatabaseSecurityAlertPolicyResources and their operations over a ManagedDatabaseSecurityAlertPolicyResource. </returns>
-        public virtual ManagedDatabaseSecurityAlertPolicyCollection GetManagedDatabaseSecurityAlertPolicies()
-        {
-            return GetCachedClient(client => new ManagedDatabaseSecurityAlertPolicyCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a managed database's security alert policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedDatabaseSecurityAlertPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedDatabaseSecurityAlertPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedDatabaseSecurityAlertPolicyResource>> GetManagedDatabaseSecurityAlertPolicyAsync(SqlSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
-        {
-            return await GetManagedDatabaseSecurityAlertPolicies().GetAsync(securityAlertPolicyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a managed database's security alert policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedDatabaseSecurityAlertPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedDatabaseSecurityAlertPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<ManagedDatabaseSecurityAlertPolicyResource> GetManagedDatabaseSecurityAlertPolicy(SqlSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
-        {
-            return GetManagedDatabaseSecurityAlertPolicies().Get(securityAlertPolicyName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ManagedTransparentDataEncryptionResources in the ManagedDatabase. </summary>
-        /// <returns> An object representing collection of ManagedTransparentDataEncryptionResources and their operations over a ManagedTransparentDataEncryptionResource. </returns>
-        public virtual ManagedTransparentDataEncryptionCollection GetManagedTransparentDataEncryptions()
-        {
-            return GetCachedClient(client => new ManagedTransparentDataEncryptionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a managed database's transparent data encryption.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/transparentDataEncryption/{tdeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedDatabaseTransparentDataEncryption_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedTransparentDataEncryptionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedTransparentDataEncryptionResource>> GetManagedTransparentDataEncryptionAsync(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
-        {
-            return await GetManagedTransparentDataEncryptions().GetAsync(tdeName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a managed database's transparent data encryption.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/transparentDataEncryption/{tdeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedDatabaseTransparentDataEncryption_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedTransparentDataEncryptionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<ManagedTransparentDataEncryptionResource> GetManagedTransparentDataEncryption(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
-        {
-            return GetManagedTransparentDataEncryptions().Get(tdeName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ManagedInstanceLongTermRetentionPolicyResources in the ManagedDatabase. </summary>
-        /// <returns> An object representing collection of ManagedInstanceLongTermRetentionPolicyResources and their operations over a ManagedInstanceLongTermRetentionPolicyResource. </returns>
-        public virtual ManagedInstanceLongTermRetentionPolicyCollection GetManagedInstanceLongTermRetentionPolicies()
-        {
-            return GetCachedClient(client => new ManagedInstanceLongTermRetentionPolicyCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a managed database's long term retention policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstanceLongTermRetentionPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceLongTermRetentionPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyName"> The policy name. Should always be Default. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedInstanceLongTermRetentionPolicyResource>> GetManagedInstanceLongTermRetentionPolicyAsync(ManagedInstanceLongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
-        {
-            return await GetManagedInstanceLongTermRetentionPolicies().GetAsync(policyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a managed database's long term retention policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstanceLongTermRetentionPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceLongTermRetentionPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyName"> The policy name. Should always be Default. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<ManagedInstanceLongTermRetentionPolicyResource> GetManagedInstanceLongTermRetentionPolicy(ManagedInstanceLongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
-        {
-            return GetManagedInstanceLongTermRetentionPolicies().Get(policyName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ManagedDatabaseAdvancedThreatProtectionResources in the ManagedDatabase. </summary>
@@ -523,7 +328,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -552,7 +357,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -588,7 +393,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -617,7 +422,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -631,6 +436,201 @@ namespace Azure.ResourceManager.Sql
         public virtual Response<ManagedDatabaseRestoreDetailResource> GetManagedDatabaseRestoreDetail(RestoreDetailsName restoreDetailsName, CancellationToken cancellationToken = default)
         {
             return GetManagedDatabaseRestoreDetails().Get(restoreDetailsName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ManagedDatabaseSecurityAlertPolicyResources in the ManagedDatabase. </summary>
+        /// <returns> An object representing collection of ManagedDatabaseSecurityAlertPolicyResources and their operations over a ManagedDatabaseSecurityAlertPolicyResource. </returns>
+        public virtual ManagedDatabaseSecurityAlertPolicyCollection GetManagedDatabaseSecurityAlertPolicies()
+        {
+            return GetCachedClient(client => new ManagedDatabaseSecurityAlertPolicyCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a managed database's security alert policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseSecurityAlertPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseSecurityAlertPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagedDatabaseSecurityAlertPolicyResource>> GetManagedDatabaseSecurityAlertPolicyAsync(SqlSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        {
+            return await GetManagedDatabaseSecurityAlertPolicies().GetAsync(securityAlertPolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a managed database's security alert policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseSecurityAlertPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseSecurityAlertPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ManagedDatabaseSecurityAlertPolicyResource> GetManagedDatabaseSecurityAlertPolicy(SqlSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        {
+            return GetManagedDatabaseSecurityAlertPolicies().Get(securityAlertPolicyName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ManagedTransparentDataEncryptionResources in the ManagedDatabase. </summary>
+        /// <returns> An object representing collection of ManagedTransparentDataEncryptionResources and their operations over a ManagedTransparentDataEncryptionResource. </returns>
+        public virtual ManagedTransparentDataEncryptionCollection GetManagedTransparentDataEncryptions()
+        {
+            return GetCachedClient(client => new ManagedTransparentDataEncryptionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a managed database's transparent data encryption.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/transparentDataEncryption/{tdeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseTransparentDataEncryption_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedTransparentDataEncryptionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagedTransparentDataEncryptionResource>> GetManagedTransparentDataEncryptionAsync(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
+        {
+            return await GetManagedTransparentDataEncryptions().GetAsync(tdeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a managed database's transparent data encryption.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/transparentDataEncryption/{tdeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseTransparentDataEncryption_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedTransparentDataEncryptionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ManagedTransparentDataEncryptionResource> GetManagedTransparentDataEncryption(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
+        {
+            return GetManagedTransparentDataEncryptions().Get(tdeName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ManagedInstanceLongTermRetentionPolicyResources in the ManagedDatabase. </summary>
+        /// <returns> An object representing collection of ManagedInstanceLongTermRetentionPolicyResources and their operations over a ManagedInstanceLongTermRetentionPolicyResource. </returns>
+        public virtual ManagedInstanceLongTermRetentionPolicyCollection GetManagedInstanceLongTermRetentionPolicies()
+        {
+            return GetCachedClient(client => new ManagedInstanceLongTermRetentionPolicyCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a managed database's long term retention policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceLongTermRetentionPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceLongTermRetentionPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyName"> The policy name. Should always be Default. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagedInstanceLongTermRetentionPolicyResource>> GetManagedInstanceLongTermRetentionPolicyAsync(ManagedInstanceLongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
+        {
+            return await GetManagedInstanceLongTermRetentionPolicies().GetAsync(policyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a managed database's long term retention policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceLongTermRetentionPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceLongTermRetentionPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyName"> The policy name. Should always be Default. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ManagedInstanceLongTermRetentionPolicyResource> GetManagedInstanceLongTermRetentionPolicy(ManagedInstanceLongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
+        {
+            return GetManagedInstanceLongTermRetentionPolicies().Get(policyName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ManagedLedgerDigestUploadResources in the ManagedDatabase. </summary>
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -751,7 +751,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -833,7 +833,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -875,7 +875,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -921,7 +921,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -967,7 +967,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1002,7 +1002,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1037,7 +1037,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1076,7 +1076,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1115,7 +1115,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1149,7 +1149,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1183,7 +1183,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1193,7 +1193,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityEvent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityEvent> GetManagedDatabaseSecurityEventsByDatabaseAsync(string filter = null, int? skip = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SecurityEvent> GetManagedDatabaseSecurityEventsByDatabaseAsync(string filter = null, long? skip = null, long? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseSecurityEventsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skip, top, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseSecurityEventsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skip, top, skiptoken);
@@ -1213,7 +1213,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1223,7 +1223,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityEvent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityEvent> GetManagedDatabaseSecurityEventsByDatabase(string filter = null, int? skip = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SecurityEvent> GetManagedDatabaseSecurityEventsByDatabase(string filter = null, long? skip = null, long? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseSecurityEventsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skip, top, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseSecurityEventsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skip, top, skiptoken);
@@ -1243,7 +1243,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1276,7 +1276,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1309,7 +1309,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1351,7 +1351,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1393,7 +1393,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1426,7 +1426,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1459,7 +1459,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1501,7 +1501,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1531,6 +1531,68 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Gets the sensitivity labels of a given database
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/sensitivityLabels</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseSensitivityLabels_ListByDatabase</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseSensitivityLabelResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ManagedDatabaseSensitivityLabelResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedDatabaseSensitivityLabelResource> GetManagedDatabaseSensitivityLabelsByDatabaseAsync(string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseSensitivityLabelRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseSensitivityLabelRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _managedDatabaseSensitivityLabelClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetManagedDatabaseSensitivityLabelsByDatabase", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the sensitivity labels of a given database
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/sensitivityLabels</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseSensitivityLabels_ListByDatabase</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseSensitivityLabelResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ManagedDatabaseSensitivityLabelResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedDatabaseSensitivityLabelResource> GetManagedDatabaseSensitivityLabelsByDatabase(string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseSensitivityLabelRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseSensitivityLabelRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _managedDatabaseSensitivityLabelClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetManagedDatabaseSensitivityLabelsByDatabase", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Cancels a managed database move operation.
         /// <list type="bullet">
         /// <item>
@@ -1543,7 +1605,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1589,7 +1651,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1635,7 +1697,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1681,7 +1743,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1727,7 +1789,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1773,7 +1835,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1819,7 +1881,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1865,7 +1927,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1911,7 +1973,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1973,7 +2035,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2035,7 +2097,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2092,7 +2154,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2149,7 +2211,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2209,7 +2271,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

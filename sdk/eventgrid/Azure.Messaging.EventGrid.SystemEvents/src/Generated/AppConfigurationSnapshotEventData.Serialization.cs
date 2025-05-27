@@ -34,21 +34,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(AppConfigurationSnapshotEventData)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Etag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(Etag);
-            }
-            if (Optional.IsDefined(SyncToken))
-            {
-                writer.WritePropertyName("syncToken"u8);
-                writer.WriteStringValue(SyncToken);
-            }
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("etag"u8);
+            writer.WriteStringValue(Etag);
+            writer.WritePropertyName("syncToken"u8);
+            writer.WriteStringValue(SyncToken);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -124,7 +115,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AppConfigurationSnapshotEventData)} does not support writing '{options.Format}' format.");
             }

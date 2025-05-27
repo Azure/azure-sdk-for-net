@@ -63,6 +63,7 @@ namespace BasicTypeSpec
             _endpoint = endpoint;
             _keyCredential = keyCredential;
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) });
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary> Initializes a new instance of BasicTypeSpecClient. </summary>
@@ -80,10 +81,14 @@ namespace BasicTypeSpec
             _endpoint = endpoint;
             _tokenCredential = tokenCredential;
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Return hi
@@ -102,11 +107,21 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Response SayHi(string headParameter, string queryParameter, string optionalQuery, RequestContext context)
         {
-            Argument.AssertNotNull(headParameter, nameof(headParameter));
-            Argument.AssertNotNull(queryParameter, nameof(queryParameter));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.SayHi");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(headParameter, nameof(headParameter));
+                Argument.AssertNotNull(queryParameter, nameof(queryParameter));
 
-            using HttpMessage message = CreateSayHiRequest(headParameter, queryParameter, optionalQuery, context);
-            return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateSayHiRequest(headParameter, queryParameter, optionalQuery, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -126,11 +141,21 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> SayHiAsync(string headParameter, string queryParameter, string optionalQuery, RequestContext context)
         {
-            Argument.AssertNotNull(headParameter, nameof(headParameter));
-            Argument.AssertNotNull(queryParameter, nameof(queryParameter));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.SayHi");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(headParameter, nameof(headParameter));
+                Argument.AssertNotNull(queryParameter, nameof(queryParameter));
 
-            using HttpMessage message = CreateSayHiRequest(headParameter, queryParameter, optionalQuery, context);
-            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateSayHiRequest(headParameter, queryParameter, optionalQuery, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Return hi. </summary>
@@ -182,12 +207,22 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Response HelloAgain(string p2, string p1, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(p2, nameof(p2));
-            Argument.AssertNotNull(p1, nameof(p1));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HelloAgain");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(p2, nameof(p2));
+                Argument.AssertNotNull(p1, nameof(p1));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateHelloAgainRequest(p2, p1, content, context);
-            return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateHelloAgainRequest(p2, p1, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -207,12 +242,22 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> HelloAgainAsync(string p2, string p1, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(p2, nameof(p2));
-            Argument.AssertNotNull(p1, nameof(p1));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HelloAgain");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(p2, nameof(p2));
+                Argument.AssertNotNull(p1, nameof(p1));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateHelloAgainRequest(p2, p1, content, context);
-            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateHelloAgainRequest(p2, p1, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Return hi again. </summary>
@@ -266,12 +311,22 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Response NoContentType(string p2, string p1, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(p2, nameof(p2));
-            Argument.AssertNotNull(p1, nameof(p1));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.NoContentType");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(p2, nameof(p2));
+                Argument.AssertNotNull(p1, nameof(p1));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateNoContentTypeRequest(p2, p1, content, context);
-            return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateNoContentTypeRequest(p2, p1, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -291,12 +346,22 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> NoContentTypeAsync(string p2, string p1, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(p2, nameof(p2));
-            Argument.AssertNotNull(p1, nameof(p1));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.NoContentType");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(p2, nameof(p2));
+                Argument.AssertNotNull(p1, nameof(p1));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateNoContentTypeRequest(p2, p1, content, context);
-            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateNoContentTypeRequest(p2, p1, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -312,8 +377,18 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Response HelloDemo2(RequestContext context)
         {
-            using HttpMessage message = CreateHelloDemo2Request(context);
-            return Pipeline.ProcessMessage(message, context);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HelloDemo2");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateHelloDemo2Request(context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -329,8 +404,18 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> HelloDemo2Async(RequestContext context)
         {
-            using HttpMessage message = CreateHelloDemo2Request(context);
-            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HelloDemo2");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateHelloDemo2Request(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Return hi in demo2. </summary>
@@ -366,10 +451,20 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateLiteral(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.CreateLiteral");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateCreateLiteralRequest(content, context);
-            return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateCreateLiteralRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -387,10 +482,20 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> CreateLiteralAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.CreateLiteral");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateCreateLiteralRequest(content, context);
-            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateCreateLiteralRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create with literal value. </summary>
@@ -432,8 +537,18 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Response HelloLiteral(RequestContext context)
         {
-            using HttpMessage message = CreateHelloLiteralRequest(context);
-            return Pipeline.ProcessMessage(message, context);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HelloLiteral");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateHelloLiteralRequest(context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -449,8 +564,18 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> HelloLiteralAsync(RequestContext context)
         {
-            using HttpMessage message = CreateHelloLiteralRequest(context);
-            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HelloLiteral");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateHelloLiteralRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Send literal parameters. </summary>
@@ -485,8 +610,18 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Response TopAction(DateTimeOffset action, RequestContext context)
         {
-            using HttpMessage message = CreateTopActionRequest(action, context);
-            return Pipeline.ProcessMessage(message, context);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.TopAction");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateTopActionRequest(action, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -503,8 +638,18 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> TopActionAsync(DateTimeOffset action, RequestContext context)
         {
-            using HttpMessage message = CreateTopActionRequest(action, context);
-            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.TopAction");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateTopActionRequest(action, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> top level method. </summary>
@@ -540,8 +685,18 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Response TopAction2(RequestContext context)
         {
-            using HttpMessage message = CreateTopAction2Request(context);
-            return Pipeline.ProcessMessage(message, context);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.TopAction2");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateTopAction2Request(context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -557,8 +712,18 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> TopAction2Async(RequestContext context)
         {
-            using HttpMessage message = CreateTopAction2Request(context);
-            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.TopAction2");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateTopAction2Request(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -576,10 +741,20 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Response PatchAction(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.PatchAction");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreatePatchActionRequest(content, context);
-            return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreatePatchActionRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -597,10 +772,20 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> PatchActionAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.PatchAction");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreatePatchActionRequest(content, context);
-            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreatePatchActionRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -618,10 +803,20 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Response AnonymousBody(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.AnonymousBody");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateAnonymousBodyRequest(content, context);
-            return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateAnonymousBodyRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -639,10 +834,20 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> AnonymousBodyAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.AnonymousBody");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateAnonymousBodyRequest(content, context);
-            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateAnonymousBodyRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> body parameter without body decorator. </summary>
@@ -660,12 +865,13 @@ namespace BasicTypeSpec
         /// <param name="optionalLiteralBool"> optional literal bool. </param>
         /// <param name="optionalNullableList"> optional nullable collection. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="requiredUnion"/> or <paramref name="requiredBadDescription"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="requiredUnion"/>, <paramref name="requiredLiteralString"/> or <paramref name="requiredBadDescription"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ThingModel> AnonymousBody(string name, BinaryData requiredUnion, ThingModelRequiredLiteralString requiredLiteralString, ThingModelRequiredLiteralInt requiredLiteralInt, ThingModelRequiredLiteralFloat requiredLiteralFloat, bool requiredLiteralBool, string requiredBadDescription, IEnumerable<int> requiredNullableList, ThingModelOptionalLiteralString? optionalLiteralString = default, ThingModelOptionalLiteralInt? optionalLiteralInt = default, ThingModelOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default, CancellationToken cancellationToken = default)
+        public virtual Response<ThingModel> AnonymousBody(string name, BinaryData requiredUnion, string requiredLiteralString, int requiredLiteralInt, float requiredLiteralFloat, bool requiredLiteralBool, string requiredBadDescription, IEnumerable<int> requiredNullableList, string optionalLiteralString = default, int? optionalLiteralInt = default, float? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(requiredUnion, nameof(requiredUnion));
+            Argument.AssertNotNull(requiredLiteralString, nameof(requiredLiteralString));
             Argument.AssertNotNull(requiredBadDescription, nameof(requiredBadDescription));
 
             ThingModel spreadModel = new ThingModel(
@@ -702,12 +908,13 @@ namespace BasicTypeSpec
         /// <param name="optionalLiteralBool"> optional literal bool. </param>
         /// <param name="optionalNullableList"> optional nullable collection. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="requiredUnion"/> or <paramref name="requiredBadDescription"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="requiredUnion"/>, <paramref name="requiredLiteralString"/> or <paramref name="requiredBadDescription"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ThingModel>> AnonymousBodyAsync(string name, BinaryData requiredUnion, ThingModelRequiredLiteralString requiredLiteralString, ThingModelRequiredLiteralInt requiredLiteralInt, ThingModelRequiredLiteralFloat requiredLiteralFloat, bool requiredLiteralBool, string requiredBadDescription, IEnumerable<int> requiredNullableList, ThingModelOptionalLiteralString? optionalLiteralString = default, ThingModelOptionalLiteralInt? optionalLiteralInt = default, ThingModelOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThingModel>> AnonymousBodyAsync(string name, BinaryData requiredUnion, string requiredLiteralString, int requiredLiteralInt, float requiredLiteralFloat, bool requiredLiteralBool, string requiredBadDescription, IEnumerable<int> requiredNullableList, string optionalLiteralString = default, int? optionalLiteralInt = default, float? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(requiredUnion, nameof(requiredUnion));
+            Argument.AssertNotNull(requiredLiteralString, nameof(requiredLiteralString));
             Argument.AssertNotNull(requiredBadDescription, nameof(requiredBadDescription));
 
             ThingModel spreadModel = new ThingModel(
@@ -744,10 +951,20 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Response FriendlyModel(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.FriendlyModel");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateFriendlyModelRequest(content, context);
-            return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateFriendlyModelRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -765,10 +982,20 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> FriendlyModelAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.FriendlyModel");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateFriendlyModelRequest(content, context);
-            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateFriendlyModelRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Model can have its friendly name. </summary>
@@ -812,8 +1039,18 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Response AddTimeHeader(RequestContext context)
         {
-            using HttpMessage message = CreateAddTimeHeaderRequest(context);
-            return Pipeline.ProcessMessage(message, context);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.AddTimeHeader");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddTimeHeaderRequest(context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -829,8 +1066,18 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> AddTimeHeaderAsync(RequestContext context)
         {
-            using HttpMessage message = CreateAddTimeHeaderRequest(context);
-            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.AddTimeHeader");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddTimeHeaderRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> addTimeHeader. </summary>
@@ -864,10 +1111,20 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Response ProjectedNameModel(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ProjectedNameModel");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateProjectedNameModelRequest(content, context);
-            return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateProjectedNameModelRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -885,10 +1142,20 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> ProjectedNameModelAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ProjectedNameModel");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateProjectedNameModelRequest(content, context);
-            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateProjectedNameModelRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Model can have its projected name. </summary>
@@ -932,8 +1199,18 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Response ReturnsAnonymousModel(RequestContext context)
         {
-            using HttpMessage message = CreateReturnsAnonymousModelRequest(context);
-            return Pipeline.ProcessMessage(message, context);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ReturnsAnonymousModel");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateReturnsAnonymousModelRequest(context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -949,8 +1226,18 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> ReturnsAnonymousModelAsync(RequestContext context)
         {
-            using HttpMessage message = CreateReturnsAnonymousModelRequest(context);
-            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ReturnsAnonymousModel");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateReturnsAnonymousModelRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> return anonymous model. </summary>
@@ -986,10 +1273,20 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetUnknownValue(string accept, RequestContext context)
         {
-            Argument.AssertNotNull(accept, nameof(accept));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetUnknownValue");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(accept, nameof(accept));
 
-            using HttpMessage message = CreateGetUnknownValueRequest(accept, context);
-            return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateGetUnknownValueRequest(accept, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1007,10 +1304,20 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetUnknownValueAsync(string accept, RequestContext context)
         {
-            Argument.AssertNotNull(accept, nameof(accept));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetUnknownValue");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(accept, nameof(accept));
 
-            using HttpMessage message = CreateGetUnknownValueRequest(accept, context);
-            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetUnknownValueRequest(accept, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> get extensible enum. </summary>
@@ -1054,10 +1361,20 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Response InternalProtocol(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.InternalProtocol");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateInternalProtocolRequest(content, context);
-            return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateInternalProtocolRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1075,10 +1392,20 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> InternalProtocolAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.InternalProtocol");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateInternalProtocolRequest(content, context);
-            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateInternalProtocolRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> When set protocol false and convenient true, then the protocol method should be internal. </summary>
@@ -1120,8 +1447,18 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Response StillConvenient(RequestContext context)
         {
-            using HttpMessage message = CreateStillConvenientRequest(context);
-            return Pipeline.ProcessMessage(message, context);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.StillConvenient");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateStillConvenientRequest(context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1137,8 +1474,18 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> StillConvenientAsync(RequestContext context)
         {
-            using HttpMessage message = CreateStillConvenientRequest(context);
-            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.StillConvenient");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateStillConvenientRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> When set protocol false and convenient true, the convenient method should be generated even it has the same signature as protocol one. </summary>
@@ -1172,10 +1519,20 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Response HeadAsBoolean(string id, RequestContext context)
         {
-            Argument.AssertNotNull(id, nameof(id));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HeadAsBoolean");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(id, nameof(id));
 
-            using HttpMessage message = CreateHeadAsBooleanRequest(id, context);
-            return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateHeadAsBooleanRequest(id, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1193,10 +1550,20 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> HeadAsBooleanAsync(string id, RequestContext context)
         {
-            Argument.AssertNotNull(id, nameof(id));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HeadAsBoolean");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(id, nameof(id));
 
-            using HttpMessage message = CreateHeadAsBooleanRequest(id, context);
-            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateHeadAsBooleanRequest(id, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> head as boolean. </summary>
@@ -1221,6 +1588,286 @@ namespace BasicTypeSpec
             Argument.AssertNotNull(id, nameof(id));
 
             return await HeadAsBooleanAsync(id, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] List things with nextlink
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> ListWithNextLink(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ListWithNextLink");
+            scope.Start();
+            try
+            {
+                return new BasicTypeSpecClientListWithNextLinkCollectionResult(this, null, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] List things with nextlink
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> ListWithNextLinkAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ListWithNextLink");
+            scope.Start();
+            try
+            {
+                return new BasicTypeSpecClientListWithNextLinkAsyncCollectionResult(this, null, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> List things with nextlink. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<ThingModel> ListWithNextLink(CancellationToken cancellationToken = default)
+        {
+            return new BasicTypeSpecClientListWithNextLinkCollectionResultOfT(this, null, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> List things with nextlink. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<ThingModel> ListWithNextLinkAsync(CancellationToken cancellationToken = default)
+        {
+            return new BasicTypeSpecClientListWithNextLinkAsyncCollectionResultOfT(this, null, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary>
+        /// [Protocol Method] List things with continuation token
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> ListWithContinuationToken(string token, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ListWithContinuationToken");
+            scope.Start();
+            try
+            {
+                return new BasicTypeSpecClientListWithContinuationTokenCollectionResult(this, token, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] List things with continuation token
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> ListWithContinuationTokenAsync(string token, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ListWithContinuationToken");
+            scope.Start();
+            try
+            {
+                return new BasicTypeSpecClientListWithContinuationTokenAsyncCollectionResult(this, token, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> List things with continuation token. </summary>
+        /// <param name="token"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<ThingModel> ListWithContinuationToken(string token = default, CancellationToken cancellationToken = default)
+        {
+            return new BasicTypeSpecClientListWithContinuationTokenCollectionResultOfT(this, token, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> List things with continuation token. </summary>
+        /// <param name="token"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<ThingModel> ListWithContinuationTokenAsync(string token = default, CancellationToken cancellationToken = default)
+        {
+            return new BasicTypeSpecClientListWithContinuationTokenAsyncCollectionResultOfT(this, token, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary>
+        /// [Protocol Method] List things with continuation token header response
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> ListWithContinuationTokenHeaderResponse(string token, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ListWithContinuationTokenHeaderResponse");
+            scope.Start();
+            try
+            {
+                return new BasicTypeSpecClientListWithContinuationTokenHeaderResponseCollectionResult(this, token, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] List things with continuation token header response
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> ListWithContinuationTokenHeaderResponseAsync(string token, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ListWithContinuationTokenHeaderResponse");
+            scope.Start();
+            try
+            {
+                return new BasicTypeSpecClientListWithContinuationTokenHeaderResponseAsyncCollectionResult(this, token, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> List things with continuation token header response. </summary>
+        /// <param name="token"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<ThingModel> ListWithContinuationTokenHeaderResponse(string token = default, CancellationToken cancellationToken = default)
+        {
+            return new BasicTypeSpecClientListWithContinuationTokenHeaderResponseCollectionResultOfT(this, token, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> List things with continuation token header response. </summary>
+        /// <param name="token"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<ThingModel> ListWithContinuationTokenHeaderResponseAsync(string token = default, CancellationToken cancellationToken = default)
+        {
+            return new BasicTypeSpecClientListWithContinuationTokenHeaderResponseAsyncCollectionResultOfT(this, token, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary>
+        /// [Protocol Method] List things with paging
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> ListWithPaging(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ListWithPaging");
+            scope.Start();
+            try
+            {
+                return new BasicTypeSpecClientListWithPagingCollectionResult(this, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] List things with paging
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> ListWithPagingAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ListWithPaging");
+            scope.Start();
+            try
+            {
+                return new BasicTypeSpecClientListWithPagingAsyncCollectionResult(this, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> List things with paging. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<ThingModel> ListWithPaging(CancellationToken cancellationToken = default)
+        {
+            return new BasicTypeSpecClientListWithPagingCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> List things with paging. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<ThingModel> ListWithPagingAsync(CancellationToken cancellationToken = default)
+        {
+            return new BasicTypeSpecClientListWithPagingAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
     }
 }

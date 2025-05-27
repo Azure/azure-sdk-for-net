@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Automation
 {
     public partial class AutomationVariableResource : IJsonModel<AutomationVariableData>
     {
+        private static AutomationVariableData s_dataDeserializationInstance;
+        private static AutomationVariableData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AutomationVariableData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutomationVariableData>)Data).Write(writer, options);
 
-        AutomationVariableData IJsonModel<AutomationVariableData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationVariableData>)Data).Create(ref reader, options);
+        AutomationVariableData IJsonModel<AutomationVariableData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationVariableData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AutomationVariableData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AutomationVariableData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutomationVariableData>(Data, options, AzureResourceManagerAutomationContext.Default);
 
-        AutomationVariableData IPersistableModel<AutomationVariableData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationVariableData>(data, options);
+        AutomationVariableData IPersistableModel<AutomationVariableData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationVariableData>(data, options, AzureResourceManagerAutomationContext.Default);
 
-        string IPersistableModel<AutomationVariableData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationVariableData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AutomationVariableData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationVariableData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

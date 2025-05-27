@@ -34,31 +34,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(MachineLearningServicesDatasetDriftDetectedEventData)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(DataDriftId))
-            {
-                writer.WritePropertyName("dataDriftId"u8);
-                writer.WriteStringValue(DataDriftId);
-            }
-            if (Optional.IsDefined(DataDriftName))
-            {
-                writer.WritePropertyName("dataDriftName"u8);
-                writer.WriteStringValue(DataDriftName);
-            }
-            if (Optional.IsDefined(RunId))
-            {
-                writer.WritePropertyName("runId"u8);
-                writer.WriteStringValue(RunId);
-            }
-            if (Optional.IsDefined(BaseDatasetId))
-            {
-                writer.WritePropertyName("baseDatasetId"u8);
-                writer.WriteStringValue(BaseDatasetId);
-            }
-            if (Optional.IsDefined(TargetDatasetId))
-            {
-                writer.WritePropertyName("targetDatasetId"u8);
-                writer.WriteStringValue(TargetDatasetId);
-            }
+            writer.WritePropertyName("dataDriftId"u8);
+            writer.WriteStringValue(DataDriftId);
+            writer.WritePropertyName("dataDriftName"u8);
+            writer.WriteStringValue(DataDriftName);
+            writer.WritePropertyName("runId"u8);
+            writer.WriteStringValue(RunId);
+            writer.WritePropertyName("baseDatasetId"u8);
+            writer.WriteStringValue(BaseDatasetId);
+            writer.WritePropertyName("targetDatasetId"u8);
+            writer.WriteStringValue(TargetDatasetId);
             if (Optional.IsDefined(DriftCoefficient))
             {
                 writer.WritePropertyName("driftCoefficient"u8);
@@ -66,13 +51,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             if (Optional.IsDefined(StartTime))
             {
-                writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartTime.Value, "O");
+                if (StartTime != null)
+                {
+                    writer.WritePropertyName("startTime"u8);
+                    writer.WriteStringValue(StartTime.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("startTime");
+                }
             }
             if (Optional.IsDefined(EndTime))
             {
-                writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndTime.Value, "O");
+                if (EndTime != null)
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndTime.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("endTime");
+                }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -161,6 +160,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        startTime = null;
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
@@ -170,6 +170,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        endTime = null;
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");
@@ -200,7 +201,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningServicesDatasetDriftDetectedEventData)} does not support writing '{options.Format}' format.");
             }

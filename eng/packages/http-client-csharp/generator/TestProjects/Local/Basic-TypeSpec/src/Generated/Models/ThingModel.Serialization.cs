@@ -17,10 +17,13 @@ namespace BasicTypeSpec
     /// <summary></summary>
     public partial class ThingModel : IJsonModel<ThingModel>
     {
+        /// <summary> Initializes a new instance of <see cref="ThingModel"/> for deserialization. </summary>
         internal ThingModel()
         {
         }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ThingModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -49,27 +52,27 @@ namespace BasicTypeSpec
             }
 #endif
             writer.WritePropertyName("requiredLiteralString"u8);
-            writer.WriteStringValue(RequiredLiteralString.ToString());
+            writer.WriteStringValue(RequiredLiteralString);
             writer.WritePropertyName("requiredLiteralInt"u8);
-            writer.WriteNumberValue(RequiredLiteralInt.ToSerialInt32());
+            writer.WriteNumberValue(RequiredLiteralInt);
             writer.WritePropertyName("requiredLiteralFloat"u8);
-            writer.WriteNumberValue(RequiredLiteralFloat.ToSerialSingle());
+            writer.WriteNumberValue(RequiredLiteralFloat);
             writer.WritePropertyName("requiredLiteralBool"u8);
             writer.WriteBooleanValue(RequiredLiteralBool);
             if (Optional.IsDefined(OptionalLiteralString))
             {
                 writer.WritePropertyName("optionalLiteralString"u8);
-                writer.WriteStringValue(OptionalLiteralString.Value.ToString());
+                writer.WriteStringValue(OptionalLiteralString);
             }
             if (Optional.IsDefined(OptionalLiteralInt))
             {
                 writer.WritePropertyName("optionalLiteralInt"u8);
-                writer.WriteNumberValue(OptionalLiteralInt.Value.ToSerialInt32());
+                writer.WriteNumberValue(OptionalLiteralInt.Value);
             }
             if (Optional.IsDefined(OptionalLiteralFloat))
             {
                 writer.WritePropertyName("optionalLiteralFloat"u8);
-                writer.WriteNumberValue(OptionalLiteralFloat.Value.ToSerialSingle());
+                writer.WriteNumberValue(OptionalLiteralFloat.Value);
             }
             if (Optional.IsDefined(OptionalLiteralBool))
             {
@@ -119,6 +122,8 @@ namespace BasicTypeSpec
             }
         }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ThingModel IJsonModel<ThingModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -134,6 +139,8 @@ namespace BasicTypeSpec
             return DeserializeThingModel(document.RootElement, options);
         }
 
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         internal static ThingModel DeserializeThingModel(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -142,13 +149,13 @@ namespace BasicTypeSpec
             }
             string name = default;
             BinaryData requiredUnion = default;
-            ThingModelRequiredLiteralString requiredLiteralString = default;
-            ThingModelRequiredLiteralInt requiredLiteralInt = default;
-            ThingModelRequiredLiteralFloat requiredLiteralFloat = default;
+            string requiredLiteralString = default;
+            int requiredLiteralInt = default;
+            float requiredLiteralFloat = default;
             bool requiredLiteralBool = default;
-            ThingModelOptionalLiteralString? optionalLiteralString = default;
-            ThingModelOptionalLiteralInt? optionalLiteralInt = default;
-            ThingModelOptionalLiteralFloat? optionalLiteralFloat = default;
+            string optionalLiteralString = default;
+            int? optionalLiteralInt = default;
+            float? optionalLiteralFloat = default;
             bool? optionalLiteralBool = default;
             string requiredBadDescription = default;
             IList<int> optionalNullableList = default;
@@ -168,17 +175,17 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("requiredLiteralString"u8))
                 {
-                    requiredLiteralString = new ThingModelRequiredLiteralString(prop.Value.GetString());
+                    requiredLiteralString = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("requiredLiteralInt"u8))
                 {
-                    requiredLiteralInt = new ThingModelRequiredLiteralInt(prop.Value.GetInt32());
+                    requiredLiteralInt = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("requiredLiteralFloat"u8))
                 {
-                    requiredLiteralFloat = new ThingModelRequiredLiteralFloat(prop.Value.GetSingle());
+                    requiredLiteralFloat = prop.Value.GetSingle();
                     continue;
                 }
                 if (prop.NameEquals("requiredLiteralBool"u8))
@@ -188,11 +195,7 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("optionalLiteralString"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    optionalLiteralString = new ThingModelOptionalLiteralString(prop.Value.GetString());
+                    optionalLiteralString = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("optionalLiteralInt"u8))
@@ -201,7 +204,7 @@ namespace BasicTypeSpec
                     {
                         continue;
                     }
-                    optionalLiteralInt = new ThingModelOptionalLiteralInt(prop.Value.GetInt32());
+                    optionalLiteralInt = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("optionalLiteralFloat"u8))
@@ -210,7 +213,7 @@ namespace BasicTypeSpec
                     {
                         continue;
                     }
-                    optionalLiteralFloat = new ThingModelOptionalLiteralFloat(prop.Value.GetSingle());
+                    optionalLiteralFloat = prop.Value.GetSingle();
                     continue;
                 }
                 if (prop.NameEquals("optionalLiteralBool"u8))
@@ -278,6 +281,7 @@ namespace BasicTypeSpec
                 additionalBinaryDataProperties);
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ThingModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -287,12 +291,14 @@ namespace BasicTypeSpec
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, BasicTypeSpecContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ThingModel)} does not support writing '{options.Format}' format.");
             }
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ThingModel IPersistableModel<ThingModel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
@@ -312,6 +318,7 @@ namespace BasicTypeSpec
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ThingModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="thingModel"> The <see cref="ThingModel"/> to serialize into <see cref="RequestContent"/>. </param>

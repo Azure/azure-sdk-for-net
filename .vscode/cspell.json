@@ -115,6 +115,7 @@
     "kusto",
     "Kustomization",
     "Kustomizations",
+    "Liftr",
     "listsas",
     "lucene",
     "mgmt",
@@ -197,7 +198,15 @@
     {
       "filename": "**/sdk/ai/**/*.cs",
       "words": [
-        "Ubinary"
+        "Ubinary",
+        "Ansii",
+        "Atbash",
+        "Bleu",
+        "azureai",
+        "bleu",
+        "azureai",
+        "Gleu",
+        "gleu"
       ]
     },
     {
@@ -915,7 +924,8 @@
         "Apac",
         "Latam",
         "Fips",
-        "Diffie"
+        "Diffie",
+        "Reimage"
       ]
     },
     {
@@ -1246,7 +1256,8 @@
         "vcpus",
         "esxi",
         "seleted",
-        "dras"
+        "dras",
+        "fqdns"
       ]
     },
     {
@@ -1385,7 +1396,8 @@
         "Stdev",
         "Unrestorable",
         "Vcores",
-        "Dtcs"
+        "Dtcs",
+        "Freemium"
       ]
     },
     {
@@ -1564,6 +1576,15 @@
         "hana",
         "ssdlrs",
         "Mbps"
+      ]
+    },
+    {
+      "filename": "**/sdk/workloadssapvirtualinstance/**/*.cs",
+      "words": [
+        "acss",
+        "ascs",
+        "hana",
+        "mbps"
       ]
     },
     {

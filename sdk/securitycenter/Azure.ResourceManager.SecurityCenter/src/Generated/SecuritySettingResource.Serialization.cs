@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class SecuritySettingResource : IJsonModel<SecuritySettingData>
     {
+        private static SecuritySettingData s_dataDeserializationInstance;
+        private static SecuritySettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecuritySettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecuritySettingData>)Data).Write(writer, options);
 
-        SecuritySettingData IJsonModel<SecuritySettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecuritySettingData>)Data).Create(ref reader, options);
+        SecuritySettingData IJsonModel<SecuritySettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecuritySettingData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecuritySettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecuritySettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecuritySettingData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        SecuritySettingData IPersistableModel<SecuritySettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecuritySettingData>(data, options);
+        SecuritySettingData IPersistableModel<SecuritySettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecuritySettingData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<SecuritySettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecuritySettingData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecuritySettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecuritySettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

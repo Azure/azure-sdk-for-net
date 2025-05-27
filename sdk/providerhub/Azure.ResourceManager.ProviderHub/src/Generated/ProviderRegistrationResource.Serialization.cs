@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ProviderHub
 {
     public partial class ProviderRegistrationResource : IJsonModel<ProviderRegistrationData>
     {
+        private static ProviderRegistrationData s_dataDeserializationInstance;
+        private static ProviderRegistrationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ProviderRegistrationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ProviderRegistrationData>)Data).Write(writer, options);
 
-        ProviderRegistrationData IJsonModel<ProviderRegistrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProviderRegistrationData>)Data).Create(ref reader, options);
+        ProviderRegistrationData IJsonModel<ProviderRegistrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProviderRegistrationData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ProviderRegistrationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ProviderRegistrationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProviderRegistrationData>(Data, options, AzureResourceManagerProviderHubContext.Default);
 
-        ProviderRegistrationData IPersistableModel<ProviderRegistrationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProviderRegistrationData>(data, options);
+        ProviderRegistrationData IPersistableModel<ProviderRegistrationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProviderRegistrationData>(data, options, AzureResourceManagerProviderHubContext.Default);
 
-        string IPersistableModel<ProviderRegistrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProviderRegistrationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ProviderRegistrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProviderRegistrationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

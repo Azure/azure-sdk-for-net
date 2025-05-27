@@ -51,7 +51,6 @@ function IsSpecDir {
 }
 
 $failingSpecs = @(
-    Join-Path 'http' 'payload' 'pageable'
     Join-Path 'http' 'payload' 'xml'
     Join-Path 'http' 'server' 'path' 'multiple'
     Join-Path 'http' 'server' 'versions' 'versioned'
@@ -68,7 +67,6 @@ $failingSpecs = @(
     Join-Path 'http' 'client' 'structure' 'multi-client'
     Join-Path 'http' 'client' 'structure' 'two-operation-group'
     Join-Path 'http' 'response' 'status-code-range' # Response namespace conflicts with Azure.Response
-    Join-Path 'http' 'routes'
     # Azure scenarios not yet buildable
     Join-Path 'http' 'client' 'namespace'
     Join-Path 'http' 'azure' 'client-generator-core' 'access'
@@ -78,15 +76,12 @@ $failingSpecs = @(
     Join-Path 'http' 'azure' 'client-generator-core' 'api-version' 'path'
     Join-Path 'http' 'azure' 'client-generator-core' 'api-version' 'query'
     Join-Path 'http' 'azure' 'core' 'basic'
-    Join-Path 'http' 'azure' 'core' 'lro' 'rpc'
-    Join-Path 'http' 'azure' 'core' 'lro' 'standard'
-    Join-Path 'http' 'azure' 'core' 'model'
     Join-Path 'http' 'azure' 'core' 'page'
     Join-Path 'http' 'azure' 'core' 'scalar'
     Join-Path 'http' 'azure' 'core' 'traits'
     Join-Path 'http' 'azure' 'encode' 'duration'
     Join-Path 'http' 'azure' 'payload' 'pageable'
-    # These scenarios will be covered in Azure.Generator.Mgmt
+    # These scenarios will be covered in Azure.Generator.Management
     Join-Path 'http' 'azure' 'resource-manager' 'common-properties'
     Join-Path 'http' 'azure' 'resource-manager' 'non-resource'
     Join-Path 'http' 'azure' 'resource-manager' 'operation-templates'

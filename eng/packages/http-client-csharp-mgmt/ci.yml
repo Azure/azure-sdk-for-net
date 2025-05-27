@@ -4,7 +4,6 @@ trigger:
       - main
   paths:
     include:
-      - eng/packages/http-client-csharp
       - eng/packages/http-client-csharp-mgmt
       - eng/scripts/typespec
 pr:
@@ -16,10 +15,9 @@ pr:
       - release/*
   paths:
     include:
-      - eng/packages/http-client-csharp
       - eng/packages/http-client-csharp-mgmt
       - eng/scripts/typespec
-
+      
 parameters:
   - name: UseTypeSpecNext
     displayName: "Use TypeSpec Next"

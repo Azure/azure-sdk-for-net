@@ -35,23 +35,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(DeliveryStatus))
+            writer.WritePropertyName("deliveryStatus"u8);
+            writer.WriteStringValue(DeliveryStatus);
+            writer.WritePropertyName("deliveryStatusDetails"u8);
+            writer.WriteStringValue(DeliveryStatusDetails);
+            if (options.Format != "W")
             {
-                writer.WritePropertyName("deliveryStatus"u8);
-                writer.WriteStringValue(DeliveryStatus);
+                writer.WritePropertyName("deliveryAttempts"u8);
+                writer.WriteStartArray();
+                foreach (var item in DeliveryAttempts)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DeliveryStatusDetails))
-            {
-                writer.WritePropertyName("deliveryStatusDetails"u8);
-                writer.WriteStringValue(DeliveryStatusDetails);
-            }
-            writer.WritePropertyName("deliveryAttempts"u8);
-            writer.WriteStartArray();
-            foreach (var item in DeliveryAttempts)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
             if (Optional.IsDefined(ReceivedTimestamp))
             {
                 writer.WritePropertyName("receivedTimestamp"u8);
@@ -170,7 +167,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AcsSmsDeliveryReportReceivedEventData)} does not support writing '{options.Format}' format.");
             }

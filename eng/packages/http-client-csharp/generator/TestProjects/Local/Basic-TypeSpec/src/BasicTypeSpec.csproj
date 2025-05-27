@@ -12,6 +12,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/RawRequestUriBuilder.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/TypeFormatters.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/RequestHeaderExtensions.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/AppContextSwitchHelper.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/ClientDiagnostics.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/DiagnosticScopeFactory.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/DiagnosticScope.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/HttpMessageSanitizer.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/TrimmingAttribute.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/NoValueResponseOfT.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
   <ItemGroup>
