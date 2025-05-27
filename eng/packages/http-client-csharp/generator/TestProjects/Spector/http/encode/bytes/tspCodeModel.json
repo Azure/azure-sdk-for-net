@@ -915,27 +915,7 @@
           "name": "value",
           "nameInRequest": "value",
           "type": {
-           "$id": "109",
-           "kind": "array",
-           "name": "Array",
-           "valueType": {
-            "$id": "110",
-            "kind": "bytes",
-            "name": "base64urlBytes",
-            "encode": "base64url",
-            "crossLanguageDefinitionId": "Encode.Bytes.base64urlBytes",
-            "baseType": {
-             "$id": "111",
-             "kind": "bytes",
-             "name": "bytes",
-             "encode": "base64",
-             "crossLanguageDefinitionId": "TypeSpec.bytes",
-             "decorators": []
-            },
-            "decorators": []
-           },
-           "crossLanguageDefinitionId": "TypeSpec.Array",
-           "decorators": []
+           "$ref": "71"
           },
           "location": "Query",
           "isApiVersion": false,
@@ -951,7 +931,7 @@
         ],
         "responses": [
          {
-          "$id": "112",
+          "$id": "109",
           "statusCodes": [
            204
           ],
@@ -970,31 +950,11 @@
        },
        "parameters": [
         {
-         "$id": "113",
+         "$id": "110",
          "name": "value",
          "nameInRequest": "value",
          "type": {
-          "$id": "114",
-          "kind": "array",
-          "name": "Array",
-          "valueType": {
-           "$id": "115",
-           "kind": "bytes",
-           "name": "base64urlBytes",
-           "encode": "base64url",
-           "crossLanguageDefinitionId": "Encode.Bytes.base64urlBytes",
-           "baseType": {
-            "$id": "116",
-            "kind": "bytes",
-            "name": "bytes",
-            "encode": "base64",
-            "crossLanguageDefinitionId": "TypeSpec.bytes",
-            "decorators": []
-           },
-           "decorators": []
-          },
-          "crossLanguageDefinitionId": "TypeSpec.Array",
-          "decorators": []
+          "$ref": "71"
          },
          "location": "Query",
          "isApiVersion": false,
@@ -1008,7 +968,7 @@
         }
        ],
        "response": {
-        "$id": "117"
+        "$id": "111"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -1018,12 +978,12 @@
      ],
      "parameters": [
       {
-       "$id": "118",
+       "$id": "112",
        "name": "endpoint",
        "nameInRequest": "endpoint",
        "doc": "Service host",
        "type": {
-        "$id": "119",
+        "$id": "113",
         "kind": "url",
         "name": "url",
         "crossLanguageDefinitionId": "TypeSpec.url"
@@ -1037,9 +997,9 @@
        "explode": false,
        "kind": "Client",
        "defaultValue": {
-        "$id": "120",
+        "$id": "114",
         "type": {
-         "$id": "121",
+         "$id": "115",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1056,25 +1016,25 @@
      }
     },
     {
-     "$id": "122",
+     "$id": "116",
      "kind": "client",
      "name": "Property",
      "namespace": "Encode.Bytes.Property",
      "methods": [
       {
-       "$id": "123",
+       "$id": "117",
        "kind": "basic",
        "name": "default",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "124",
+        "$id": "118",
         "name": "default",
         "resourceName": "Property",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "125",
+          "$id": "119",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/json",
@@ -1092,7 +1052,7 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "126",
+          "$id": "120",
           "name": "accept",
           "nameInRequest": "Accept",
           "type": {
@@ -1109,7 +1069,7 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "127",
+          "$id": "121",
           "name": "body",
           "nameInRequest": "body",
           "type": {
@@ -1128,7 +1088,7 @@
         ],
         "responses": [
          {
-          "$id": "128",
+          "$id": "122",
           "statusCodes": [
            200
           ],
@@ -1156,7 +1116,7 @@
        },
        "parameters": [
         {
-         "$id": "129",
+         "$id": "123",
          "name": "body",
          "nameInRequest": "body",
          "type": {
@@ -1173,7 +1133,7 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "130",
+         "$id": "124",
          "name": "contentType",
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
@@ -1191,7 +1151,7 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "131",
+         "$id": "125",
          "name": "accept",
          "nameInRequest": "accept",
          "type": {
@@ -1209,7 +1169,7 @@
         }
        ],
        "response": {
-        "$id": "132",
+        "$id": "126",
         "type": {
          "$ref": "54"
         }
@@ -1220,19 +1180,19 @@
        "crossLanguageDefinitionId": "Encode.Bytes.Property.default"
       },
       {
-       "$id": "133",
+       "$id": "127",
        "kind": "basic",
        "name": "base64",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "134",
+        "$id": "128",
         "name": "base64",
         "resourceName": "Property",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "135",
+          "$id": "129",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/json",
@@ -1250,7 +1210,7 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "136",
+          "$id": "130",
           "name": "accept",
           "nameInRequest": "Accept",
           "type": {
@@ -1267,7 +1227,7 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "137",
+          "$id": "131",
           "name": "body",
           "nameInRequest": "body",
           "type": {
@@ -1286,7 +1246,7 @@
         ],
         "responses": [
          {
-          "$id": "138",
+          "$id": "132",
           "statusCodes": [
            200
           ],
@@ -1314,7 +1274,7 @@
        },
        "parameters": [
         {
-         "$id": "139",
+         "$id": "133",
          "name": "body",
          "nameInRequest": "body",
          "type": {
@@ -1331,7 +1291,7 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "140",
+         "$id": "134",
          "name": "contentType",
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
@@ -1349,7 +1309,7 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "141",
+         "$id": "135",
          "name": "accept",
          "nameInRequest": "accept",
          "type": {
@@ -1367,7 +1327,7 @@
         }
        ],
        "response": {
-        "$id": "142",
+        "$id": "136",
         "type": {
          "$ref": "59"
         }
@@ -1378,19 +1338,19 @@
        "crossLanguageDefinitionId": "Encode.Bytes.Property.base64"
       },
       {
-       "$id": "143",
+       "$id": "137",
        "kind": "basic",
        "name": "base64url",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "144",
+        "$id": "138",
         "name": "base64url",
         "resourceName": "Property",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "145",
+          "$id": "139",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/json",
@@ -1408,7 +1368,7 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "146",
+          "$id": "140",
           "name": "accept",
           "nameInRequest": "Accept",
           "type": {
@@ -1425,7 +1385,7 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "147",
+          "$id": "141",
           "name": "body",
           "nameInRequest": "body",
           "type": {
@@ -1444,7 +1404,7 @@
         ],
         "responses": [
          {
-          "$id": "148",
+          "$id": "142",
           "statusCodes": [
            200
           ],
@@ -1472,7 +1432,7 @@
        },
        "parameters": [
         {
-         "$id": "149",
+         "$id": "143",
          "name": "body",
          "nameInRequest": "body",
          "type": {
@@ -1489,7 +1449,7 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "150",
+         "$id": "144",
          "name": "contentType",
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
@@ -1507,7 +1467,7 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "151",
+         "$id": "145",
          "name": "accept",
          "nameInRequest": "accept",
          "type": {
@@ -1525,7 +1485,7 @@
         }
        ],
        "response": {
-        "$id": "152",
+        "$id": "146",
         "type": {
          "$ref": "64"
         }
@@ -1536,19 +1496,19 @@
        "crossLanguageDefinitionId": "Encode.Bytes.Property.base64url"
       },
       {
-       "$id": "153",
+       "$id": "147",
        "kind": "basic",
        "name": "base64urlArray",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "154",
+        "$id": "148",
         "name": "base64urlArray",
         "resourceName": "Property",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "155",
+          "$id": "149",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/json",
@@ -1566,7 +1526,7 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "156",
+          "$id": "150",
           "name": "accept",
           "nameInRequest": "Accept",
           "type": {
@@ -1583,7 +1543,7 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "157",
+          "$id": "151",
           "name": "body",
           "nameInRequest": "body",
           "type": {
@@ -1602,7 +1562,7 @@
         ],
         "responses": [
          {
-          "$id": "158",
+          "$id": "152",
           "statusCodes": [
            200
           ],
@@ -1630,7 +1590,7 @@
        },
        "parameters": [
         {
-         "$id": "159",
+         "$id": "153",
          "name": "body",
          "nameInRequest": "body",
          "type": {
@@ -1647,7 +1607,7 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "160",
+         "$id": "154",
          "name": "contentType",
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
@@ -1665,7 +1625,7 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "161",
+         "$id": "155",
          "name": "accept",
          "nameInRequest": "accept",
          "type": {
@@ -1683,7 +1643,7 @@
         }
        ],
        "response": {
-        "$id": "162",
+        "$id": "156",
         "type": {
          "$ref": "69"
         }
@@ -1696,12 +1656,12 @@
      ],
      "parameters": [
       {
-       "$id": "163",
+       "$id": "157",
        "name": "endpoint",
        "nameInRequest": "endpoint",
        "doc": "Service host",
        "type": {
-        "$id": "164",
+        "$id": "158",
         "kind": "url",
         "name": "url",
         "crossLanguageDefinitionId": "TypeSpec.url"
@@ -1715,9 +1675,9 @@
        "explode": false,
        "kind": "Client",
        "defaultValue": {
-        "$id": "165",
+        "$id": "159",
         "type": {
-         "$id": "166",
+         "$id": "160",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1734,29 +1694,29 @@
      }
     },
     {
-     "$id": "167",
+     "$id": "161",
      "kind": "client",
      "name": "Header",
      "namespace": "Encode.Bytes.Header",
      "methods": [
       {
-       "$id": "168",
+       "$id": "162",
        "kind": "basic",
        "name": "default",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "169",
+        "$id": "163",
         "name": "default",
         "resourceName": "Header",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "170",
+          "$id": "164",
           "name": "value",
           "nameInRequest": "value",
           "type": {
-           "$id": "171",
+           "$id": "165",
            "kind": "bytes",
            "name": "bytes",
            "encode": "base64",
@@ -1776,7 +1736,7 @@
         ],
         "responses": [
          {
-          "$id": "172",
+          "$id": "166",
           "statusCodes": [
            204
           ],
@@ -1795,11 +1755,11 @@
        },
        "parameters": [
         {
-         "$id": "173",
+         "$id": "167",
          "name": "value",
          "nameInRequest": "value",
          "type": {
-          "$id": "174",
+          "$id": "168",
           "kind": "bytes",
           "name": "bytes",
           "encode": "base64",
@@ -1818,7 +1778,7 @@
         }
        ],
        "response": {
-        "$id": "175"
+        "$id": "169"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -1826,23 +1786,23 @@
        "crossLanguageDefinitionId": "Encode.Bytes.Header.default"
       },
       {
-       "$id": "176",
+       "$id": "170",
        "kind": "basic",
        "name": "base64",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "177",
+        "$id": "171",
         "name": "base64",
         "resourceName": "Header",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "178",
+          "$id": "172",
           "name": "value",
           "nameInRequest": "value",
           "type": {
-           "$id": "179",
+           "$id": "173",
            "kind": "bytes",
            "name": "bytes",
            "encode": "base64",
@@ -1862,7 +1822,7 @@
         ],
         "responses": [
          {
-          "$id": "180",
+          "$id": "174",
           "statusCodes": [
            204
           ],
@@ -1881,11 +1841,11 @@
        },
        "parameters": [
         {
-         "$id": "181",
+         "$id": "175",
          "name": "value",
          "nameInRequest": "value",
          "type": {
-          "$id": "182",
+          "$id": "176",
           "kind": "bytes",
           "name": "bytes",
           "encode": "base64",
@@ -1904,7 +1864,7 @@
         }
        ],
        "response": {
-        "$id": "183"
+        "$id": "177"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -1912,23 +1872,23 @@
        "crossLanguageDefinitionId": "Encode.Bytes.Header.base64"
       },
       {
-       "$id": "184",
+       "$id": "178",
        "kind": "basic",
        "name": "base64url",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "185",
+        "$id": "179",
         "name": "base64url",
         "resourceName": "Header",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "186",
+          "$id": "180",
           "name": "value",
           "nameInRequest": "value",
           "type": {
-           "$id": "187",
+           "$id": "181",
            "kind": "bytes",
            "name": "bytes",
            "encode": "base64url",
@@ -1948,7 +1908,7 @@
         ],
         "responses": [
          {
-          "$id": "188",
+          "$id": "182",
           "statusCodes": [
            204
           ],
@@ -1967,11 +1927,11 @@
        },
        "parameters": [
         {
-         "$id": "189",
+         "$id": "183",
          "name": "value",
          "nameInRequest": "value",
          "type": {
-          "$id": "190",
+          "$id": "184",
           "kind": "bytes",
           "name": "bytes",
           "encode": "base64url",
@@ -1990,7 +1950,7 @@
         }
        ],
        "response": {
-        "$id": "191"
+        "$id": "185"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -1998,43 +1958,23 @@
        "crossLanguageDefinitionId": "Encode.Bytes.Header.base64url"
       },
       {
-       "$id": "192",
+       "$id": "186",
        "kind": "basic",
        "name": "base64urlArray",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "193",
+        "$id": "187",
         "name": "base64urlArray",
         "resourceName": "Header",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "194",
+          "$id": "188",
           "name": "value",
           "nameInRequest": "value",
           "type": {
-           "$id": "195",
-           "kind": "array",
-           "name": "Array",
-           "valueType": {
-            "$id": "196",
-            "kind": "bytes",
-            "name": "base64urlBytes",
-            "encode": "base64url",
-            "crossLanguageDefinitionId": "Encode.Bytes.base64urlBytes",
-            "baseType": {
-             "$id": "197",
-             "kind": "bytes",
-             "name": "bytes",
-             "encode": "base64",
-             "crossLanguageDefinitionId": "TypeSpec.bytes",
-             "decorators": []
-            },
-            "decorators": []
-           },
-           "crossLanguageDefinitionId": "TypeSpec.Array",
-           "decorators": []
+           "$ref": "71"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -2050,7 +1990,7 @@
         ],
         "responses": [
          {
-          "$id": "198",
+          "$id": "189",
           "statusCodes": [
            204
           ],
@@ -2069,31 +2009,11 @@
        },
        "parameters": [
         {
-         "$id": "199",
+         "$id": "190",
          "name": "value",
          "nameInRequest": "value",
          "type": {
-          "$id": "200",
-          "kind": "array",
-          "name": "Array",
-          "valueType": {
-           "$id": "201",
-           "kind": "bytes",
-           "name": "base64urlBytes",
-           "encode": "base64url",
-           "crossLanguageDefinitionId": "Encode.Bytes.base64urlBytes",
-           "baseType": {
-            "$id": "202",
-            "kind": "bytes",
-            "name": "bytes",
-            "encode": "base64",
-            "crossLanguageDefinitionId": "TypeSpec.bytes",
-            "decorators": []
-           },
-           "decorators": []
-          },
-          "crossLanguageDefinitionId": "TypeSpec.Array",
-          "decorators": []
+          "$ref": "71"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -2107,7 +2027,7 @@
         }
        ],
        "response": {
-        "$id": "203"
+        "$id": "191"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -2117,12 +2037,12 @@
      ],
      "parameters": [
       {
-       "$id": "204",
+       "$id": "192",
        "name": "endpoint",
        "nameInRequest": "endpoint",
        "doc": "Service host",
        "type": {
-        "$id": "205",
+        "$id": "193",
         "kind": "url",
         "name": "url",
         "crossLanguageDefinitionId": "TypeSpec.url"
@@ -2136,9 +2056,9 @@
        "explode": false,
        "kind": "Client",
        "defaultValue": {
-        "$id": "206",
+        "$id": "194",
         "type": {
-         "$id": "207",
+         "$id": "195",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -2155,25 +2075,25 @@
      }
     },
     {
-     "$id": "208",
+     "$id": "196",
      "kind": "client",
      "name": "RequestBody",
      "namespace": "Encode.Bytes.RequestBody",
      "methods": [
       {
-       "$id": "209",
+       "$id": "197",
        "kind": "basic",
        "name": "default",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "210",
+        "$id": "198",
         "name": "default",
         "resourceName": "RequestBody",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "211",
+          "$id": "199",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/octet-stream",
@@ -2191,11 +2111,11 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "212",
+          "$id": "200",
           "name": "value",
           "nameInRequest": "value",
           "type": {
-           "$id": "213",
+           "$id": "201",
            "kind": "bytes",
            "name": "bytes",
            "crossLanguageDefinitionId": "TypeSpec.bytes",
@@ -2214,7 +2134,7 @@
         ],
         "responses": [
          {
-          "$id": "214",
+          "$id": "202",
           "statusCodes": [
            204
           ],
@@ -2236,11 +2156,11 @@
        },
        "parameters": [
         {
-         "$id": "215",
+         "$id": "203",
          "name": "value",
          "nameInRequest": "value",
          "type": {
-          "$id": "216",
+          "$id": "204",
           "kind": "bytes",
           "name": "bytes",
           "crossLanguageDefinitionId": "TypeSpec.bytes",
@@ -2257,7 +2177,7 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "217",
+         "$id": "205",
          "name": "contentType",
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/octet-stream",
@@ -2276,7 +2196,7 @@
         }
        ],
        "response": {
-        "$id": "218"
+        "$id": "206"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -2284,19 +2204,19 @@
        "crossLanguageDefinitionId": "Encode.Bytes.RequestBody.default"
       },
       {
-       "$id": "219",
+       "$id": "207",
        "kind": "basic",
        "name": "octetStream",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "220",
+        "$id": "208",
         "name": "octetStream",
         "resourceName": "RequestBody",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "221",
+          "$id": "209",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "type": {
@@ -2313,11 +2233,11 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "222",
+          "$id": "210",
           "name": "value",
           "nameInRequest": "value",
           "type": {
-           "$id": "223",
+           "$id": "211",
            "kind": "bytes",
            "name": "bytes",
            "crossLanguageDefinitionId": "TypeSpec.bytes",
@@ -2336,7 +2256,7 @@
         ],
         "responses": [
          {
-          "$id": "224",
+          "$id": "212",
           "statusCodes": [
            204
           ],
@@ -2358,7 +2278,7 @@
        },
        "parameters": [
         {
-         "$id": "225",
+         "$id": "213",
          "name": "contentType",
          "nameInRequest": "content-type",
          "type": {
@@ -2375,11 +2295,11 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "226",
+         "$id": "214",
          "name": "value",
          "nameInRequest": "value",
          "type": {
-          "$id": "227",
+          "$id": "215",
           "kind": "bytes",
           "name": "bytes",
           "crossLanguageDefinitionId": "TypeSpec.bytes",
@@ -2397,7 +2317,7 @@
         }
        ],
        "response": {
-        "$id": "228"
+        "$id": "216"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -2405,19 +2325,19 @@
        "crossLanguageDefinitionId": "Encode.Bytes.RequestBody.octetStream"
       },
       {
-       "$id": "229",
+       "$id": "217",
        "kind": "basic",
        "name": "customContentType",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "230",
+        "$id": "218",
         "name": "customContentType",
         "resourceName": "RequestBody",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "231",
+          "$id": "219",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "type": {
@@ -2434,11 +2354,11 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "232",
+          "$id": "220",
           "name": "value",
           "nameInRequest": "value",
           "type": {
-           "$id": "233",
+           "$id": "221",
            "kind": "bytes",
            "name": "bytes",
            "crossLanguageDefinitionId": "TypeSpec.bytes",
@@ -2457,7 +2377,7 @@
         ],
         "responses": [
          {
-          "$id": "234",
+          "$id": "222",
           "statusCodes": [
            204
           ],
@@ -2479,7 +2399,7 @@
        },
        "parameters": [
         {
-         "$id": "235",
+         "$id": "223",
          "name": "contentType",
          "nameInRequest": "content-type",
          "type": {
@@ -2496,11 +2416,11 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "236",
+         "$id": "224",
          "name": "value",
          "nameInRequest": "value",
          "type": {
-          "$id": "237",
+          "$id": "225",
           "kind": "bytes",
           "name": "bytes",
           "crossLanguageDefinitionId": "TypeSpec.bytes",
@@ -2518,7 +2438,7 @@
         }
        ],
        "response": {
-        "$id": "238"
+        "$id": "226"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -2526,19 +2446,19 @@
        "crossLanguageDefinitionId": "Encode.Bytes.RequestBody.customContentType"
       },
       {
-       "$id": "239",
+       "$id": "227",
        "kind": "basic",
        "name": "base64",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "240",
+        "$id": "228",
         "name": "base64",
         "resourceName": "RequestBody",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "241",
+          "$id": "229",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "type": {
@@ -2555,11 +2475,11 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "242",
+          "$id": "230",
           "name": "value",
           "nameInRequest": "value",
           "type": {
-           "$id": "243",
+           "$id": "231",
            "kind": "bytes",
            "name": "bytes",
            "encode": "base64",
@@ -2579,7 +2499,7 @@
         ],
         "responses": [
          {
-          "$id": "244",
+          "$id": "232",
           "statusCodes": [
            204
           ],
@@ -2601,7 +2521,7 @@
        },
        "parameters": [
         {
-         "$id": "245",
+         "$id": "233",
          "name": "contentType",
          "nameInRequest": "content-type",
          "type": {
@@ -2618,11 +2538,11 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "246",
+         "$id": "234",
          "name": "value",
          "nameInRequest": "value",
          "type": {
-          "$id": "247",
+          "$id": "235",
           "kind": "bytes",
           "name": "bytes",
           "encode": "base64",
@@ -2641,7 +2561,7 @@
         }
        ],
        "response": {
-        "$id": "248"
+        "$id": "236"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -2649,19 +2569,19 @@
        "crossLanguageDefinitionId": "Encode.Bytes.RequestBody.base64"
       },
       {
-       "$id": "249",
+       "$id": "237",
        "kind": "basic",
        "name": "base64url",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "250",
+        "$id": "238",
         "name": "base64url",
         "resourceName": "RequestBody",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "251",
+          "$id": "239",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "type": {
@@ -2678,11 +2598,11 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "252",
+          "$id": "240",
           "name": "value",
           "nameInRequest": "value",
           "type": {
-           "$id": "253",
+           "$id": "241",
            "kind": "bytes",
            "name": "bytes",
            "encode": "base64url",
@@ -2702,7 +2622,7 @@
         ],
         "responses": [
          {
-          "$id": "254",
+          "$id": "242",
           "statusCodes": [
            204
           ],
@@ -2724,7 +2644,7 @@
        },
        "parameters": [
         {
-         "$id": "255",
+         "$id": "243",
          "name": "contentType",
          "nameInRequest": "content-type",
          "type": {
@@ -2741,11 +2661,11 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "256",
+         "$id": "244",
          "name": "value",
          "nameInRequest": "value",
          "type": {
-          "$id": "257",
+          "$id": "245",
           "kind": "bytes",
           "name": "bytes",
           "encode": "base64url",
@@ -2764,7 +2684,7 @@
         }
        ],
        "response": {
-        "$id": "258"
+        "$id": "246"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -2774,12 +2694,12 @@
      ],
      "parameters": [
       {
-       "$id": "259",
+       "$id": "247",
        "name": "endpoint",
        "nameInRequest": "endpoint",
        "doc": "Service host",
        "type": {
-        "$id": "260",
+        "$id": "248",
         "kind": "url",
         "name": "url",
         "crossLanguageDefinitionId": "TypeSpec.url"
@@ -2793,9 +2713,9 @@
        "explode": false,
        "kind": "Client",
        "defaultValue": {
-        "$id": "261",
+        "$id": "249",
         "type": {
-         "$id": "262",
+         "$id": "250",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -2812,25 +2732,25 @@
      }
     },
     {
-     "$id": "263",
+     "$id": "251",
      "kind": "client",
      "name": "ResponseBody",
      "namespace": "Encode.Bytes.ResponseBody",
      "methods": [
       {
-       "$id": "264",
+       "$id": "252",
        "kind": "basic",
        "name": "default",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "265",
+        "$id": "253",
         "name": "default",
         "resourceName": "ResponseBody",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "266",
+          "$id": "254",
           "name": "accept",
           "nameInRequest": "Accept",
           "type": {
@@ -2849,12 +2769,12 @@
         ],
         "responses": [
          {
-          "$id": "267",
+          "$id": "255",
           "statusCodes": [
            200
           ],
           "bodyType": {
-           "$id": "268",
+           "$id": "256",
            "kind": "bytes",
            "name": "bytes",
            "crossLanguageDefinitionId": "TypeSpec.bytes",
@@ -2878,7 +2798,7 @@
        },
        "parameters": [
         {
-         "$id": "269",
+         "$id": "257",
          "name": "accept",
          "nameInRequest": "accept",
          "type": {
@@ -2896,9 +2816,9 @@
         }
        ],
        "response": {
-        "$id": "270",
+        "$id": "258",
         "type": {
-         "$ref": "268"
+         "$ref": "256"
         }
        },
        "isOverride": false,
@@ -2907,19 +2827,19 @@
        "crossLanguageDefinitionId": "Encode.Bytes.ResponseBody.default"
       },
       {
-       "$id": "271",
+       "$id": "259",
        "kind": "basic",
        "name": "octetStream",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "272",
+        "$id": "260",
         "name": "octetStream",
         "resourceName": "ResponseBody",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "273",
+          "$id": "261",
           "name": "accept",
           "nameInRequest": "Accept",
           "type": {
@@ -2938,12 +2858,12 @@
         ],
         "responses": [
          {
-          "$id": "274",
+          "$id": "262",
           "statusCodes": [
            200
           ],
           "bodyType": {
-           "$id": "275",
+           "$id": "263",
            "kind": "bytes",
            "name": "bytes",
            "crossLanguageDefinitionId": "TypeSpec.bytes",
@@ -2951,7 +2871,7 @@
           },
           "headers": [
            {
-            "$id": "276",
+            "$id": "264",
             "name": "contentType",
             "nameInResponse": "content-type",
             "type": {
@@ -2976,7 +2896,7 @@
        },
        "parameters": [
         {
-         "$id": "277",
+         "$id": "265",
          "name": "accept",
          "nameInRequest": "accept",
          "type": {
@@ -2994,9 +2914,9 @@
         }
        ],
        "response": {
-        "$id": "278",
+        "$id": "266",
         "type": {
-         "$ref": "275"
+         "$ref": "263"
         }
        },
        "isOverride": false,
@@ -3005,19 +2925,19 @@
        "crossLanguageDefinitionId": "Encode.Bytes.ResponseBody.octetStream"
       },
       {
-       "$id": "279",
+       "$id": "267",
        "kind": "basic",
        "name": "customContentType",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "280",
+        "$id": "268",
         "name": "customContentType",
         "resourceName": "ResponseBody",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "281",
+          "$id": "269",
           "name": "accept",
           "nameInRequest": "Accept",
           "type": {
@@ -3036,12 +2956,12 @@
         ],
         "responses": [
          {
-          "$id": "282",
+          "$id": "270",
           "statusCodes": [
            200
           ],
           "bodyType": {
-           "$id": "283",
+           "$id": "271",
            "kind": "bytes",
            "name": "bytes",
            "crossLanguageDefinitionId": "TypeSpec.bytes",
@@ -3049,7 +2969,7 @@
           },
           "headers": [
            {
-            "$id": "284",
+            "$id": "272",
             "name": "contentType",
             "nameInResponse": "content-type",
             "type": {
@@ -3074,7 +2994,7 @@
        },
        "parameters": [
         {
-         "$id": "285",
+         "$id": "273",
          "name": "accept",
          "nameInRequest": "accept",
          "type": {
@@ -3092,9 +3012,9 @@
         }
        ],
        "response": {
-        "$id": "286",
+        "$id": "274",
         "type": {
-         "$ref": "283"
+         "$ref": "271"
         }
        },
        "isOverride": false,
@@ -3103,19 +3023,19 @@
        "crossLanguageDefinitionId": "Encode.Bytes.ResponseBody.customContentType"
       },
       {
-       "$id": "287",
+       "$id": "275",
        "kind": "basic",
        "name": "base64",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "288",
+        "$id": "276",
         "name": "base64",
         "resourceName": "ResponseBody",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "289",
+          "$id": "277",
           "name": "accept",
           "nameInRequest": "Accept",
           "type": {
@@ -3134,12 +3054,12 @@
         ],
         "responses": [
          {
-          "$id": "290",
+          "$id": "278",
           "statusCodes": [
            200
           ],
           "bodyType": {
-           "$id": "291",
+           "$id": "279",
            "kind": "bytes",
            "name": "bytes",
            "encode": "base64",
@@ -3148,7 +3068,7 @@
           },
           "headers": [
            {
-            "$id": "292",
+            "$id": "280",
             "name": "contentType",
             "nameInResponse": "content-type",
             "type": {
@@ -3173,7 +3093,7 @@
        },
        "parameters": [
         {
-         "$id": "293",
+         "$id": "281",
          "name": "accept",
          "nameInRequest": "accept",
          "type": {
@@ -3191,9 +3111,9 @@
         }
        ],
        "response": {
-        "$id": "294",
+        "$id": "282",
         "type": {
-         "$ref": "291"
+         "$ref": "279"
         }
        },
        "isOverride": false,
@@ -3202,19 +3122,19 @@
        "crossLanguageDefinitionId": "Encode.Bytes.ResponseBody.base64"
       },
       {
-       "$id": "295",
+       "$id": "283",
        "kind": "basic",
        "name": "base64url",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "296",
+        "$id": "284",
         "name": "base64url",
         "resourceName": "ResponseBody",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "297",
+          "$id": "285",
           "name": "accept",
           "nameInRequest": "Accept",
           "type": {
@@ -3233,18 +3153,18 @@
         ],
         "responses": [
          {
-          "$id": "298",
+          "$id": "286",
           "statusCodes": [
            200
           ],
           "bodyType": {
-           "$id": "299",
+           "$id": "287",
            "kind": "bytes",
            "name": "base64urlBytes",
            "encode": "base64url",
            "crossLanguageDefinitionId": "Encode.Bytes.base64urlBytes",
            "baseType": {
-            "$id": "300",
+            "$id": "288",
             "kind": "bytes",
             "name": "bytes",
             "encode": "base64",
@@ -3255,7 +3175,7 @@
           },
           "headers": [
            {
-            "$id": "301",
+            "$id": "289",
             "name": "contentType",
             "nameInResponse": "content-type",
             "type": {
@@ -3280,7 +3200,7 @@
        },
        "parameters": [
         {
-         "$id": "302",
+         "$id": "290",
          "name": "accept",
          "nameInRequest": "accept",
          "type": {
@@ -3298,9 +3218,9 @@
         }
        ],
        "response": {
-        "$id": "303",
+        "$id": "291",
         "type": {
-         "$ref": "299"
+         "$ref": "287"
         }
        },
        "isOverride": false,
@@ -3311,12 +3231,12 @@
      ],
      "parameters": [
       {
-       "$id": "304",
+       "$id": "292",
        "name": "endpoint",
        "nameInRequest": "endpoint",
        "doc": "Service host",
        "type": {
-        "$id": "305",
+        "$id": "293",
         "kind": "url",
         "name": "url",
         "crossLanguageDefinitionId": "TypeSpec.url"
@@ -3330,9 +3250,9 @@
        "explode": false,
        "kind": "Client",
        "defaultValue": {
-        "$id": "306",
+        "$id": "294",
         "type": {
-         "$id": "307",
+         "$id": "295",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
