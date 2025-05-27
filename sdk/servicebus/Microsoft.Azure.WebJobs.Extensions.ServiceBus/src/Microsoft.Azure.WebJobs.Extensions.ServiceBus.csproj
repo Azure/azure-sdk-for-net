@@ -19,14 +19,14 @@
     <PackageReference Include="Azure.Messaging.ServiceBus" />
   </ItemGroup>
 
-  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Rpc" />
     <PackageReference Include="Grpc.Tools" />
     <PackageReference Include="Google.Protobuf" />
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))" Include="Grpc\Proto\settlement.proto" GrpcServices="service" Access="internal" />
+    <Protobuf Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))" Include="Grpc\Proto\settlement.proto" GrpcServices="service" Access="internal" />
   </ItemGroup>
 
   <ItemGroup>
