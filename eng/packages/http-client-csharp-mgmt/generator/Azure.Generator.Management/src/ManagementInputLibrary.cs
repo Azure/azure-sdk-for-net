@@ -4,6 +4,7 @@
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace Azure.Generator.Management
         private IReadOnlyDictionary<InputClient, ResourceMetadata>? _resourceMetadata;
         private IReadOnlyDictionary<string, InputModelType>? _inputModelsByCrossLanguageDefinitionId;
         private IReadOnlyDictionary<string, InputClient>? _inputClientsByCrossLanguageDefinitionId;
+        private HashSet<CSharpType>? _resourceTypes;
 
         /// <inheritdoc/>
         public ManagementInputLibrary(string configPath) : base(configPath)
@@ -34,6 +36,8 @@ namespace Azure.Generator.Management
 
         private IReadOnlyDictionary<string, InputClient> InputClientsByCrossLanguageDefinitionId => _inputClientsByCrossLanguageDefinitionId ??= AllClients.ToDictionary(c => c.CrossLanguageDefinitionId, c => c);
 
+        private HashSet<CSharpType> ResourceTypes => _resourceTypes ??= BuildResourceModels();
+
         internal ResourceMetadata? GetResourceMetadata(InputClient client)
             => ResourceMetadata.TryGetValue(client, out var metadata) ? metadata : null;
 
@@ -46,6 +50,8 @@ namespace Azure.Generator.Management
         internal bool IsResourceModel(InputModelType model)
             => model.Decorators.Any(d => d.Name.Equals(KnownDecorators.ArmResourceInternal));
 
+        internal bool IsResourceModelType(CSharpType type) => ResourceTypes.Contains(type);
+
         private IReadOnlyList<InputClient> EnumerateClients()
         {
             var clients = new List<InputClient>(InputNamespace.Clients);
@@ -56,6 +62,24 @@ namespace Azure.Generator.Management
             }
 
             return clients;
+        }
+
+        private HashSet<CSharpType> BuildResourceModels()
+        {
+            var resourceTypes = new HashSet<CSharpType>();
+
+            foreach (var model in InputNamespace.Models)
+            {
+                if (IsResourceModel(model))
+                {
+                    var modelProvider = ManagementClientGenerator.Instance.TypeFactory.CreateModel(model);
+                    if (modelProvider is not null)
+                    {
+                        resourceTypes.Add(modelProvider.Type);
+                    }
+                }
+            }
+            return resourceTypes;
         }
 
         private IReadOnlyDictionary<string, InputModelType> BuildModelCrossLanguageDefinitionIds()

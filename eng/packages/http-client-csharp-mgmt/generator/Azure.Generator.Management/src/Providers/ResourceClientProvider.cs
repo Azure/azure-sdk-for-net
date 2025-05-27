@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Utilities;
@@ -209,7 +210,7 @@ namespace Azure.Generator.Management.Providers
             var operationMethods = new List<MethodProvider>();
             foreach (var method in _resourceServiceMethods)
             {
-                var convenienceMethod = GetCorrespondingConvenienceMethod(method.Operation, false);
+                var convenienceMethod = _clientProvider.GetConvenienceMethodByOperation(method.Operation, false);
                 // exclude the List operations for resource, they will be in ResourceCollection
                 var returnType = convenienceMethod.Signature.ReturnType!;
                 if ((returnType.IsFrameworkType && returnType.IsList) || (method is InputPagingServiceMethod pagingMethod && pagingMethod.PagingMetadata.ItemPropertySegments.Any() == true))
@@ -220,7 +221,7 @@ namespace Azure.Generator.Management.Providers
                 // only update for non-singleton resource
                 var isUpdateOnly = method.Operation.HttpMethod == HttpMethod.Put.ToString() && !IsSingleton;
                 operationMethods.Add(BuildOperationMethod(method, convenienceMethod, false, isUpdateOnly));
-                var asyncConvenienceMethod = GetCorrespondingConvenienceMethod(method.Operation, true);
+                var asyncConvenienceMethod = _clientProvider.GetConvenienceMethodByOperation(method.Operation, true);
                 operationMethods.Add(BuildOperationMethod(method, asyncConvenienceMethod, true, isUpdateOnly));
             }
 
@@ -254,8 +255,8 @@ namespace Azure.Generator.Management.Providers
                     scopeVariable.Invoke(nameof(DiagnosticScope.Start)).Terminate(),
                     new TryCatchFinallyStatement
                     (BuildOperationMethodTryStatement(method, convenienceMethod, signature, isAsync, isGeneric),
-                     Catch(Declare<Exception>("e", out var exceptionVarialble),
-                     [scopeVariable.Invoke(nameof(DiagnosticScope.Failed), exceptionVarialble).Terminate(), Throw()]))
+                     Catch(Declare<Exception>("e", out var exceptionVariable),
+                     [scopeVariable.Invoke(nameof(DiagnosticScope.Failed), exceptionVariable).Terminate(), Throw()]))
                 };
 
             return new MethodProvider(signature, bodyStatements, this);
@@ -428,10 +429,6 @@ namespace Azure.Generator.Management.Providers
             }
             return arguments.ToArray();
         }
-
-        // TODO: get clean name of operation Name
-        protected MethodProvider GetCorrespondingConvenienceMethod(InputOperation operation, bool isAsync)
-            => _clientProvider.CanonicalView.Methods.Single(m => m.Signature.Name.Equals(isAsync ? $"{operation.Name}Async" : operation.Name, StringComparison.OrdinalIgnoreCase) && m.Signature.Parameters.Any(p => p.Type.Equals(typeof(CancellationToken))));
 
         private MethodProvider GetCorrespondingRequestMethod(InputOperation operation)
             => _clientProvider.RestClient.Methods.Single(m => m.Signature.Name.Equals($"Create{operation.Name}Request", StringComparison.OrdinalIgnoreCase));

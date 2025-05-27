@@ -1,5 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
+using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Utilities;
@@ -124,7 +126,7 @@ namespace Azure.Generator.Management.Providers
 
             foreach (var isAsync in new List<bool> { true, false})
             {
-                var convenienceMethod = GetCorrespondingConvenienceMethod(_create!.Operation, isAsync);
+                var convenienceMethod = _clientProvider.GetConvenienceMethodByOperation(_create!.Operation, isAsync);
                 result.Add(BuildOperationMethod(_create, convenienceMethod, isAsync));
             }
 
@@ -132,7 +134,7 @@ namespace Azure.Generator.Management.Providers
         }
         private MethodProvider BuildGetAllMethod(bool isAsync)
         {
-            var convenienceMethod = GetCorrespondingConvenienceMethod(_getAll!.Operation, isAsync);
+            var convenienceMethod = _clientProvider.GetConvenienceMethodByOperation(_getAll!.Operation, isAsync);
             var isLongRunning = _getAll is InputLongRunningPagingServiceMethod;
             var signature = new MethodSignature(
                 isAsync ? "GetAllAsync" : "GetAll",
@@ -161,7 +163,7 @@ namespace Azure.Generator.Management.Providers
 
             foreach (var isAsync in new List<bool> { true, false})
             {
-                var convenienceMethod = GetCorrespondingConvenienceMethod(_get!.Operation, isAsync);
+                var convenienceMethod = _clientProvider.GetConvenienceMethodByOperation(_get!.Operation, isAsync);
                 result.Add(BuildOperationMethod(_get, convenienceMethod, isAsync));
             }
 
@@ -178,7 +180,7 @@ namespace Azure.Generator.Management.Providers
 
             foreach (var isAsync in new List<bool> { true, false})
             {
-                var convenienceMethod = GetCorrespondingConvenienceMethod(_get!.Operation, isAsync);
+                var convenienceMethod = _clientProvider.GetConvenienceMethodByOperation(_get!.Operation, isAsync);
                 var signature = new MethodSignature(
                 isAsync ? "ExistsAsync" : "Exists",
                 $"Checks to see if the resource exists in azure.",
@@ -207,7 +209,7 @@ namespace Azure.Generator.Management.Providers
 
             foreach (var isAsync in new List<bool> { true, false})
             {
-                var convenienceMethod = GetCorrespondingConvenienceMethod(_get!.Operation, isAsync);
+                var convenienceMethod = _clientProvider.GetConvenienceMethodByOperation(_get!.Operation, isAsync);
                 var signature = new MethodSignature(
                 isAsync ? "GetIfExistsAsync" : "GetIfExists",
                 $"Tries to get details for this resource from the service.",
