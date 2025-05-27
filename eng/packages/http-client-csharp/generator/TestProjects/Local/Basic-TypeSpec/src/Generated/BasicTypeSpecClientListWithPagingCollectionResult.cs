@@ -21,7 +21,7 @@ namespace BasicTypeSpec
         /// <summary> Initializes a new instance of BasicTypeSpecClientListWithPagingCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BasicTypeSpecClient client used to send requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BasicTypeSpecClientListWithPagingCollectionResult(BasicTypeSpecClient client, RequestContext context)
+        public BasicTypeSpecClientListWithPagingCollectionResult(BasicTypeSpecClient client, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _context = context;
@@ -33,26 +33,17 @@ namespace BasicTypeSpec
         /// <returns> The pages of BasicTypeSpecClientListWithPagingCollectionResult as an enumerable collection. </returns>
         public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            do
+            Response response = GetNextResponse(pageSizeHint, null);
+            PageThingModel responseWithType = (PageThingModel)response;
+            List<BinaryData> items = new List<BinaryData>();
+            foreach (var item in responseWithType.Items)
             {
-                Response response = GetNextResponse(pageSizeHint, continuationToken);
-                if (response is null)
-                {
-                    yield break;
-                }
-                PageThingModel responseWithType = (PageThingModel)response;
-                List<BinaryData> items = new List<BinaryData>();
-                foreach (var item in responseWithType.Items)
-                {
-                    items.Add(BinaryData.FromObjectAsJson(item));
-                }
-                continuationToken = null;
-                yield return Page<BinaryData>.FromValues(items, continuationToken, response);
+                items.Add(BinaryData.FromObjectAsJson(item));
             }
-            while (!string.IsNullOrEmpty(continuationToken));
+            yield return Page<BinaryData>.FromValues(items, null, response);
         }
 
-        /// <summary> Get response from next link. </summary>
+        /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         private Response GetNextResponse(int? pageSizeHint, string continuationToken)
@@ -62,7 +53,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                _client.Pipeline.Send(message, _context.CancellationToken);
+                _client.Pipeline.Send(message, CancellationToken);
                 if (message.Response.IsError && _context.ErrorOptions != ErrorOptions.NoThrow)
                 {
                     throw new RequestFailedException(message.Response);

@@ -24,7 +24,7 @@ namespace BasicTypeSpec
         /// <param name="client"> The BasicTypeSpecClient client used to send requests. </param>
         /// <param name="nextPage"> The url of the next page of responses. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BasicTypeSpecClientListWithNextLinkAsyncCollectionResult(BasicTypeSpecClient client, Uri nextPage, RequestContext context)
+        public BasicTypeSpecClientListWithNextLinkAsyncCollectionResult(BasicTypeSpecClient client, Uri nextPage, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _nextPage = nextPage;
@@ -37,9 +37,10 @@ namespace BasicTypeSpec
         /// <returns> The pages of BasicTypeSpecClientListWithNextLinkAsyncCollectionResult as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : _nextPage;
             do
             {
-                Response response = await GetNextResponse(pageSizeHint, continuationToken).ConfigureAwait(false);
+                Response response = await GetNextResponse(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -50,23 +51,23 @@ namespace BasicTypeSpec
                 {
                     items.Add(BinaryData.FromObjectAsJson(item));
                 }
-                continuationToken = responseWithType.Next.AbsoluteUri;
-                yield return Page<BinaryData>.FromValues(items, continuationToken, response);
+                nextPage = responseWithType.Next;
+                yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
             }
-            while (!string.IsNullOrEmpty(continuationToken));
+            while (nextPage != null);
         }
 
-        /// <summary> Get response from next link. </summary>
+        /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
-        private async ValueTask<Response> GetNextResponse(int? pageSizeHint, string continuationToken)
+        /// <param name="nextLink"> The next link to use for the next page of results. </param>
+        private async ValueTask<Response> GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateListWithNextLinkRequest(_nextPage, _context);
+            HttpMessage message = _client.CreateListWithNextLinkRequest(nextLink, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.ListWithNextLink");
             scope.Start();
             try
             {
-                await _client.Pipeline.SendAsync(message, _context.CancellationToken).ConfigureAwait(false);
+                await _client.Pipeline.SendAsync(message, CancellationToken).ConfigureAwait(false);
                 if (message.Response.IsError && _context.ErrorOptions != ErrorOptions.NoThrow)
                 {
                     throw new RequestFailedException(message.Response);
