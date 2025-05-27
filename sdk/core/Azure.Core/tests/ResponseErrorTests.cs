@@ -11,16 +11,32 @@ namespace Azure.Core.Tests
     public class ResponseErrorTests
     {
         [Test]
-        public void CanDeserializeNull()
+        public void CanDeserializeNullWithSTJ()
         {
             Assert.Null(JsonSerializer.Deserialize<ResponseError>("null"));
         }
 
         [Test]
-        public void CanDeserializeSimple()
+        public void CanDeserializeNullWithMRW()
         {
-            var error = JsonSerializer.Deserialize<ResponseError>(
-                "{" +
+            var json = "null";
+            var binaryData = BinaryData.FromString(json);
+
+            // Deserialize using ModelReaderWriter should return a new instance instead of null
+            var errorFromModel = ModelReaderWriter.Read<ResponseError>(binaryData, ModelReaderWriterOptions.Json);
+
+            // MRW does not allow null to be returned from read
+            Assert.NotNull(errorFromModel);
+            Assert.Null(errorFromModel.Code);
+            Assert.Null(errorFromModel.Message);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void CanDeserializeSimple(bool useMRW)
+        {
+            var json = "{" +
                 "\"code\":\"BadError\"," +
                 "\"message\":\"Something wasn't awesome\"," +
                 "\"target\":\"Error target\"," +
@@ -28,7 +44,19 @@ namespace Azure.Core.Tests
                 "{" +
                     "\"code\":\"MoreDetailedBadError\"," +
                     "\"message\":\"Inner message\"" +
-                "}}");
+                "}}";
+
+            ResponseError error;
+
+            if (useMRW)
+            {
+                var binaryData = BinaryData.FromString(json);
+                error = ModelReaderWriter.Read<ResponseError>(binaryData, ModelReaderWriterOptions.Json);
+            }
+            else
+            {
+                error = JsonSerializer.Deserialize<ResponseError>(json);
+            }
 
             Assert.AreEqual("BadError", error.Code);
             Assert.AreEqual("Something wasn't awesome", error.Message);
@@ -49,10 +77,11 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanDeserializeComplex()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void CanDeserializeComplex(bool useMRW)
         {
-            var error = JsonSerializer.Deserialize<ResponseError>(
-                "{" +
+            var json = "{" +
                 "\"code\":\"BadError\"," +
                 "\"message\":\"Something wasn't awesome\"," +
                 "\"target\":\"Error target\"," +
@@ -69,8 +98,19 @@ namespace Azure.Core.Tests
                     "{" +
                         "\"code\":\"InnerMoreDetailedBadError\"," +
                         "\"message\":\"Inner Inner message\"" +
-                    "}"+
-                "}}");
+                    "}" +
+                "}}";
+
+            ResponseError error;
+            if (useMRW)
+            {
+                var binaryData = BinaryData.FromString(json);
+                error = ModelReaderWriter.Read<ResponseError>(binaryData, ModelReaderWriterOptions.Json);
+            }
+            else
+            {
+                error = JsonSerializer.Deserialize<ResponseError>(json);
+            }
 
             Assert.AreEqual("BadError", error.Code);
             Assert.AreEqual("Something wasn't awesome", error.Message);
@@ -106,81 +146,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanDeserializeWithModelReaderWriter()
-        {
-            var json = "{" +
-                       "\"code\":\"BadError\"," +
-                       "\"message\":\"Something wasn't awesome\"," +
-                       "\"target\":\"Error target\"," +
-                       "\"innererror\":" +
-                       "{" +
-                       "\"code\":\"MoreDetailedBadError\"," +
-                       "\"message\":\"Inner message\"" +
-                       "}}";
-
-            var binaryData = BinaryData.FromString(json);
-            var error = ModelReaderWriter.Read<ResponseError>(binaryData, ModelReaderWriterOptions.Json);
-
-            Assert.AreEqual("BadError", error.Code);
-            Assert.AreEqual("Something wasn't awesome", error.Message);
-            Assert.AreEqual("Error target", error.Target);
-            Assert.AreEqual("MoreDetailedBadError", error.InnerError.Code);
-            Assert.Null(error.InnerError.InnerError);
-        }
-
-        [Test]
-        public void ModelReaderWriterAndJsonSerializerProduceIdenticalResults()
-        {
-            var json = "{" +
-                       "\"code\":\"BadError\"," +
-                       "\"message\":\"Something wasn't awesome\"," +
-                       "\"target\":\"Error target\"," +
-                       "\"details\": [" +
-                       "{\"code\":\"Code 1\",\"message\":\"Message 1\"}," +
-                       "{\"code\":\"Code 2\",\"message\":\"Message 2\"}" +
-                       "]," +
-                       "\"innererror\":" +
-                       "{" +
-                       "\"code\":\"MoreDetailedBadError\"," +
-                       "\"message\":\"Inner message\"" +
-                       "}}";
-
-            var binaryData = BinaryData.FromString(json);
-
-            // Deserialize using ModelReaderWriter
-            var errorFromModel = ModelReaderWriter.Read<ResponseError>(binaryData, ModelReaderWriterOptions.Json);
-            // Deserialize using System.Text.Json
-            var errorFromJson = JsonSerializer.Deserialize<ResponseError>(json);
-
-            // Verify both deserialization methods produce identical results
-            Assert.AreEqual(errorFromJson.Code, errorFromModel.Code);
-            Assert.AreEqual(errorFromJson.Message, errorFromModel.Message);
-            Assert.AreEqual(errorFromJson.Target, errorFromModel.Target);
-            Assert.AreEqual(errorFromJson.InnerError.Code, errorFromModel.InnerError.Code);
-            Assert.AreEqual(errorFromJson.Details.Count, errorFromModel.Details.Count);
-
-            for (int i = 0; i < errorFromJson.Details.Count; i++)
-            {
-                Assert.AreEqual(errorFromJson.Details[i].Code, errorFromModel.Details[i].Code);
-                Assert.AreEqual(errorFromJson.Details[i].Message, errorFromModel.Details[i].Message);
-            }
-        }
-
-        [Test]
-        public void ModelReaderWriterCanDeserializeNullResponseError()
-        {
-            var json = "null";
-            var binaryData = BinaryData.FromString(json);
-
-            // Deserialize using ModelReaderWriter should return a new instance instead of null
-            var errorFromModel = ModelReaderWriter.Read<ResponseError>(binaryData, ModelReaderWriterOptions.Json);
-            Assert.NotNull(errorFromModel);
-            Assert.Null(errorFromModel.Code);
-            Assert.Null(errorFromModel.Message);
-        }
-
-        [Test]
-        public void ModelReaderWriterHandlesEdgeCases()
+        public void ReadingWithMRW()
         {
             var json = "{" +
                       "\"code\":\"\"," + // Empty string
@@ -212,7 +178,7 @@ namespace Azure.Core.Tests
             using var writer = new Utf8JsonWriter(stream);
 
             var ex2 = Assert.Throws<NotSupportedException>(() =>
-                ((IJsonModel<ResponseError>)error).Write(writer, ModelReaderWriterOptions.Json));
+                error.Write(writer, ModelReaderWriterOptions.Json));
 
             Assert.IsTrue(ex2.Message.Contains("does not support writing to JSON"));
         }
@@ -223,8 +189,8 @@ namespace Azure.Core.Tests
             var json = "{}";
             var binaryData = BinaryData.FromString(json);
 
-            // Create invalid format options
-            var options = new ModelReaderWriterOptions("X"); // Not "J" for JSON
+            // Create unsupported format options
+            var options = ModelReaderWriterOptions.Xml;
 
             // Should throw FormatException
             var ex = Assert.Throws<FormatException>(() =>
@@ -232,5 +198,4 @@ namespace Azure.Core.Tests
 
             Assert.IsTrue(ex.Message.Contains("does not support 'X' format"));
         }
-    }
 }
