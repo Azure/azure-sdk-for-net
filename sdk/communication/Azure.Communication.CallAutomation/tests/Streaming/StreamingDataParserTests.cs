@@ -74,8 +74,6 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
                 + "\"kind\": \"DtmfData\","
                 + "\"dtmfData\": {"
                 + "\"data\": \"5\","
-                + "\"timestamp\": \"2022-08-23T11:48:05Z\","
-                + "\"participantRawID\": \"participantId\""
                 + "}"
                 + "}";
 
@@ -86,9 +84,6 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
         {
             Assert.IsNotNull(streamingDtmf);
             Assert.AreEqual("5", streamingDtmf.Data);
-            Assert.AreEqual(2022, streamingDtmf.Timestamp.Year);
-            Assert.IsTrue(streamingDtmf.Participant is CommunicationIdentifier);
-            Assert.AreEqual("participantId", streamingDtmf.Participant.RawId);
         }
         #endregion
 

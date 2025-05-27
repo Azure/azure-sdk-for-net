@@ -706,8 +706,6 @@ namespace Azure.Communication.CallAutomation
     {
         public DtmfData(string data) { }
         public string Data { get { throw null; } }
-        public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
-        public System.DateTimeOffset Timestamp { get { throw null; } }
     }
     public partial class DtmfResult : Azure.Communication.CallAutomation.RecognizeResult
     {

@@ -22,28 +22,11 @@ namespace Azure.Communication.CallAutomation
         internal DtmfData(string data, DateTime timestamp, string participantId)
         {
             Data = !string.IsNullOrWhiteSpace(data) ? data : default;
-            Timestamp = timestamp;
-            if (participantId != null)
-            {
-                Participant = CommunicationIdentifier.FromRawId(participantId);
-            }
         }
 
         /// <summary>
         /// The dtmf data in base64 string.
         /// </summary>
         public string Data { get; }
-
-        /// <summary>
-        /// The timestamp indicating when the media content was received by the bot,
-        /// or if the bot is sending media, the timestamp of when the media was sourced.
-        /// The format is ISO 8601 (yyyy-mm-ddThh:mm).
-        /// </summary>
-        public DateTimeOffset Timestamp { get; }
-
-        /// <summary>
-        /// The raw ID of the participant.
-        /// </summary>
-        public CommunicationIdentifier Participant { get; }
     }
 }
