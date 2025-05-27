@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Models
             }
         }
 
-        internal static ManagedServiceIdentity DeserializeManagedServiceIdentity(JsonElement element, ModelReaderWriterOptions options, JsonSerializerOptions jOptions)
+        internal static ManagedServiceIdentity DeserializeManagedServiceIdentity(JsonElement element, ModelReaderWriterOptions options)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -205,6 +205,10 @@ namespace Azure.ResourceManager.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     type = new ManagedServiceIdentityType(property.Value.GetString());
                     continue;
                 }
