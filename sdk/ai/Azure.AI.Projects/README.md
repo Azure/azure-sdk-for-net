@@ -70,6 +70,8 @@ var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
 
+**Note:** The support of connection strings as the project endpoints and hub-based projects was dropped. Please create a new project, which uses endpoints \[recommended\], or pin the version of `Azure.AI.Projects` to `1.0.0-beta.8` if it is not possible.
+
 Once the `AIProjectClient` is created, you can call methods in the form of `Get<Method>Client()` on this client to retrieve instances of specific sub-clients.
 
 ## Examples
