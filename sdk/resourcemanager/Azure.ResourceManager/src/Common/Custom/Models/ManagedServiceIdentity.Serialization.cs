@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("managedServiceIdentityType"u8);
             writer.WriteStringValue(ManagedServiceIdentityType.ToString());
             if (options.Format != "W" && Optional.IsDefined(PrincipalId))
             {
