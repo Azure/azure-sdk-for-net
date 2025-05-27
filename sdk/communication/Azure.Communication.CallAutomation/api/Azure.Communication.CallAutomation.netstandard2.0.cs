@@ -108,6 +108,12 @@ namespace Azure.Communication.CallAutomation
         public string MediaSubscriptionId { get { throw null; } }
         public int SampleRate { get { throw null; } }
     }
+    public partial class AzureCommunicationCallAutomationContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureCommunicationCallAutomationContext() { }
+        public static Azure.Communication.CallAutomation.AzureCommunicationCallAutomationContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class CallAutomationClient
     {
         protected CallAutomationClient() { }
@@ -1467,6 +1473,39 @@ namespace Azure.Communication.CallAutomation
         public static implicit operator Azure.Communication.CallAutomation.StreamingTransport (string value) { throw null; }
         public static bool operator !=(Azure.Communication.CallAutomation.StreamingTransport left, Azure.Communication.CallAutomation.StreamingTransport right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class TeamsPhoneCallDetails
+    {
+        public TeamsPhoneCallDetails() { }
+        public string CallContext { get { throw null; } set { } }
+        public string CallSentiment { get { throw null; } set { } }
+        public string CallTopic { get { throw null; } set { } }
+        public string Intent { get { throw null; } set { } }
+        public string SessionId { get { throw null; } set { } }
+        public string SuggestedActions { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.TeamsPhoneCallerDetails TeamsPhoneCallerDetails { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.TeamsPhoneSourceDetails TeamsPhoneSourceDetails { get { throw null; } set { } }
+        public string TranscriptUrl { get { throw null; } set { } }
+    }
+    public partial class TeamsPhoneCallerDetails
+    {
+        public TeamsPhoneCallerDetails(Azure.Communication.CommunicationIdentifier caller, string name, string phoneNumber) { }
+        public System.Collections.Generic.IDictionary<string, string> AdditionalCallerInformation { get { throw null; } }
+        public bool? IsAuthenticated { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public string PhoneNumber { get { throw null; } set { } }
+        public string RecordId { get { throw null; } set { } }
+        public string ScreenPopUrl { get { throw null; } set { } }
+        public bool AddAdditionalCallerInformation(string key, string value) { throw null; }
+    }
+    public partial class TeamsPhoneSourceDetails
+    {
+        public TeamsPhoneSourceDetails(Azure.Communication.CommunicationIdentifier source, string language, string status) { }
+        public System.Collections.Generic.IDictionary<string, Azure.Communication.CommunicationIdentifier> IntendedTargets { get { throw null; } }
+        public string Language { get { throw null; } set { } }
+        public Azure.Communication.CommunicationIdentifier Source { get { throw null; } set { } }
+        public string Status { get { throw null; } set { } }
+        public bool AddIntendedTargets(string key, Azure.Communication.CommunicationIdentifier target) { throw null; }
     }
     public partial class TextSource : Azure.Communication.CallAutomation.PlaySource
     {
