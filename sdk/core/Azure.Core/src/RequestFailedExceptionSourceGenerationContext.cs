@@ -20,7 +20,7 @@ namespace Azure
     [JsonSerializable(typeof(string))]
     [JsonSerializable(typeof(bool))]
     [JsonSerializable(typeof(List<ResponseError>))]
-    internal partial class ResponseErrorSourceGenerationContext : JsonSerializerContext
+    internal partial class RequestFailedExceptionSourceGenerationContext : JsonSerializerContext
     {
     }
 #endif
