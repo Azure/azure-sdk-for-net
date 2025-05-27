@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Provisioning.Expressions;
+using Azure.Provisioning.Primitives;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.Tests.Expressions

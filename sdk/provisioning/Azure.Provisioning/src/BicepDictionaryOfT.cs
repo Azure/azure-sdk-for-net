@@ -1,11 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 
@@ -75,8 +77,26 @@ public class BicepDictionary<T> :
     /// <returns>The value.</returns>
     public BicepValue<T> this[string key]
     {
-        get => _values[key];
-        set => _values[key] = value;
+        get
+        {
+            if (_isOutput)
+            {
+                return BicepSyntax.Index(_self!.GetReference(), BicepSyntax.Value(key));
+            }
+            else
+            {
+                return _values[key];
+            }
+        }
+
+        set
+        {
+            if (_kind == BicepValueKind.Expression || _isOutput)
+            {
+                throw new InvalidOperationException($"Cannot assign to {_self?.PropertyName}");
+            }
+            _values[key] = value;
+        }
     }
 
     public void Add(string key, BicepValue<T> value) => _values.Add(key, value);
