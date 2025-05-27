@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Developer.Playwright.Interface;
-using Azure.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.JsonWebTokens;
 
@@ -16,26 +15,36 @@ internal class EntraLifecycle: IEntraLifecycle
 {
     internal string? _entraIdAccessToken;
     internal long? _entraIdAccessTokenExpiry;
-    private readonly TokenCredential _tokenCredential;
+    private readonly TokenCredential? _tokenCredential;
     private readonly JsonWebTokenHandler _jsonWebTokenHandler;
     private readonly ILogger? _logger;
     private readonly IEnvironment _environment;
+    private bool noOpFlag = false;
 
     public EntraLifecycle(TokenCredential? tokenCredential = null, JsonWebTokenHandler? jsonWebTokenHandler = null, ILogger? logger = null, IEnvironment? environment = null)
     {
         _logger = logger;
-        _tokenCredential = tokenCredential ?? new DefaultAzureCredential();
+        _tokenCredential = tokenCredential;
         _jsonWebTokenHandler = jsonWebTokenHandler ?? new JsonWebTokenHandler();
         _environment = environment ?? new EnvironmentHandler();
+        if (_tokenCredential == null)
+        {
+            noOpFlag = true;
+            return;
+        }
         SetEntraIdAccessTokenFromEnvironment();
     }
 
     public async Task FetchEntraIdAccessTokenAsync(CancellationToken cancellationToken = default)
     {
+        if (noOpFlag)
+        {
+            throw new Exception(Constants.s_entra_no_cred_error);
+        }
         try
         {
             var tokenRequestContext = new TokenRequestContext(Constants.s_entra_access_token_scopes);
-            AccessToken accessToken = await _tokenCredential.GetTokenAsync(tokenRequestContext, cancellationToken).ConfigureAwait(false);
+            AccessToken accessToken = await _tokenCredential!.GetTokenAsync(tokenRequestContext, cancellationToken).ConfigureAwait(false);
             _entraIdAccessToken = accessToken.Token;
             _entraIdAccessTokenExpiry = accessToken.ExpiresOn.ToUnixTimeSeconds();
             _environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), _entraIdAccessToken);
@@ -50,10 +59,14 @@ internal class EntraLifecycle: IEntraLifecycle
 
     public void FetchEntraIdAccessToken(CancellationToken cancellationToken = default)
     {
+        if (noOpFlag)
+        {
+            throw new Exception(Constants.s_entra_no_cred_error);
+        }
         try
         {
             var tokenRequestContext = new TokenRequestContext(Constants.s_entra_access_token_scopes);
-            AccessToken accessToken = _tokenCredential.GetToken(tokenRequestContext, cancellationToken);
+            AccessToken accessToken = _tokenCredential!.GetToken(tokenRequestContext, cancellationToken);
             _entraIdAccessToken = accessToken.Token;
             _entraIdAccessTokenExpiry = accessToken.ExpiresOn.ToUnixTimeSeconds();
             _environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), _entraIdAccessToken);
@@ -68,6 +81,10 @@ internal class EntraLifecycle: IEntraLifecycle
 
     public bool DoesEntraIdAccessTokenRequireRotation()
     {
+        if (noOpFlag)
+        {
+            throw new Exception(Constants.s_entra_no_cred_error);
+        }
         if (string.IsNullOrEmpty(_entraIdAccessToken))
         {
             return true;

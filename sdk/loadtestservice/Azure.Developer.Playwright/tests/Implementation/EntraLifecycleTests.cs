@@ -9,7 +9,6 @@ using Azure.Core;
 using Azure.Developer.Playwright.Implementation;
 using Azure.Identity;
 using Microsoft.IdentityModel.JsonWebTokens;
-using Microsoft.IdentityModel.Tokens;
 using Moq;
 
 namespace Azure.Developer.Playwright.Tests.Implementation;
@@ -228,7 +227,8 @@ public class EntraLifecycleTests
     public void DoesEntraIdAccessTokenRequireRotation_WhenEntraIdAccessTokenIsEmpty_ReturnsTrue()
     {
         var environment = new TestEnvironment();
-        EntraLifecycle entraLifecycle = new(environment: environment)
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        EntraLifecycle entraLifecycle = new(environment: environment, tokenCredential: defaultAzureCredentialMock.Object)
         {
             _entraIdAccessToken = ""
         };
@@ -239,7 +239,8 @@ public class EntraLifecycleTests
     public void DoesEntraIdAccessTokenRequireRotation_WhenEntraIdAccessTokenIsNull_ReturnsTrue()
     {
         var environment = new TestEnvironment();
-        EntraLifecycle entraLifecycle = new(environment: environment)
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        EntraLifecycle entraLifecycle = new(environment: environment, tokenCredential: defaultAzureCredentialMock.Object)
         {
             _entraIdAccessToken = null
         };
@@ -250,7 +251,8 @@ public class EntraLifecycleTests
     public void DoesEntraIdAccessTokenRequireRotation_WhenTokenIsNotAboutToExpire_ReturnsFalse()
     {
         var environment = new TestEnvironment();
-        EntraLifecycle entraLifecycle = new(environment: environment)
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        EntraLifecycle entraLifecycle = new(environment: environment, tokenCredential: defaultAzureCredentialMock.Object)
         {
             _entraIdAccessToken = "valid_token",
             _entraIdAccessTokenExpiry = DateTimeOffset.UtcNow.ToUnixTimeSeconds() + 1000 // more than threshold of 10 mins
@@ -262,11 +264,39 @@ public class EntraLifecycleTests
     public void DoesEntraIdAccessTokenRequireRotation_WhenTokenIsAboutToExpire_ReturnsTrue()
     {
         var environment = new TestEnvironment();
-        EntraLifecycle entraLifecycle = new(environment: environment)
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        EntraLifecycle entraLifecycle = new(environment: environment, tokenCredential: defaultAzureCredentialMock.Object)
         {
             _entraIdAccessToken = "valid_token",
             _entraIdAccessTokenExpiry = DateTimeOffset.UtcNow.ToUnixTimeSeconds() + 400 // less than threshold of 10 mins
         };
         Assert.That(entraLifecycle.DoesEntraIdAccessTokenRequireRotation(), Is.True);
+    }
+
+    [Test]
+    public void FetchEntraIdAccessTokenAsync_WhenAzureCredentialsIsntPassed_ThrowsException()
+    {
+        var environment = new TestEnvironment();
+        EntraLifecycle entraLifecycle = new(environment: environment);
+        Exception? ex = Assert.ThrowsAsync<Exception>(async () => await entraLifecycle.FetchEntraIdAccessTokenAsync());
+        Assert.That(ex!.Message, Is.EqualTo(Constants.s_entra_no_cred_error));
+    }
+
+    [Test]
+    public void FetchEntraIdAccessToken_WhenAzureCredentialsIsntPassed_ThrowsException()
+    {
+        var environment = new TestEnvironment();
+        EntraLifecycle entraLifecycle = new(environment: environment);
+        Exception? ex = Assert.Throws<Exception>(() => entraLifecycle.FetchEntraIdAccessToken());
+        Assert.That(ex!.Message, Is.EqualTo(Constants.s_entra_no_cred_error));
+    }
+
+    [Test]
+    public void DoesEntraIdAccessTokenRequireRotation_WhenAzureCredentialsIsntPassed_ThrowsException()
+    {
+        var environment = new TestEnvironment();
+        EntraLifecycle entraLifecycle = new(environment: environment);
+        Exception? ex = Assert.Throws<Exception>(() => entraLifecycle.DoesEntraIdAccessTokenRequireRotation());
+        Assert.That(ex!.Message, Is.EqualTo(Constants.s_entra_no_cred_error));
     }
 }
