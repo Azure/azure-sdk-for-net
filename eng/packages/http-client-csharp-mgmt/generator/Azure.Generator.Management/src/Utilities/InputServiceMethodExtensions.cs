@@ -44,23 +44,8 @@ namespace Azure.Generator.Management.Utilities
             // Determine the content type for the operation
             CSharpType? contentType = DetermineContentType(responseBodyCSharpType, resourceClientCSharpType, resourceDataType);
 
-            // Determine the appropriate wrapper type based on operation characteristics
-            CSharpType wrapperType;
-            if (isLongRunningOperation)
-            {
-                wrapperType = contentType is not null
-                    ? new CSharpType(typeof(Azure.ResourceManager.ArmOperation<>), contentType)
-                    : typeof(Azure.ResourceManager.ArmOperation);
-            }
-            else
-            {
-                wrapperType = contentType is not null ? new CSharpType(typeof(Azure.Response<>), contentType) : typeof(Azure.Response);
-            }
-
-            // Add Task<> wrapper if async
-            return isAsync
-                ? new CSharpType(typeof(System.Threading.Tasks.Task<>), wrapperType)
-                : wrapperType;
+            // Use the extension methods to create the appropriate return type
+            return contentType.WrapResponse(isLongRunningOperation).WrapAsync(isAsync);
         }
 
         private static CSharpType? DetermineContentType(CSharpType? responseBodyCSharpType, CSharpType resourceClientCSharpType, CSharpType resourceDataType)
