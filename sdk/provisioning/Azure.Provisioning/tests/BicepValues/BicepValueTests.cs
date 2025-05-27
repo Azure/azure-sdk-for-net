@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
 using Azure.Provisioning.Primitives;
 using NUnit.Framework;
 
@@ -43,10 +45,10 @@ public class BicepValueTests
     }
 
     [Test]
-    public void ValidateOutputArrayShouldBeIndexedSuccessfully()
+    public void ValidateOutputArray()
     {
-        var construct = new TestConstruct("test");
-        var expression = construct.Properties.Ports[0];
+        var resource = new TestConstruct("test");
+        var expression = resource.Properties.Ports[0];
         AssertExpression(
             "test.properties.ports[0]",
             expression
@@ -54,20 +56,63 @@ public class BicepValueTests
     }
 
     [Test]
-    public void ValidateOutputDictionaryShouldBeIndexedSuccessfully()
+    public void ValidateOutputDictionary()
     {
-        var construct = new TestConstruct("test")
+        var resource = new TestConstruct("test")
         {
             Properties = new()
         };
-        var expression = construct.Properties.Endpoints["reference"];
+        var expression = resource.Properties.Endpoints["reference"];
         AssertExpression(
             "test.properties.endpoints['reference']",
             expression
             );
     }
 
-    // TODO -- add more test cases for settable list and dictionary.
+    [Test]
+    public void ValidateInputArray()
+    {
+        var resource = new TestConstruct("test")
+        {
+            Properties = new()
+            {
+                IpAddresses = ["192.168.1.1"]
+            }
+        };
+        var expression = resource.Properties.IpAddresses[0];
+        AssertExpression(
+            "'192.168.1.1'",
+            expression
+            );
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+        {
+            var e = resource.Properties.IpAddresses[1];
+        });
+    }
+
+    [Test]
+    public void ValidateInputDictionary()
+    {
+        var resource = new TestConstruct("test")
+        {
+            Properties = new()
+            {
+                Tags = new()
+                {
+                    ["foo"] = "bar"
+                }
+            }
+        };
+        var expression = resource.Properties.Tags["foo"];
+        AssertExpression(
+            "'bar'",
+            expression
+            );
+        Assert.Throws<KeyNotFoundException>(() =>
+        {
+            var t = resource.Properties.Tags["bar"];
+        });
+    }
 
     private class TestConstruct : ProvisionableResource
     {
