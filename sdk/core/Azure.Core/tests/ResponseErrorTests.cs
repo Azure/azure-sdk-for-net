@@ -17,7 +17,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanDeserializeNullWithMRW()
+        public void CanReadNullWithMRW()
         {
             var json = "null";
             var binaryData = BinaryData.FromString(json);
@@ -146,6 +146,66 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void CanReadWithAzureCoreContext()
+        {
+            var json = "{" +
+                "\"code\":\"BadError\"," +
+                "\"message\":\"Something wasn't awesome\"," +
+                "\"target\":\"Error target\"," +
+                "\"details\": [" +
+                    "{\"code\":\"Code 1\",\"message\":\"Message 1\"}," +
+                    "{\"code\":\"Code 2\",\"message\":\"Message 2\"}," +
+                    "null" +
+                "]," +
+                "\"innererror\":" +
+                "{" +
+                    "\"code\":\"MoreDetailedBadError\"," +
+                    "\"message\":\"Inner message\"," +
+                    "\"innererror\":" +
+                    "{" +
+                        "\"code\":\"InnerMoreDetailedBadError\"," +
+                        "\"message\":\"Inner Inner message\"" +
+                    "}" +
+                "}}";
+
+            var binaryData = BinaryData.FromString(json);
+
+            ResponseError error = ModelReaderWriter.Read<ResponseError>(binaryData, ModelReaderWriterOptions.Json, AzureCoreContext.Default);
+
+            Assert.AreEqual("BadError", error.Code);
+            Assert.AreEqual("Something wasn't awesome", error.Message);
+            Assert.AreEqual("Error target", error.Target);
+
+            Assert.AreEqual("MoreDetailedBadError", error.InnerError.Code);
+
+            Assert.AreEqual("InnerMoreDetailedBadError", error.InnerError.InnerError.Code);
+
+            Assert.AreEqual("Code 1", error.Details[0].Code);
+            Assert.AreEqual("Message 1", error.Details[0].Message);
+
+            Assert.AreEqual("Code 2", error.Details[1].Code);
+            Assert.AreEqual("Message 2", error.Details[1].Message);
+
+            Assert.AreEqual(2, error.Details.Count);
+
+            Assert.Null(error.InnerError.InnerError.InnerError);
+
+            Assert.AreEqual("BadError: Something wasn't awesome" + Environment.NewLine +
+                            "Target: Error target" + Environment.NewLine +
+                            Environment.NewLine +
+                            "Inner Errors:" + Environment.NewLine +
+                            "MoreDetailedBadError" + Environment.NewLine +
+                            "InnerMoreDetailedBadError" + Environment.NewLine +
+                            Environment.NewLine +
+                            "Details:" + Environment.NewLine +
+                            "Code 1: Message 1" + Environment.NewLine +
+                            "Code 2: Message 2" + Environment.NewLine +
+                            Environment.NewLine +
+                            "Raw:" + Environment.NewLine +
+                            "{\"code\":\"BadError\",\"message\":\"Something wasn't awesome\",\"target\":\"Error target\",\"details\": [{\"code\":\"Code 1\",\"message\":\"Message 1\"},{\"code\":\"Code 2\",\"message\":\"Message 2\"},null],\"innererror\":{\"code\":\"MoreDetailedBadError\",\"message\":\"Inner message\",\"innererror\":{\"code\":\"InnerMoreDetailedBadError\",\"message\":\"Inner Inner message\"}}}", error.ToString());
+        }
+
+        [Test]
         public void ReadingWithMRW()
         {
             var json = "{" +
@@ -198,4 +258,5 @@ namespace Azure.Core.Tests
 
             Assert.IsTrue(ex.Message.Contains("does not support 'X' format"));
         }
+    }
 }
