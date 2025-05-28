@@ -262,7 +262,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
                 trainingMode: ConversationAuthoringTrainingMode.Standard
             )
             {
-                TrainingConfigVersion = "2025-05-15-preview",
+                TrainingConfigVersion = "2025-05-15-preview-ConvLevel",
                 EvaluationOptions = new ConversationAuthoringEvaluationDetails
                 {
                     Kind = ConversationAuthoringEvaluationKind.Percentage,
