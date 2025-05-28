@@ -9,7 +9,6 @@
 		<PackageReference Include="Azure.Core" />
 		<PackageReference Include="Azure.Generator" />
 		<PackageReference Include="Azure.ResourceManager" />
-		<PackageReference Include="Microsoft.TypeSpec.Generator" VersionOverride ="1.0.0-alpha.20250526.2" />
 	</ItemGroup>
 
 	<Target Name="CheckEmitterBuild" BeforeTargets="Build">

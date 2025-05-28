@@ -7,7 +7,6 @@
       $(NoWarn);
       CS8002;
       SCM0005; <!-- Resources currently do not have a parameterless ctor so builders cannot be created for them -->
-      NU1608;
     </NoWarn>
   </PropertyGroup>
   <!--
