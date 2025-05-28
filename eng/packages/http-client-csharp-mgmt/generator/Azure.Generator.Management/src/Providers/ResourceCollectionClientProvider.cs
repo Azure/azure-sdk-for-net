@@ -176,21 +176,8 @@ namespace Azure.Generator.Management.Providers
             foreach (var isAsync in new List<bool> { true, false})
             {
                 var convenienceMethod = GetCorrespondingConvenienceMethod(_get!.Operation, isAsync);
-                var signature = new MethodSignature(
-                isAsync ? "ExistsAsync" : "Exists",
-                $"Checks to see if the resource exists in azure.",
-                convenienceMethod.Signature.Modifiers,
-                isAsync ? new CSharpType(typeof(Task<>), new CSharpType(typeof(Response<>), typeof(bool))) : new CSharpType(typeof(Response<>), typeof(bool)),
-                convenienceMethod.Signature.ReturnDescription,
-                GetOperationMethodParameters(convenienceMethod, false),
-                convenienceMethod.Signature.Attributes,
-                convenienceMethod.Signature.GenericArguments,
-                convenienceMethod.Signature.GenericParameterConstraints,
-                convenienceMethod.Signature.ExplicitInterface,
-                convenienceMethod.Signature.NonDocumentComment);
-
-                var existsMethodProvider = new ExistsOperationMethodProvider(this, _get, convenienceMethod, signature, isAsync);
-                result.Add(existsMethodProvider.Build());
+                var existsMethodProvider = new ExistsOperationMethodProvider(this, _get, convenienceMethod, isAsync);
+                result.Add(existsMethodProvider);
             }
 
             return result;
@@ -207,21 +194,8 @@ namespace Azure.Generator.Management.Providers
             foreach (var isAsync in new List<bool> { true, false})
             {
                 var convenienceMethod = GetCorrespondingConvenienceMethod(_get!.Operation, isAsync);
-                var signature = new MethodSignature(
-                isAsync ? "GetIfExistsAsync" : "GetIfExists",
-                $"Tries to get details for this resource from the service.",
-                convenienceMethod.Signature.Modifiers,
-                isAsync ? new CSharpType(typeof(Task<>), new CSharpType(typeof(NullableResponse<>), ResourceClientCSharpType)) : new CSharpType(typeof(NullableResponse<>), ResourceClientCSharpType),
-                convenienceMethod.Signature.ReturnDescription,
-                GetOperationMethodParameters(convenienceMethod, false),
-                convenienceMethod.Signature.Attributes,
-                convenienceMethod.Signature.GenericArguments,
-                convenienceMethod.Signature.GenericParameterConstraints,
-                convenienceMethod.Signature.ExplicitInterface,
-                convenienceMethod.Signature.NonDocumentComment);
-
-                var getIfExistsMethodProvider = new GetIfExistsOperationMethodProvider(this, _get, convenienceMethod, signature, isAsync);
-                result.Add(getIfExistsMethodProvider.Build());
+                var getIfExistsMethodProvider = new GetIfExistsOperationMethodProvider(this, _get, convenienceMethod, isAsync);
+                result.Add(getIfExistsMethodProvider);
             }
 
             return result;

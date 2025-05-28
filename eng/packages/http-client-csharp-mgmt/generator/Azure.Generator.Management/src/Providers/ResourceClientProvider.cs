@@ -217,38 +217,37 @@ namespace Azure.Generator.Management.Providers
                     continue;
                 }
 
-                // only update for non-singleton resource
-                var isUpdateOnly = method.Operation.HttpMethod == HttpMethod.Put.ToString() && !IsSingleton;
-                operationMethods.Add(BuildOperationMethod(method, convenienceMethod, false, isUpdateOnly));
-                var asyncConvenienceMethod = GetCorrespondingConvenienceMethod(method.Operation, true);
-                operationMethods.Add(BuildOperationMethod(method, asyncConvenienceMethod, true, isUpdateOnly));
+                // Check if this is an update operation (PUT method for non-singleton resource)
+                var isUpdateOperation = method.Operation.HttpMethod == HttpMethod.Put.ToString() && !IsSingleton;
+
+                if (isUpdateOperation)
+                {
+                    var updateMethodProvider = new UpdateOperationMethodProvider(this, method, convenienceMethod, false);
+                    operationMethods.Add(updateMethodProvider);
+
+                    var asyncConvenienceMethod = GetCorrespondingConvenienceMethod(method.Operation, true);
+                    var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, method, asyncConvenienceMethod, true);
+                    operationMethods.Add(updateAsyncMethodProvider);
+                }
+                else
+                {
+                    operationMethods.Add(BuildOperationMethod(method, convenienceMethod, false));
+                    var asyncConvenienceMethod = GetCorrespondingConvenienceMethod(method.Operation, true);
+                    operationMethods.Add(BuildOperationMethod(method, asyncConvenienceMethod, true));
+                }
             }
 
             return [BuildValidateResourceIdMethod(), .. operationMethods];
         }
 
-        protected MethodProvider BuildOperationMethod(InputServiceMethod method, MethodProvider convenienceMethod, bool isAsync, bool isUpdateOnly = false)
+        protected MethodProvider BuildOperationMethod(InputServiceMethod method, MethodProvider convenienceMethod, bool isAsync)
         {
-            var signature = new MethodSignature(
-                isUpdateOnly ? (isAsync ? "UpdateAsync" : "Update") : convenienceMethod.Signature.Name,
-                isUpdateOnly ? $"Update a {SpecName}" : convenienceMethod.Signature.Description,
-                convenienceMethod.Signature.Modifiers,
-                method.GetOperationMethodReturnType(isAsync, ResourceClientCSharpType, ResourceData.Type),
-                convenienceMethod.Signature.ReturnDescription,
-                GetOperationMethodParameters(convenienceMethod, method is InputLongRunningServiceMethod),
-                convenienceMethod.Signature.Attributes,
-                convenienceMethod.Signature.GenericArguments,
-                convenienceMethod.Signature.GenericParameterConstraints,
-                convenienceMethod.Signature.ExplicitInterface,
-                convenienceMethod.Signature.NonDocumentComment);
-
-            return BuildOperationMethodCore(method, convenienceMethod, signature, isAsync);
+            return BuildOperationMethodCore(method, convenienceMethod, isAsync);
         }
 
-        protected MethodProvider BuildOperationMethodCore(InputServiceMethod method, MethodProvider convenienceMethod, MethodSignature signature, bool isAsync)
+        protected MethodProvider BuildOperationMethodCore(InputServiceMethod method, MethodProvider convenienceMethod, bool isAsync)
         {
-            var operationMethodProvider = new ResourceOperationMethodProvider(this, method, convenienceMethod, signature, isAsync);
-            return operationMethodProvider.Build();
+            return new ResourceOperationMethodProvider(this, method, convenienceMethod, isAsync);
         }
 
         protected virtual bool SkipMethodParameter(ParameterProvider parameter)
@@ -256,7 +255,7 @@ namespace Azure.Generator.Management.Providers
             return ContextualParameters.Contains(parameter.Name);
         }
 
-        protected IReadOnlyList<ParameterProvider> GetOperationMethodParameters(MethodProvider convenienceMethod, bool isLongRunning)
+        internal IReadOnlyList<ParameterProvider> GetOperationMethodParameters(MethodProvider convenienceMethod, bool isLongRunning)
         {
             var result = new List<ParameterProvider>();
             if (isLongRunning)

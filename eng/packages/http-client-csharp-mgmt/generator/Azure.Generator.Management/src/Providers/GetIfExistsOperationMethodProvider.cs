@@ -7,22 +7,45 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers
 {
-    internal class GetIfExistsOperationMethodProvider(
-        ResourceClientProvider resourceClientProvider,
-        InputServiceMethod method,
-        MethodProvider convenienceMethod,
-        MethodSignature signature,
-        bool isAsync) : ResourceOperationMethodProvider(resourceClientProvider, method, convenienceMethod, signature, isAsync)
+    internal class GetIfExistsOperationMethodProvider : ResourceOperationMethodProvider
     {
-        private readonly ResourceClientProvider _resourceClient = resourceClientProvider;
+        public GetIfExistsOperationMethodProvider(
+            ResourceClientProvider resourceClientProvider,
+            InputServiceMethod method,
+            MethodProvider convenienceMethod,
+            bool isAsync)
+            : base(resourceClientProvider, method, convenienceMethod, isAsync)
+        {
+        }
+
+        protected override MethodSignature CreateSignature()
+        {
+            var returnType = _isAsync
+                ? new CSharpType(typeof(Task<>), new CSharpType(typeof(NullableResponse<>), _resourceClientProvider.ResourceClientCSharpType))
+                : new CSharpType(typeof(NullableResponse<>), _resourceClientProvider.ResourceClientCSharpType);
+
+            return new MethodSignature(
+                _isAsync ? "GetIfExistsAsync" : "GetIfExists",
+                $"Tries to get details for this resource from the service.",
+                _convenienceMethod.Signature.Modifiers,
+                returnType,
+                _convenienceMethod.Signature.ReturnDescription,
+                _resourceClientProvider.GetOperationMethodParameters(_convenienceMethod, false),
+                _convenienceMethod.Signature.Attributes,
+                _convenienceMethod.Signature.GenericArguments,
+                _convenienceMethod.Signature.GenericParameterConstraints,
+                _convenienceMethod.Signature.ExplicitInterface,
+                _convenienceMethod.Signature.NonDocumentComment);
+        }
 
         protected override IReadOnlyList<MethodBodyStatement> BuildReturnStatements(ValueExpression responseVariable, MethodSignature signature)
         {
-            var resourceClientCSharpType = _resourceClient.ResourceClientCSharpType;
+            var resourceClientCSharpType = _resourceClientProvider.ResourceClientCSharpType;
 
             List<MethodBodyStatement> statements =
             [

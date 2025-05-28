@@ -25,42 +25,65 @@ namespace Azure.Generator.Management.Providers
     /// </summary>
     internal class ResourceOperationMethodProvider
     {
-        private readonly ResourceClientProvider _resourceClientProvider;
-        private readonly InputServiceMethod _method;
-        private readonly MethodProvider _convenienceMethod;
-        private readonly MethodSignature _signature;
-        private readonly bool _isAsync;
-        private readonly ValueExpression _clientDiagnosticsField;
+        protected readonly ResourceClientProvider _resourceClientProvider;
+        protected readonly InputServiceMethod _serviceMethod;
+        protected readonly MethodProvider _convenienceMethod;
+        protected readonly bool _isAsync;
+        protected readonly ValueExpression _clientDiagnosticsField;
+        protected readonly MethodSignature _signature;
+        protected readonly MethodBodyStatement[] _bodyStatements;
 
         public ResourceOperationMethodProvider(
             ResourceClientProvider resourceClientProvider,
             InputServiceMethod method,
             MethodProvider convenienceMethod,
-            MethodSignature signature,
             bool isAsync)
         {
             _resourceClientProvider = resourceClientProvider;
-            _method = method;
+            _serviceMethod = method;
             _convenienceMethod = convenienceMethod;
-            _signature = signature;
             _isAsync = isAsync;
             _clientDiagnosticsField = resourceClientProvider.GetClientDiagnosticsField();
+            _signature = CreateSignature();
+            _bodyStatements = BuildBodyStatements();
         }
 
-        public MethodProvider Build()
+        public static implicit operator MethodProvider(ResourceOperationMethodProvider resourceOperationMethodProvider)
+        {
+            return new MethodProvider(
+                resourceOperationMethodProvider._signature,
+                resourceOperationMethodProvider._bodyStatements,
+                resourceOperationMethodProvider._resourceClientProvider.Source);
+        }
+
+        protected virtual MethodBodyStatement[] BuildBodyStatements()
         {
             var scopeDeclaration = BuildDiagnosticScopeDeclaration(out var scopeVariable);
-            var bodyStatements = new MethodBodyStatement[]
-            {
+            return
+            [
                 scopeDeclaration,
                 scopeVariable.Invoke(nameof(DiagnosticScope.Start)).Terminate(),
                 new TryCatchFinallyStatement(
                     BuildTryExpression(),
                     BuildCatchExpression(scopeVariable)
                 )
-            };
+            ];
+        }
 
-            return new MethodProvider(_signature, bodyStatements, _resourceClientProvider);
+        protected virtual MethodSignature CreateSignature()
+        {
+            return new MethodSignature(
+                _convenienceMethod.Signature.Name,
+                _convenienceMethod.Signature.Description,
+                _convenienceMethod.Signature.Modifiers,
+                _serviceMethod.GetOperationMethodReturnType(_isAsync, _resourceClientProvider.ResourceClientCSharpType, _resourceClientProvider.ResourceData.Type),
+                _convenienceMethod.Signature.ReturnDescription,
+                _resourceClientProvider.GetOperationMethodParameters(_convenienceMethod, _serviceMethod.IsLongRunningOperation()),
+                _convenienceMethod.Signature.Attributes,
+                _convenienceMethod.Signature.GenericArguments,
+                _convenienceMethod.Signature.GenericParameterConstraints,
+                _convenienceMethod.Signature.ExplicitInterface,
+                _convenienceMethod.Signature.NonDocumentComment);
         }
 
         private MethodBodyStatement BuildDiagnosticScopeDeclaration(out VariableExpression scopeVariable)
@@ -81,16 +104,16 @@ namespace Azure.Generator.Management.Providers
             var tryStatements = new List<MethodBodyStatement>
             {
                 BuildRequestContextInitialization(cancellationTokenParameter, out var contextVariable),
-                BuildHttpMessageInitialization(_method, _convenienceMethod, contextVariable, out var messageVariable)
+                BuildHttpMessageInitialization(_serviceMethod, _convenienceMethod, contextVariable, out var messageVariable)
             };
 
             tryStatements.AddRange(BuildClientPipelineProcessing(_convenienceMethod, _isAsync, messageVariable, contextVariable, out var responseVariable));
 
-            if (_method.IsLongRunningOperation())
+            if (_serviceMethod.IsLongRunningOperation())
             {
                 tryStatements.AddRange(
                 BuildLroHandling(
-                    _method,
+                    _serviceMethod,
                     _isAsync,
                     messageVariable,
                     responseVariable,
