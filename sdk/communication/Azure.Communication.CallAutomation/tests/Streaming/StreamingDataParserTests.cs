@@ -73,7 +73,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             string dtmfJson = "{"
                 + "\"kind\": \"DtmfData\","
                 + "\"dtmfData\": {"
-                + "\"data\": \"5\","
+                + "\"data\": \"5\""
                 + "}"
                 + "}";
 
