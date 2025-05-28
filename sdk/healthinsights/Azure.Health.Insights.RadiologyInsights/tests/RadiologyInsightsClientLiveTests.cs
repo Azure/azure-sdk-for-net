@@ -40,6 +40,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             var request = GetRequestContent("RadiologyInsightsClientTest.request.json");
             var jobId = "job1714464002036";
             var operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, jobId, request);
+
             Assert.IsNotNull(operation);
             Response response = operation.GetRawResponse();
             Assert.IsNotNull(response);
