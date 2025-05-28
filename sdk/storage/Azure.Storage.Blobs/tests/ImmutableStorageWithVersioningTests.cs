@@ -87,7 +87,13 @@ namespace Azure.Storage.Blobs.Test
                     new StorageSharedKeyCredential(Tenants.TestConfigOAuth.AccountName,
                     Tenants.TestConfigOAuth.AccountKey))
                     .GetBlobContainerClient(_containerName);
-                await foreach (BlobItem blobItem in containerClient.GetBlobsAsync(BlobTraits.ImmutabilityPolicy | BlobTraits.LegalHold))
+
+                GetBlobsOptions options = new GetBlobsOptions
+                {
+                    Traits = BlobTraits.ImmutabilityPolicy | BlobTraits.LegalHold,
+                };
+
+                await foreach (BlobItem blobItem in containerClient.GetBlobsAsync(options))
                 {
                     BlobClient blobClient = containerClient.GetBlobClient(blobItem.Name);
 
@@ -143,7 +149,14 @@ namespace Azure.Storage.Blobs.Test
             // Validate we are correctly deserializing Blob Items.
             // Act
             List<BlobItem> blobItems = new List<BlobItem>();
-            await foreach (BlobItem blobItem in _containerClient.GetBlobsAsync(traits: BlobTraits.ImmutabilityPolicy, prefix: blob.Name))
+
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                Traits = BlobTraits.ImmutabilityPolicy,
+                Prefix = blob.Name
+            };
+
+            await foreach (BlobItem blobItem in _containerClient.GetBlobsAsync(options))
             {
                 blobItems.Add(blobItem);
             }
@@ -685,7 +698,14 @@ namespace Azure.Storage.Blobs.Test
             // Validate we are correctly deserializing Blob Items.
             // Act
             List<BlobItem> blobItems = new List<BlobItem>();
-            await foreach (BlobItem blobItem in _containerClient.GetBlobsAsync(traits: BlobTraits.LegalHold, prefix: blob.Name))
+
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                Traits = BlobTraits.LegalHold,
+                Prefix = blob.Name,
+            };
+
+            await foreach (BlobItem blobItem in _containerClient.GetBlobsAsync(options))
             {
                 blobItems.Add(blobItem);
             }
