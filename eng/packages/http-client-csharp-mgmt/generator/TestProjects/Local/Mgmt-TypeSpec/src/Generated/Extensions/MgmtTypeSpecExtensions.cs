@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.ResourceManager.Resources;
 
 namespace MgmtTypeSpec
@@ -16,6 +20,43 @@ namespace MgmtTypeSpec
         public static MockableMgmtTypeSpecResourceGroupResource GetMockableMgmtTypeSpecResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
             return resourceGroupResource.GetCachedClient(client => new MockableMgmtTypeSpecResourceGroupResource(client, resourceGroupResource.Id));
+        }
+
+        /// <summary> Gets a collection of Foos in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of Foos and their operations over a FooResource. </returns>
+        public static FooCollection GetFoos(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetFoos();
+        }
+
+        /// <summary> Get a Foo. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="fooName"> The name of the Foo. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="fooName"/> is null. </exception>
+        public static Response<FooResource> Get(this ResourceGroupResource resourceGroupResource, string fooName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(fooName, nameof(fooName));
+
+            return GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).Get(fooName, cancellationToken);
+        }
+
+        /// <summary> Get a Foo. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="fooName"> The name of the Foo. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="fooName"/> is null. </exception>
+        public static async Task<Response<FooResource>> GetAsync(this ResourceGroupResource resourceGroupResource, string fooName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(fooName, nameof(fooName));
+
+            return await GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetAsync(fooName, cancellationToken).ConfigureAwait(false);
         }
     }
 }

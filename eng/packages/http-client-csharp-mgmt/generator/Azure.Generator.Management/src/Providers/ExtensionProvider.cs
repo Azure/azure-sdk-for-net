@@ -33,21 +33,28 @@ namespace Azure.Generator.Management.Providers
 
         protected override MethodProvider[] BuildMethods()
         {
-            var methods = new List<MethodProvider>(_mockableResources.Count + _mockableResources.Sum(m => m.Methods.Count));
-
             // we have a few methods to get the cached clients for those mockable resources
+            var getCachedClientMethods = new Dictionary<CSharpType, MethodProvider>();
             foreach (var mockableResource in _mockableResources)
             {
-                methods.Add(BuildGetCachedClientMethod(mockableResource));
+                var getCachedClientMethod = BuildGetCachedClientMethod(mockableResource);
+                getCachedClientMethods.Add(mockableResource.ArmCoreType, getCachedClientMethod);
             }
 
             // then all the methods are just forwarding to the mockable resource methods
+            var redirectedMethods = new List<MethodProvider>(_mockableResources.Sum(m => m.Methods.Count));
             foreach (var mockableResource in _mockableResources)
             {
-                //methods.AddRange(mockableResource.Methods);
+                var getCachedClientMethod = getCachedClientMethods[mockableResource.ArmCoreType];
+                redirectedMethods.AddRange(
+                    mockableResource.Methods.Select(m => BuildRedirectMethod(mockableResource.ArmCoreType, m, getCachedClientMethod))
+                    );
             }
 
-            return [.. methods];
+            return [
+                .. getCachedClientMethods.Values,
+                .. redirectedMethods
+                ];
         }
 
         private MethodProvider BuildGetCachedClientMethod(MockableResourceProvider mockableResource)
@@ -68,6 +75,36 @@ namespace Azure.Generator.Management.Providers
                 Return(parameter.Invoke(GetCachedClient, lambda))
             };
             return new MethodProvider(methodSignature, statements, this);
+        }
+
+        private MethodProvider BuildRedirectMethod(CSharpType armCoreType, MethodProvider targetMethod, MethodProvider getCachedClientMethod)
+        {
+            var target = targetMethod.Signature;
+            // TODO -- add mocking information in method description
+            var extensionParameter = new ParameterProvider(
+                armCoreType.Name.ToVariableName(),
+                $"The {armCoreType:C} the method will execute against.",
+                armCoreType,
+                validation: ParameterValidationType.AssertNotNull);
+            IReadOnlyList<ParameterProvider> parameters = [
+                extensionParameter,
+                ..target.Parameters
+                ];
+            var modifiers = (target.Modifiers & ~MethodSignatureModifiers.Virtual) | MethodSignatureModifiers.Static | MethodSignatureModifiers.Extension;
+            var methodSignature = new MethodSignature(
+                target.Name,
+                target.Description,
+                modifiers,
+                target.ReturnType,
+                target.ReturnDescription,
+                parameters);
+
+            var body = new MethodBodyStatement[]
+            {
+                Return(Static().Invoke(getCachedClientMethod.Signature, [extensionParameter]).Invoke(target))
+            };
+
+            return new MethodProvider(methodSignature, body, this);
         }
     }
 }
