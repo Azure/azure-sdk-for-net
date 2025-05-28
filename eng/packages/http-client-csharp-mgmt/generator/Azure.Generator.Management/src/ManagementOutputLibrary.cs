@@ -40,7 +40,7 @@ namespace Azure.Generator.Management
         };
 
         // TODO -- build extensions and their corresponding mockable resources
-        private IReadOnlyList<MockableResourceProvider> BuildResourceExtensions(IEnumerable<ResourceClientProvider> resources)
+        private IReadOnlyList<TypeProvider> BuildExtensions(IEnumerable<ResourceClientProvider> resources)
         {
             // walk through all resources to figure out their scopes
             var scopeCandidates = new Dictionary<ResourceScope, List<ResourceClientProvider>>
@@ -64,8 +64,10 @@ namespace Azure.Generator.Management
                     mockableResources.Add(mockableExtension);
                 }
             }
+            var extensionProvider = new ExtensionProvider(mockableResources);
+            ManagementClientGenerator.Instance.AddTypeToKeep(extensionProvider.Name);
 
-            return mockableResources;
+            return [.. mockableResources, extensionProvider];
         }
 
         private static void BuildResourceCore(List<ResourceClientProvider> resources, List<ResourceCollectionClientProvider> collections, InputClient client)
@@ -89,7 +91,7 @@ namespace Azure.Generator.Management
         protected override TypeProvider[] BuildTypeProviders()
         {
             var (resources, collections) = BuildResources();
-            var extensions = BuildResourceExtensions(resources);
+            var extensions = BuildExtensions(resources);
             return [
                 .. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider),
                 ArmOperation,

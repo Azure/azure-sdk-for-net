@@ -10,6 +10,7 @@ using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
@@ -58,7 +59,8 @@ namespace Azure.Generator.Management.Providers
             var resourceType = resourceMetadata.ResourceType;
             _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(resourceType));
             var resourceModel = resourceMetadata.ResourceModel;
-            SpecName = resourceModel.Name; // TODO -- here we need to call the ToCleanName
+            // TODO -- the name of a resource is not always the name of its model. Maybe the resource metadata should have a property for the name of the resource?
+            SpecName = resourceModel.Name.ToIdentifierName();
 
             // We should be able to assume that all operations in the resource client are for the same resource
             var requestPath = new RequestPath(inputClient.Methods.First().Operation.Path);

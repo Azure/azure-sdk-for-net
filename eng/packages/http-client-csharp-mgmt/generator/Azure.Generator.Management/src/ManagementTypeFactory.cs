@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.InputTransformation;
-using Azure.Generator.Management.Providers.Abstraction;
 using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Providers;
+using Azure.Generator.Management.Providers.Abstraction;
+using Azure.Generator.Primitives;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -12,12 +14,11 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
-using System.ClientModel.Primitives;
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
-using Azure.Generator.Management.Providers;
 
 namespace Azure.Generator.Management
 {
@@ -103,6 +104,12 @@ namespace Azure.Generator.Management
                 return Static(typeof(JsonSerializer)).Invoke(nameof(JsonSerializer.Deserialize), [element], [valueType], false);
             }
             return base.DeserializeJsonValue(valueType, element, format);
+        }
+
+        /// <inheritdoc/>
+        public override NewProjectScaffolding CreateNewProjectScaffolding()
+        {
+            return new NewManagementProjectScaffolding();
         }
     }
 }
