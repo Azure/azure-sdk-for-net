@@ -127,6 +127,21 @@ namespace Azure.ResourceManager.Grafana.Models
         public EnterpriseConfigurations EnterpriseConfigurations { get; set; }
         /// <summary> Server configurations of a Grafana instance. </summary>
         public GrafanaConfigurations GrafanaConfigurations { get; set; }
+        /// <summary>
+        /// Email server settings.
+        /// https://grafana.com/docs/grafana/v9.0/setup-grafana/configure-grafana/#smtp
+        /// </summary>
+        public Smtp GrafanaConfigurationsSmtp
+        {
+            get => GrafanaConfigurations is null ? default : GrafanaConfigurations.Smtp;
+            set
+            {
+                if (GrafanaConfigurations is null)
+                    GrafanaConfigurations = new GrafanaConfigurations();
+                GrafanaConfigurations.Smtp = value;
+            }
+        }
+
         /// <summary> Installed plugin list of the Grafana instance. Key is plugin id, value is plugin definition. </summary>
         public IDictionary<string, GrafanaPlugin> GrafanaPlugins { get; }
         /// <summary> The major Grafana software version to target. </summary>
