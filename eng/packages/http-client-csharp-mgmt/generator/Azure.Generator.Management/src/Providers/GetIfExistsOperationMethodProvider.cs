@@ -12,17 +12,12 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers
 {
-    internal class GetIfExistsOperationMethodProvider : ResourceOperationMethodProvider
+    internal class GetIfExistsOperationMethodProvider(
+        ResourceClientProvider resourceClientProvider,
+        InputServiceMethod method,
+        MethodProvider convenienceMethod,
+        bool isAsync) : ResourceOperationMethodProvider(resourceClientProvider, method, convenienceMethod, isAsync)
     {
-        public GetIfExistsOperationMethodProvider(
-            ResourceClientProvider resourceClientProvider,
-            InputServiceMethod method,
-            MethodProvider convenienceMethod,
-            bool isAsync)
-            : base(resourceClientProvider, method, convenienceMethod, isAsync)
-        {
-        }
-
         protected override MethodSignature CreateSignature()
         {
             var returnType = _isAsync

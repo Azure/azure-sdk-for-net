@@ -8,17 +8,12 @@ using Azure.Generator.Management.Utilities;
 
 namespace Azure.Generator.Management.Providers
 {
-    internal class UpdateOperationMethodProvider : ResourceOperationMethodProvider
+    internal class UpdateOperationMethodProvider(
+        ResourceClientProvider resourceClientProvider,
+        InputServiceMethod method,
+        MethodProvider convenienceMethod,
+        bool isAsync) : ResourceOperationMethodProvider(resourceClientProvider, method, convenienceMethod, isAsync)
     {
-        public UpdateOperationMethodProvider(
-            ResourceClientProvider resourceClientProvider,
-            InputServiceMethod method,
-            MethodProvider convenienceMethod,
-            bool isAsync)
-            : base(resourceClientProvider, method, convenienceMethod, isAsync)
-        {
-        }
-
         protected override MethodSignature CreateSignature()
         {
             return new MethodSignature(

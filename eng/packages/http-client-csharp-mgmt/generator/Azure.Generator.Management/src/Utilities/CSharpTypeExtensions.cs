@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using Microsoft.TypeSpec.Generator.Primitives;
+using System;
+using System.Linq;
 
 namespace Azure.Generator.Management.Utilities
 {
@@ -28,6 +30,19 @@ namespace Azure.Generator.Management.Utilities
                     ? new CSharpType(typeof(Azure.Response<>), type)
                     : typeof(Azure.Response);
             }
+        }
+
+        public static CSharpType UnWrapAsync(this CSharpType type)
+        {
+            if (type.IsGenericType && type.Name == "Task")
+            {
+                if (type.Arguments.Count != 1)
+                {
+                    throw new InvalidOperationException($"Task type must have exactly one type argument, but found {type.Arguments.Count}.");
+                }
+                return type.Arguments[0];
+            }
+            return type;
         }
     }
 }

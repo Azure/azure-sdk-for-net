@@ -12,17 +12,12 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers
 {
-    internal class ExistsOperationMethodProvider : ResourceOperationMethodProvider
+    internal class ExistsOperationMethodProvider(
+        ResourceClientProvider resourceClientProvider,
+        InputServiceMethod method,
+        MethodProvider convenienceMethod,
+        bool isAsync) : ResourceOperationMethodProvider(resourceClientProvider, method, convenienceMethod, isAsync)
     {
-        public ExistsOperationMethodProvider(
-            ResourceClientProvider resourceClientProvider,
-            InputServiceMethod method,
-            MethodProvider convenienceMethod,
-            bool isAsync)
-            : base(resourceClientProvider, method, convenienceMethod, isAsync)
-        {
-        }
-
         protected override MethodSignature CreateSignature()
         {
             var returnType = _isAsync
@@ -42,6 +37,7 @@ namespace Azure.Generator.Management.Providers
                 _convenienceMethod.Signature.ExplicitInterface,
                 _convenienceMethod.Signature.NonDocumentComment);
         }
+
         protected override IReadOnlyList<MethodBodyStatement> BuildReturnStatements(ValueExpression responseVariable, MethodSignature signature)
         {
             // For Exists methods, we check if Value is not null and return a boolean

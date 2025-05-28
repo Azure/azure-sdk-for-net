@@ -1,10 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Linq;
 using Azure.Core;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
 
 namespace Azure.Generator.Management.Utilities
 {
@@ -55,6 +57,15 @@ namespace Azure.Generator.Management.Utilities
             return (responseBodyCSharpType != resourceDataType)
                 ? responseBodyCSharpType
                 : resourceClientCSharpType;
+        }
+
+        public static MethodProvider GetCorrespondingRequestMethod(this InputServiceMethod serviceMethod, Providers.ResourceClientProvider resourceClientProvider)
+        {
+            var expectedMethodName = $"Create{serviceMethod.Operation.Name}Request";
+            return resourceClientProvider.GetClientProvider().RestClient.Methods
+                .Single(m => m.Signature.Name.Equals(
+                    expectedMethodName,
+                    StringComparison.OrdinalIgnoreCase));
         }
     }
 }

@@ -104,17 +104,15 @@ namespace Azure.Generator.Management.Providers
             var tryStatements = new List<MethodBodyStatement>
             {
                 BuildRequestContextInitialization(cancellationTokenParameter, out var contextVariable),
-                BuildHttpMessageInitialization(_serviceMethod, _convenienceMethod, contextVariable, out var messageVariable)
+                BuildHttpMessageInitialization(contextVariable, out var messageVariable)
             };
 
-            tryStatements.AddRange(BuildClientPipelineProcessing(_convenienceMethod, _isAsync, messageVariable, contextVariable, out var responseVariable));
+            tryStatements.AddRange(BuildClientPipelineProcessing(messageVariable, contextVariable, out var responseVariable));
 
             if (_serviceMethod.IsLongRunningOperation())
             {
                 tryStatements.AddRange(
                 BuildLroHandling(
-                    _serviceMethod,
-                    _isAsync,
                     messageVariable,
                     responseVariable,
                     cancellationTokenParameter));
@@ -149,13 +147,12 @@ namespace Azure.Generator.Management.Providers
                 out contextVariable);
         }
 
-        private MethodBodyStatement BuildHttpMessageInitialization(InputServiceMethod serviceMethod, MethodProvider convenienceMethod, VariableExpression contextVariable, out VariableExpression messageVariable)
+        private MethodBodyStatement BuildHttpMessageInitialization(VariableExpression contextVariable, out VariableExpression messageVariable)
         {
-            var requestMethod = GetCorrespondingRequestMethod(serviceMethod.Operation);
+            var requestMethod = _serviceMethod.GetCorrespondingRequestMethod(_resourceClientProvider);
 
             var arguments = PopulateArguments(
                 requestMethod.Signature.Parameters,
-                convenienceMethod,
                 contextVariable);
 
             var invokeExpression = _resourceClientProvider
@@ -170,16 +167,14 @@ namespace Azure.Generator.Management.Providers
         }
 
         private IReadOnlyList<MethodBodyStatement> BuildClientPipelineProcessing(
-            MethodProvider convenienceMethod,
-            bool isAsync,
             VariableExpression messageVariable,
             VariableExpression contextVariable,
             out VariableExpression responseVariable)
         {
             var statements = new List<MethodBodyStatement>();
-            var responseType = isAsync ? convenienceMethod.Signature.ReturnType?.Arguments[0]! : convenienceMethod.Signature.ReturnType!;
+            var responseType = _convenienceMethod.Signature.ReturnType!.UnWrapAsync();
             VariableExpression declaredResponseVariable;
-            var pipelineInvoke = isAsync ? "ProcessMessageAsync" : "ProcessMessage";
+            var pipelineInvoke = _isAsync ? "ProcessMessageAsync" : "ProcessMessage";
 
             if (!responseType.Equals(typeof(Response)))
             {
@@ -188,7 +183,7 @@ namespace Azure.Generator.Management.Providers
                     typeof(Response),
                     Identifier("this")
                         .Property("Pipeline")
-                        .Invoke(pipelineInvoke, [messageVariable, contextVariable], null, isAsync),
+                        .Invoke(pipelineInvoke, [messageVariable, contextVariable], null, _isAsync),
                     out var resultVariable);
                 statements.Add(resultDeclaration);
 
@@ -208,7 +203,7 @@ namespace Azure.Generator.Management.Providers
                     typeof(Response),
                     Identifier("this")
                         .Property("Pipeline")
-                        .Invoke(pipelineInvoke, [messageVariable, contextVariable], null, isAsync),
+                        .Invoke(pipelineInvoke, [messageVariable, contextVariable], null, _isAsync),
                     out declaredResponseVariable);
                 statements.Add(responseDeclaration);
             }
@@ -217,16 +212,14 @@ namespace Azure.Generator.Management.Providers
         }
 
         private IReadOnlyList<MethodBodyStatement> BuildLroHandling(
-            InputServiceMethod method,
-            bool isAsync,
             VariableExpression messageVariable,
             VariableExpression responseVariable,
             ParameterProvider cancellationTokenParameter)
         {
             var statements = new List<MethodBodyStatement>();
 
-            var finalStateVia = method.GetOperationFinalStateVia();
-            bool isGeneric = method.GetResponseBodyType() != null;
+            var finalStateVia = _serviceMethod.GetOperationFinalStateVia();
+            bool isGeneric = _serviceMethod.GetResponseBodyType() != null;
 
             var armOperationType = isGeneric
                 ? ManagementClientGenerator.Instance.OutputLibrary.GenericArmOperation.Type
@@ -256,11 +249,11 @@ namespace Azure.Generator.Management.Providers
             statements.Add(operationDeclaration);
 
             var waitMethod = isGeneric
-                ? (isAsync ? "WaitForCompletionAsync" : "WaitForCompletion")
-                : (isAsync ? "WaitForCompletionResponseAsync" : "WaitForCompletionResponse");
+                ? (_isAsync ? "WaitForCompletionAsync" : "WaitForCompletion")
+                : (_isAsync ? "WaitForCompletionResponseAsync" : "WaitForCompletionResponse");
 
-            var waitInvocation = isAsync
-                ? operationVariable.Invoke(waitMethod, [cancellationTokenParameter], null, isAsync).Terminate()
+            var waitInvocation = _isAsync
+                ? operationVariable.Invoke(waitMethod, [cancellationTokenParameter], null, _isAsync).Terminate()
                 : operationVariable.Invoke(waitMethod, cancellationTokenParameter).Terminate();
 
             var waitIfCompletedStatement = new IfStatement(
@@ -305,7 +298,6 @@ namespace Azure.Generator.Management.Providers
 
         private ValueExpression[] PopulateArguments(
             IReadOnlyList<ParameterProvider> parameters,
-            MethodProvider convenienceMethod,
             VariableExpression contextVariable)
         {
             var arguments = new List<ValueExpression>();
@@ -332,13 +324,13 @@ namespace Azure.Generator.Management.Providers
                 }
                 else if (parameter.Type.Equals(typeof(RequestContent)))
                 {
-                    var resource = convenienceMethod.Signature.Parameters
+                    var resource = _convenienceMethod.Signature.Parameters
                         .Single(p => p.Type.Equals(_resourceClientProvider.ResourceData.Type));
                     arguments.Add(resource);
                 }
                 else if (parameter.Type.Equals(typeof(RequestContext)))
                 {
-                    var cancellationToken = convenienceMethod.Signature.Parameters
+                    var cancellationToken = _convenienceMethod.Signature.Parameters
                         .Single(p => p.Type.Equals(typeof(CancellationToken)));
                     arguments.Add(contextVariable);
                 }
@@ -347,16 +339,7 @@ namespace Azure.Generator.Management.Providers
                     arguments.Add(parameter);
                 }
             }
-            return arguments.ToArray();
-        }
-
-        private MethodProvider GetCorrespondingRequestMethod(InputOperation operation)
-        {
-            var expectedMethodName = $"Create{operation.Name}Request";
-            return _resourceClientProvider.GetClientProvider().RestClient.Methods
-                .Single(m => m.Signature.Name.Equals(
-                    expectedMethodName,
-                    StringComparison.OrdinalIgnoreCase));
+            return [.. arguments];
         }
     }
 }
