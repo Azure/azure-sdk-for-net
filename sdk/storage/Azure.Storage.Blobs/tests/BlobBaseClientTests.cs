@@ -7074,7 +7074,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
         public async Task SetTags_AccessConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
