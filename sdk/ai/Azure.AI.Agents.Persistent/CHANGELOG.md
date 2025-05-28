@@ -24,7 +24,7 @@
 - First stable release of Azure AI Agents Persistent client library.
 
 ### Breaking Changes
-- The support of connection strings and hub based projects was dropped. Please create a new project, which uses endpoints (recommended), or pin the version of `Azure.AI.Agents.Persistent` to `1.0.0-beta.2` if it is not possible.
+- The support of connection strings and hub based projects was dropped. Please create a new Azure AI Foundry resource, which uses endpoints (recommended), or pin the version of `Azure.AI.Agents.Persistent` to `1.0.0-beta.2` if it is not possible.
 
 ## 1.0.0-beta.2 (2025-05-14)
 
