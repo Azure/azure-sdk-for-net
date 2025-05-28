@@ -318,6 +318,7 @@ extends:
               - "/*"
               - "!SessionRecords"
           - pwsh: |
+              Start-Sleep -Seconds 30
               git fetch origin $(branchName)
               git checkout $(branchName)
               Write-Host "Most recent commits:"
