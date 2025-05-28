@@ -11,7 +11,6 @@
   - Cognitive Services Project Connections
   - Cognitive Services Project Capability Hosts
 
-
 ## 1.4.0 (2024-11-19)
 
 ### Features Added
