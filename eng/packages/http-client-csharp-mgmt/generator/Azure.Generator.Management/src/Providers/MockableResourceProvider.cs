@@ -2,16 +2,13 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Humanizer;
-using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -78,6 +75,7 @@ namespace Azure.Generator.Management.Providers
         {
             if (resource.IsSingleton)
             {
+                // TODO -- not implemented yet.
                 yield break;
             }
             else

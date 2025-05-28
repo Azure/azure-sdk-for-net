@@ -3,6 +3,7 @@
 
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Providers;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -40,7 +41,7 @@ namespace Azure.Generator.Management
         };
 
         // TODO -- build extensions and their corresponding mockable resources
-        private IReadOnlyList<TypeProvider> BuildExtensions(IEnumerable<ResourceClientProvider> resources)
+        private IReadOnlyList<TypeProvider> BuildExtensions(IReadOnlyList<ResourceClientProvider> resources)
         {
             // walk through all resources to figure out their scopes
             var scopeCandidates = new Dictionary<ResourceScope, List<ResourceClientProvider>>
@@ -54,7 +55,12 @@ namespace Azure.Generator.Management
                 scopeCandidates[resource.ResourceScope].Add(resource);
             }
 
-            var mockableResources = new List<MockableResourceProvider>(scopeCandidates.Count);
+            var mockableResources = new List<MockableResourceProvider>(scopeCandidates.Count)
+            {
+                // add the arm client mockable resource
+                new MockableArmClientProvider(typeof(ArmClient), resources)
+            };
+
             foreach (var (scope, candidates) in scopeCandidates)
             {
                 if (candidates.Count > 0)
@@ -64,6 +70,7 @@ namespace Azure.Generator.Management
                     mockableResources.Add(mockableExtension);
                 }
             }
+
             var extensionProvider = new ExtensionProvider(mockableResources);
             ManagementClientGenerator.Instance.AddTypeToKeep(extensionProvider.Name);
 
