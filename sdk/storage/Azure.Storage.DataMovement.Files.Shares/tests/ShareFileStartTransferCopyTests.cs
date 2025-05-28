@@ -765,6 +765,13 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             string sourceFileMode = "1777";
             ShareFileCreateOptions sharefileCreateOptions = new ShareFileCreateOptions()
             {
+                HttpHeaders = new ShareFileHttpHeaders()
+                {
+                    ContentLanguage = _defaultContentLanguage,
+                    ContentDisposition = _defaultContentDisposition,
+                    CacheControl = _defaultCacheControl
+                },
+                Metadata = _defaultMetadata,
                 SmbProperties = new FileSmbProperties()
                 {
                     FileCreatedOn = sourceFileCreatedOn,
