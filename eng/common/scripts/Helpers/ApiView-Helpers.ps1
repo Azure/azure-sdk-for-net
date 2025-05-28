@@ -261,7 +261,11 @@ function Create-API-Review {
     $requestParam.Add('repoName', $repoName)
     $requestParam.Add('pullRequestNumber', $pullRequestNumber)
     $requestParam.Add('packageName', $requestData.packageName)
-    $requestParam.Add('filePath', $requestData.filePath)
+    if ($language -eq "python") {
+      $requestParam.Add('codeFile', $requestData.filePath)
+    } else {
+      $requestParam.Add('filePath', $requestData.filePath)
+    }
     $requestParam.Add('language', $language)
     $requestUri.query = $requestParam.toString()
     $correlationId = [System.Guid]::NewGuid().ToString()
