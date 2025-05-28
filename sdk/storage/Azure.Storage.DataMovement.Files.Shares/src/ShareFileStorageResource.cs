@@ -283,8 +283,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 ShareFileStorageResource sourceShareFile = (ShareFileStorageResource)sourceResource;
                 // both source and destination must be SMB and destination FilePermission option must be set.
-                if (((sourceShareFile._options?.ShareProtocol ?? ShareProtocol.Smb) == ShareProtocol.Smb)
-                    && ((_options?.ShareProtocol ?? ShareProtocol.Smb) == ShareProtocol.Smb)
+                ShareProtocol sourceShareProtocol = sourceShareFile._options?.ShareProtocol ?? ShareProtocol.Smb;
+                ShareProtocol destinationShareProtocol = _options?.ShareProtocol ?? ShareProtocol.Smb;
+                if (sourceShareProtocol == ShareProtocol.Smb && destinationShareProtocol == ShareProtocol.Smb
                     && (_options?.FilePermissions ?? false))
                 {
                     string permissionsValue = sourceProperties?.RawProperties?.GetPermission();

@@ -132,6 +132,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             using Stream sourceStream = await hardlinkClient.OpenReadAsync();
             using Stream destinationStream = File.OpenRead(destinationResource.Uri.LocalPath);
             Assert.AreEqual(sourceStream.Length, destinationStream.Length);
+            Assert.AreEqual(sourceStream, destinationStream);
         }
 
         [RecordedTest]

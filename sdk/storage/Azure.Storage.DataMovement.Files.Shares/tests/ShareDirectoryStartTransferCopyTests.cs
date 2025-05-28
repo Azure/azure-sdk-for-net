@@ -182,7 +182,20 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert subdirectories
             Assert.AreEqual(sourceDirectoryNames.Count, destinationDirectoryNames.Count);
-            Assert.AreEqual(sourceDirectoryNames, destinationDirectoryNames);
+            for (int i = 0; i < sourceDirectoryNames.Count; i++)
+            {
+                Assert.AreEqual(
+                    sourceDirectoryNames[i],
+                    destinationDirectoryNames[i]);
+
+                // Verify Preservation
+                ShareDirectoryClient sourceClient = sourceDirectory.GetSubdirectoryClient(sourceDirectoryNames[i]);
+                ShareDirectoryClient destinationClient = destinationDirectory.GetSubdirectoryClient(destinationDirectoryNames[i]);
+                await VerifyPropertiesCopyAsync(
+                    propertiesTestType,
+                    sourceClient,
+                    destinationClient);
+            }
 
             // Assert file and file contents
             Assert.AreEqual(sourceFileNames.Count, destinationFileNames.Count);
@@ -372,6 +385,28 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             await directory.CreateIfNotExistsAsync(options: options, cancellationToken: cancellationToken);
         }
 
+        internal async Task CreateDirectoryTreeSmbAsync(
+            ShareClient client,
+            string sourcePrefix,
+            ShareDirectoryCreateOptions options,
+            int size)
+        {
+            string itemName1 = string.Join("/", sourcePrefix, "item1");
+            string itemName2 = string.Join("/", sourcePrefix, "item2");
+            await CreateObjectInSourceAsync(client, size, itemName1);
+            await CreateObjectInSourceAsync(client, size, itemName2);
+
+            string subDirPath = string.Join("/", sourcePrefix, "bar");
+            await CreateDirectoryAsync(client, subDirPath, options);
+            string itemName3 = string.Join("/", subDirPath, "item3");
+            await CreateObjectInSourceAsync(client, size, itemName3);
+
+            string subDirPath2 = string.Join("/", sourcePrefix, "pik");
+            await CreateDirectoryAsync(client, subDirPath2, options);
+            string itemName4 = string.Join("/", subDirPath2, "item4");
+            await CreateObjectInSourceAsync(client, size, itemName4);
+        }
+
         private async Task CreateDirectoryTreeNfsAsync(ShareClient client,
             string sourcePrefix,
             ShareDirectoryCreateOptions options,
@@ -416,6 +451,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 Assert.AreEqual(_defaultContentLanguage, destinationProperties.ContentLanguage);
                 Assert.AreEqual(_defaultCacheControl, destinationProperties.CacheControl);
                 Assert.AreEqual(_defaultContentType, destinationProperties.ContentType);
+                Assert.AreEqual(_defaultFileAttributes, destinationProperties.SmbProperties.FileAttributes);
                 Assert.AreEqual(_defaultFileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
                 Assert.AreEqual(_defaultFileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
                 Assert.AreEqual(_defaultFileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
@@ -430,6 +466,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 Assert.AreEqual(sourceProperties.ContentLanguage, destinationProperties.ContentLanguage);
                 Assert.AreEqual(sourceProperties.CacheControl, destinationProperties.CacheControl);
                 Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
+                Assert.AreEqual(sourceProperties.SmbProperties.FileAttributes, destinationProperties.SmbProperties.FileAttributes);
                 Assert.AreEqual(sourceProperties.SmbProperties.FileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
                 Assert.AreEqual(sourceProperties.SmbProperties.FileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
                 Assert.AreEqual(sourceProperties.SmbProperties.FileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
@@ -455,6 +492,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 Assert.AreEqual(sourceProperties.ContentLanguage, destinationProperties.ContentLanguage);
                 Assert.AreEqual(sourceProperties.CacheControl, destinationProperties.CacheControl);
                 Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
+                Assert.AreEqual(sourceProperties.SmbProperties.FileAttributes, destinationProperties.SmbProperties.FileAttributes);
                 Assert.AreEqual(sourceProperties.SmbProperties.FileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
                 Assert.AreEqual(sourceProperties.SmbProperties.FileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
                 Assert.AreEqual(sourceProperties.SmbProperties.FileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
@@ -498,6 +536,92 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 Assert.AreEqual(sourceProperties.ContentLanguage, destinationProperties.ContentLanguage);
                 Assert.AreEqual(sourceProperties.CacheControl, destinationProperties.CacheControl);
                 Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
+                Assert.AreEqual(sourceProperties.SmbProperties.FileAttributes, destinationProperties.SmbProperties.FileAttributes);
+                Assert.AreEqual(sourceProperties.SmbProperties.FileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
+                Assert.AreEqual(sourceProperties.SmbProperties.FileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
+                Assert.AreEqual(sourceProperties.SmbProperties.FileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
+            }
+        }
+
+        protected async Task VerifyPropertiesCopyAsync(
+            TransferPropertiesTestType transferPropertiesTestType,
+            ShareDirectoryClient sourceClient,
+            ShareDirectoryClient destinationClient)
+        {
+            if (transferPropertiesTestType == TransferPropertiesTestType.NoPreserve)
+            {
+                ShareDirectoryProperties destinationProperties = await destinationClient.GetPropertiesAsync();
+
+                Assert.IsEmpty(destinationProperties.Metadata);
+            }
+            else if (transferPropertiesTestType == TransferPropertiesTestType.NewProperties)
+            {
+                ShareDirectoryProperties destinationProperties = await destinationClient.GetPropertiesAsync();
+
+                Assert.That(_defaultMetadata, Is.EqualTo(destinationProperties.Metadata));
+                Assert.AreEqual(_defaultDirectoryAttributes, destinationProperties.SmbProperties.FileAttributes);
+                Assert.AreEqual(_defaultFileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
+                Assert.AreEqual(_defaultFileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
+                Assert.AreEqual(_defaultFileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
+            }
+            else if (transferPropertiesTestType == TransferPropertiesTestType.Preserve)
+            {
+                ShareDirectoryProperties sourceProperties = await sourceClient.GetPropertiesAsync();
+                ShareDirectoryProperties destinationProperties = await destinationClient.GetPropertiesAsync();
+
+                Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
+                Assert.AreEqual(sourceProperties.SmbProperties.FileAttributes, destinationProperties.SmbProperties.FileAttributes);
+                Assert.AreEqual(sourceProperties.SmbProperties.FileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
+                Assert.AreEqual(sourceProperties.SmbProperties.FileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
+                Assert.AreEqual(sourceProperties.SmbProperties.FileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
+
+                // Check if the permissions are the same. Permission Keys will be different as they are defined by the share service.
+                ShareClient sourceShareClient = sourceClient.GetParentShareClient();
+                ShareFilePermission sourcePermission = await sourceShareClient.GetPermissionAsync(sourceProperties.SmbProperties.FilePermissionKey);
+
+                ShareClient parentDestinationClient = destinationClient.GetParentShareClient();
+                ShareFilePermission fullPermission = await parentDestinationClient.GetPermissionAsync(destinationProperties.SmbProperties.FilePermissionKey);
+
+                string sourcePermissionStr = RemoveSacl(sourcePermission.Permission);
+                string destPermissionStr = RemoveSacl(fullPermission.Permission);
+                Assert.AreEqual(sourcePermissionStr, destPermissionStr);
+            }
+            else if (transferPropertiesTestType == TransferPropertiesTestType.PreserveNoPermissions)
+            {
+                ShareDirectoryProperties sourceProperties = await sourceClient.GetPropertiesAsync();
+                ShareDirectoryProperties destinationProperties = await destinationClient.GetPropertiesAsync();
+
+                Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
+                Assert.AreEqual(sourceProperties.SmbProperties.FileAttributes, destinationProperties.SmbProperties.FileAttributes);
+                Assert.AreEqual(sourceProperties.SmbProperties.FileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
+                Assert.AreEqual(sourceProperties.SmbProperties.FileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
+                Assert.AreEqual(sourceProperties.SmbProperties.FileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
+            }
+            else if (transferPropertiesTestType == TransferPropertiesTestType.PreserveNfs)
+            {
+                ShareDirectoryProperties sourceProperties = await sourceClient.GetPropertiesAsync();
+                ShareDirectoryProperties destinationProperties = await destinationClient.GetPropertiesAsync();
+
+                Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
+                Assert.AreEqual(sourceProperties.SmbProperties.FileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
+                Assert.AreEqual(sourceProperties.PosixProperties.Owner, destinationProperties.PosixProperties.Owner);
+                Assert.AreEqual(sourceProperties.PosixProperties.Group, destinationProperties.PosixProperties.Group);
+                Assert.AreEqual(sourceProperties.PosixProperties.FileMode.ToString(), destinationProperties.PosixProperties.FileMode.ToString());
+            }
+            else if (transferPropertiesTestType == TransferPropertiesTestType.PreserveNfsNoPermissions)
+            {
+                ShareDirectoryProperties sourceProperties = await sourceClient.GetPropertiesAsync();
+                ShareDirectoryProperties destinationProperties = await destinationClient.GetPropertiesAsync();
+
+                Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
+                Assert.AreEqual(sourceProperties.SmbProperties.FileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
+            }
+            else // Default properties
+            {
+                ShareDirectoryProperties sourceProperties = await sourceClient.GetPropertiesAsync();
+                ShareDirectoryProperties destinationProperties = await destinationClient.GetPropertiesAsync();
+
+                Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
                 Assert.AreEqual(sourceProperties.SmbProperties.FileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
                 Assert.AreEqual(sourceProperties.SmbProperties.FileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
                 Assert.AreEqual(sourceProperties.SmbProperties.FileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
@@ -574,7 +698,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 FilePermission = new ShareFilePermission() { Permission = _defaultPermissions },
                 SmbProperties = new FileSmbProperties()
                 {
-                    FileAttributes = _defaultFileAttributes,
+                    FileAttributes = NtfsFileAttributes.Directory | NtfsFileAttributes.ReadOnly | NtfsFileAttributes.Archive,
                     FileCreatedOn = _defaultFileCreatedOn,
                     FileChangedOn = _defaultFileChangedOn,
                     FileLastWrittenOn = _defaultFileLastWrittenOn,
@@ -582,7 +706,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             };
             // setup source
             await CreateDirectoryAsync(source.Container, sourcePrefix, directoryCreateOptions);
-            await CreateDirectoryTreeAsync(source.Container, sourcePrefix, DataMovementTestConstants.KB);
+            await CreateDirectoryTreeSmbAsync(source.Container, sourcePrefix, directoryCreateOptions, DataMovementTestConstants.KB);
             // setup destination
             await CreateDirectoryInDestinationAsync(destination.Container, destPrefix);
 
