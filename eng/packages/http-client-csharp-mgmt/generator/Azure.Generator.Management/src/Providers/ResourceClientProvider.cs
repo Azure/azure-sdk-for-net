@@ -202,6 +202,12 @@ namespace Azure.Generator.Management.Providers
         internal ClientProvider GetClientProvider() => _clientProvider;
         internal IReadOnlyList<string> ContextualParameters { get; }
 
+        /// <summary>
+        /// Gets the collection of parameter names that are implicitly available from the resource context
+        /// and should be excluded from method parameters.
+        /// </summary>
+        internal virtual IReadOnlyList<string> ImplicitParameterNames => ContextualParameters;
+
         protected override CSharpType[] BuildImplements() => [typeof(ArmResource)];
 
         protected override MethodProvider[] BuildMethods()
@@ -248,30 +254,6 @@ namespace Azure.Generator.Management.Providers
         protected MethodProvider BuildOperationMethodCore(InputServiceMethod method, MethodProvider convenienceMethod, bool isAsync)
         {
             return new ResourceOperationMethodProvider(this, method, convenienceMethod, isAsync);
-        }
-
-        protected virtual bool SkipMethodParameter(ParameterProvider parameter)
-        {
-            return ContextualParameters.Contains(parameter.Name);
-        }
-
-        internal IReadOnlyList<ParameterProvider> GetOperationMethodParameters(MethodProvider convenienceMethod, bool isLongRunning)
-        {
-            var result = new List<ParameterProvider>();
-            if (isLongRunning)
-            {
-                result.Add(KnownAzureParameters.WaitUntil);
-            }
-
-            foreach (var parameter in convenienceMethod.Signature.Parameters)
-            {
-                if (!SkipMethodParameter(parameter))
-                {
-                    result.Add(parameter);
-                }
-            }
-
-            return result;
         }
 
         // TODO: get clean name of operation Name

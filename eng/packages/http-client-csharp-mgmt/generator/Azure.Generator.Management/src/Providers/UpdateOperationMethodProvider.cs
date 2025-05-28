@@ -22,7 +22,7 @@ namespace Azure.Generator.Management.Providers
                 _convenienceMethod.Signature.Modifiers,
                 _serviceMethod.GetOperationMethodReturnType(_isAsync, _resourceClientProvider.ResourceClientCSharpType, _resourceClientProvider.ResourceData.Type),
                 _convenienceMethod.Signature.ReturnDescription,
-                _resourceClientProvider.GetOperationMethodParameters(_convenienceMethod, _serviceMethod.IsLongRunningOperation()),
+                GetOperationMethodParameters(_convenienceMethod, _serviceMethod.IsLongRunningOperation(), _resourceClientProvider.ImplicitParameterNames),
                 _convenienceMethod.Signature.Attributes,
                 _convenienceMethod.Signature.GenericArguments,
                 _convenienceMethod.Signature.GenericParameterConstraints,

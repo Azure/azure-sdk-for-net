@@ -136,7 +136,7 @@ namespace Azure.Generator.Management.Providers
                 convenienceMethod.Signature.Modifiers,
                 isAsync ? new CSharpType(typeof(AsyncPageable<>), _resource.Type) : new CSharpType(typeof(Pageable<>), _resource.Type),
                 convenienceMethod.Signature.ReturnDescription,
-                GetOperationMethodParameters(convenienceMethod, isLongRunning),
+                ResourceOperationMethodProvider.GetOperationMethodParameters(convenienceMethod, isLongRunning, ImplicitParameterNames),
                 convenienceMethod.Signature.Attributes,
                 convenienceMethod.Signature.GenericArguments,
                 convenienceMethod.Signature.GenericParameterConstraints,
@@ -200,13 +200,11 @@ namespace Azure.Generator.Management.Providers
             return result;
         }
 
-        protected override bool SkipMethodParameter(ParameterProvider parameter)
-        {
-            if (ContextualParameters == null)
-            {
-                return false;
-            }
-            return ContextualParameters.Take(ContextualParameters.Count - 1).Any(p => p == parameter.Name);
-        }
+        /// <summary>
+        /// Gets the collection of parameter names that should be excluded from method parameters.
+        /// For collection clients, this excludes all contextual parameters except the last one (typically the resource name).
+        /// </summary>
+        internal override IReadOnlyList<string> ImplicitParameterNames =>
+            ContextualParameters == null ? [] : ContextualParameters.Take(ContextualParameters.Count - 1).ToList();
     }
 }
