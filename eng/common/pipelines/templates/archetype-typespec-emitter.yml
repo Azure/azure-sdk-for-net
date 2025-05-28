@@ -290,6 +290,7 @@ extends:
             parameters:
               artifactName: config_files
               artifactPath: $(Build.SourcesDirectory)    
+              displayName: Publish generated package config files
 
           - task: PowerShell@2
             displayName: Get generation job matrix

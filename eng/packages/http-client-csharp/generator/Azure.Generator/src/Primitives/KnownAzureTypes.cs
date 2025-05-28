@@ -60,7 +60,7 @@ namespace Azure.Generator.Primitives
             [ETagId] = typeof(ETag),
             [AzureLocationId] = typeof(AzureLocation),
             [ArmIdId] = typeof(ResourceIdentifier),
-            [AzureError] = typeof(ResponseError),
+            // [AzureError] = typeof(ResponseError),
             [EmbeddingVector] = typeof(ReadOnlyMemory<>)
         };
 
