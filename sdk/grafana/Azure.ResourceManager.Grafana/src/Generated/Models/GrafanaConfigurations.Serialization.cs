@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    internal partial class GrafanaConfigurations : IUtf8JsonSerializable, IJsonModel<GrafanaConfigurations>
+    public partial class GrafanaConfigurations : IUtf8JsonSerializable, IJsonModel<GrafanaConfigurations>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GrafanaConfigurations>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -38,6 +38,26 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 writer.WritePropertyName("smtp"u8);
                 writer.WriteObjectValue(Smtp, options);
+            }
+            if (Optional.IsDefined(Snapshots))
+            {
+                writer.WritePropertyName("snapshots"u8);
+                writer.WriteObjectValue(Snapshots, options);
+            }
+            if (Optional.IsDefined(Users))
+            {
+                writer.WritePropertyName("users"u8);
+                writer.WriteObjectValue(Users, options);
+            }
+            if (Optional.IsDefined(Security))
+            {
+                writer.WritePropertyName("security"u8);
+                writer.WriteObjectValue(Security, options);
+            }
+            if (Optional.IsDefined(UnifiedAlertingScreenshots))
+            {
+                writer.WritePropertyName("unifiedAlertingScreenshots"u8);
+                writer.WriteObjectValue(UnifiedAlertingScreenshots, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -77,6 +97,10 @@ namespace Azure.ResourceManager.Grafana.Models
                 return null;
             }
             Smtp smtp = default;
+            Snapshots snapshots = default;
+            Users users = default;
+            Security security = default;
+            UnifiedAlertingScreenshots unifiedAlertingScreenshots = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,13 +114,55 @@ namespace Azure.ResourceManager.Grafana.Models
                     smtp = Smtp.DeserializeSmtp(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("snapshots"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    snapshots = Snapshots.DeserializeSnapshots(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("users"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    users = Users.DeserializeUsers(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("security"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    security = Security.DeserializeSecurity(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("unifiedAlertingScreenshots"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    unifiedAlertingScreenshots = UnifiedAlertingScreenshots.DeserializeUnifiedAlertingScreenshots(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GrafanaConfigurations(smtp, serializedAdditionalRawData);
+            return new GrafanaConfigurations(
+                smtp,
+                snapshots,
+                users,
+                security,
+                unifiedAlertingScreenshots,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GrafanaConfigurations>.Write(ModelReaderWriterOptions options)

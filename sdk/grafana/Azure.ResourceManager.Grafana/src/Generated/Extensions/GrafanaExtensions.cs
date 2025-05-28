@@ -109,6 +109,44 @@ namespace Azure.ResourceManager.Grafana
         }
 
         /// <summary>
+        /// Gets an object representing an <see cref="IntegrationFabricResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IntegrationFabricResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationFabricResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableGrafanaArmClient.GetIntegrationFabricResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="IntegrationFabricResource"/> object. </returns>
+        public static IntegrationFabricResource GetIntegrationFabricResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableGrafanaArmClient(client).GetIntegrationFabricResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedDashboardResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedDashboardResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDashboardResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableGrafanaArmClient.GetManagedDashboardResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManagedDashboardResource"/> object. </returns>
+        public static ManagedDashboardResource GetManagedDashboardResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableGrafanaArmClient(client).GetManagedDashboardResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of ManagedGrafanaResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
@@ -138,7 +176,7 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -176,7 +214,7 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -202,6 +240,99 @@ namespace Azure.ResourceManager.Grafana
         }
 
         /// <summary>
+        /// Gets a collection of ManagedDashboardResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableGrafanaResourceGroupResource.GetManagedDashboards()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of ManagedDashboardResources and their operations over a ManagedDashboardResource. </returns>
+        public static ManagedDashboardCollection GetManagedDashboards(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableGrafanaResourceGroupResource(resourceGroupResource).GetManagedDashboards();
+        }
+
+        /// <summary>
+        /// Get the properties of a specific dashboard for grafana resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards/{dashboardName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Dashboards_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDashboardResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableGrafanaResourceGroupResource.GetManagedDashboardAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="dashboardName"> The name of the Azure Managed Dashboard. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="dashboardName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dashboardName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ManagedDashboardResource>> GetManagedDashboardAsync(this ResourceGroupResource resourceGroupResource, string dashboardName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableGrafanaResourceGroupResource(resourceGroupResource).GetManagedDashboardAsync(dashboardName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the properties of a specific dashboard for grafana resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards/{dashboardName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Dashboards_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDashboardResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableGrafanaResourceGroupResource.GetManagedDashboard(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="dashboardName"> The name of the Azure Managed Dashboard. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="dashboardName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dashboardName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<ManagedDashboardResource> GetManagedDashboard(this ResourceGroupResource resourceGroupResource, string dashboardName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableGrafanaResourceGroupResource(resourceGroupResource).GetManagedDashboard(dashboardName, cancellationToken);
+        }
+
+        /// <summary>
         /// List all resources of workspaces for Grafana under the specified subscription.
         /// <list type="bullet">
         /// <item>
@@ -214,7 +345,7 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,7 +381,7 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -271,6 +402,78 @@ namespace Azure.ResourceManager.Grafana
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableGrafanaSubscriptionResource(subscriptionResource).GetManagedGrafanas(cancellationToken);
+        }
+
+        /// <summary>
+        /// List all resources of dashboards under the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/dashboards</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Dashboards_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDashboardResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableGrafanaSubscriptionResource.GetManagedDashboards(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ManagedDashboardResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ManagedDashboardResource> GetManagedDashboardsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableGrafanaSubscriptionResource(subscriptionResource).GetManagedDashboardsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List all resources of dashboards under the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/dashboards</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Dashboards_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDashboardResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableGrafanaSubscriptionResource.GetManagedDashboards(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ManagedDashboardResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ManagedDashboardResource> GetManagedDashboards(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableGrafanaSubscriptionResource(subscriptionResource).GetManagedDashboards(cancellationToken);
         }
     }
 }

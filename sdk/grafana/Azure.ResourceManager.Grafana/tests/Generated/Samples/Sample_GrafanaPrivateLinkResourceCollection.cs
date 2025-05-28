@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Grafana.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_PrivateLinkResourcesGet()
         {
-            // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2023-09-01/examples/PrivateLinkResources_Get.json
+            // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/preview/2024-11-01-preview/examples/PrivateLinkResources_Get.json
             // this example is just showing the usage of "PrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Grafana.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_PrivateLinkResourcesList()
         {
-            // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2023-09-01/examples/PrivateLinkResources_List.json
+            // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/preview/2024-11-01-preview/examples/PrivateLinkResources_List.json
             // this example is just showing the usage of "PrivateLinkResources_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Grafana.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_PrivateLinkResourcesGet()
         {
-            // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2023-09-01/examples/PrivateLinkResources_Get.json
+            // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/preview/2024-11-01-preview/examples/PrivateLinkResources_Get.json
             // this example is just showing the usage of "PrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Grafana.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_PrivateLinkResourcesGet()
         {
-            // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2023-09-01/examples/PrivateLinkResources_Get.json
+            // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/preview/2024-11-01-preview/examples/PrivateLinkResources_Get.json
             // this example is just showing the usage of "PrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

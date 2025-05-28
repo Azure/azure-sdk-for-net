@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Grafana.Models
 {
     /// <summary> Server configurations of a Grafana instance. </summary>
-    internal partial class GrafanaConfigurations
+    public partial class GrafanaConfigurations
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -55,10 +55,18 @@ namespace Azure.ResourceManager.Grafana.Models
         /// Email server settings.
         /// https://grafana.com/docs/grafana/v9.0/setup-grafana/configure-grafana/#smtp
         /// </param>
+        /// <param name="snapshots"> Grafana Snapshots settings. </param>
+        /// <param name="users"> Grafana users settings. </param>
+        /// <param name="security"> Grafana security settings. </param>
+        /// <param name="unifiedAlertingScreenshots"> Grafana Unified Alerting Screenshots settings. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GrafanaConfigurations(Smtp smtp, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GrafanaConfigurations(Smtp smtp, Snapshots snapshots, Users users, Security security, UnifiedAlertingScreenshots unifiedAlertingScreenshots, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Smtp = smtp;
+            Snapshots = snapshots;
+            Users = users;
+            Security = security;
+            UnifiedAlertingScreenshots = unifiedAlertingScreenshots;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -67,5 +75,48 @@ namespace Azure.ResourceManager.Grafana.Models
         /// https://grafana.com/docs/grafana/v9.0/setup-grafana/configure-grafana/#smtp
         /// </summary>
         public Smtp Smtp { get; set; }
+        /// <summary> Grafana Snapshots settings. </summary>
+        internal Snapshots Snapshots { get; set; }
+        /// <summary> Set to false to disable external snapshot publish endpoint. </summary>
+        public bool? ExternalEnabled
+        {
+            get => Snapshots is null ? default : Snapshots.ExternalEnabled;
+            set
+            {
+                if (Snapshots is null)
+                    Snapshots = new Snapshots();
+                Snapshots.ExternalEnabled = value;
+            }
+        }
+
+        /// <summary> Grafana users settings. </summary>
+        public Users Users { get; set; }
+        /// <summary> Grafana security settings. </summary>
+        internal Security Security { get; set; }
+        /// <summary> Set to true to execute the CSRF check even if the login cookie is not in a request (default false). </summary>
+        public bool? CsrfAlwaysCheck
+        {
+            get => Security is null ? default : Security.CsrfAlwaysCheck;
+            set
+            {
+                if (Security is null)
+                    Security = new Security();
+                Security.CsrfAlwaysCheck = value;
+            }
+        }
+
+        /// <summary> Grafana Unified Alerting Screenshots settings. </summary>
+        internal UnifiedAlertingScreenshots UnifiedAlertingScreenshots { get; set; }
+        /// <summary> Set to false to disable capture screenshot in Unified Alert due to performance issue. </summary>
+        public bool? CaptureEnabled
+        {
+            get => UnifiedAlertingScreenshots is null ? default : UnifiedAlertingScreenshots.CaptureEnabled;
+            set
+            {
+                if (UnifiedAlertingScreenshots is null)
+                    UnifiedAlertingScreenshots = new UnifiedAlertingScreenshots();
+                UnifiedAlertingScreenshots.CaptureEnabled = value;
+            }
+        }
     }
 }
