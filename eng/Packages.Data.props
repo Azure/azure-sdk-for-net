@@ -209,6 +209,7 @@
     <PackageReference Update="Microsoft.TypeSpec.Generator.ClientModel" Version="[$(UnbrandedGeneratorVersion)]" />
     <PackageReference Update="Microsoft.TypeSpec.Generator.Input" Version="[$(UnbrandedGeneratorVersion)]" />
     <PackageReference Update="Azure.Generator" Version="[$(AzureGeneratorVersion)]" />
+    <PackageReference Update="Humanizer.Core" Version="2.14.1" />
   </ItemGroup>
 
   <!--
