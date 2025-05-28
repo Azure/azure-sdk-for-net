@@ -167,11 +167,16 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 string currentPrefix = prefixes.Dequeue();
 
+                GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+                {
+                    Traits = BlobTraits.Metadata,
+                    Prefix = currentPrefix,
+                    Delimiter = Constants.PathBackSlashDelimiter
+                };
+
                 int childCount = 0;
                 await foreach (BlobHierarchyItem blobHierarchyItem in BlobContainerClient.GetBlobsByHierarchyAsync(
-                    traits: BlobTraits.Metadata,
-                    prefix: currentPrefix,
-                    delimiter: Constants.PathBackSlashDelimiter,
+                    options: options,
                     cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
                     childCount++;

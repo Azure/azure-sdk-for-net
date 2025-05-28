@@ -127,10 +127,15 @@ namespace Azure.Storage.Blobs.ChangeFeed
         {
             List<string> list = new List<string>();
 
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                Prefix = yearPath,
+            };
+
             if (async)
             {
                 await foreach (BlobHierarchyItem blobHierarchyItem in containerClient.GetBlobsByHierarchyAsync(
-                    prefix: yearPath,
+                    options: options,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false))
                 {
@@ -148,7 +153,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             else
             {
                 foreach (BlobHierarchyItem blobHierarchyItem in containerClient.GetBlobsByHierarchy(
-                    prefix: yearPath,
+                    options: options,
                     cancellationToken: cancellationToken))
                 {
                     if (blobHierarchyItem.IsPrefix)
