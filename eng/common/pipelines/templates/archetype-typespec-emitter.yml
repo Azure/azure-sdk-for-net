@@ -312,8 +312,17 @@ extends:
           variables:
             matrixArtifactsPath: $(Pipeline.Workspace)/matrix_artifacts
           steps:
-          - checkout: self # don't use sparse checkout here as we need the emitter package json changes
-            fetchDepth: 0
+          - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+            parameters:
+              Paths:
+              - "/*"
+              - "!SessionRecords"
+          - pwsh: |
+              git fetch origin $(branchName)
+              git checkout $(branchName)
+              Write-Host "Most recent commits:"
+              git log -n 5 --oneline
+            displayName: Ensure latest pushed emitter files are checked out  
           - task: UseNode@1
             displayName: 'Install Node.js'
             inputs:
