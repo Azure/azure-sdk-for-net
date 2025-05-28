@@ -2684,10 +2684,13 @@ namespace Azure.Provisioning.Roles
         public static Azure.Provisioning.Roles.FederatedIdentityCredential FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2022_01_31_PREVIEW;
             public static readonly string V2023_01_31;
+            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2023_07_31_PREVIEW;
             public static readonly string V2024_11_30;
+            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2025_01_31_PREVIEW;
         }
     }
@@ -2708,13 +2711,18 @@ namespace Azure.Provisioning.Roles
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2015_08_31_PREVIEW;
             public static readonly string V2018_11_30;
+            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2021_09_30_PREVIEW;
+            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2022_01_31_PREVIEW;
             public static readonly string V2023_01_31;
+            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2023_07_31_PREVIEW;
             public static readonly string V2024_11_30;
+            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2025_01_31_PREVIEW;
         }
     }

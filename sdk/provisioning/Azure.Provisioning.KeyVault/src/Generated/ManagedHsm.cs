@@ -11,6 +11,7 @@ using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using System;
+using System.ComponentModel;
 
 namespace Azure.Provisioning.KeyVault;
 
@@ -139,11 +140,6 @@ public partial class ManagedHsm : ProvisionableResource
         public static readonly string V2024_11_01 = "2024-11-01";
 
         /// <summary>
-        /// 2023-08-01-PREVIEW.
-        /// </summary>
-        public static readonly string V2023_08_01_PREVIEW = "2023-08-01-PREVIEW";
-
-        /// <summary>
         /// 2023-07-01.
         /// </summary>
         public static readonly string V2023_07_01 = "2023-07-01";
@@ -167,6 +163,12 @@ public partial class ManagedHsm : ProvisionableResource
         /// 2021-10-01.
         /// </summary>
         public static readonly string V2021_10_01 = "2021-10-01";
+
+        /// <summary>
+        /// 2023-08-01-PREVIEW.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static readonly string V2023_08_01_PREVIEW = "2023-08-01-PREVIEW";
     }
 
     /// <summary>

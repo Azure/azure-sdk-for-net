@@ -247,6 +247,7 @@ namespace Azure.Provisioning.KeyVault
             public static readonly string V2022_11_01;
             public static readonly string V2023_02_01;
             public static readonly string V2023_07_01;
+            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2023_08_01_PREVIEW;
             public static readonly string V2024_11_01;
         }
@@ -337,6 +338,7 @@ namespace Azure.Provisioning.KeyVault
             public static readonly string V2022_11_01;
             public static readonly string V2023_02_01;
             public static readonly string V2023_07_01;
+            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2023_08_01_PREVIEW;
             public static readonly string V2024_11_01;
         }
@@ -367,6 +369,7 @@ namespace Azure.Provisioning.KeyVault
             public static readonly string V2022_11_01;
             public static readonly string V2023_02_01;
             public static readonly string V2023_07_01;
+            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2023_08_01_PREVIEW;
             public static readonly string V2024_11_01;
         }
@@ -416,6 +419,7 @@ namespace Azure.Provisioning.KeyVault
             public static readonly string V2022_11_01;
             public static readonly string V2023_02_01;
             public static readonly string V2023_07_01;
+            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2023_08_01_PREVIEW;
             public static readonly string V2024_11_01;
         }
@@ -497,6 +501,7 @@ namespace Azure.Provisioning.KeyVault
             public static readonly string V2022_11_01;
             public static readonly string V2023_02_01;
             public static readonly string V2023_07_01;
+            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public static readonly string V2023_08_01_PREVIEW;
             public static readonly string V2024_11_01;
         }

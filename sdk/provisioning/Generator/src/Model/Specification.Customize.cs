@@ -116,4 +116,15 @@ public abstract partial class Specification : ModelBase
             resource.ResourceVersions!.Insert(0, apiVersions[i]);
         }
     }
+
+    public void IncludeHiddenVersions<T>(params string[] apiVersions)
+    {
+        Resource resource = GetResource<T>();
+        resource.HiddenResourceVersions ??= [];
+        foreach (string version in apiVersions)
+        {
+            if (resource.HiddenResourceVersions.Contains(version)) { continue; }
+            resource.HiddenResourceVersions.Add(version);
+        }
+    }
 }
