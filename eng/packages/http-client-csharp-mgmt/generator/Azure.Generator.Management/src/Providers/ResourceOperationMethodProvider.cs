@@ -81,9 +81,10 @@ namespace Azure.Generator.Management.Providers
             var tryStatements = new List<MethodBodyStatement>
             {
                 BuildRequestContextInitialization(cancellationTokenParameter, out var contextVariable),
-                BuildHttpMessageInitialization(_method, _convenienceMethod, contextVariable, out var messageVariable),
-                BuildClientPipelineProcessing(_convenienceMethod, _isAsync, messageVariable, contextVariable, out var responseVariable).ToList()
+                BuildHttpMessageInitialization(_method, _convenienceMethod, contextVariable, out var messageVariable)
             };
+
+            tryStatements.AddRange(BuildClientPipelineProcessing(_convenienceMethod, _isAsync, messageVariable, contextVariable, out var responseVariable));
 
             if (_method.IsLongRunningOperation())
             {
@@ -155,7 +156,6 @@ namespace Azure.Generator.Management.Providers
             var statements = new List<MethodBodyStatement>();
             var responseType = isAsync ? convenienceMethod.Signature.ReturnType?.Arguments[0]! : convenienceMethod.Signature.ReturnType!;
             VariableExpression declaredResponseVariable;
-            var pipelineProperty = typeof(ArmResource).GetProperty("Pipeline");
             var pipelineInvoke = isAsync ? "ProcessMessageAsync" : "ProcessMessage";
 
             if (!responseType.Equals(typeof(Response)))
