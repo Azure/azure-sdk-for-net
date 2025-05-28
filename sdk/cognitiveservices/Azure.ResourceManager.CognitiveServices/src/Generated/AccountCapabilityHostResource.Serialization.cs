@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     public partial class AccountCapabilityHostResource : IJsonModel<CapabilityHostData>
     {
+        private static CapabilityHostData s_dataDeserializationInstance;
+        private static CapabilityHostData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CapabilityHostData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CapabilityHostData>)Data).Write(writer, options);
 
-        CapabilityHostData IJsonModel<CapabilityHostData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CapabilityHostData>)Data).Create(ref reader, options);
+        CapabilityHostData IJsonModel<CapabilityHostData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CapabilityHostData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<CapabilityHostData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CapabilityHostData>(Data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
         CapabilityHostData IPersistableModel<CapabilityHostData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CapabilityHostData>(data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
-        string IPersistableModel<CapabilityHostData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CapabilityHostData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CapabilityHostData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CapabilityHostData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HybridNetwork
 {
     public partial class NetworkServiceDesignGroupResource : IJsonModel<NetworkServiceDesignGroupData>
     {
+        private static NetworkServiceDesignGroupData s_dataDeserializationInstance;
+        private static NetworkServiceDesignGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkServiceDesignGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkServiceDesignGroupData>)Data).Write(writer, options);
 
-        NetworkServiceDesignGroupData IJsonModel<NetworkServiceDesignGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkServiceDesignGroupData>)Data).Create(ref reader, options);
+        NetworkServiceDesignGroupData IJsonModel<NetworkServiceDesignGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkServiceDesignGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NetworkServiceDesignGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkServiceDesignGroupData>(Data, options, AzureResourceManagerHybridNetworkContext.Default);
 
         NetworkServiceDesignGroupData IPersistableModel<NetworkServiceDesignGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkServiceDesignGroupData>(data, options, AzureResourceManagerHybridNetworkContext.Default);
 
-        string IPersistableModel<NetworkServiceDesignGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkServiceDesignGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkServiceDesignGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkServiceDesignGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

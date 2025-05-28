@@ -73,6 +73,15 @@ namespace Azure.Generator
                     return knownType;
                 }
             }
+            else if (inputType is InputArrayType inputArrayType)
+            {
+                // Handle special collection types
+                if (KnownAzureTypes.TryGetKnownType(inputArrayType.CrossLanguageDefinitionId, out var knownType))
+                {
+                    var elementType = CreateCSharpType(inputArrayType.ValueType);
+                    return new CSharpType(knownType, elementType!);
+                }
+            }
 
             return base.CreateCSharpTypeCore(inputType);
         }

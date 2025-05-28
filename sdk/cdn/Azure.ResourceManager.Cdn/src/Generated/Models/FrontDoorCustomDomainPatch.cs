@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The domain JSON object required for domain creation or update. </summary>
+    /// <summary>
+    /// The domain JSON object required for domain creation or update.
+    /// Serialized Name: AFDDomainUpdateParameters
+    /// </summary>
     public partial class FrontDoorCustomDomainPatch
     {
         /// <summary>
@@ -53,10 +56,22 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainPatch"/>. </summary>
-        /// <param name="profileName"> The name of the profile which holds the domain. </param>
-        /// <param name="tlsSettings"> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user's own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </param>
-        /// <param name="dnsZone"> Resource reference to the Azure DNS zone. </param>
-        /// <param name="preValidatedCustomDomainResource"> Resource reference to the Azure resource where custom domain ownership was prevalidated. </param>
+        /// <param name="profileName">
+        /// The name of the profile which holds the domain.
+        /// Serialized Name: AFDDomainUpdateParameters.properties.profileName
+        /// </param>
+        /// <param name="tlsSettings">
+        /// The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user's own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default.
+        /// Serialized Name: AFDDomainUpdateParameters.properties.tlsSettings
+        /// </param>
+        /// <param name="dnsZone">
+        /// Resource reference to the Azure DNS zone
+        /// Serialized Name: AFDDomainUpdateParameters.properties.azureDnsZone
+        /// </param>
+        /// <param name="preValidatedCustomDomainResource">
+        /// Resource reference to the Azure resource where custom domain ownership was prevalidated
+        /// Serialized Name: AFDDomainUpdateParameters.properties.preValidatedCustomDomainResourceId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FrontDoorCustomDomainPatch(string profileName, FrontDoorCustomDomainHttpsContent tlsSettings, WritableSubResource dnsZone, WritableSubResource preValidatedCustomDomainResource, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,11 +82,20 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the profile which holds the domain. </summary>
+        /// <summary>
+        /// The name of the profile which holds the domain.
+        /// Serialized Name: AFDDomainUpdateParameters.properties.profileName
+        /// </summary>
         public string ProfileName { get; }
-        /// <summary> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user's own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </summary>
+        /// <summary>
+        /// The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user's own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default.
+        /// Serialized Name: AFDDomainUpdateParameters.properties.tlsSettings
+        /// </summary>
         public FrontDoorCustomDomainHttpsContent TlsSettings { get; set; }
-        /// <summary> Resource reference to the Azure DNS zone. </summary>
+        /// <summary>
+        /// Resource reference to the Azure DNS zone
+        /// Serialized Name: AFDDomainUpdateParameters.properties.azureDnsZone
+        /// </summary>
         internal WritableSubResource DnsZone { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier DnsZoneId
@@ -85,7 +109,10 @@ namespace Azure.ResourceManager.Cdn.Models
             }
         }
 
-        /// <summary> Resource reference to the Azure resource where custom domain ownership was prevalidated. </summary>
+        /// <summary>
+        /// Resource reference to the Azure resource where custom domain ownership was prevalidated
+        /// Serialized Name: AFDDomainUpdateParameters.properties.preValidatedCustomDomainResourceId
+        /// </summary>
         internal WritableSubResource PreValidatedCustomDomainResource { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier PreValidatedCustomDomainResourceId

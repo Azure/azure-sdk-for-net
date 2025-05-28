@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Possible API response formats. </summary>
-    public readonly partial struct ResponseFormat : IEquatable<ResponseFormat>
+    internal readonly partial struct ResponseFormat : IEquatable<ResponseFormat>
     {
         private readonly string _value;
 

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Migration.Assessment
 {
     public partial class MigrationAssessedSqlDatabaseV2Resource : IJsonModel<MigrationAssessedSqlDatabaseV2Data>
     {
+        private static MigrationAssessedSqlDatabaseV2Data s_dataDeserializationInstance;
+        private static MigrationAssessedSqlDatabaseV2Data DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MigrationAssessedSqlDatabaseV2Data>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MigrationAssessedSqlDatabaseV2Data>)Data).Write(writer, options);
 
-        MigrationAssessedSqlDatabaseV2Data IJsonModel<MigrationAssessedSqlDatabaseV2Data>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationAssessedSqlDatabaseV2Data>)Data).Create(ref reader, options);
+        MigrationAssessedSqlDatabaseV2Data IJsonModel<MigrationAssessedSqlDatabaseV2Data>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationAssessedSqlDatabaseV2Data>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MigrationAssessedSqlDatabaseV2Data>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MigrationAssessedSqlDatabaseV2Data>(Data, options, AzureResourceManagerMigrationAssessmentContext.Default);
 
         MigrationAssessedSqlDatabaseV2Data IPersistableModel<MigrationAssessedSqlDatabaseV2Data>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrationAssessedSqlDatabaseV2Data>(data, options, AzureResourceManagerMigrationAssessmentContext.Default);
 
-        string IPersistableModel<MigrationAssessedSqlDatabaseV2Data>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationAssessedSqlDatabaseV2Data>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MigrationAssessedSqlDatabaseV2Data>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationAssessedSqlDatabaseV2Data>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

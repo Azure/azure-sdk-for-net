@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class ArmDeploymentResource : IJsonModel<ArmDeploymentData>
     {
+        private static ArmDeploymentData s_dataDeserializationInstance;
+        private static ArmDeploymentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ArmDeploymentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ArmDeploymentData>)Data).Write(writer, options);
 
-        ArmDeploymentData IJsonModel<ArmDeploymentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ArmDeploymentData>)Data).Create(ref reader, options);
+        ArmDeploymentData IJsonModel<ArmDeploymentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ArmDeploymentData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ArmDeploymentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ArmDeploymentData>(Data, options, AzureResourceManagerResourcesContext.Default);
 
         ArmDeploymentData IPersistableModel<ArmDeploymentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ArmDeploymentData>(data, options, AzureResourceManagerResourcesContext.Default);
 
-        string IPersistableModel<ArmDeploymentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ArmDeploymentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ArmDeploymentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ArmDeploymentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

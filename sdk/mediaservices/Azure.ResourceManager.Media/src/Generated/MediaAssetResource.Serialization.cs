@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Media
 {
     public partial class MediaAssetResource : IJsonModel<MediaAssetData>
     {
+        private static MediaAssetData s_dataDeserializationInstance;
+        private static MediaAssetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MediaAssetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MediaAssetData>)Data).Write(writer, options);
 
-        MediaAssetData IJsonModel<MediaAssetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MediaAssetData>)Data).Create(ref reader, options);
+        MediaAssetData IJsonModel<MediaAssetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MediaAssetData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MediaAssetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MediaAssetData>(Data, options, AzureResourceManagerMediaContext.Default);
 
         MediaAssetData IPersistableModel<MediaAssetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MediaAssetData>(data, options, AzureResourceManagerMediaContext.Default);
 
-        string IPersistableModel<MediaAssetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MediaAssetData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MediaAssetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MediaAssetData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

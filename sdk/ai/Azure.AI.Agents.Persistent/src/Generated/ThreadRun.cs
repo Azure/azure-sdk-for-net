@@ -147,7 +147,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolResources"> Override the tools the agent can use for this run. This is useful for modifying the behavior on a per-run basis. </param>
         /// <param name="parallelToolCalls"> Determines if tools can be executed in parallel within the run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ThreadRun(string id, string @object, string threadId, string assistantId, RunStatus status, RequiredAction requiredAction, RunError lastError, string model, string instructions, IReadOnlyList<ToolDefinition> tools, DateTimeOffset createdAt, DateTimeOffset? expiresAt, DateTimeOffset? startedAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, IncompleteRunDetails incompleteDetails, RunCompletionUsage usage, float? temperature, float? topP, int? maxPromptTokens, int? maxCompletionTokens, Truncation truncationStrategy, BinaryData toolChoice, BinaryData responseFormat, IReadOnlyDictionary<string, string> metadata, UpdateToolResourcesOptions toolResources, bool parallelToolCalls, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ThreadRun(string id, string @object, string threadId, string assistantId, RunStatus status, RequiredAction requiredAction, RunError lastError, string model, string instructions, IReadOnlyList<ToolDefinition> tools, DateTimeOffset createdAt, DateTimeOffset? expiresAt, DateTimeOffset? startedAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, IncompleteRunDetails incompleteDetails, RunCompletionUsage usage, float? temperature, float? topP, int? maxPromptTokens, int? maxCompletionTokens, Truncation truncationStrategy, BinaryData toolChoice, BinaryData responseFormat, IReadOnlyDictionary<string, string> metadata, ToolResources toolResources, bool parallelToolCalls, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Object = @object;
@@ -302,7 +302,7 @@ namespace Azure.AI.Agents.Persistent
         /// <description><see cref="PersistentAgentsResponseFormatMode"/></description>
         /// </item>
         /// <item>
-        /// <description><see cref="PersistentAgentsResponseFormat"/></description>
+        /// <description><see cref="InternalPersistentAgentsResponseFormat"/></description>
         /// </item>
         /// <item>
         /// <description><see cref="ResponseFormatJsonSchemaType"/></description>
@@ -334,7 +334,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </summary>
         public IReadOnlyDictionary<string, string> Metadata { get; }
         /// <summary> Override the tools the agent can use for this run. This is useful for modifying the behavior on a per-run basis. </summary>
-        public UpdateToolResourcesOptions ToolResources { get; }
+        public ToolResources ToolResources { get; }
         /// <summary> Determines if tools can be executed in parallel within the run. </summary>
         public bool ParallelToolCalls { get; }
     }

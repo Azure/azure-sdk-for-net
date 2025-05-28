@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class VirtualWanResource : IJsonModel<VirtualWanData>
     {
+        private static VirtualWanData s_dataDeserializationInstance;
+        private static VirtualWanData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<VirtualWanData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualWanData>)Data).Write(writer, options);
 
-        VirtualWanData IJsonModel<VirtualWanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualWanData>)Data).Create(ref reader, options);
+        VirtualWanData IJsonModel<VirtualWanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualWanData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<VirtualWanData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualWanData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         VirtualWanData IPersistableModel<VirtualWanData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualWanData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<VirtualWanData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualWanData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<VirtualWanData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualWanData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -84,7 +84,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="purpose"> The purpose of the file. Allowed values: "fine-tune" | "fine-tune-results" | "assistants" | "assistants_output" | "batch" | "batch_output" | "vision". </param>
+        /// <param name="purpose"> The purpose of the file. Allowed values: "assistants" | "assistants_output" | "vision". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -119,7 +119,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="purpose"> The purpose of the file. Allowed values: "fine-tune" | "fine-tune-results" | "assistants" | "assistants_output" | "batch" | "batch_output" | "vision". </param>
+        /// <param name="purpose"> The purpose of the file. Allowed values: "assistants" | "assistants_output" | "vision". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>

@@ -87,7 +87,7 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
         ).ToListAsync();
         // Build the map of file IDs to file names.
         Dictionary<string, string> dtFiles = [];
-        AsyncPageable<VectorStoreFile> storeFiles = client.VectorStoreFiles.GetVectorStoreFilesAsync(
+        AsyncPageable<VectorStoreFile> storeFiles = client.VectorStores.GetVectorStoreFilesAsync(
             vectorStoreId: vectorStore.Id
         );
         await foreach (VectorStoreFile fle in storeFiles)
@@ -185,7 +185,7 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
         );
         // Build the map of file IDs to file names.
         Dictionary<string, string> dtFiles = [];
-        Pageable<VectorStoreFile> storeFiles = client.VectorStoreFiles.GetVectorStoreFiles(
+        Pageable<VectorStoreFile> storeFiles = client.VectorStores.GetVectorStoreFiles(
             vectorStoreId: vectorStore.Id
         );
         foreach (VectorStoreFile fle in storeFiles)

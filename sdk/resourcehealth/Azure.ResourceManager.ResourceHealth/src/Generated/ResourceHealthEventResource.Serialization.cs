@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ResourceHealth
 {
     public partial class ResourceHealthEventResource : IJsonModel<ResourceHealthEventData>
     {
+        private static ResourceHealthEventData s_dataDeserializationInstance;
+        private static ResourceHealthEventData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ResourceHealthEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ResourceHealthEventData>)Data).Write(writer, options);
 
-        ResourceHealthEventData IJsonModel<ResourceHealthEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceHealthEventData>)Data).Create(ref reader, options);
+        ResourceHealthEventData IJsonModel<ResourceHealthEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceHealthEventData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ResourceHealthEventData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceHealthEventData>(Data, options, AzureResourceManagerResourceHealthContext.Default);
 
         ResourceHealthEventData IPersistableModel<ResourceHealthEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceHealthEventData>(data, options, AzureResourceManagerResourceHealthContext.Default);
 
-        string IPersistableModel<ResourceHealthEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceHealthEventData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ResourceHealthEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceHealthEventData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

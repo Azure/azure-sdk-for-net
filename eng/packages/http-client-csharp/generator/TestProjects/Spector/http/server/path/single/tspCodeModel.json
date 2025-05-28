@@ -3,6 +3,7 @@
  "name": "Server.Path.Single",
  "apiVersions": [],
  "enums": [],
+ "constants": [],
  "models": [],
  "clients": [
   {

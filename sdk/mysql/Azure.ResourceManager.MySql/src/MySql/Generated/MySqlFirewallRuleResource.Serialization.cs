@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MySql
 {
     public partial class MySqlFirewallRuleResource : IJsonModel<MySqlFirewallRuleData>
     {
+        private static MySqlFirewallRuleData s_dataDeserializationInstance;
+        private static MySqlFirewallRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MySqlFirewallRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MySqlFirewallRuleData>)Data).Write(writer, options);
 
-        MySqlFirewallRuleData IJsonModel<MySqlFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MySqlFirewallRuleData>)Data).Create(ref reader, options);
+        MySqlFirewallRuleData IJsonModel<MySqlFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MySqlFirewallRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MySqlFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MySqlFirewallRuleData>(Data, options, AzureResourceManagerMySqlContext.Default);
 
         MySqlFirewallRuleData IPersistableModel<MySqlFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MySqlFirewallRuleData>(data, options, AzureResourceManagerMySqlContext.Default);
 
-        string IPersistableModel<MySqlFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MySqlFirewallRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MySqlFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MySqlFirewallRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

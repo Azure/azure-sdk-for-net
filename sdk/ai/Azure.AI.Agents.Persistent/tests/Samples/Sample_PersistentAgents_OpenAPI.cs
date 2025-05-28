@@ -45,7 +45,7 @@ public partial class Sample_PersistentAgents_OpenAPI : SamplesBase<AIAgentsTestE
             name: "get_weather",
             description: "Retrieve weather information for a location",
             spec: BinaryData.FromBytes(System.IO.File.ReadAllBytes(file_path)),
-            auth: oaiAuth,
+            openApiAuthentication: oaiAuth,
             defaultParams: [ "format" ]
         );
 
@@ -129,7 +129,7 @@ public partial class Sample_PersistentAgents_OpenAPI : SamplesBase<AIAgentsTestE
             name: "get_weather",
             description: "Retrieve weather information for a location",
             spec: BinaryData.FromBytes(System.IO.File.ReadAllBytes(file_path)),
-            auth: oaiAuth,
+            openApiAuthentication: oaiAuth,
             defaultParams: ["format"]
         );
 

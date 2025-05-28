@@ -81,12 +81,14 @@ namespace Azure.Generator.Primitives
             "DiagnosticScope.cs",
             "HttpMessageSanitizer.cs",
             "TrimmingAttribute.cs",
+            "NoValueResponseOfT.cs",
         ];
 
         private static readonly IReadOnlyList<string> _lroSharedFiles =
         [
             "AsyncLockWithValue.cs",
             "FixedDelayWithNoJitterStrategy.cs",
+            "HttpPipelineExtensions.cs",
             "IOperationSource.cs",
             "NextLinkOperationImplementation.cs",
             "OperationFinalStateVia.cs",
@@ -94,6 +96,8 @@ namespace Azure.Generator.Primitives
             "OperationInternalBase.cs",
             "OperationInternalOfT.cs",
             "OperationPoller.cs",
+            "ProtocolOperation.cs",
+            "ProtocolOperationHelpers.cs",
             "SequentialDelayStrategy.cs",
             "TaskExtensions.cs",
             "VoidValue.cs"

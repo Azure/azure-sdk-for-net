@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ElasticSan
 {
     public partial class ElasticSanResource : IJsonModel<ElasticSanData>
     {
+        private static ElasticSanData s_dataDeserializationInstance;
+        private static ElasticSanData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ElasticSanData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ElasticSanData>)Data).Write(writer, options);
 
-        ElasticSanData IJsonModel<ElasticSanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ElasticSanData>)Data).Create(ref reader, options);
+        ElasticSanData IJsonModel<ElasticSanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ElasticSanData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ElasticSanData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ElasticSanData>(Data, options, AzureResourceManagerElasticSanContext.Default);
 
         ElasticSanData IPersistableModel<ElasticSanData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ElasticSanData>(data, options, AzureResourceManagerElasticSanContext.Default);
 
-        string IPersistableModel<ElasticSanData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ElasticSanData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ElasticSanData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ElasticSanData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

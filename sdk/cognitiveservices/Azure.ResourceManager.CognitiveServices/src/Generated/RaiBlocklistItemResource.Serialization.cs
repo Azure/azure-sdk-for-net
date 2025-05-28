@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     public partial class RaiBlocklistItemResource : IJsonModel<RaiBlocklistItemData>
     {
+        private static RaiBlocklistItemData s_dataDeserializationInstance;
+        private static RaiBlocklistItemData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RaiBlocklistItemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RaiBlocklistItemData>)Data).Write(writer, options);
 
-        RaiBlocklistItemData IJsonModel<RaiBlocklistItemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RaiBlocklistItemData>)Data).Create(ref reader, options);
+        RaiBlocklistItemData IJsonModel<RaiBlocklistItemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RaiBlocklistItemData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<RaiBlocklistItemData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RaiBlocklistItemData>(Data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
         RaiBlocklistItemData IPersistableModel<RaiBlocklistItemData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RaiBlocklistItemData>(data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
-        string IPersistableModel<RaiBlocklistItemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RaiBlocklistItemData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RaiBlocklistItemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RaiBlocklistItemData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     public partial class AccountConnectionResource : IJsonModel<ConnectionPropertiesV2BasicResourceData>
     {
+        private static ConnectionPropertiesV2BasicResourceData s_dataDeserializationInstance;
+        private static ConnectionPropertiesV2BasicResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ConnectionPropertiesV2BasicResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ConnectionPropertiesV2BasicResourceData>)Data).Write(writer, options);
 
-        ConnectionPropertiesV2BasicResourceData IJsonModel<ConnectionPropertiesV2BasicResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConnectionPropertiesV2BasicResourceData>)Data).Create(ref reader, options);
+        ConnectionPropertiesV2BasicResourceData IJsonModel<ConnectionPropertiesV2BasicResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConnectionPropertiesV2BasicResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ConnectionPropertiesV2BasicResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConnectionPropertiesV2BasicResourceData>(Data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
         ConnectionPropertiesV2BasicResourceData IPersistableModel<ConnectionPropertiesV2BasicResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConnectionPropertiesV2BasicResourceData>(data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
-        string IPersistableModel<ConnectionPropertiesV2BasicResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConnectionPropertiesV2BasicResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ConnectionPropertiesV2BasicResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConnectionPropertiesV2BasicResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sphere
 {
     public partial class SphereCatalogResource : IJsonModel<SphereCatalogData>
     {
+        private static SphereCatalogData s_dataDeserializationInstance;
+        private static SphereCatalogData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SphereCatalogData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SphereCatalogData>)Data).Write(writer, options);
 
-        SphereCatalogData IJsonModel<SphereCatalogData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SphereCatalogData>)Data).Create(ref reader, options);
+        SphereCatalogData IJsonModel<SphereCatalogData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SphereCatalogData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SphereCatalogData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SphereCatalogData>(Data, options, AzureResourceManagerSphereContext.Default);
 
         SphereCatalogData IPersistableModel<SphereCatalogData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SphereCatalogData>(data, options, AzureResourceManagerSphereContext.Default);
 
-        string IPersistableModel<SphereCatalogData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SphereCatalogData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SphereCatalogData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SphereCatalogData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.AI.Agents.Persistent
     /// A collection of file-batch operations under
     /// `/vector_stores/{vectorStoreId}/file_batches`.
     /// </summary>
-    public partial class VectorStoreFileBatches
+    internal partial class VectorStoreFileBatches
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -470,6 +470,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 uri.AppendQuery("filter", filter, true);
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (limit != null)
             {
                 uri.AppendQuery("limit", limit.Value, true);
