@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="ConnectionPropertiesV2BasicResourceArmPaginatedResult"/>. </summary>
         internal ConnectionPropertiesV2BasicResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<ConnectionPropertiesV2BasicResourceData>();
+            Value = new ChangeTrackingList<CognitiveServicesConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectionPropertiesV2BasicResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"></param>
         /// <param name="value"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionPropertiesV2BasicResourceArmPaginatedResult(string nextLink, IReadOnlyList<ConnectionPropertiesV2BasicResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectionPropertiesV2BasicResourceArmPaginatedResult(string nextLink, IReadOnlyList<CognitiveServicesConnectionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<ConnectionPropertiesV2BasicResourceData> Value { get; }
+        public IReadOnlyList<CognitiveServicesConnectionData> Value { get; }
     }
 }

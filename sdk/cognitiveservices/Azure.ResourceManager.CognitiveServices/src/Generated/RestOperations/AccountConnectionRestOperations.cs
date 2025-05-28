@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConnectionPropertiesV2BasicResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string connectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<CognitiveServicesConnectionData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -187,13 +187,13 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        ConnectionPropertiesV2BasicResourceData value = default;
+                        CognitiveServicesConnectionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ConnectionPropertiesV2BasicResourceData.DeserializeConnectionPropertiesV2BasicResourceData(document.RootElement);
+                        value = CognitiveServicesConnectionData.DeserializeCognitiveServicesConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ConnectionPropertiesV2BasicResourceData)null, message.Response);
+                    return Response.FromValue((CognitiveServicesConnectionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConnectionPropertiesV2BasicResourceData> Get(string subscriptionId, string resourceGroupName, string accountName, string connectionName, CancellationToken cancellationToken = default)
+        public Response<CognitiveServicesConnectionData> Get(string subscriptionId, string resourceGroupName, string accountName, string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -220,19 +220,19 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        ConnectionPropertiesV2BasicResourceData value = default;
+                        CognitiveServicesConnectionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ConnectionPropertiesV2BasicResourceData.DeserializeConnectionPropertiesV2BasicResourceData(document.RootElement);
+                        value = CognitiveServicesConnectionData.DeserializeCognitiveServicesConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ConnectionPropertiesV2BasicResourceData)null, message.Response);
+                    return Response.FromValue((CognitiveServicesConnectionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string connectionName, ConnectionUpdateContent content)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string connectionName, CognitiveServicesConnectionPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CognitiveServices
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string connectionName, ConnectionUpdateContent content)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string connectionName, CognitiveServicesConnectionPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -267,9 +267,9 @@ namespace Azure.ResourceManager.CognitiveServices
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -279,27 +279,27 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of Cognitive Services account. </param>
         /// <param name="connectionName"> Friendly name of the connection. </param>
-        /// <param name="content"> Parameters for account connection update. </param>
+        /// <param name="patch"> Parameters for account connection update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="connectionName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="connectionName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConnectionPropertiesV2BasicResourceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string connectionName, ConnectionUpdateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<CognitiveServicesConnectionData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string connectionName, CognitiveServicesConnectionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, connectionName, content);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, connectionName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ConnectionPropertiesV2BasicResourceData value = default;
+                        CognitiveServicesConnectionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ConnectionPropertiesV2BasicResourceData.DeserializeConnectionPropertiesV2BasicResourceData(document.RootElement);
+                        value = CognitiveServicesConnectionData.DeserializeCognitiveServicesConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -312,27 +312,27 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of Cognitive Services account. </param>
         /// <param name="connectionName"> Friendly name of the connection. </param>
-        /// <param name="content"> Parameters for account connection update. </param>
+        /// <param name="patch"> Parameters for account connection update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="connectionName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="connectionName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConnectionPropertiesV2BasicResourceData> Update(string subscriptionId, string resourceGroupName, string accountName, string connectionName, ConnectionUpdateContent content, CancellationToken cancellationToken = default)
+        public Response<CognitiveServicesConnectionData> Update(string subscriptionId, string resourceGroupName, string accountName, string connectionName, CognitiveServicesConnectionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, connectionName, content);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, connectionName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ConnectionPropertiesV2BasicResourceData value = default;
+                        CognitiveServicesConnectionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ConnectionPropertiesV2BasicResourceData.DeserializeConnectionPropertiesV2BasicResourceData(document.RootElement);
+                        value = CognitiveServicesConnectionData.DeserializeCognitiveServicesConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
-        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string connectionName, ConnectionPropertiesV2BasicResourceData data)
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string connectionName, CognitiveServicesConnectionData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.CognitiveServices
             return uri;
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, string connectionName, ConnectionPropertiesV2BasicResourceData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, string connectionName, CognitiveServicesConnectionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConnectionPropertiesV2BasicResourceData>> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string connectionName, ConnectionPropertiesV2BasicResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response<CognitiveServicesConnectionData>> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string connectionName, CognitiveServicesConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -405,9 +405,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        ConnectionPropertiesV2BasicResourceData value = default;
+                        CognitiveServicesConnectionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ConnectionPropertiesV2BasicResourceData.DeserializeConnectionPropertiesV2BasicResourceData(document.RootElement);
+                        value = CognitiveServicesConnectionData.DeserializeCognitiveServicesConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConnectionPropertiesV2BasicResourceData> Create(string subscriptionId, string resourceGroupName, string accountName, string connectionName, ConnectionPropertiesV2BasicResourceData data, CancellationToken cancellationToken = default)
+        public Response<CognitiveServicesConnectionData> Create(string subscriptionId, string resourceGroupName, string accountName, string connectionName, CognitiveServicesConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -438,9 +438,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        ConnectionPropertiesV2BasicResourceData value = default;
+                        CognitiveServicesConnectionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ConnectionPropertiesV2BasicResourceData.DeserializeConnectionPropertiesV2BasicResourceData(document.RootElement);
+                        value = CognitiveServicesConnectionData.DeserializeCognitiveServicesConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

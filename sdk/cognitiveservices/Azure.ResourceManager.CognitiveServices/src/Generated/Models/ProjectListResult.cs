@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="ProjectListResult"/>. </summary>
         internal ProjectListResult()
         {
-            Value = new ChangeTrackingList<ProjectData>();
+            Value = new ChangeTrackingList<CognitiveServicesProjectData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProjectListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of projects. </param>
         /// <param name="value"> Gets the list of Cognitive Services projects and their properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectListResult(string nextLink, IReadOnlyList<ProjectData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProjectListResult(string nextLink, IReadOnlyList<CognitiveServicesProjectData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> The link used to get the next page of projects. </summary>
         public string NextLink { get; }
         /// <summary> Gets the list of Cognitive Services projects and their properties. </summary>
-        public IReadOnlyList<ProjectData> Value { get; }
+        public IReadOnlyList<CognitiveServicesProjectData> Value { get; }
     }
 }

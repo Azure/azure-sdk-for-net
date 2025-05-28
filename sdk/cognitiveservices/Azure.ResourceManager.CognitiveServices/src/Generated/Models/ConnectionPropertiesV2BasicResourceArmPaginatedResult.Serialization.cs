@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string nextLink = default;
-            IReadOnlyList<ConnectionPropertiesV2BasicResourceData> value = default;
+            IReadOnlyList<CognitiveServicesConnectionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<ConnectionPropertiesV2BasicResourceData> array = new List<ConnectionPropertiesV2BasicResourceData>();
+                    List<CognitiveServicesConnectionData> array = new List<CognitiveServicesConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectionPropertiesV2BasicResourceData.DeserializeConnectionPropertiesV2BasicResourceData(item, options));
+                        array.Add(CognitiveServicesConnectionData.DeserializeCognitiveServicesConnectionData(item, options));
                     }
                     value = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConnectionPropertiesV2BasicResourceArmPaginatedResult(nextLink, value ?? new ChangeTrackingList<ConnectionPropertiesV2BasicResourceData>(), serializedAdditionalRawData);
+            return new ConnectionPropertiesV2BasicResourceArmPaginatedResult(nextLink, value ?? new ChangeTrackingList<CognitiveServicesConnectionData>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

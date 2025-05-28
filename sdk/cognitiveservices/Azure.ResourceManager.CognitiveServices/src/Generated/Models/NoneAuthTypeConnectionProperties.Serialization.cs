@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             ConnectionAuthType authType = default;
-            ConnectionCategory? category = default;
+            CognitiveServicesConnectionCategory? category = default;
             ResourceIdentifier createdByWorkspaceArmId = default;
             string error = default;
             DateTimeOffset? expiryTime = default;
-            ConnectionGroup? group = default;
+            CognitiveServicesConnectionGroup? group = default;
             bool? isSharedToAll = default;
             IDictionary<string, string> metadata = default;
             ManagedPERequirement? peRequirement = default;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    category = new ConnectionCategory(property.Value.GetString());
+                    category = new CognitiveServicesConnectionCategory(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("createdByWorkspaceArmId"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    group = new ConnectionGroup(property.Value.GetString());
+                    group = new CognitiveServicesConnectionGroup(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isSharedToAll"u8))

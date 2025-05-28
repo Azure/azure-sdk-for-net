@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// Target:= {any value}
     /// Use Metadata property bag for ApiVersion and other metadata fields
     /// </summary>
-    public partial class CustomKeysConnectionProperties : ConnectionPropertiesV2
+    public partial class CustomKeysConnectionProperties : CognitiveServicesConnectionProperties
     {
         /// <summary> Initializes a new instance of <see cref="CustomKeysConnectionProperties"/>. </summary>
         public CustomKeysConnectionProperties()
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="useWorkspaceManagedIdentity"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="credentials"> Custom Keys credential object. </param>
-        internal CustomKeysConnectionProperties(ConnectionAuthType authType, ConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, string error, DateTimeOffset? expiryOn, ConnectionGroup? group, bool? isSharedToAll, IDictionary<string, string> metadata, ManagedPERequirement? peRequirement, ManagedPEStatus? peStatus, IList<string> sharedUserList, string target, bool? useWorkspaceManagedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData, CustomKeys credentials) : base(authType, category, createdByWorkspaceArmId, error, expiryOn, group, isSharedToAll, metadata, peRequirement, peStatus, sharedUserList, target, useWorkspaceManagedIdentity, serializedAdditionalRawData)
+        internal CustomKeysConnectionProperties(ConnectionAuthType authType, CognitiveServicesConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, string error, DateTimeOffset? expiryOn, CognitiveServicesConnectionGroup? group, bool? isSharedToAll, IDictionary<string, string> metadata, ManagedPERequirement? peRequirement, ManagedPEStatus? peStatus, IList<string> sharedUserList, string target, bool? useWorkspaceManagedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData, CustomKeys credentials) : base(authType, category, createdByWorkspaceArmId, error, expiryOn, group, isSharedToAll, metadata, peRequirement, peStatus, sharedUserList, target, useWorkspaceManagedIdentity, serializedAdditionalRawData)
         {
             Credentials = credentials;
             AuthType = authType;

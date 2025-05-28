@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="defaultProject"> Specifies the project that is targeted when data plane endpoints are called without a project parameter. </param>
         /// <param name="associatedProjects"> Specifies the projects that are associated with this resource. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesAccountProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState = null, string endpoint = null, IEnumerable<CognitiveServicesSkuCapability> capabilities = null, bool? isMigrated = null, string migrationToken = null, CognitiveServicesSkuChangeInfo skuChangeInfo = null, string customSubDomainName = null, CognitiveServicesNetworkRuleSet networkAcls = null, ServiceAccountEncryptionProperties encryption = null, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage = null, UserOwnedAmlWorkspace amlWorkspace = null, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = null, ServiceAccountPublicNetworkAccess? publicNetworkAccess = null, ServiceAccountApiProperties apiProperties = null, DateTimeOffset? createdOn = null, ServiceAccountCallRateLimit callRateLimit = null, bool? enableDynamicThrottling = null, ServiceAccountQuotaLimit quotaLimit = null, bool? restrictOutboundNetworkAccess = null, IEnumerable<string> allowedFqdnList = null, bool? disableLocalAuth = null, IReadOnlyDictionary<string, string> endpoints = null, bool? restore = null, DateTimeOffset? deletedOn = null, string scheduledPurgeDate = null, CognitiveServicesMultiRegionSettings locations = null, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations = null, AbusePenalty abusePenalty = null, RaiMonitorConfig raiMonitorConfig = null, NetworkInjections networkInjections = null, bool? allowProjectManagement = null, string defaultProject = null, IEnumerable<string> associatedProjects = null)
+        public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState = null, string endpoint = null, IEnumerable<CognitiveServicesSkuCapability> capabilities = null, bool? isMigrated = null, string migrationToken = null, CognitiveServicesSkuChangeInfo skuChangeInfo = null, string customSubDomainName = null, CognitiveServicesNetworkRuleSet networkAcls = null, ServiceAccountEncryptionProperties encryption = null, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage = null, UserOwnedAmlWorkspace amlWorkspace = null, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = null, ServiceAccountPublicNetworkAccess? publicNetworkAccess = null, ServiceAccountApiProperties apiProperties = null, DateTimeOffset? createdOn = null, ServiceAccountCallRateLimit callRateLimit = null, bool? enableDynamicThrottling = null, ServiceAccountQuotaLimit quotaLimit = null, bool? restrictOutboundNetworkAccess = null, IEnumerable<string> allowedFqdnList = null, bool? disableLocalAuth = null, IReadOnlyDictionary<string, string> endpoints = null, bool? restore = null, DateTimeOffset? deletedOn = null, string scheduledPurgeDate = null, CognitiveServicesMultiRegionSettings locations = null, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations = null, AbusePenalty abusePenalty = null, RaiMonitorConfig raiMonitorConfig = null, AIFoundryNetworkInjection networkInjections = null, bool? allowProjectManagement = null, string defaultProject = null, IEnumerable<string> associatedProjects = null)
         {
             capabilities ??= new List<CognitiveServicesSkuCapability>();
             userOwnedStorage ??= new List<ServiceAccountUserOwnedStorage>();
@@ -1003,7 +1003,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CognitiveServices.ProjectData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServices.CognitiveServicesProjectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1013,12 +1013,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="properties"> Properties of Cognitive Services project. </param>
         /// <param name="etag"> Resource Etag. </param>
-        /// <returns> A new <see cref="CognitiveServices.ProjectData"/> instance for mocking. </returns>
-        public static ProjectData ProjectData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ProjectProperties properties = null, ETag? etag = null)
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesProjectData"/> instance for mocking. </returns>
+        public static CognitiveServicesProjectData CognitiveServicesProjectData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, CognitiveServicesProjectProperties properties = null, ETag? etag = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ProjectData(
+            return new CognitiveServicesProjectData(
                 id,
                 name,
                 resourceType,
@@ -1031,18 +1031,18 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProjectProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesProjectProperties"/>. </summary>
         /// <param name="provisioningState"> Gets the status of the cognitive services project at the time the operation was called. </param>
         /// <param name="displayName"> The display name of the Cognitive Services Project. </param>
         /// <param name="description"> The description of the Cognitive Services Project. </param>
         /// <param name="endpoints"> The list of endpoint for this Cognitive Services Project. </param>
         /// <param name="isDefault"> Indicates whether the project is the default project for the account. </param>
-        /// <returns> A new <see cref="Models.ProjectProperties"/> instance for mocking. </returns>
-        public static ProjectProperties ProjectProperties(ServiceAccountProvisioningState? provisioningState = null, string displayName = null, string description = null, IReadOnlyDictionary<string, string> endpoints = null, bool? isDefault = null)
+        /// <returns> A new <see cref="Models.CognitiveServicesProjectProperties"/> instance for mocking. </returns>
+        public static CognitiveServicesProjectProperties CognitiveServicesProjectProperties(ServiceAccountProvisioningState? provisioningState = null, string displayName = null, string description = null, IReadOnlyDictionary<string, string> endpoints = null, bool? isDefault = null)
         {
             endpoints ??= new Dictionary<string, string>();
 
-            return new ProjectProperties(
+            return new CognitiveServicesProjectProperties(
                 provisioningState,
                 displayName,
                 description,
@@ -1051,20 +1051,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CognitiveServices.ConnectionPropertiesV2BasicResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServices.CognitiveServicesConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// Connection property base schema.
-        /// Please note <see cref="Models.ConnectionPropertiesV2"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.AADAuthTypeConnectionProperties"/>, <see cref="Models.AccessKeyAuthTypeConnectionProperties"/>, <see cref="Models.AccountKeyAuthTypeConnectionProperties"/>, <see cref="Models.ApiKeyAuthConnectionProperties"/>, <see cref="Models.CustomKeysConnectionProperties"/>, <see cref="Models.ManagedIdentityAuthTypeConnectionProperties"/>, <see cref="Models.NoneAuthTypeConnectionProperties"/>, <see cref="Models.OAuth2AuthTypeConnectionProperties"/>, <see cref="Models.PATAuthTypeConnectionProperties"/>, <see cref="Models.SASAuthTypeConnectionProperties"/>, <see cref="Models.ServicePrincipalAuthTypeConnectionProperties"/> and <see cref="Models.UsernamePasswordAuthTypeConnectionProperties"/>.
+        /// Please note <see cref="Models.CognitiveServicesConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.AadAuthTypeConnectionProperties"/>, <see cref="Models.AccessKeyAuthTypeConnectionProperties"/>, <see cref="Models.AccountKeyAuthTypeConnectionProperties"/>, <see cref="Models.ApiKeyAuthConnectionProperties"/>, <see cref="Models.CustomKeysConnectionProperties"/>, <see cref="Models.ManagedIdentityAuthTypeConnectionProperties"/>, <see cref="Models.NoneAuthTypeConnectionProperties"/>, <see cref="Models.OAuth2AuthTypeConnectionProperties"/>, <see cref="Models.PatAuthTypeConnectionProperties"/>, <see cref="Models.SASAuthTypeConnectionProperties"/>, <see cref="Models.ServicePrincipalAuthTypeConnectionProperties"/> and <see cref="Models.UsernamePasswordAuthTypeConnectionProperties"/>.
         /// </param>
-        /// <returns> A new <see cref="CognitiveServices.ConnectionPropertiesV2BasicResourceData"/> instance for mocking. </returns>
-        public static ConnectionPropertiesV2BasicResourceData ConnectionPropertiesV2BasicResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ConnectionPropertiesV2 properties = null)
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesConnectionData"/> instance for mocking. </returns>
+        public static CognitiveServicesConnectionData CognitiveServicesConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CognitiveServicesConnectionProperties properties = null)
         {
-            return new ConnectionPropertiesV2BasicResourceData(
+            return new CognitiveServicesConnectionData(
                 id,
                 name,
                 resourceType,
@@ -1073,7 +1073,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConnectionPropertiesV2"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesConnectionProperties"/>. </summary>
         /// <param name="authType"> Authentication type of the connection target. </param>
         /// <param name="category"> Category of the connection. </param>
         /// <param name="createdByWorkspaceArmId"></param>
@@ -1087,8 +1087,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="sharedUserList"></param>
         /// <param name="target"></param>
         /// <param name="useWorkspaceManagedIdentity"></param>
-        /// <returns> A new <see cref="Models.ConnectionPropertiesV2"/> instance for mocking. </returns>
-        public static ConnectionPropertiesV2 ConnectionPropertiesV2(string authType = null, ConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, ConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null)
+        /// <returns> A new <see cref="Models.CognitiveServicesConnectionProperties"/> instance for mocking. </returns>
+        public static CognitiveServicesConnectionProperties CognitiveServicesConnectionProperties(string authType = null, CognitiveServicesConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, CognitiveServicesConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null)
         {
             metadata ??= new Dictionary<string, string>();
             sharedUserList ??= new List<string>();
@@ -1110,16 +1110,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CognitiveServices.CapabilityHostData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServices.CognitiveServicesCapabilityHostData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <returns> A new <see cref="CognitiveServices.CapabilityHostData"/> instance for mocking. </returns>
-        public static CapabilityHostData CapabilityHostData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CapabilityHostProperties properties = null)
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesCapabilityHostData"/> instance for mocking. </returns>
+        public static CognitiveServicesCapabilityHostData CognitiveServicesCapabilityHostData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CognitiveServicesCapabilityHostProperties properties = null)
         {
-            return new CapabilityHostData(
+            return new CognitiveServicesCapabilityHostData(
                 id,
                 name,
                 resourceType,
@@ -1128,7 +1128,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CapabilityHostProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesCapabilityHostProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="aiServicesConnections"> List of AI services connections. </param>
@@ -1138,8 +1138,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="storageConnections"> List of Storage connections. </param>
         /// <param name="threadStorageConnections"> List of Thread storage connections. </param>
         /// <param name="vectorStoreConnections"> List of VectorStore connections. </param>
-        /// <returns> A new <see cref="Models.CapabilityHostProperties"/> instance for mocking. </returns>
-        public static CapabilityHostProperties CapabilityHostProperties(string description = null, IDictionary<string, string> tags = null, IEnumerable<string> aiServicesConnections = null, CapabilityHostKind? capabilityHostKind = null, string customerSubnet = null, CapabilityHostProvisioningState? provisioningState = null, IEnumerable<string> storageConnections = null, IEnumerable<string> threadStorageConnections = null, IEnumerable<string> vectorStoreConnections = null)
+        /// <returns> A new <see cref="Models.CognitiveServicesCapabilityHostProperties"/> instance for mocking. </returns>
+        public static CognitiveServicesCapabilityHostProperties CognitiveServicesCapabilityHostProperties(string description = null, IDictionary<string, string> tags = null, IEnumerable<string> aiServicesConnections = null, CapabilityHostKind? capabilityHostKind = null, string customerSubnet = null, CapabilityHostProvisioningState? provisioningState = null, IEnumerable<string> storageConnections = null, IEnumerable<string> threadStorageConnections = null, IEnumerable<string> vectorStoreConnections = null)
         {
             tags ??= new Dictionary<string, string>();
             aiServicesConnections ??= new List<string>();
@@ -1147,7 +1147,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             threadStorageConnections ??= new List<string>();
             vectorStoreConnections ??= new List<string>();
 
-            return new CapabilityHostProperties(
+            return new CognitiveServicesCapabilityHostProperties(
                 description,
                 tags,
                 serializedAdditionalRawData: null,
@@ -1160,7 +1160,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 vectorStoreConnections?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PATAuthTypeConnectionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PatAuthTypeConnectionProperties"/>. </summary>
         /// <param name="category"> Category of the connection. </param>
         /// <param name="createdByWorkspaceArmId"></param>
         /// <param name="error"></param>
@@ -1174,13 +1174,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="target"></param>
         /// <param name="useWorkspaceManagedIdentity"></param>
         /// <param name="credentialsPat"></param>
-        /// <returns> A new <see cref="Models.PATAuthTypeConnectionProperties"/> instance for mocking. </returns>
-        public static PATAuthTypeConnectionProperties PATAuthTypeConnectionProperties(ConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, ConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, string credentialsPat = null)
+        /// <returns> A new <see cref="Models.PatAuthTypeConnectionProperties"/> instance for mocking. </returns>
+        public static PatAuthTypeConnectionProperties PatAuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, CognitiveServicesConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, string credentialsPat = null)
         {
             metadata ??= new Dictionary<string, string>();
             sharedUserList ??= new List<string>();
 
-            return new PATAuthTypeConnectionProperties(
+            return new PatAuthTypeConnectionProperties(
                 ConnectionAuthType.PAT,
                 category,
                 createdByWorkspaceArmId,
@@ -1213,7 +1213,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="useWorkspaceManagedIdentity"></param>
         /// <param name="credentials"></param>
         /// <returns> A new <see cref="Models.ManagedIdentityAuthTypeConnectionProperties"/> instance for mocking. </returns>
-        public static ManagedIdentityAuthTypeConnectionProperties ManagedIdentityAuthTypeConnectionProperties(ConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, ConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, ConnectionManagedIdentity credentials = null)
+        public static ManagedIdentityAuthTypeConnectionProperties ManagedIdentityAuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, CognitiveServicesConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, CognitiveServicesConnectionManagedIdentity credentials = null)
         {
             metadata ??= new Dictionary<string, string>();
             sharedUserList ??= new List<string>();
@@ -1251,7 +1251,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="useWorkspaceManagedIdentity"></param>
         /// <param name="credentials"></param>
         /// <returns> A new <see cref="Models.UsernamePasswordAuthTypeConnectionProperties"/> instance for mocking. </returns>
-        public static UsernamePasswordAuthTypeConnectionProperties UsernamePasswordAuthTypeConnectionProperties(ConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, ConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, ConnectionUsernamePassword credentials = null)
+        public static UsernamePasswordAuthTypeConnectionProperties UsernamePasswordAuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, CognitiveServicesConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, CognitiveServicesConnectionUsernamePassword credentials = null)
         {
             metadata ??= new Dictionary<string, string>();
             sharedUserList ??= new List<string>();
@@ -1288,7 +1288,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="target"></param>
         /// <param name="useWorkspaceManagedIdentity"></param>
         /// <returns> A new <see cref="Models.NoneAuthTypeConnectionProperties"/> instance for mocking. </returns>
-        public static NoneAuthTypeConnectionProperties NoneAuthTypeConnectionProperties(ConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, ConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null)
+        public static NoneAuthTypeConnectionProperties NoneAuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, CognitiveServicesConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null)
         {
             metadata ??= new Dictionary<string, string>();
             sharedUserList ??= new List<string>();
@@ -1325,7 +1325,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="useWorkspaceManagedIdentity"></param>
         /// <param name="credentialsSas"></param>
         /// <returns> A new <see cref="Models.SASAuthTypeConnectionProperties"/> instance for mocking. </returns>
-        public static SASAuthTypeConnectionProperties SASAuthTypeConnectionProperties(ConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, ConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, string credentialsSas = null)
+        public static SASAuthTypeConnectionProperties SASAuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, CognitiveServicesConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, string credentialsSas = null)
         {
             metadata ??= new Dictionary<string, string>();
             sharedUserList ??= new List<string>();
@@ -1363,7 +1363,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="useWorkspaceManagedIdentity"></param>
         /// <param name="credentialsKey"> Account key object for connection credential. </param>
         /// <returns> A new <see cref="Models.AccountKeyAuthTypeConnectionProperties"/> instance for mocking. </returns>
-        public static AccountKeyAuthTypeConnectionProperties AccountKeyAuthTypeConnectionProperties(ConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, ConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, string credentialsKey = null)
+        public static AccountKeyAuthTypeConnectionProperties AccountKeyAuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, CognitiveServicesConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, string credentialsKey = null)
         {
             metadata ??= new Dictionary<string, string>();
             sharedUserList ??= new List<string>();
@@ -1401,7 +1401,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="useWorkspaceManagedIdentity"></param>
         /// <param name="credentials"></param>
         /// <returns> A new <see cref="Models.ServicePrincipalAuthTypeConnectionProperties"/> instance for mocking. </returns>
-        public static ServicePrincipalAuthTypeConnectionProperties ServicePrincipalAuthTypeConnectionProperties(ConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, ConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, ConnectionServicePrincipal credentials = null)
+        public static ServicePrincipalAuthTypeConnectionProperties ServicePrincipalAuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, CognitiveServicesConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, CognitiveServicesConnectionServicePrincipal credentials = null)
         {
             metadata ??= new Dictionary<string, string>();
             sharedUserList ??= new List<string>();
@@ -1439,7 +1439,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="useWorkspaceManagedIdentity"></param>
         /// <param name="credentials"></param>
         /// <returns> A new <see cref="Models.AccessKeyAuthTypeConnectionProperties"/> instance for mocking. </returns>
-        public static AccessKeyAuthTypeConnectionProperties AccessKeyAuthTypeConnectionProperties(ConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, ConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, ConnectionAccessKey credentials = null)
+        public static AccessKeyAuthTypeConnectionProperties AccessKeyAuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, CognitiveServicesConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, CognitiveServicesConnectionAccessKey credentials = null)
         {
             metadata ??= new Dictionary<string, string>();
             sharedUserList ??= new List<string>();
@@ -1477,7 +1477,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="useWorkspaceManagedIdentity"></param>
         /// <param name="credentialsKey"> Api key object for connection credential. </param>
         /// <returns> A new <see cref="Models.ApiKeyAuthConnectionProperties"/> instance for mocking. </returns>
-        public static ApiKeyAuthConnectionProperties ApiKeyAuthConnectionProperties(ConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, ConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, string credentialsKey = null)
+        public static ApiKeyAuthConnectionProperties ApiKeyAuthConnectionProperties(CognitiveServicesConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, CognitiveServicesConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, string credentialsKey = null)
         {
             metadata ??= new Dictionary<string, string>();
             sharedUserList ??= new List<string>();
@@ -1515,7 +1515,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="useWorkspaceManagedIdentity"></param>
         /// <param name="credentialsKeys"> Custom Keys credential object. </param>
         /// <returns> A new <see cref="Models.CustomKeysConnectionProperties"/> instance for mocking. </returns>
-        public static CustomKeysConnectionProperties CustomKeysConnectionProperties(ConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, ConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, IDictionary<string, string> credentialsKeys = null)
+        public static CustomKeysConnectionProperties CustomKeysConnectionProperties(CognitiveServicesConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, CognitiveServicesConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, IDictionary<string, string> credentialsKeys = null)
         {
             metadata ??= new Dictionary<string, string>();
             sharedUserList ??= new List<string>();
@@ -1557,7 +1557,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// depending on each OAuth2 provider's implementation.
         /// </param>
         /// <returns> A new <see cref="Models.OAuth2AuthTypeConnectionProperties"/> instance for mocking. </returns>
-        public static OAuth2AuthTypeConnectionProperties OAuth2AuthTypeConnectionProperties(ConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, ConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, ConnectionOAuth2 credentials = null)
+        public static OAuth2AuthTypeConnectionProperties OAuth2AuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, CognitiveServicesConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, CognitiveServicesConnectionOAuth2 credentials = null)
         {
             metadata ??= new Dictionary<string, string>();
             sharedUserList ??= new List<string>();
@@ -1580,7 +1580,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 credentials);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AADAuthTypeConnectionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AadAuthTypeConnectionProperties"/>. </summary>
         /// <param name="category"> Category of the connection. </param>
         /// <param name="createdByWorkspaceArmId"></param>
         /// <param name="error"></param>
@@ -1593,13 +1593,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="sharedUserList"></param>
         /// <param name="target"></param>
         /// <param name="useWorkspaceManagedIdentity"></param>
-        /// <returns> A new <see cref="Models.AADAuthTypeConnectionProperties"/> instance for mocking. </returns>
-        public static AADAuthTypeConnectionProperties AADAuthTypeConnectionProperties(ConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, ConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null)
+        /// <returns> A new <see cref="Models.AadAuthTypeConnectionProperties"/> instance for mocking. </returns>
+        public static AadAuthTypeConnectionProperties AadAuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, CognitiveServicesConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null)
         {
             metadata ??= new Dictionary<string, string>();
             sharedUserList ??= new List<string>();
 
-            return new AADAuthTypeConnectionProperties(
+            return new AadAuthTypeConnectionProperties(
                 ConnectionAuthType.AAD,
                 category,
                 createdByWorkspaceArmId,

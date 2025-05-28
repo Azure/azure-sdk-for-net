@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> This connection type covers the account key connection for Azure storage. </summary>
-    public partial class AccountKeyAuthTypeConnectionProperties : ConnectionPropertiesV2
+    public partial class AccountKeyAuthTypeConnectionProperties : CognitiveServicesConnectionProperties
     {
         /// <summary> Initializes a new instance of <see cref="AccountKeyAuthTypeConnectionProperties"/>. </summary>
         public AccountKeyAuthTypeConnectionProperties()
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="useWorkspaceManagedIdentity"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="credentials"> Account key object for connection credential. </param>
-        internal AccountKeyAuthTypeConnectionProperties(ConnectionAuthType authType, ConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, string error, DateTimeOffset? expiryOn, ConnectionGroup? group, bool? isSharedToAll, IDictionary<string, string> metadata, ManagedPERequirement? peRequirement, ManagedPEStatus? peStatus, IList<string> sharedUserList, string target, bool? useWorkspaceManagedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData, ConnectionAccountKey credentials) : base(authType, category, createdByWorkspaceArmId, error, expiryOn, group, isSharedToAll, metadata, peRequirement, peStatus, sharedUserList, target, useWorkspaceManagedIdentity, serializedAdditionalRawData)
+        internal AccountKeyAuthTypeConnectionProperties(ConnectionAuthType authType, CognitiveServicesConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, string error, DateTimeOffset? expiryOn, CognitiveServicesConnectionGroup? group, bool? isSharedToAll, IDictionary<string, string> metadata, ManagedPERequirement? peRequirement, ManagedPEStatus? peStatus, IList<string> sharedUserList, string target, bool? useWorkspaceManagedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData, ConnectionAccountKey credentials) : base(authType, category, createdByWorkspaceArmId, error, expiryOn, group, isSharedToAll, metadata, peRequirement, peStatus, sharedUserList, target, useWorkspaceManagedIdentity, serializedAdditionalRawData)
         {
             Credentials = credentials;
             AuthType = authType;

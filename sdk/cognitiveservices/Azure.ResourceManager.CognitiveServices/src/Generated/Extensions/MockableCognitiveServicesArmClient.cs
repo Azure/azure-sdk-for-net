@@ -203,63 +203,63 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectResource.CreateResourceIdentifier" /> to create a <see cref="ProjectResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="CognitiveServicesProjectResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CognitiveServicesProjectResource.CreateResourceIdentifier" /> to create a <see cref="CognitiveServicesProjectResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectResource"/> object. </returns>
-        public virtual ProjectResource GetProjectResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CognitiveServicesProjectResource"/> object. </returns>
+        public virtual CognitiveServicesProjectResource GetCognitiveServicesProjectResource(ResourceIdentifier id)
         {
-            ProjectResource.ValidateResourceId(id);
-            return new ProjectResource(Client, id);
+            CognitiveServicesProjectResource.ValidateResourceId(id);
+            return new CognitiveServicesProjectResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AccountConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AccountConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AccountConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="CognitiveServicesConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CognitiveServicesConnectionResource.CreateResourceIdentifier" /> to create a <see cref="CognitiveServicesConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AccountConnectionResource"/> object. </returns>
-        public virtual AccountConnectionResource GetAccountConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CognitiveServicesConnectionResource"/> object. </returns>
+        public virtual CognitiveServicesConnectionResource GetCognitiveServicesConnectionResource(ResourceIdentifier id)
         {
-            AccountConnectionResource.ValidateResourceId(id);
-            return new AccountConnectionResource(Client, id);
+            CognitiveServicesConnectionResource.ValidateResourceId(id);
+            return new CognitiveServicesConnectionResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AccountProjectConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AccountProjectConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AccountProjectConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="CognitiveServicesProjectConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CognitiveServicesProjectConnectionResource.CreateResourceIdentifier" /> to create a <see cref="CognitiveServicesProjectConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AccountProjectConnectionResource"/> object. </returns>
-        public virtual AccountProjectConnectionResource GetAccountProjectConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CognitiveServicesProjectConnectionResource"/> object. </returns>
+        public virtual CognitiveServicesProjectConnectionResource GetCognitiveServicesProjectConnectionResource(ResourceIdentifier id)
         {
-            AccountProjectConnectionResource.ValidateResourceId(id);
-            return new AccountProjectConnectionResource(Client, id);
+            CognitiveServicesProjectConnectionResource.ValidateResourceId(id);
+            return new CognitiveServicesProjectConnectionResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AccountCapabilityHostResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AccountCapabilityHostResource.CreateResourceIdentifier" /> to create an <see cref="AccountCapabilityHostResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="CognitiveServicesCapabilityHostResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CognitiveServicesCapabilityHostResource.CreateResourceIdentifier" /> to create a <see cref="CognitiveServicesCapabilityHostResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AccountCapabilityHostResource"/> object. </returns>
-        public virtual AccountCapabilityHostResource GetAccountCapabilityHostResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CognitiveServicesCapabilityHostResource"/> object. </returns>
+        public virtual CognitiveServicesCapabilityHostResource GetCognitiveServicesCapabilityHostResource(ResourceIdentifier id)
         {
-            AccountCapabilityHostResource.ValidateResourceId(id);
-            return new AccountCapabilityHostResource(Client, id);
+            CognitiveServicesCapabilityHostResource.ValidateResourceId(id);
+            return new CognitiveServicesCapabilityHostResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AccountProjectCapabilityHostResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AccountProjectCapabilityHostResource.CreateResourceIdentifier" /> to create an <see cref="AccountProjectCapabilityHostResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="CognitiveServicesProjectCapabilityHostResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CognitiveServicesProjectCapabilityHostResource.CreateResourceIdentifier" /> to create a <see cref="CognitiveServicesProjectCapabilityHostResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AccountProjectCapabilityHostResource"/> object. </returns>
-        public virtual AccountProjectCapabilityHostResource GetAccountProjectCapabilityHostResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CognitiveServicesProjectCapabilityHostResource"/> object. </returns>
+        public virtual CognitiveServicesProjectCapabilityHostResource GetCognitiveServicesProjectCapabilityHostResource(ResourceIdentifier id)
         {
-            AccountProjectCapabilityHostResource.ValidateResourceId(id);
-            return new AccountProjectCapabilityHostResource(Client, id);
+            CognitiveServicesProjectCapabilityHostResource.ValidateResourceId(id);
+            return new CognitiveServicesProjectCapabilityHostResource(Client, id);
         }
     }
 }

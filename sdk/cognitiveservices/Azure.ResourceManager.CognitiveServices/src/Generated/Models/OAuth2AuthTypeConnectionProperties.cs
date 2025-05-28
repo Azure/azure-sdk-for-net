@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The OAuth2AuthTypeConnectionProperties. </summary>
-    public partial class OAuth2AuthTypeConnectionProperties : ConnectionPropertiesV2
+    public partial class OAuth2AuthTypeConnectionProperties : CognitiveServicesConnectionProperties
     {
         /// <summary> Initializes a new instance of <see cref="OAuth2AuthTypeConnectionProperties"/>. </summary>
         public OAuth2AuthTypeConnectionProperties()
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// ClientId and ClientSecret are required. Other properties are optional
         /// depending on each OAuth2 provider's implementation.
         /// </param>
-        internal OAuth2AuthTypeConnectionProperties(ConnectionAuthType authType, ConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, string error, DateTimeOffset? expiryOn, ConnectionGroup? group, bool? isSharedToAll, IDictionary<string, string> metadata, ManagedPERequirement? peRequirement, ManagedPEStatus? peStatus, IList<string> sharedUserList, string target, bool? useWorkspaceManagedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData, ConnectionOAuth2 credentials) : base(authType, category, createdByWorkspaceArmId, error, expiryOn, group, isSharedToAll, metadata, peRequirement, peStatus, sharedUserList, target, useWorkspaceManagedIdentity, serializedAdditionalRawData)
+        internal OAuth2AuthTypeConnectionProperties(ConnectionAuthType authType, CognitiveServicesConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, string error, DateTimeOffset? expiryOn, CognitiveServicesConnectionGroup? group, bool? isSharedToAll, IDictionary<string, string> metadata, ManagedPERequirement? peRequirement, ManagedPEStatus? peStatus, IList<string> sharedUserList, string target, bool? useWorkspaceManagedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData, CognitiveServicesConnectionOAuth2 credentials) : base(authType, category, createdByWorkspaceArmId, error, expiryOn, group, isSharedToAll, metadata, peRequirement, peStatus, sharedUserList, target, useWorkspaceManagedIdentity, serializedAdditionalRawData)
         {
             Credentials = credentials;
             AuthType = authType;
@@ -50,6 +50,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// depending on each OAuth2 provider's implementation.
         /// </summary>
         [WirePath("credentials")]
-        public ConnectionOAuth2 Credentials { get; set; }
+        public CognitiveServicesConnectionOAuth2 Credentials { get; set; }
     }
 }

@@ -15,11 +15,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    internal partial class UnknownConnectionPropertiesV2 : IUtf8JsonSerializable, IJsonModel<ConnectionPropertiesV2>
+    internal partial class UnknownConnectionPropertiesV2 : IUtf8JsonSerializable, IJsonModel<CognitiveServicesConnectionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionPropertiesV2>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesConnectionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ConnectionPropertiesV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CognitiveServicesConnectionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,25 +30,25 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionPropertiesV2)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesConnectionProperties)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
         }
 
-        ConnectionPropertiesV2 IJsonModel<ConnectionPropertiesV2>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CognitiveServicesConnectionProperties IJsonModel<CognitiveServicesConnectionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionPropertiesV2)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesConnectionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConnectionPropertiesV2(document.RootElement, options);
+            return DeserializeCognitiveServicesConnectionProperties(document.RootElement, options);
         }
 
         internal static UnknownConnectionPropertiesV2 DeserializeUnknownConnectionPropertiesV2(JsonElement element, ModelReaderWriterOptions options = null)
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             ConnectionAuthType authType = "Unknown";
-            ConnectionCategory? category = default;
+            CognitiveServicesConnectionCategory? category = default;
             ResourceIdentifier createdByWorkspaceArmId = default;
             string error = default;
             DateTimeOffset? expiryTime = default;
-            ConnectionGroup? group = default;
+            CognitiveServicesConnectionGroup? group = default;
             bool? isSharedToAll = default;
             IDictionary<string, string> metadata = default;
             ManagedPERequirement? peRequirement = default;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    category = new ConnectionCategory(property.Value.GetString());
+                    category = new CognitiveServicesConnectionCategory(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("createdByWorkspaceArmId"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    group = new ConnectionGroup(property.Value.GetString());
+                    group = new CognitiveServicesConnectionGroup(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isSharedToAll"u8))
@@ -483,9 +483,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ConnectionPropertiesV2>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CognitiveServicesConnectionProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -494,26 +494,26 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionPropertiesV2)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesConnectionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ConnectionPropertiesV2 IPersistableModel<ConnectionPropertiesV2>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CognitiveServicesConnectionProperties IPersistableModel<CognitiveServicesConnectionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeConnectionPropertiesV2(document.RootElement, options);
+                        return DeserializeCognitiveServicesConnectionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionPropertiesV2)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesConnectionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ConnectionPropertiesV2>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CognitiveServicesConnectionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

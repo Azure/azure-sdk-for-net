@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             IReadOnlyList<CommitmentPlanAssociation> commitmentPlanAssociations = default;
             AbusePenalty abusePenalty = default;
             RaiMonitorConfig raiMonitorConfig = default;
-            NetworkInjections networkInjections = default;
+            AIFoundryNetworkInjection networkInjections = default;
             bool? allowProjectManagement = default;
             string defaultProject = default;
             IList<string> associatedProjects = default;
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    networkInjections = NetworkInjections.DeserializeNetworkInjections(property.Value, options);
+                    networkInjections = AIFoundryNetworkInjection.DeserializeAIFoundryNetworkInjection(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("allowProjectManagement"u8))

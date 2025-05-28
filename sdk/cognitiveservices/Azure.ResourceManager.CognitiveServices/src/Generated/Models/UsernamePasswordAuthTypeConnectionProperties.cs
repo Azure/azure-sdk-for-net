@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The UsernamePasswordAuthTypeConnectionProperties. </summary>
-    public partial class UsernamePasswordAuthTypeConnectionProperties : ConnectionPropertiesV2
+    public partial class UsernamePasswordAuthTypeConnectionProperties : CognitiveServicesConnectionProperties
     {
         /// <summary> Initializes a new instance of <see cref="UsernamePasswordAuthTypeConnectionProperties"/>. </summary>
         public UsernamePasswordAuthTypeConnectionProperties()
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="useWorkspaceManagedIdentity"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="credentials"></param>
-        internal UsernamePasswordAuthTypeConnectionProperties(ConnectionAuthType authType, ConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, string error, DateTimeOffset? expiryOn, ConnectionGroup? group, bool? isSharedToAll, IDictionary<string, string> metadata, ManagedPERequirement? peRequirement, ManagedPEStatus? peStatus, IList<string> sharedUserList, string target, bool? useWorkspaceManagedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData, ConnectionUsernamePassword credentials) : base(authType, category, createdByWorkspaceArmId, error, expiryOn, group, isSharedToAll, metadata, peRequirement, peStatus, sharedUserList, target, useWorkspaceManagedIdentity, serializedAdditionalRawData)
+        internal UsernamePasswordAuthTypeConnectionProperties(ConnectionAuthType authType, CognitiveServicesConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, string error, DateTimeOffset? expiryOn, CognitiveServicesConnectionGroup? group, bool? isSharedToAll, IDictionary<string, string> metadata, ManagedPERequirement? peRequirement, ManagedPEStatus? peStatus, IList<string> sharedUserList, string target, bool? useWorkspaceManagedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData, CognitiveServicesConnectionUsernamePassword credentials) : base(authType, category, createdByWorkspaceArmId, error, expiryOn, group, isSharedToAll, metadata, peRequirement, peStatus, sharedUserList, target, useWorkspaceManagedIdentity, serializedAdditionalRawData)
         {
             Credentials = credentials;
             AuthType = authType;
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Gets or sets the credentials. </summary>
         [WirePath("credentials")]
-        public ConnectionUsernamePassword Credentials { get; set; }
+        public CognitiveServicesConnectionUsernamePassword Credentials { get; set; }
     }
 }
