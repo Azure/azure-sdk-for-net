@@ -2041,7 +2041,7 @@ Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString
 Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
 ]]></code></example>
     </member>
-    <member name="AnalyzeTextSubmitOperationAsync(WaitUntil,MultiLanguageTextInput,IEnumerable{AnalyzeTextOperationAction},string,string,CancellationToken)">
+    <member name="AnalyzeTextSubmitOperationAsync(WaitUntil,MultiLanguageTextInput,IEnumerable{AnalyzeTextOperationAction},string,string,float?,CancellationToken)">
       <example>
 This sample shows how to call AnalyzeTextSubmitOperationAsync.
 <code><![CDATA[
@@ -2178,7 +2178,7 @@ Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Com
 });
 ]]></code></example>
     </member>
-    <member name="AnalyzeTextSubmitOperation(WaitUntil,MultiLanguageTextInput,IEnumerable{AnalyzeTextOperationAction},string,string,CancellationToken)">
+    <member name="AnalyzeTextSubmitOperation(WaitUntil,MultiLanguageTextInput,IEnumerable{AnalyzeTextOperationAction},string,string,float?,CancellationToken)">
       <example>
 This sample shows how to call AnalyzeTextSubmitOperation.
 <code><![CDATA[

@@ -53,6 +53,11 @@ namespace Azure.AI.Language.Text
                 writer.WritePropertyName("defaultLanguage"u8);
                 writer.WriteStringValue(DefaultLanguage);
             }
+            if (Optional.IsDefined(CancelAfter))
+            {
+                writer.WritePropertyName("cancelAfter"u8);
+                writer.WriteNumberValue(CancelAfter.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -94,6 +99,7 @@ namespace Azure.AI.Language.Text
             MultiLanguageTextInput analysisInput = default;
             IReadOnlyList<AnalyzeTextOperationAction> tasks = default;
             string defaultLanguage = default;
+            float? cancelAfter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,13 +129,28 @@ namespace Azure.AI.Language.Text
                     defaultLanguage = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("cancelAfter"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cancelAfter = property.Value.GetSingle();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AnalyzeTextSubmitJobRequest(displayName, analysisInput, tasks, defaultLanguage, serializedAdditionalRawData);
+            return new AnalyzeTextSubmitJobRequest(
+                displayName,
+                analysisInput,
+                tasks,
+                defaultLanguage,
+                cancelAfter,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalyzeTextSubmitJobRequest>.Write(ModelReaderWriterOptions options)
