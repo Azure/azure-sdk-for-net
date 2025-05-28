@@ -242,7 +242,7 @@ extends:
               - "/*"
               - "!SessionRecords"
               Repositories:
-              - Name: $(Build.Repository.Name)
+              - Name: azure-sdk/azure-sdk-for-net
                 Commitish: $(branchName)
                 WorkingDirectory: $(System.DefaultWorkingDirectory)
           
