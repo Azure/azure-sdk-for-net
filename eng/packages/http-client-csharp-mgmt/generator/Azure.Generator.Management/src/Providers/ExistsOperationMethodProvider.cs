@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers
@@ -20,9 +20,8 @@ namespace Azure.Generator.Management.Providers
     {
         protected override MethodSignature CreateSignature()
         {
-            var returnType = _isAsync
-                ? new CSharpType(typeof(Task<>), new CSharpType(typeof(Response<>), typeof(bool)))
-                : new CSharpType(typeof(Response<>), typeof(bool));
+            var returnType = new CSharpType(typeof(Response<>), typeof(bool))
+                .WrapAsync(_isAsync);
 
             return new MethodSignature(
                 _isAsync ? "ExistsAsync" : "Exists",
