@@ -180,9 +180,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
         }
 
         /// <summary>
-        /// The file system attributes for this file. This is intended to be set on the destination Share.
+        /// The file system attributes for this file/directory. This is intended to be set on the destination Share.
         ///
-        /// By default preserves the File Attributes from the source for copy transfers. If explicitly set, the File Attributes of the destination will be set to this value.
+        /// By default preserves the Attributes from the source for copy transfers. If explicitly set, the Attributes of the destination will be set to this value.
         /// </summary>
         public NtfsFileAttributes? FileAttributes
         {
@@ -195,20 +195,20 @@ namespace Azure.Storage.DataMovement.Files.Shares
         }
 
         /// <summary>
-        /// To preserve the file permissions. This is intended to be set on the destination Share.
+        /// To preserve the file/directory permissions. This is intended to be set on the destination Share.
         /// If set to true, the permissions will be preserved from the source Share to the destination Share.
         /// For SMB, this requires a <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/create-permission">Create Share Permissions</see> operation,
         /// which is a operation called on the Destination Share, which requires Share level permissions.
         ///
-        /// By default the file permissions will not be preserved from the source Share to the destination Share. If explicitly set to null, the File Permissions will not be preserved.
+        /// By default the permissions will not be preserved from the source Share to the destination Share. If explicitly set to null, the permissions will not be preserved.
         /// Applies only to copy transfers.
         /// </summary>
         public bool? FilePermissions { get; set; }
 
         /// <summary>
-        /// The creation time of the file. This is intended to be set on the destination Share.
+        /// The creation time of the file/directory. This is intended to be set on the destination Share.
         ///
-        /// By default preserves the File Created On Time from the source for copy transfers. If explicitly set, the File Created On Time of the destination will be set to this value.
+        /// By default preserves the Created On Time from the source for copy transfers. If explicitly set, the Created On Time of the destination will be set to this value.
         /// </summary>
         public DateTimeOffset? FileCreatedOn
         {
@@ -221,10 +221,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
         }
 
         /// <summary>
-        /// The last write time of the file. This is intended to be set on the destination Share.
+        /// The last write time of the file/directory. This is intended to be set on the destination Share.
         ///
-        /// By default preserves the File Last Written On Time from the source for copy transfers. If explicitly set, the File Last Written On Time of the destination will be set to this value.
-        /// Note: For share directories, the File Last Written On Time may not be preserved.
+        /// By default preserves the Last Written On Time from the source for copy transfers. If explicitly set, the Last Written On Time of the destination will be set to this value.
+        /// Note: For share directories, the Last Written On Time may not be preserved.
         /// </summary>
         public DateTimeOffset? FileLastWrittenOn
         {
@@ -237,9 +237,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
         }
 
         /// <summary>
-        /// The change time of the file. This is intended to be set on the destination Share.
+        /// The change time of the file/directory. This is intended to be set on the destination Share.
         ///
-        /// By default preserves the File Changed On Time from the source for copy transfers. If explicitly set, the File Changed On Time of the destination will be set to this value.
+        /// By default preserves the Changed On Time from the source for copy transfers. If explicitly set, the Changed On Time of the destination will be set to this value.
         /// </summary>
         public DateTimeOffset? FileChangedOn
         {
