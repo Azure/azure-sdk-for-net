@@ -357,7 +357,7 @@ extends:
             parameters:
               BaseRepoOwner: azure-sdk
               TargetRepoName: $(Build.Repository.Name)
-              BaseRepoBranch: $(branchName)
+              BaseRepoBranch: $(branchName)-$(JobKey)
               CommitMsg: Update SDK code $(JobKey)
               WorkingDirectory: $(Build.SourcesDirectory)
               ScriptDirectory: $(Build.SourcesDirectory)/eng/common/scripts
