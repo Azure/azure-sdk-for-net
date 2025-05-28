@@ -286,6 +286,11 @@ extends:
               # To accomodate scheduled runs and retries, we want to overwrite any existing changes on the branch
               PushArgs: --force
 
+          - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+            parameters:
+              artifactName: config_files
+              artifactPath: $(Build.SourcesDirectory)    
+
           - task: PowerShell@2
             displayName: Get generation job matrix
             name: generate_matrix
@@ -317,13 +322,6 @@ extends:
               Paths:
               - "/*"
               - "!SessionRecords"
-          - pwsh: |
-              Start-Sleep -Seconds 30
-              git fetch origin $(branchName)
-              git checkout $(branchName)
-              Write-Host "Most recent commits:"
-              git log -n 5 --oneline
-            displayName: Ensure latest pushed emitter files are checked out  
           - task: UseNode@1
             displayName: 'Install Node.js'
             inputs:
@@ -331,6 +329,16 @@ extends:
 
           - download: current
             displayName: Download pipeline artifacts
+
+          - pwsh: |
+              # Copy the generated config files from the downloaded artifacts
+              $configSource = "$(Pipeline.Workspace)/config_files"
+              $destination = "$(Build.SourcesDirectory)"
+              
+              if (Test-Path "$configSource/${{ parameters.EmitterPackageJsonOutputPath }}") {
+                Copy-Item -Path "$configSource/${{ parameters.EmitterPackageJsonOutputPath }}" -Destination "$destination/${{ parameters.EmitterPackageJsonOutputPath }}" -Force
+              }
+            displayName: Restore generated config files from artifacts
 
           - ${{ parameters.InitializationSteps }}
 
