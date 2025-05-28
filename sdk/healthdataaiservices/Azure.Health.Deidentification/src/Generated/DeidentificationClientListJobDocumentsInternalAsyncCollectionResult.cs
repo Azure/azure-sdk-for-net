@@ -21,7 +21,6 @@ namespace Azure.Health.Deidentification
         private readonly string _jobName;
         private readonly int? _maxpagesize;
         private readonly string _continuationToken;
-        private readonly Guid? _clientRequestId;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of DeidentificationClientListJobDocumentsInternalAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
@@ -30,10 +29,9 @@ namespace Azure.Health.Deidentification
         /// <param name="jobName"> The name of a job. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="continuationToken"> Token to continue a previous query. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        public DeidentificationClientListJobDocumentsInternalAsyncCollectionResult(DeidentificationClient client, Uri nextPage, string jobName, int? maxpagesize, string continuationToken, Guid? clientRequestId, RequestContext context) : base(context?.CancellationToken ?? default)
+        public DeidentificationClientListJobDocumentsInternalAsyncCollectionResult(DeidentificationClient client, Uri nextPage, string jobName, int? maxpagesize, string continuationToken, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             Argument.AssertNotNull(jobName, nameof(jobName));
 
@@ -42,7 +40,6 @@ namespace Azure.Health.Deidentification
             _jobName = jobName;
             _maxpagesize = maxpagesize;
             _continuationToken = continuationToken;
-            _clientRequestId = clientRequestId;
             _context = context;
         }
 
@@ -77,7 +74,7 @@ namespace Azure.Health.Deidentification
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateListJobDocumentsInternalRequest(nextLink, _jobName, _maxpagesize, _continuationToken, _clientRequestId, _context);
+            HttpMessage message = _client.CreateListJobDocumentsInternalRequest(nextLink, _jobName, _maxpagesize, _continuationToken, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeidentificationClient.ListJobDocumentsInternal");
             scope.Start();
             try

@@ -24,7 +24,7 @@ namespace Azure.Health.Deidentification
 
         private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 = new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
-        internal HttpMessage CreateGetJobRequest(string jobName, Guid? clientRequestId, RequestContext context)
+        internal HttpMessage CreateGetJobRequest(string jobName, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -35,15 +35,11 @@ namespace Azure.Health.Deidentification
             uri.AppendPath(jobName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (clientRequestId != null)
-            {
-                request.Headers.SetValue("x-ms-client-request-id", TypeFormatters.ConvertToString(clientRequestId, null));
-            }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateDeidentifyDocumentsRequest(string jobName, RequestContent content, Guid? clientRequestId, RequestContext context)
+        internal HttpMessage CreateDeidentifyDocumentsRequest(string jobName, RequestContent content, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
@@ -54,17 +50,13 @@ namespace Azure.Health.Deidentification
             uri.AppendPath(jobName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (clientRequestId != null)
-            {
-                request.Headers.SetValue("x-ms-client-request-id", TypeFormatters.ConvertToString(clientRequestId, null));
-            }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateListJobsInternalRequest(Uri nextPage, int? maxpagesize, string continuationToken, Guid? clientRequestId, RequestContext context)
+        internal HttpMessage CreateListJobsInternalRequest(Uri nextPage, int? maxpagesize, string continuationToken, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -85,15 +77,11 @@ namespace Azure.Health.Deidentification
                 uri.AppendQuery("continuationToken", continuationToken, true);
             }
             request.Uri = uri;
-            if (clientRequestId != null)
-            {
-                request.Headers.SetValue("x-ms-client-request-id", TypeFormatters.ConvertToString(clientRequestId, null));
-            }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateListJobDocumentsInternalRequest(Uri nextPage, string jobName, int? maxpagesize, string continuationToken, Guid? clientRequestId, RequestContext context)
+        internal HttpMessage CreateListJobDocumentsInternalRequest(Uri nextPage, string jobName, int? maxpagesize, string continuationToken, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -116,15 +104,11 @@ namespace Azure.Health.Deidentification
                 uri.AppendQuery("continuationToken", continuationToken, true);
             }
             request.Uri = uri;
-            if (clientRequestId != null)
-            {
-                request.Headers.SetValue("x-ms-client-request-id", TypeFormatters.ConvertToString(clientRequestId, null));
-            }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateCancelJobRequest(string jobName, Guid? clientRequestId, RequestContext context)
+        internal HttpMessage CreateCancelJobRequest(string jobName, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -136,15 +120,11 @@ namespace Azure.Health.Deidentification
             uri.AppendPath(":cancel", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (clientRequestId != null)
-            {
-                request.Headers.SetValue("x-ms-client-request-id", TypeFormatters.ConvertToString(clientRequestId, null));
-            }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateDeleteJobRequest(string jobName, Guid? clientRequestId, RequestContext context)
+        internal HttpMessage CreateDeleteJobRequest(string jobName, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
@@ -155,15 +135,11 @@ namespace Azure.Health.Deidentification
             uri.AppendPath(jobName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (clientRequestId != null)
-            {
-                request.Headers.SetValue("x-ms-client-request-id", TypeFormatters.ConvertToString(clientRequestId, null));
-            }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateDeidentifyTextRequest(RequestContent content, Guid? clientRequestId, RequestContext context)
+        internal HttpMessage CreateDeidentifyTextRequest(RequestContent content, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -173,10 +149,6 @@ namespace Azure.Health.Deidentification
             uri.AppendPath("/deid", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (clientRequestId != null)
-            {
-                request.Headers.SetValue("x-ms-client-request-id", TypeFormatters.ConvertToString(clientRequestId, null));
-            }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
