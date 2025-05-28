@@ -246,6 +246,52 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         }
 
         [RecordedTest]
+        public async Task TrainAsync_withDataGenerationSettings()
+        {
+            // Arrange
+            string projectName = "Test-data-labels";
+
+            var connectionInfo = new AnalyzeConversationAuthoringDataGenerationConnectionInfo(
+                kind: AnalyzeConversationAuthoringDataGenerationConnectionKind.AzureOpenAI,
+                deploymentName: "gpt-4o"
+            );
+            connectionInfo.ResourceId = "/subscriptions/e54a2925-af7f-4b05-9ba1-2155c5fe8a8e/resourceGroups/gouri-eastus/providers/Microsoft.CognitiveServices/accounts/sdk-test-openai";
+
+            var trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
+                modelLabel: "MyModel",
+                trainingMode: ConversationAuthoringTrainingMode.Standard
+            )
+            {
+                TrainingConfigVersion = "2025-05-15-preview",
+                EvaluationOptions = new ConversationAuthoringEvaluationDetails
+                {
+                    Kind = ConversationAuthoringEvaluationKind.Percentage,
+                    TestingSplitPercentage = 20,
+                    TrainingSplitPercentage = 80
+                },
+                DataGenerationSettings = new AnalyzeConversationAuthoringDataGenerationSettings(
+                    enableDataGeneration: true,
+                    dataGenerationConnectionInfo: connectionInfo
+                )
+            };
+
+            ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
+
+            // Act
+            Operation<ConversationAuthoringTrainingJobResult> operation = await projectAuthoringClient.TrainAsync(
+                waitUntil: WaitUntil.Completed,
+                details: trainingJobDetails
+            );
+
+            // Assert
+            Assert.IsNotNull(operation, "The operation should not be null.");
+            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected operation status to be 200 (OK).");
+
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+            //Assert.IsNotNull(operationLocation, "Expected operation-location header to be present.");
+        }
+
+        [RecordedTest]
         public async Task CancelTrainingJobAsync()
         {
             // Arrange
