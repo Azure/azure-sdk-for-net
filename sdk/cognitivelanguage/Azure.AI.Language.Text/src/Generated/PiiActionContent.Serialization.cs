@@ -84,10 +84,15 @@ namespace Azure.AI.Language.Text
                 writer.WritePropertyName("valueExclusionPolicy"u8);
                 writer.WriteObjectValue(ValueExclusionPolicy, options);
             }
-            if (Optional.IsDefined(EntitySynonyms))
+            if (Optional.IsCollectionDefined(EntitySynonyms))
             {
                 writer.WritePropertyName("entitySynonyms"u8);
-                writer.WriteObjectValue(EntitySynonyms, options);
+                writer.WriteStartArray();
+                foreach (var item in EntitySynonyms)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -134,7 +139,7 @@ namespace Azure.AI.Language.Text
             IList<PiiCategoriesExclude> excludePiiCategories = default;
             BaseRedactionPolicy redactionPolicy = default;
             ValueExclusionPolicy valueExclusionPolicy = default;
-            EntitySynonyms entitySynonyms = default;
+            IList<EntitySynonyms> entitySynonyms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,7 +228,12 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    entitySynonyms = EntitySynonyms.DeserializeEntitySynonyms(property.Value, options);
+                    List<EntitySynonyms> array = new List<EntitySynonyms>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(Text.EntitySynonyms.DeserializeEntitySynonyms(item, options));
+                    }
+                    entitySynonyms = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -241,7 +251,7 @@ namespace Azure.AI.Language.Text
                 excludePiiCategories ?? new ChangeTrackingList<PiiCategoriesExclude>(),
                 redactionPolicy,
                 valueExclusionPolicy,
-                entitySynonyms,
+                entitySynonyms ?? new ChangeTrackingList<EntitySynonyms>(),
                 serializedAdditionalRawData);
         }
 
