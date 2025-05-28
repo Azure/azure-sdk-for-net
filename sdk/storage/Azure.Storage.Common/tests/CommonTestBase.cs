@@ -37,8 +37,9 @@ namespace Azure.Storage.Test
     BlobClientOptions.ServiceVersion.V2025_01_05,
     BlobClientOptions.ServiceVersion.V2025_05_05,
     BlobClientOptions.ServiceVersion.V2025_07_05,
-    RecordingServiceVersion = BlobClientOptions.ServiceVersion.V2025_07_05,
-    LiveServiceVersions = new object[] { BlobClientOptions.ServiceVersion.V2025_07_05, })]
+    BlobClientOptions.ServiceVersion.V2025_11_05,
+    RecordingServiceVersion = BlobClientOptions.ServiceVersion.V2025_11_05,
+    LiveServiceVersions = new object[] { BlobClientOptions.ServiceVersion.V2025_11_05, })]
     public abstract class CommonTestBase : StorageTestBase<StorageTestEnvironment>
     {
         protected readonly BlobClientOptions.ServiceVersion _serviceVersion;

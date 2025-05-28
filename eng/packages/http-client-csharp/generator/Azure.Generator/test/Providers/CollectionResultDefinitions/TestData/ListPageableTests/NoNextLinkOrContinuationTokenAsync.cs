@@ -26,7 +26,7 @@ namespace Samples
         /// <param name="animalKind"> animalKind description. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="global::System.ArgumentNullException"> <paramref name="animalKind"/> is null. </exception>
-        public CatClientGetCatsAsyncCollectionResult(global::Samples.CatClient client, string animalKind, global::Azure.RequestContext context)
+        public CatClientGetCatsAsyncCollectionResult(global::Samples.CatClient client, string animalKind, global::Azure.RequestContext context) : base((context?.CancellationToken ?? default))
         {
             global::Samples.Argument.AssertNotNull(animalKind, nameof(animalKind));
 
@@ -41,26 +41,17 @@ namespace Samples
         /// <returns> The pages of CatClientGetCatsAsyncCollectionResult as an enumerable collection. </returns>
         public override async global::System.Collections.Generic.IAsyncEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            do
+            global::Azure.Response response = await this.GetNextResponse(pageSizeHint, null).ConfigureAwait(false);
+            global::Samples.Models.Page responseWithType = ((global::Samples.Models.Page)response);
+            global::System.Collections.Generic.List<global::System.BinaryData> items = new global::System.Collections.Generic.List<global::System.BinaryData>();
+            foreach (var item in responseWithType.Cats)
             {
-                global::Azure.Response response = await this.GetNextResponse(pageSizeHint, continuationToken).ConfigureAwait(false);
-                if ((response is null))
-                {
-                    yield break;
-                }
-                global::Samples.Models.Page responseWithType = ((global::Samples.Models.Page)response);
-                global::System.Collections.Generic.List<global::System.BinaryData> items = new global::System.Collections.Generic.List<global::System.BinaryData>();
-                foreach (var item in responseWithType.Cats)
-                {
-                    items.Add(global::System.BinaryData.FromObjectAsJson(item));
-                }
-                continuationToken = null;
-                yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, continuationToken, response);
+                items.Add(global::System.BinaryData.FromObjectAsJson(item));
             }
-            while (!string.IsNullOrEmpty(continuationToken));
+            yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, null, response);
         }
 
-        /// <summary> Get response from next link. </summary>
+        /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         private async global::System.Threading.Tasks.ValueTask<global::Azure.Response> GetNextResponse(int? pageSizeHint, string continuationToken)
@@ -70,7 +61,7 @@ namespace Samples
             scope.Start();
             try
             {
-                await _client.Pipeline.SendAsync(message, _context.CancellationToken).ConfigureAwait(false);
+                await _client.Pipeline.SendAsync(message, this.CancellationToken).ConfigureAwait(false);
                 if ((message.Response.IsError && (_context.ErrorOptions != global::Azure.ErrorOptions.NoThrow)))
                 {
                     throw new global::Azure.RequestFailedException(message.Response);

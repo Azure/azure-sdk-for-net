@@ -13,7 +13,7 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/8a059231d92b10d87ffc
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   skipped-operations:
   - Topics_ListEventTypes # because we use customized code to rewrite this operation
@@ -29,7 +29,7 @@ modelerfour:
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 request-path-to-resource-name:

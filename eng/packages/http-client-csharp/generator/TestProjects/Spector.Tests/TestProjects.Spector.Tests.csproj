@@ -42,6 +42,7 @@
     <ProjectReference Include="..\Spector\http\payload\json-merge-patch\src\Payload.JsonMergePatch.csproj" />
     <ProjectReference Include="..\Spector\http\payload\media-type\src\Payload.MediaType.csproj" />
     <ProjectReference Include="..\Spector\http\payload\multipart\src\Payload.MultiPart.csproj" />
+    <ProjectReference Include="..\Spector\http\payload\pageable\src\Payload.Pageable.csproj" />
     <ProjectReference Include="..\Spector\http\routes\src\Routes.csproj" />
     <ProjectReference Include="..\Spector\http\serialization\encoded-name\json\src\Serialization.EncodedName.Json.csproj" />
     <ProjectReference Include="..\Spector\http\server\endpoint\not-defined\src\Server.Endpoint.NotDefined.csproj" />
