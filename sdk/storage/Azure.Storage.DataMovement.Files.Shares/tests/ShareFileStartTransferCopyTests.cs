@@ -335,6 +335,26 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         protected override Task<Stream> DestinationOpenReadAsync(ShareFileClient objectClient)
             => objectClient.OpenReadAsync();
 
+        private bool StreamsAreEqual(Stream s1, Stream s2)
+        {
+            if (s1.Length != s2.Length)
+                return false;
+
+            s1.Position = 0;
+            s2.Position = 0;
+
+            int byte1, byte2;
+            do
+            {
+                byte1 = s1.ReadByte();
+                byte2 = s2.ReadByte();
+                if (byte1 != byte2)
+                    return false;
+            } while (byte1 != -1);
+
+            return true;
+        }
+
         public ShareClientOptions GetOptions()
         {
             var options = new ShareClientOptions(_serviceVersion)
@@ -372,7 +392,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             await testEventsRaised.AssertSingleCompletedCheck();
             using Stream sourceStream = await sourceClient.OpenReadAsync(cancellationToken: cancellationToken);
             using Stream destinationStream = await destinationClient.OpenReadAsync(cancellationToken: cancellationToken);
-            Assert.AreEqual(sourceStream, destinationStream);
+            Assert.IsTrue(StreamsAreEqual(sourceStream, destinationStream));
 
             if (transferPropertiesTestType == TransferPropertiesTestType.NoPreserve)
             {
@@ -536,7 +556,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             await testEventsRaised.AssertSingleCompletedCheck();
             using Stream sourceStream = await sourceClient.OpenReadAsync(cancellationToken: cancellationTokenSource.Token);
             using Stream destinationStream = await destinationClient.OpenReadAsync(cancellationToken: cancellationTokenSource.Token);
-            Assert.AreEqual(sourceStream, destinationStream);
+            Assert.IsTrue(StreamsAreEqual(sourceStream, destinationStream));
             // Verify destination File Attributes
             ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync(cancellationToken: cancellationTokenSource.Token);
             Assert.AreEqual(fileAttribute, destinationProperties.SmbProperties.FileAttributes);
@@ -591,7 +611,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             await testEventsRaised.AssertSingleCompletedCheck();
             using Stream sourceStream = await sourceClient.OpenReadAsync(cancellationToken: cancellationTokenSource.Token);
             using Stream destinationStream = await destinationClient.OpenReadAsync(cancellationToken: cancellationTokenSource.Token);
-            Assert.AreEqual(sourceStream, destinationStream);
+            Assert.IsTrue(StreamsAreEqual(sourceStream, destinationStream));
         }
 
         [RecordedTest]
@@ -681,7 +701,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             await testEventsRaised.AssertSingleCompletedCheck();
             using Stream sourceStream = await sourceClient.OpenReadAsync();
             using Stream destinationStream = await destinationClient.OpenReadAsync();
-            Assert.AreEqual(sourceStream, destinationStream);
+            Assert.IsTrue(StreamsAreEqual(sourceStream, destinationStream));
             if (propertiesType == TransferPropertiesTestType.NewProperties)
             {
                 ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync();
@@ -797,7 +817,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             await testEventsRaised.AssertSingleCompletedCheck();
             using Stream sourceStream = await sourceClient.OpenReadAsync();
             using Stream destinationStream = await destinationClient.OpenReadAsync();
-            Assert.AreEqual(sourceStream, destinationStream);
+            Assert.IsTrue(StreamsAreEqual(sourceStream, destinationStream));
 
             ShareFileProperties sourceProperties = await sourceClient.GetPropertiesAsync();
             ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync();
@@ -878,7 +898,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 await testEventsRaised.AssertSingleCompletedCheck();
                 using Stream sourceStream = await sourceClient.OpenReadAsync();
                 using Stream destinationStream = await destinationClient.OpenReadAsync();
-                Assert.AreEqual(sourceStream, destinationStream);
+                Assert.IsTrue(StreamsAreEqual(sourceStream, destinationStream));
             }
             else
             {
@@ -937,7 +957,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 await testEventsRaised.AssertSingleCompletedCheck();
                 using Stream sourceStream = await sourceClient.OpenReadAsync();
                 using Stream destinationStream = await destinationClient.OpenReadAsync();
-                Assert.AreEqual(sourceStream, destinationStream);
+                Assert.IsTrue(StreamsAreEqual(sourceStream, destinationStream));
             }
             else
             {
@@ -996,7 +1016,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 await testEventsRaised.AssertSingleCompletedCheck();
                 using Stream sourceStream = await sourceClient.OpenReadAsync();
                 using Stream destinationStream = await destinationClient.OpenReadAsync();
-                Assert.AreEqual(sourceStream, destinationStream);
+                Assert.IsTrue(StreamsAreEqual(sourceStream, destinationStream));
             }
             else
             {

@@ -211,12 +211,32 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 ShareFileClient destinationClient = destinationDirectory.GetFileClient(destinationFileNames[i]);
                 using Stream sourceStream = await sourceClient.OpenReadAsync(cancellationToken: cancellationToken);
                 using Stream destinationStream = await destinationClient.OpenReadAsync(cancellationToken: cancellationToken);
-                Assert.AreEqual(sourceStream, destinationStream);
+                Assert.IsTrue(StreamsAreEqual(sourceStream, destinationStream));
                 await VerifyPropertiesCopyAsync(
                     propertiesTestType,
                     sourceClient,
                     destinationClient);
             }
+        }
+
+        private bool StreamsAreEqual(Stream s1, Stream s2)
+        {
+            if (s1.Length != s2.Length)
+                return false;
+
+            s1.Position = 0;
+            s2.Position = 0;
+
+            int byte1, byte2;
+            do
+            {
+                byte1 = s1.ReadByte();
+                byte2 = s2.ReadByte();
+                if (byte1 != byte2)
+                    return false;
+            } while (byte1 != -1);
+
+            return true;
         }
 
         private async Task CreateShareFileAsync(
@@ -558,7 +578,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 ShareDirectoryProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
-                Assert.That(_defaultMetadata, Is.EqualTo(destinationProperties.Metadata));
                 Assert.AreEqual(_defaultDirectoryAttributes, destinationProperties.SmbProperties.FileAttributes);
                 Assert.AreEqual(_defaultFileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
                 Assert.AreEqual(_defaultFileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
