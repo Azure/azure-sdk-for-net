@@ -34,25 +34,25 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 throw new FormatException($"The model {nameof(OracleDBServerProperties)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(Ocid))
+            if (options.Format != "W" && Optional.IsDefined(DBServerOcid))
             {
                 writer.WritePropertyName("ocid"u8);
-                writer.WriteStringValue(Ocid);
+                writer.WriteStringValue(DBServerOcid);
             }
             if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CompartmentId))
+            if (options.Format != "W" && Optional.IsDefined(CompartmentOcid))
             {
                 writer.WritePropertyName("compartmentId"u8);
-                writer.WriteStringValue(CompartmentId);
+                writer.WriteStringValue(CompartmentOcid);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExadataInfrastructureId))
+            if (options.Format != "W" && Optional.IsDefined(ExadataInfrastructureOcid))
             {
                 writer.WritePropertyName("exadataInfrastructureId"u8);
-                writer.WriteStringValue(ExadataInfrastructureId);
+                writer.WriteStringValue(ExadataInfrastructureOcid);
             }
             if (options.Format != "W" && Optional.IsDefined(CpuCoreCount))
             {
@@ -74,21 +74,21 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("dbNodeStorageSizeInGbs"u8);
                 writer.WriteNumberValue(DBNodeStorageSizeInGbs.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VmClusterIds))
+            if (options.Format != "W" && Optional.IsCollectionDefined(VmClusterOcids))
             {
                 writer.WritePropertyName("vmClusterIds"u8);
                 writer.WriteStartArray();
-                foreach (var item in VmClusterIds)
+                foreach (var item in VmClusterOcids)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DBNodeIds))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DBNodeOcids))
             {
                 writer.WritePropertyName("dbNodeIds"u8);
                 writer.WriteStartArray();
-                foreach (var item in DBNodeIds)
+                foreach (var item in DBNodeOcids)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -109,21 +109,21 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("maxCpuCount"u8);
                 writer.WriteNumberValue(MaxCpuCount.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AutonomousVmClusterIds))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AutonomousVmClusterOcids))
             {
                 writer.WritePropertyName("autonomousVmClusterIds"u8);
                 writer.WriteStartArray();
-                foreach (var item in AutonomousVmClusterIds)
+                foreach (var item in AutonomousVmClusterOcids)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AutonomousVirtualMachineIds))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AutonomousVirtualMachineOcids))
             {
                 writer.WritePropertyName("autonomousVirtualMachineIds"u8);
                 writer.WriteStartArray();
-                foreach (var item in AutonomousVirtualMachineIds)
+                foreach (var item in AutonomousVirtualMachineOcids)
                 {
                     writer.WriteStringValue(item);
                 }

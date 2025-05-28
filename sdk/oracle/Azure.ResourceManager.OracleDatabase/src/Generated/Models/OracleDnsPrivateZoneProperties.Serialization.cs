@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
 
             writer.WritePropertyName("ocid"u8);
-            writer.WriteStringValue(Ocid);
+            writer.WriteStringValue(ZoneOcid);
             writer.WritePropertyName("isProtected"u8);
             writer.WriteBooleanValue(IsProtected);
             writer.WritePropertyName("lifecycleState"u8);
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             writer.WriteNumberValue(Serial);
             writer.WritePropertyName("version"u8);
             writer.WriteStringValue(Version);
-            if (Optional.IsDefined(ViewId))
+            if (Optional.IsDefined(ViewOcid))
             {
                 writer.WritePropertyName("viewId"u8);
-                writer.WriteStringValue(ViewId);
+                writer.WriteStringValue(ViewOcid);
             }
             writer.WritePropertyName("zoneType"u8);
             writer.WriteStringValue(ZoneType.ToString());

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
 
             writer.WritePropertyName("ocid"u8);
-            writer.WriteStringValue(Ocid);
+            writer.WriteStringValue(DnsPrivateViewOcid);
             writer.WritePropertyName("displayName"u8);
             writer.WriteStringValue(DisplayName);
             writer.WritePropertyName("isProtected"u8);

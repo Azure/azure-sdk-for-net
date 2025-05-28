@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             writer.WritePropertyName("hostnameLabel"u8);
             writer.WriteStringValue(HostnameLabel);
             writer.WritePropertyName("ocid"u8);
-            writer.WriteStringValue(Ocid);
+            writer.WriteStringValue(PrivateIPAddressesOcid);
             writer.WritePropertyName("ipAddress"u8);
             writer.WriteStringValue(IPAddress);
             writer.WritePropertyName("subnetId"u8);

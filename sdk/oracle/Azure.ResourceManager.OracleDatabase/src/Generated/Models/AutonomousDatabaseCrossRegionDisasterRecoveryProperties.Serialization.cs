@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             IReadOnlyList<string> supportedRegionsToCloneTo = default;
             DateTimeOffset? timeDataGuardRoleChanged = default;
             DateTimeOffset? timeDeletionOfFreeAutonomousDatabase = default;
-            DateTimeOffset? timeLocalDataGuardEnabled = default;
+            string timeLocalDataGuardEnabled = default;
             DateTimeOffset? timeOfLastFailover = default;
             DateTimeOffset? timeOfLastRefresh = default;
             DateTimeOffset? timeOfLastRefreshPoint = default;
@@ -776,11 +776,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("timeLocalDataGuardEnabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    timeLocalDataGuardEnabled = property.Value.GetDateTimeOffset("O");
+                    timeLocalDataGuardEnabled = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("timeOfLastFailover"u8))

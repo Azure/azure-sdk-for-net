@@ -21,11 +21,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public AutonomousDatabaseComputeModel? ComputeModel { get => DatabaseComputeModel.ToString(); set => DatabaseComputeModel = value.ToString(); }
 
-        /// <summary> The date and time that Autonomous Data Guard was enabled for an Autonomous Database where the standby was provisioned in the same region as the primary database. </summary>
-        [Obsolete("This property is obsolete and will be removed in a future release", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public string TimeLocalDataGuardEnabled { get => LocalDataGuardEnabledOn.ToString(); }
-
         /// <summary> Database ocid. </summary>
         [Obsolete("This property is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]

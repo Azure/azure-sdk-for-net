@@ -39,15 +39,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (Optional.IsDefined(VmOcid))
+            if (Optional.IsDefined(VipVmOcid))
             {
                 writer.WritePropertyName("vmOcid"u8);
-                writer.WriteStringValue(VmOcid);
+                writer.WriteStringValue(VipVmOcid);
             }
-            if (options.Format != "W" && Optional.IsDefined(Ocid))
+            if (options.Format != "W" && Optional.IsDefined(VipOcid))
             {
                 writer.WritePropertyName("ocid"u8);
-                writer.WriteStringValue(Ocid);
+                writer.WriteStringValue(VipOcid);
             }
             if (options.Format != "W" && Optional.IsDefined(Domain))
             {

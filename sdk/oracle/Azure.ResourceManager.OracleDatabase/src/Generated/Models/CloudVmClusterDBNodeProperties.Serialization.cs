@@ -35,26 +35,26 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
 
             writer.WritePropertyName("ocid"u8);
-            writer.WriteStringValue(Ocid);
+            writer.WriteStringValue(DBNodeOcid);
             if (Optional.IsDefined(AdditionalDetails))
             {
                 writer.WritePropertyName("additionalDetails"u8);
                 writer.WriteStringValue(AdditionalDetails);
             }
-            if (Optional.IsDefined(BackupIPId))
+            if (Optional.IsDefined(BackupIPOcid))
             {
                 writer.WritePropertyName("backupIpId"u8);
-                writer.WriteStringValue(BackupIPId);
+                writer.WriteStringValue(BackupIPOcid);
             }
-            if (Optional.IsDefined(BackupVnic2Id))
+            if (Optional.IsDefined(BackupVnic2Ocid))
             {
                 writer.WritePropertyName("backupVnic2Id"u8);
-                writer.WriteStringValue(BackupVnic2Id);
+                writer.WriteStringValue(BackupVnic2Ocid);
             }
-            if (Optional.IsDefined(BackupVnicId))
+            if (Optional.IsDefined(BackupVnicOcid))
             {
                 writer.WritePropertyName("backupVnicId"u8);
-                writer.WriteStringValue(BackupVnicId);
+                writer.WriteStringValue(BackupVnicOcid);
             }
             if (Optional.IsDefined(CpuCoreCount))
             {
@@ -66,22 +66,22 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("dbNodeStorageSizeInGbs"u8);
                 writer.WriteNumberValue(DBNodeStorageSizeInGbs.Value);
             }
-            if (Optional.IsDefined(DBServerId))
+            if (Optional.IsDefined(DBServerOcid))
             {
                 writer.WritePropertyName("dbServerId"u8);
-                writer.WriteStringValue(DBServerId);
+                writer.WriteStringValue(DBServerOcid);
             }
             writer.WritePropertyName("dbSystemId"u8);
-            writer.WriteStringValue(DBSystemId);
+            writer.WriteStringValue(DBSystemOcid);
             if (Optional.IsDefined(FaultDomain))
             {
                 writer.WritePropertyName("faultDomain"u8);
                 writer.WriteStringValue(FaultDomain);
             }
-            if (Optional.IsDefined(HostIPId))
+            if (Optional.IsDefined(HostIPOcid))
             {
                 writer.WritePropertyName("hostIpId"u8);
-                writer.WriteStringValue(HostIPId);
+                writer.WriteStringValue(HostIPOcid);
             }
             if (Optional.IsDefined(Hostname))
             {
@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("timeMaintenanceWindowStart"u8);
                 writer.WriteStringValue(TimeMaintenanceWindowStart.Value, "O");
             }
-            if (Optional.IsDefined(Vnic2Id))
+            if (Optional.IsDefined(Vnic2Ocid))
             {
                 writer.WritePropertyName("vnic2Id"u8);
-                writer.WriteStringValue(Vnic2Id);
+                writer.WriteStringValue(Vnic2Ocid);
             }
             writer.WritePropertyName("vnicId"u8);
-            writer.WriteStringValue(VnicId);
+            writer.WriteStringValue(VnicOcid);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);

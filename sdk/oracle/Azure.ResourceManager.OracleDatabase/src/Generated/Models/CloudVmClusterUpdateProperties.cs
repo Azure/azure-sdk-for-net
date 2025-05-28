@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
             FileSystemConfigurationDetails = new ChangeTrackingList<FileSystemConfigurationDetails>();
             SshPublicKeys = new ChangeTrackingList<string>();
-            ComputeNodes = new ChangeTrackingList<string>();
+            ComputeNodeOcids = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudVmClusterUpdateProperties"/>. </summary>
@@ -65,9 +65,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="licenseModel"> The Oracle license model that applies to the cloud VM cluster. The default is LICENSE_INCLUDED. </param>
         /// <param name="dataCollectionOptions"> Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS. </param>
         /// <param name="displayName"> Display Name. </param>
-        /// <param name="computeNodes"> The list of compute servers to be added to the cloud VM cluster. </param>
+        /// <param name="computeNodeOcids"> The list of compute servers to be added to the cloud VM cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudVmClusterUpdateProperties(int? storageSizeInGbs, IList<FileSystemConfigurationDetails> fileSystemConfigurationDetails, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, int? cpuCoreCount, float? ocpuCount, IList<string> sshPublicKeys, OracleLicenseModel? licenseModel, DiagnosticCollectionConfig dataCollectionOptions, string displayName, IList<string> computeNodes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudVmClusterUpdateProperties(int? storageSizeInGbs, IList<FileSystemConfigurationDetails> fileSystemConfigurationDetails, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, int? cpuCoreCount, float? ocpuCount, IList<string> sshPublicKeys, OracleLicenseModel? licenseModel, DiagnosticCollectionConfig dataCollectionOptions, string displayName, IList<string> computeNodeOcids, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageSizeInGbs = storageSizeInGbs;
             FileSystemConfigurationDetails = fileSystemConfigurationDetails;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             LicenseModel = licenseModel;
             DataCollectionOptions = dataCollectionOptions;
             DisplayName = displayName;
-            ComputeNodes = computeNodes;
+            ComputeNodeOcids = computeNodeOcids;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -105,6 +105,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Display Name. </summary>
         public string DisplayName { get; set; }
         /// <summary> The list of compute servers to be added to the cloud VM cluster. </summary>
-        public IList<string> ComputeNodes { get; }
+        public IList<string> ComputeNodeOcids { get; }
     }
 }

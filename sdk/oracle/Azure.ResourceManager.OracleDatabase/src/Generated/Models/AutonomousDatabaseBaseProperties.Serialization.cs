@@ -386,10 +386,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("timeDeletionOfFreeAutonomousDatabase"u8);
                 writer.WriteStringValue(FreeAutonomousDatabaseDeletedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LocalDataGuardEnabledOn))
+            if (options.Format != "W" && Optional.IsDefined(TimeLocalDataGuardEnabled))
             {
                 writer.WritePropertyName("timeLocalDataGuardEnabled"u8);
-                writer.WriteStringValue(LocalDataGuardEnabledOn.Value, "O");
+                writer.WriteStringValue(TimeLocalDataGuardEnabled);
             }
             if (options.Format != "W" && Optional.IsDefined(LastFailoverHappenedOn))
             {

@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
+        /// <summary> The OCID of the view. </summary>
+        [Obsolete("This property is obsolete and will be removed in a future release", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ResourceIdentifier Ocid { get => new ResourceIdentifier(DnsPrivateViewOcid); }
         /// <summary> Views lifecycleState. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public DnsPrivateViewsLifecycleState? LifecycleState { get; }

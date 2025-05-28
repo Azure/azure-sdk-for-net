@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("saasSubscriptionId"u8);
                 writer.WriteStringValue(SaasSubscriptionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(CloudAccountId))
+            if (options.Format != "W" && Optional.IsDefined(CloudAccountOcid))
             {
                 writer.WritePropertyName("cloudAccountId"u8);
-                writer.WriteStringValue(CloudAccountId);
+                writer.WriteStringValue(CloudAccountOcid);
             }
             if (options.Format != "W" && Optional.IsDefined(CloudAccountState))
             {

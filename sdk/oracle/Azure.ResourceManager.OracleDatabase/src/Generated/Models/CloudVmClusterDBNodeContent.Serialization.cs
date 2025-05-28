@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
             writer.WritePropertyName("dbServers"u8);
             writer.WriteStartArray();
-            foreach (var item in DBServers)
+            foreach (var item in DBServerOcids)
             {
                 writer.WriteStringValue(item);
             }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetOcid);
             writer.WritePropertyName("vnicId"u8);
-            writer.WriteStringValue(VnicId);
+            writer.WriteStringValue(VnicOcid);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

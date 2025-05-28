@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(ComputeNodes))
+            if (Optional.IsCollectionDefined(ComputeNodeOcids))
             {
                 writer.WritePropertyName("computeNodes"u8);
                 writer.WriteStartArray();
-                foreach (var item in ComputeNodes)
+                foreach (var item in ComputeNodeOcids)
                 {
                     writer.WriteStringValue(item);
                 }

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="zoneType"> The type of the zone. Must be either PRIMARY or SECONDARY. SECONDARY is only supported for GLOBAL zones. </param>
         /// <param name="createdOn"> Zones timeCreated. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This constructor is obsolete and will be removed in a future release", false)]
         public OracleDnsPrivateZoneProperties(ResourceIdentifier ocid, bool isProtected, string self, int serial, string version, OracleDnsPrivateZoneType zoneType, DateTimeOffset createdOn)
         {
-            Ocid = ocid.ToString() ?? throw new ArgumentNullException(nameof(ocid));
             IsProtected = isProtected;
             Self = self ?? throw new ArgumentNullException(nameof(self));
             Serial = serial;
@@ -32,5 +32,13 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Zones lifecycleState. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public DnsPrivateZonesLifecycleState? LifecycleState { get; }
+        /// <summary> The OCID of the Zone. </summary>
+        [Obsolete("This property is obsolete and will be removed in a future release", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ResourceIdentifier Ocid { get => new ResourceIdentifier(ZoneOcid); }
+        /// <summary> The OCID of the private view containing the zone. This value will be null for zones in the global DNS, which are publicly resolvable and not part of a private view. </summary>
+        [Obsolete("This property is obsolete and will be removed in a future release", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ResourceIdentifier ViewId { get => new ResourceIdentifier(ViewOcid); }
     }
 }

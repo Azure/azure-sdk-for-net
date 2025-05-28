@@ -47,25 +47,25 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Initializes a new instance of <see cref="PrivateIPAddressesContent"/>. </summary>
         /// <param name="subnetOcid"> Subnet OCID. </param>
-        /// <param name="vnicId"> VCN OCID. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subnetOcid"/> or <paramref name="vnicId"/> is null. </exception>
-        public PrivateIPAddressesContent(string subnetOcid, string vnicId)
+        /// <param name="vnicOcid"> VCN OCID. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subnetOcid"/> or <paramref name="vnicOcid"/> is null. </exception>
+        public PrivateIPAddressesContent(string subnetOcid, string vnicOcid)
         {
             Argument.AssertNotNull(subnetOcid, nameof(subnetOcid));
-            Argument.AssertNotNull(vnicId, nameof(vnicId));
+            Argument.AssertNotNull(vnicOcid, nameof(vnicOcid));
 
             SubnetOcid = subnetOcid;
-            VnicId = vnicId;
+            VnicOcid = vnicOcid;
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateIPAddressesContent"/>. </summary>
         /// <param name="subnetOcid"> Subnet OCID. </param>
-        /// <param name="vnicId"> VCN OCID. </param>
+        /// <param name="vnicOcid"> VCN OCID. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateIPAddressesContent(string subnetOcid, string vnicId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateIPAddressesContent(string subnetOcid, string vnicOcid, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubnetOcid = subnetOcid;
-            VnicId = vnicId;
+            VnicOcid = vnicOcid;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -77,6 +77,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Subnet OCID. </summary>
         public string SubnetOcid { get; }
         /// <summary> VCN OCID. </summary>
-        public string VnicId { get; }
+        public string VnicOcid { get; }
     }
 }

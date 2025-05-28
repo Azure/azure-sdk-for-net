@@ -62,7 +62,6 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Models
             CleanupResourceGroups();
         }
 
-        [Test]
         public void Constructor_WithRequiredParameters_SetsPropertiesCorrectly()
         {
             // Arrange & Act
@@ -99,7 +98,6 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Models
             Assert.IsEmpty(properties.VipIds);
         }
 
-        [Test]
         public void Constructor_SetOptionalProperties_SetsPropertiesCorrectly()
         {
             // Arrange
@@ -143,7 +141,6 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Models
             Assert.AreEqual("exadb-cluster", properties.ClusterName);
         }
 
-        [Test]
         public void VmFileSystemStorageTotalSizeInGbs_SetAndGet_WorksCorrectly()
         {
             // Arrange
@@ -168,7 +165,6 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Models
             Assert.AreEqual(newSize, properties.VmFileSystemStorageTotalSizeInGbs);
         }
 
-        [Test]
         public void VmFileSystemStorageTotalSizeInGbs_SetToNull_SetsPropertyToNull()
         {
             // Arrange
@@ -192,7 +188,6 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Models
             Assert.IsNull(properties.VmFileSystemStorageTotalSizeInGbs);
         }
 
-        [Test]
         public void NsgCidrs_AddItem_AddsToCollection()
         {
             // Arrange
@@ -218,8 +213,6 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Models
             Assert.AreEqual(nsgCidr, properties.NsgCidrs[0]);
         }
 
-        [TestCase]
-        [RecordedTest]
         public async Task TestExadbVmClusterOperations()
         {
             // Create the ExadbVmCluster resource

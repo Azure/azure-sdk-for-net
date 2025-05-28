@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 throw new FormatException($"The model {nameof(CloudVmClusterProperties)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(Ocid))
+            if (options.Format != "W" && Optional.IsDefined(CloudVmClusterOcid))
             {
                 writer.WritePropertyName("ocid"u8);
-                writer.WriteStringValue(Ocid);
+                writer.WriteStringValue(CloudVmClusterOcid);
             }
             if (options.Format != "W" && Optional.IsDefined(ListenerPort))
             {
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Optional.IsDefined(ZoneId))
+            if (Optional.IsDefined(ZoneOcid))
             {
                 writer.WritePropertyName("zoneId"u8);
-                writer.WriteStringValue(ZoneId);
+                writer.WriteStringValue(ZoneOcid);
             }
             writer.WritePropertyName("hostname"u8);
             writer.WriteStringValue(Hostname);
@@ -192,10 +192,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("scanListenerPortTcpSsl"u8);
                 writer.WriteNumberValue(ScanListenerPortTcpSsl.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ScanDnsRecordId))
+            if (options.Format != "W" && Optional.IsDefined(ScanDnsRecordOcid))
             {
                 writer.WritePropertyName("scanDnsRecordId"u8);
-                writer.WriteStringValue(ScanDnsRecordId);
+                writer.WriteStringValue(ScanDnsRecordOcid);
             }
             if (options.Format != "W" && Optional.IsDefined(Shape))
             {
@@ -250,11 +250,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
             writer.WritePropertyName("displayName"u8);
             writer.WriteStringValue(DisplayName);
-            if (Optional.IsCollectionDefined(ComputeNodes))
+            if (Optional.IsCollectionDefined(ComputeNodeOcids))
             {
                 writer.WritePropertyName("computeNodes"u8);
                 writer.WriteStartArray();
-                foreach (var item in ComputeNodes)
+                foreach (var item in ComputeNodeOcids)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -265,30 +265,30 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("iormConfigCache"u8);
                 writer.WriteObjectValue(IormConfigCache, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdateHistoryEntryId))
+            if (options.Format != "W" && Optional.IsDefined(LastUpdateHistoryEntryOcid))
             {
                 writer.WritePropertyName("lastUpdateHistoryEntryId"u8);
-                writer.WriteStringValue(LastUpdateHistoryEntryId);
+                writer.WriteStringValue(LastUpdateHistoryEntryOcid);
             }
-            if (Optional.IsCollectionDefined(DBServers))
+            if (Optional.IsCollectionDefined(DBServerOcids))
             {
                 writer.WritePropertyName("dbServers"u8);
                 writer.WriteStartArray();
-                foreach (var item in DBServers)
+                foreach (var item in DBServerOcids)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CompartmentId))
+            if (options.Format != "W" && Optional.IsDefined(CompartmentOcid))
             {
                 writer.WritePropertyName("compartmentId"u8);
-                writer.WriteStringValue(CompartmentId);
+                writer.WriteStringValue(CompartmentOcid);
             }
-            if (options.Format != "W" && Optional.IsDefined(SubnetOcid))
+            if (options.Format != "W" && Optional.IsDefined(ClusterSubnetOcid))
             {
                 writer.WritePropertyName("subnetOcid"u8);
-                writer.WriteStringValue(SubnetOcid);
+                writer.WriteStringValue(ClusterSubnetOcid);
             }
             if (options.Format != "W" && Optional.IsDefined(ComputeModel))
             {

@@ -48,21 +48,21 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Initializes a new instance of <see cref="PrivateIPAddressResult"/>. </summary>
         /// <param name="displayName"> PrivateIpAddresses displayName. </param>
         /// <param name="hostnameLabel"> PrivateIpAddresses hostnameLabel. </param>
-        /// <param name="ocid"> PrivateIpAddresses Id. </param>
+        /// <param name="privateIPAddressesOcid"> PrivateIpAddresses Id. </param>
         /// <param name="ipAddress"> PrivateIpAddresses ipAddress. </param>
         /// <param name="subnetOcid"> PrivateIpAddresses subnetId. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="hostnameLabel"/>, <paramref name="ocid"/>, <paramref name="ipAddress"/> or <paramref name="subnetOcid"/> is null. </exception>
-        internal PrivateIPAddressResult(string displayName, string hostnameLabel, string ocid, string ipAddress, string subnetOcid)
+        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="hostnameLabel"/>, <paramref name="privateIPAddressesOcid"/>, <paramref name="ipAddress"/> or <paramref name="subnetOcid"/> is null. </exception>
+        internal PrivateIPAddressResult(string displayName, string hostnameLabel, string privateIPAddressesOcid, string ipAddress, string subnetOcid)
         {
             Argument.AssertNotNull(displayName, nameof(displayName));
             Argument.AssertNotNull(hostnameLabel, nameof(hostnameLabel));
-            Argument.AssertNotNull(ocid, nameof(ocid));
+            Argument.AssertNotNull(privateIPAddressesOcid, nameof(privateIPAddressesOcid));
             Argument.AssertNotNull(ipAddress, nameof(ipAddress));
             Argument.AssertNotNull(subnetOcid, nameof(subnetOcid));
 
             DisplayName = displayName;
             HostnameLabel = hostnameLabel;
-            Ocid = ocid;
+            PrivateIPAddressesOcid = privateIPAddressesOcid;
             IPAddress = ipAddress;
             SubnetOcid = subnetOcid;
         }
@@ -70,15 +70,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Initializes a new instance of <see cref="PrivateIPAddressResult"/>. </summary>
         /// <param name="displayName"> PrivateIpAddresses displayName. </param>
         /// <param name="hostnameLabel"> PrivateIpAddresses hostnameLabel. </param>
-        /// <param name="ocid"> PrivateIpAddresses Id. </param>
+        /// <param name="privateIPAddressesOcid"> PrivateIpAddresses Id. </param>
         /// <param name="ipAddress"> PrivateIpAddresses ipAddress. </param>
         /// <param name="subnetOcid"> PrivateIpAddresses subnetId. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateIPAddressResult(string displayName, string hostnameLabel, string ocid, string ipAddress, string subnetOcid, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateIPAddressResult(string displayName, string hostnameLabel, string privateIPAddressesOcid, string ipAddress, string subnetOcid, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             HostnameLabel = hostnameLabel;
-            Ocid = ocid;
+            PrivateIPAddressesOcid = privateIPAddressesOcid;
             IPAddress = ipAddress;
             SubnetOcid = subnetOcid;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> PrivateIpAddresses hostnameLabel. </summary>
         public string HostnameLabel { get; }
         /// <summary> PrivateIpAddresses Id. </summary>
-        public string Ocid { get; }
+        public string PrivateIPAddressesOcid { get; }
         /// <summary> PrivateIpAddresses ipAddress. </summary>
         public string IPAddress { get; }
         /// <summary> PrivateIpAddresses subnetId. </summary>

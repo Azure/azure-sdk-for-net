@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Ocid))
+            if (options.Format != "W" && Optional.IsDefined(ExadataInfraOcid))
             {
                 writer.WritePropertyName("ocid"u8);
-                writer.WriteStringValue(Ocid);
+                writer.WriteStringValue(ExadataInfraOcid);
             }
             if (Optional.IsDefined(ComputeCount))
             {
@@ -178,15 +178,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
             writer.WritePropertyName("displayName"u8);
             writer.WriteStringValue(DisplayName);
-            if (options.Format != "W" && Optional.IsDefined(LastMaintenanceRunId))
+            if (options.Format != "W" && Optional.IsDefined(LastMaintenanceRunOcid))
             {
                 writer.WritePropertyName("lastMaintenanceRunId"u8);
-                writer.WriteStringValue(LastMaintenanceRunId);
+                writer.WriteStringValue(LastMaintenanceRunOcid);
             }
-            if (options.Format != "W" && Optional.IsDefined(NextMaintenanceRunId))
+            if (options.Format != "W" && Optional.IsDefined(NextMaintenanceRunOcid))
             {
                 writer.WritePropertyName("nextMaintenanceRunId"u8);
-                writer.WriteStringValue(NextMaintenanceRunId);
+                writer.WriteStringValue(NextMaintenanceRunOcid);
             }
             if (options.Format != "W" && Optional.IsDefined(MonthlyDBServerVersion))
             {

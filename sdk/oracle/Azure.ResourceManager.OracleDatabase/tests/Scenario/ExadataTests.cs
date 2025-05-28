@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             await DeleteExadataInfrastructureScenario(_exaInfraResource);
         }
 
-        private async Task<List<ResourceIdentifier>> GetDbServerOcids(CloudExadataInfrastructureResource exaInfraResource) {
-            List<ResourceIdentifier> dbServerOcids = new();
+        private async Task<List<string>> GetDbServerOcids(CloudExadataInfrastructureResource exaInfraResource) {
+            List<string> dbServerOcids = new();
             OracleDBServerCollection dbServerCollection = exaInfraResource.GetOracleDBServers();
             AsyncPageable<OracleDBServerResource> dbServers = dbServerCollection.GetAllAsync();
             await foreach (OracleDBServerResource dbServer in dbServers) {
-                dbServerOcids.Add(dbServer.Data.Properties.Ocid);
+                dbServerOcids.Add(dbServer.Data.Properties.DBServerOcid);
             }
             return dbServerOcids;
         }
@@ -125,13 +125,13 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
         private async Task<CloudVmClusterData> GetDefaultVmClusterData() {
             CloudVmClusterProperties vmClusterProperties = GetDefaultVmClusterProperties();
 
-            List<ResourceIdentifier> dbServerOcids = await GetDbServerOcids(_exaInfraResource);
+            List<string> dbServerOcids = await GetDbServerOcids(_exaInfraResource);
             // A minimum of 2 database servers is required.
             if (dbServerOcids[0] != null) {
-                vmClusterProperties.DBServers.Add(dbServerOcids[0]);
+                vmClusterProperties.DBServerOcids.Add(dbServerOcids[0]);
             }
             if (dbServerOcids[1] != null) {
-                vmClusterProperties.DBServers.Add(dbServerOcids[1]);
+                vmClusterProperties.DBServerOcids.Add(dbServerOcids[1]);
             }
 
             return new CloudVmClusterData(_location) {
