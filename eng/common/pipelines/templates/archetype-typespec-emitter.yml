@@ -312,12 +312,8 @@ extends:
           variables:
             matrixArtifactsPath: $(Pipeline.Workspace)/matrix_artifacts
           steps:
-          - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-            parameters:
-              Paths:
-              - "/*"
-              - "!SessionRecords"
-
+          - checkout: self # don't use sparse checkout here as we need the emitter package json changes
+            fetchDepth: 0
           - task: UseNode@1
             displayName: 'Install Node.js'
             inputs:
