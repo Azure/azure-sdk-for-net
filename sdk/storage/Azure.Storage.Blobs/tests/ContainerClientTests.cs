@@ -27,6 +27,7 @@ using Azure.Storage.Tests.Shared;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace Azure.Storage.Blobs.Test
 {
@@ -2806,6 +2807,27 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task ListBlobsFlatSegmentAsync_StartFrom()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await SetUpContainerForListing(test.Container);
+
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                StartFrom = "foo"
+            };
+
+            // Act
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(options).ToListAsync();
+
+            // Assert
+            Assert.AreEqual(3, blobs.Count);
+        }
+
+        [RecordedTest]
         [PlaybackOnly("Service bug - https://github.com/Azure/azure-sdk-for-net/issues/16516")]
         public async Task ListBlobsHierarchySegmentAsync()
         {
@@ -3290,6 +3312,27 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(blobs[0].VersionId);
 
             Assert.AreEqual("baz/", prefixes[0]);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task ListBlobsHierarchySegmentAsync_StartFrom()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await SetUpContainerForListing(test.Container);
+
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                StartFrom = "foo"
+            };
+
+            // Act
+            IList<BlobHierarchyItem> blobHierachyItems = await test.Container.GetBlobsByHierarchyAsync(getBlobsByHierarchyOptions).ToListAsync();
+
+            // Assert
+            Assert.AreEqual(3, blobHierachyItems.Count);
         }
 
         [RecordedTest]
