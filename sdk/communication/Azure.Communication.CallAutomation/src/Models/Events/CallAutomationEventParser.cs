@@ -124,6 +124,10 @@ namespace Azure.Communication.CallAutomation
                     return RecognizeFailed.Deserialize(eventData);
                 case nameof(RecognizeCanceled):
                     return RecognizeCanceled.Deserialize(eventData);
+                case nameof(MoveParticipantFailed):
+                    return MoveParticipantFailed.Deserialize(eventData);
+                case nameof(MoveParticipantSucceeded):
+                    return MoveParticipantSucceeded.Deserialize(eventData);
                 case nameof(RemoveParticipantSucceeded):
                     return RemoveParticipantSucceeded.Deserialize(eventData);
                 case nameof(RemoveParticipantFailed):

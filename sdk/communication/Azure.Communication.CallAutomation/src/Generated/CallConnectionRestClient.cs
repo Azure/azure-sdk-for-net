@@ -813,7 +813,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateMoveParticipantsRequest(string callConnectionId, MoveParticipantsRequest moveParticipantRequest)
+        internal HttpMessage CreateMoveParticipantsRequest(string callConnectionId, MoveParticipantsRequestInternal moveParticipantRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -840,7 +840,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="moveParticipantRequest"> The move participants request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="moveParticipantRequest"/> is null. </exception>
-        public async Task<Response<MoveParticipantsResponse>> MoveParticipantsAsync(string callConnectionId, MoveParticipantsRequest moveParticipantRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<MoveParticipantsResponseInternal>> MoveParticipantsAsync(string callConnectionId, MoveParticipantsRequestInternal moveParticipantRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -857,9 +857,9 @@ namespace Azure.Communication.CallAutomation
             {
                 case 202:
                     {
-                        MoveParticipantsResponse value = default;
+                        MoveParticipantsResponseInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = MoveParticipantsResponse.DeserializeMoveParticipantsResponse(document.RootElement);
+                        value = MoveParticipantsResponseInternal.DeserializeMoveParticipantsResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -872,7 +872,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="moveParticipantRequest"> The move participants request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="moveParticipantRequest"/> is null. </exception>
-        public Response<MoveParticipantsResponse> MoveParticipants(string callConnectionId, MoveParticipantsRequest moveParticipantRequest, CancellationToken cancellationToken = default)
+        public Response<MoveParticipantsResponseInternal> MoveParticipants(string callConnectionId, MoveParticipantsRequestInternal moveParticipantRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -889,9 +889,9 @@ namespace Azure.Communication.CallAutomation
             {
                 case 202:
                     {
-                        MoveParticipantsResponse value = default;
+                        MoveParticipantsResponseInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = MoveParticipantsResponse.DeserializeMoveParticipantsResponse(document.RootElement);
+                        value = MoveParticipantsResponseInternal.DeserializeMoveParticipantsResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

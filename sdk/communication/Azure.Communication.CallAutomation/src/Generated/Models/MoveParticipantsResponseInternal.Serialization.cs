@@ -10,9 +10,9 @@ using System.Text.Json;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class MoveParticipantsResponse
+    internal partial class MoveParticipantsResponseInternal
     {
-        internal static MoveParticipantsResponse DeserializeMoveParticipantsResponse(JsonElement element)
+        internal static MoveParticipantsResponseInternal DeserializeMoveParticipantsResponseInternal(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -48,15 +48,15 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new MoveParticipantsResponse(participants ?? new ChangeTrackingList<CallParticipantInternal>(), operationContext, fromCall);
+            return new MoveParticipantsResponseInternal(participants ?? new ChangeTrackingList<CallParticipantInternal>(), operationContext, fromCall);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static MoveParticipantsResponse FromResponse(Response response)
+        internal static MoveParticipantsResponseInternal FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMoveParticipantsResponse(document.RootElement);
+            return DeserializeMoveParticipantsResponseInternal(document.RootElement);
         }
     }
 }
