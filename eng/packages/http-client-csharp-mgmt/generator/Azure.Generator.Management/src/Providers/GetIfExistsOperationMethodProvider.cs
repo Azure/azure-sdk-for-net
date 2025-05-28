@@ -29,7 +29,7 @@ namespace Azure.Generator.Management.Providers
                 _convenienceMethod.Signature.Modifiers,
                 returnType,
                 _convenienceMethod.Signature.ReturnDescription,
-                GetOperationMethodParameters(_convenienceMethod, false, _resourceClientProvider.ImplicitParameterNames),
+                GetOperationMethodParameters(),
                 _convenienceMethod.Signature.Attributes,
                 _convenienceMethod.Signature.GenericArguments,
                 _convenienceMethod.Signature.GenericParameterConstraints,

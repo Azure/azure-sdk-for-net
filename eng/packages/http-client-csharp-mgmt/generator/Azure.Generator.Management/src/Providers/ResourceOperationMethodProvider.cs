@@ -78,7 +78,7 @@ namespace Azure.Generator.Management.Providers
                 _convenienceMethod.Signature.Modifiers,
                 _serviceMethod.GetOperationMethodReturnType(_isAsync, _resourceClientProvider.ResourceClientCSharpType, _resourceClientProvider.ResourceData.Type),
                 _convenienceMethod.Signature.ReturnDescription,
-                GetOperationMethodParameters(_convenienceMethod, _serviceMethod.IsLongRunningOperation(), _resourceClientProvider.ImplicitParameterNames),
+                GetOperationMethodParameters(),
                 _convenienceMethod.Signature.Attributes,
                 _convenienceMethod.Signature.GenericArguments,
                 _convenienceMethod.Signature.GenericParameterConstraints,
@@ -342,27 +342,17 @@ namespace Azure.Generator.Management.Providers
             return [.. arguments];
         }
 
-        /// <summary>
-        /// Gets the collection of parameters for an operation method, filtering out implicit parameters.
-        /// </summary>
-        /// <param name="convenienceMethod">The convenience method to extract parameters from.</param>
-        /// <param name="isLongRunning">Whether this is a long-running operation that needs a WaitUntil parameter.</param>
-        /// <param name="implicitParameterNames">The collection of parameter names that should be excluded.</param>
-        /// <returns>The filtered list of parameters for the operation method.</returns>
-        internal static IReadOnlyList<ParameterProvider> GetOperationMethodParameters(
-            MethodProvider convenienceMethod,
-            bool isLongRunning,
-            IReadOnlyList<string> implicitParameterNames)
+        protected virtual IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
         {
             var result = new List<ParameterProvider>();
-            if (isLongRunning)
+            if (_serviceMethod.IsLongRunningOperation())
             {
                 result.Add(KnownAzureParameters.WaitUntil);
             }
 
-            foreach (var parameter in convenienceMethod.Signature.Parameters)
+            foreach (var parameter in _convenienceMethod.Signature.Parameters)
             {
-                if (!implicitParameterNames.Contains(parameter.Name))
+                if (!_resourceClientProvider.ImplicitParameterNames.Contains(parameter.Name))
                 {
                     result.Add(parameter);
                 }

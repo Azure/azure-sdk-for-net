@@ -126,25 +126,11 @@ namespace Azure.Generator.Management.Providers
 
             return result;
         }
+
         private MethodProvider BuildGetAllMethod(bool isAsync)
         {
             var convenienceMethod = GetCorrespondingConvenienceMethod(_getAll!.Operation, isAsync);
-            var isLongRunning = _getAll is InputLongRunningPagingServiceMethod;
-            var signature = new MethodSignature(
-                isAsync ? "GetAllAsync" : "GetAll",
-                convenienceMethod.Signature.Description,
-                convenienceMethod.Signature.Modifiers,
-                isAsync ? new CSharpType(typeof(AsyncPageable<>), _resource.Type) : new CSharpType(typeof(Pageable<>), _resource.Type),
-                convenienceMethod.Signature.ReturnDescription,
-                ResourceOperationMethodProvider.GetOperationMethodParameters(convenienceMethod, isLongRunning, ImplicitParameterNames),
-                convenienceMethod.Signature.Attributes,
-                convenienceMethod.Signature.GenericArguments,
-                convenienceMethod.Signature.GenericParameterConstraints,
-                convenienceMethod.Signature.ExplicitInterface,
-                convenienceMethod.Signature.NonDocumentComment);
-
-            // TODO: implement paging method properly
-            return new MethodProvider(signature, ThrowExpression(New.Instance(typeof(NotImplementedException))), this);
+            return new GetAllResourceOperationMethodProvider(this, _getAll, convenienceMethod, isAsync);
         }
 
         private List<MethodProvider> BuildGetMethods()
