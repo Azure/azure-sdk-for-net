@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    internal partial class ClassicAlertSettings : IUtf8JsonSerializable, IJsonModel<ClassicAlertSettings>
+    public partial class ClassicAlertSettings : IUtf8JsonSerializable, IJsonModel<ClassicAlertSettings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClassicAlertSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 writer.WritePropertyName("alertsForCriticalOperations"u8);
                 writer.WriteStringValue(AlertsForCriticalOperations.Value.ToString());
+            }
+            if (Optional.IsDefined(EmailNotificationsForSiteRecovery))
+            {
+                writer.WritePropertyName("emailNotificationsForSiteRecovery"u8);
+                writer.WriteStringValue(EmailNotificationsForSiteRecovery.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 return null;
             }
             RecoveryServicesAlertsState? alertsForCriticalOperations = default;
+            RecoveryServicesAlertsState? emailNotificationsForSiteRecovery = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,13 +96,22 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     alertsForCriticalOperations = new RecoveryServicesAlertsState(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("emailNotificationsForSiteRecovery"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    emailNotificationsForSiteRecovery = new RecoveryServicesAlertsState(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ClassicAlertSettings(alertsForCriticalOperations, serializedAdditionalRawData);
+            return new ClassicAlertSettings(alertsForCriticalOperations, emailNotificationsForSiteRecovery, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClassicAlertSettings>.Write(ModelReaderWriterOptions options)

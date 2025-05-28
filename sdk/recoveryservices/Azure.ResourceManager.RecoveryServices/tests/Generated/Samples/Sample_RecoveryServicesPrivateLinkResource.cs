@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPrivateLinkResource()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/GetPrivateLinkResources.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/GetPrivateLinkResources.json
             // this example is just showing the usage of "PrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

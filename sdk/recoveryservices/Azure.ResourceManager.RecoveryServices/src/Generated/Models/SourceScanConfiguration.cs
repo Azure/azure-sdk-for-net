@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    /// <summary> Soft delete Settings of vault. </summary>
-    public partial class RecoveryServicesSoftDeleteSettings
+    /// <summary> Source scan configuration of vault. </summary>
+    public partial class SourceScanConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +45,25 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSoftDeleteSettings"/>. </summary>
-        public RecoveryServicesSoftDeleteSettings()
+        /// <summary> Initializes a new instance of <see cref="SourceScanConfiguration"/>. </summary>
+        public SourceScanConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSoftDeleteSettings"/>. </summary>
-        /// <param name="softDeleteState"></param>
-        /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
-        /// <param name="enhancedSecurityState"></param>
+        /// <summary> Initializes a new instance of <see cref="SourceScanConfiguration"/>. </summary>
+        /// <param name="state"></param>
+        /// <param name="sourceScanIdentity"> Identity details to be used for an operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryServicesSoftDeleteSettings(RecoveryServicesSoftDeleteState? softDeleteState, int? softDeleteRetentionPeriodInDays, EnhancedSecurityState? enhancedSecurityState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SourceScanConfiguration(State? state, AssociatedIdentity sourceScanIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SoftDeleteState = softDeleteState;
-            SoftDeleteRetentionPeriodInDays = softDeleteRetentionPeriodInDays;
-            EnhancedSecurityState = enhancedSecurityState;
+            State = state;
+            SourceScanIdentity = sourceScanIdentity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the soft delete state. </summary>
-        public RecoveryServicesSoftDeleteState? SoftDeleteState { get; set; }
-        /// <summary> Soft delete retention period in days. </summary>
-        public int? SoftDeleteRetentionPeriodInDays { get; set; }
-        /// <summary> Gets or sets the enhanced security state. </summary>
-        public EnhancedSecurityState? EnhancedSecurityState { get; set; }
+        /// <summary> Gets or sets the state. </summary>
+        public State? State { get; set; }
+        /// <summary> Identity details to be used for an operation. </summary>
+        public AssociatedIdentity SourceScanIdentity { get; set; }
     }
 }

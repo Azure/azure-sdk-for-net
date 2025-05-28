@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetRecoveryServicesResource()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/GETVault.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/GETVault.json
             // this example is just showing the usage of "Vaults_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteRecoveryServicesVault()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/DeleteVault.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/DeleteVault.json
             // this example is just showing the usage of "Vaults_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateResource()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/PATCHVault.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/PATCHVault.json
             // this example is just showing the usage of "Vaults_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateResourceWithCustomerManagedKeys()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/PATCHVault_WithCMK.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/PATCHVault_WithCMK.json
             // this example is just showing the usage of "Vaults_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateResourceWithCustomerManagedKeys2()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/PatchVault_WithCMK2.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/PatchVault_WithCMK2.json
             // this example is just showing the usage of "Vaults_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateResourceWithCustomerManagedKeys3()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/PATCHVault_WithCMK3.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/PATCHVault_WithCMK3.json
             // this example is just showing the usage of "Vaults_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateResourceWithUserAssignedIdentity()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/PATCHVault_WithUserAssignedIdentity.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/PATCHVault_WithUserAssignedIdentity.json
             // this example is just showing the usage of "Vaults_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateVaultWithMonitoringSetting()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/PATCHVault_WithMonitoringSettings.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/PATCHVault_WithMonitoringSettings.json
             // this example is just showing the usage of "Vaults_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -342,9 +342,120 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
                 {
                     MonitoringSettings = new VaultMonitoringSettings
                     {
-                        AzureMonitorAlertAlertsForAllJobFailures = RecoveryServicesAlertsState.Enabled,
-                        ClassicAlertAlertsForCriticalOperations = RecoveryServicesAlertsState.Disabled,
+                        AzureMonitorAlertSettings = new AzureMonitorAlertSettings
+                        {
+                            AlertsForAllJobFailures = RecoveryServicesAlertsState.Enabled,
+                            AlertsForAllReplicationIssues = RecoveryServicesAlertsState.Enabled,
+                            AlertsForAllFailoverIssues = RecoveryServicesAlertsState.Disabled,
+                        },
+                        ClassicAlertSettings = new ClassicAlertSettings
+                        {
+                            AlertsForCriticalOperations = RecoveryServicesAlertsState.Disabled,
+                            EmailNotificationsForSiteRecovery = RecoveryServicesAlertsState.Enabled,
+                        },
                     },
+                },
+                Tags =
+{
+["PatchKey"] = "PatchKeyUpdated"
+},
+            };
+            ArmOperation<RecoveryServicesVaultResource> lro = await recoveryServicesVault.UpdateAsync(WaitUntil.Completed, patch);
+            RecoveryServicesVaultResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            RecoveryServicesVaultData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateVaultWithRedundancySetting()
+        {
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/PATCHVault_WithRedundancySettings.json
+            // this example is just showing the usage of "Vaults_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this RecoveryServicesVaultResource created on azure
+            // for more information of creating RecoveryServicesVaultResource, please refer to the document of RecoveryServicesVaultResource
+            string subscriptionId = "77777777-b0c6-47a2-b37c-d8e65a629c18";
+            string resourceGroupName = "HelloWorld";
+            string vaultName = "swaggerExample";
+            ResourceIdentifier recoveryServicesVaultResourceId = RecoveryServicesVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
+            RecoveryServicesVaultResource recoveryServicesVault = client.GetRecoveryServicesVaultResource(recoveryServicesVaultResourceId);
+
+            // invoke the operation
+            RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch(default)
+            {
+                Properties = new RecoveryServicesVaultProperties
+                {
+                    RedundancySettings = new VaultPropertiesRedundancySettings
+                    {
+                        StandardTierStorageRedundancy = StandardTierStorageRedundancy.GeoRedundant,
+                        CrossRegionRestore = CrossRegionRestore.Enabled,
+                    },
+                },
+            };
+            ArmOperation<RecoveryServicesVaultResource> lro = await recoveryServicesVault.UpdateAsync(WaitUntil.Completed, patch);
+            RecoveryServicesVaultResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            RecoveryServicesVaultData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateVaultWithSourceScanConfiguration()
+        {
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/PATCHVault_WithSourceScanConfiguration.json
+            // this example is just showing the usage of "Vaults_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this RecoveryServicesVaultResource created on azure
+            // for more information of creating RecoveryServicesVaultResource, please refer to the document of RecoveryServicesVaultResource
+            string subscriptionId = "77777777-b0c6-47a2-b37c-d8e65a629c18";
+            string resourceGroupName = "HelloWorld";
+            string vaultName = "swaggerExample";
+            ResourceIdentifier recoveryServicesVaultResourceId = RecoveryServicesVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
+            RecoveryServicesVaultResource recoveryServicesVault = client.GetRecoveryServicesVaultResource(recoveryServicesVaultResourceId);
+
+            // invoke the operation
+            RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch(default)
+            {
+                Properties = new RecoveryServicesVaultProperties
+                {
+                    SecuritySettings = new RecoveryServicesSecuritySettings
+                    {
+                        SourceScanConfiguration = new SourceScanConfiguration
+                        {
+                            State = State.Enabled,
+                            SourceScanIdentity = new AssociatedIdentity
+                            {
+                                OperationIdentityType = IdentityType.UserAssigned,
+                                UserAssignedIdentity = "/subscriptions/85bf5e8c-3084-4f42-add2-746ebb7e97b2/resourcegroups/defaultrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/examplemsi",
+                            },
+                        },
+                    },
+                },
+                Identity = new ManagedServiceIdentity("UserAssigned")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("/subscriptions/85bf5e8c-3084-4f42-add2-746ebb7e97b2/resourcegroups/defaultrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/examplemsi")] = new UserAssignedIdentity()
+},
                 },
                 Tags =
 {
@@ -365,7 +476,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateVaultCertificate_DownloadVaultCredentialFile()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/PUTVaultCred.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/PUTVaultCred.json
             // this example is just showing the usage of "VaultCertificates_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -400,7 +511,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task DeleteRegisteredIdentity_DeleteRegisteredIdentity()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/DeleteRegisteredIdentities.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/DeleteRegisteredIdentities.json
             // this example is just showing the usage of "RegisteredIdentities_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -427,7 +538,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetReplicationUsages_GetsReplicationUsagesOfVault()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/ListReplicationUsages.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/ListReplicationUsages.json
             // this example is just showing the usage of "ReplicationUsages_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -456,7 +567,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetUsagesByVaults_GetsVaultUsages()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/ListUsages.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/ListUsages.json
             // this example is just showing the usage of "Usages_ListByVaults" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
