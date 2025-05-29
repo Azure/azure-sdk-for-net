@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
@@ -20,7 +19,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <summary> Initializes a new instance of <see cref="FailedLockToken"/>. </summary>
         /// <param name="lockToken"> The lock token of an entry in the request. </param>
         /// <param name="error"> Error information of the failed operation result for the lock token in the request. </param>
-        internal FailedLockToken(string lockToken, ResponseError error)
+        internal FailedLockToken(string lockToken, Error error)
         {
             LockToken = lockToken;
             Error = error;
@@ -30,7 +29,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="lockToken"> The lock token of an entry in the request. </param>
         /// <param name="error"> Error information of the failed operation result for the lock token in the request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FailedLockToken(string lockToken, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FailedLockToken(string lockToken, Error error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LockToken = lockToken;
             Error = error;
@@ -41,6 +40,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public string LockToken { get; }
 
         /// <summary> Error information of the failed operation result for the lock token in the request. </summary>
-        public ResponseError Error { get; }
+        public Error Error { get; }
     }
 }

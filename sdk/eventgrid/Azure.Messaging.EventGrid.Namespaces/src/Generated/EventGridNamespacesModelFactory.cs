@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Messaging;
 
 namespace Azure.Messaging.EventGrid.Namespaces
@@ -59,9 +58,38 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="lockToken"> The lock token of an entry in the request. </param>
         /// <param name="error"> Error information of the failed operation result for the lock token in the request. </param>
         /// <returns> A new <see cref="Namespaces.FailedLockToken"/> instance for mocking. </returns>
-        public static FailedLockToken FailedLockToken(string lockToken = default, ResponseError error = default)
+        public static FailedLockToken FailedLockToken(string lockToken = default, Error error = default)
         {
             return new FailedLockToken(lockToken, error, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The error object. </summary>
+        /// <param name="code"> One of a server-defined set of error codes. </param>
+        /// <param name="message"> A human-readable representation of the error. </param>
+        /// <param name="target"> The target of the error. </param>
+        /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
+        /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
+        /// <returns> A new <see cref="Namespaces.Error"/> instance for mocking. </returns>
+        public static Error Error(string code = default, string message = default, string target = default, IEnumerable<Error> details = default, InnerError innererror = default)
+        {
+            details ??= new ChangeTrackingList<Error>();
+
+            return new Error(
+                code,
+                message,
+                target,
+                details?.ToList(),
+                innererror,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#handling-errors. </summary>
+        /// <param name="code"> One of a server-defined set of error codes. </param>
+        /// <param name="innererror"> Inner error. </param>
+        /// <returns> A new <see cref="Namespaces.InnerError"/> instance for mocking. </returns>
+        public static InnerError InnerError(string code = default, InnerError innererror = default)
+        {
+            return new InnerError(code, innererror, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The result of the Release operation. </summary>

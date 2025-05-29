@@ -15,16 +15,11 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.Namespaces
 {
     /// <summary></summary>
-    public partial class FailedLockToken : IJsonModel<FailedLockToken>
+    public partial class InnerError : IJsonModel<InnerError>
     {
-        /// <summary> Initializes a new instance of <see cref="FailedLockToken"/> for deserialization. </summary>
-        internal FailedLockToken()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FailedLockToken>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<InnerError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -35,15 +30,21 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FailedLockToken>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InnerError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FailedLockToken)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(InnerError)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("lockToken"u8);
-            writer.WriteStringValue(LockToken);
-            writer.WritePropertyName("error"u8);
-            JsonSerializer.Serialize(writer, Error);
+            if (Optional.IsDefined(Code))
+            {
+                writer.WritePropertyName("code"u8);
+                writer.WriteStringValue(Code);
+            }
+            if (Optional.IsDefined(Innererror))
+            {
+                writer.WritePropertyName("innererror"u8);
+                writer.WriteObjectValue(Innererror, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -63,42 +64,46 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FailedLockToken IJsonModel<FailedLockToken>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        InnerError IJsonModel<InnerError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FailedLockToken JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual InnerError JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FailedLockToken>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InnerError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FailedLockToken)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(InnerError)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFailedLockToken(document.RootElement, options);
+            return DeserializeInnerError(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FailedLockToken DeserializeFailedLockToken(JsonElement element, ModelReaderWriterOptions options)
+        internal static InnerError DeserializeInnerError(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string lockToken = default;
-            ResponseError error = default;
+            string code = default;
+            InnerError innererror = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("lockToken"u8))
+                if (prop.NameEquals("code"u8))
                 {
-                    lockToken = prop.Value.GetString();
+                    code = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("error"u8))
+                if (prop.NameEquals("innererror"u8))
                 {
-                    error = JsonSerializer.Deserialize<ResponseError>(prop.Value.GetRawText());
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    innererror = DeserializeInnerError(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -106,67 +111,67 @@ namespace Azure.Messaging.EventGrid.Namespaces
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FailedLockToken(lockToken, error, additionalBinaryDataProperties);
+            return new InnerError(code, innererror, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FailedLockToken>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<InnerError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FailedLockToken>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InnerError>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureMessagingEventGridNamespacesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FailedLockToken)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InnerError)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FailedLockToken IPersistableModel<FailedLockToken>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        InnerError IPersistableModel<InnerError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FailedLockToken PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual InnerError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FailedLockToken>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InnerError>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeFailedLockToken(document.RootElement, options);
+                        return DeserializeInnerError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FailedLockToken)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InnerError)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FailedLockToken>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<InnerError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="failedLockToken"> The <see cref="FailedLockToken"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(FailedLockToken failedLockToken)
+        /// <param name="innerError"> The <see cref="InnerError"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(InnerError innerError)
         {
-            if (failedLockToken == null)
+            if (innerError == null)
             {
                 return null;
             }
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(failedLockToken, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(innerError, ModelSerializationExtensions.WireOptions);
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="FailedLockToken"/> from. </param>
-        public static explicit operator FailedLockToken(Response result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="InnerError"/> from. </param>
+        public static explicit operator InnerError(Response result)
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeFailedLockToken(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeInnerError(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }
