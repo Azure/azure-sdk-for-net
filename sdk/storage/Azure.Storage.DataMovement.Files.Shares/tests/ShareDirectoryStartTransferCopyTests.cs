@@ -858,6 +858,200 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         }
 
         [RecordedTest]
+        public async Task ShareDirectoryToShareDirectory_SmbDestinationOptionsOverride()
+        {
+            // Arrange
+            await using IDisposingContainer<ShareClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<ShareClient> destination = await GetDestinationDisposingContainerAsync();
+
+            string sourcePrefix = "sourceFolder";
+            string destPrefix = "destFolder";
+
+            // This will be overridden by destination options
+            ShareDirectoryCreateOptions sourceDirOptions = new ShareDirectoryCreateOptions
+            {
+                Metadata = new System.Collections.Generic.Dictionary<string, string> { { "src", "nfsdir" } },
+                SmbProperties = new FileSmbProperties
+                {
+                    FileAttributes = NtfsFileAttributes.Directory,
+                    FileCreatedOn = new DateTimeOffset(2024, 5, 1, 10, 0, 0, default),
+                    FileLastWrittenOn = new DateTimeOffset(2024, 5, 1, 11, 0, 0, default),
+                    FileChangedOn = new DateTimeOffset(2024, 5, 1, 12, 0, 0, default)
+                }
+            };
+
+            // Create source directory
+            await CreateDirectoryAsync(source.Container, sourcePrefix, sourceDirOptions);
+            string subDirPath = string.Join("/", sourcePrefix, "bar");
+            await CreateDirectoryAsync(source.Container, subDirPath, sourceDirOptions);
+
+            // Destination options (override)
+            ShareFileStorageResourceOptions destOptions = new ShareFileStorageResourceOptions
+            {
+                FileAttributes = NtfsFileAttributes.Directory | NtfsFileAttributes.ReadOnly | NtfsFileAttributes.Archive,
+                FileCreatedOn = new DateTimeOffset(2025, 1, 1, 1, 1, 1, default),
+                FileLastWrittenOn = new DateTimeOffset(2025, 1, 2, 2, 2, 2, default),
+                FileChangedOn = new DateTimeOffset(2025, 1, 3, 2, 2, 2, default),
+                DirectoryMetadata = new System.Collections.Generic.Dictionary<string, string> { { "dest", "overridedir" } },
+            };
+
+            // Create destination directory
+            await CreateDirectoryInDestinationAsync(destination.Container, destPrefix);
+
+            // Create storage resource containers
+            StorageResourceContainer sourceResource = new ShareDirectoryStorageResourceContainer(
+                source.Container.GetDirectoryClient(sourcePrefix),
+                new ShareFileStorageResourceOptions());
+
+            StorageResourceContainer destinationResource = new ShareDirectoryStorageResourceContainer(
+                destination.Container.GetDirectoryClient(destPrefix),
+                destOptions);
+
+            // Transfer
+            TransferOptions options = new TransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            TransferManagerOptions managerOptions = new TransferManagerOptions() { MaximumConcurrency = 1 };
+            TransferManager transferManager = new TransferManager(managerOptions);
+
+            TransferOperation transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options).ConfigureAwait(false);
+
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            testEventsRaised.AssertUnexpectedFailureCheck();
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+
+            // Get destination directory properties
+            string destDubDirPath = string.Join("/", destPrefix, "bar");
+            ShareDirectoryClient destDirClient = destination.Container.GetDirectoryClient(destDubDirPath);
+            ShareDirectoryProperties destDirProps = await destDirClient.GetPropertiesAsync();
+
+            // Assert destination properties are as set in options
+            Assert.That(destOptions.DirectoryMetadata, Is.EqualTo(destDirProps.Metadata));
+            Assert.AreEqual(destOptions.FileAttributes, destDirProps.SmbProperties.FileAttributes);
+            Assert.AreEqual(destOptions.FileCreatedOn, destDirProps.SmbProperties.FileCreatedOn);
+            Assert.AreEqual(destOptions.FileLastWrittenOn, destDirProps.SmbProperties.FileLastWrittenOn);
+            Assert.AreEqual(destOptions.FileChangedOn, destDirProps.SmbProperties.FileChangedOn);
+        }
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        [TestCase(null)]
+        public async Task ShareDirectoryToShareDirectory_NfsDestinationOptionsOverride(bool? filePermissions)
+        {
+            // Arrange
+            await using IDisposingContainer<ShareClient> source = await SourceClientBuilder.GetTestShareSasNfsAsync();
+            await using IDisposingContainer<ShareClient> destination = await DestinationClientBuilder.GetTestShareSasNfsAsync();
+
+            string sourcePrefix = "sourceFolder";
+            string destPrefix = "destFolder";
+
+            // This will be overridden by destination options
+            ShareDirectoryCreateOptions sourceDirOptions = new ShareDirectoryCreateOptions
+            {
+                Metadata = new System.Collections.Generic.Dictionary<string, string> { { "src", "nfsdir" } },
+                SmbProperties = new FileSmbProperties
+                {
+                    FileCreatedOn = new DateTimeOffset(2024, 5, 1, 10, 0, 0, default),
+                    FileLastWrittenOn = new DateTimeOffset(2024, 5, 1, 11, 0, 0, default),
+                },
+                PosixProperties = new FilePosixProperties
+                {
+                    Owner = "345",
+                    Group = "123",
+                    FileMode = NfsFileMode.ParseOctalFileMode("1777"),
+                }
+            };
+
+            // Create source directory
+            await CreateDirectoryAsync(source.Container, sourcePrefix, sourceDirOptions);
+            string subDirPath = string.Join("/", sourcePrefix, "bar");
+            await CreateDirectoryAsync(source.Container, subDirPath, sourceDirOptions);
+
+            // Destination options (override)
+            ShareFileStorageResourceOptions destOptions = new ShareFileStorageResourceOptions
+            {
+                FileCreatedOn = new DateTimeOffset(2025, 1, 1, 1, 1, 1, default),
+                FileLastWrittenOn = new DateTimeOffset(2025, 1, 2, 2, 2, 2, default),
+                DirectoryMetadata = new System.Collections.Generic.Dictionary<string, string> { { "dest", "overridedir" } },
+                ShareProtocol = ShareProtocol.Nfs,
+                FilePermissions = filePermissions
+            };
+
+            // Create destination directory
+            await CreateDirectoryInDestinationAsync(destination.Container, destPrefix);
+
+            // Create storage resource containers
+            StorageResourceContainer sourceResource = new ShareDirectoryStorageResourceContainer(
+                source.Container.GetDirectoryClient(sourcePrefix),
+                new ShareFileStorageResourceOptions { ShareProtocol = ShareProtocol.Nfs });
+
+            StorageResourceContainer destinationResource = new ShareDirectoryStorageResourceContainer(
+                destination.Container.GetDirectoryClient(destPrefix),
+                destOptions);
+
+            // Transfer
+            TransferOptions options = new TransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            TransferManagerOptions managerOptions = new TransferManagerOptions() { MaximumConcurrency = 1 };
+            TransferManager transferManager = new TransferManager(managerOptions);
+
+            TransferOperation transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options).ConfigureAwait(false);
+
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            testEventsRaised.AssertUnexpectedFailureCheck();
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+
+            // Get destination directory properties
+            string destDubDirPath = string.Join("/", destPrefix, "bar");
+            ShareDirectoryClient destDirClient = destination.Container.GetDirectoryClient(destDubDirPath);
+            ShareDirectoryProperties destDirProps = await destDirClient.GetPropertiesAsync();
+
+            // Assert destination properties are as set in options
+            Assert.That(destOptions.DirectoryMetadata, Is.EqualTo(destDirProps.Metadata));
+            Assert.AreEqual(destOptions.FileCreatedOn, destDirProps.SmbProperties.FileCreatedOn);
+            Assert.AreEqual(destOptions.FileLastWrittenOn, destDirProps.SmbProperties.FileLastWrittenOn);
+
+            if (filePermissions == true)
+            {
+                // Should preserve NFS properties from source
+                ShareDirectoryClient srcDirClient = source.Container.GetDirectoryClient(sourcePrefix);
+                ShareDirectoryProperties srcDirProps = await srcDirClient.GetPropertiesAsync();
+                Assert.AreEqual(srcDirProps.PosixProperties.Owner, destDirProps.PosixProperties.Owner);
+                Assert.AreEqual(srcDirProps.PosixProperties.Group, destDirProps.PosixProperties.Group);
+                Assert.AreEqual(srcDirProps.PosixProperties.FileMode.ToOctalFileMode(), destDirProps.PosixProperties.FileMode.ToOctalFileMode());
+            }
+            else
+            {
+                // Should use default NFS properties
+                Assert.AreEqual("0", destDirProps.PosixProperties.Owner);
+                Assert.AreEqual("0", destDirProps.PosixProperties.Group);
+                Assert.AreEqual("0755", destDirProps.PosixProperties.FileMode.ToOctalFileMode());
+            }
+        }
+
+        [RecordedTest]
         [TestCase(ShareProtocol.Nfs, ShareProtocol.Nfs)]
         [TestCase(ShareProtocol.Smb, ShareProtocol.Smb)]
         public async Task ValidateProtocolAsync_SmbShareDirectoryToSmbShareDirectory_CompareProtocolSetToActual(ShareProtocol sourceProtocol, ShareProtocol destProtocol)

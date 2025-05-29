@@ -395,9 +395,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
             // ShareFile to ShareFile Copy transfer
             if (sourceResource is ShareFileStorageResource sourceShareFileResource)
             {
+                ShareProtocol sourceProtocol = sourceShareFileResource._options?.ShareProtocol ?? ShareProtocol.Smb;
+                ShareProtocol destinationProtocol = _options?.ShareProtocol ?? ShareProtocol.Smb;
                 // Ensure the transfer is supported (NFS -> NFS and SMB -> SMB)
-                if ((_options?.ShareProtocol ?? ShareProtocol.Smb)
-                    != (sourceShareFileResource._options?.ShareProtocol ?? ShareProtocol.Smb))
+                if (destinationProtocol != sourceProtocol)
                 {
                     throw Errors.ShareTransferNotSupported();
                 }
