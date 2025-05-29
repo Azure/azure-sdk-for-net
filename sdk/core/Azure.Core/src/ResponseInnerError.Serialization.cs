@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Core;
 
 namespace Azure
 {
@@ -79,13 +80,7 @@ namespace Azure
                 throw new FormatException($"The model {nameof(ResponseInnerError)} does not support '{format}' format.");
             }
 
-            using var stream = new System.IO.MemoryStream();
-            using var writer = new Utf8JsonWriter(stream);
-
-            WriteInnerError(writer, this);
-            writer.Flush();
-
-            return new BinaryData(stream.ToArray());
+            return ModelReaderWriter.Write(this, options, AzureCoreContext.Default);
         }
 
         public ResponseInnerError Create(BinaryData data, ModelReaderWriterOptions options)

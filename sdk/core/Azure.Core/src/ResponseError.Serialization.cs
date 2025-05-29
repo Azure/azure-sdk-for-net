@@ -114,13 +114,7 @@ namespace Azure
                 throw new FormatException($"The model {nameof(ResponseError)} does not support '{format}' format.");
             }
 
-            using var stream = new System.IO.MemoryStream();
-            using var writer = new Utf8JsonWriter(stream);
-
-            Write(writer, options);
-            writer.Flush();
-
-            return new BinaryData(stream.ToArray());
+            return ModelReaderWriter.Write(this, options, AzureCoreContext.Default);
         }
 
         /// <inheritdoc />
