@@ -76,20 +76,4 @@ rename-mapping:
   ActionType: DnsSecurityRuleActionType
   Action: DnsResolverDomainListBulkAction
   VirtualNetworkDnsForwardingRuleset.id: -|arm-id
-
-directive:
-  - from: swagger-document
-    where: $.definitions.DnsSecurityRuleAction
-    transform: >
-      $.properties["blockResponseCode"] = {
-          "type": "string",
-          "description": "The response code for block actions.",
-          "enum": [
-            "SERVFAIL"
-          ],
-          "x-ms-enum": {
-            "name": "BlockResponseCode",
-            "modelAsString": true
-          }
-        };
 ```
