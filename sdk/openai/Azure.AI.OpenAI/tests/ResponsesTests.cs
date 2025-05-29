@@ -90,6 +90,37 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         }
     }
 
+    [TestCase(Gpt4oMiniDeployment)]
+    public async Task ResponseImageInput(string deploymentName)
+    {
+        OpenAIClient topLevelClient = GetTestTopLevelClient(DefaultResponsesConfig);
+        OpenAIFileClient fileClient = topLevelClient.GetOpenAIFileClient();
+        VectorStoreClient vectorStoreClient = topLevelClient.GetVectorStoreClient();
+        OpenAIResponseClient client = topLevelClient.GetOpenAIResponseClient(deploymentName);
+
+        Uri imageUri = new("https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/512px-Microsoft_logo.svg.png");
+        ResponseContentPart imagePart = ResponseContentPart.CreateInputImagePart(imageUri);
+        ResponseContentPart textPart = ResponseContentPart.CreateInputTextPart("Describe this image");
+
+        List<ResponseContentPart> contentParts = [imagePart, textPart];
+
+        OpenAIResponse response = client.CreateResponse(
+                    inputItems:
+                    [
+                        ResponseItem.CreateSystemMessageItem("You are a helpful assistant that describes images"),
+                        ResponseItem.CreateUserMessageItem(contentParts)
+                    ]);
+
+        Assert.That(response.OutputItems?.Count, Is.EqualTo(1));
+        MessageResponseItem? message = response?.OutputItems?[0] as MessageResponseItem;
+        Assert.That(message, Is.Not.Null);
+
+        await foreach (ResponseItem inputItem in client.GetResponseInputItemsAsync(response?.Id))
+        {
+            Console.WriteLine(ModelReaderWriter.Write(inputItem).ToString());
+        }
+    }
+
     [RecordedTest]
     public async Task ComputerToolWithScreenshotRoundTrip()
     {
@@ -953,4 +984,45 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
                 }
                 """),
             false);
+
+    [TestCase(Gpt4oMiniDeployment)]
+    public void ChatbotTellsJokes(string deploymentName)
+    {
+        OpenAIResponseClient client = GetResponseTestClientForDeployment(deploymentName);
+
+        OpenAIResponse response = client.CreateResponse(
+            inputItems: [
+                ResponseItem.CreateSystemMessageItem("You are a humorous assistant who tells jokes"),
+                ResponseItem.CreateUserMessageItem("Please tell me 3 jokes about trains")
+            ]);
+
+        string output = ((MessageResponseItem)response.OutputItems[0]).Content[0].Text;
+
+        Assert.That(output, Is.Not.Null.And.Not.Empty);
+    }
+
+    [TestCase(Gpt4oMiniDeployment)]
+    public void ChatbotSummarizeTextTest(string deploymentName)
+    {
+        OpenAIResponseClient client = GetResponseTestClientForDeployment(deploymentName);
+
+        OpenAIResponse response = client.CreateResponse(
+           inputItems: [
+                ResponseItem.CreateSystemMessageItem("You are a helpful assistant that summarizes texts"),
+                    ResponseItem.CreateAssistantMessageItem("Please summarize the following text in one sentence"),
+                    ResponseItem.CreateUserMessageItem(GetSummarizationPromt())
+            ]);
+
+        string output = ((MessageResponseItem)response.OutputItems[0]).Content[0].Text;
+        Assert.That(output, Is.Not.Null.And.Not.Empty);
+    }
+    private static string GetSummarizationPromt()
+    {
+        String textToSummarize = "On July 20, 1969, Apollo 11 successfully landed the first humans on the Moon. "
+                                + "Astronauts Neil Armstrong and Buzz Aldrin spent over two hours collecting samples and conducting experiments, "
+                                + "while Michael Collins remained in orbit aboard the command module. "
+                                + "The mission marked a significant achievement in space exploration, fulfilling President John F. Kennedy's goal of landing a man on the Moon and returning him safely to Earth. "
+                                + "The lunar samples brought back provided invaluable insights into the Moon's composition and history.";
+        return "Summarize the following text.%n" + "Text:%n" + textToSummarize + "%n Summary:%n";
+    }
 }
