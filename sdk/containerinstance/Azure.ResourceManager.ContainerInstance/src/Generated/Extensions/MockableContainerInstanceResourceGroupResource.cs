@@ -8,14 +8,18 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.ContainerInstance.Models;
 
 namespace Azure.ResourceManager.ContainerInstance.Mocking
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableContainerInstanceResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _containerGroupClientDiagnostics;
+        private ContainerGroupsRestOperations _containerGroupRestClient;
         private ClientDiagnostics _subnetServiceAssociationLinkClientDiagnostics;
         private SubnetServiceAssociationLinkRestOperations _subnetServiceAssociationLinkRestClient;
 
@@ -31,6 +35,8 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         {
         }
 
+        private ClientDiagnostics ContainerGroupClientDiagnostics => _containerGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ContainerGroupResource.ResourceType.Namespace, Diagnostics);
+        private ContainerGroupsRestOperations ContainerGroupRestClient => _containerGroupRestClient ??= new ContainerGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerGroupResource.ResourceType));
         private ClientDiagnostics SubnetServiceAssociationLinkClientDiagnostics => _subnetServiceAssociationLinkClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private SubnetServiceAssociationLinkRestOperations SubnetServiceAssociationLinkRestClient => _subnetServiceAssociationLinkRestClient ??= new SubnetServiceAssociationLinkRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -60,7 +66,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -91,7 +97,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -109,6 +115,75 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             return GetContainerGroups().Get(containerGroupName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of NGroupResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NGroupResources and their operations over a NGroupResource. </returns>
+        public virtual NGroupCollection GetNGroups()
+        {
+            return GetCachedClient(client => new NGroupCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get the properties of the specified NGroups resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/ngroups/{ngroupsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ngroupsName"> The NGroups name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ngroupsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ngroupsName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NGroupResource>> GetNGroupAsync(string ngroupsName, CancellationToken cancellationToken = default)
+        {
+            return await GetNGroups().GetAsync(ngroupsName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the properties of the specified NGroups resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/ngroups/{ngroupsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ngroupsName"> The NGroups name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ngroupsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ngroupsName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NGroupResource> GetNGroup(string ngroupsName, CancellationToken cancellationToken = default)
+        {
+            return GetNGroups().Get(ngroupsName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ContainerGroupProfileResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ContainerGroupProfileResources and their operations over a ContainerGroupProfileResource. </returns>
         public virtual ContainerGroupProfileCollection GetContainerGroupProfiles()
@@ -117,7 +192,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         }
 
         /// <summary>
-        /// Gets the properties of the specified container group profile in the specified subscription and resource group. The operation returns the properties of container group profile including containers, image registry credentials, restart policy, IP address type, OS type, volumes, current revision number, etc.
+        /// Get the properties of the specified container group profile.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -125,11 +200,11 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ContainerGroupProfiles_Get</description>
+        /// <description>CGProfile_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -137,7 +212,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="containerGroupProfileName"> The name of the container group profile. </param>
+        /// <param name="containerGroupProfileName"> ContainerGroupProfile name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerGroupProfileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerGroupProfileName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -148,7 +223,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         }
 
         /// <summary>
-        /// Gets the properties of the specified container group profile in the specified subscription and resource group. The operation returns the properties of container group profile including containers, image registry credentials, restart policy, IP address type, OS type, volumes, current revision number, etc.
+        /// Get the properties of the specified container group profile.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -156,11 +231,11 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ContainerGroupProfiles_Get</description>
+        /// <description>CGProfile_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -168,7 +243,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="containerGroupProfileName"> The name of the container group profile. </param>
+        /// <param name="containerGroupProfileName"> ContainerGroupProfile name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerGroupProfileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerGroupProfileName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -176,6 +251,66 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         public virtual Response<ContainerGroupProfileResource> GetContainerGroupProfile(string containerGroupProfileName, CancellationToken cancellationToken = default)
         {
             return GetContainerGroupProfiles().Get(containerGroupProfileName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a list of container groups in a specified subscription and resource group. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerGroups_ListByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ListResultContainerGroup"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ListResultContainerGroup> GetContainerGroupsByResourceGroupAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerGroupRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerGroupRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ListResultContainerGroup.DeserializeListResultContainerGroup(e), ContainerGroupClientDiagnostics, Pipeline, "MockableContainerInstanceResourceGroupResource.GetContainerGroupsByResourceGroup", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a list of container groups in a specified subscription and resource group. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerGroups_ListByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ListResultContainerGroup"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ListResultContainerGroup> GetContainerGroupsByResourceGroup(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerGroupRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerGroupRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ListResultContainerGroup.DeserializeListResultContainerGroup(e), ContainerGroupClientDiagnostics, Pipeline, "MockableContainerInstanceResourceGroupResource.GetContainerGroupsByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -191,7 +326,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,7 +371,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    internal partial class ConfigMap : IUtf8JsonSerializable, IJsonModel<ConfigMap>
+    internal partial class StorageProfile : IUtf8JsonSerializable, IJsonModel<StorageProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfigMap>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ConfigMap>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StorageProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,22 +28,21 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfigMap>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigMap)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageProfile)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(KeyValuePairs))
+            if (Optional.IsCollectionDefined(FileShares))
             {
-                writer.WritePropertyName("keyValuePairs"u8);
-                writer.WriteStartObject();
-                foreach (var item in KeyValuePairs)
+                writer.WritePropertyName("fileShares"u8);
+                writer.WriteStartArray();
+                foreach (var item in FileShares)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteObjectValue(item, options);
                 }
-                writer.WriteEndObject();
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -62,19 +61,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
         }
 
-        ConfigMap IJsonModel<ConfigMap>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        StorageProfile IJsonModel<StorageProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfigMap>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigMap)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConfigMap(document.RootElement, options);
+            return DeserializeStorageProfile(document.RootElement, options);
         }
 
-        internal static ConfigMap DeserializeConfigMap(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static StorageProfile DeserializeStorageProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,23 +81,23 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            IDictionary<string, string> keyValuePairs = default;
+            IList<FileShare> fileShares = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyValuePairs"u8))
+                if (property.NameEquals("fileShares"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    List<FileShare> array = new List<FileShare>();
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        array.Add(FileShare.DeserializeFileShare(item, options));
                     }
-                    keyValuePairs = dictionary;
+                    fileShares = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -107,38 +106,38 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConfigMap(keyValuePairs ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new StorageProfile(fileShares ?? new ChangeTrackingList<FileShare>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ConfigMap>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<StorageProfile>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfigMap>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerInstanceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConfigMap)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ConfigMap IPersistableModel<ConfigMap>.Create(BinaryData data, ModelReaderWriterOptions options)
+        StorageProfile IPersistableModel<StorageProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfigMap>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeConfigMap(document.RootElement, options);
+                        return DeserializeStorageProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfigMap)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ConfigMap>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StorageProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

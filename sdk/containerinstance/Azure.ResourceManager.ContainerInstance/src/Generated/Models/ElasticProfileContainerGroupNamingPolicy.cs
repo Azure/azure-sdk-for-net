@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    /// <summary> The container config map. </summary>
-    internal partial class ConfigMap
+    /// <summary> Container Groups are named on a generic guid based naming scheme/policy. Customer can modify naming policy to add prefix to CG names during scale out operation. </summary>
+    internal partial class ElasticProfileContainerGroupNamingPolicy
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,32 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConfigMap"/>. </summary>
-        public ConfigMap()
+        /// <summary> Initializes a new instance of <see cref="ElasticProfileContainerGroupNamingPolicy"/>. </summary>
+        public ElasticProfileContainerGroupNamingPolicy()
         {
-            KeyValuePairs = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConfigMap"/>. </summary>
-        /// <param name="keyValuePairs"> The key value pairs dictionary in the config map. </param>
+        /// <summary> Initializes a new instance of <see cref="ElasticProfileContainerGroupNamingPolicy"/>. </summary>
+        /// <param name="guidNamingPolicy"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigMap(IDictionary<string, string> keyValuePairs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticProfileContainerGroupNamingPolicy(ElasticProfileContainerGroupNamingPolicyGuidNamingPolicy guidNamingPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            KeyValuePairs = keyValuePairs;
+            GuidNamingPolicy = guidNamingPolicy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The key value pairs dictionary in the config map. </summary>
-        public IDictionary<string, string> KeyValuePairs { get; }
+        /// <summary> Gets or sets the guid naming policy. </summary>
+        internal ElasticProfileContainerGroupNamingPolicyGuidNamingPolicy GuidNamingPolicy { get; set; }
+        /// <summary> The prefix can be used when there are tooling limitations (e.g. on the Azure portal where CGs from multiple NGroups exist in the same RG). The prefix with the suffixed resource name must still follow Azure resource naming guidelines. </summary>
+        public string GuidNamingPrefix
+        {
+            get => GuidNamingPolicy is null ? default : GuidNamingPolicy.Prefix;
+            set
+            {
+                if (GuidNamingPolicy is null)
+                    GuidNamingPolicy = new ElasticProfileContainerGroupNamingPolicyGuidNamingPolicy();
+                GuidNamingPolicy.Prefix = value;
+            }
+        }
     }
 }
