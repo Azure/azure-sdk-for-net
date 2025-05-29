@@ -43,7 +43,6 @@ namespace Azure.Communication.Identity
             new object[] { new string[] { teamsExtensionScope, communicationClientsScope } },
             new object[] { new string[] { "invalidScope" } },
             new object[] { new string[] { "" } },
-            new object[] { new string[] { } },
         };
 
         [SetUp]
@@ -82,13 +81,19 @@ namespace Azure.Communication.Identity
         }
 
         [Test]
-        public void EntraCommunicationTokenCredentialOptions_NullScopes_ThrowsError()
+        public void EntraCommunicationTokenCredentialOptions_NullOrEmptyScopes_ThrowsError()
         {
             Assert.Throws<ArgumentException>(() => new EntraCommunicationTokenCredentialOptions(
                 _resourceEndpoint,
                 _mockTokenCredential.Object)
             {
                 Scopes = null
+            });
+            Assert.Throws<ArgumentException>(() => new EntraCommunicationTokenCredentialOptions(
+                _resourceEndpoint,
+                _mockTokenCredential.Object)
+            {
+                Scopes = Array.Empty<string>()
             });
         }
 
@@ -119,7 +124,7 @@ namespace Azure.Communication.Identity
             // Arrange
             var mockTransport = CreateMockTransport(new[] { CreateMockResponse(200, TokenResponse) });
             // Assert
-            Assert.Throws<ArgumentException>(() => new EntraTokenCredential(null, mockTransport));
+            Assert.Throws<ArgumentNullException>(() => new EntraTokenCredential(null, mockTransport));
         }
 
         [Test, TestCaseSource(nameof(validScopes))]
@@ -286,6 +291,29 @@ namespace Azure.Communication.Identity
             // Act & Assert
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await entraTokenCredential.GetTokenAsync(CancellationToken.None));
             StringAssert.Contains(lastRetryErrorMessage, ex?.Message);
+        }
+
+        [Test, TestCaseSource(nameof(invalidScopes))]
+        public void EntraTokenCredential_GetToken_ThrowsForInvalidScopes(string[] scopes)
+        {
+            // Arrange
+            var options = new EntraCommunicationTokenCredentialOptions(_resourceEndpoint, _mockTokenCredential.Object)
+            {
+                Scopes = Enumerable.Repeat(communicationClientsScope, scopes.Length).ToArray()
+            };
+            scopes.CopyTo(options.Scopes, 0);
+
+            var mockResponses = new MockResponse[]
+            {
+                CreateMockResponse(200, TokenResponse)
+            };
+
+            var mockTransport = CreateMockTransport(mockResponses);
+            var entraTokenCredential = new EntraTokenCredential(options, mockTransport);
+
+            // Act & Assert
+            var ex = Assert.ThrowsAsync<ArgumentException>(async () => await entraTokenCredential.GetTokenAsync(CancellationToken.None));
+            StringAssert.Contains("Scopes validation failed. Ensure all scopes start with either", ex?.Message);
         }
 
         [Test]

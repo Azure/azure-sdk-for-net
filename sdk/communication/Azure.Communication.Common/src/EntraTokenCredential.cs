@@ -146,7 +146,6 @@ namespace Azure.Communication
             }
             else
             {
-                // Should not ever happen, validated in EntraCommunicationTokenCredentialOptions
                 throw new ArgumentException($"Scopes validation failed. Ensure all scopes start with either {EntraCommunicationTokenScopes.TeamsExtensionScopePrefix} or {EntraCommunicationTokenScopes.CommunicationClientsScopePrefix}.", nameof(_scopes));
             }
         }
