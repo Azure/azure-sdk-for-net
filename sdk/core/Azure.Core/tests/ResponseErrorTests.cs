@@ -10,6 +10,8 @@ namespace Azure.Core.Tests
 {
     public class ResponseErrorTests
     {
+        #region Read/Deserialize tests
+
         [Test]
         public void CanDeserializeNullWithSTJ()
         {
@@ -224,26 +226,6 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void WriteMethodsThrowNotSupportedException()
-        {
-            var error = new ResponseError("TestCode", "Test message");
-
-            // Test all write methods throw NotSupportedException
-            var ex1 = Assert.Throws<NotSupportedException>(() =>
-              ModelReaderWriter.Write(error, ModelReaderWriterOptions.Json));
-
-            Assert.IsTrue(ex1.Message.Contains("does not support writing to JSON"));
-
-            using var stream = new System.IO.MemoryStream();
-            using var writer = new Utf8JsonWriter(stream);
-
-            var ex2 = Assert.Throws<NotSupportedException>(() =>
-                error.Write(writer, ModelReaderWriterOptions.Json));
-
-            Assert.IsTrue(ex2.Message.Contains("does not support writing to JSON"));
-        }
-
-        [Test]
         public void UnsupportedFormatThrowsFormatException()
         {
             var json = "{}";
@@ -258,5 +240,122 @@ namespace Azure.Core.Tests
 
             Assert.IsTrue(ex.Message.Contains("does not support 'X' format"));
         }
+
+        #endregion
+
+        #region Write/Serialize tests
+
+        [Test]
+        public void WriteMethodsSerializeSimpleResponseError()
+        {
+            // Create a simple ResponseError instance
+            var originalError = new ResponseError("BadError", "Something wasn't awesome");
+
+            // Write to JSON using the ModelReaderWriter
+            var binaryData = ModelReaderWriter.Write(originalError, ModelReaderWriterOptions.Json);
+            Assert.NotNull(binaryData);
+
+            // Verify the serialized content
+            string jsonString = binaryData.ToString();
+            Assert.IsTrue(jsonString.Contains("\"code\":\"BadError\""));
+            Assert.IsTrue(jsonString.Contains("\"message\":\"Something wasn't awesome\""));
+
+            // Deserialize back to verify round-trip
+            var deserializedError = ModelReaderWriter.Read<ResponseError>(binaryData, ModelReaderWriterOptions.Json);
+            Assert.AreEqual(originalError.Code, deserializedError.Code);
+            Assert.AreEqual(originalError.Message, deserializedError.Message);
+        }
+
+        [Test]
+        public void WriteMethodsSerializeComplexResponseError()
+        {
+            // First create a complex error structure by deserializing known JSON
+            var complexJson = "{" +
+                "\"code\":\"BadError\"," +
+                "\"message\":\"Something wasn't awesome\"," +
+                "\"target\":\"Error target\"," +
+                "\"details\": [" +
+                    "{\"code\":\"Code 1\",\"message\":\"Message 1\"}," +
+                    "{\"code\":\"Code 2\",\"message\":\"Message 2\"}" +
+                "]," +
+                "\"innererror\":" +
+                "{" +
+                    "\"code\":\"MoreDetailedBadError\"," +
+                    "\"innererror\":" +
+                    "{" +
+                        "\"code\":\"InnerMoreDetailedBadError\"" +
+                    "}" +
+                "}}";
+
+            var binaryData = BinaryData.FromString(complexJson);
+            var originalError = ModelReaderWriter.Read<ResponseError>(binaryData, ModelReaderWriterOptions.Json);
+
+            // Now test the serialization
+            var serializedData = ModelReaderWriter.Write(originalError, ModelReaderWriterOptions.Json);
+            Assert.NotNull(serializedData);
+
+            // Verify key elements are in the serialized JSON
+            string jsonString = serializedData.ToString();
+            Assert.IsTrue(jsonString.Contains("\"code\":\"BadError\""));
+            Assert.IsTrue(jsonString.Contains("\"message\":\"Something wasn't awesome\""));
+            Assert.IsTrue(jsonString.Contains("\"target\":\"Error target\""));
+            Assert.IsTrue(jsonString.Contains("\"details\":["));
+            Assert.IsTrue(jsonString.Contains("\"code\":\"Code 1\""));
+            Assert.IsTrue(jsonString.Contains("\"code\":\"Code 2\""));
+            Assert.IsTrue(jsonString.Contains("\"innererror\":"));
+            Assert.IsTrue(jsonString.Contains("\"code\":\"MoreDetailedBadError\""));
+            Assert.IsTrue(jsonString.Contains("\"code\":\"InnerMoreDetailedBadError\""));
+
+            // Deserialize back to verify round-trip
+            var roundTrippedError = ModelReaderWriter.Read<ResponseError>(serializedData, ModelReaderWriterOptions.Json);
+            Assert.AreEqual(originalError.Code, roundTrippedError.Code);
+            Assert.AreEqual(originalError.Message, roundTrippedError.Message);
+            Assert.AreEqual(originalError.Target, roundTrippedError.Target);
+            Assert.AreEqual(originalError.Details.Count, roundTrippedError.Details.Count);
+            Assert.AreEqual(originalError.Details[0].Code, roundTrippedError.Details[0].Code);
+            Assert.AreEqual(originalError.Details[1].Code, roundTrippedError.Details[1].Code);
+            Assert.AreEqual(originalError.InnerError?.Code, roundTrippedError.InnerError?.Code);
+            Assert.AreEqual(originalError.InnerError?.InnerError?.Code, roundTrippedError.InnerError?.InnerError?.Code);
+        }
+
+        [Test]
+        public void DirectWriterMethodSerializesCorrectly()
+        {
+            // Create a simple ResponseError
+            var error = new ResponseError("TestCode", "Test message");
+
+            // Use the direct Write method with a JsonWriter
+            using var stream = new System.IO.MemoryStream();
+            using var writer = new Utf8JsonWriter(stream);
+
+            error.Write(writer, ModelReaderWriterOptions.Json);
+            writer.Flush();
+
+            // Read the JSON back
+            stream.Position = 0;
+            using var document = JsonDocument.Parse(stream);
+            var element = document.RootElement;
+
+            // Verify content
+            Assert.AreEqual("TestCode", element.GetProperty("code").GetString());
+            Assert.AreEqual("Test message", element.GetProperty("message").GetString());
+        }
+
+        [Test]
+        public void UnsupportedFormatThrowsFormatExceptionWhenWriting()
+        {
+            var error = new ResponseError("TestCode", "Test message");
+
+            // Create unsupported format options for writing
+            var options = ModelReaderWriterOptions.Xml;
+
+            // Should throw FormatException
+            var ex = Assert.Throws<FormatException>(() =>
+                ModelReaderWriter.Write(error, options));
+
+            Assert.IsTrue(ex.Message.Contains("does not support 'X' format"));
+        }
+
+        #endregion
     }
 }

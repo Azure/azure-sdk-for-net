@@ -15,12 +15,9 @@ namespace Azure
     /// <summary>
     /// Represents an error returned by an Azure Service.
     /// </summary>
-    [JsonConverter(typeof(Converter))]
-    [TypeReferenceType(true, new string[] { nameof(Target), nameof(Details) })]
-    public sealed class ResponseError : IJsonModel<ResponseError>
+    public sealed partial class ResponseError
     {
         private readonly JsonElement _element;
-        private const string NotSupportedExceptionMessage = $"The model {nameof(ResponseError)} does not support writing to JSON.";
 
         /// <summary>
         /// Initializes a new instance of <see cref="ResponseError"/>.
@@ -84,70 +81,6 @@ namespace Azure
         /// </summary>
         internal IReadOnlyList<ResponseError> Details { get; }
 
-        private static ResponseError? ReadFromJson(JsonElement element)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-
-            string? code = null;
-            if (element.TryGetProperty("code", out var property))
-            {
-                code = property.GetString();
-            }
-
-            string? message = null;
-            if (element.TryGetProperty("message", out property))
-            {
-                message = property.GetString();
-            }
-
-            string? target = null;
-            if (element.TryGetProperty("target", out property))
-            {
-                target = property.GetString();
-            }
-
-            ResponseInnerError? innererror = null;
-            if (element.TryGetProperty("innererror", out property))
-            {
-                innererror = ResponseInnerError.Converter.Read(property);
-            }
-
-            List<ResponseError>? details = null;
-            if (element.TryGetProperty("details", out property) &&
-                property.ValueKind == JsonValueKind.Array)
-            {
-                foreach (var item in property.EnumerateArray())
-                {
-                    var detail = ReadFromJson(item);
-                    if (detail != null)
-                    {
-                        details ??= new();
-                        details.Add(detail);
-                    }
-                }
-            }
-            return new ResponseError(code, message, target, element.Clone(), innererror, details);
-        }
-
-        // This class needs to be internal rather than private so that it can be used by the System.Text.Json source generator
-        internal class Converter : JsonConverter<ResponseError?>
-        {
-            public override ResponseError? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                var element = document.RootElement;
-                return ReadFromJson(element);
-            }
-
-            public override void Write(Utf8JsonWriter writer, ResponseError? value, JsonSerializerOptions options)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
         /// <inheritdoc />
         public override string ToString()
         {
@@ -197,48 +130,5 @@ namespace Azure
                 builder.Append(_element.GetRawText());
             }
         }
-
-        /// <inheritdoc />
-        public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            throw new NotSupportedException(NotSupportedExceptionMessage);
-        }
-
-        /// <inheritdoc />
-        public ResponseError Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ResponseError)} does not support '{format}' format.");
-            }
-
-            using var document = JsonDocument.ParseValue(ref reader);
-            var element = document.RootElement;
-            return ReadFromJson(element) ?? new ResponseError();
-        }
-
-        /// <inheritdoc />
-        public BinaryData Write(ModelReaderWriterOptions options)
-        {
-            throw new NotSupportedException(NotSupportedExceptionMessage);
-        }
-
-        /// <inheritdoc />
-        public ResponseError Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ResponseError)} does not support '{format}' format.");
-            }
-
-            using var document = JsonDocument.Parse(data);
-            var element = document.RootElement;
-            return ReadFromJson(element) ?? new ResponseError();
-        }
-
-        /// <inheritdoc />
-        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

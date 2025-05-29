@@ -32,11 +32,7 @@ namespace Azure.Core.Pipeline
                 }
                 // Try the ErrorResponse format and fallback to the ResponseError format.
 
-#if NET6_0_OR_GREATER
-                error = System.Text.Json.JsonSerializer.Deserialize<RequestFailedException.ErrorResponse>(content, RequestFailedExceptionSourceGenerationContext.Default.ErrorResponse)?.Error;
-#else
-                error = System.Text.Json.JsonSerializer.Deserialize<RequestFailedException.ErrorResponse>(content)?.Error;
-#endif
+                error = ModelReaderWriter.Read<RequestFailedException.ErrorResponse>(response.Content, ModelReaderWriterOptions.Json, AzureCoreContext.Default)?.Error;
                 error ??= ModelReaderWriter.Read<ResponseError>(response.Content, ModelReaderWriterOptions.Json, AzureCoreContext.Default);
             }
             catch (Exception)
