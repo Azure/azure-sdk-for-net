@@ -942,7 +942,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             using Stream destinationStream = await destinationClient.OpenReadAsync();
             Assert.IsTrue(StreamsAreEqual(sourceStream, destinationStream));
 
-            ShareFileProperties sourceProperties = await sourceClient.GetPropertiesAsync();
             ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
             // Assert destination properties are as set in options
@@ -956,6 +955,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Permissions are still preserved from source, if filePermissions is true
             if (filePermissions == true)
             {
+                ShareFileProperties sourceProperties = await sourceClient.GetPropertiesAsync();
                 Assert.AreEqual(sourceProperties.PosixProperties.Owner, destinationProperties.PosixProperties.Owner);
                 Assert.AreEqual(sourceProperties.PosixProperties.Group, destinationProperties.PosixProperties.Group);
                 Assert.AreEqual(sourceProperties.PosixProperties.FileMode.ToOctalFileMode(), destinationProperties.PosixProperties.FileMode.ToOctalFileMode());

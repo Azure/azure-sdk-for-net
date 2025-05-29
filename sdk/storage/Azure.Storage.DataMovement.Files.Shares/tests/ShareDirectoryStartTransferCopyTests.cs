@@ -870,7 +870,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // This will be overridden by destination options
             ShareDirectoryCreateOptions sourceDirOptions = new ShareDirectoryCreateOptions
             {
-                Metadata = new System.Collections.Generic.Dictionary<string, string> { { "src", "nfsdir" } },
+                Metadata = new Dictionary<string, string> { { "src", "nfsdir" } },
                 SmbProperties = new FileSmbProperties
                 {
                     FileAttributes = NtfsFileAttributes.Directory,
@@ -882,8 +882,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Create source directory
             await CreateDirectoryAsync(source.Container, sourcePrefix, sourceDirOptions);
-            string subDirPath = string.Join("/", sourcePrefix, "bar");
-            await CreateDirectoryAsync(source.Container, subDirPath, sourceDirOptions);
+            string sourceSubDirPath = string.Join("/", sourcePrefix, "bar");
+            await CreateDirectoryAsync(source.Container, sourceSubDirPath, sourceDirOptions);
 
             // Destination options (override)
             ShareFileStorageResourceOptions destOptions = new ShareFileStorageResourceOptions
@@ -892,7 +892,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 FileCreatedOn = new DateTimeOffset(2025, 1, 1, 1, 1, 1, default),
                 FileLastWrittenOn = new DateTimeOffset(2025, 1, 2, 2, 2, 2, default),
                 FileChangedOn = new DateTimeOffset(2025, 1, 3, 2, 2, 2, default),
-                DirectoryMetadata = new System.Collections.Generic.Dictionary<string, string> { { "dest", "overridedir" } },
+                DirectoryMetadata = new Dictionary<string, string> { { "dest", "overridedir" } },
             };
 
             // Create destination directory
@@ -931,8 +931,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Assert.AreEqual(TransferState.Completed, transfer.Status.State);
 
             // Get destination directory properties
-            string destDubDirPath = string.Join("/", destPrefix, "bar");
-            ShareDirectoryClient destDirClient = destination.Container.GetDirectoryClient(destDubDirPath);
+            string destSubDirPath = string.Join("/", destPrefix, "bar");
+            ShareDirectoryClient destDirClient = destination.Container.GetDirectoryClient(destSubDirPath);
             ShareDirectoryProperties destDirProps = await destDirClient.GetPropertiesAsync();
 
             // Assert destination properties are as set in options
@@ -959,7 +959,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // This will be overridden by destination options
             ShareDirectoryCreateOptions sourceDirOptions = new ShareDirectoryCreateOptions
             {
-                Metadata = new System.Collections.Generic.Dictionary<string, string> { { "src", "nfsdir" } },
+                Metadata = new Dictionary<string, string> { { "src", "nfsdir" } },
                 SmbProperties = new FileSmbProperties
                 {
                     FileCreatedOn = new DateTimeOffset(2024, 5, 1, 10, 0, 0, default),
@@ -975,15 +975,15 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Create source directory
             await CreateDirectoryAsync(source.Container, sourcePrefix, sourceDirOptions);
-            string subDirPath = string.Join("/", sourcePrefix, "bar");
-            await CreateDirectoryAsync(source.Container, subDirPath, sourceDirOptions);
+            string sourceSubDirPath = string.Join("/", sourcePrefix, "bar");
+            await CreateDirectoryAsync(source.Container, sourceSubDirPath, sourceDirOptions);
 
             // Destination options (override)
             ShareFileStorageResourceOptions destOptions = new ShareFileStorageResourceOptions
             {
                 FileCreatedOn = new DateTimeOffset(2025, 1, 1, 1, 1, 1, default),
                 FileLastWrittenOn = new DateTimeOffset(2025, 1, 2, 2, 2, 2, default),
-                DirectoryMetadata = new System.Collections.Generic.Dictionary<string, string> { { "dest", "overridedir" } },
+                DirectoryMetadata = new Dictionary<string, string> { { "dest", "overridedir" } },
                 ShareProtocol = ShareProtocol.Nfs,
                 FilePermissions = filePermissions
             };
@@ -1024,8 +1024,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Assert.AreEqual(TransferState.Completed, transfer.Status.State);
 
             // Get destination directory properties
-            string destDubDirPath = string.Join("/", destPrefix, "bar");
-            ShareDirectoryClient destDirClient = destination.Container.GetDirectoryClient(destDubDirPath);
+            string destSubDirPath = string.Join("/", destPrefix, "bar");
+            ShareDirectoryClient destDirClient = destination.Container.GetDirectoryClient(destSubDirPath);
             ShareDirectoryProperties destDirProps = await destDirClient.GetPropertiesAsync();
 
             // Assert destination properties are as set in options
@@ -1036,11 +1036,11 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             if (filePermissions == true)
             {
                 // Should preserve NFS properties from source
-                ShareDirectoryClient srcDirClient = source.Container.GetDirectoryClient(sourcePrefix);
-                ShareDirectoryProperties srcDirProps = await srcDirClient.GetPropertiesAsync();
-                Assert.AreEqual(srcDirProps.PosixProperties.Owner, destDirProps.PosixProperties.Owner);
-                Assert.AreEqual(srcDirProps.PosixProperties.Group, destDirProps.PosixProperties.Group);
-                Assert.AreEqual(srcDirProps.PosixProperties.FileMode.ToOctalFileMode(), destDirProps.PosixProperties.FileMode.ToOctalFileMode());
+                ShareDirectoryClient sourceDirClient = source.Container.GetDirectoryClient(sourceSubDirPath);
+                ShareDirectoryProperties sourceDirProps = await sourceDirClient.GetPropertiesAsync();
+                Assert.AreEqual(sourceDirProps.PosixProperties.Owner, destDirProps.PosixProperties.Owner);
+                Assert.AreEqual(sourceDirProps.PosixProperties.Group, destDirProps.PosixProperties.Group);
+                Assert.AreEqual(sourceDirProps.PosixProperties.FileMode.ToOctalFileMode(), destDirProps.PosixProperties.FileMode.ToOctalFileMode());
             }
             else
             {
