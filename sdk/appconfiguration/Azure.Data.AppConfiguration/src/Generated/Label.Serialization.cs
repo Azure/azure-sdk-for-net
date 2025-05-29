@@ -15,7 +15,7 @@ using Azure.Core;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary></summary>
-    public partial class Label : IJsonModel<Label>
+    internal partial class Label : IJsonModel<Label>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
