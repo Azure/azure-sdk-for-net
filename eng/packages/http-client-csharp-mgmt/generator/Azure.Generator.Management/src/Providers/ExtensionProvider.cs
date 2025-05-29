@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
+using Azure.Generator.Management.Snippets;
+using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -69,7 +72,13 @@ namespace Azure.Generator.Management.Providers
                 null,
                 [parameter]);
             var clientVar = new CodeWriterDeclaration("client");
-            var lambda = new FuncExpression([clientVar], New.Instance(mockableResource.Type, new ValueExpression[] { new VariableExpression(mockableResource.Type, clientVar), parameter.Property(IdProperty) }));
+            var lambda = new FuncExpression([clientVar],
+                New.Instance(mockableResource.Type,
+                    coreType.Equals(typeof(ArmClient)) ?
+                        [new VariableExpression(mockableResource.Type, clientVar), Static<ResourceIdentifier>().As<ResourceIdentifier>().Root()] :
+                        // if the core type is not ArmClient, we need to pass the client and the resource identifier
+                        [new VariableExpression(mockableResource.Type, clientVar), parameter.Property(IdProperty)]
+                ));
             var statements = new List<MethodBodyStatement>
             {
                 Return(parameter.Invoke(GetCachedClient, lambda))

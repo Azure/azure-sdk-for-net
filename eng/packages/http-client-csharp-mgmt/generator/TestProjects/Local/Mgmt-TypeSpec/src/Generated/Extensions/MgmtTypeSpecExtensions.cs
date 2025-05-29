@@ -9,6 +9,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
@@ -20,7 +21,7 @@ namespace MgmtTypeSpec
         /// <param name="armClient"></param>
         public static MockableMgmtTypeSpecArmClient GetMockableMgmtTypeSpecArmClient(ArmClient armClient)
         {
-            return armClient.GetCachedClient(client => new MockableMgmtTypeSpecArmClient(client, armClient.Id));
+            return armClient.GetCachedClient(client => new MockableMgmtTypeSpecArmClient(client, ResourceIdentifier.Root));
         }
 
         /// <param name="resourceGroupResource"></param>

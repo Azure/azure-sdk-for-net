@@ -18,7 +18,7 @@ namespace Azure.Generator.Management.Providers
 {
     internal class MockableResourceProvider : TypeProvider
     {
-        private readonly IReadOnlyList<ResourceClientProvider> _resources;
+        private protected readonly IReadOnlyList<ResourceClientProvider> _resources;
 
         private const string GetCachedClient = "GetCachedClient";
         private const string IdProperty = "Id";
