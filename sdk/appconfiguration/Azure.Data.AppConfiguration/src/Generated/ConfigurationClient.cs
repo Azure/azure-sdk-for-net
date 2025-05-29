@@ -753,48 +753,6 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary> Deletes a key-value. </summary>
-        /// <param name="key"> The key of the key-value to delete. </param>
-        /// <param name="accept"></param>
-        /// <param name="label"> The label of the key-value to delete. </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="accept"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<KeyValue> DeleteKeyValue(string key, string accept, string label = default, string syncToken = default, string ifMatch = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(accept, nameof(accept));
-
-            Response result = DeleteKeyValue(key, accept, label, syncToken, ifMatch, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((KeyValue)result, result);
-        }
-
-        /// <summary> Deletes a key-value. </summary>
-        /// <param name="key"> The key of the key-value to delete. </param>
-        /// <param name="accept"></param>
-        /// <param name="label"> The label of the key-value to delete. </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="accept"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<KeyValue>> DeleteKeyValueAsync(string key, string accept, string label = default, string syncToken = default, string ifMatch = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(accept, nameof(accept));
-
-            Response result = await DeleteKeyValueAsync(key, accept, label, syncToken, ifMatch, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((KeyValue)result, result);
-        }
-
         /// <summary>
         /// [Protocol Method] Requests the headers and status of the given resource.
         /// <list type="bullet">
@@ -895,68 +853,6 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary> Requests the headers and status of the given resource. </summary>
-        /// <param name="key"> The key of the key-value to retrieve. </param>
-        /// <param name="label"> The label of the key-value to retrieve. </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="acceptDatetime">
-        /// Requests the server to respond with the state of the resource at the specified
-        /// time.
-        /// </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="ifNoneMatch">
-        /// Used to perform an operation only if the targeted resource's etag does not
-        /// match the value provided.
-        /// </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="tags">
-        /// A filter used to query by tags. Syntax reference:
-        /// https://aka.ms/azconfig/docs/keyvaluefiltering
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response CheckKeyValue(string key, string label = default, string syncToken = default, string acceptDatetime = default, string ifMatch = default, string ifNoneMatch = default, IEnumerable<KeyValueFields> @select = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-
-            return CheckKeyValue(key, label, syncToken, acceptDatetime, ifMatch, ifNoneMatch, @select, tags, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> Requests the headers and status of the given resource. </summary>
-        /// <param name="key"> The key of the key-value to retrieve. </param>
-        /// <param name="label"> The label of the key-value to retrieve. </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="acceptDatetime">
-        /// Requests the server to respond with the state of the resource at the specified
-        /// time.
-        /// </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="ifNoneMatch">
-        /// Used to perform an operation only if the targeted resource's etag does not
-        /// match the value provided.
-        /// </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="tags">
-        /// A filter used to query by tags. Syntax reference:
-        /// https://aka.ms/azconfig/docs/keyvaluefiltering
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> CheckKeyValueAsync(string key, string label = default, string syncToken = default, string acceptDatetime = default, string ifMatch = default, string ifNoneMatch = default, IEnumerable<KeyValueFields> @select = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-
-            return await CheckKeyValueAsync(key, label, syncToken, acceptDatetime, ifMatch, ifNoneMatch, @select, tags, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
-
         /// <summary>
         /// [Protocol Method] Gets a list of key-value snapshots.
         /// <list type="bullet">
@@ -1051,64 +947,6 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary> Gets a list of key-value snapshots. </summary>
-        /// <param name="accept"></param>
-        /// <param name="name"> A filter for the name of the returned snapshots. </param>
-        /// <param name="after">
-        /// Instructs the server to return elements that appear after the element referred
-        /// to by the specified token.
-        /// </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="status"> Used to filter returned snapshots by their status property. </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<Snapshot> GetSnapshots(string accept, string name = default, string after = default, IEnumerable<SnapshotFields> @select = default, IEnumerable<ConfigurationSnapshotStatus> status = default, string syncToken = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(accept, nameof(accept));
-
-            return new ConfigurationClientGetSnapshotsCollectionResultOfT(
-                this,
-                null,
-                accept,
-                name,
-                after,
-                @select,
-                status,
-                syncToken,
-                cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> Gets a list of key-value snapshots. </summary>
-        /// <param name="accept"></param>
-        /// <param name="name"> A filter for the name of the returned snapshots. </param>
-        /// <param name="after">
-        /// Instructs the server to return elements that appear after the element referred
-        /// to by the specified token.
-        /// </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="status"> Used to filter returned snapshots by their status property. </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<Snapshot> GetSnapshotsAsync(string accept, string name = default, string after = default, IEnumerable<SnapshotFields> @select = default, IEnumerable<ConfigurationSnapshotStatus> status = default, string syncToken = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(accept, nameof(accept));
-
-            return new ConfigurationClientGetSnapshotsAsyncCollectionResultOfT(
-                this,
-                null,
-                accept,
-                name,
-                after,
-                @select,
-                status,
-                syncToken,
-                cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
         /// <summary>
         /// [Protocol Method] Requests the headers and status of the given resource.
         /// <list type="bullet">
@@ -1171,32 +1009,6 @@ namespace Azure.Data.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Requests the headers and status of the given resource. </summary>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="after">
-        /// Instructs the server to return elements that appear after the element referred
-        /// to by the specified token.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response CheckSnapshots(string syncToken = default, string after = default, CancellationToken cancellationToken = default)
-        {
-            return CheckSnapshots(syncToken, after, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> Requests the headers and status of the given resource. </summary>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="after">
-        /// Instructs the server to return elements that appear after the element referred
-        /// to by the specified token.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> CheckSnapshotsAsync(string syncToken = default, string after = default, CancellationToken cancellationToken = default)
-        {
-            return await CheckSnapshotsAsync(syncToken, after, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1285,56 +1097,6 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary> Gets a single key-value snapshot. </summary>
-        /// <param name="name"> The name of the snapshot. </param>
-        /// <param name="accept"></param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="ifNoneMatch">
-        /// Used to perform an operation only if the targeted resource's etag does not
-        /// match the value provided.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="accept"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Snapshot> GetSnapshot(string name, string accept, IEnumerable<SnapshotFields> @select = default, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(accept, nameof(accept));
-
-            Response result = GetSnapshot(name, accept, @select, syncToken, ifMatch, ifNoneMatch, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((Snapshot)result, result);
-        }
-
-        /// <summary> Gets a single key-value snapshot. </summary>
-        /// <param name="name"> The name of the snapshot. </param>
-        /// <param name="accept"></param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="ifNoneMatch">
-        /// Used to perform an operation only if the targeted resource's etag does not
-        /// match the value provided.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="accept"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Snapshot>> GetSnapshotAsync(string name, string accept, IEnumerable<SnapshotFields> @select = default, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(accept, nameof(accept));
-
-            Response result = await GetSnapshotAsync(name, accept, @select, syncToken, ifMatch, ifNoneMatch, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((Snapshot)result, result);
-        }
-
         /// <summary>
         /// [Protocol Method] Gets the state of a long running operation.
         /// <list type="bullet">
@@ -1395,32 +1157,6 @@ namespace Azure.Data.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets the state of a long running operation. </summary>
-        /// <param name="snapshot"> Snapshot identifier for the long running operation. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<OperationDetails> GetOperationDetails(string snapshot, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(snapshot, nameof(snapshot));
-
-            Response result = GetOperationDetails(snapshot, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((OperationDetails)result, result);
-        }
-
-        /// <summary> Gets the state of a long running operation. </summary>
-        /// <param name="snapshot"> Snapshot identifier for the long running operation. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<OperationDetails>> GetOperationDetailsAsync(string snapshot, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(snapshot, nameof(snapshot));
-
-            Response result = await GetOperationDetailsAsync(snapshot, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((OperationDetails)result, result);
         }
 
         /// <summary> Creates a key-value snapshot. </summary>
@@ -1691,48 +1427,6 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary> Requests the headers and status of the given resource. </summary>
-        /// <param name="name"> The name of the key-value snapshot to check. </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="ifNoneMatch">
-        /// Used to perform an operation only if the targeted resource's etag does not
-        /// match the value provided.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response CheckSnapshot(string name, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-
-            return CheckSnapshot(name, syncToken, ifMatch, ifNoneMatch, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> Requests the headers and status of the given resource. </summary>
-        /// <param name="name"> The name of the key-value snapshot to check. </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="ifNoneMatch">
-        /// Used to perform an operation only if the targeted resource's etag does not
-        /// match the value provided.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> CheckSnapshotAsync(string name, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-
-            return await CheckSnapshotAsync(name, syncToken, ifMatch, ifNoneMatch, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
-
         /// <summary>
         /// [Protocol Method] Gets a list of labels.
         /// <list type="bullet">
@@ -1833,70 +1527,6 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary> Gets a list of labels. </summary>
-        /// <param name="accept"></param>
-        /// <param name="name"> A filter for the name of the returned labels. </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="after">
-        /// Instructs the server to return elements that appear after the element referred
-        /// to by the specified token.
-        /// </param>
-        /// <param name="acceptDatetime">
-        /// Requests the server to respond with the state of the resource at the specified
-        /// time.
-        /// </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<Label> GetLabels(string accept, string name = default, string syncToken = default, string after = default, string acceptDatetime = default, IEnumerable<LabelFields> @select = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(accept, nameof(accept));
-
-            return new ConfigurationClientGetLabelsCollectionResultOfT(
-                this,
-                null,
-                accept,
-                name,
-                syncToken,
-                after,
-                acceptDatetime,
-                @select,
-                cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> Gets a list of labels. </summary>
-        /// <param name="accept"></param>
-        /// <param name="name"> A filter for the name of the returned labels. </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="after">
-        /// Instructs the server to return elements that appear after the element referred
-        /// to by the specified token.
-        /// </param>
-        /// <param name="acceptDatetime">
-        /// Requests the server to respond with the state of the resource at the specified
-        /// time.
-        /// </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<Label> GetLabelsAsync(string accept, string name = default, string syncToken = default, string after = default, string acceptDatetime = default, IEnumerable<LabelFields> @select = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(accept, nameof(accept));
-
-            return new ConfigurationClientGetLabelsAsyncCollectionResultOfT(
-                this,
-                null,
-                accept,
-                name,
-                syncToken,
-                after,
-                acceptDatetime,
-                @select,
-                cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
         /// <summary>
         /// [Protocol Method] Requests the headers and status of the given resource.
         /// <list type="bullet">
@@ -1971,44 +1601,6 @@ namespace Azure.Data.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Requests the headers and status of the given resource. </summary>
-        /// <param name="name"> A filter for the name of the returned labels. </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="after">
-        /// Instructs the server to return elements that appear after the element referred
-        /// to by the specified token.
-        /// </param>
-        /// <param name="acceptDatetime">
-        /// Requests the server to respond with the state of the resource at the specified
-        /// time.
-        /// </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response CheckLabels(string name = default, string syncToken = default, string after = default, string acceptDatetime = default, IEnumerable<LabelFields> @select = default, CancellationToken cancellationToken = default)
-        {
-            return CheckLabels(name, syncToken, after, acceptDatetime, @select, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> Requests the headers and status of the given resource. </summary>
-        /// <param name="name"> A filter for the name of the returned labels. </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="after">
-        /// Instructs the server to return elements that appear after the element referred
-        /// to by the specified token.
-        /// </param>
-        /// <param name="acceptDatetime">
-        /// Requests the server to respond with the state of the resource at the specified
-        /// time.
-        /// </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> CheckLabelsAsync(string name = default, string syncToken = default, string after = default, string acceptDatetime = default, IEnumerable<LabelFields> @select = default, CancellationToken cancellationToken = default)
-        {
-            return await CheckLabelsAsync(name, syncToken, after, acceptDatetime, @select, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2097,56 +1689,6 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary> Locks a key-value. </summary>
-        /// <param name="key"> The key of the key-value to lock. </param>
-        /// <param name="accept"></param>
-        /// <param name="label"> The label, if any, of the key-value to lock. </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="ifNoneMatch">
-        /// Used to perform an operation only if the targeted resource's etag does not
-        /// match the value provided.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="accept"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<KeyValue> PutLock(string key, string accept, string label = default, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(accept, nameof(accept));
-
-            Response result = PutLock(key, accept, label, syncToken, ifMatch, ifNoneMatch, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((KeyValue)result, result);
-        }
-
-        /// <summary> Locks a key-value. </summary>
-        /// <param name="key"> The key of the key-value to lock. </param>
-        /// <param name="accept"></param>
-        /// <param name="label"> The label, if any, of the key-value to lock. </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="ifNoneMatch">
-        /// Used to perform an operation only if the targeted resource's etag does not
-        /// match the value provided.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="accept"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<KeyValue>> PutLockAsync(string key, string accept, string label = default, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(accept, nameof(accept));
-
-            Response result = await PutLockAsync(key, accept, label, syncToken, ifMatch, ifNoneMatch, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((KeyValue)result, result);
-        }
-
         /// <summary>
         /// [Protocol Method] Unlocks a key-value.
         /// <list type="bullet">
@@ -2231,56 +1773,6 @@ namespace Azure.Data.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Unlocks a key-value. </summary>
-        /// <param name="key"> The key of the key-value to unlock. </param>
-        /// <param name="accept"></param>
-        /// <param name="label"> The label, if any, of the key-value to unlock. </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="ifNoneMatch">
-        /// Used to perform an operation only if the targeted resource's etag does not
-        /// match the value provided.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="accept"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<KeyValue> DeleteLock(string key, string accept, string label = default, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(accept, nameof(accept));
-
-            Response result = DeleteLock(key, accept, label, syncToken, ifMatch, ifNoneMatch, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((KeyValue)result, result);
-        }
-
-        /// <summary> Unlocks a key-value. </summary>
-        /// <param name="key"> The key of the key-value to unlock. </param>
-        /// <param name="accept"></param>
-        /// <param name="label"> The label, if any, of the key-value to unlock. </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="ifNoneMatch">
-        /// Used to perform an operation only if the targeted resource's etag does not
-        /// match the value provided.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="accept"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<KeyValue>> DeleteLockAsync(string key, string accept, string label = default, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(accept, nameof(accept));
-
-            Response result = await DeleteLockAsync(key, accept, label, syncToken, ifMatch, ifNoneMatch, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((KeyValue)result, result);
         }
 
         /// <summary>
@@ -2409,96 +1901,6 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary> Gets a list of key-value revisions. </summary>
-        /// <param name="accept"></param>
-        /// <param name="key">
-        /// A filter used to match keys. Syntax reference:
-        /// https://aka.ms/azconfig/docs/restapirevisions
-        /// </param>
-        /// <param name="label">
-        /// A filter used to match labels. Syntax reference:
-        /// https://aka.ms/azconfig/docs/restapirevisions
-        /// </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="after">
-        /// Instructs the server to return elements that appear after the element referred
-        /// to by the specified token.
-        /// </param>
-        /// <param name="acceptDatetime">
-        /// Requests the server to respond with the state of the resource at the specified
-        /// time.
-        /// </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="tags">
-        /// A filter used to query by tags. Syntax reference:
-        /// https://aka.ms/azconfig/docs/restapirevisions
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<KeyValue> GetRevisions(string accept, string key = default, string label = default, string syncToken = default, string after = default, string acceptDatetime = default, IEnumerable<KeyValueFields> @select = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(accept, nameof(accept));
-
-            return new ConfigurationClientGetRevisionsCollectionResultOfT(
-                this,
-                null,
-                accept,
-                key,
-                label,
-                syncToken,
-                after,
-                acceptDatetime,
-                @select,
-                tags,
-                cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> Gets a list of key-value revisions. </summary>
-        /// <param name="accept"></param>
-        /// <param name="key">
-        /// A filter used to match keys. Syntax reference:
-        /// https://aka.ms/azconfig/docs/restapirevisions
-        /// </param>
-        /// <param name="label">
-        /// A filter used to match labels. Syntax reference:
-        /// https://aka.ms/azconfig/docs/restapirevisions
-        /// </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="after">
-        /// Instructs the server to return elements that appear after the element referred
-        /// to by the specified token.
-        /// </param>
-        /// <param name="acceptDatetime">
-        /// Requests the server to respond with the state of the resource at the specified
-        /// time.
-        /// </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="tags">
-        /// A filter used to query by tags. Syntax reference:
-        /// https://aka.ms/azconfig/docs/restapirevisions
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<KeyValue> GetRevisionsAsync(string accept, string key = default, string label = default, string syncToken = default, string after = default, string acceptDatetime = default, IEnumerable<KeyValueFields> @select = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(accept, nameof(accept));
-
-            return new ConfigurationClientGetRevisionsAsyncCollectionResultOfT(
-                this,
-                null,
-                accept,
-                key,
-                label,
-                syncToken,
-                after,
-                acceptDatetime,
-                @select,
-                tags,
-                cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
         /// <summary>
         /// [Protocol Method] Requests the headers and status of the given resource.
         /// <list type="bullet">
@@ -2595,66 +1997,6 @@ namespace Azure.Data.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Requests the headers and status of the given resource. </summary>
-        /// <param name="key">
-        /// A filter used to match keys. Syntax reference:
-        /// https://aka.ms/azconfig/docs/restapirevisions
-        /// </param>
-        /// <param name="label">
-        /// A filter used to match labels. Syntax reference:
-        /// https://aka.ms/azconfig/docs/restapirevisions
-        /// </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="after">
-        /// Instructs the server to return elements that appear after the element referred
-        /// to by the specified token.
-        /// </param>
-        /// <param name="acceptDatetime">
-        /// Requests the server to respond with the state of the resource at the specified
-        /// time.
-        /// </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="tags">
-        /// A filter used to query by tags. Syntax reference:
-        /// https://aka.ms/azconfig/docs/restapirevisions
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response CheckRevisions(string key = default, string label = default, string syncToken = default, string after = default, string acceptDatetime = default, IEnumerable<KeyValueFields> @select = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
-        {
-            return CheckRevisions(key, label, syncToken, after, acceptDatetime, @select, tags, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> Requests the headers and status of the given resource. </summary>
-        /// <param name="key">
-        /// A filter used to match keys. Syntax reference:
-        /// https://aka.ms/azconfig/docs/restapirevisions
-        /// </param>
-        /// <param name="label">
-        /// A filter used to match labels. Syntax reference:
-        /// https://aka.ms/azconfig/docs/restapirevisions
-        /// </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="after">
-        /// Instructs the server to return elements that appear after the element referred
-        /// to by the specified token.
-        /// </param>
-        /// <param name="acceptDatetime">
-        /// Requests the server to respond with the state of the resource at the specified
-        /// time.
-        /// </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="tags">
-        /// A filter used to query by tags. Syntax reference:
-        /// https://aka.ms/azconfig/docs/restapirevisions
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> CheckRevisionsAsync(string key = default, string label = default, string syncToken = default, string after = default, string acceptDatetime = default, IEnumerable<KeyValueFields> @select = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
-        {
-            return await CheckRevisionsAsync(key, label, syncToken, after, acceptDatetime, @select, tags, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
     }
 }
