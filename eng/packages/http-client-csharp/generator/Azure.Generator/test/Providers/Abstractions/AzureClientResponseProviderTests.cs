@@ -7,7 +7,6 @@ using System.Linq;
 using NUnit.Framework;
 using Azure.Generator.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
-using Microsoft.TypeSpec.Generator.Input;
 
 namespace Azure.Generator.Tests.Providers.Abstractions
 {

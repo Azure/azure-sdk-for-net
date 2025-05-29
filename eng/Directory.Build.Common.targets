@@ -27,10 +27,10 @@
     <Error Condition="'$(IsClientLibrary)' == 'true' and '$(PackageReleaseNotes)' != ''" Text="Do NOT set PackageReleaseNotes property in the project. Release notes are added automatically from package changelog" />
     <PropertyGroup>
       <DirectoryPartofPath>$(PackageRootDirectory.Replace($(RepoRoot), ''))</DirectoryPartofPath>
-      <PackageProjectUrl Condition="Exists('$(PackageRootDirectory)/README.md') and '$(SkipDevBuildNumber)' != 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)README.md).Uri)</PackageProjectUrl>
-      <PackageProjectUrl Condition="Exists('$(PackageRootDirectory)/README.md') and '$(SkipDevBuildNumber)' == 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(PackageId)_$(Version)/$(DirectoryPartofPath)README.md).Uri)</PackageProjectUrl>
-      <PackageReleaseNotes Condition="Exists('$(PackageRootDirectory)/CHANGELOG.md') and '$(SkipDevBuildNumber)' != 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)CHANGELOG.md).Uri)</PackageReleaseNotes>
-      <PackageReleaseNotes Condition="Exists('$(PackageRootDirectory)/CHANGELOG.md') and '$(SkipDevBuildNumber)' == 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(PackageId)_$(Version)/$(DirectoryPartofPath)CHANGELOG.md).Uri)</PackageReleaseNotes>
+      <PackageProjectUrl Condition="Exists('$(PackageRootDirectory)/README.md') and '$(SkipDevBuildNumber)' != 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)/README.md).Uri)</PackageProjectUrl>
+      <PackageProjectUrl Condition="Exists('$(PackageRootDirectory)/README.md') and '$(SkipDevBuildNumber)' == 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(PackageId)_$(Version)/$(DirectoryPartofPath)/README.md).Uri)</PackageProjectUrl>
+      <PackageReleaseNotes Condition="Exists('$(PackageRootDirectory)/CHANGELOG.md') and '$(SkipDevBuildNumber)' != 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)/CHANGELOG.md).Uri)</PackageReleaseNotes>
+      <PackageReleaseNotes Condition="Exists('$(PackageRootDirectory)/CHANGELOG.md') and '$(SkipDevBuildNumber)' == 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(PackageId)_$(Version)/$(DirectoryPartofPath)/CHANGELOG.md).Uri)</PackageReleaseNotes>
     </PropertyGroup>
   </Target>
 
@@ -89,7 +89,7 @@
 
   <!-- Add Client SDK Tools -->
   <ItemGroup>
-    <PackageReference Condition="'$(IsClientLibrary)' == 'true'" Include="Microsoft.Azure.AutoRest.CSharp" PrivateAssets="All" />
+    <PackageReference Condition="'$(IncludeAutorestDependency)' == 'true'" Include="Microsoft.Azure.AutoRest.CSharp" PrivateAssets="All" />
 
     <PackageReference Condition="'$(GenerateAPIListing)' == 'true'" Include="Microsoft.DotNet.GenAPI" PrivateAssets="All" />
 
@@ -172,7 +172,7 @@
 
   <Import Project="CodeCoverage.targets" Condition="'$(CollectCoverage)' == 'true'" />
 
-  <Import Project="CodeGeneration.targets" Condition="'$(TemporaryUsePreviousGeneratorVersion)' == 'true'" />
+  <Import Project="CodeGeneration.targets" Condition="'$(IncludeAutorestDependency)' != 'true'" />
 
   <Import Project="Azure.Management.Test.targets" Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' == 'true'" />
 

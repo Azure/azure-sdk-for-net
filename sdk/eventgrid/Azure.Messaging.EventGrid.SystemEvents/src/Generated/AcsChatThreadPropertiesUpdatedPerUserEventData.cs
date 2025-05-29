@@ -15,19 +15,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadPropertiesUpdatedPerUserEventData"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
+        /// <param name="threadId"> The chat thread id. </param>
         /// <param name="editedByCommunicationIdentifier"> The communication identifier of the user who updated the thread properties. </param>
-        /// <param name="metadata"> The thread metadata. </param>
         /// <param name="properties"> The updated thread properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recipientCommunicationIdentifier"/>, <paramref name="editedByCommunicationIdentifier"/>, <paramref name="metadata"/> or <paramref name="properties"/> is null. </exception>
-        internal AcsChatThreadPropertiesUpdatedPerUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, CommunicationIdentifierModel editedByCommunicationIdentifier, IReadOnlyDictionary<string, string> metadata, IReadOnlyDictionary<string, BinaryData> properties) : base(recipientCommunicationIdentifier)
+        /// <exception cref="ArgumentNullException"> <paramref name="recipientCommunicationIdentifier"/>, <paramref name="threadId"/>, <paramref name="editedByCommunicationIdentifier"/> or <paramref name="properties"/> is null. </exception>
+        internal AcsChatThreadPropertiesUpdatedPerUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string threadId, CommunicationIdentifierModel editedByCommunicationIdentifier, IReadOnlyDictionary<string, BinaryData> properties) : base(recipientCommunicationIdentifier, threadId)
         {
             Argument.AssertNotNull(recipientCommunicationIdentifier, nameof(recipientCommunicationIdentifier));
+            Argument.AssertNotNull(threadId, nameof(threadId));
             Argument.AssertNotNull(editedByCommunicationIdentifier, nameof(editedByCommunicationIdentifier));
-            Argument.AssertNotNull(metadata, nameof(metadata));
             Argument.AssertNotNull(properties, nameof(properties));
 
             EditedByCommunicationIdentifier = editedByCommunicationIdentifier;
-            Metadata = metadata;
+            Metadata = new ChangeTrackingDictionary<string, string>();
             Properties = properties;
         }
 

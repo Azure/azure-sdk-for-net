@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseMetadataSyncConfigurationResource : IJsonModel<SynapseMetadataSyncConfigurationData>
     {
+        private static SynapseMetadataSyncConfigurationData s_dataDeserializationInstance;
+        private static SynapseMetadataSyncConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SynapseMetadataSyncConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseMetadataSyncConfigurationData>)Data).Write(writer, options);
 
-        SynapseMetadataSyncConfigurationData IJsonModel<SynapseMetadataSyncConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseMetadataSyncConfigurationData>)Data).Create(ref reader, options);
+        SynapseMetadataSyncConfigurationData IJsonModel<SynapseMetadataSyncConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseMetadataSyncConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SynapseMetadataSyncConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseMetadataSyncConfigurationData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
         SynapseMetadataSyncConfigurationData IPersistableModel<SynapseMetadataSyncConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseMetadataSyncConfigurationData>(data, options, AzureResourceManagerSynapseContext.Default);
 
-        string IPersistableModel<SynapseMetadataSyncConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseMetadataSyncConfigurationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseMetadataSyncConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseMetadataSyncConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

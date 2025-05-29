@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Blueprint
 {
     public partial class PublishedBlueprintResource : IJsonModel<PublishedBlueprintData>
     {
+        private static PublishedBlueprintData s_dataDeserializationInstance;
+        private static PublishedBlueprintData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PublishedBlueprintData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PublishedBlueprintData>)Data).Write(writer, options);
 
-        PublishedBlueprintData IJsonModel<PublishedBlueprintData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PublishedBlueprintData>)Data).Create(ref reader, options);
+        PublishedBlueprintData IJsonModel<PublishedBlueprintData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PublishedBlueprintData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PublishedBlueprintData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PublishedBlueprintData>(Data, options, AzureResourceManagerBlueprintContext.Default);
 
         PublishedBlueprintData IPersistableModel<PublishedBlueprintData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PublishedBlueprintData>(data, options, AzureResourceManagerBlueprintContext.Default);
 
-        string IPersistableModel<PublishedBlueprintData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PublishedBlueprintData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PublishedBlueprintData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PublishedBlueprintData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

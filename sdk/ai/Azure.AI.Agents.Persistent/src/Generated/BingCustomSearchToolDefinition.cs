@@ -14,9 +14,9 @@ namespace Azure.AI.Agents.Persistent
     public partial class BingCustomSearchToolDefinition : ToolDefinition
     {
         /// <summary> Initializes a new instance of <see cref="BingCustomSearchToolDefinition"/>. </summary>
-        /// <param name="bingCustomSearch"> The list of search configurations used by the bing custom search tool. </param>
+        /// <param name="bingCustomSearch"> The bing custom search tool parameters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="bingCustomSearch"/> is null. </exception>
-        public BingCustomSearchToolDefinition(BingCustomSearchConfigurationList bingCustomSearch)
+        public BingCustomSearchToolDefinition(BingCustomSearchToolParameters bingCustomSearch)
         {
             Argument.AssertNotNull(bingCustomSearch, nameof(bingCustomSearch));
 
@@ -27,8 +27,8 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Initializes a new instance of <see cref="BingCustomSearchToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="bingCustomSearch"> The list of search configurations used by the bing custom search tool. </param>
-        internal BingCustomSearchToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, BingCustomSearchConfigurationList bingCustomSearch) : base(type, serializedAdditionalRawData)
+        /// <param name="bingCustomSearch"> The bing custom search tool parameters. </param>
+        internal BingCustomSearchToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, BingCustomSearchToolParameters bingCustomSearch) : base(type, serializedAdditionalRawData)
         {
             BingCustomSearch = bingCustomSearch;
         }
@@ -38,7 +38,7 @@ namespace Azure.AI.Agents.Persistent
         {
         }
 
-        /// <summary> The list of search configurations used by the bing custom search tool. </summary>
-        public BingCustomSearchConfigurationList BingCustomSearch { get; set; }
+        /// <summary> The bing custom search tool parameters. </summary>
+        public BingCustomSearchToolParameters BingCustomSearch { get; set; }
     }
 }

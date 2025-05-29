@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MachineLearning
 {
     public partial class MachineLearningOutboundRuleBasicResource : IJsonModel<MachineLearningOutboundRuleBasicData>
     {
+        private static MachineLearningOutboundRuleBasicData s_dataDeserializationInstance;
+        private static MachineLearningOutboundRuleBasicData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MachineLearningOutboundRuleBasicData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningOutboundRuleBasicData>)Data).Write(writer, options);
 
-        MachineLearningOutboundRuleBasicData IJsonModel<MachineLearningOutboundRuleBasicData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningOutboundRuleBasicData>)Data).Create(ref reader, options);
+        MachineLearningOutboundRuleBasicData IJsonModel<MachineLearningOutboundRuleBasicData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningOutboundRuleBasicData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MachineLearningOutboundRuleBasicData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineLearningOutboundRuleBasicData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
         MachineLearningOutboundRuleBasicData IPersistableModel<MachineLearningOutboundRuleBasicData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningOutboundRuleBasicData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        string IPersistableModel<MachineLearningOutboundRuleBasicData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningOutboundRuleBasicData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MachineLearningOutboundRuleBasicData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningOutboundRuleBasicData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

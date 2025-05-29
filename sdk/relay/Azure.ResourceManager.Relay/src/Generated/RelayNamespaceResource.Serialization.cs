@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Relay
 {
     public partial class RelayNamespaceResource : IJsonModel<RelayNamespaceData>
     {
+        private static RelayNamespaceData s_dataDeserializationInstance;
+        private static RelayNamespaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RelayNamespaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RelayNamespaceData>)Data).Write(writer, options);
 
-        RelayNamespaceData IJsonModel<RelayNamespaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RelayNamespaceData>)Data).Create(ref reader, options);
+        RelayNamespaceData IJsonModel<RelayNamespaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RelayNamespaceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<RelayNamespaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RelayNamespaceData>(Data, options, AzureResourceManagerRelayContext.Default);
 
         RelayNamespaceData IPersistableModel<RelayNamespaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RelayNamespaceData>(data, options, AzureResourceManagerRelayContext.Default);
 
-        string IPersistableModel<RelayNamespaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RelayNamespaceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RelayNamespaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RelayNamespaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

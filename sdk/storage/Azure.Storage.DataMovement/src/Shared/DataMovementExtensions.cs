@@ -27,7 +27,6 @@ namespace Azure.Storage.DataMovement
         {
             return new StorageResourceContainerProperties()
             {
-                Uri = properties.Uri,
                 RawProperties = properties.RawProperties
             };
         }

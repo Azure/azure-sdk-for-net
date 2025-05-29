@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiTagDescriptionResource : IJsonModel<ApiTagDescriptionData>
     {
+        private static ApiTagDescriptionData s_dataDeserializationInstance;
+        private static ApiTagDescriptionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApiTagDescriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiTagDescriptionData>)Data).Write(writer, options);
 
-        ApiTagDescriptionData IJsonModel<ApiTagDescriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiTagDescriptionData>)Data).Create(ref reader, options);
+        ApiTagDescriptionData IJsonModel<ApiTagDescriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiTagDescriptionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ApiTagDescriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiTagDescriptionData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
         ApiTagDescriptionData IPersistableModel<ApiTagDescriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiTagDescriptionData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiTagDescriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiTagDescriptionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApiTagDescriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiTagDescriptionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

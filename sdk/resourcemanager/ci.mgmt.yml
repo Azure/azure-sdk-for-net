@@ -70,6 +70,8 @@ trigger:
     - sdk/dataprotection/Azure.ResourceManager.DataProtectionBackup
     - sdk/datashare/Azure.ResourceManager.DataShare
     - sdk/defendereasm/Azure.ResourceManager.DefenderEasm
+    - sdk/dellstorage/Azure.ResourceManager.Dell.Storage
+    - sdk/dependencymap/Azure.ResourceManager.DependencyMap
     - sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization
     - sdk/devcenter/Azure.ResourceManager.DevCenter
     - sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices
@@ -137,6 +139,7 @@ trigger:
     - sdk/mixedreality/Azure.ResourceManager.MixedReality
     - sdk/mobilenetwork/Azure.ResourceManager.MobileNetwork
     - sdk/mongocluster/Azure.ResourceManager.MongoCluster
+    - sdk/mongodbatlas/Azure.ResourceManager.MongoDBAtlas
     - sdk/monitor/Azure.ResourceManager.Monitor
     - sdk/mysql/Azure.ResourceManager.MySql
     - sdk/neonpostgres/Azure.ResourceManager.NeonPostgres
@@ -148,6 +151,7 @@ trigger:
     - sdk/newrelicobservability/Azure.ResourceManager.NewRelicObservability
     - sdk/nginx/Azure.ResourceManager.Nginx
     - sdk/notificationhubs/Azure.ResourceManager.NotificationHubs
+    - sdk/onlineexperimentation/Azure.ResourceManager.OnlineExperimentation
     - sdk/openenergyplatform/Azure.ResourceManager.EnergyServices
     - sdk/operationalinsights/Azure.ResourceManager.OperationalInsights
     - sdk/oracle/Azure.ResourceManager.OracleDatabase
@@ -162,6 +166,7 @@ trigger:
     - sdk/powerbidedicated/Azure.ResourceManager.PowerBIDedicated
     - sdk/privatedns/Azure.ResourceManager.PrivateDns
     - sdk/providerhub/Azure.ResourceManager.ProviderHub
+    - sdk/purestorageblock/Azure.ResourceManager.PureStorageBlock
     - sdk/purview/Azure.ResourceManager.Purview
     - sdk/quantum/Azure.ResourceManager.Quantum
     - sdk/qumulo/Azure.ResourceManager.Qumulo
@@ -180,6 +185,7 @@ trigger:
     - sdk/resourcemover/Azure.ResourceManager.ResourceMover
     - sdk/resources/Azure.ResourceManager.Resources
     - sdk/search/Azure.ResourceManager.Search
+    - sdk/secretsstoreextension/Azure.ResourceManager.SecretsStoreExtension
     - sdk/securitycenter/Azure.ResourceManager.SecurityCenter
     - sdk/securitydevops/Azure.ResourceManager.SecurityDevOps
     - sdk/securityinsights/Azure.ResourceManager.SecurityInsights
@@ -190,6 +196,7 @@ trigger:
     - sdk/servicelinker/Azure.ResourceManager.ServiceLinker
     - sdk/servicenetworking/Azure.ResourceManager.ServiceNetworking
     - sdk/signalr/Azure.ResourceManager.SignalR
+    - sdk/sitemanager/Azure.ResourceManager.SiteManager
     - sdk/sphere/Azure.ResourceManager.Sphere
     - sdk/springappdiscovery/Azure.ResourceManager.SpringAppDiscovery
     - sdk/sqlmanagement/Azure.ResourceManager.Sql
@@ -287,6 +294,8 @@ pr:
     - sdk/dataprotection/Azure.ResourceManager.DataProtectionBackup
     - sdk/datashare/Azure.ResourceManager.DataShare
     - sdk/defendereasm/Azure.ResourceManager.DefenderEasm
+    - sdk/dellstorage/Azure.ResourceManager.Dell.Storage
+    - sdk/dependencymap/Azure.ResourceManager.DependencyMap
     - sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization
     - sdk/devcenter/Azure.ResourceManager.DevCenter
     - sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices
@@ -354,6 +363,7 @@ pr:
     - sdk/mixedreality/Azure.ResourceManager.MixedReality
     - sdk/mobilenetwork/Azure.ResourceManager.MobileNetwork
     - sdk/mongocluster/Azure.ResourceManager.MongoCluster
+    - sdk/mongodbatlas/Azure.ResourceManager.MongoDBAtlas
     - sdk/monitor/Azure.ResourceManager.Monitor
     - sdk/mysql/Azure.ResourceManager.MySql
     - sdk/neonpostgres/Azure.ResourceManager.NeonPostgres
@@ -365,6 +375,7 @@ pr:
     - sdk/newrelicobservability/Azure.ResourceManager.NewRelicObservability
     - sdk/nginx/Azure.ResourceManager.Nginx
     - sdk/notificationhubs/Azure.ResourceManager.NotificationHubs
+    - sdk/onlineexperimentation/Azure.ResourceManager.OnlineExperimentation
     - sdk/openenergyplatform/Azure.ResourceManager.EnergyServices
     - sdk/operationalinsights/Azure.ResourceManager.OperationalInsights
     - sdk/oracle/Azure.ResourceManager.OracleDatabase
@@ -379,6 +390,7 @@ pr:
     - sdk/powerbidedicated/Azure.ResourceManager.PowerBIDedicated
     - sdk/privatedns/Azure.ResourceManager.PrivateDns
     - sdk/providerhub/Azure.ResourceManager.ProviderHub
+    - sdk/purestorageblock/Azure.ResourceManager.PureStorageBlock
     - sdk/purview/Azure.ResourceManager.Purview
     - sdk/quantum/Azure.ResourceManager.Quantum
     - sdk/qumulo/Azure.ResourceManager.Qumulo
@@ -397,6 +409,7 @@ pr:
     - sdk/resourcemover/Azure.ResourceManager.ResourceMover
     - sdk/resources/Azure.ResourceManager.Resources
     - sdk/search/Azure.ResourceManager.Search
+    - sdk/secretsstoreextension/Azure.ResourceManager.SecretsStoreExtension
     - sdk/securitycenter/Azure.ResourceManager.SecurityCenter
     - sdk/securitydevops/Azure.ResourceManager.SecurityDevOps
     - sdk/securityinsights/Azure.ResourceManager.SecurityInsights
@@ -407,6 +420,7 @@ pr:
     - sdk/servicelinker/Azure.ResourceManager.ServiceLinker
     - sdk/servicenetworking/Azure.ResourceManager.ServiceNetworking
     - sdk/signalr/Azure.ResourceManager.SignalR
+    - sdk/sitemanager/Azure.ResourceManager.SiteManager
     - sdk/sphere/Azure.ResourceManager.Sphere
     - sdk/springappdiscovery/Azure.ResourceManager.SpringAppDiscovery
     - sdk/sqlmanagement/Azure.ResourceManager.Sql

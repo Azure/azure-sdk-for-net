@@ -40,13 +40,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("classificationPolicyId"u8);
                 writer.WriteStringValue(ClassificationPolicyId);
             }
-            writer.WritePropertyName("errors"u8);
-            writer.WriteStartArray();
-            foreach (var item in Errors)
+            if (options.Format != "W")
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("errors"u8);
+                writer.WriteStartArray();
+                foreach (var item in Errors)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
         }
 
         AcsRouterJobClassificationFailedEventData IJsonModel<AcsRouterJobClassificationFailedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

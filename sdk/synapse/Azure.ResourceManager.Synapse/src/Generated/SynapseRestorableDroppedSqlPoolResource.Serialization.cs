@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseRestorableDroppedSqlPoolResource : IJsonModel<SynapseRestorableDroppedSqlPoolData>
     {
+        private static SynapseRestorableDroppedSqlPoolData s_dataDeserializationInstance;
+        private static SynapseRestorableDroppedSqlPoolData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SynapseRestorableDroppedSqlPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseRestorableDroppedSqlPoolData>)Data).Write(writer, options);
 
-        SynapseRestorableDroppedSqlPoolData IJsonModel<SynapseRestorableDroppedSqlPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseRestorableDroppedSqlPoolData>)Data).Create(ref reader, options);
+        SynapseRestorableDroppedSqlPoolData IJsonModel<SynapseRestorableDroppedSqlPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseRestorableDroppedSqlPoolData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SynapseRestorableDroppedSqlPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseRestorableDroppedSqlPoolData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
         SynapseRestorableDroppedSqlPoolData IPersistableModel<SynapseRestorableDroppedSqlPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseRestorableDroppedSqlPoolData>(data, options, AzureResourceManagerSynapseContext.Default);
 
-        string IPersistableModel<SynapseRestorableDroppedSqlPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseRestorableDroppedSqlPoolData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseRestorableDroppedSqlPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseRestorableDroppedSqlPoolData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
