@@ -9,7 +9,6 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Moq" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-		<PackageReference Include="Microsoft.TypeSpec.Generator.Input" VersionOverride ="1.0.0-alpha.20250526.2" />
   </ItemGroup>
 
   <ItemGroup>

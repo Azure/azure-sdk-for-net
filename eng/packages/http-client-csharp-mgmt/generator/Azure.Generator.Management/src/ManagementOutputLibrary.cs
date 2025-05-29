@@ -21,7 +21,7 @@ namespace Azure.Generator.Management
         {
             var resources = new List<ResourceClientProvider>();
             var collections = new List<ResourceCollectionClientProvider>();
-            foreach (var client in ManagementClientGenerator.Instance.InputLibrary.AllClients)
+            foreach (var client in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
             {
                 BuildResourceCore(resources, collections, client);
             }

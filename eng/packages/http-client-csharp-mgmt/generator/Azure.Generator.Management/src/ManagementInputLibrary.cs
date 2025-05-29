@@ -14,7 +14,6 @@ namespace Azure.Generator.Management
     /// <inheritdoc/>
     public class ManagementInputLibrary : InputLibrary
     {
-        private IReadOnlyList<InputClient>? _allClients;
         private IReadOnlyDictionary<InputClient, ResourceMetadata>? _resourceMetadata;
         private IReadOnlyDictionary<string, InputModelType>? _inputModelsByCrossLanguageDefinitionId;
         private IReadOnlyDictionary<string, InputClient>? _inputClientsByCrossLanguageDefinitionId;
@@ -25,16 +24,11 @@ namespace Azure.Generator.Management
         {
         }
 
-        /// <summary>
-        /// All clients in the input library, including the subclients.
-        /// </summary>
-        internal IReadOnlyList<InputClient> AllClients => _allClients ??= EnumerateClients();
-
         private IReadOnlyDictionary<InputClient, ResourceMetadata> ResourceMetadata => _resourceMetadata ??= DeserializeResourceMetadata();
 
         private IReadOnlyDictionary<string, InputModelType> InputModelsByCrossLanguageDefinitionId => _inputModelsByCrossLanguageDefinitionId ??= BuildModelCrossLanguageDefinitionIds();
 
-        private IReadOnlyDictionary<string, InputClient> InputClientsByCrossLanguageDefinitionId => _inputClientsByCrossLanguageDefinitionId ??= AllClients.ToDictionary(c => c.CrossLanguageDefinitionId, c => c);
+        private IReadOnlyDictionary<string, InputClient> InputClientsByCrossLanguageDefinitionId => _inputClientsByCrossLanguageDefinitionId ??= InputNamespace.Clients.ToDictionary(c => c.CrossLanguageDefinitionId, c => c);
 
         private HashSet<CSharpType> ResourceTypes => _resourceTypes ??= BuildResourceModels();
 
@@ -51,18 +45,6 @@ namespace Azure.Generator.Management
             => model.Decorators.Any(d => d.Name.Equals(KnownDecorators.ArmResourceInternal));
 
         internal bool IsResourceModelType(CSharpType type) => ResourceTypes.Contains(type);
-
-        private IReadOnlyList<InputClient> EnumerateClients()
-        {
-            var clients = new List<InputClient>(InputNamespace.Clients);
-            for (int i = 0; i < clients.Count; i++)
-            {
-                var client = clients[i];
-                clients.AddRange(client.Children);
-            }
-
-            return clients;
-        }
 
         private HashSet<CSharpType> BuildResourceModels()
         {
@@ -100,7 +82,7 @@ namespace Azure.Generator.Management
         private IReadOnlyDictionary<InputClient, ResourceMetadata> DeserializeResourceMetadata()
         {
             var resourceMetadata = new Dictionary<InputClient, ResourceMetadata>();
-            foreach (var client in AllClients)
+            foreach (var client in InputNamespace.Clients)
             {
                 var decorator = client.Decorators.FirstOrDefault(d => d.Name == KnownDecorators.ResourceMetadata);
                 if (decorator != null)
