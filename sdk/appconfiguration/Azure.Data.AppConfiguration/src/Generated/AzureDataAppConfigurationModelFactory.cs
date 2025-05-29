@@ -15,50 +15,6 @@ namespace Azure.Data.AppConfiguration
     public static partial class AzureDataAppConfigurationModelFactory
     {
 
-        /// <summary> Azure App Configuration error object. </summary>
-        /// <param name="type"> The type of the error. </param>
-        /// <param name="title"> A brief summary of the error. </param>
-        /// <param name="name"> The name of the parameter that resulted in the error. </param>
-        /// <param name="detail"> A detailed description of the error. </param>
-        /// <param name="status"> The HTTP status code that the error maps to. </param>
-        /// <returns> A new <see cref="AppConfiguration.Error"/> instance for mocking. </returns>
-        public static Error Error(string @type = default, string title = default, string name = default, string detail = default, int? status = default)
-        {
-            return new Error(
-                @type,
-                title,
-                name,
-                detail,
-                status,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A key-value pair representing application settings. </summary>
-        /// <param name="key"> The key of the key-value. </param>
-        /// <param name="label"> The label the key-value belongs to. </param>
-        /// <param name="contentType"> The content type of the value stored within the key-value. </param>
-        /// <param name="value"> The value of the key-value. </param>
-        /// <param name="lastModified"> A date representing the last time the key-value was modified. </param>
-        /// <param name="tags"> The tags of the key-value. </param>
-        /// <param name="locked"> Indicates whether the key-value is locked. </param>
-        /// <param name="etag"> A value representing the current state of the resource. </param>
-        /// <returns> A new <see cref="AppConfiguration.KeyValue"/> instance for mocking. </returns>
-        public static KeyValue KeyValue(string key = default, string label = default, string contentType = default, string value = default, DateTimeOffset? lastModified = default, IDictionary<string, string> tags = default, bool? locked = default, string etag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new KeyValue(
-                key,
-                label,
-                contentType,
-                value,
-                lastModified,
-                tags,
-                locked,
-                etag,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> A snapshot is a named, immutable subset of an App Configuration store's key-values. </summary>
         /// <param name="name"> The name of the snapshot. </param>
         /// <param name="status"> The current status of the snapshot. </param>
@@ -115,27 +71,6 @@ namespace Azure.Data.AppConfiguration
             tags ??= new ChangeTrackingList<string>();
 
             return new KeyValueFilter(key, label, tags?.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Details of a long running operation. </summary>
-        /// <param name="id"> The unique id of the operation. </param>
-        /// <param name="status"> The current status of the operation. </param>
-        /// <param name="error">
-        /// An error, available when the status is `Failed`, describing why the operation
-        /// failed.
-        /// </param>
-        /// <returns> A new <see cref="AppConfiguration.OperationDetails"/> instance for mocking. </returns>
-        public static OperationDetails OperationDetails(string id = default, OperationState status = default, Error error = default)
-        {
-            return new OperationDetails(id, status, error, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Labels are used to group key-values. </summary>
-        /// <param name="name"> The name of the label. </param>
-        /// <returns> A new <see cref="AppConfiguration.Label"/> instance for mocking. </returns>
-        public static Label Label(string name = default)
-        {
-            return new Label(name, additionalBinaryDataProperties: null);
         }
     }
 }
