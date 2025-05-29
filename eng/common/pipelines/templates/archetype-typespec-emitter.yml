@@ -318,7 +318,7 @@ extends:
               - "/*"
               - "!SessionRecords"
               Repositories:
-              - Name: azure-sdk/azure-sdk-for-net
+              - Name: $[format('azure-sdk/{0}', split(variables['Build.Repository.Name'], '/')[1])]
                 Commitish: $(branchName)
                 WorkingDirectory: $(System.DefaultWorkingDirectory)
 
