@@ -267,6 +267,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             return statements;
         }
 
+        // TODO: re-examine if this method need to be virtual or not after tags related method providers are implmented.
         protected virtual IReadOnlyList<MethodBodyStatement> BuildReturnStatements(ValueExpression responseVariable, MethodSignature signature)
         {
             var nullCheckStatement = new IfStatement(
