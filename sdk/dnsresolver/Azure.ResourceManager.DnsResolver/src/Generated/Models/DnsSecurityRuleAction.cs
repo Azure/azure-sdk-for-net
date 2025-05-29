@@ -52,12 +52,10 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         /// <summary> Initializes a new instance of <see cref="DnsSecurityRuleAction"/>. </summary>
         /// <param name="actionType"> The type of action to take. </param>
-        /// <param name="blockResponseCode"> The response code for block actions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DnsSecurityRuleAction(DnsSecurityRuleActionType? actionType, BlockResponseCode? blockResponseCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DnsSecurityRuleAction(DnsSecurityRuleActionType? actionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActionType = actionType;
-            BlockResponseCode = blockResponseCode;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
