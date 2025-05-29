@@ -5,14 +5,14 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 azure-arm: true
 require: https://github.com/Azure/azure-rest-api-specs/blob/8600539fa5ba6c774b4454a401d9cd3cf01a36a7/specification/dnsresolver/resource-manager/readme.md
-tag: package-2025-05
+# tag: package-2025-05 - Commented to default to latest
 library-name: dnsresolver
 namespace: Azure.ResourceManager.DnsResolver
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
   sample: false # Current issue with virtual network dns resolver resouce autogen that is being addressed in autorest repo https://github.com/Azure/autorest.csharp/issues/5134
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -78,7 +78,7 @@ rename-mapping:
   VirtualNetworkDnsForwardingRuleset.id: -|arm-id
 
 directive:
-  - from: dnsresolver.json
+  - from: swagger-document
     where: $.definitions.DnsSecurityRuleAction
     transform: >
       $.properties["blockResponseCode"] = {
