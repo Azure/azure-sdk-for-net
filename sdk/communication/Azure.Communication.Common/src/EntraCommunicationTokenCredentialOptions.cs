@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.Communication
@@ -31,15 +32,7 @@ namespace Azure.Communication
             get => _scopes;
             set
             {
-                if (value == null || value.Length == 0)
-                {
-                    throw new ArgumentException(
-                        $"Scopes must not be null or empty. Ensure all scopes start with either {EntraCommunicationTokenScopes.TeamsExtensionScopePrefix} or {EntraCommunicationTokenScopes.CommunicationClientsScopePrefix}.", nameof(Scopes));
-                }
-                else
-                {
-                    _scopes = value;
-                }
+                _scopes = ValidateScopes(value);
             }
         }
 
@@ -58,6 +51,23 @@ namespace Azure.Communication
             this.ResourceEndpoint = resourceEndpoint;
             this.TokenCredential = entraTokenCredential;
             this.Scopes = DefaultScopes;
+        }
+
+        private static string[] ValidateScopes(string[] scopes)
+        {
+            if (scopes == null || scopes.Length == 0)
+            {
+                throw new ArgumentException(
+                    $"Scopes must not be null or empty. Ensure all scopes start with either {EntraCommunicationTokenScopes.TeamsExtensionScopePrefix} or {EntraCommunicationTokenScopes.CommunicationClientsScopePrefix}.", nameof(scopes));
+            }
+
+            if (scopes.All(item => item.StartsWith(EntraCommunicationTokenScopes.TeamsExtensionScopePrefix))
+                || scopes.All(item => item.StartsWith(EntraCommunicationTokenScopes.CommunicationClientsScopePrefix)))
+            {
+                return scopes;
+            }
+
+            throw new ArgumentException($"Scopes validation failed. Ensure all scopes start with either {EntraCommunicationTokenScopes.TeamsExtensionScopePrefix} or {EntraCommunicationTokenScopes.CommunicationClientsScopePrefix}.", nameof(_scopes));
         }
     }
 }

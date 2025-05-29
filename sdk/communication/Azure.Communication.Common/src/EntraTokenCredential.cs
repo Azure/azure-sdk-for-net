@@ -34,6 +34,10 @@ namespace Azure.Communication
         /// <param name="pipelineTransport">Only for testing.</param>
         public EntraTokenCredential(EntraCommunicationTokenCredentialOptions options, HttpPipelineTransport pipelineTransport = null)
         {
+            Argument.AssertNotNull(options, nameof(options));
+            // Should not ever happen, validated in EntraCommunicationTokenCredentialOptions
+            Argument.AssertNotNullOrEmpty(options.Scopes, nameof(options.Scopes));
+
             this._resourceEndpoint = options.ResourceEndpoint;
             this._scopes = (ICollection<string>)options.Scopes.Clone();
             _pipeline = CreatePipelineFromOptions(options, pipelineTransport);
@@ -142,6 +146,7 @@ namespace Azure.Communication
             }
             else
             {
+                // Should not ever happen, validated in EntraCommunicationTokenCredentialOptions
                 throw new ArgumentException($"Scopes validation failed. Ensure all scopes start with either {EntraCommunicationTokenScopes.TeamsExtensionScopePrefix} or {EntraCommunicationTokenScopes.CommunicationClientsScopePrefix}.", nameof(_scopes));
             }
         }

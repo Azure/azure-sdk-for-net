@@ -43,6 +43,7 @@ namespace Azure.Communication.Identity
             new object[] { new string[] { teamsExtensionScope, communicationClientsScope } },
             new object[] { new string[] { "invalidScope" } },
             new object[] { new string[] { "" } },
+            new object[] { new string[] { } },
         };
 
         [SetUp]
@@ -56,7 +57,7 @@ namespace Azure.Communication.Identity
         }
 
         [Test, TestCaseSource(nameof(validScopes))]
-        public void EntraTokenCredential_Init_ThrowsErrorWithNulls(string[] scopes)
+        public void EntraCommunicationTokenCredentialOptions_Init_ThrowsErrorWithNulls(string[] scopes)
         {
             Assert.Throws<ArgumentNullException>(() => new EntraCommunicationTokenCredentialOptions(
                 null,
@@ -81,7 +82,7 @@ namespace Azure.Communication.Identity
         }
 
         [Test]
-        public void EntraCommunicationTokenCredentialOptions_NullOrEmptyScopes_ThrowsError()
+        public void EntraCommunicationTokenCredentialOptions_NullScopes_ThrowsError()
         {
             Assert.Throws<ArgumentException>(() => new EntraCommunicationTokenCredentialOptions(
                 _resourceEndpoint,
@@ -89,23 +90,36 @@ namespace Azure.Communication.Identity
             {
                 Scopes = null
             });
+        }
 
+        [Test, TestCaseSource(nameof(invalidScopes))]
+        public void EntraCommunicationTokenCredentialOptions_InvalidScopes_ThrowsForInvalidScopes(string[] scopes)
+        {
             Assert.Throws<ArgumentException>(() => new EntraCommunicationTokenCredentialOptions(
                 _resourceEndpoint,
                 _mockTokenCredential.Object)
             {
-                Scopes = new string[] { }
+                Scopes = scopes
             });
         }
 
         [Test]
-        public void EntraTokenCredential_InitWithoutScopes_InitsWithDefaultScope()
+        public void EntraCommunicationTokenCredentialOptions_InitWithoutScopes_InitsWithDefaultScope()
         {
             var credential = new EntraCommunicationTokenCredentialOptions(
                 _resourceEndpoint,
                 _mockTokenCredential.Object);
             var scopes = new[] { "https://communication.azure.com/clients/.default" };
             Assert.AreEqual(credential.Scopes, scopes);
+        }
+
+        [Test]
+        public void EntraTokenCredential_Ctor_NullOptionsThrows()
+        {
+            // Arrange
+            var mockTransport = CreateMockTransport(new[] { CreateMockResponse(200, TokenResponse) });
+            // Assert
+            Assert.Throws<ArgumentException>(() => new EntraTokenCredential(null, mockTransport));
         }
 
         [Test, TestCaseSource(nameof(validScopes))]
@@ -272,24 +286,6 @@ namespace Azure.Communication.Identity
             // Act & Assert
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await entraTokenCredential.GetTokenAsync(CancellationToken.None));
             StringAssert.Contains(lastRetryErrorMessage, ex?.Message);
-        }
-
-        [Test, TestCaseSource(nameof(invalidScopes))]
-        public void EntraTokenCredential_GetToken_ThrowsForInvalidScopes(string[] scopes)
-        {
-            // Arrange
-            var options = CreateEntraTokenCredentialOptions(scopes);
-            var mockResponses = new MockResponse[]
-            {
-                CreateMockResponse(200, TokenResponse)
-            };
-
-            var mockTransport = CreateMockTransport(mockResponses);
-            var entraTokenCredential = new EntraTokenCredential(options, mockTransport);
-
-            // Act & Assert
-            var ex = Assert.ThrowsAsync<ArgumentException>(async () => await entraTokenCredential.GetTokenAsync(CancellationToken.None));
-            StringAssert.Contains("Scopes validation failed. Ensure all scopes start with either", ex?.Message);
         }
 
         [Test]
