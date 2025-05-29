@@ -241,10 +241,6 @@ extends:
               Paths:
               - "/*"
               - "!SessionRecords"
-              Repositories:
-              - Name: azure-sdk/azure-sdk-for-net
-                Commitish: $(branchName)
-                WorkingDirectory: $(System.DefaultWorkingDirectory)
           
           - task: UseNode@1
             displayName: 'Install Node.js'
@@ -321,6 +317,10 @@ extends:
               Paths:
               - "/*"
               - "!SessionRecords"
+              Repositories:
+              - Name: azure-sdk/azure-sdk-for-net
+                Commitish: $(branchName)
+                WorkingDirectory: $(System.DefaultWorkingDirectory)
 
           - task: UseNode@1
             displayName: 'Install Node.js'
