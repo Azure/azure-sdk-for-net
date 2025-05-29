@@ -7,7 +7,7 @@
 - Adds new POST bulk API for large domain list usage.
 
 ### Breaking Changes
-- BlockResponseCode has been removed from the DnsSecurityRule Action type and can no longer be specified.
+- BlockResponseCode has been removed from the DnsSecurityRule Action type in api-version `2025-05-01`.
 
 ## 1.2.0-beta.1 (2024-10-24)
 
