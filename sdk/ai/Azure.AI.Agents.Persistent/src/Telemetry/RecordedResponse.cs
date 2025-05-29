@@ -22,14 +22,17 @@ namespace Azure.AI.Agents.Persistent.Telemetry
         public List<PersistentThreadMessage>? Messages { get; set; }
         public List<RunStep>? RunSteps { get; set; }
 
+        public ThreadRun? LastRun { get; set; }
+        public PersistentThreadMessage? LastMessage { get; set; }
+
+        public List<StreamingMessage>? StreamingMessages { get; set; } = null;
+
         private bool _recordContent = false;
 
         public RecordedResponse(bool recordContent)
         {
             _recordContent = recordContent;
         }
-
-        public List<StreamingMessage>? StreamingMessages { get; set; } = null;
 
         internal void AddStreamingMessage(StreamingMessage message)
         {

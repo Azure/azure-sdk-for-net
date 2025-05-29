@@ -177,6 +177,8 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(run, nameof(run));
             Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
 
+            var scope = OpenTelemetryScope.StartCreateRunStreaming(run.Id, run.AssistantId, _endpoint);
+
             SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(toolOutputs.ToList(), true, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response sendRequest() => SubmitToolOutputsInternal(run.ThreadId, run.Id, true, submitToolOutputsToRunRequest.ToRequestContent(), context);

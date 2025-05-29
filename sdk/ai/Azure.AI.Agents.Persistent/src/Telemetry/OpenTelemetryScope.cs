@@ -23,31 +23,13 @@ namespace Azure.AI.Agents.Persistent.Telemetry
 {
     internal class StreamingMessage
     {
-        public string MessageId { get; set; }
-        public string ThreadId { get; set; }
-        public string AgentId { get; set; }
-        public string RunId { get; set; }
-        public string Role { get; set; }
-        public string Status { get; set; }
-        public int? InputTokens { get; set; }
-        public int? OutputTokens { get; set; }
-        public StringBuilder MessageText { get; } = new StringBuilder();
-
-        public string GetEventContentJson()
+        public StreamingMessage(PersistentThreadMessage message, RunStep runStep)
         {
-            var content = new
-            {
-                content = new
-                {
-                    text = new
-                    {
-                        value = MessageText.ToString()
-                    }
-                },
-                role = Role
-            };
-            return System.Text.Json.JsonSerializer.Serialize(content);
+            Message = message;
+            RunStep = runStep;
         }
+        public RunStep RunStep { get; set; }
+        public PersistentThreadMessage Message { get; set; }
     }
 
     internal class OpenTelemetryScope : IDisposable
@@ -88,12 +70,14 @@ namespace Azure.AI.Agents.Persistent.Telemetry
         private readonly Activity _activity;
         private readonly Stopwatch _duration;
         private readonly TagList _commonTags;
-        private static bool s_traceContent = AppContextSwitchHelper.GetConfigValue(
-            TraceContentsSwitch,
-            TraceContentsEnvironmentVariable);
-        private static bool s_enableTelemetry = AppContextSwitchHelper.GetConfigValue(
-            EnableOpenTelemetrySwitch,
-            EnableOpenTelemetryEnvironmentVariable);
+        private static bool s_traceContent = true;
+        private static bool s_enableTelemetry = true;
+        //private static bool s_traceContent = AppContextSwitchHelper.GetConfigValue(
+        //    TraceContentsSwitch,
+        //    TraceContentsEnvironmentVariable);
+        //private static bool s_enableTelemetry = AppContextSwitchHelper.GetConfigValue(
+        //    EnableOpenTelemetrySwitch,
+        //    EnableOpenTelemetryEnvironmentVariable);
         private RecordedResponse _response;
         private string _errorType;
         private Exception _exception;
@@ -101,7 +85,6 @@ namespace Azure.AI.Agents.Persistent.Telemetry
         private int _hasEnded = 0;
         private readonly OpenTelemetryScopeType _scopeType;
         // In your handler class:
-        private StreamingMessage _currentStreamingMessage;
 
         /// <summary>
         /// Create the instance of OpenTelemetryScope for agent creation.
@@ -239,7 +222,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
                 return null;
             }
 
-            var scope = new OpenTelemetryScope(OperationNameValueStartThreadRun, endpoint);
+            var scope = new OpenTelemetryScope(OperationNameValueProcessThreadRun, endpoint);
             scope.SetTagMaybe(GenAiThreadIdKey, threadId);
             scope.SetTagMaybe(GenAiAgentIdKey, agentId);
 
@@ -657,18 +640,22 @@ namespace Azure.AI.Agents.Persistent.Telemetry
 
             switch (update)
             {
-                case MessageContentUpdate contentUpdate:
-                    if (_currentStreamingMessage == null)
-                        _currentStreamingMessage = new StreamingMessage();
+                //case MessageContentUpdate contentUpdate:
+                //    if (_currentStreamingMessage == null)
+                //        _currentStreamingMessage = new StreamingMessage();
 
-                    if (!string.IsNullOrEmpty(contentUpdate.Text))
-                        _currentStreamingMessage.MessageText.Append(contentUpdate.Text);
+                //    if (!string.IsNullOrEmpty(contentUpdate.Text))
+                //        _currentStreamingMessage.MessageText.Append(contentUpdate.Text);
 
-                    // Optionally set role/messageId if not already set
-                    if (string.IsNullOrEmpty(_currentStreamingMessage.Role) && contentUpdate.Role.HasValue)
-                        _currentStreamingMessage.Role = contentUpdate.Role.Value.ToString();
-                    if (string.IsNullOrEmpty(_currentStreamingMessage.MessageId))
-                        _currentStreamingMessage.MessageId = contentUpdate.MessageId;
+                //    // Optionally set role/messageId if not already set
+                //    if (string.IsNullOrEmpty(_currentStreamingMessage.Role) && contentUpdate.Role.HasValue)
+                //        _currentStreamingMessage.Role = contentUpdate.Role.Value.ToString();
+                //    if (string.IsNullOrEmpty(_currentStreamingMessage.MessageId))
+                //        _currentStreamingMessage.MessageId = contentUpdate.MessageId;
+                //    break;
+                case RunUpdate runUpdate:
+                    var threadRun = runUpdate.Value;
+                    _response.LastRun = threadRun;
                     break;
 
                 case MessageStatusUpdate statusUpdate:
@@ -676,18 +663,27 @@ namespace Azure.AI.Agents.Persistent.Telemetry
                     var status = value.Status.ToString();
                     if (status == "completed" || status == "failed")
                     {
-                        if (_currentStreamingMessage == null)
-                            _currentStreamingMessage = new StreamingMessage();
+                        _response.LastMessage = value;
+                    }
+                    break;
 
-                        _currentStreamingMessage.Status = status;
-                        _currentStreamingMessage.MessageId = value.Id;
-                        _currentStreamingMessage.ThreadId = value.ThreadId;
-                        _currentStreamingMessage.AgentId = value.AssistantId;
-                        _currentStreamingMessage.RunId = value.RunId;
-                        _currentStreamingMessage.Role = value.Role.ToString();
-
-                        _response.AddStreamingMessage(_currentStreamingMessage);
-                        _currentStreamingMessage = null;
+                case RunStepUpdate runStepUpdate:
+                    if (_response.RunSteps == null)
+                        _response.RunSteps = new List<RunStep>();
+                    var runStep = runStepUpdate.Value;
+                    if ((runStep.Status == RunStepStatus.Completed) &&
+                        (runStep.Type == RunStepType.ToolCalls) &&
+                        (runStep.StepDetails is RunStepToolCallDetails toolCallDetails))
+                    {
+                        _response.RunSteps.Add(runStep);
+                    }
+                    else if ((runStep.Status == RunStepStatus.Completed) &&
+                             (runStep.Type == RunStepType.MessageCreation) &&
+                             (_response.LastMessage != null))
+                    {
+                        StreamingMessage message = new StreamingMessage(_response.LastMessage, runStep);
+                        _response.AddStreamingMessage(message);
+                        _response.LastMessage = null;
                     }
                     break;
             }
@@ -751,6 +747,20 @@ namespace Azure.AI.Agents.Persistent.Telemetry
                 return;
             }
 
+            if (_response.LastRun != null)
+            {
+                _response.RunStatus = _response.LastRun.Status.ToString();
+                _response.RunId = _response.LastRun.Id;
+                _response.AgentId = _response.LastRun.AssistantId;
+                _response.ThreadId = _response.LastRun.ThreadId;
+                if (_response.LastRun.Usage != null)
+                {
+                    _response.CompletionTokens = (int?)_response.LastRun.Usage.CompletionTokens;
+                    _response.PromptTokens = (int?)_response.LastRun.Usage.PromptTokens;
+                }
+                _response.Model = _response.LastRun.Model;
+            }
+
             if (!string.IsNullOrEmpty(_response.Model))
             {
                 finalTags.Add(GenAiResponseModelKey, _response.Model);
@@ -795,27 +805,35 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             {
                 foreach (StreamingMessage streamingMessage in _response.StreamingMessages)
                 {
-                    var jsonDocument = JsonDocument.Parse($@"
-                        {{
-                            ""id"": ""{streamingMessage.MessageId}"",
-                            ""thread_id"": ""{streamingMessage.ThreadId}"",
-                            ""assistant_id"": ""{streamingMessage.AgentId}"",
-                            ""run_id"": ""{streamingMessage.RunId}"",
-                            ""role"": ""{streamingMessage.Role}"",
-                            ""contentItems"": [
-                                {{
-                                    ""type"": ""text"",
-                                    ""text"": {{
-                                        ""value"": {JsonSerializer.Serialize(streamingMessage.MessageText.ToString())}
-                                    }}
-                                }}
-                            ]
-                        }}").RootElement;
-                    // With the following code:
-                    var threadMessage = PersistentThreadMessage.DeserializePersistentThreadMessage(jsonDocument);
-                    RecordThreadMessageEventAttributes(threadMessage);
+                    RecordThreadMessageEventAttributes(streamingMessage.Message, streamingMessage.RunStep);
                 }
             }
+
+            //if (_response.StreamingMessages != null)
+            //{
+            //    foreach (StreamingMessage streamingMessage in _response.StreamingMessages)
+            //    {
+            //        var jsonDocument = JsonDocument.Parse($@"
+            //            {{
+            //                ""id"": ""{streamingMessage.MessageId}"",
+            //                ""thread_id"": ""{streamingMessage.ThreadId}"",
+            //                ""assistant_id"": ""{streamingMessage.AgentId}"",
+            //                ""run_id"": ""{streamingMessage.RunId}"",
+            //                ""role"": ""{streamingMessage.Role}"",
+            //                ""contentItems"": [
+            //                    {{
+            //                        ""type"": ""text"",
+            //                        ""text"": {{
+            //                            ""value"": {JsonSerializer.Serialize(streamingMessage.MessageText.ToString())}
+            //                        }}
+            //                    }}
+            //                ]
+            //            }}").RootElement;
+            //        // With the following code:
+            //        var threadMessage = PersistentThreadMessage.DeserializePersistentThreadMessage(jsonDocument);
+            //        RecordThreadMessageEventAttributes(threadMessage);
+            //    }
+            //}
 
             if (_response.RunSteps != null)
             {
@@ -826,7 +844,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             }
         }
 
-        private void RecordThreadMessageEventAttributes(PersistentThreadMessage threadMessage)
+        private void RecordThreadMessageEventAttributes(PersistentThreadMessage threadMessage, RunStep runStep = null)
         {
             // Derive the event name based on the role
             string eventName = threadMessage.Role.ToString().ToLower() switch
@@ -916,9 +934,20 @@ namespace Azure.AI.Agents.Persistent.Telemetry
                 attributes[GenAiRunIdKey] = threadMessage.RunId;
             }
 
+            attributes[GenAiMessageStatusKey] = threadMessage.Status;
+
             if (!string.IsNullOrEmpty(threadMessage.Id))
             {
                 attributes[GenAiMessageIdKey] = threadMessage.Id;
+            }
+
+            if (runStep != null)
+            {
+                if (runStep.Usage != null)
+                {
+                    attributes[GenAiUsageInputTokensKey] = runStep.Usage.PromptTokens;
+                    attributes[GenAiUsageOutputTokensKey] = runStep.Usage.CompletionTokens;
+                }
             }
 
             attributes[GenAiEventContent] = serializedEventBody;
