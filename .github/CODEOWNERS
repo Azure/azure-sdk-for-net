@@ -592,10 +592,10 @@
 # ServiceOwners:                                                   @Tanmayeekamath
 
 # PRLabel: %Load Test Service
-/sdk/loadtestservice/                                              @prativen @mitsha-microsoft @ninallam
+/sdk/loadtestservice/                                              @azure/testing-services
 
 # ServiceLabel: %Load Test Service
-# ServiceOwners:                                                   @prativen @mitsha-microsoft @ninallam
+# ServiceOwners:                                                   @azure/testing-services
 
 # ServiceLabel: %Logic App
 # ServiceOwners:                                                   @Azure/azure-logicapps-team
@@ -1057,6 +1057,12 @@
 
 # PRLabel: %Network - CDN
 /sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978 @Ptnan7
+
+# PRLabel: %Network - DNS Private Resolver
+/sdk/dnsresolver/Azure.ResourceManager.*/                          @jamesvoongms @jotrivet
+
+# ServiceLabel: %Network - DNS Private Resolver %Mgmt
+# ServiceOwners:                                                   @jamesvoongms @jotrivet
 
 # PRLabel: %Network - Front Door
 /sdk/frontdoor/Azure.ResourceManager.*/                            @ArcturusZhang @ArthurMa1978 @Ptnan7
