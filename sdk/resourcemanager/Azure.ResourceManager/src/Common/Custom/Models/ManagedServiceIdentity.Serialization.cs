@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Models
             }
         }
 
-        internal static ManagedServiceIdentity DeserializeManagedServiceIdentity(JsonElement element, ModelReaderWriterOptions options)
+        internal static ManagedServiceIdentity DeserializeManagedServiceIdentity(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -230,11 +230,6 @@ namespace Azure.ResourceManager.Models
             return new ManagedServiceIdentity(principalId, tenantId, type, userAssignedIdentities ?? new ChangeTrackingDictionary<ResourceIdentifier, UserAssignedIdentity>());
         }
 
-        internal static ManagedServiceIdentity DeserializeManagedServiceIdentity(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            return DeserializeManagedServiceIdentity(element, options, null);
-        }
-
         ManagedServiceIdentity IPersistableModel<ManagedServiceIdentity>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
@@ -262,7 +257,7 @@ namespace Azure.ResourceManager.Models
             public override ManagedServiceIdentity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeManagedServiceIdentity(document.RootElement, null, options);
+                return DeserializeManagedServiceIdentity(document.RootElement);
             }
         }
     }
