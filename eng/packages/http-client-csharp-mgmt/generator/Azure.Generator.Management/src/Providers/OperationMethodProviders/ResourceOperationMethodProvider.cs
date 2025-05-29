@@ -18,7 +18,7 @@ using System.Linq;
 using System.Threading;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
-namespace Azure.Generator.Management.Providers.OperationMethodProvider
+namespace Azure.Generator.Management.Providers.OperationMethodProviders
 {
     /// <summary>
     /// Provider for building operation methods in resource clients.

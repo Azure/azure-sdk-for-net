@@ -6,7 +6,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Azure.Generator.Management.Utilities;
 
-namespace Azure.Generator.Management.Providers.OperationMethodProvider
+namespace Azure.Generator.Management.Providers.OperationMethodProviders
 {
     internal class UpdateOperationMethodProvider(
         ResourceClientProvider resourceClientProvider,

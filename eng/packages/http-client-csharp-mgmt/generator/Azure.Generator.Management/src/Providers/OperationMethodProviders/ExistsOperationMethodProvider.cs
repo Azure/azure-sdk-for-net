@@ -10,7 +10,7 @@ using Microsoft.TypeSpec.Generator.Statements;
 using System.Collections.Generic;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
-namespace Azure.Generator.Management.Providers.OperationMethodProvider
+namespace Azure.Generator.Management.Providers.OperationMethodProviders
 {
     internal class ExistsOperationMethodProvider(
         ResourceClientProvider resourceClientProvider,

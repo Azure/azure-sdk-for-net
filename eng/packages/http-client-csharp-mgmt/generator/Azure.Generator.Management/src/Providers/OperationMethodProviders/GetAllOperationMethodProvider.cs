@@ -9,7 +9,7 @@ using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
-namespace Azure.Generator.Management.Providers.OperationMethodProvider
+namespace Azure.Generator.Management.Providers.OperationMethodProviders
 {
     internal class GetAllOperationMethodProvider(
         ResourceCollectionClientProvider resourceCollectionClientProvider,
@@ -21,7 +21,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProvider
 
         protected override MethodSignature CreateSignature()
         {
-            var isLongRunning = _serviceMethod is InputLongRunningPagingServiceMethod;
             var resourceType = _resourceCollectionClientProvider.ResourceClientCSharpType;
             var returnType = _isAsync
                 ? new CSharpType(typeof(AsyncPageable<>), resourceType)
