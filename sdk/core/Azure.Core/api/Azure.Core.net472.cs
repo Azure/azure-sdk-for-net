@@ -265,11 +265,12 @@ namespace Azure
         public ResponseError(string? code, string? message) { }
         public string? Code { get { throw null; } }
         public string? Message { get { throw null; } }
-        public Azure.ResponseError Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public Azure.ResponseError Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public string GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResponseError System.ClientModel.Primitives.IJsonModel<Azure.ResponseError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResponseError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResponseError System.ClientModel.Primitives.IPersistableModel<Azure.ResponseError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResponseError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResponseError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public override string ToString() { throw null; }
-        public System.BinaryData Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public void Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
     }
     public abstract partial class Response<T> : Azure.NullableResponse<T>
