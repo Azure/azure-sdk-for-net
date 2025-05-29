@@ -18,7 +18,7 @@ using System.Linq;
 using System.Threading;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
-namespace Azure.Generator.Management.Providers
+namespace Azure.Generator.Management.Providers.OperationMethodProvider
 {
     /// <summary>
     /// Provider for building operation methods in resource clients.
@@ -342,7 +342,7 @@ namespace Azure.Generator.Management.Providers
             return [.. arguments];
         }
 
-        protected virtual IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
+        protected IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
         {
             var result = new List<ParameterProvider>();
             if (_serviceMethod.IsLongRunningOperation())

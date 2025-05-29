@@ -9,7 +9,7 @@ using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
-namespace Azure.Generator.Management.Providers
+namespace Azure.Generator.Management.Providers.OperationMethodProvider
 {
     internal class GetAllResourceOperationMethodProvider(
         ResourceCollectionClientProvider resourceCollectionClientProvider,
@@ -25,18 +25,20 @@ namespace Azure.Generator.Management.Providers
             var resourceType = _resourceCollectionClientProvider.ResourceClientCSharpType;
             var returnType = _isAsync
                 ? new CSharpType(typeof(AsyncPageable<>), resourceType)
-                : new CSharpType(typeof(Pageable<>), resourceType);            return new MethodSignature(
-                _isAsync ? "GetAllAsync" : "GetAll",
-                _convenienceMethod.Signature.Description,
-                _convenienceMethod.Signature.Modifiers,
-                returnType,
-                _convenienceMethod.Signature.ReturnDescription,
-                GetOperationMethodParameters(),
-                _convenienceMethod.Signature.Attributes,
-                _convenienceMethod.Signature.GenericArguments,
-                _convenienceMethod.Signature.GenericParameterConstraints,
-                _convenienceMethod.Signature.ExplicitInterface,
-                _convenienceMethod.Signature.NonDocumentComment);
+                : new CSharpType(typeof(Pageable<>), resourceType);
+
+            return new MethodSignature(
+            _isAsync ? "GetAllAsync" : "GetAll",
+            _convenienceMethod.Signature.Description,
+            _convenienceMethod.Signature.Modifiers,
+            returnType,
+            _convenienceMethod.Signature.ReturnDescription,
+            GetOperationMethodParameters(),
+            _convenienceMethod.Signature.Attributes,
+            _convenienceMethod.Signature.GenericArguments,
+            _convenienceMethod.Signature.GenericParameterConstraints,
+            _convenienceMethod.Signature.ExplicitInterface,
+            _convenienceMethod.Signature.NonDocumentComment);
         }
 
         protected override MethodBodyStatement[] BuildBodyStatements()

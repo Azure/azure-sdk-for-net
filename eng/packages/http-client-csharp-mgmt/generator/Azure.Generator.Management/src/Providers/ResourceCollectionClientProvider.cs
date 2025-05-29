@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Providers.OperationMethodProvider;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
