@@ -11,7 +11,7 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers.OperationMethodProvider
 {
-    internal class GetAllResourceOperationMethodProvider(
+    internal class GetAllOperationMethodProvider(
         ResourceCollectionClientProvider resourceCollectionClientProvider,
         InputServiceMethod method,
         MethodProvider convenienceMethod,

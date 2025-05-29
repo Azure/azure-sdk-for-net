@@ -131,7 +131,7 @@ namespace Azure.Generator.Management.Providers
         private MethodProvider BuildGetAllMethod(bool isAsync)
         {
             var convenienceMethod = GetCorrespondingConvenienceMethod(_getAll!.Operation, isAsync);
-            return new GetAllResourceOperationMethodProvider(this, _getAll, convenienceMethod, isAsync);
+            return new GetAllOperationMethodProvider(this, _getAll, convenienceMethod, isAsync);
         }
 
         private List<MethodProvider> BuildGetMethods()
