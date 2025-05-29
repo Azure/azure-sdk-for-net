@@ -1,6 +1,6 @@
 # Microsoft Azure MongoDBAtlas management client library for .NET
 
-MongoDB Atlas is fully-managed document database,  including native vector search capabilities, directly into the Azure ecosystem. Build and scale modern AI applications with a streamlined setup of an Atlas Organization, unified billing management, and seamless access to Azure services.
+MongoDB Atlas is fully-managed document database, including native vector search capabilities, directly into the Azure ecosystem. Build and scale modern AI applications with a streamlined setup of an Atlas Organization, unified billing management, and seamless access to Azure services.
 
 This library supports managing Microsoft MongoDB Atlas resources.
 
