@@ -15,12 +15,12 @@ namespace Azure
     /// <summary>
     /// Represents an error returned by an Azure Service.
     /// </summary>
-    [JsonConverter(typeof(ResponseErrorConverter))]
+    [JsonConverter(typeof(Converter))]
     [TypeReferenceType(true, [nameof(Target), nameof(Details)])]
     public sealed partial class ResponseError : IJsonModel<ResponseError>
     {
         // This class needs to be internal rather than private so that it can be used by the System.Text.Json source generator
-        internal class ResponseErrorConverter : JsonConverter<ResponseError?>
+        internal class Converter : JsonConverter<ResponseError?>
         {
             public override ResponseError? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -168,7 +168,7 @@ namespace Azure
             ResponseInnerError? innererror = null;
             if (element.TryGetProperty("innererror", out property))
             {
-                innererror = ResponseInnerError.Converter.Read(property);
+                innererror = ResponseInnerError.ReadFromJson(property);
             }
 
             List<ResponseError>? details = null;
@@ -185,6 +185,7 @@ namespace Azure
                     }
                 }
             }
+
             return new ResponseError(code, message, target, element.Clone(), innererror, details);
         }
     }

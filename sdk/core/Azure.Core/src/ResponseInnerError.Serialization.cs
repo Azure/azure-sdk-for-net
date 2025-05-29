@@ -47,7 +47,7 @@ namespace Azure
             writer.WriteEndObject();
         }
 
-        void IJsonModel<ResponseInnerError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -58,7 +58,7 @@ namespace Azure
             WriteInnerError(writer, this);
         }
 
-        ResponseInnerError IJsonModel<ResponseInnerError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        public ResponseInnerError Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -71,7 +71,7 @@ namespace Azure
             return ReadFromJson(element) ?? new ResponseInnerError(null, null, default);
         }
 
-        BinaryData IPersistableModel<ResponseInnerError>.Write(ModelReaderWriterOptions options)
+        public BinaryData Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -88,7 +88,7 @@ namespace Azure
             return new BinaryData(stream.ToArray());
         }
 
-        ResponseInnerError IPersistableModel<ResponseInnerError>.Create(BinaryData data, ModelReaderWriterOptions options)
+        public ResponseInnerError Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -105,7 +105,7 @@ namespace Azure
 
         private string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        private static ResponseInnerError? ReadFromJson(JsonElement element)
+        internal static ResponseInnerError? ReadFromJson(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

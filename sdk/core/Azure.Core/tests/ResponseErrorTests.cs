@@ -249,7 +249,7 @@ namespace Azure.Core.Tests
         public void WriteMethodsSerializeSimpleResponseError()
         {
             // Create a simple ResponseError instance
-            var originalError = new ResponseError("BadError", "Something wasn't awesome");
+            var originalError = new ResponseError("BadError", "Something was not awesome");
 
             // Write to JSON using the ModelReaderWriter
             var binaryData = ModelReaderWriter.Write(originalError, ModelReaderWriterOptions.Json);
@@ -258,7 +258,7 @@ namespace Azure.Core.Tests
             // Verify the serialized content
             string jsonString = binaryData.ToString();
             Assert.IsTrue(jsonString.Contains("\"code\":\"BadError\""));
-            Assert.IsTrue(jsonString.Contains("\"message\":\"Something wasn't awesome\""));
+            Assert.IsTrue(jsonString.Contains("\"message\":\"Something was not awesome\""));
 
             // Deserialize back to verify round-trip
             var deserializedError = ModelReaderWriter.Read<ResponseError>(binaryData, ModelReaderWriterOptions.Json);
@@ -272,7 +272,7 @@ namespace Azure.Core.Tests
             // First create a complex error structure by deserializing known JSON
             var complexJson = "{" +
                 "\"code\":\"BadError\"," +
-                "\"message\":\"Something wasn't awesome\"," +
+                "\"message\":\"Something was not awesome\"," +
                 "\"target\":\"Error target\"," +
                 "\"details\": [" +
                     "{\"code\":\"Code 1\",\"message\":\"Message 1\"}," +
@@ -297,7 +297,7 @@ namespace Azure.Core.Tests
             // Verify key elements are in the serialized JSON
             string jsonString = serializedData.ToString();
             Assert.IsTrue(jsonString.Contains("\"code\":\"BadError\""));
-            Assert.IsTrue(jsonString.Contains("\"message\":\"Something wasn't awesome\""));
+            Assert.IsTrue(jsonString.Contains("\"message\":\"Something was not awesome\""));
             Assert.IsTrue(jsonString.Contains("\"target\":\"Error target\""));
             Assert.IsTrue(jsonString.Contains("\"details\":["));
             Assert.IsTrue(jsonString.Contains("\"code\":\"Code 1\""));
