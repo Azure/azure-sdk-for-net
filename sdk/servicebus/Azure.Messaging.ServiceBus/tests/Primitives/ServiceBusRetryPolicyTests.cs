@@ -177,9 +177,9 @@ namespace Azure.Messaging.ServiceBus.Tests
                 return null;
             }
 
-            protected override int GetMaxRetries()
+            protected override int CalculateRemainingRetries(int currentTryCount)
             {
-                return MaxRetriesValue;
+                return MaxRetriesValue - currentTryCount;
             }
 
             // Test helper method to set server busy state
