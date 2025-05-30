@@ -16,14 +16,13 @@ namespace Azure.Generator.Utilities
         /// If the namespace starts with `Azure`, returns every segment concatenating together after the `Azure` prefix.
         /// Returns the namespace as the RP name if nothing matches.
         /// </summary>
-        /// <param name="namespaceName"></param>
-        /// <returns></returns>
-        public static string GetResourceProviderName(string namespaceName)
+        public static string GetResourceProviderName()
         {
-            var segments = namespaceName.Split('.');
-            if (namespaceName.StartsWith(AzurePackageNamespacePrefix))
+            var packageName = AzureClientGenerator.Instance.Configuration.PackageName;
+            var segments = packageName.Split('.');
+            if (packageName.StartsWith(AzurePackageNamespacePrefix))
             {
-                if (namespaceName.StartsWith(AzureMgmtPackageNamespacePrefix))
+                if (packageName.StartsWith(AzureMgmtPackageNamespacePrefix))
                 {
                     return string.Join("", segments.Skip(2)); // skips "Azure" and "ResourceManager"
                 }

@@ -29,7 +29,7 @@ namespace Azure.Generator.Providers
         public ClientBuilderExtensionsDefinition(IEnumerable<ClientProvider> clients)
         {
             _clients = clients.ToList();
-            _resourceProviderName = TypeNameUtilities.GetResourceProviderName(_clients[0].Name);
+            _resourceProviderName = TypeNameUtilities.GetResourceProviderName();
             AzureClientGenerator.Instance.AddTypeToKeep(this);
         }
 
@@ -76,7 +76,7 @@ namespace Azure.Generator.Providers
                         continue;
                     }
 
-                    if (constructor.Signature.Parameters.Last().Type.Equals(client.ClientOptionsParameter.Type))
+                    if (constructor.Signature.Parameters.LastOrDefault()?.Type.Equals(client.ClientOptionsParameter.Type) == true)
                     {
                         continue;
                     }

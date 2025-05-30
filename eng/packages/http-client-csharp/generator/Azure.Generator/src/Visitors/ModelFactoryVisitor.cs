@@ -13,7 +13,7 @@ namespace Azure.Generator.Visitors
         {
             if (type is ModelFactoryProvider && type.CustomCodeView == null)
             {
-                type.Type.Update(name: $"{TypeNameUtilities.GetResourceProviderName(type.Type.Namespace)}ModelFactory");
+                type.Type.Update(name: $"{TypeNameUtilities.GetResourceProviderName()}ModelFactory");
             }
 
             return type;
