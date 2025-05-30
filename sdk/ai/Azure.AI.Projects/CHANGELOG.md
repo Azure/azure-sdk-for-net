@@ -19,7 +19,7 @@
 
 ### Breaking Changes
 * Azure AI Foundry Project endpoint is now required to construct the `AIProjectClient`. It has the form
-`https://<your-ai-services-account-name>.services.ai.azure.com/api/projects/<your-project-name>`. Find it in your AI Foundry Project Overview page. 
+`https://<your-ai-services-account-name>.services.ai.azure.com/api/projects/<your-project-name>`. Find it in your AI Foundry Project Overview page. Support for project connection string and hub-based projects has been discontinued. We recommend creating a new Azure AI Foundry resource utilizing project endpoint. If this is not possible, please pin the version of `Azure.AI.Projects` to version `1.0.0-beta.8` or earlier.
 * Agents are now implemented in a separate package `Azure.AI.Agents.Persistent`. Use the `GetPersistentAgentsClient` method on the
 `AIProjectsClient` to create, run and delete agents. However there have been some breaking changes in these operations. See [Agents package document and samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Agents.Persistent) for more details.
 * Several changes to the `Connections` methods, including the response object (now it is simply called `Connection`). The class `ConnectionProperties` was renamed to `Connection`, and its properties have changed.
