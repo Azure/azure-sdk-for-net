@@ -38,50 +38,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            writer.WritePropertyName("model"u8);
-            writer.WriteStringValue(Model);
-            if (Optional.IsDefined(Manufacturer))
-            {
-                writer.WritePropertyName("manufacturer"u8);
-                writer.WriteStringValue(Manufacturer);
-            }
-            if (Optional.IsCollectionDefined(SupportedVersions))
-            {
-                writer.WritePropertyName("supportedVersions"u8);
-                writer.WriteStartArray();
-                foreach (var item in SupportedVersions)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(SupportedRoleTypes))
-            {
-                writer.WritePropertyName("supportedRoleTypes"u8);
-                writer.WriteStartArray();
-                foreach (var item in SupportedRoleTypes)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Interfaces))
-            {
-                writer.WritePropertyName("interfaces"u8);
-                writer.WriteStartArray();
-                foreach (var item in Interfaces)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
+            writer.WriteObjectValue(Properties, options);
         }
 
         NetworkDeviceSkuData IJsonModel<NetworkDeviceSkuData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -104,20 +61,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
+            NetworkDeviceSkuProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string model = default;
-            string manufacturer = default;
-            IList<SupportedVersionProperties> supportedVersions = default;
-            IList<NetworkDeviceRoleName> supportedRoleTypes = default;
-            IList<NetworkDeviceInterfaceProperties> interfaces = default;
-            NetworkFabricProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = NetworkDeviceSkuProperties.DeserializeNetworkDeviceSkuProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -142,79 +99,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("model"u8))
-                        {
-                            model = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("manufacturer"u8))
-                        {
-                            manufacturer = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("supportedVersions"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<SupportedVersionProperties> array = new List<SupportedVersionProperties>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(SupportedVersionProperties.DeserializeSupportedVersionProperties(item, options));
-                            }
-                            supportedVersions = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("supportedRoleTypes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<NetworkDeviceRoleName> array = new List<NetworkDeviceRoleName>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(new NetworkDeviceRoleName(item.GetString()));
-                            }
-                            supportedRoleTypes = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("interfaces"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<NetworkDeviceInterfaceProperties> array = new List<NetworkDeviceInterfaceProperties>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(NetworkDeviceInterfaceProperties.DeserializeNetworkDeviceInterfaceProperties(item, options));
-                            }
-                            interfaces = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -226,12 +110,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 name,
                 type,
                 systemData,
-                model,
-                manufacturer,
-                supportedVersions ?? new ChangeTrackingList<SupportedVersionProperties>(),
-                supportedRoleTypes ?? new ChangeTrackingList<NetworkDeviceRoleName>(),
-                interfaces ?? new ChangeTrackingList<NetworkDeviceInterfaceProperties>(),
-                provisioningState,
+                properties,
                 serializedAdditionalRawData);
         }
 

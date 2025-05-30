@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_NetworkDeviceSkusGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkDeviceSkus_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkDeviceSkus_Get.json
             // this example is just showing the usage of "NetworkDeviceSkus_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkDeviceSkuResource created on azure
             // for more information of creating NetworkDeviceSkuResource, please refer to the document of NetworkDeviceSkuResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string networkDeviceSkuName = "example-deviceSku";
             ResourceIdentifier networkDeviceSkuResourceId = NetworkDeviceSkuResource.CreateResourceIdentifier(subscriptionId, networkDeviceSkuName);
             NetworkDeviceSkuResource networkDeviceSku = client.GetNetworkDeviceSkuResource(networkDeviceSkuResourceId);
