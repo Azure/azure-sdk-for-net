@@ -131,7 +131,8 @@ var credential = new CommunicationTokenCredential(entraTokenCredentialOptions);
 ```
 
 Other scenarios for Entra users to utilize Azure Communication Services are currently in the **preview stage only and should not be used in production**.
-The scopes for these scenarios follow the format `https://communication.azure.com/clients/<ACS Scope>`. If specific scopes are not provided, the default scopes will be set to `https://communication.azure.com/clients/.default`.
+The scopes for these scenarios follow the format `https://communication.azure.com/clients/<Azure Communication Services Clients API permission>`.
+If specific scopes are not provided, the default scopes will be set to `https://communication.azure.com/clients/.default`.
 ```C# 
 var options = new InteractiveBrowserCredentialOptions
     {
