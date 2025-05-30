@@ -186,7 +186,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             public void SetServerBusyForTest()
             {
                 ServerBusyExceptionMessage = "Test server busy";
-                var serverBusyStateField = typeof(ServiceBusRetryPolicy).GetField("_serverBusyState", 
+                var serverBusyStateField = typeof(ServiceBusRetryPolicy).GetField("_serverBusyState",
                     System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
                 serverBusyStateField?.SetValue(this, 1); // Set to ServerBusyState
             }
