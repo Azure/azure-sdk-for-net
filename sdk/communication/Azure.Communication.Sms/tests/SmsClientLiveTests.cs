@@ -191,7 +191,7 @@ namespace Azure.Communication.Sms.Tests
             try
             {
                 SmsSendResult result = await client.SendAsync(
-                   from: null,
+                   from: TestEnvironment.FromPhoneNumber,
                    to: TestEnvironment.ToPhoneNumber,
                    message: "Hi",
                    options: new SmsSendOptions(true)
@@ -214,7 +214,7 @@ namespace Azure.Communication.Sms.Tests
             try
             {
                 SmsSendResult result = await client.SendAsync(
-                   from: null,
+                   from: TestEnvironment.FromPhoneNumber,
                    to: TestEnvironment.ToPhoneNumber,
                    message: "Hi",
                    options: new SmsSendOptions(true)
@@ -224,7 +224,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual(nameof(MessagingConnectOptions.Partner).ToLower(), ex.ParamName);
+                Assert.AreEqual(nameof(MessagingConnectOptions.Partner).ToLower(), ex.ParamName?.ToLower());
                 return;
             }
             Assert.Fail("SendAsync should have thrown an exception.");
