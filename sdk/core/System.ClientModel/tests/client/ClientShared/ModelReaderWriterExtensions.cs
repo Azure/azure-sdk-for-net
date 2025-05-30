@@ -176,7 +176,7 @@ internal static class ModelReaderWriterExtensions
         writer.WriteNumberValue(value.ToUnixTimeSeconds());
     }
 
-    public static void WriteObjectValue(this Utf8JsonWriter writer, object? value)
+    public static void WriteObjectValue(this Utf8JsonWriter writer, object? value, ModelReaderWriterOptions? options = default)
     {
         switch (value)
         {
@@ -184,7 +184,8 @@ internal static class ModelReaderWriterExtensions
                 writer.WriteNullValue();
                 break;
             case IJsonModel<object> writeable:
-                writeable.Write(writer, ModelReaderWriterHelper.WireOptions);
+                options ??= ModelReaderWriterHelper.WireOptions;
+                options.ResolveProxy(writeable).Write(writer, options);
                 break;
             case byte[] bytes:
                 writer.WriteBase64StringValue(bytes);
