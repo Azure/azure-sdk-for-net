@@ -216,15 +216,15 @@ namespace MgmtTypeSpec.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FooData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="fooData"> The <see cref="FooData"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(FooData fooData)
+        /// <param name="data"> The <see cref="FooData"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(FooData data)
         {
-            if (fooData == null)
+            if (data == null)
             {
                 return null;
             }
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(fooData, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             return content;
         }
 

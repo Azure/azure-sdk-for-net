@@ -4,6 +4,7 @@
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,6 @@ namespace Azure.Generator.Management
     /// <inheritdoc/>
     public class ManagementInputLibrary : InputLibrary
     {
-        private IReadOnlyList<InputClient>? _allClients;
         private IReadOnlyDictionary<InputClient, ResourceMetadata>? _resourceMetadata;
         private IReadOnlyDictionary<string, InputModelType>? _inputModelsByCrossLanguageDefinitionId;
         private IReadOnlyDictionary<string, InputClient>? _inputClientsByCrossLanguageDefinitionId;
@@ -23,16 +23,11 @@ namespace Azure.Generator.Management
         {
         }
 
-        /// <summary>
-        /// All clients in the input library, including the subclients.
-        /// </summary>
-        internal IReadOnlyList<InputClient> AllClients => _allClients ??= EnumerateClients();
-
         private IReadOnlyDictionary<InputClient, ResourceMetadata> ResourceMetadata => _resourceMetadata ??= DeserializeResourceMetadata();
 
         private IReadOnlyDictionary<string, InputModelType> InputModelsByCrossLanguageDefinitionId => _inputModelsByCrossLanguageDefinitionId ??= BuildModelCrossLanguageDefinitionIds();
 
-        private IReadOnlyDictionary<string, InputClient> InputClientsByCrossLanguageDefinitionId => _inputClientsByCrossLanguageDefinitionId ??= AllClients.ToDictionary(c => c.CrossLanguageDefinitionId, c => c);
+        private IReadOnlyDictionary<string, InputClient> InputClientsByCrossLanguageDefinitionId => _inputClientsByCrossLanguageDefinitionId ??= InputNamespace.Clients.ToDictionary(c => c.CrossLanguageDefinitionId, c => c);
 
         internal ResourceMetadata? GetResourceMetadata(InputClient client)
             => ResourceMetadata.TryGetValue(client, out var metadata) ? metadata : null;
@@ -45,18 +40,6 @@ namespace Azure.Generator.Management
 
         internal bool IsResourceModel(InputModelType model)
             => model.Decorators.Any(d => d.Name.Equals(KnownDecorators.ArmResourceInternal));
-
-        private IReadOnlyList<InputClient> EnumerateClients()
-        {
-            var clients = new List<InputClient>(InputNamespace.Clients);
-            for (int i = 0; i < clients.Count; i++)
-            {
-                var client = clients[i];
-                clients.AddRange(client.Children);
-            }
-
-            return clients;
-        }
 
         private IReadOnlyDictionary<string, InputModelType> BuildModelCrossLanguageDefinitionIds()
         {
@@ -76,7 +59,7 @@ namespace Azure.Generator.Management
         private IReadOnlyDictionary<InputClient, ResourceMetadata> DeserializeResourceMetadata()
         {
             var resourceMetadata = new Dictionary<InputClient, ResourceMetadata>();
-            foreach (var client in AllClients)
+            foreach (var client in InputNamespace.Clients)
             {
                 var decorator = client.Decorators.FirstOrDefault(d => d.Name == KnownDecorators.ResourceMetadata);
                 if (decorator != null)
