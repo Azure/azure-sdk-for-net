@@ -279,16 +279,16 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
 
             // Act
             Operation<ConversationAuthoringTrainingJobResult> operation = await projectAuthoringClient.TrainAsync(
-                waitUntil: WaitUntil.Completed,
+                waitUntil: WaitUntil.Started,
                 details: trainingJobDetails
             );
 
             // Assert
             Assert.IsNotNull(operation, "The operation should not be null.");
-            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected operation status to be 200 (OK).");
+            Assert.AreEqual(202, operation.GetRawResponse().Status, "Expected operation status to be 202.");
 
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
-            //Assert.IsNotNull(operationLocation, "Expected operation-location header to be present.");
+            Assert.IsNotNull(operationLocation, "Expected operation-location header to be present.");
         }
 
         [RecordedTest]
