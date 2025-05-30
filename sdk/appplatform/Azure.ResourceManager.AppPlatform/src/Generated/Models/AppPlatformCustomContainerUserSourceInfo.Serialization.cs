@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(CustomContainer))
             {
                 writer.WritePropertyName("customContainer"u8);
-                writer.WriteObjectValue(CustomContainer, options);
+                ((IJsonModel<AppPlatformCustomContainer>)CustomContainer).Write(writer, options);
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    customContainer = AppPlatformCustomContainer.DeserializeAppPlatformCustomContainer(property.Value, options);
+                    customContainer = ModelSerializationExtensions.JsonDeserialize<AppPlatformCustomContainer>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

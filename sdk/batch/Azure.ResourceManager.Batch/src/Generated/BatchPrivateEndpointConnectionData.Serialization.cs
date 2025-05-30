@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Batch
             if (options.Format != "W" && Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
+                ((IJsonModel<SubResource>)PrivateEndpoint).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(GroupIds))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Batch
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState, options);
+                ((IJsonModel<BatchPrivateLinkServiceConnectionState>)ConnectionState).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Batch
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
+                            privateEndpoint = ModelSerializationExtensions.JsonDeserialize<SubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("groupIds"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = BatchPrivateLinkServiceConnectionState.DeserializeBatchPrivateLinkServiceConnectionState(property0.Value, options);
+                            privateLinkServiceConnectionState = ModelSerializationExtensions.JsonDeserialize<BatchPrivateLinkServiceConnectionState>(property0.Value);
                             continue;
                         }
                     }

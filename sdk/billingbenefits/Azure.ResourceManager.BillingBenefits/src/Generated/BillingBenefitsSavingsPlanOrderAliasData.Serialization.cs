@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.BillingBenefits
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<BillingBenefitsSku>)Sku).Write(writer, options);
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.BillingBenefits
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties, options);
+                ((IJsonModel<BillingBenefitsAppliedScopeProperties>)AppliedScopeProperties).Write(writer, options);
             }
             if (Optional.IsDefined(Commitment))
             {
                 writer.WritePropertyName("commitment"u8);
-                writer.WriteObjectValue(Commitment, options);
+                ((IJsonModel<BillingBenefitsCommitment>)Commitment).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = BillingBenefitsSku.DeserializeBillingBenefitsSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<BillingBenefitsSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.BillingBenefits
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.BillingBenefits
                             {
                                 continue;
                             }
-                            appliedScopeProperties = BillingBenefitsAppliedScopeProperties.DeserializeBillingBenefitsAppliedScopeProperties(property0.Value, options);
+                            appliedScopeProperties = ModelSerializationExtensions.JsonDeserialize<BillingBenefitsAppliedScopeProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("commitment"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.BillingBenefits
                             {
                                 continue;
                             }
-                            commitment = BillingBenefitsCommitment.DeserializeBillingBenefitsCommitment(property0.Value, options);
+                            commitment = ModelSerializationExtensions.JsonDeserialize<BillingBenefitsCommitment>(property0.Value);
                             continue;
                         }
                     }

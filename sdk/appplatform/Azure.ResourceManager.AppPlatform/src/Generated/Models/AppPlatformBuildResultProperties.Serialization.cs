@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in BuildStages)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AppPlatformBuildStageProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

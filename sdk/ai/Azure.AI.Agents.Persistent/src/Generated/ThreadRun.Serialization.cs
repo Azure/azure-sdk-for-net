@@ -49,7 +49,7 @@ namespace Azure.AI.Agents.Persistent
                 if (RequiredAction != null)
                 {
                     writer.WritePropertyName("required_action"u8);
-                    writer.WriteObjectValue(RequiredAction, options);
+                    ((IJsonModel<RequiredAction>)RequiredAction).Write(writer, options);
                 }
                 else
                 {
@@ -59,7 +59,7 @@ namespace Azure.AI.Agents.Persistent
             if (LastError != null)
             {
                 writer.WritePropertyName("last_error"u8);
-                writer.WriteObjectValue(LastError, options);
+                ((IJsonModel<RunError>)LastError).Write(writer, options);
             }
             else
             {
@@ -73,7 +73,7 @@ namespace Azure.AI.Agents.Persistent
             writer.WriteStartArray();
             foreach (var item in Tools)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ToolDefinition>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("created_at"u8);
@@ -126,7 +126,7 @@ namespace Azure.AI.Agents.Persistent
             if (IncompleteDetails != null)
             {
                 writer.WritePropertyName("incomplete_details"u8);
-                writer.WriteObjectValue(IncompleteDetails, options);
+                ((IJsonModel<IncompleteRunDetails>)IncompleteDetails).Write(writer, options);
             }
             else
             {
@@ -135,7 +135,7 @@ namespace Azure.AI.Agents.Persistent
             if (Usage != null)
             {
                 writer.WritePropertyName("usage"u8);
-                writer.WriteObjectValue(Usage, options);
+                ((IJsonModel<RunCompletionUsage>)Usage).Write(writer, options);
             }
             else
             {
@@ -186,7 +186,7 @@ namespace Azure.AI.Agents.Persistent
             if (TruncationStrategy != null)
             {
                 writer.WritePropertyName("truncation_strategy"u8);
-                writer.WriteObjectValue(TruncationStrategy, options);
+                ((IJsonModel<Truncation>)TruncationStrategy).Write(writer, options);
             }
             else
             {
@@ -244,7 +244,7 @@ namespace Azure.AI.Agents.Persistent
                 if (ToolResources != null)
                 {
                     writer.WritePropertyName("tool_resources"u8);
-                    writer.WriteObjectValue(ToolResources, options);
+                    ((IJsonModel<ToolResources>)ToolResources).Write(writer, options);
                 }
                 else
                 {
@@ -354,7 +354,7 @@ namespace Azure.AI.Agents.Persistent
                         requiredAction = null;
                         continue;
                     }
-                    requiredAction = RequiredAction.DeserializeRequiredAction(property.Value, options);
+                    requiredAction = ModelSerializationExtensions.JsonDeserialize<RequiredAction>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("last_error"u8))
@@ -364,7 +364,7 @@ namespace Azure.AI.Agents.Persistent
                         lastError = null;
                         continue;
                     }
-                    lastError = RunError.DeserializeRunError(property.Value, options);
+                    lastError = ModelSerializationExtensions.JsonDeserialize<RunError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("model"u8))
@@ -424,7 +424,7 @@ namespace Azure.AI.Agents.Persistent
                         incompleteDetails = null;
                         continue;
                     }
-                    incompleteDetails = IncompleteRunDetails.DeserializeIncompleteRunDetails(property.Value, options);
+                    incompleteDetails = ModelSerializationExtensions.JsonDeserialize<IncompleteRunDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("usage"u8))
@@ -434,7 +434,7 @@ namespace Azure.AI.Agents.Persistent
                         usage = null;
                         continue;
                     }
-                    usage = RunCompletionUsage.DeserializeRunCompletionUsage(property.Value, options);
+                    usage = ModelSerializationExtensions.JsonDeserialize<RunCompletionUsage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("temperature"u8))
@@ -484,7 +484,7 @@ namespace Azure.AI.Agents.Persistent
                         truncationStrategy = null;
                         continue;
                     }
-                    truncationStrategy = Truncation.DeserializeTruncation(property.Value, options);
+                    truncationStrategy = ModelSerializationExtensions.JsonDeserialize<Truncation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tool_choice"u8))
@@ -529,7 +529,7 @@ namespace Azure.AI.Agents.Persistent
                         toolResources = null;
                         continue;
                     }
-                    toolResources = ToolResources.DeserializeToolResources(property.Value, options);
+                    toolResources = ModelSerializationExtensions.JsonDeserialize<ToolResources>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parallel_tool_calls"u8))

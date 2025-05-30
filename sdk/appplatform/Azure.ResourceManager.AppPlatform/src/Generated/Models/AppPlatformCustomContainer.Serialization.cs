@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(ImageRegistryCredential))
             {
                 writer.WritePropertyName("imageRegistryCredential"u8);
-                writer.WriteObjectValue(ImageRegistryCredential, options);
+                ((IJsonModel<AppPlatformImageRegistryCredential>)ImageRegistryCredential).Write(writer, options);
             }
             if (Optional.IsDefined(LanguageFramework))
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    imageRegistryCredential = AppPlatformImageRegistryCredential.DeserializeAppPlatformImageRegistryCredential(property.Value, options);
+                    imageRegistryCredential = ModelSerializationExtensions.JsonDeserialize<AppPlatformImageRegistryCredential>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("languageFramework"u8))

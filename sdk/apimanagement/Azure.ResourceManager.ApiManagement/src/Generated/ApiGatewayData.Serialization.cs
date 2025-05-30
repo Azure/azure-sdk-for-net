@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<ApiManagementGatewaySkuProperties>)Sku).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -66,17 +66,17 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Frontend))
             {
                 writer.WritePropertyName("frontend"u8);
-                writer.WriteObjectValue(Frontend, options);
+                ((IJsonModel<FrontendConfiguration>)Frontend).Write(writer, options);
             }
             if (Optional.IsDefined(Backend))
             {
                 writer.WritePropertyName("backend"u8);
-                writer.WriteObjectValue(Backend, options);
+                ((IJsonModel<BackendConfiguration>)Backend).Write(writer, options);
             }
             if (Optional.IsDefined(ConfigurationApi))
             {
                 writer.WritePropertyName("configurationApi"u8);
-                writer.WriteObjectValue(ConfigurationApi, options);
+                ((IJsonModel<GatewayConfigurationApi>)ConfigurationApi).Write(writer, options);
             }
             if (Optional.IsDefined(VirtualNetworkType))
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = ApiManagementGatewaySkuProperties.DeserializeApiManagementGatewaySkuProperties(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<ApiManagementGatewaySkuProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            frontend = FrontendConfiguration.DeserializeFrontendConfiguration(property0.Value, options);
+                            frontend = ModelSerializationExtensions.JsonDeserialize<FrontendConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("backend"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            backend = BackendConfiguration.DeserializeBackendConfiguration(property0.Value, options);
+                            backend = ModelSerializationExtensions.JsonDeserialize<BackendConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("configurationApi"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            configurationApi = GatewayConfigurationApi.DeserializeGatewayConfigurationApi(property0.Value, options);
+                            configurationApi = ModelSerializationExtensions.JsonDeserialize<GatewayConfigurationApi>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("virtualNetworkType"u8))

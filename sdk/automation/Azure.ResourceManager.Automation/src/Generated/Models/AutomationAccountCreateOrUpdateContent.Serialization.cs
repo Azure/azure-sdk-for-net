@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<AutomationSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<AutomationEncryptionProperties>)Encryption).Write(writer, options);
             }
             if (Optional.IsDefined(IsPublicNetworkAccessAllowed))
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            sku = AutomationSku.DeserializeAutomationSku(property0.Value, options);
+                            sku = ModelSerializationExtensions.JsonDeserialize<AutomationSku>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            encryption = AutomationEncryptionProperties.DeserializeAutomationEncryptionProperties(property0.Value, options);
+                            encryption = ModelSerializationExtensions.JsonDeserialize<AutomationEncryptionProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))

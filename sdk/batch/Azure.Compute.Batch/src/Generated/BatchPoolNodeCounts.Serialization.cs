@@ -39,12 +39,12 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(Dedicated))
             {
                 writer.WritePropertyName("dedicated"u8);
-                writer.WriteObjectValue(Dedicated, options);
+                ((IJsonModel<BatchNodeCounts>)Dedicated).Write(writer, options);
             }
             if (Optional.IsDefined(LowPriority))
             {
                 writer.WritePropertyName("lowPriority"u8);
-                writer.WriteObjectValue(LowPriority, options);
+                ((IJsonModel<BatchNodeCounts>)LowPriority).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -101,7 +101,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    dedicated = BatchNodeCounts.DeserializeBatchNodeCounts(property.Value, options);
+                    dedicated = ModelSerializationExtensions.JsonDeserialize<BatchNodeCounts>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lowPriority"u8))
@@ -110,7 +110,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    lowPriority = BatchNodeCounts.DeserializeBatchNodeCounts(property.Value, options);
+                    lowPriority = ModelSerializationExtensions.JsonDeserialize<BatchNodeCounts>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

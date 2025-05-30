@@ -37,22 +37,22 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(AzureBlobFileSystemConfiguration))
             {
                 writer.WritePropertyName("azureBlobFileSystemConfiguration"u8);
-                writer.WriteObjectValue(AzureBlobFileSystemConfiguration, options);
+                ((IJsonModel<AzureBlobFileSystemConfiguration>)AzureBlobFileSystemConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(NfsMountConfiguration))
             {
                 writer.WritePropertyName("nfsMountConfiguration"u8);
-                writer.WriteObjectValue(NfsMountConfiguration, options);
+                ((IJsonModel<NfsMountConfiguration>)NfsMountConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(CifsMountConfiguration))
             {
                 writer.WritePropertyName("cifsMountConfiguration"u8);
-                writer.WriteObjectValue(CifsMountConfiguration, options);
+                ((IJsonModel<CifsMountConfiguration>)CifsMountConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(AzureFileShareConfiguration))
             {
                 writer.WritePropertyName("azureFileShareConfiguration"u8);
-                writer.WriteObjectValue(AzureFileShareConfiguration, options);
+                ((IJsonModel<AzureFileShareConfiguration>)AzureFileShareConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,7 +105,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    azureBlobFileSystemConfiguration = AzureBlobFileSystemConfiguration.DeserializeAzureBlobFileSystemConfiguration(property.Value, options);
+                    azureBlobFileSystemConfiguration = ModelSerializationExtensions.JsonDeserialize<AzureBlobFileSystemConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nfsMountConfiguration"u8))
@@ -114,7 +114,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    nfsMountConfiguration = NfsMountConfiguration.DeserializeNfsMountConfiguration(property.Value, options);
+                    nfsMountConfiguration = ModelSerializationExtensions.JsonDeserialize<NfsMountConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("cifsMountConfiguration"u8))
@@ -123,7 +123,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    cifsMountConfiguration = CifsMountConfiguration.DeserializeCifsMountConfiguration(property.Value, options);
+                    cifsMountConfiguration = ModelSerializationExtensions.JsonDeserialize<CifsMountConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azureFileShareConfiguration"u8))
@@ -132,7 +132,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    azureFileShareConfiguration = AzureFileShareConfiguration.DeserializeAzureFileShareConfiguration(property.Value, options);
+                    azureFileShareConfiguration = ModelSerializationExtensions.JsonDeserialize<AzureFileShareConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

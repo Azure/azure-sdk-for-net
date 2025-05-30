@@ -48,27 +48,27 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Signin))
             {
                 writer.WritePropertyName("signin"u8);
-                writer.WriteObjectValue(Signin, options);
+                ((IJsonModel<PortalConfigPropertiesSignin>)Signin).Write(writer, options);
             }
             if (Optional.IsDefined(Signup))
             {
                 writer.WritePropertyName("signup"u8);
-                writer.WriteObjectValue(Signup, options);
+                ((IJsonModel<PortalConfigPropertiesSignup>)Signup).Write(writer, options);
             }
             if (Optional.IsDefined(Delegation))
             {
                 writer.WritePropertyName("delegation"u8);
-                writer.WriteObjectValue(Delegation, options);
+                ((IJsonModel<PortalConfigDelegationProperties>)Delegation).Write(writer, options);
             }
             if (Optional.IsDefined(Cors))
             {
                 writer.WritePropertyName("cors"u8);
-                writer.WriteObjectValue(Cors, options);
+                ((IJsonModel<PortalConfigCorsProperties>)Cors).Write(writer, options);
             }
             if (Optional.IsDefined(Csp))
             {
                 writer.WritePropertyName("csp"u8);
-                writer.WriteObjectValue(Csp, options);
+                ((IJsonModel<PortalConfigCspProperties>)Csp).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            signin = PortalConfigPropertiesSignin.DeserializePortalConfigPropertiesSignin(property0.Value, options);
+                            signin = ModelSerializationExtensions.JsonDeserialize<PortalConfigPropertiesSignin>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("signup"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            signup = PortalConfigPropertiesSignup.DeserializePortalConfigPropertiesSignup(property0.Value, options);
+                            signup = ModelSerializationExtensions.JsonDeserialize<PortalConfigPropertiesSignup>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("delegation"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            delegation = PortalConfigDelegationProperties.DeserializePortalConfigDelegationProperties(property0.Value, options);
+                            delegation = ModelSerializationExtensions.JsonDeserialize<PortalConfigDelegationProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cors"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            cors = PortalConfigCorsProperties.DeserializePortalConfigCorsProperties(property0.Value, options);
+                            cors = ModelSerializationExtensions.JsonDeserialize<PortalConfigCorsProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("csp"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            csp = PortalConfigCspProperties.DeserializePortalConfigCspProperties(property0.Value, options);
+                            csp = ModelSerializationExtensions.JsonDeserialize<PortalConfigCspProperties>(property0.Value);
                             continue;
                         }
                     }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Analysis.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<AnalysisResourceSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(ResourceType))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Analysis.Models
                     {
                         continue;
                     }
-                    sku = AnalysisResourceSku.DeserializeAnalysisResourceSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<AnalysisResourceSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceType"u8))

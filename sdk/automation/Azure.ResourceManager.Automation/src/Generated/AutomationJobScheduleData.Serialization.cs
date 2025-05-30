@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule, options);
+                ((IJsonModel<ScheduleAssociationProperty>)Schedule).Write(writer, options);
             }
             if (Optional.IsDefined(Runbook))
             {
                 writer.WritePropertyName("runbook"u8);
-                writer.WriteObjectValue(Runbook, options);
+                ((IJsonModel<RunbookAssociationProperty>)Runbook).Write(writer, options);
             }
             if (Optional.IsDefined(RunOn))
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            schedule = ScheduleAssociationProperty.DeserializeScheduleAssociationProperty(property0.Value, options);
+                            schedule = ModelSerializationExtensions.JsonDeserialize<ScheduleAssociationProperty>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("runbook"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            runbook = RunbookAssociationProperty.DeserializeRunbookAssociationProperty(property0.Value, options);
+                            runbook = ModelSerializationExtensions.JsonDeserialize<RunbookAssociationProperty>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("runOn"u8))

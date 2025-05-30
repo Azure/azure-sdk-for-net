@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<PrivateEndpointConnectionRequestProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    properties = PrivateEndpointConnectionRequestProperties.DeserializePrivateEndpointConnectionRequestProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<PrivateEndpointConnectionRequestProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

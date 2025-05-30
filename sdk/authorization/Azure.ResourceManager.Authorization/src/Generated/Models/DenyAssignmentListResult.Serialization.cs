@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DenyAssignmentData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

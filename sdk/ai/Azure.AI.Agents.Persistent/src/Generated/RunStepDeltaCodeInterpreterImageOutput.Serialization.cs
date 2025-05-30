@@ -38,7 +38,7 @@ namespace Azure.AI.Agents.Persistent
             if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
-                writer.WriteObjectValue(Image, options);
+                ((IJsonModel<RunStepDeltaCodeInterpreterImageOutputObject>)Image).Write(writer, options);
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    image = RunStepDeltaCodeInterpreterImageOutputObject.DeserializeRunStepDeltaCodeInterpreterImageOutputObject(property.Value, options);
+                    image = ModelSerializationExtensions.JsonDeserialize<RunStepDeltaCodeInterpreterImageOutputObject>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("index"u8))

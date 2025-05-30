@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<AppPlatformErrorInfo>)Error).Write(writer, options);
             }
             if (Optional.IsDefined(ConfigServer))
             {
                 writer.WritePropertyName("configServer"u8);
-                writer.WriteObjectValue(ConfigServer, options);
+                ((IJsonModel<ConfigServerSettings>)ConfigServer).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    error = AppPlatformErrorInfo.DeserializeAppPlatformErrorInfo(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<AppPlatformErrorInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("configServer"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    configServer = ConfigServerSettings.DeserializeConfigServerSettings(property.Value, options);
+                    configServer = ModelSerializationExtensions.JsonDeserialize<ConfigServerSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

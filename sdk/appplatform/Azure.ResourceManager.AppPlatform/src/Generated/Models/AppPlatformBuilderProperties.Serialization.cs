@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(Stack))
             {
                 writer.WritePropertyName("stack"u8);
-                writer.WriteObjectValue(Stack, options);
+                ((IJsonModel<AppPlatformClusterStackProperties>)Stack).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(BuildpackGroups))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in BuildpackGroups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BuildpacksGroupProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    stack = AppPlatformClusterStackProperties.DeserializeAppPlatformClusterStackProperties(property.Value, options);
+                    stack = ModelSerializationExtensions.JsonDeserialize<AppPlatformClusterStackProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("buildpackGroups"u8))

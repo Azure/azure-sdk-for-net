@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in RuleGroupOverrides)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedRuleGroupOverrideSetting>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

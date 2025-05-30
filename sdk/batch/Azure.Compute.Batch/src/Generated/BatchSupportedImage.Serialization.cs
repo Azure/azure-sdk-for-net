@@ -37,7 +37,7 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("nodeAgentSKUId"u8);
             writer.WriteStringValue(NodeAgentSkuId);
             writer.WritePropertyName("imageReference"u8);
-            writer.WriteObjectValue(ImageReference, options);
+            ((IJsonModel<ImageReference>)ImageReference).Write(writer, options);
             writer.WritePropertyName("osType"u8);
             writer.WriteStringValue(OsType.ToString());
             if (Optional.IsCollectionDefined(Capabilities))
@@ -111,7 +111,7 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("imageReference"u8))
                 {
-                    imageReference = ImageReference.DeserializeImageReference(property.Value, options);
+                    imageReference = ModelSerializationExtensions.JsonDeserialize<ImageReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("osType"u8))

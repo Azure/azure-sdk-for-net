@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(SoftwareUpdateConfiguration))
             {
                 writer.WritePropertyName("softwareUpdateConfiguration"u8);
-                writer.WriteObjectValue(SoftwareUpdateConfiguration, options);
+                ((IJsonModel<SoftwareUpdateConfigurationNavigation>)SoftwareUpdateConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Tasks))
             {
                 writer.WritePropertyName("tasks"u8);
-                writer.WriteObjectValue(Tasks, options);
+                ((IJsonModel<SoftwareUpdateConfigurationRunTasks>)Tasks).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            softwareUpdateConfiguration = SoftwareUpdateConfigurationNavigation.DeserializeSoftwareUpdateConfigurationNavigation(property0.Value, options);
+                            softwareUpdateConfiguration = ModelSerializationExtensions.JsonDeserialize<SoftwareUpdateConfigurationNavigation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            tasks = SoftwareUpdateConfigurationRunTasks.DeserializeSoftwareUpdateConfigurationRunTasks(property0.Value, options);
+                            tasks = ModelSerializationExtensions.JsonDeserialize<SoftwareUpdateConfigurationRunTasks>(property0.Value);
                             continue;
                         }
                     }

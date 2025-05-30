@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(ContentHash))
             {
                 writer.WritePropertyName("contentHash"u8);
-                writer.WriteObjectValue(ContentHash, options);
+                ((IJsonModel<AutomationContentHash>)ContentHash).Write(writer, options);
             }
             if (Optional.IsDefined(Version))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    contentHash = AutomationContentHash.DeserializeAutomationContentHash(property.Value, options);
+                    contentHash = ModelSerializationExtensions.JsonDeserialize<AutomationContentHash>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("version"u8))

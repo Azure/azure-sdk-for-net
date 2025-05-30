@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 }
                 if (property.NameEquals("dateRange"u8))
                 {
-                    dateRange = CarbonEmissionQueryDateRange.DeserializeCarbonEmissionQueryDateRange(property.Value, options);
+                    dateRange = ModelSerializationExtensions.JsonDeserialize<CarbonEmissionQueryDateRange>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("subscriptionList"u8))

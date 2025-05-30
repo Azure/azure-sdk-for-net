@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in EligibilityDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PaymentTermsEligibilityDetail>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

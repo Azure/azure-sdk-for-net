@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(OAuth2))
             {
                 writer.WritePropertyName("oAuth2"u8);
-                writer.WriteObjectValue(OAuth2, options);
+                ((IJsonModel<OAuth2AuthenticationSettingsContract>)OAuth2).Write(writer, options);
             }
             if (Optional.IsDefined(OpenId))
             {
                 writer.WritePropertyName("openid"u8);
-                writer.WriteObjectValue(OpenId, options);
+                ((IJsonModel<OpenIdAuthenticationSettingsContract>)OpenId).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(OAuth2AuthenticationSettings))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in OAuth2AuthenticationSettings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<OAuth2AuthenticationSettingsContract>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in OpenidAuthenticationSettings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<OpenIdAuthenticationSettingsContract>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    oAuth2 = OAuth2AuthenticationSettingsContract.DeserializeOAuth2AuthenticationSettingsContract(property.Value, options);
+                    oAuth2 = ModelSerializationExtensions.JsonDeserialize<OAuth2AuthenticationSettingsContract>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("openid"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    openid = OpenIdAuthenticationSettingsContract.DeserializeOpenIdAuthenticationSettingsContract(property.Value, options);
+                    openid = ModelSerializationExtensions.JsonDeserialize<OpenIdAuthenticationSettingsContract>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("oAuth2AuthenticationSettings"u8))

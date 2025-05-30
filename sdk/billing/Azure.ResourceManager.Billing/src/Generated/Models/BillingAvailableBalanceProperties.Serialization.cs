@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (options.Format != "W" && Optional.IsDefined(Amount))
             {
                 writer.WritePropertyName("amount"u8);
-                writer.WriteObjectValue(Amount, options);
+                ((IJsonModel<BillingAmount>)Amount).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PaymentsOnAccount))
             {
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in PaymentsOnAccount)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BillingPaymentOnAccount>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(TotalPaymentsOnAccount))
             {
                 writer.WritePropertyName("totalPaymentsOnAccount"u8);
-                writer.WriteObjectValue(TotalPaymentsOnAccount, options);
+                ((IJsonModel<BillingAmount>)TotalPaymentsOnAccount).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    amount = BillingAmount.DeserializeBillingAmount(property.Value, options);
+                    amount = ModelSerializationExtensions.JsonDeserialize<BillingAmount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("paymentsOnAccount"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    totalPaymentsOnAccount = BillingAmount.DeserializeBillingAmount(property.Value, options);
+                    totalPaymentsOnAccount = ModelSerializationExtensions.JsonDeserialize<BillingAmount>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

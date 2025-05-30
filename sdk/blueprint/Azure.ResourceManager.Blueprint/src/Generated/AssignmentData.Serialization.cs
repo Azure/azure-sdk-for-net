@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Blueprint
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("identity"u8);
-            writer.WriteObjectValue(Identity, options);
+            ((IJsonModel<Models.ManagedServiceIdentity>)Identity).Write(writer, options);
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Blueprint
             foreach (var item in Parameters)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                ((IJsonModel<ParameterValue>)item.Value).Write(writer, options);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("resourceGroups"u8);
@@ -76,18 +76,18 @@ namespace Azure.ResourceManager.Blueprint
             foreach (var item in ResourceGroups)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                ((IJsonModel<ResourceGroupValue>)item.Value).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<AssignmentStatus>)Status).Write(writer, options);
             }
             if (Optional.IsDefined(Locks))
             {
                 writer.WritePropertyName("locks"u8);
-                writer.WriteObjectValue(Locks, options);
+                ((IJsonModel<AssignmentLockSettings>)Locks).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Blueprint
             {
                 if (property.NameEquals("identity"u8))
                 {
-                    identity = Models.ManagedServiceIdentity.DeserializeManagedServiceIdentity(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<Models.ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Blueprint
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Blueprint
                             {
                                 continue;
                             }
-                            status = AssignmentStatus.DeserializeAssignmentStatus(property0.Value, options);
+                            status = ModelSerializationExtensions.JsonDeserialize<AssignmentStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("locks"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Blueprint
                             {
                                 continue;
                             }
-                            locks = AssignmentLockSettings.DeserializeAssignmentLockSettings(property0.Value, options);
+                            locks = ModelSerializationExtensions.JsonDeserialize<AssignmentLockSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

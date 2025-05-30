@@ -44,28 +44,28 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<CdnSku>)Sku).Write(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PolicySettings))
             {
                 writer.WritePropertyName("policySettings"u8);
-                writer.WriteObjectValue(PolicySettings, options);
+                ((IJsonModel<WafPolicySettings>)PolicySettings).Write(writer, options);
             }
             if (Optional.IsDefined(RateLimitSettings))
             {
                 writer.WritePropertyName("rateLimitRules"u8);
-                writer.WriteObjectValue(RateLimitSettings, options);
+                ((IJsonModel<RateLimitRuleList>)RateLimitSettings).Write(writer, options);
             }
             if (Optional.IsDefined(CustomSettings))
             {
                 writer.WritePropertyName("customRules"u8);
-                writer.WriteObjectValue(CustomSettings, options);
+                ((IJsonModel<CustomRuleList>)CustomSettings).Write(writer, options);
             }
             if (Optional.IsDefined(ManagedRules))
             {
                 writer.WritePropertyName("managedRules"u8);
-                writer.WriteObjectValue(ManagedRules, options);
+                ((IJsonModel<ManagedRuleSetList>)ManagedRules).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(EndpointLinks))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in EndpointLinks)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Cdn
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = CdnSku.DeserializeCdnSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<CdnSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Cdn
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            policySettings = WafPolicySettings.DeserializeWafPolicySettings(property0.Value, options);
+                            policySettings = ModelSerializationExtensions.JsonDeserialize<WafPolicySettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("rateLimitRules"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            rateLimitRules = RateLimitRuleList.DeserializeRateLimitRuleList(property0.Value, options);
+                            rateLimitRules = ModelSerializationExtensions.JsonDeserialize<RateLimitRuleList>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("customRules"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            customRules = CustomRuleList.DeserializeCustomRuleList(property0.Value, options);
+                            customRules = ModelSerializationExtensions.JsonDeserialize<CustomRuleList>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("managedRules"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            managedRules = ManagedRuleSetList.DeserializeManagedRuleSetList(property0.Value, options);
+                            managedRules = ModelSerializationExtensions.JsonDeserialize<ManagedRuleSetList>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("endpointLinks"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Cdn
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<SubResource>(item));
                             }
                             endpointLinks = array;
                             continue;

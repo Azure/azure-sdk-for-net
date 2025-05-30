@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
             }
 
             writer.WritePropertyName("marketplace"u8);
-            writer.WriteObjectValue(Marketplace, options);
+            ((IJsonModel<ArizeAIObservabilityEvalMarketplaceDetails>)Marketplace).Write(writer, options);
             writer.WritePropertyName("user"u8);
-            writer.WriteObjectValue(User, options);
+            ((IJsonModel<ArizeAIObservabilityEvalUserDetails>)User).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
             if (Optional.IsDefined(PartnerProperties))
             {
                 writer.WritePropertyName("partnerProperties"u8);
-                writer.WriteObjectValue(PartnerProperties, options);
+                ((IJsonModel<ArizeAIObservabilityEvalOfferPartnerProperties>)PartnerProperties).Write(writer, options);
             }
             if (Optional.IsDefined(SingleSignOnProperties))
             {
                 writer.WritePropertyName("singleSignOnProperties"u8);
-                writer.WriteObjectValue(SingleSignOnProperties, options);
+                ((IJsonModel<ArizeAIObservabilityEvalSingleSignOnPropertiesV2>)SingleSignOnProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
             {
                 if (property.NameEquals("marketplace"u8))
                 {
-                    marketplace = ArizeAIObservabilityEvalMarketplaceDetails.DeserializeArizeAIObservabilityEvalMarketplaceDetails(property.Value, options);
+                    marketplace = ModelSerializationExtensions.JsonDeserialize<ArizeAIObservabilityEvalMarketplaceDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("user"u8))
                 {
-                    user = ArizeAIObservabilityEvalUserDetails.DeserializeArizeAIObservabilityEvalUserDetails(property.Value, options);
+                    user = ModelSerializationExtensions.JsonDeserialize<ArizeAIObservabilityEvalUserDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
                     {
                         continue;
                     }
-                    partnerProperties = ArizeAIObservabilityEvalOfferPartnerProperties.DeserializeArizeAIObservabilityEvalOfferPartnerProperties(property.Value, options);
+                    partnerProperties = ModelSerializationExtensions.JsonDeserialize<ArizeAIObservabilityEvalOfferPartnerProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("singleSignOnProperties"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
                     {
                         continue;
                     }
-                    singleSignOnProperties = ArizeAIObservabilityEvalSingleSignOnPropertiesV2.DeserializeArizeAIObservabilityEvalSingleSignOnPropertiesV2(property.Value, options);
+                    singleSignOnProperties = ModelSerializationExtensions.JsonDeserialize<ArizeAIObservabilityEvalSingleSignOnPropertiesV2>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

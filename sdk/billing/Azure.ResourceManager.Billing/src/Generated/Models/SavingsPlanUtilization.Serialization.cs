@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in Aggregates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SavingsPlanUtilizationAggregates>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

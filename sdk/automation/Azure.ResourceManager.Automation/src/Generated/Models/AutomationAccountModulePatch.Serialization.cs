@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(ContentLink))
             {
                 writer.WritePropertyName("contentLink"u8);
-                writer.WriteObjectValue(ContentLink, options);
+                ((IJsonModel<AutomationContentLink>)ContentLink).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            contentLink = AutomationContentLink.DeserializeAutomationContentLink(property0.Value, options);
+                            contentLink = ModelSerializationExtensions.JsonDeserialize<AutomationContentLink>(property0.Value);
                             continue;
                         }
                     }

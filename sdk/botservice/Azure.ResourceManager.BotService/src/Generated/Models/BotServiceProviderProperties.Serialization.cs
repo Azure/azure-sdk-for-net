@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BotServiceProviderParameter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -38,7 +38,7 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStartArray();
             foreach (var item in Series)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<TimeSeriesPoint>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("granularity"u8);

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteStartArray();
             foreach (var item in Data)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<MonitorServiceDetails>)item).Write(writer, options);
             }
             writer.WriteEndArray();
         }

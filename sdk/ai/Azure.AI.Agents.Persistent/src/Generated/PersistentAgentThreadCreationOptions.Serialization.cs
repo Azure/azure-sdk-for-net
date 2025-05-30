@@ -40,7 +40,7 @@ namespace Azure.AI.Agents.Persistent
                 writer.WriteStartArray();
                 foreach (var item in Messages)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ThreadMessageOptions>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -49,7 +49,7 @@ namespace Azure.AI.Agents.Persistent
                 if (ToolResources != null)
                 {
                     writer.WritePropertyName("tool_resources"u8);
-                    writer.WriteObjectValue(ToolResources, options);
+                    ((IJsonModel<ToolResources>)ToolResources).Write(writer, options);
                 }
                 else
                 {
@@ -139,7 +139,7 @@ namespace Azure.AI.Agents.Persistent
                         toolResources = null;
                         continue;
                     }
-                    toolResources = ToolResources.DeserializeToolResources(property.Value, options);
+                    toolResources = ModelSerializationExtensions.JsonDeserialize<ToolResources>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))

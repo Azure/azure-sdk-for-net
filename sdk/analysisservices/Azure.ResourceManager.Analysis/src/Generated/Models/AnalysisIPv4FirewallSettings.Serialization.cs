@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 writer.WriteStartArray();
                 foreach (var item in FirewallRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AnalysisIPv4FirewallRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

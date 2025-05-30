@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Attestation.Models
             if (Optional.IsDefined(PolicySigningCertificates))
             {
                 writer.WritePropertyName("policySigningCertificates"u8);
-                writer.WriteObjectValue(PolicySigningCertificates, options);
+                ((IJsonModel<JsonWebKeySet>)PolicySigningCertificates).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     {
                         continue;
                     }
-                    policySigningCertificates = JsonWebKeySet.DeserializeJsonWebKeySet(property.Value, options);
+                    policySigningCertificates = ModelSerializationExtensions.JsonDeserialize<JsonWebKeySet>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

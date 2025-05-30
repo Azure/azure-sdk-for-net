@@ -36,7 +36,7 @@ namespace Azure.AI.Agents.Persistent
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("url_citation"u8);
-            writer.WriteObjectValue(UriCitation, options);
+            ((IJsonModel<MessageDeltaTextUriCitationDetails>)UriCitation).Write(writer, options);
             if (Optional.IsDefined(StartIndex))
             {
                 writer.WritePropertyName("start_index"u8);
@@ -80,7 +80,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (property.NameEquals("url_citation"u8))
                 {
-                    urlCitation = MessageDeltaTextUriCitationDetails.DeserializeMessageDeltaTextUriCitationDetails(property.Value, options);
+                    urlCitation = ModelSerializationExtensions.JsonDeserialize<MessageDeltaTextUriCitationDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("start_index"u8))

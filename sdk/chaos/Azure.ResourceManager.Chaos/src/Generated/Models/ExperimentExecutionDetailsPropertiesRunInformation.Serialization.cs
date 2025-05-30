@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WriteStartArray();
                 foreach (var item in Steps)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ChaosExperimentRunStepStatus>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -29,7 +29,7 @@ namespace Azure.Security.Attestation
                     {
                         continue;
                     }
-                    xMsPolicyCertificates = JsonWebKeySet.DeserializeJsonWebKeySet(property.Value);
+                    xMsPolicyCertificates = ModelSerializationExtensions.JsonDeserialize<JsonWebKeySet>(property.Value);
                     continue;
                 }
             }

@@ -36,7 +36,7 @@ namespace Azure.AI.Agents.Persistent
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("message_creation"u8);
-            writer.WriteObjectValue(MessageCreation, options);
+            ((IJsonModel<RunStepMessageCreationReference>)MessageCreation).Write(writer, options);
         }
 
         RunStepMessageCreationDetails IJsonModel<RunStepMessageCreationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (property.NameEquals("message_creation"u8))
                 {
-                    messageCreation = RunStepMessageCreationReference.DeserializeRunStepMessageCreationReference(property.Value, options);
+                    messageCreation = ModelSerializationExtensions.JsonDeserialize<RunStepMessageCreationReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

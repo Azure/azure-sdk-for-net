@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResponsibilityResourceItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in RecommendationList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RecommendationDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

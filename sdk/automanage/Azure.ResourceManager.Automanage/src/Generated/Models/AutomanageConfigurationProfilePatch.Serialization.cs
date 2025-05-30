@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Automanage.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ConfigurationProfileProperties>)Properties).Write(writer, options);
             }
         }
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Automanage.Models
                     {
                         continue;
                     }
-                    properties = ConfigurationProfileProperties.DeserializeConfigurationProfileProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ConfigurationProfileProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
-                writer.WriteObjectValue(ErrorDetails, options);
+                ((IJsonModel<BillingSubscriptionValidateMoveEligibilityError>)ErrorDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    errorDetails = BillingSubscriptionValidateMoveEligibilityError.DeserializeBillingSubscriptionValidateMoveEligibilityError(property.Value, options);
+                    errorDetails = ModelSerializationExtensions.JsonDeserialize<BillingSubscriptionValidateMoveEligibilityError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

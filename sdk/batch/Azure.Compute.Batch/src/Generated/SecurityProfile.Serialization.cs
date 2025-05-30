@@ -39,7 +39,7 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("securityType"u8);
             writer.WriteStringValue(SecurityType.ToString());
             writer.WritePropertyName("uefiSettings"u8);
-            writer.WriteObjectValue(UefiSettings, options);
+            ((IJsonModel<UefiSettings>)UefiSettings).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -96,7 +96,7 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("uefiSettings"u8))
                 {
-                    uefiSettings = UefiSettings.DeserializeUefiSettings(property.Value, options);
+                    uefiSettings = ModelSerializationExtensions.JsonDeserialize<UefiSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

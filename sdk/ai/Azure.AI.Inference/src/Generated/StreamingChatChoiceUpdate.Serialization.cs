@@ -46,7 +46,7 @@ namespace Azure.AI.Inference
                 writer.WriteNull("finish_reason");
             }
             writer.WritePropertyName("delta"u8);
-            writer.WriteObjectValue<StreamingChatResponseMessageUpdate>(Delta, options);
+            ((IJsonModel<StreamingChatResponseMessageUpdate>)Delta).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -108,7 +108,7 @@ namespace Azure.AI.Inference
                 }
                 if (property.NameEquals("delta"u8))
                 {
-                    delta = StreamingChatResponseMessageUpdate.DeserializeStreamingChatResponseMessageUpdate(property.Value, options);
+                    delta = ModelSerializationExtensions.JsonDeserialize<StreamingChatResponseMessageUpdate>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

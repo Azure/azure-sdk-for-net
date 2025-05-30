@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in AccessRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BatchAccessRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

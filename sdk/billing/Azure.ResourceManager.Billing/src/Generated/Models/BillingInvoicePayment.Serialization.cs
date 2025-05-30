@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (options.Format != "W" && Optional.IsDefined(Amount))
             {
                 writer.WritePropertyName("amount"u8);
-                writer.WriteObjectValue(Amount, options);
+                ((IJsonModel<BillingAmount>)Amount).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MadeOn))
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    amount = BillingAmount.DeserializeBillingAmount(property.Value, options);
+                    amount = ModelSerializationExtensions.JsonDeserialize<BillingAmount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("date"u8))

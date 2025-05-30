@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (options.Format != "W" && Optional.IsDefined(AzureCreditApplied))
             {
                 writer.WritePropertyName("azureCreditApplied"u8);
-                writer.WriteObjectValue(AzureCreditApplied, options);
+                ((IJsonModel<BillingAmount>)AzureCreditApplied).Write(writer, options);
             }
             if (Optional.IsDefined(AzurePlan))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (options.Format != "W" && Optional.IsDefined(ConsumptionCommitmentDecremented))
             {
                 writer.WritePropertyName("consumptionCommitmentDecremented"u8);
-                writer.WriteObjectValue(ConsumptionCommitmentDecremented, options);
+                ((IJsonModel<BillingAmount>)ConsumptionCommitmentDecremented).Write(writer, options);
             }
             if (Optional.IsDefined(CustomerDisplayName))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (options.Format != "W" && Optional.IsDefined(EffectivePrice))
             {
                 writer.WritePropertyName("effectivePrice"u8);
-                writer.WriteObjectValue(EffectivePrice, options);
+                ((IJsonModel<BillingAmount>)EffectivePrice).Write(writer, options);
             }
             if (Optional.IsDefined(ExchangeRate))
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (options.Format != "W" && Optional.IsDefined(MarketPrice))
             {
                 writer.WritePropertyName("marketPrice"u8);
-                writer.WriteObjectValue(MarketPrice, options);
+                ((IJsonModel<BillingAmount>)MarketPrice).Write(writer, options);
             }
             if (Optional.IsDefined(PartNumber))
             {
@@ -195,17 +195,17 @@ namespace Azure.ResourceManager.Billing.Models
             if (options.Format != "W" && Optional.IsDefined(SubTotal))
             {
                 writer.WritePropertyName("subTotal"u8);
-                writer.WriteObjectValue(SubTotal, options);
+                ((IJsonModel<BillingAmount>)SubTotal).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Tax))
             {
                 writer.WritePropertyName("tax"u8);
-                writer.WriteObjectValue(Tax, options);
+                ((IJsonModel<BillingAmount>)Tax).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TransactionAmount))
             {
                 writer.WritePropertyName("transactionAmount"u8);
-                writer.WriteObjectValue(TransactionAmount, options);
+                ((IJsonModel<BillingAmount>)TransactionAmount).Write(writer, options);
             }
             if (Optional.IsDefined(TransactionType))
             {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(RefundTransactionDetails))
             {
                 writer.WritePropertyName("refundTransactionDetails"u8);
-                writer.WriteObjectValue(RefundTransactionDetails, options);
+                ((IJsonModel<RefundTransactionDetails>)RefundTransactionDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    azureCreditApplied = BillingAmount.DeserializeBillingAmount(property.Value, options);
+                    azureCreditApplied = ModelSerializationExtensions.JsonDeserialize<BillingAmount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azurePlan"u8))
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    consumptionCommitmentDecremented = BillingAmount.DeserializeBillingAmount(property.Value, options);
+                    consumptionCommitmentDecremented = ModelSerializationExtensions.JsonDeserialize<BillingAmount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("customerDisplayName"u8))
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    effectivePrice = BillingAmount.DeserializeBillingAmount(property.Value, options);
+                    effectivePrice = ModelSerializationExtensions.JsonDeserialize<BillingAmount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("exchangeRate"u8))
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    marketPrice = BillingAmount.DeserializeBillingAmount(property.Value, options);
+                    marketPrice = ModelSerializationExtensions.JsonDeserialize<BillingAmount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("partNumber"u8))
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    subTotal = BillingAmount.DeserializeBillingAmount(property.Value, options);
+                    subTotal = ModelSerializationExtensions.JsonDeserialize<BillingAmount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tax"u8))
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    tax = BillingAmount.DeserializeBillingAmount(property.Value, options);
+                    tax = ModelSerializationExtensions.JsonDeserialize<BillingAmount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("transactionAmount"u8))
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    transactionAmount = BillingAmount.DeserializeBillingAmount(property.Value, options);
+                    transactionAmount = ModelSerializationExtensions.JsonDeserialize<BillingAmount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("transactionType"u8))
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    refundTransactionDetails = RefundTransactionDetails.DeserializeRefundTransactionDetails(property.Value, options);
+                    refundTransactionDetails = ModelSerializationExtensions.JsonDeserialize<RefundTransactionDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ServiceAlertMetadataProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     {
                         continue;
                     }
-                    properties = ServiceAlertMetadataProperties.DeserializeServiceAlertMetadataProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ServiceAlertMetadataProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

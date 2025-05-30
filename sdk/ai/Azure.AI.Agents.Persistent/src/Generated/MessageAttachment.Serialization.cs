@@ -42,7 +42,7 @@ namespace Azure.AI.Agents.Persistent
             if (Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("data_source"u8);
-                writer.WriteObjectValue(DataSource, options);
+                ((IJsonModel<VectorStoreDataSource>)DataSource).Write(writer, options);
             }
             writer.WritePropertyName("tools"u8);
             writer.WriteStartArray();
@@ -118,7 +118,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    dataSource = VectorStoreDataSource.DeserializeVectorStoreDataSource(property.Value, options);
+                    dataSource = ModelSerializationExtensions.JsonDeserialize<VectorStoreDataSource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tools"u8))

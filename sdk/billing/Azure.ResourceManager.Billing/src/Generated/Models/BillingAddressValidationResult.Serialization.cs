@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in SuggestedAddresses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BillingAddressDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

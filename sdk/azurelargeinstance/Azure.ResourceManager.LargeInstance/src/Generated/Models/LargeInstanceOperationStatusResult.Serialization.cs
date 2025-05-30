@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in Operations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LargeInstanceOperationStatusResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

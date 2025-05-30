@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
+                ((IJsonModel<SubResource>)PrivateEndpoint).Write(writer, options);
             }
             if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+                ((IJsonModel<ApiManagementPrivateLinkServiceConnectionState>)PrivateLinkServiceConnectionState).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
+                            privateEndpoint = ModelSerializationExtensions.JsonDeserialize<SubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = ApiManagementPrivateLinkServiceConnectionState.DeserializeApiManagementPrivateLinkServiceConnectionState(property0.Value, options);
+                            privateLinkServiceConnectionState = ModelSerializationExtensions.JsonDeserialize<ApiManagementPrivateLinkServiceConnectionState>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

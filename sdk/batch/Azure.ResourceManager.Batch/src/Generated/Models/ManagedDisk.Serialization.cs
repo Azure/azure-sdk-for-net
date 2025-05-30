@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile, options);
+                ((IJsonModel<VmDiskSecurityProfile>)SecurityProfile).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    securityProfile = VmDiskSecurityProfile.DeserializeVmDiskSecurityProfile(property.Value, options);
+                    securityProfile = ModelSerializationExtensions.JsonDeserialize<VmDiskSecurityProfile>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

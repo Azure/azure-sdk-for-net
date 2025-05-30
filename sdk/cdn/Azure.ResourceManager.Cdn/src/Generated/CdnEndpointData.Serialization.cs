@@ -103,14 +103,14 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in GeoFilters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<GeoFilter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DefaultOriginGroup))
             {
                 writer.WritePropertyName("defaultOriginGroup"u8);
-                JsonSerializer.Serialize(writer, DefaultOriginGroup);
+                ((IJsonModel<WritableSubResource>)DefaultOriginGroup).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(UriSigningKeys))
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteStartArray();
                     foreach (var item in UriSigningKeys)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<UriSigningKey>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Cdn
                 if (DeliveryPolicy != null)
                 {
                     writer.WritePropertyName("deliveryPolicy"u8);
-                    writer.WriteObjectValue(DeliveryPolicy, options);
+                    ((IJsonModel<EndpointDeliveryPolicy>)DeliveryPolicy).Write(writer, options);
                 }
                 else
                 {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Cdn
                 if (WebApplicationFirewallPolicyLink != null)
                 {
                     writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
-                    writer.WriteObjectValue(WebApplicationFirewallPolicyLink, options);
+                    ((IJsonModel<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink>)WebApplicationFirewallPolicyLink).Write(writer, options);
                 }
                 else
                 {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in Origins)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DeepCreatedOrigin>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in OriginGroups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DeepCreatedOriginGroup>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in DeepCreatedCustomDomains)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DeepCreatedCustomDomain>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Cdn
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            defaultOriginGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            defaultOriginGroup = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("urlSigningKeys"u8))
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Cdn
                                 deliveryPolicy = null;
                                 continue;
                             }
-                            deliveryPolicy = EndpointDeliveryPolicy.DeserializeEndpointDeliveryPolicy(property0.Value, options);
+                            deliveryPolicy = ModelSerializationExtensions.JsonDeserialize<EndpointDeliveryPolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("webApplicationFirewallPolicyLink"u8))
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Cdn
                                 webApplicationFirewallPolicyLink = null;
                                 continue;
                             }
-                            webApplicationFirewallPolicyLink = EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink.DeserializeEndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(property0.Value, options);
+                            webApplicationFirewallPolicyLink = ModelSerializationExtensions.JsonDeserialize<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hostName"u8))

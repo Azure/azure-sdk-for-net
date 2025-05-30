@@ -110,19 +110,19 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in RecentTasks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BatchTaskInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(StartTask))
             {
                 writer.WritePropertyName("startTask"u8);
-                writer.WriteObjectValue(StartTask, options);
+                ((IJsonModel<BatchStartTask>)StartTask).Write(writer, options);
             }
             if (Optional.IsDefined(StartTaskInfo))
             {
                 writer.WritePropertyName("startTaskInfo"u8);
-                writer.WriteObjectValue(StartTaskInfo, options);
+                ((IJsonModel<BatchStartTaskInfo>)StartTaskInfo).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(CertificateReferences))
             {
@@ -130,7 +130,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in CertificateReferences)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BatchCertificateReference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -140,7 +140,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BatchNodeError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -152,17 +152,17 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(EndpointConfiguration))
             {
                 writer.WritePropertyName("endpointConfiguration"u8);
-                writer.WriteObjectValue(EndpointConfiguration, options);
+                ((IJsonModel<BatchNodeEndpointConfiguration>)EndpointConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(NodeAgentInfo))
             {
                 writer.WritePropertyName("nodeAgentInfo"u8);
-                writer.WriteObjectValue(NodeAgentInfo, options);
+                ((IJsonModel<BatchNodeAgentInfo>)NodeAgentInfo).Write(writer, options);
             }
             if (Optional.IsDefined(VirtualMachineInfo))
             {
                 writer.WritePropertyName("virtualMachineInfo"u8);
-                writer.WriteObjectValue(VirtualMachineInfo, options);
+                ((IJsonModel<VirtualMachineInfo>)VirtualMachineInfo).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -354,7 +354,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    startTask = BatchStartTask.DeserializeBatchStartTask(property.Value, options);
+                    startTask = ModelSerializationExtensions.JsonDeserialize<BatchStartTask>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("startTaskInfo"u8))
@@ -363,7 +363,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    startTaskInfo = BatchStartTaskInfo.DeserializeBatchStartTaskInfo(property.Value, options);
+                    startTaskInfo = ModelSerializationExtensions.JsonDeserialize<BatchStartTaskInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("certificateReferences"u8))
@@ -409,7 +409,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    endpointConfiguration = BatchNodeEndpointConfiguration.DeserializeBatchNodeEndpointConfiguration(property.Value, options);
+                    endpointConfiguration = ModelSerializationExtensions.JsonDeserialize<BatchNodeEndpointConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nodeAgentInfo"u8))
@@ -418,7 +418,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    nodeAgentInfo = BatchNodeAgentInfo.DeserializeBatchNodeAgentInfo(property.Value, options);
+                    nodeAgentInfo = ModelSerializationExtensions.JsonDeserialize<BatchNodeAgentInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("virtualMachineInfo"u8))
@@ -427,7 +427,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    virtualMachineInfo = VirtualMachineInfo.DeserializeVirtualMachineInfo(property.Value, options);
+                    virtualMachineInfo = ModelSerializationExtensions.JsonDeserialize<VirtualMachineInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

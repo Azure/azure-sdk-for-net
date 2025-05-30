@@ -36,7 +36,7 @@ namespace Azure.AI.Agents.Persistent
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("function"u8);
-            writer.WriteObjectValue<InternalRequiredFunctionToolCallDetails>(InternalDetails, options);
+            ((IJsonModel<InternalRequiredFunctionToolCallDetails>)InternalDetails).Write(writer, options);
         }
 
         RequiredFunctionToolCall IJsonModel<RequiredFunctionToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -68,7 +68,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (property.NameEquals("function"u8))
                 {
-                    function = InternalRequiredFunctionToolCallDetails.DeserializeInternalRequiredFunctionToolCallDetails(property.Value, options);
+                    function = ModelSerializationExtensions.JsonDeserialize<InternalRequiredFunctionToolCallDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

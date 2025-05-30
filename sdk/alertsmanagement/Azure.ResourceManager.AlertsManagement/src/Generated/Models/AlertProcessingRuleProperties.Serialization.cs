@@ -47,20 +47,20 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Conditions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AlertProcessingRuleCondition>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule, options);
+                ((IJsonModel<AlertProcessingRuleSchedule>)Schedule).Write(writer, options);
             }
             writer.WritePropertyName("actions"u8);
             writer.WriteStartArray();
             foreach (var item in Actions)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<AlertProcessingRuleAction>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Description))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     {
                         continue;
                     }
-                    schedule = AlertProcessingRuleSchedule.DeserializeAlertProcessingRuleSchedule(property.Value, options);
+                    schedule = ModelSerializationExtensions.JsonDeserialize<AlertProcessingRuleSchedule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("actions"u8))

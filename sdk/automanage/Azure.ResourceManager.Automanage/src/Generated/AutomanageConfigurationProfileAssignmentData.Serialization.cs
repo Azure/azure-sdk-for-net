@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Automanage
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<AutomanageConfigurationProfileAssignmentProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ManagedBy))
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Automanage
                     {
                         continue;
                     }
-                    properties = AutomanageConfigurationProfileAssignmentProperties.DeserializeAutomanageConfigurationProfileAssignmentProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<AutomanageConfigurationProfileAssignmentProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("managedBy"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Automanage
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Billing
                 writer.WriteStartArray();
                 foreach (var item in DetailedTransferStatus)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DetailedTransferStatus>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

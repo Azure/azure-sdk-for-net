@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(AdvancedSchedule))
             {
                 writer.WritePropertyName("advancedSchedule"u8);
-                writer.WriteObjectValue(AdvancedSchedule, options);
+                ((IJsonModel<AutomationAdvancedSchedule>)AdvancedSchedule).Write(writer, options);
             }
             if (Optional.IsDefined(CreatedOn))
             {
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    advancedSchedule = AutomationAdvancedSchedule.DeserializeAutomationAdvancedSchedule(property.Value, options);
+                    advancedSchedule = ModelSerializationExtensions.JsonDeserialize<AutomationAdvancedSchedule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("creationTime"u8))

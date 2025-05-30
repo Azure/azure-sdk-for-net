@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             writer.WriteStartArray();
             foreach (var item in Filters)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ComponentPurgeFilters>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

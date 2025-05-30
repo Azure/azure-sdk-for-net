@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Chaos.Models
             if (options.Format != "W" && Optional.IsDefined(RunInformation))
             {
                 writer.WritePropertyName("runInformation"u8);
-                writer.WriteObjectValue(RunInformation, options);
+                ((IJsonModel<ExperimentExecutionDetailsPropertiesRunInformation>)RunInformation).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Chaos.Models
                             {
                                 continue;
                             }
-                            runInformation = ExperimentExecutionDetailsPropertiesRunInformation.DeserializeExperimentExecutionDetailsPropertiesRunInformation(property0.Value, options);
+                            runInformation = ModelSerializationExtensions.JsonDeserialize<ExperimentExecutionDetailsPropertiesRunInformation>(property0.Value);
                             continue;
                         }
                     }

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Galleries)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WorkbookTemplateGallery>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

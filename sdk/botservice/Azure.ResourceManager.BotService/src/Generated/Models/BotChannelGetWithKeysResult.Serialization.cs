@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue(Resource, options);
+                ((IJsonModel<BotChannelProperties>)Resource).Write(writer, options);
             }
             if (Optional.IsDefined(Setting))
             {
                 writer.WritePropertyName("setting"u8);
-                writer.WriteObjectValue(Setting, options);
+                ((IJsonModel<BotChannelSettings>)Setting).Write(writer, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<BotChannelProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<BotServiceSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    resource = BotChannelProperties.DeserializeBotChannelProperties(property.Value, options);
+                    resource = ModelSerializationExtensions.JsonDeserialize<BotChannelProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("setting"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    setting = BotChannelSettings.DeserializeBotChannelSettings(property.Value, options);
+                    setting = ModelSerializationExtensions.JsonDeserialize<BotChannelSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    properties = BotChannelProperties.DeserializeBotChannelProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<BotChannelProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    sku = BotServiceSku.DeserializeBotServiceSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<BotServiceSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

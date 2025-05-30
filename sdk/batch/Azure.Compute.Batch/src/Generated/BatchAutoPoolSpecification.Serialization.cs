@@ -49,7 +49,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(Pool))
             {
                 writer.WritePropertyName("pool"u8);
-                writer.WriteObjectValue(Pool, options);
+                ((IJsonModel<BatchPoolSpecification>)Pool).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    pool = BatchPoolSpecification.DeserializeBatchPoolSpecification(property.Value, options);
+                    pool = ModelSerializationExtensions.JsonDeserialize<BatchPoolSpecification>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

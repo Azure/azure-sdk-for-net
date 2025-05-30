@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (options.Format != "W" && Optional.IsDefined(LastCharge))
             {
                 writer.WritePropertyName("lastCharge"u8);
-                writer.WriteObjectValue(LastCharge, options);
+                ((IJsonModel<BillingAmount>)LastCharge).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastChargeDate))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (options.Format != "W" && Optional.IsDefined(Reseller))
             {
                 writer.WritePropertyName("reseller"u8);
-                writer.WriteObjectValue(Reseller, options);
+                ((IJsonModel<BillingAmount>)Reseller).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    lastCharge = BillingAmount.DeserializeBillingAmount(property.Value, options);
+                    lastCharge = ModelSerializationExtensions.JsonDeserialize<BillingAmount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lastChargeDate"u8))
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    reseller = BillingAmount.DeserializeBillingAmount(property.Value, options);
+                    reseller = ModelSerializationExtensions.JsonDeserialize<BillingAmount>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in BillingProfileInfo)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BillingProfileInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in Participants)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BillingAgreementParticipant>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

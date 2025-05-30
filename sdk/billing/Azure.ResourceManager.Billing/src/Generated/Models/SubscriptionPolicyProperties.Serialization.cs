@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in Policies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BillingPolicySummary>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

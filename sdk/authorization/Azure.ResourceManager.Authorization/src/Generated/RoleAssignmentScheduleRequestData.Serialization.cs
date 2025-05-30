@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Authorization
             if (Optional.IsDefined(TicketInfo))
             {
                 writer.WritePropertyName("ticketInfo"u8);
-                writer.WriteObjectValue(TicketInfo, options);
+                ((IJsonModel<RoleAssignmentScheduleTicketInfo>)TicketInfo).Write(writer, options);
             }
             if (Optional.IsDefined(Condition))
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Authorization
             if (options.Format != "W" && Optional.IsDefined(ExpandedProperties))
             {
                 writer.WritePropertyName("expandedProperties"u8);
-                writer.WriteObjectValue(ExpandedProperties, options);
+                ((IJsonModel<RoleManagementExpandedProperties>)ExpandedProperties).Write(writer, options);
             }
             writer.WritePropertyName("scheduleInfo"u8);
             writer.WriteStartObject();
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Authorization
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Authorization
                             {
                                 continue;
                             }
-                            ticketInfo = RoleAssignmentScheduleTicketInfo.DeserializeRoleAssignmentScheduleTicketInfo(property0.Value, options);
+                            ticketInfo = ModelSerializationExtensions.JsonDeserialize<RoleAssignmentScheduleTicketInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("condition"u8))
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Authorization
                             {
                                 continue;
                             }
-                            expandedProperties = RoleManagementExpandedProperties.DeserializeRoleManagementExpandedProperties(property0.Value, options);
+                            expandedProperties = ModelSerializationExtensions.JsonDeserialize<RoleManagementExpandedProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("scheduleInfo"u8))

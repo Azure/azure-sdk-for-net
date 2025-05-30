@@ -57,22 +57,22 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(SsoProperties))
             {
                 writer.WritePropertyName("ssoProperties"u8);
-                writer.WriteObjectValue(SsoProperties, options);
+                ((IJsonModel<AppPlatformSsoProperties>)SsoProperties).Write(writer, options);
             }
             if (Optional.IsDefined(ApiMetadataProperties))
             {
                 writer.WritePropertyName("apiMetadataProperties"u8);
-                writer.WriteObjectValue(ApiMetadataProperties, options);
+                ((IJsonModel<AppPlatformGatewayApiMetadataProperties>)ApiMetadataProperties).Write(writer, options);
             }
             if (Optional.IsDefined(CorsProperties))
             {
                 writer.WritePropertyName("corsProperties"u8);
-                writer.WriteObjectValue(CorsProperties, options);
+                ((IJsonModel<AppPlatformGatewayCorsProperties>)CorsProperties).Write(writer, options);
             }
             if (Optional.IsDefined(ResourceRequests))
             {
                 writer.WritePropertyName("resourceRequests"u8);
-                writer.WriteObjectValue(ResourceRequests, options);
+                ((IJsonModel<AppPlatformGatewayResourceRequirements>)ResourceRequests).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Instances))
             {
@@ -80,14 +80,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Instances)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AppPlatformGatewayInstance>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(OperatorProperties))
             {
                 writer.WritePropertyName("operatorProperties"u8);
-                writer.WriteObjectValue(OperatorProperties, options);
+                ((IJsonModel<AppPlatformGatewayOperatorProperties>)OperatorProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    ssoProperties = AppPlatformSsoProperties.DeserializeAppPlatformSsoProperties(property.Value, options);
+                    ssoProperties = ModelSerializationExtensions.JsonDeserialize<AppPlatformSsoProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("apiMetadataProperties"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    apiMetadataProperties = AppPlatformGatewayApiMetadataProperties.DeserializeAppPlatformGatewayApiMetadataProperties(property.Value, options);
+                    apiMetadataProperties = ModelSerializationExtensions.JsonDeserialize<AppPlatformGatewayApiMetadataProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("corsProperties"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    corsProperties = AppPlatformGatewayCorsProperties.DeserializeAppPlatformGatewayCorsProperties(property.Value, options);
+                    corsProperties = ModelSerializationExtensions.JsonDeserialize<AppPlatformGatewayCorsProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceRequests"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    resourceRequests = AppPlatformGatewayResourceRequirements.DeserializeAppPlatformGatewayResourceRequirements(property.Value, options);
+                    resourceRequests = ModelSerializationExtensions.JsonDeserialize<AppPlatformGatewayResourceRequirements>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("instances"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    operatorProperties = AppPlatformGatewayOperatorProperties.DeserializeAppPlatformGatewayOperatorProperties(property.Value, options);
+                    operatorProperties = ModelSerializationExtensions.JsonDeserialize<AppPlatformGatewayOperatorProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

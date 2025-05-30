@@ -64,7 +64,7 @@ namespace Azure.AI.Projects
             if (options.Format != "W")
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<Sku>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ConnectionName))
             {
@@ -132,7 +132,7 @@ namespace Azure.AI.Projects
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = Sku.DeserializeSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<Sku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("connectionName"u8))

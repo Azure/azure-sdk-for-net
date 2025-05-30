@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
-                writer.WriteObjectValue(Request, options);
+                ((IJsonModel<HttpMessageDiagnostic>)Request).Write(writer, options);
             }
             if (Optional.IsDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
-                writer.WriteObjectValue(Response, options);
+                ((IJsonModel<HttpMessageDiagnostic>)Response).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    request = HttpMessageDiagnostic.DeserializeHttpMessageDiagnostic(property.Value, options);
+                    request = ModelSerializationExtensions.JsonDeserialize<HttpMessageDiagnostic>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("response"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    response = HttpMessageDiagnostic.DeserializeHttpMessageDiagnostic(property.Value, options);
+                    response = ModelSerializationExtensions.JsonDeserialize<HttpMessageDiagnostic>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

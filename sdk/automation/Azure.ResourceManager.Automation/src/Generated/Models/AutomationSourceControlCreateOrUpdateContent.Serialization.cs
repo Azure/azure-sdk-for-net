@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(SecurityToken))
             {
                 writer.WritePropertyName("securityToken"u8);
-                writer.WriteObjectValue(SecurityToken, options);
+                ((IJsonModel<SourceControlSecurityTokenProperties>)SecurityToken).Write(writer, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            securityToken = SourceControlSecurityTokenProperties.DeserializeSourceControlSecurityTokenProperties(property0.Value, options);
+                            securityToken = ModelSerializationExtensions.JsonDeserialize<SourceControlSecurityTokenProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("description"u8))

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Authorization.Models
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("setting"u8);
-                writer.WriteObjectValue(Settings, options);
+                ((IJsonModel<RoleManagementApprovalSettings>)Settings).Write(writer, options);
             }
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    setting = RoleManagementApprovalSettings.DeserializeRoleManagementApprovalSettings(property.Value, options);
+                    setting = ModelSerializationExtensions.JsonDeserialize<RoleManagementApprovalSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value, options);
+                    target = ModelSerializationExtensions.JsonDeserialize<RoleManagementPolicyRuleTarget>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

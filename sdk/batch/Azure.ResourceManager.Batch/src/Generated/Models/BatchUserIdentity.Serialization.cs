@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(AutoUser))
             {
                 writer.WritePropertyName("autoUser"u8);
-                writer.WriteObjectValue(AutoUser, options);
+                ((IJsonModel<BatchAutoUserSpecification>)AutoUser).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    autoUser = BatchAutoUserSpecification.DeserializeBatchAutoUserSpecification(property.Value, options);
+                    autoUser = ModelSerializationExtensions.JsonDeserialize<BatchAutoUserSpecification>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

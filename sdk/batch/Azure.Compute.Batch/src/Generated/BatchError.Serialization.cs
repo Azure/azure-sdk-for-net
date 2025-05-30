@@ -39,7 +39,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
-                writer.WriteObjectValue(Message, options);
+                ((IJsonModel<BatchErrorMessage>)Message).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Values))
             {
@@ -47,7 +47,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BatchErrorDetail>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +106,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    message = BatchErrorMessage.DeserializeBatchErrorMessage(property.Value, options);
+                    message = ModelSerializationExtensions.JsonDeserialize<BatchErrorMessage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("values"u8))

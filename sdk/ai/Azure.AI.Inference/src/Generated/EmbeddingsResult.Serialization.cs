@@ -40,11 +40,11 @@ namespace Azure.AI.Inference
             writer.WriteStartArray();
             foreach (var item in Data)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<EmbeddingItem>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("usage"u8);
-            writer.WriteObjectValue(Usage, options);
+            ((IJsonModel<EmbeddingsUsage>)Usage).Write(writer, options);
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -109,7 +109,7 @@ namespace Azure.AI.Inference
                 }
                 if (property.NameEquals("usage"u8))
                 {
-                    usage = EmbeddingsUsage.DeserializeEmbeddingsUsage(property.Value, options);
+                    usage = ModelSerializationExtensions.JsonDeserialize<EmbeddingsUsage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("model"u8))

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(Constraints))
             {
                 writer.WritePropertyName("constraints"u8);
-                writer.WriteObjectValue(Constraints, options);
+                ((IJsonModel<ServiceProviderParameterMetadataConstraints>)Constraints).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    constraints = ServiceProviderParameterMetadataConstraints.DeserializeServiceProviderParameterMetadataConstraints(property.Value, options);
+                    constraints = ModelSerializationExtensions.JsonDeserialize<ServiceProviderParameterMetadataConstraints>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

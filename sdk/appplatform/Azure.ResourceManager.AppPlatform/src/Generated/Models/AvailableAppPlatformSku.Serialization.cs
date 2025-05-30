@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity, options);
+                ((IJsonModel<AppPlatformSkuCapacity>)Capacity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Locations))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in LocationInfo)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AppPlatformSkuLocationInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Restrictions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AppPlatformSkuRestrictions>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    capacity = AppPlatformSkuCapacity.DeserializeAppPlatformSkuCapacity(property.Value, options);
+                    capacity = ModelSerializationExtensions.JsonDeserialize<AppPlatformSkuCapacity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("locations"u8))

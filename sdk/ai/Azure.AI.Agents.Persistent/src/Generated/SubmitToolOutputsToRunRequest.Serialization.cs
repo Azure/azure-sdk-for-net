@@ -38,7 +38,7 @@ namespace Azure.AI.Agents.Persistent
             writer.WriteStartArray();
             foreach (var item in ToolOutputs)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ToolOutput>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Stream))

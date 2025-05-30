@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             writer.WriteStartArray();
             foreach (var item in Resources)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ReportResourceMetadata>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(Status))
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
             {
                 writer.WritePropertyName("complianceStatus"u8);
-                writer.WriteObjectValue(ComplianceStatus, options);
+                ((IJsonModel<ReportComplianceStatus>)ComplianceStatus).Write(writer, options);
             }
             if (Optional.IsDefined(StorageInfo))
             {
                 writer.WritePropertyName("storageInfo"u8);
-                writer.WriteObjectValue(StorageInfo, options);
+                ((IJsonModel<ReportStorageInfo>)StorageInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(CertRecords))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in CertRecords)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CertSyncRecord>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    complianceStatus = ReportComplianceStatus.DeserializeReportComplianceStatus(property.Value, options);
+                    complianceStatus = ModelSerializationExtensions.JsonDeserialize<ReportComplianceStatus>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storageInfo"u8))
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    storageInfo = ReportStorageInfo.DeserializeReportStorageInfo(property.Value, options);
+                    storageInfo = ModelSerializationExtensions.JsonDeserialize<ReportStorageInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("certRecords"u8))

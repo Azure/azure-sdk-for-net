@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
-                writer.WriteObjectValue(Tags, options);
+                ((IJsonModel<HciPrecheckResultTags>)Tags).Write(writer, options);
             }
             if (Optional.IsDefined(HealthCheckTags))
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    tags = HciPrecheckResultTags.DeserializeHciPrecheckResultTags(property.Value, options);
+                    tags = ModelSerializationExtensions.JsonDeserialize<HciPrecheckResultTags>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("healthCheckTags"u8))

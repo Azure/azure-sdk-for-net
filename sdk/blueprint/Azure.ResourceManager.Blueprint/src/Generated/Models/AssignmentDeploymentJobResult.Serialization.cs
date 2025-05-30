@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<AzureResourceManagerError>)Error).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Resources))
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AssignmentJobCreatedResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     {
                         continue;
                     }
-                    error = AzureResourceManagerError.DeserializeAzureResourceManagerError(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<AzureResourceManagerError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resources"u8))

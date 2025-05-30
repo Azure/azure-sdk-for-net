@@ -59,7 +59,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(ExecutionInfo))
             {
                 writer.WritePropertyName("executionInfo"u8);
-                writer.WriteObjectValue(ExecutionInfo, options);
+                ((IJsonModel<BatchTaskExecutionInfo>)ExecutionInfo).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -143,7 +143,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    executionInfo = BatchTaskExecutionInfo.DeserializeBatchTaskExecutionInfo(property.Value, options);
+                    executionInfo = ModelSerializationExtensions.JsonDeserialize<BatchTaskExecutionInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

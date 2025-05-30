@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(KeyVaultDetails))
             {
                 writer.WritePropertyName("keyVault"u8);
-                writer.WriteObjectValue(KeyVaultDetails, options);
+                ((IJsonModel<KeyVaultContractCreateProperties>)KeyVaultDetails).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            keyVault = KeyVaultContractCreateProperties.DeserializeKeyVaultContractCreateProperties(property0.Value, options);
+                            keyVault = ModelSerializationExtensions.JsonDeserialize<KeyVaultContractCreateProperties>(property0.Value);
                             continue;
                         }
                     }

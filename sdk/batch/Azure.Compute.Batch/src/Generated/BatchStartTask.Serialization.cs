@@ -39,7 +39,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(ContainerSettings))
             {
                 writer.WritePropertyName("containerSettings"u8);
-                writer.WriteObjectValue(ContainerSettings, options);
+                ((IJsonModel<BatchTaskContainerSettings>)ContainerSettings).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ResourceFiles))
             {
@@ -47,7 +47,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in ResourceFiles)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceFile>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,14 +57,14 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in EnvironmentSettings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EnvironmentSetting>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(UserIdentity))
             {
                 writer.WritePropertyName("userIdentity"u8);
-                writer.WriteObjectValue(UserIdentity, options);
+                ((IJsonModel<UserIdentity>)UserIdentity).Write(writer, options);
             }
             if (Optional.IsDefined(MaxTaskRetryCount))
             {
@@ -135,7 +135,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    containerSettings = BatchTaskContainerSettings.DeserializeBatchTaskContainerSettings(property.Value, options);
+                    containerSettings = ModelSerializationExtensions.JsonDeserialize<BatchTaskContainerSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceFiles"u8))
@@ -172,7 +172,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    userIdentity = UserIdentity.DeserializeUserIdentity(property.Value, options);
+                    userIdentity = ModelSerializationExtensions.JsonDeserialize<UserIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("maxTaskRetryCount"u8))

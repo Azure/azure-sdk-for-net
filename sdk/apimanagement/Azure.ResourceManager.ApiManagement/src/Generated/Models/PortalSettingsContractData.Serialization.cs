@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(IsSubscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
-                writer.WriteObjectValue(IsSubscriptions, options);
+                ((IJsonModel<SubscriptionDelegationSettingProperties>)IsSubscriptions).Write(writer, options);
             }
             if (Optional.IsDefined(IsUserRegistration))
             {
                 writer.WritePropertyName("userRegistration"u8);
-                writer.WriteObjectValue(IsUserRegistration, options);
+                ((IJsonModel<RegistrationDelegationSettingProperties>)IsUserRegistration).Write(writer, options);
             }
             if (Optional.IsDefined(IsRedirectEnabled))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(TermsOfService))
             {
                 writer.WritePropertyName("termsOfService"u8);
-                writer.WriteObjectValue(TermsOfService, options);
+                ((IJsonModel<TermsOfServiceProperties>)TermsOfService).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            subscriptions = SubscriptionDelegationSettingProperties.DeserializeSubscriptionDelegationSettingProperties(property0.Value, options);
+                            subscriptions = ModelSerializationExtensions.JsonDeserialize<SubscriptionDelegationSettingProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("userRegistration"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            userRegistration = RegistrationDelegationSettingProperties.DeserializeRegistrationDelegationSettingProperties(property0.Value, options);
+                            userRegistration = ModelSerializationExtensions.JsonDeserialize<RegistrationDelegationSettingProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enabled"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            termsOfService = TermsOfServiceProperties.DeserializeTermsOfServiceProperties(property0.Value, options);
+                            termsOfService = ModelSerializationExtensions.JsonDeserialize<TermsOfServiceProperties>(property0.Value);
                             continue;
                         }
                     }

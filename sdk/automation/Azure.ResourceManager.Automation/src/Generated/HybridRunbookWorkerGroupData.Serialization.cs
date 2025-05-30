@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue(Credential, options);
+                ((IJsonModel<RunAsCredentialAssociationProperty>)Credential).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            credential = RunAsCredentialAssociationProperty.DeserializeRunAsCredentialAssociationProperty(property0.Value, options);
+                            credential = ModelSerializationExtensions.JsonDeserialize<RunAsCredentialAssociationProperty>(property0.Value);
                             continue;
                         }
                     }

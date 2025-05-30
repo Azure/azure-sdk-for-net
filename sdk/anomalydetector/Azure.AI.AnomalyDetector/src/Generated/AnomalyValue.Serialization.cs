@@ -46,7 +46,7 @@ namespace Azure.AI.AnomalyDetector
                 writer.WriteStartArray();
                 foreach (var item in Interpretation)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AnomalyInterpretation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

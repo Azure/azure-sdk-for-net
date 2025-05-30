@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Headers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HttpHeaderConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

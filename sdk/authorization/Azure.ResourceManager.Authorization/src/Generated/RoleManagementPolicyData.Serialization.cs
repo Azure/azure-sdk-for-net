@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Authorization
             if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
-                writer.WriteObjectValue(LastModifiedBy, options);
+                ((IJsonModel<RoleManagementPrincipal>)LastModifiedBy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Authorization
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RoleManagementPolicyRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -87,14 +87,14 @@ namespace Azure.ResourceManager.Authorization
                 writer.WriteStartArray();
                 foreach (var item in EffectiveRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RoleManagementPolicyRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(PolicyProperties))
             {
                 writer.WritePropertyName("policyProperties"u8);
-                writer.WriteObjectValue(PolicyProperties, options);
+                ((IJsonModel<RoleManagementPolicyProperties>)PolicyProperties).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Authorization
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Authorization
                             {
                                 continue;
                             }
-                            lastModifiedBy = RoleManagementPrincipal.DeserializeRoleManagementPrincipal(property0.Value, options);
+                            lastModifiedBy = ModelSerializationExtensions.JsonDeserialize<RoleManagementPrincipal>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("lastModifiedDateTime"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Authorization
                             {
                                 continue;
                             }
-                            policyProperties = RoleManagementPolicyProperties.DeserializeRoleManagementPolicyProperties(property0.Value, options);
+                            policyProperties = ModelSerializationExtensions.JsonDeserialize<RoleManagementPolicyProperties>(property0.Value);
                             continue;
                         }
                     }

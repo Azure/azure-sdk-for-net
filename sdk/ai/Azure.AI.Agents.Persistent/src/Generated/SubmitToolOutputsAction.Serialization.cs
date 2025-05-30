@@ -36,7 +36,7 @@ namespace Azure.AI.Agents.Persistent
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("submit_tool_outputs"u8);
-            writer.WriteObjectValue<InternalSubmitToolOutputsDetails>(InternalDetails, options);
+            ((IJsonModel<InternalSubmitToolOutputsDetails>)InternalDetails).Write(writer, options);
         }
 
         SubmitToolOutputsAction IJsonModel<SubmitToolOutputsAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (property.NameEquals("submit_tool_outputs"u8))
                 {
-                    submitToolOutputs = InternalSubmitToolOutputsDetails.DeserializeInternalSubmitToolOutputsDetails(property.Value, options);
+                    submitToolOutputs = ModelSerializationExtensions.JsonDeserialize<InternalSubmitToolOutputsDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

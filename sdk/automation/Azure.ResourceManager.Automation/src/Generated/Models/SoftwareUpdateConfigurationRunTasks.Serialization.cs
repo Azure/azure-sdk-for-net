@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(PreTask))
             {
                 writer.WritePropertyName("preTask"u8);
-                writer.WriteObjectValue(PreTask, options);
+                ((IJsonModel<SoftwareUpdateConfigurationRunTaskProperties>)PreTask).Write(writer, options);
             }
             if (Optional.IsDefined(PostTask))
             {
                 writer.WritePropertyName("postTask"u8);
-                writer.WriteObjectValue(PostTask, options);
+                ((IJsonModel<SoftwareUpdateConfigurationRunTaskProperties>)PostTask).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    preTask = SoftwareUpdateConfigurationRunTaskProperties.DeserializeSoftwareUpdateConfigurationRunTaskProperties(property.Value, options);
+                    preTask = ModelSerializationExtensions.JsonDeserialize<SoftwareUpdateConfigurationRunTaskProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("postTask"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    postTask = SoftwareUpdateConfigurationRunTaskProperties.DeserializeSoftwareUpdateConfigurationRunTaskProperties(property.Value, options);
+                    postTask = ModelSerializationExtensions.JsonDeserialize<SoftwareUpdateConfigurationRunTaskProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

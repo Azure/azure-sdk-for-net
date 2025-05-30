@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<CdnSku>)Sku).Write(writer, options);
             if (Optional.IsCollectionDefined(MigrationEndpointMappings))
             {
                 writer.WritePropertyName("migrationEndpointMappings"u8);
                 writer.WriteStartArray();
                 foreach (var item in MigrationEndpointMappings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MigrationEndpointMapping>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = CdnSku.DeserializeCdnSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<CdnSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("migrationEndpointMappings"u8))

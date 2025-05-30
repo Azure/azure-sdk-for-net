@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ScVmm.Models
             if (options.Format != "W" && Optional.IsDefined(LastRestoredVmCheckpoint))
             {
                 writer.WritePropertyName("lastRestoredVMCheckpoint"u8);
-                writer.WriteObjectValue(LastRestoredVmCheckpoint, options);
+                ((IJsonModel<ScVmmCheckpoint>)LastRestoredVmCheckpoint).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Checkpoints))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 writer.WriteStartArray();
                 foreach (var item in Checkpoints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ScVmmCheckpoint>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                     {
                         continue;
                     }
-                    lastRestoredVmCheckpoint = ScVmmCheckpoint.DeserializeScVmmCheckpoint(property.Value, options);
+                    lastRestoredVmCheckpoint = ModelSerializationExtensions.JsonDeserialize<ScVmmCheckpoint>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("checkpoints"u8))

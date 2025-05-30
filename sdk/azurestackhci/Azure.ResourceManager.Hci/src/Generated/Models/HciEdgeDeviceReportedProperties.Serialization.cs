@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (options.Format != "W" && Optional.IsDefined(ExtensionProfile))
             {
                 writer.WritePropertyName("extensionProfile"u8);
-                writer.WriteObjectValue(ExtensionProfile, options);
+                ((IJsonModel<HciEdgeDeviceExtensionProfile>)ExtensionProfile).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    extensionProfile = HciEdgeDeviceExtensionProfile.DeserializeHciEdgeDeviceExtensionProfile(property.Value, options);
+                    extensionProfile = ModelSerializationExtensions.JsonDeserialize<HciEdgeDeviceExtensionProfile>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

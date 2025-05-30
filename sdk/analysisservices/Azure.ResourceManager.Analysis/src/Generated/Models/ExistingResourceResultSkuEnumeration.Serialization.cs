@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AnalysisExistingSku>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

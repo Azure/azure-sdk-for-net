@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("parameters"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<CacheExpirationActionProperties>)Properties).Write(writer, options);
         }
 
         DeliveryRuleCacheExpirationAction IJsonModel<DeliveryRuleCacheExpirationAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = CacheExpirationActionProperties.DeserializeCacheExpirationActionProperties(property.Value, options);
+                    parameters = ModelSerializationExtensions.JsonDeserialize<CacheExpirationActionProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

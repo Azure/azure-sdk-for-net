@@ -38,7 +38,7 @@ namespace Azure.AI.Agents.Persistent
             if (Optional.IsDefined(ImageFile))
             {
                 writer.WritePropertyName("image_file"u8);
-                writer.WriteObjectValue(ImageFile, options);
+                ((IJsonModel<MessageDeltaImageFileContentObject>)ImageFile).Write(writer, options);
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    imageFile = MessageDeltaImageFileContentObject.DeserializeMessageDeltaImageFileContentObject(property.Value, options);
+                    imageFile = ModelSerializationExtensions.JsonDeserialize<MessageDeltaImageFileContentObject>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("index"u8))

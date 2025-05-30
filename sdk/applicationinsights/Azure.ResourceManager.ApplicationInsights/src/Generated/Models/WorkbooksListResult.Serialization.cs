@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationInsightsWorkbookData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

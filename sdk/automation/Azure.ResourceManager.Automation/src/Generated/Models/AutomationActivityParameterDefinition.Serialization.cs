@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationSet)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AutomationActivityParameterValidationSet>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source, options);
+                ((IJsonModel<AppPlatformUserSourceInfo>)Source).Write(writer, options);
             }
             if (Optional.IsDefined(DeploymentSettings))
             {
                 writer.WritePropertyName("deploymentSettings"u8);
-                writer.WriteObjectValue(DeploymentSettings, options);
+                ((IJsonModel<AppPlatformDeploymentSettings>)DeploymentSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Instances)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AppPlatformDeploymentInstance>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    source = AppPlatformUserSourceInfo.DeserializeAppPlatformUserSourceInfo(property.Value, options);
+                    source = ModelSerializationExtensions.JsonDeserialize<AppPlatformUserSourceInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deploymentSettings"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    deploymentSettings = AppPlatformDeploymentSettings.DeserializeAppPlatformDeploymentSettings(property.Value, options);
+                    deploymentSettings = ModelSerializationExtensions.JsonDeserialize<AppPlatformDeploymentSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source, options);
+            ((IJsonModel<ConnectivityCheckRequestSource>)Source).Write(writer, options);
             writer.WritePropertyName("destination"u8);
-            writer.WriteObjectValue(Destination, options);
+            ((IJsonModel<ConnectivityCheckRequestDestination>)Destination).Write(writer, options);
             if (Optional.IsDefined(PreferredIPVersion))
             {
                 writer.WritePropertyName("preferredIPVersion"u8);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(ProtocolConfiguration))
             {
                 writer.WritePropertyName("protocolConfiguration"u8);
-                writer.WriteObjectValue(ProtocolConfiguration, options);
+                ((IJsonModel<ConnectivityCheckRequestProtocolConfiguration>)ProtocolConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 if (property.NameEquals("source"u8))
                 {
-                    source = ConnectivityCheckRequestSource.DeserializeConnectivityCheckRequestSource(property.Value, options);
+                    source = ModelSerializationExtensions.JsonDeserialize<ConnectivityCheckRequestSource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("destination"u8))
                 {
-                    destination = ConnectivityCheckRequestDestination.DeserializeConnectivityCheckRequestDestination(property.Value, options);
+                    destination = ModelSerializationExtensions.JsonDeserialize<ConnectivityCheckRequestDestination>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("preferredIPVersion"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    protocolConfiguration = ConnectivityCheckRequestProtocolConfiguration.DeserializeConnectivityCheckRequestProtocolConfiguration(property.Value, options);
+                    protocolConfiguration = ModelSerializationExtensions.JsonDeserialize<ConnectivityCheckRequestProtocolConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

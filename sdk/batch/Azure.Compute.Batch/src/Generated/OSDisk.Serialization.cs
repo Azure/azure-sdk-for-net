@@ -37,7 +37,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(EphemeralOSDiskSettings))
             {
                 writer.WritePropertyName("ephemeralOSDiskSettings"u8);
-                writer.WriteObjectValue(EphemeralOSDiskSettings, options);
+                ((IJsonModel<DiffDiskSettings>)EphemeralOSDiskSettings).Write(writer, options);
             }
             if (Optional.IsDefined(Caching))
             {
@@ -52,7 +52,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
-                writer.WriteObjectValue(ManagedDisk, options);
+                ((IJsonModel<ManagedDisk>)ManagedDisk).Write(writer, options);
             }
             if (Optional.IsDefined(WriteAcceleratorEnabled))
             {
@@ -111,7 +111,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    ephemeralOSDiskSettings = DiffDiskSettings.DeserializeDiffDiskSettings(property.Value, options);
+                    ephemeralOSDiskSettings = ModelSerializationExtensions.JsonDeserialize<DiffDiskSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("caching"u8))
@@ -138,7 +138,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    managedDisk = ManagedDisk.DeserializeManagedDisk(property.Value, options);
+                    managedDisk = ModelSerializationExtensions.JsonDeserialize<ManagedDisk>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("writeAcceleratorEnabled"u8))

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(HttpConfiguration))
             {
                 writer.WritePropertyName("HTTPConfiguration"u8);
-                writer.WriteObjectValue(HttpConfiguration, options);
+                ((IJsonModel<ConnectivityCheckRequestHttpConfiguration>)HttpConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    httpConfiguration = ConnectivityCheckRequestHttpConfiguration.DeserializeConnectivityCheckRequestHttpConfiguration(property.Value, options);
+                    httpConfiguration = ModelSerializationExtensions.JsonDeserialize<ConnectivityCheckRequestHttpConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

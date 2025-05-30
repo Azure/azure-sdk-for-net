@@ -37,7 +37,7 @@ namespace Azure.AI.Agents.Persistent
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("storage_queue"u8);
-            writer.WriteObjectValue<AzureFunctionStorageQueue>(StorageQueue, options);
+            ((IJsonModel<AzureFunctionStorageQueue>)StorageQueue).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,7 +88,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (property.NameEquals("storage_queue"u8))
                 {
-                    storageQueue = AzureFunctionStorageQueue.DeserializeAzureFunctionStorageQueue(property.Value, options);
+                    storageQueue = ModelSerializationExtensions.JsonDeserialize<AzureFunctionStorageQueue>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

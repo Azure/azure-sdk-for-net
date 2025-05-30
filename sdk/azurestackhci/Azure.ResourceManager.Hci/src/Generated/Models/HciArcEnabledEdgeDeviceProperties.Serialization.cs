@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (options.Format != "W" && Optional.IsDefined(ReportedProperties))
             {
                 writer.WritePropertyName("reportedProperties"u8);
-                writer.WriteObjectValue(ReportedProperties, options);
+                ((IJsonModel<HciReportedProperties>)ReportedProperties).Write(writer, options);
             }
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    reportedProperties = HciReportedProperties.DeserializeHciReportedProperties(property.Value, options);
+                    reportedProperties = ModelSerializationExtensions.JsonDeserialize<HciReportedProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deviceConfiguration"u8))
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    deviceConfiguration = HciEdgeDeviceConfiguration.DeserializeHciEdgeDeviceConfiguration(property.Value, options);
+                    deviceConfiguration = ModelSerializationExtensions.JsonDeserialize<HciEdgeDeviceConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

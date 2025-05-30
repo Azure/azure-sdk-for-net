@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Continents)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContinentsResponseContinentsItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in CountryOrRegions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContinentsResponseCountryOrRegionsItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

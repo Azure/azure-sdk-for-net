@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceRequests))
             {
                 writer.WritePropertyName("resourceRequests"u8);
-                writer.WriteObjectValue(ResourceRequests, options);
+                ((IJsonModel<AppPlatformConfigurationServiceRequirements>)ResourceRequests).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Instances))
             {
@@ -50,14 +50,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Instances)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AppPlatformConfigurationServiceInstance>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
-                writer.WriteObjectValue(Settings, options);
+                ((IJsonModel<AppPlatformConfigurationServiceSettings>)Settings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    resourceRequests = AppPlatformConfigurationServiceRequirements.DeserializeAppPlatformConfigurationServiceRequirements(property.Value, options);
+                    resourceRequests = ModelSerializationExtensions.JsonDeserialize<AppPlatformConfigurationServiceRequirements>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("instances"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    settings = AppPlatformConfigurationServiceSettings.DeserializeAppPlatformConfigurationServiceSettings(property.Value, options);
+                    settings = ModelSerializationExtensions.JsonDeserialize<AppPlatformConfigurationServiceSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

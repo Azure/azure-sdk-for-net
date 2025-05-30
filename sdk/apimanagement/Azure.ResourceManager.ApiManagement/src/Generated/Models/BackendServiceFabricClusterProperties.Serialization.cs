@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in ServerX509Names)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<X509CertificateName>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

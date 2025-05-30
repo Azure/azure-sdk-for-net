@@ -40,7 +40,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in ExitCodes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExitCodeMapping>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,24 +50,24 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in ExitCodeRanges)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExitCodeRangeMapping>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PreProcessingError))
             {
                 writer.WritePropertyName("preProcessingError"u8);
-                writer.WriteObjectValue(PreProcessingError, options);
+                ((IJsonModel<ExitOptions>)PreProcessingError).Write(writer, options);
             }
             if (Optional.IsDefined(FileUploadError))
             {
                 writer.WritePropertyName("fileUploadError"u8);
-                writer.WriteObjectValue(FileUploadError, options);
+                ((IJsonModel<ExitOptions>)FileUploadError).Write(writer, options);
             }
             if (Optional.IsDefined(Default))
             {
                 writer.WritePropertyName("default"u8);
-                writer.WriteObjectValue(Default, options);
+                ((IJsonModel<ExitOptions>)Default).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -149,7 +149,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    preProcessingError = ExitOptions.DeserializeExitOptions(property.Value, options);
+                    preProcessingError = ModelSerializationExtensions.JsonDeserialize<ExitOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("fileUploadError"u8))
@@ -158,7 +158,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    fileUploadError = ExitOptions.DeserializeExitOptions(property.Value, options);
+                    fileUploadError = ModelSerializationExtensions.JsonDeserialize<ExitOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("default"u8))
@@ -167,7 +167,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    @default = ExitOptions.DeserializeExitOptions(property.Value, options);
+                    @default = ModelSerializationExtensions.JsonDeserialize<ExitOptions>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

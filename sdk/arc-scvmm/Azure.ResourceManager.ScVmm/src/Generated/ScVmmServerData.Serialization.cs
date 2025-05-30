@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.ScVmm
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("extendedLocation"u8);
-            JsonSerializer.Serialize(writer, ExtendedLocation);
+            ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials, options);
+                ((IJsonModel<VmmCredential>)Credentials).Write(writer, options);
             }
             writer.WritePropertyName("fqdn"u8);
             writer.WriteStringValue(Fqdn);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ScVmm
             {
                 if (property.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<ExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ScVmm
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ScVmm
                             {
                                 continue;
                             }
-                            credentials = VmmCredential.DeserializeVmmCredential(property0.Value, options);
+                            credentials = ModelSerializationExtensions.JsonDeserialize<VmmCredential>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("fqdn"u8))

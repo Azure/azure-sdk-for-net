@@ -40,7 +40,7 @@ namespace Azure.AI.Agents.Persistent
             writer.WriteStartArray();
             foreach (var item in Content)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<MessageDeltaContent>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

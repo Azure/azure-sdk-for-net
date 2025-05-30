@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BatchAccountEndpointDependency>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

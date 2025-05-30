@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(ProbeAction))
             {
                 writer.WritePropertyName("probeAction"u8);
-                writer.WriteObjectValue(ProbeAction, options);
+                ((IJsonModel<AppInstanceProbeAction>)ProbeAction).Write(writer, options);
             }
             writer.WritePropertyName("disableProbe"u8);
             writer.WriteBooleanValue(IsProbeDisabled);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    probeAction = AppInstanceProbeAction.DeserializeAppInstanceProbeAction(property.Value, options);
+                    probeAction = ModelSerializationExtensions.JsonDeserialize<AppInstanceProbeAction>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("disableProbe"u8))

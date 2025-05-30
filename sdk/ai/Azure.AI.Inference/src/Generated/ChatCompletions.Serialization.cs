@@ -44,11 +44,11 @@ namespace Azure.AI.Inference
             writer.WriteStartArray();
             foreach (var item in Choices)
             {
-                writer.WriteObjectValue<ChatChoice>(item, options);
+                ((IJsonModel<ChatChoice>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("usage"u8);
-            writer.WriteObjectValue(Usage, options);
+            ((IJsonModel<CompletionsUsage>)Usage).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -122,7 +122,7 @@ namespace Azure.AI.Inference
                 }
                 if (property.NameEquals("usage"u8))
                 {
-                    usage = CompletionsUsage.DeserializeCompletionsUsage(property.Value, options);
+                    usage = ModelSerializationExtensions.JsonDeserialize<CompletionsUsage>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -92,14 +92,14 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WebTestGeolocation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("Configuration"u8);
-                writer.WriteObjectValue(Configuration, options);
+                ((IJsonModel<WebTestConfiguration>)Configuration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("Request"u8);
-                writer.WriteObjectValue(Request, options);
+                ((IJsonModel<WebTestRequest>)Request).Write(writer, options);
             }
             if (Optional.IsDefined(ValidationRules))
             {
                 writer.WritePropertyName("ValidationRules"u8);
-                writer.WriteObjectValue(ValidationRules, options);
+                ((IJsonModel<WebTestValidationRules>)ValidationRules).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                             {
                                 continue;
                             }
-                            configuration = WebTestConfiguration.DeserializeWebTestConfiguration(property0.Value, options);
+                            configuration = ModelSerializationExtensions.JsonDeserialize<WebTestConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                             {
                                 continue;
                             }
-                            request = WebTestRequest.DeserializeWebTestRequest(property0.Value, options);
+                            request = ModelSerializationExtensions.JsonDeserialize<WebTestRequest>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ValidationRules"u8))
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                             {
                                 continue;
                             }
-                            validationRules = WebTestValidationRules.DeserializeWebTestValidationRules(property0.Value, options);
+                            validationRules = ModelSerializationExtensions.JsonDeserialize<WebTestValidationRules>(property0.Value);
                             continue;
                         }
                     }

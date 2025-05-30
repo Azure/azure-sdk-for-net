@@ -35,13 +35,13 @@ namespace Azure.Compute.Batch
             }
 
             writer.WritePropertyName("imageReference"u8);
-            writer.WriteObjectValue(ImageReference, options);
+            ((IJsonModel<ImageReference>)ImageReference).Write(writer, options);
             writer.WritePropertyName("nodeAgentSKUId"u8);
             writer.WriteStringValue(NodeAgentSkuId);
             if (Optional.IsDefined(WindowsConfiguration))
             {
                 writer.WritePropertyName("windowsConfiguration"u8);
-                writer.WriteObjectValue(WindowsConfiguration, options);
+                ((IJsonModel<WindowsConfiguration>)WindowsConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DataDisks))
             {
@@ -49,7 +49,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in DataDisks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataDisk>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -61,17 +61,17 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(ContainerConfiguration))
             {
                 writer.WritePropertyName("containerConfiguration"u8);
-                writer.WriteObjectValue(ContainerConfiguration, options);
+                ((IJsonModel<ContainerConfiguration>)ContainerConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(DiskEncryptionConfiguration))
             {
                 writer.WritePropertyName("diskEncryptionConfiguration"u8);
-                writer.WriteObjectValue(DiskEncryptionConfiguration, options);
+                ((IJsonModel<DiskEncryptionConfiguration>)DiskEncryptionConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(NodePlacementConfiguration))
             {
                 writer.WritePropertyName("nodePlacementConfiguration"u8);
-                writer.WriteObjectValue(NodePlacementConfiguration, options);
+                ((IJsonModel<BatchNodePlacementConfiguration>)NodePlacementConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Extensions))
             {
@@ -79,24 +79,24 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VMExtension>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OsDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
-                writer.WriteObjectValue(OsDisk, options);
+                ((IJsonModel<OSDisk>)OsDisk).Write(writer, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile, options);
+                ((IJsonModel<SecurityProfile>)SecurityProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ServiceArtifactReference))
             {
                 writer.WritePropertyName("serviceArtifactReference"u8);
-                writer.WriteObjectValue(ServiceArtifactReference, options);
+                ((IJsonModel<ServiceArtifactReference>)ServiceArtifactReference).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -153,7 +153,7 @@ namespace Azure.Compute.Batch
             {
                 if (property.NameEquals("imageReference"u8))
                 {
-                    imageReference = ImageReference.DeserializeImageReference(property.Value, options);
+                    imageReference = ModelSerializationExtensions.JsonDeserialize<ImageReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nodeAgentSKUId"u8))
@@ -167,7 +167,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    windowsConfiguration = WindowsConfiguration.DeserializeWindowsConfiguration(property.Value, options);
+                    windowsConfiguration = ModelSerializationExtensions.JsonDeserialize<WindowsConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataDisks"u8))
@@ -195,7 +195,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    containerConfiguration = ContainerConfiguration.DeserializeContainerConfiguration(property.Value, options);
+                    containerConfiguration = ModelSerializationExtensions.JsonDeserialize<ContainerConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("diskEncryptionConfiguration"u8))
@@ -204,7 +204,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    diskEncryptionConfiguration = DiskEncryptionConfiguration.DeserializeDiskEncryptionConfiguration(property.Value, options);
+                    diskEncryptionConfiguration = ModelSerializationExtensions.JsonDeserialize<DiskEncryptionConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nodePlacementConfiguration"u8))
@@ -213,7 +213,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    nodePlacementConfiguration = BatchNodePlacementConfiguration.DeserializeBatchNodePlacementConfiguration(property.Value, options);
+                    nodePlacementConfiguration = ModelSerializationExtensions.JsonDeserialize<BatchNodePlacementConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extensions"u8))
@@ -236,7 +236,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    osDisk = OSDisk.DeserializeOSDisk(property.Value, options);
+                    osDisk = ModelSerializationExtensions.JsonDeserialize<OSDisk>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("securityProfile"u8))
@@ -245,7 +245,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    securityProfile = SecurityProfile.DeserializeSecurityProfile(property.Value, options);
+                    securityProfile = ModelSerializationExtensions.JsonDeserialize<SecurityProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("serviceArtifactReference"u8))
@@ -254,7 +254,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    serviceArtifactReference = ServiceArtifactReference.DeserializeServiceArtifactReference(property.Value, options);
+                    serviceArtifactReference = ModelSerializationExtensions.JsonDeserialize<ServiceArtifactReference>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

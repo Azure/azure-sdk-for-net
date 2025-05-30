@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ReportResourceItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,19 +50,19 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in ComplianceReport)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AppComplianceReportItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(CompliancePdfReport))
             {
                 writer.WritePropertyName("compliancePdfReport"u8);
-                writer.WriteObjectValue(CompliancePdfReport, options);
+                ((IJsonModel<AppCompliancePdfReport>)CompliancePdfReport).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ComplianceDetailedPdfReport))
             {
                 writer.WritePropertyName("complianceDetailedPdfReport"u8);
-                writer.WriteObjectValue(ComplianceDetailedPdfReport, options);
+                ((IJsonModel<AppComplianceDetailedPdfReport>)ComplianceDetailedPdfReport).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    compliancePdfReport = AppCompliancePdfReport.DeserializeAppCompliancePdfReport(property.Value, options);
+                    compliancePdfReport = ModelSerializationExtensions.JsonDeserialize<AppCompliancePdfReport>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("complianceDetailedPdfReport"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    complianceDetailedPdfReport = AppComplianceDetailedPdfReport.DeserializeAppComplianceDetailedPdfReport(property.Value, options);
+                    complianceDetailedPdfReport = ModelSerializationExtensions.JsonDeserialize<AppComplianceDetailedPdfReport>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

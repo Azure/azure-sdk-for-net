@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Automation.Models
                 if (RawContent != null)
                 {
                     writer.WritePropertyName("rawContent"u8);
-                    writer.WriteObjectValue(RawContent, options);
+                    ((IJsonModel<RawGraphicalRunbookContent>)RawContent).Write(writer, options);
                 }
                 else
                 {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Automation.Models
                         rawContent = null;
                         continue;
                     }
-                    rawContent = RawGraphicalRunbookContent.DeserializeRawGraphicalRunbookContent(property.Value, options);
+                    rawContent = ModelSerializationExtensions.JsonDeserialize<RawGraphicalRunbookContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("graphRunbookJson"u8))

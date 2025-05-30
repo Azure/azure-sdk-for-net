@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<FacebookChannelProperties>)Properties).Write(writer, options);
             }
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    properties = FacebookChannelProperties.DeserializeFacebookChannelProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<FacebookChannelProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("channelName"u8))

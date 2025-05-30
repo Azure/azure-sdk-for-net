@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<AppComplianceReportScopingConfigurationProperties>)Properties).Write(writer, options);
         }
 
         AppComplianceReportScopingConfigurationData IJsonModel<AppComplianceReportScopingConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = AppComplianceReportScopingConfigurationProperties.DeserializeAppComplianceReportScopingConfigurationProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<AppComplianceReportScopingConfigurationProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

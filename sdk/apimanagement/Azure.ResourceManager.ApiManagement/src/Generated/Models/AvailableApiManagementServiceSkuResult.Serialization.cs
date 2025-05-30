@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<ResourceSku>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity, options);
+                ((IJsonModel<ApiManagementResourceSkuCapacity>)Capacity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    sku = ResourceSku.DeserializeResourceSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<ResourceSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    capacity = ApiManagementResourceSkuCapacity.DeserializeApiManagementResourceSkuCapacity(property.Value, options);
+                    capacity = ModelSerializationExtensions.JsonDeserialize<ApiManagementResourceSkuCapacity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

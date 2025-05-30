@@ -49,7 +49,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(SchedulingError))
             {
                 writer.WritePropertyName("schedulingError"u8);
-                writer.WriteObjectValue(SchedulingError, options);
+                ((IJsonModel<BatchJobSchedulingError>)SchedulingError).Write(writer, options);
             }
             if (Optional.IsDefined(TerminationReason))
             {
@@ -127,7 +127,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    schedulingError = BatchJobSchedulingError.DeserializeBatchJobSchedulingError(property.Value, options);
+                    schedulingError = ModelSerializationExtensions.JsonDeserialize<BatchJobSchedulingError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("terminateReason"u8))

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartArray();
             foreach (var item in LineRegistrations)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<LineRegistration>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(CallbackUri))

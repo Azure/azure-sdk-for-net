@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Automanage.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AutomanageBestPracticeData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

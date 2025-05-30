@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WriteStartArray();
                 foreach (var item in Zones)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AvsClusterZone>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

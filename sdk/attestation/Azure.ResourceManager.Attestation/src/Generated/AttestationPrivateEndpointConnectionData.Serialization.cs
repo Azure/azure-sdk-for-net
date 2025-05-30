@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Attestation
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                writer.WriteObjectValue(PrivateEndpoint, options);
+                ((IJsonModel<PrivateEndpoint>)PrivateEndpoint).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState, options);
+                ((IJsonModel<AttestationPrivateLinkServiceConnectionState>)ConnectionState).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Attestation
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Attestation
                             {
                                 continue;
                             }
-                            privateEndpoint = PrivateEndpoint.DeserializePrivateEndpoint(property0.Value, options);
+                            privateEndpoint = ModelSerializationExtensions.JsonDeserialize<PrivateEndpoint>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Attestation
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = AttestationPrivateLinkServiceConnectionState.DeserializeAttestationPrivateLinkServiceConnectionState(property0.Value, options);
+                            privateLinkServiceConnectionState = ModelSerializationExtensions.JsonDeserialize<AttestationPrivateLinkServiceConnectionState>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

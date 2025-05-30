@@ -40,8 +40,7 @@ namespace Azure.ResourceManager.Chaos
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -54,14 +53,14 @@ namespace Azure.ResourceManager.Chaos
             writer.WriteStartArray();
             foreach (var item in Steps)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ChaosExperimentStep>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("selectors"u8);
             writer.WriteStartArray();
             foreach (var item in Selectors)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ChaosTargetSelector>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -108,7 +107,7 @@ namespace Azure.ResourceManager.Chaos
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -151,7 +150,7 @@ namespace Azure.ResourceManager.Chaos
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

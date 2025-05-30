@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(NetworkStatus))
             {
                 writer.WritePropertyName("networkStatus"u8);
-                writer.WriteObjectValue(NetworkStatus, options);
+                ((IJsonModel<NetworkStatusContract>)NetworkStatus).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    networkStatus = NetworkStatusContract.DeserializeNetworkStatusContract(property.Value, options);
+                    networkStatus = ModelSerializationExtensions.JsonDeserialize<NetworkStatusContract>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

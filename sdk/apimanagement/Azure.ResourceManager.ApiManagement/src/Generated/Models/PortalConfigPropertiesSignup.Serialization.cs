@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(TermsOfService))
             {
                 writer.WritePropertyName("termsOfService"u8);
-                writer.WriteObjectValue(TermsOfService, options);
+                ((IJsonModel<PortalConfigTermsOfServiceProperties>)TermsOfService).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    termsOfService = PortalConfigTermsOfServiceProperties.DeserializePortalConfigTermsOfServiceProperties(property.Value, options);
+                    termsOfService = ModelSerializationExtensions.JsonDeserialize<PortalConfigTermsOfServiceProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

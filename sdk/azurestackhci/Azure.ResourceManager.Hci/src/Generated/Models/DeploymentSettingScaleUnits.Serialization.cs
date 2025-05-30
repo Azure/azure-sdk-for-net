@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WritePropertyName("deploymentData"u8);
-            writer.WriteObjectValue(DeploymentData, options);
+            ((IJsonModel<HciClusterDeploymentInfo>)DeploymentData).Write(writer, options);
             if (Optional.IsDefined(SbePartnerInfo))
             {
                 writer.WritePropertyName("sbePartnerInfo"u8);
-                writer.WriteObjectValue(SbePartnerInfo, options);
+                ((IJsonModel<SbePartnerInfo>)SbePartnerInfo).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 if (property.NameEquals("deploymentData"u8))
                 {
-                    deploymentData = HciClusterDeploymentInfo.DeserializeHciClusterDeploymentInfo(property.Value, options);
+                    deploymentData = ModelSerializationExtensions.JsonDeserialize<HciClusterDeploymentInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sbePartnerInfo"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    sbePartnerInfo = SbePartnerInfo.DeserializeSbePartnerInfo(property.Value, options);
+                    sbePartnerInfo = ModelSerializationExtensions.JsonDeserialize<SbePartnerInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

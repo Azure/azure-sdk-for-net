@@ -37,7 +37,7 @@ namespace Azure.AI.Agents.Persistent
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(StoreName);
             writer.WritePropertyName("configuration"u8);
-            writer.WriteObjectValue(StoreConfiguration, options);
+            ((IJsonModel<VectorStoreConfiguration>)StoreConfiguration).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,7 +88,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (property.NameEquals("configuration"u8))
                 {
-                    configuration = VectorStoreConfiguration.DeserializeVectorStoreConfiguration(property.Value, options);
+                    configuration = ModelSerializationExtensions.JsonDeserialize<VectorStoreConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

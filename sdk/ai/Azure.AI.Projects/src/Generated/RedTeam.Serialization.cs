@@ -107,7 +107,7 @@ namespace Azure.AI.Projects
                 writer.WriteStringValue(Status);
             }
             writer.WritePropertyName("target"u8);
-            writer.WriteObjectValue(Target, options);
+            ((IJsonModel<TargetConfig>)Target).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -256,7 +256,7 @@ namespace Azure.AI.Projects
                 }
                 if (property.NameEquals("target"u8))
                 {
-                    target = TargetConfig.DeserializeTargetConfig(property.Value, options);
+                    target = ModelSerializationExtensions.JsonDeserialize<TargetConfig>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

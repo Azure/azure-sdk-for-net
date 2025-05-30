@@ -36,7 +36,7 @@ namespace Azure.AI.Agents.Persistent
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("bing_custom_search"u8);
-            writer.WriteObjectValue(BingCustomSearch, options);
+            ((IJsonModel<BingCustomSearchToolParameters>)BingCustomSearch).Write(writer, options);
         }
 
         BingCustomSearchToolDefinition IJsonModel<BingCustomSearchToolDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (property.NameEquals("bing_custom_search"u8))
                 {
-                    bingCustomSearch = BingCustomSearchToolParameters.DeserializeBingCustomSearchToolParameters(property.Value, options);
+                    bingCustomSearch = ModelSerializationExtensions.JsonDeserialize<BingCustomSearchToolParameters>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

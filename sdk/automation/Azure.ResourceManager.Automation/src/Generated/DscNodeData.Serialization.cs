@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Automation
                 writer.WriteStartArray();
                 foreach (var item in ExtensionHandler)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DscNodeExtensionHandlerAssociationProperty>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

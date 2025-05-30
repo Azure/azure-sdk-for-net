@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in IPv4Addresses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CidrIPAddress>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in IPv6Addresses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CidrIPAddress>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

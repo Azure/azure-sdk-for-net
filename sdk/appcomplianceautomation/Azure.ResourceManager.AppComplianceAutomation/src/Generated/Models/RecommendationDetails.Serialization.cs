@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in RecommendationSolutions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RecommendationSolution>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -38,7 +38,7 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStartArray();
             foreach (var item in Variables)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<VariableValues>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(TopContributorCount))

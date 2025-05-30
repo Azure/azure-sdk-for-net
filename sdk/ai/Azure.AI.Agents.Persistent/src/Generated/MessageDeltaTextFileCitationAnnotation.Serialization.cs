@@ -38,7 +38,7 @@ namespace Azure.AI.Agents.Persistent
             if (Optional.IsDefined(FileCitation))
             {
                 writer.WritePropertyName("file_citation"u8);
-                writer.WriteObjectValue(FileCitation, options);
+                ((IJsonModel<MessageDeltaTextFileCitationAnnotationObject>)FileCitation).Write(writer, options);
             }
             if (Optional.IsDefined(Text))
             {
@@ -93,7 +93,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    fileCitation = MessageDeltaTextFileCitationAnnotationObject.DeserializeMessageDeltaTextFileCitationAnnotationObject(property.Value, options);
+                    fileCitation = ModelSerializationExtensions.JsonDeserialize<MessageDeltaTextFileCitationAnnotationObject>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("text"u8))

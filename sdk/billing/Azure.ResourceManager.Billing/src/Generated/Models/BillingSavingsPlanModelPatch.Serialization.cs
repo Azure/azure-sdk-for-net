@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<SavingsPlanUpdateRequestProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<BillingSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    properties = SavingsPlanUpdateRequestProperties.DeserializeSavingsPlanUpdateRequestProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<SavingsPlanUpdateRequestProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    sku = BillingSku.DeserializeBillingSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<BillingSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

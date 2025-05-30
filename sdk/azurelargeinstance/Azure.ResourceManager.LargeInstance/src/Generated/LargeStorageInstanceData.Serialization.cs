@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.LargeInstance
             if (Optional.IsDefined(StorageProperties))
             {
                 writer.WritePropertyName("storageProperties"u8);
-                writer.WriteObjectValue(StorageProperties, options);
+                ((IJsonModel<LargeInstanceStorageProperties>)StorageProperties).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.LargeInstance
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.LargeInstance
                             {
                                 continue;
                             }
-                            storageProperties = LargeInstanceStorageProperties.DeserializeLargeInstanceStorageProperties(property0.Value, options);
+                            storageProperties = ModelSerializationExtensions.JsonDeserialize<LargeInstanceStorageProperties>(property0.Value);
                             continue;
                         }
                     }

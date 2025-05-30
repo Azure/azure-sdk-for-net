@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in ErrorDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HciValidationFailureDetail>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

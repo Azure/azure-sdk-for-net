@@ -36,7 +36,7 @@ namespace Azure.AI.Agents.Persistent
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("fabric_dataagent"u8);
-            writer.WriteObjectValue(FabricDataagent, options);
+            ((IJsonModel<FabricDataAgentToolParameters>)FabricDataagent).Write(writer, options);
         }
 
         MicrosoftFabricToolDefinition IJsonModel<MicrosoftFabricToolDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (property.NameEquals("fabric_dataagent"u8))
                 {
-                    fabricDataagent = FabricDataAgentToolParameters.DeserializeFabricDataAgentToolParameters(property.Value, options);
+                    fabricDataagent = ModelSerializationExtensions.JsonDeserialize<FabricDataAgentToolParameters>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

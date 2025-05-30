@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties, options);
+                ((IJsonModel<AutomationKeyVaultProperties>)KeyVaultProperties).Write(writer, options);
             }
             if (Optional.IsDefined(KeySource))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<EncryptionPropertiesIdentity>)Identity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = AutomationKeyVaultProperties.DeserializeAutomationKeyVaultProperties(property.Value, options);
+                    keyVaultProperties = ModelSerializationExtensions.JsonDeserialize<AutomationKeyVaultProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("keySource"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    identity = EncryptionPropertiesIdentity.DeserializeEncryptionPropertiesIdentity(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<EncryptionPropertiesIdentity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

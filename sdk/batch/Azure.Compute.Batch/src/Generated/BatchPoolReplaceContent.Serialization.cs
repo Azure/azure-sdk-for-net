@@ -37,27 +37,27 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(StartTask))
             {
                 writer.WritePropertyName("startTask"u8);
-                writer.WriteObjectValue(StartTask, options);
+                ((IJsonModel<BatchStartTask>)StartTask).Write(writer, options);
             }
             writer.WritePropertyName("certificateReferences"u8);
             writer.WriteStartArray();
             foreach (var item in CertificateReferences)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<BatchCertificateReference>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("applicationPackageReferences"u8);
             writer.WriteStartArray();
             foreach (var item in ApplicationPackageReferences)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<BatchApplicationPackageReference>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("metadata"u8);
             writer.WriteStartArray();
             foreach (var item in Metadata)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<MetadataItem>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(TargetNodeCommunicationMode))
@@ -117,7 +117,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    startTask = BatchStartTask.DeserializeBatchStartTask(property.Value, options);
+                    startTask = ModelSerializationExtensions.JsonDeserialize<BatchStartTask>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("certificateReferences"u8))

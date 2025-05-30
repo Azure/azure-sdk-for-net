@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in Keys)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AutomationKey>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

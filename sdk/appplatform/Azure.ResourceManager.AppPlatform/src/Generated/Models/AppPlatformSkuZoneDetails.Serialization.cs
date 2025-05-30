@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AppPlatformSkuCapabilities>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

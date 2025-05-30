@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Batch
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Batch
             if (options.Format != "W" && Optional.IsDefined(KeyVaultReference))
             {
                 writer.WritePropertyName("keyVaultReference"u8);
-                writer.WriteObjectValue(KeyVaultReference, options);
+                ((IJsonModel<BatchKeyVaultReference>)KeyVaultReference).Write(writer, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Batch
                 if (NetworkProfile != null)
                 {
                     writer.WritePropertyName("networkProfile"u8);
-                    writer.WriteObjectValue(NetworkProfile, options);
+                    ((IJsonModel<BatchNetworkProfile>)NetworkProfile).Write(writer, options);
                 }
                 else
                 {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Batch
                     writer.WriteStartArray();
                     foreach (var item in PrivateEndpointConnections)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<BatchPrivateEndpointConnectionData>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.Batch
             if (options.Format != "W" && Optional.IsDefined(AutoStorage))
             {
                 writer.WritePropertyName("autoStorage"u8);
-                writer.WriteObjectValue(AutoStorage, options);
+                ((IJsonModel<BatchAccountAutoStorageConfiguration>)AutoStorage).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<BatchAccountEncryptionConfiguration>)Encryption).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DedicatedCoreQuota))
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Batch
                     writer.WriteStartArray();
                     foreach (var item in DedicatedCoreQuotaPerVmFamily)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<BatchVmFamilyCoreQuota>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Batch
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Batch
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            keyVaultReference = BatchKeyVaultReference.DeserializeBatchKeyVaultReference(property0.Value, options);
+                            keyVaultReference = ModelSerializationExtensions.JsonDeserialize<BatchKeyVaultReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Batch
                                 networkProfile = null;
                                 continue;
                             }
-                            networkProfile = BatchNetworkProfile.DeserializeBatchNetworkProfile(property0.Value, options);
+                            networkProfile = ModelSerializationExtensions.JsonDeserialize<BatchNetworkProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            autoStorage = BatchAccountAutoStorageConfiguration.DeserializeBatchAccountAutoStorageConfiguration(property0.Value, options);
+                            autoStorage = ModelSerializationExtensions.JsonDeserialize<BatchAccountAutoStorageConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            encryption = BatchAccountEncryptionConfiguration.DeserializeBatchAccountEncryptionConfiguration(property0.Value, options);
+                            encryption = ModelSerializationExtensions.JsonDeserialize<BatchAccountEncryptionConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dedicatedCoreQuota"u8))

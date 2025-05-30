@@ -35,11 +35,11 @@ namespace Azure.AI.Agents.Persistent
             }
 
             writer.WritePropertyName("function"u8);
-            writer.WriteObjectValue(Function, options);
+            ((IJsonModel<InternalFunctionDefinition>)Function).Write(writer, options);
             writer.WritePropertyName("input_binding"u8);
-            writer.WriteObjectValue(InputBinding, options);
+            ((IJsonModel<AzureFunctionBinding>)InputBinding).Write(writer, options);
             writer.WritePropertyName("output_binding"u8);
-            writer.WriteObjectValue(OutputBinding, options);
+            ((IJsonModel<AzureFunctionBinding>)OutputBinding).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -86,17 +86,17 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (property.NameEquals("function"u8))
                 {
-                    function = InternalFunctionDefinition.DeserializeInternalFunctionDefinition(property.Value, options);
+                    function = ModelSerializationExtensions.JsonDeserialize<InternalFunctionDefinition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("input_binding"u8))
                 {
-                    inputBinding = AzureFunctionBinding.DeserializeAzureFunctionBinding(property.Value, options);
+                    inputBinding = ModelSerializationExtensions.JsonDeserialize<AzureFunctionBinding>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("output_binding"u8))
                 {
-                    outputBinding = AzureFunctionBinding.DeserializeAzureFunctionBinding(property.Value, options);
+                    outputBinding = ModelSerializationExtensions.JsonDeserialize<AzureFunctionBinding>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

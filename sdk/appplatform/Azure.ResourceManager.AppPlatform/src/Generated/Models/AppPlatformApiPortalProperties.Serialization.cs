@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(SsoProperties))
             {
                 writer.WritePropertyName("ssoProperties"u8);
-                writer.WriteObjectValue(SsoProperties, options);
+                ((IJsonModel<AppPlatformSsoProperties>)SsoProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceRequests))
             {
                 writer.WritePropertyName("resourceRequests"u8);
-                writer.WriteObjectValue(ResourceRequests, options);
+                ((IJsonModel<AppPlatformApiPortalResourceRequirements>)ResourceRequests).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Instances))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Instances)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AppPlatformApiPortalInstance>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    ssoProperties = AppPlatformSsoProperties.DeserializeAppPlatformSsoProperties(property.Value, options);
+                    ssoProperties = ModelSerializationExtensions.JsonDeserialize<AppPlatformSsoProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceRequests"u8))
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    resourceRequests = AppPlatformApiPortalResourceRequirements.DeserializeAppPlatformApiPortalResourceRequirements(property.Value, options);
+                    resourceRequests = ModelSerializationExtensions.JsonDeserialize<AppPlatformApiPortalResourceRequirements>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("instances"u8))

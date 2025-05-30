@@ -42,7 +42,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in UserAssignedIdentities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UserAssignedIdentity>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

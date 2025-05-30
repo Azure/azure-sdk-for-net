@@ -40,7 +40,7 @@ namespace Azure.AI.Projects
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("data"u8);
-            writer.WriteObjectValue(Data, options);
+            ((IJsonModel<InputData>)Data).Write(writer, options);
             if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
@@ -83,7 +83,7 @@ namespace Azure.AI.Projects
             foreach (var item in Evaluators)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                ((IJsonModel<EvaluatorConfiguration>)item.Value).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -142,7 +142,7 @@ namespace Azure.AI.Projects
                 }
                 if (property.NameEquals("data"u8))
                 {
-                    data = InputData.DeserializeInputData(property.Value, options);
+                    data = ModelSerializationExtensions.JsonDeserialize<InputData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))

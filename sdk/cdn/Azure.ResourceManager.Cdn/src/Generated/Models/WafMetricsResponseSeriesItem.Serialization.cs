@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteStartArray();
                     foreach (var item in Groups)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<WafMetricsResponseSeriesPropertiesItemsItem>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

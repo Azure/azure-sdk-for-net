@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 foreach (var item in Examples)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<ParameterExampleContract>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }

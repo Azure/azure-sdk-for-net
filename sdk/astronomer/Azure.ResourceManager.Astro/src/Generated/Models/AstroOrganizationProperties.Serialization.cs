@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Astro.Models
             }
 
             writer.WritePropertyName("marketplace"u8);
-            writer.WriteObjectValue(Marketplace, options);
+            ((IJsonModel<AstroMarketplaceDetails>)Marketplace).Write(writer, options);
             writer.WritePropertyName("user"u8);
-            writer.WriteObjectValue(User, options);
+            ((IJsonModel<AstroUserDetails>)User).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Astro.Models
             if (Optional.IsDefined(PartnerOrganizationProperties))
             {
                 writer.WritePropertyName("partnerOrganizationProperties"u8);
-                writer.WriteObjectValue(PartnerOrganizationProperties, options);
+                ((IJsonModel<AstroPartnerOrganizationProperties>)PartnerOrganizationProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.Astro.Models
             {
                 if (property.NameEquals("marketplace"u8))
                 {
-                    marketplace = AstroMarketplaceDetails.DeserializeAstroMarketplaceDetails(property.Value, options);
+                    marketplace = ModelSerializationExtensions.JsonDeserialize<AstroMarketplaceDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("user"u8))
                 {
-                    user = AstroUserDetails.DeserializeAstroUserDetails(property.Value, options);
+                    user = ModelSerializationExtensions.JsonDeserialize<AstroUserDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Astro.Models
                     {
                         continue;
                     }
-                    partnerOrganizationProperties = AstroPartnerOrganizationProperties.DeserializeAstroPartnerOrganizationProperties(property.Value, options);
+                    partnerOrganizationProperties = ModelSerializationExtensions.JsonDeserialize<AstroPartnerOrganizationProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

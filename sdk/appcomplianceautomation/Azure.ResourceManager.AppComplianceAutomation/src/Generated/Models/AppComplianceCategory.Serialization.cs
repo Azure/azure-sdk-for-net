@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in ControlFamilies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AppComplianceControlFamily>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

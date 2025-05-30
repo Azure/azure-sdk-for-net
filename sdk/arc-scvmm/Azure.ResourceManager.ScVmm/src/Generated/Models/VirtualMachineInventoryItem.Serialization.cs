@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ScVmm.Models
             if (Optional.IsDefined(Cloud))
             {
                 writer.WritePropertyName("cloud"u8);
-                writer.WriteObjectValue(Cloud, options);
+                ((IJsonModel<ScVmmInventoryItemDetails>)Cloud).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(BiosGuid))
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                     {
                         continue;
                     }
-                    cloud = ScVmmInventoryItemDetails.DeserializeScVmmInventoryItemDetails(property.Value, options);
+                    cloud = ModelSerializationExtensions.JsonDeserialize<ScVmmInventoryItemDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("biosGuid"u8))

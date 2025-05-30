@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Identities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UserIdentityContract>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

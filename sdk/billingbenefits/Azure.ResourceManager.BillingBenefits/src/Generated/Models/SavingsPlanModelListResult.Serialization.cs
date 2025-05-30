@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BillingBenefitsSavingsPlanData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WriteStartArray();
                 foreach (var item in AdditionalProperties)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SavingsPlanSummary>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

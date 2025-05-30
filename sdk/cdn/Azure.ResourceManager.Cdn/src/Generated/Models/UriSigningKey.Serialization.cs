@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WritePropertyName("keyId"u8);
             writer.WriteStringValue(KeyId);
             writer.WritePropertyName("keySourceParameters"u8);
-            writer.WriteObjectValue(KeySourceParameters, options);
+            ((IJsonModel<KeyVaultSigningKey>)KeySourceParameters).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("keySourceParameters"u8))
                 {
-                    keySourceParameters = KeyVaultSigningKey.DeserializeKeyVaultSigningKey(property.Value, options);
+                    keySourceParameters = ModelSerializationExtensions.JsonDeserialize<KeyVaultSigningKey>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

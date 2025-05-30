@@ -46,7 +46,7 @@ namespace Azure.AI.Inference
                 writer.WriteNull("finish_reason");
             }
             writer.WritePropertyName("message"u8);
-            writer.WriteObjectValue(Message, options);
+            ((IJsonModel<ChatResponseMessage>)Message).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -108,7 +108,7 @@ namespace Azure.AI.Inference
                 }
                 if (property.NameEquals("message"u8))
                 {
-                    message = ChatResponseMessage.DeserializeChatResponseMessage(property.Value, options);
+                    message = ModelSerializationExtensions.JsonDeserialize<ChatResponseMessage>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

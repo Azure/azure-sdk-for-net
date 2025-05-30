@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
-                writer.WriteObjectValue(Subscriptions, options);
+                ((IJsonModel<SubscriptionDelegationSettingProperties>)Subscriptions).Write(writer, options);
             }
             if (Optional.IsDefined(UserRegistration))
             {
                 writer.WritePropertyName("userRegistration"u8);
-                writer.WriteObjectValue(UserRegistration, options);
+                ((IJsonModel<RegistrationDelegationSettingProperties>)UserRegistration).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            subscriptions = SubscriptionDelegationSettingProperties.DeserializeSubscriptionDelegationSettingProperties(property0.Value, options);
+                            subscriptions = ModelSerializationExtensions.JsonDeserialize<SubscriptionDelegationSettingProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("userRegistration"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            userRegistration = RegistrationDelegationSettingProperties.DeserializeRegistrationDelegationSettingProperties(property0.Value, options);
+                            userRegistration = ModelSerializationExtensions.JsonDeserialize<RegistrationDelegationSettingProperties>(property0.Value);
                             continue;
                         }
                     }

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in Steps)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HciClusterDeploymentStep>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

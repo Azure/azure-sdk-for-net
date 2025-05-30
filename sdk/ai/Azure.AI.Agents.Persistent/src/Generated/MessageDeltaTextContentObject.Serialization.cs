@@ -45,7 +45,7 @@ namespace Azure.AI.Agents.Persistent
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MessageDeltaTextAnnotation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

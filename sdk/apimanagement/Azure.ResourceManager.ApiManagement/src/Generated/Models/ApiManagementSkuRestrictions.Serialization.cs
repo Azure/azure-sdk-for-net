@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (options.Format != "W" && Optional.IsDefined(RestrictionInfo))
             {
                 writer.WritePropertyName("restrictionInfo"u8);
-                writer.WriteObjectValue(RestrictionInfo, options);
+                ((IJsonModel<ApiManagementSkuRestrictionInfo>)RestrictionInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReasonCode))
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    restrictionInfo = ApiManagementSkuRestrictionInfo.DeserializeApiManagementSkuRestrictionInfo(property.Value, options);
+                    restrictionInfo = ModelSerializationExtensions.JsonDeserialize<ApiManagementSkuRestrictionInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("reasonCode"u8))

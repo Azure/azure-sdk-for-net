@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in RemoteSupportNodeSettings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RemoteSupportNodeSettings>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in RemoteSupportSessionDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PerNodeRemoteSupportSession>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

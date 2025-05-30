@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(LinuxUserConfiguration))
             {
                 writer.WritePropertyName("linuxUserConfiguration"u8);
-                writer.WriteObjectValue(LinuxUserConfiguration, options);
+                ((IJsonModel<BatchLinuxUserConfiguration>)LinuxUserConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(WindowsUserConfiguration))
             {
                 writer.WritePropertyName("windowsUserConfiguration"u8);
-                writer.WriteObjectValue(WindowsUserConfiguration, options);
+                ((IJsonModel<BatchWindowsUserConfiguration>)WindowsUserConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    linuxUserConfiguration = BatchLinuxUserConfiguration.DeserializeBatchLinuxUserConfiguration(property.Value, options);
+                    linuxUserConfiguration = ModelSerializationExtensions.JsonDeserialize<BatchLinuxUserConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("windowsUserConfiguration"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    windowsUserConfiguration = BatchWindowsUserConfiguration.DeserializeBatchWindowsUserConfiguration(property.Value, options);
+                    windowsUserConfiguration = ModelSerializationExtensions.JsonDeserialize<BatchWindowsUserConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

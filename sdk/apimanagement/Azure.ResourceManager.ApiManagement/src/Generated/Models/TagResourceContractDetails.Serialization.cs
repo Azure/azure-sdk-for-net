@@ -36,21 +36,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WritePropertyName("tag"u8);
-            writer.WriteObjectValue(Tag, options);
+            ((IJsonModel<AssociatedTagProperties>)Tag).Write(writer, options);
             if (Optional.IsDefined(Api))
             {
                 writer.WritePropertyName("api"u8);
-                writer.WriteObjectValue(Api, options);
+                ((IJsonModel<AssociatedApiProperties>)Api).Write(writer, options);
             }
             if (Optional.IsDefined(Operation))
             {
                 writer.WritePropertyName("operation"u8);
-                writer.WriteObjectValue(Operation, options);
+                ((IJsonModel<AssociatedOperationProperties>)Operation).Write(writer, options);
             }
             if (Optional.IsDefined(Product))
             {
                 writer.WritePropertyName("product"u8);
-                writer.WriteObjectValue(Product, options);
+                ((IJsonModel<AssociatedProductProperties>)Product).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 if (property.NameEquals("tag"u8))
                 {
-                    tag = AssociatedTagProperties.DeserializeAssociatedTagProperties(property.Value, options);
+                    tag = ModelSerializationExtensions.JsonDeserialize<AssociatedTagProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("api"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    api = AssociatedApiProperties.DeserializeAssociatedApiProperties(property.Value, options);
+                    api = ModelSerializationExtensions.JsonDeserialize<AssociatedApiProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("operation"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    operation = AssociatedOperationProperties.DeserializeAssociatedOperationProperties(property.Value, options);
+                    operation = ModelSerializationExtensions.JsonDeserialize<AssociatedOperationProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("product"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    product = AssociatedProductProperties.DeserializeAssociatedProductProperties(property.Value, options);
+                    product = ModelSerializationExtensions.JsonDeserialize<AssociatedProductProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

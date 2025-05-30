@@ -38,7 +38,7 @@ namespace Azure.AI.Agents.Persistent
             if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
-                writer.WriteObjectValue(Text, options);
+                ((IJsonModel<MessageDeltaTextContentObject>)Text).Write(writer, options);
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    text = MessageDeltaTextContentObject.DeserializeMessageDeltaTextContentObject(property.Value, options);
+                    text = ModelSerializationExtensions.JsonDeserialize<MessageDeltaTextContentObject>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("index"u8))

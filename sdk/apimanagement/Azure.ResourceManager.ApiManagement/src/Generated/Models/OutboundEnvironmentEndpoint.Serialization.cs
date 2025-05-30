@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EndpointDependency>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

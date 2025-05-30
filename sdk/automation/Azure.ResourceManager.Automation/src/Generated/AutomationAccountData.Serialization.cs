@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<AutomationSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(LastModifiedBy))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<AutomationEncryptionProperties>)Encryption).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Automation
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AutomationPrivateEndpointConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            sku = AutomationSku.DeserializeAutomationSku(property0.Value, options);
+                            sku = ModelSerializationExtensions.JsonDeserialize<AutomationSku>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("lastModifiedBy"u8))
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            encryption = AutomationEncryptionProperties.DeserializeAutomationEncryptionProperties(property0.Value, options);
+                            encryption = ModelSerializationExtensions.JsonDeserialize<AutomationEncryptionProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))

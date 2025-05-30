@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(BillTo))
             {
                 writer.WritePropertyName("billTo"u8);
-                writer.WriteObjectValue(BillTo, options);
+                ((IJsonModel<BillingAddressDetails>)BillTo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Currency))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in EnabledAzurePlans)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BillingAzurePlan>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(IndirectRelationshipInfo))
             {
                 writer.WritePropertyName("indirectRelationshipInfo"u8);
-                writer.WriteObjectValue(IndirectRelationshipInfo, options);
+                ((IJsonModel<IndirectRelationshipInfo>)IndirectRelationshipInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(InvoiceDay))
             {
@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(ShipTo))
             {
                 writer.WritePropertyName("shipTo"u8);
-                writer.WriteObjectValue(ShipTo, options);
+                ((IJsonModel<BillingAddressDetails>)ShipTo).Write(writer, options);
             }
             if (Optional.IsDefined(SoldTo))
             {
                 writer.WritePropertyName("soldTo"u8);
-                writer.WriteObjectValue(SoldTo, options);
+                ((IJsonModel<BillingAddressDetails>)SoldTo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SpendingLimit))
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in SpendingLimitDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SpendingLimitDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(CurrentPaymentTerm))
             {
                 writer.WritePropertyName("currentPaymentTerm"u8);
-                writer.WriteObjectValue(CurrentPaymentTerm, options);
+                ((IJsonModel<BillingPaymentTerm>)CurrentPaymentTerm).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(OtherPaymentTerms))
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in OtherPaymentTerms)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BillingPaymentTerm>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    billTo = BillingAddressDetails.DeserializeBillingAddressDetails(property.Value, options);
+                    billTo = ModelSerializationExtensions.JsonDeserialize<BillingAddressDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("currency"u8))
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    indirectRelationshipInfo = IndirectRelationshipInfo.DeserializeIndirectRelationshipInfo(property.Value, options);
+                    indirectRelationshipInfo = ModelSerializationExtensions.JsonDeserialize<IndirectRelationshipInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("invoiceDay"u8))
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    shipTo = BillingAddressDetails.DeserializeBillingAddressDetails(property.Value, options);
+                    shipTo = ModelSerializationExtensions.JsonDeserialize<BillingAddressDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("soldTo"u8))
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    soldTo = BillingAddressDetails.DeserializeBillingAddressDetails(property.Value, options);
+                    soldTo = ModelSerializationExtensions.JsonDeserialize<BillingAddressDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("spendingLimit"u8))
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    currentPaymentTerm = BillingPaymentTerm.DeserializeBillingPaymentTerm(property.Value, options);
+                    currentPaymentTerm = ModelSerializationExtensions.JsonDeserialize<BillingPaymentTerm>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("otherPaymentTerms"u8))

@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteBooleanValue(IsLogProgressEnabled.Value);
             }
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source, options);
+            ((IJsonModel<AutomationContentSource>)Source).Write(writer, options);
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Automation.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<DscConfigurationParameterDefinition>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Automation.Models
                         }
                         if (property0.NameEquals("source"u8))
                         {
-                            source = AutomationContentSource.DeserializeAutomationContentSource(property0.Value, options);
+                            source = ModelSerializationExtensions.JsonDeserialize<AutomationContentSource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("parameters"u8))

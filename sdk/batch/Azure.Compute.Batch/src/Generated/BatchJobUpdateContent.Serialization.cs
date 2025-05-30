@@ -52,12 +52,12 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(Constraints))
             {
                 writer.WritePropertyName("constraints"u8);
-                writer.WriteObjectValue(Constraints, options);
+                ((IJsonModel<BatchJobConstraints>)Constraints).Write(writer, options);
             }
             if (Optional.IsDefined(PoolInfo))
             {
                 writer.WritePropertyName("poolInfo"u8);
-                writer.WriteObjectValue(PoolInfo, options);
+                ((IJsonModel<BatchPoolInfo>)PoolInfo).Write(writer, options);
             }
             if (Optional.IsDefined(OnAllTasksComplete))
             {
@@ -70,14 +70,14 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MetadataItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
-                writer.WriteObjectValue(NetworkConfiguration, options);
+                ((IJsonModel<BatchJobNetworkConfiguration>)NetworkConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -161,7 +161,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    constraints = BatchJobConstraints.DeserializeBatchJobConstraints(property.Value, options);
+                    constraints = ModelSerializationExtensions.JsonDeserialize<BatchJobConstraints>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("poolInfo"u8))
@@ -170,7 +170,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    poolInfo = BatchPoolInfo.DeserializeBatchPoolInfo(property.Value, options);
+                    poolInfo = ModelSerializationExtensions.JsonDeserialize<BatchPoolInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("onAllTasksComplete"u8))
@@ -202,7 +202,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    networkConfiguration = BatchJobNetworkConfiguration.DeserializeBatchJobNetworkConfiguration(property.Value, options);
+                    networkConfiguration = ModelSerializationExtensions.JsonDeserialize<BatchJobNetworkConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

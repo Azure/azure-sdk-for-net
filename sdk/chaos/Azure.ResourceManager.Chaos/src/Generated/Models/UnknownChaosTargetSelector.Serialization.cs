@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    filter = ChaosTargetFilter.DeserializeChaosTargetFilter(property.Value, options);
+                    filter = ModelSerializationExtensions.JsonDeserialize<ChaosTargetFilter>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

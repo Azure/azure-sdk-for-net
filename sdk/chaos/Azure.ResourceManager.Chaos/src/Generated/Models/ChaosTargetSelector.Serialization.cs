@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Chaos.Models
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter, options);
+                ((IJsonModel<ChaosTargetFilter>)Filter).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    authenticationSettings = AuthenticationSettingsContract.DeserializeAuthenticationSettingsContract(property.Value, options);
+                    authenticationSettings = ModelSerializationExtensions.JsonDeserialize<AuthenticationSettingsContract>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("subscriptionKeyParameterNames"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    subscriptionKeyParameterNames = SubscriptionKeyParameterNamesContract.DeserializeSubscriptionKeyParameterNamesContract(property.Value, options);
+                    subscriptionKeyParameterNames = ModelSerializationExtensions.JsonDeserialize<SubscriptionKeyParameterNamesContract>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    contact = ApiContactInformation.DeserializeApiContactInformation(property.Value, options);
+                    contact = ModelSerializationExtensions.JsonDeserialize<ApiContactInformation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("license"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    license = ApiLicenseInformation.DeserializeApiLicenseInformation(property.Value, options);
+                    license = ModelSerializationExtensions.JsonDeserialize<ApiLicenseInformation>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

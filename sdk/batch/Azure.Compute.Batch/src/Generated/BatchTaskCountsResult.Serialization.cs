@@ -35,9 +35,9 @@ namespace Azure.Compute.Batch
             }
 
             writer.WritePropertyName("taskCounts"u8);
-            writer.WriteObjectValue(TaskCounts, options);
+            ((IJsonModel<BatchTaskCounts>)TaskCounts).Write(writer, options);
             writer.WritePropertyName("taskSlotCounts"u8);
-            writer.WriteObjectValue(TaskSlotCounts, options);
+            ((IJsonModel<BatchTaskSlotCounts>)TaskSlotCounts).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,12 +83,12 @@ namespace Azure.Compute.Batch
             {
                 if (property.NameEquals("taskCounts"u8))
                 {
-                    taskCounts = BatchTaskCounts.DeserializeBatchTaskCounts(property.Value, options);
+                    taskCounts = ModelSerializationExtensions.JsonDeserialize<BatchTaskCounts>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("taskSlotCounts"u8))
                 {
-                    taskSlotCounts = BatchTaskSlotCounts.DeserializeBatchTaskSlotCounts(property.Value, options);
+                    taskSlotCounts = ModelSerializationExtensions.JsonDeserialize<BatchTaskSlotCounts>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

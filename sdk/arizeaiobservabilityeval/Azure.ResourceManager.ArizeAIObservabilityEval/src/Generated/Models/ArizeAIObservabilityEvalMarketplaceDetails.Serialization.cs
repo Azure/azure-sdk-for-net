@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
                 writer.WriteStringValue(SubscriptionStatus.Value.ToString());
             }
             writer.WritePropertyName("offerDetails"u8);
-            writer.WriteObjectValue(OfferDetails, options);
+            ((IJsonModel<ArizeAIObservabilityEvalOfferDetails>)OfferDetails).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
                 }
                 if (property.NameEquals("offerDetails"u8))
                 {
-                    offerDetails = ArizeAIObservabilityEvalOfferDetails.DeserializeArizeAIObservabilityEvalOfferDetails(property.Value, options);
+                    offerDetails = ModelSerializationExtensions.JsonDeserialize<ArizeAIObservabilityEvalOfferDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

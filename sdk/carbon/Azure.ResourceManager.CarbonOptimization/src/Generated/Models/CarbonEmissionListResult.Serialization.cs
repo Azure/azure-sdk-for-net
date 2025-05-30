@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<CarbonEmission>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(SkipToken))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 writer.WriteStartArray();
                 foreach (var item in SubscriptionAccessDecisionList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SubscriptionAccessDecision>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

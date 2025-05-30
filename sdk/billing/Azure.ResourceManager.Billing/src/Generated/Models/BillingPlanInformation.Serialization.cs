@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(PricingCurrencyTotal))
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
-                writer.WriteObjectValue(PricingCurrencyTotal, options);
+                ((IJsonModel<BillingPrice>)PricingCurrencyTotal).Write(writer, options);
             }
             if (Optional.IsDefined(StartOn))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in Transactions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BillingPlanPaymentDetail>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    pricingCurrencyTotal = BillingPrice.DeserializeBillingPrice(property.Value, options);
+                    pricingCurrencyTotal = ModelSerializationExtensions.JsonDeserialize<BillingPrice>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("startDate"u8))

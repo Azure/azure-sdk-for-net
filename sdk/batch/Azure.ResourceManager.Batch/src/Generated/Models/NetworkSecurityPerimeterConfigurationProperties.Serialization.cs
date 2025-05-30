@@ -45,24 +45,24 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in ProvisioningIssues)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BatchProvisioningIssue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(NetworkSecurityPerimeter))
             {
                 writer.WritePropertyName("networkSecurityPerimeter"u8);
-                writer.WriteObjectValue(NetworkSecurityPerimeter, options);
+                ((IJsonModel<NetworkSecurityPerimeter>)NetworkSecurityPerimeter).Write(writer, options);
             }
             if (Optional.IsDefined(ResourceAssociation))
             {
                 writer.WritePropertyName("resourceAssociation"u8);
-                writer.WriteObjectValue(ResourceAssociation, options);
+                ((IJsonModel<BatchResourceAssociation>)ResourceAssociation).Write(writer, options);
             }
             if (Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
-                writer.WriteObjectValue(Profile, options);
+                ((IJsonModel<NetworkSecurityProfile>)Profile).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    networkSecurityPerimeter = NetworkSecurityPerimeter.DeserializeNetworkSecurityPerimeter(property.Value, options);
+                    networkSecurityPerimeter = ModelSerializationExtensions.JsonDeserialize<NetworkSecurityPerimeter>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceAssociation"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    resourceAssociation = BatchResourceAssociation.DeserializeBatchResourceAssociation(property.Value, options);
+                    resourceAssociation = ModelSerializationExtensions.JsonDeserialize<BatchResourceAssociation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("profile"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    profile = NetworkSecurityProfile.DeserializeNetworkSecurityProfile(property.Value, options);
+                    profile = ModelSerializationExtensions.JsonDeserialize<NetworkSecurityProfile>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

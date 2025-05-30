@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(OriginGroup))
             {
                 writer.WritePropertyName("originGroup"u8);
-                JsonSerializer.Serialize(writer, OriginGroup);
+                ((IJsonModel<WritableSubResource>)OriginGroup).Write(writer, options);
             }
             if (Optional.IsDefined(ForwardingProtocol))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    originGroup = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    originGroup = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("forwardingProtocol"u8))

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (options.Format != "W" && Optional.IsDefined(OutboundIPs))
             {
                 writer.WritePropertyName("outboundIPs"u8);
-                writer.WriteObjectValue(OutboundIPs, options);
+                ((IJsonModel<NetworkProfileOutboundIPs>)OutboundIPs).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(RequiredTraffics))
             {
@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in RequiredTraffics)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AppPlatformServiceRequiredTraffic>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(IngressConfig))
             {
                 writer.WritePropertyName("ingressConfig"u8);
-                writer.WriteObjectValue(IngressConfig, options);
+                ((IJsonModel<IngressConfig>)IngressConfig).Write(writer, options);
             }
             if (Optional.IsDefined(OutboundType))
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    outboundIPs = NetworkProfileOutboundIPs.DeserializeNetworkProfileOutboundIPs(property.Value, options);
+                    outboundIPs = ModelSerializationExtensions.JsonDeserialize<NetworkProfileOutboundIPs>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("requiredTraffics"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    ingressConfig = IngressConfig.DeserializeIngressConfig(property.Value, options);
+                    ingressConfig = ModelSerializationExtensions.JsonDeserialize<IngressConfig>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("outboundType"u8))

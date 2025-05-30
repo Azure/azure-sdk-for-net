@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Astro.Models
             if (Optional.IsDefined(User))
             {
                 writer.WritePropertyName("user"u8);
-                writer.WriteObjectValue(User, options);
+                ((IJsonModel<AstroUserUpdateDetails>)User).Write(writer, options);
             }
             if (Optional.IsDefined(PartnerOrganizationProperties))
             {
                 writer.WritePropertyName("partnerOrganizationProperties"u8);
-                writer.WriteObjectValue(PartnerOrganizationProperties, options);
+                ((IJsonModel<AstroPartnerOrganizationUpdateProperties>)PartnerOrganizationProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Astro.Models
                     {
                         continue;
                     }
-                    user = AstroUserUpdateDetails.DeserializeAstroUserUpdateDetails(property.Value, options);
+                    user = ModelSerializationExtensions.JsonDeserialize<AstroUserUpdateDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("partnerOrganizationProperties"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Astro.Models
                     {
                         continue;
                     }
-                    partnerOrganizationProperties = AstroPartnerOrganizationUpdateProperties.DeserializeAstroPartnerOrganizationUpdateProperties(property.Value, options);
+                    partnerOrganizationProperties = ModelSerializationExtensions.JsonDeserialize<AstroPartnerOrganizationUpdateProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -44,7 +44,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(Registry))
             {
                 writer.WritePropertyName("registry"u8);
-                writer.WriteObjectValue(Registry, options);
+                ((IJsonModel<ContainerRegistryReference>)Registry).Write(writer, options);
             }
             if (Optional.IsDefined(WorkingDirectory))
             {
@@ -57,7 +57,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in ContainerHostBatchBindMounts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerHostBatchBindMountEntry>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -123,7 +123,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    registry = ContainerRegistryReference.DeserializeContainerRegistryReference(property.Value, options);
+                    registry = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("workingDirectory"u8))

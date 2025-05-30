@@ -36,7 +36,7 @@ namespace Azure.AI.Inference
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("json_schema"u8);
-            writer.WriteObjectValue(JsonSchema, options);
+            ((IJsonModel<ChatCompletionsResponseFormatJsonSchemaDefinition>)JsonSchema).Write(writer, options);
         }
 
         ChatCompletionsResponseFormatJsonSchema IJsonModel<ChatCompletionsResponseFormatJsonSchema>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.AI.Inference
             {
                 if (property.NameEquals("json_schema"u8))
                 {
-                    jsonSchema = ChatCompletionsResponseFormatJsonSchemaDefinition.DeserializeChatCompletionsResponseFormatJsonSchemaDefinition(property.Value, options);
+                    jsonSchema = ModelSerializationExtensions.JsonDeserialize<ChatCompletionsResponseFormatJsonSchemaDefinition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

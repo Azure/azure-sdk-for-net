@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<HciClusterRawCertificate>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    properties = HciClusterRawCertificate.DeserializeHciClusterRawCertificate(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<HciClusterRawCertificate>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

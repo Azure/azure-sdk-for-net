@@ -47,12 +47,12 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(EndpointConfiguration))
             {
                 writer.WritePropertyName("endpointConfiguration"u8);
-                writer.WriteObjectValue(EndpointConfiguration, options);
+                ((IJsonModel<BatchPoolEndpointConfiguration>)EndpointConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(PublicIpAddressConfiguration))
             {
                 writer.WritePropertyName("publicIPAddressConfiguration"u8);
-                writer.WriteObjectValue(PublicIpAddressConfiguration, options);
+                ((IJsonModel<PublicIpAddressConfiguration>)PublicIpAddressConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(EnableAcceleratedNetworking))
             {
@@ -125,7 +125,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    endpointConfiguration = BatchPoolEndpointConfiguration.DeserializeBatchPoolEndpointConfiguration(property.Value, options);
+                    endpointConfiguration = ModelSerializationExtensions.JsonDeserialize<BatchPoolEndpointConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("publicIPAddressConfiguration"u8))
@@ -134,7 +134,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    publicIPAddressConfiguration = PublicIpAddressConfiguration.DeserializePublicIpAddressConfiguration(property.Value, options);
+                    publicIPAddressConfiguration = ModelSerializationExtensions.JsonDeserialize<PublicIpAddressConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("enableAcceleratedNetworking"u8))

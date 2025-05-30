@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(EnrollmentDetails))
             {
                 writer.WritePropertyName("enrollmentDetails"u8);
-                writer.WriteObjectValue(EnrollmentDetails, options);
+                ((IJsonModel<BillingAccountEnrollmentDetails>)EnrollmentDetails).Write(writer, options);
             }
             if (Optional.IsDefined(HasReadAccess))
             {
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(SoldTo))
             {
                 writer.WritePropertyName("soldTo"u8);
-                writer.WriteObjectValue(SoldTo, options);
+                ((IJsonModel<BillingAddressDetails>)SoldTo).Write(writer, options);
             }
             if (Optional.IsDefined(RegistrationNumber))
             {
                 writer.WritePropertyName("registrationNumber"u8);
-                writer.WriteObjectValue(RegistrationNumber, options);
+                ((IJsonModel<BillingRegistrationNumber>)RegistrationNumber).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(BillingRelationshipTypes))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in TaxIds)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BillingTaxIdentifier>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    enrollmentDetails = BillingAccountEnrollmentDetails.DeserializeBillingAccountEnrollmentDetails(property.Value, options);
+                    enrollmentDetails = ModelSerializationExtensions.JsonDeserialize<BillingAccountEnrollmentDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("hasReadAccess"u8))
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    soldTo = BillingAddressDetails.DeserializeBillingAddressDetails(property.Value, options);
+                    soldTo = ModelSerializationExtensions.JsonDeserialize<BillingAddressDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("registrationNumber"u8))
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    registrationNumber = BillingRegistrationNumber.DeserializeBillingRegistrationNumber(property.Value, options);
+                    registrationNumber = ModelSerializationExtensions.JsonDeserialize<BillingRegistrationNumber>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("billingRelationshipTypes"u8))

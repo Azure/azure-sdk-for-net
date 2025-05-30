@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WriteStartArray();
                 foreach (var item in Operations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AuthorizationProviderOperationInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

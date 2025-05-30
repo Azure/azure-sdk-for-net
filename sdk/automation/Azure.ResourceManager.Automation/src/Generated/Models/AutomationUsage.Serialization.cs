@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
+                ((IJsonModel<AutomationUsageCounterName>)Name).Write(writer, options);
             }
             if (Optional.IsDefined(Unit))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    name = AutomationUsageCounterName.DeserializeAutomationUsageCounterName(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<AutomationUsageCounterName>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("unit"u8))

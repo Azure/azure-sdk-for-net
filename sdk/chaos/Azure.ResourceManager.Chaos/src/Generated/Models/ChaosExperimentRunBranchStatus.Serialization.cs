@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ChaosExperimentRunActionStatus>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

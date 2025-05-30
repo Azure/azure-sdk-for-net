@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ScVmmNetworkInterfaceUpdate>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -43,7 +43,7 @@ namespace Azure.AI.Agents.Persistent
             if (ToolResources != null)
             {
                 writer.WritePropertyName("tool_resources"u8);
-                writer.WriteObjectValue(ToolResources, options);
+                ((IJsonModel<ToolResources>)ToolResources).Write(writer, options);
             }
             else
             {
@@ -132,7 +132,7 @@ namespace Azure.AI.Agents.Persistent
                         toolResources = null;
                         continue;
                     }
-                    toolResources = ToolResources.DeserializeToolResources(property.Value, options);
+                    toolResources = ModelSerializationExtensions.JsonDeserialize<ToolResources>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))

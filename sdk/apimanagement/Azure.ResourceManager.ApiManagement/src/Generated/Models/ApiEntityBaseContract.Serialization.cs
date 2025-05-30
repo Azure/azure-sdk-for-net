@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(AuthenticationSettings))
             {
                 writer.WritePropertyName("authenticationSettings"u8);
-                writer.WriteObjectValue(AuthenticationSettings, options);
+                ((IJsonModel<AuthenticationSettingsContract>)AuthenticationSettings).Write(writer, options);
             }
             if (Optional.IsDefined(SubscriptionKeyParameterNames))
             {
                 writer.WritePropertyName("subscriptionKeyParameterNames"u8);
-                writer.WriteObjectValue(SubscriptionKeyParameterNames, options);
+                ((IJsonModel<SubscriptionKeyParameterNamesContract>)SubscriptionKeyParameterNames).Write(writer, options);
             }
             if (Optional.IsDefined(ApiType))
             {
@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Contact))
             {
                 writer.WritePropertyName("contact"u8);
-                writer.WriteObjectValue(Contact, options);
+                ((IJsonModel<ApiContactInformation>)Contact).Write(writer, options);
             }
             if (Optional.IsDefined(License))
             {
                 writer.WritePropertyName("license"u8);
-                writer.WriteObjectValue(License, options);
+                ((IJsonModel<ApiLicenseInformation>)License).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    authenticationSettings = AuthenticationSettingsContract.DeserializeAuthenticationSettingsContract(property.Value, options);
+                    authenticationSettings = ModelSerializationExtensions.JsonDeserialize<AuthenticationSettingsContract>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("subscriptionKeyParameterNames"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    subscriptionKeyParameterNames = SubscriptionKeyParameterNamesContract.DeserializeSubscriptionKeyParameterNamesContract(property.Value, options);
+                    subscriptionKeyParameterNames = ModelSerializationExtensions.JsonDeserialize<SubscriptionKeyParameterNamesContract>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    contact = ApiContactInformation.DeserializeApiContactInformation(property.Value, options);
+                    contact = ModelSerializationExtensions.JsonDeserialize<ApiContactInformation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("license"u8))
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    license = ApiLicenseInformation.DeserializeApiLicenseInformation(property.Value, options);
+                    license = ModelSerializationExtensions.JsonDeserialize<ApiLicenseInformation>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

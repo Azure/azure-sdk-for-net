@@ -52,17 +52,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Sampling))
             {
                 writer.WritePropertyName("sampling"u8);
-                writer.WriteObjectValue(Sampling, options);
+                ((IJsonModel<SamplingSettings>)Sampling).Write(writer, options);
             }
             if (Optional.IsDefined(Frontend))
             {
                 writer.WritePropertyName("frontend"u8);
-                writer.WriteObjectValue(Frontend, options);
+                ((IJsonModel<PipelineDiagnosticSettings>)Frontend).Write(writer, options);
             }
             if (Optional.IsDefined(Backend))
             {
                 writer.WritePropertyName("backend"u8);
-                writer.WriteObjectValue(Backend, options);
+                ((IJsonModel<PipelineDiagnosticSettings>)Backend).Write(writer, options);
             }
             if (Optional.IsDefined(IsLogClientIPEnabled))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            sampling = SamplingSettings.DeserializeSamplingSettings(property0.Value, options);
+                            sampling = ModelSerializationExtensions.JsonDeserialize<SamplingSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("frontend"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            frontend = PipelineDiagnosticSettings.DeserializePipelineDiagnosticSettings(property0.Value, options);
+                            frontend = ModelSerializationExtensions.JsonDeserialize<PipelineDiagnosticSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("backend"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            backend = PipelineDiagnosticSettings.DeserializePipelineDiagnosticSettings(property0.Value, options);
+                            backend = ModelSerializationExtensions.JsonDeserialize<PipelineDiagnosticSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("logClientIp"u8))

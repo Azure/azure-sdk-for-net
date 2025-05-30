@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<BillingBenefitsSavingsPlanPatchProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    properties = BillingBenefitsSavingsPlanPatchProperties.DeserializeBillingBenefitsSavingsPlanPatchProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<BillingBenefitsSavingsPlanPatchProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

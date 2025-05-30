@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WritePropertyName("securityPolicyName"u8);
             writer.WriteStringValue(SecurityPolicyName);
             writer.WritePropertyName("changeToWafPolicy"u8);
-            JsonSerializer.Serialize(writer, ChangeToWafPolicy);
+            ((IJsonModel<WritableSubResource>)ChangeToWafPolicy).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("changeToWafPolicy"u8))
                 {
-                    changeToWafPolicy = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    changeToWafPolicy = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(NodeIdentity))
             {
                 writer.WritePropertyName("nodeIdentityReference"u8);
-                writer.WriteObjectValue(NodeIdentity, options);
+                ((IJsonModel<ComputeNodeIdentityReference>)NodeIdentity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    nodeIdentityReference = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(property.Value, options);
+                    nodeIdentityReference = ModelSerializationExtensions.JsonDeserialize<ComputeNodeIdentityReference>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

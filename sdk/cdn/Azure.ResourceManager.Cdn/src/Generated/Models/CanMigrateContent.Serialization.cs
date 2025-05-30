@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WritePropertyName("classicResourceReference"u8);
-            JsonSerializer.Serialize(writer, ClassicResourceReference);
+            ((IJsonModel<WritableSubResource>)ClassicResourceReference).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("classicResourceReference"u8))
                 {
-                    classicResourceReference = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    classicResourceReference = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(SecuritySettings))
             {
                 writer.WritePropertyName("securitySettings"u8);
-                writer.WriteObjectValue(SecuritySettings, options);
+                ((IJsonModel<HciClusterDeploymentSecuritySettings>)SecuritySettings).Write(writer, options);
             }
             if (Optional.IsDefined(Observability))
             {
                 writer.WritePropertyName("observability"u8);
-                writer.WriteObjectValue(Observability, options);
+                ((IJsonModel<DeploymentSettingObservability>)Observability).Write(writer, options);
             }
             if (Optional.IsDefined(Cluster))
             {
                 writer.WritePropertyName("cluster"u8);
-                writer.WriteObjectValue(Cluster, options);
+                ((IJsonModel<HciDeploymentCluster>)Cluster).Write(writer, options);
             }
             if (Optional.IsDefined(Storage))
             {
                 writer.WritePropertyName("storage"u8);
-                writer.WriteObjectValue(Storage, options);
+                ((IJsonModel<DeploymentSettingStorage>)Storage).Write(writer, options);
             }
             if (Optional.IsDefined(NamingPrefix))
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in InfrastructureNetwork)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DeploymentSettingInfrastructureNetwork>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,19 +82,19 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in PhysicalNodes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DeploymentSettingPhysicalNodes>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(HostNetwork))
             {
                 writer.WritePropertyName("hostNetwork"u8);
-                writer.WriteObjectValue(HostNetwork, options);
+                ((IJsonModel<DeploymentSettingHostNetwork>)HostNetwork).Write(writer, options);
             }
             if (Optional.IsDefined(SdnIntegration))
             {
                 writer.WritePropertyName("sdnIntegration"u8);
-                writer.WriteObjectValue(SdnIntegration, options);
+                ((IJsonModel<SdnIntegration>)SdnIntegration).Write(writer, options);
             }
             if (Optional.IsDefined(AdouPath))
             {
@@ -112,14 +112,14 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EceDeploymentSecrets>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OptionalServices))
             {
                 writer.WritePropertyName("optionalServices"u8);
-                writer.WriteObjectValue(OptionalServices, options);
+                ((IJsonModel<OptionalServices>)OptionalServices).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    securitySettings = HciClusterDeploymentSecuritySettings.DeserializeHciClusterDeploymentSecuritySettings(property.Value, options);
+                    securitySettings = ModelSerializationExtensions.JsonDeserialize<HciClusterDeploymentSecuritySettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("observability"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    observability = DeploymentSettingObservability.DeserializeDeploymentSettingObservability(property.Value, options);
+                    observability = ModelSerializationExtensions.JsonDeserialize<DeploymentSettingObservability>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("cluster"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    cluster = HciDeploymentCluster.DeserializeHciDeploymentCluster(property.Value, options);
+                    cluster = ModelSerializationExtensions.JsonDeserialize<HciDeploymentCluster>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storage"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    storage = DeploymentSettingStorage.DeserializeDeploymentSettingStorage(property.Value, options);
+                    storage = ModelSerializationExtensions.JsonDeserialize<DeploymentSettingStorage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("namingPrefix"u8))
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    hostNetwork = DeploymentSettingHostNetwork.DeserializeDeploymentSettingHostNetwork(property.Value, options);
+                    hostNetwork = ModelSerializationExtensions.JsonDeserialize<DeploymentSettingHostNetwork>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sdnIntegration"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    sdnIntegration = SdnIntegration.DeserializeSdnIntegration(property.Value, options);
+                    sdnIntegration = ModelSerializationExtensions.JsonDeserialize<SdnIntegration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("adouPath"u8))
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    optionalServices = OptionalServices.DeserializeOptionalServices(property.Value, options);
+                    optionalServices = ModelSerializationExtensions.JsonDeserialize<OptionalServices>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

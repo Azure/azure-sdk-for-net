@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AttestationPrivateLinkResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

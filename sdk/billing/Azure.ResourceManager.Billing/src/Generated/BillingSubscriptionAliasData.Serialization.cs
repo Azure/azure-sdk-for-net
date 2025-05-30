@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Billing
             if (Optional.IsDefined(Beneficiary))
             {
                 writer.WritePropertyName("beneficiary"u8);
-                writer.WriteObjectValue(Beneficiary, options);
+                ((IJsonModel<BillingBeneficiary>)Beneficiary).Write(writer, options);
             }
             if (Optional.IsDefined(BillingFrequency))
             {
@@ -151,17 +151,17 @@ namespace Azure.ResourceManager.Billing
             if (options.Format != "W" && Optional.IsDefined(LastMonthCharges))
             {
                 writer.WritePropertyName("lastMonthCharges"u8);
-                writer.WriteObjectValue(LastMonthCharges, options);
+                ((IJsonModel<BillingAmount>)LastMonthCharges).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MonthToDateCharges))
             {
                 writer.WritePropertyName("monthToDateCharges"u8);
-                writer.WriteObjectValue(MonthToDateCharges, options);
+                ((IJsonModel<BillingAmount>)MonthToDateCharges).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(NextBillingCycleDetails))
             {
                 writer.WritePropertyName("nextBillingCycleDetails"u8);
-                writer.WriteObjectValue(NextBillingCycleDetails, options);
+                ((IJsonModel<NextBillingCycleDetails>)NextBillingCycleDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OfferId))
             {
@@ -196,12 +196,12 @@ namespace Azure.ResourceManager.Billing
             if (options.Format != "W" && Optional.IsDefined(Reseller))
             {
                 writer.WritePropertyName("reseller"u8);
-                writer.WriteObjectValue(Reseller, options);
+                ((IJsonModel<CreatedSubscriptionReseller>)Reseller).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RenewalTermDetails))
             {
                 writer.WritePropertyName("renewalTermDetails"u8);
-                writer.WriteObjectValue(RenewalTermDetails, options);
+                ((IJsonModel<SubscriptionRenewalTermDetails>)RenewalTermDetails).Write(writer, options);
             }
             if (Optional.IsDefined(SkuId))
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Billing
             if (Optional.IsDefined(SystemOverrides))
             {
                 writer.WritePropertyName("systemOverrides"u8);
-                writer.WriteObjectValue(SystemOverrides, options);
+                ((IJsonModel<BillingSystemOverrides>)SystemOverrides).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceUri))
             {
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Billing
                 writer.WriteStartArray();
                 foreach (var item in SuspensionReasonDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BillingSubscriptionStatusDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            beneficiary = BillingBeneficiary.DeserializeBillingBeneficiary(property0.Value, options);
+                            beneficiary = ModelSerializationExtensions.JsonDeserialize<BillingBeneficiary>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("billingFrequency"u8))
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            lastMonthCharges = BillingAmount.DeserializeBillingAmount(property0.Value, options);
+                            lastMonthCharges = ModelSerializationExtensions.JsonDeserialize<BillingAmount>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("monthToDateCharges"u8))
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            monthToDateCharges = BillingAmount.DeserializeBillingAmount(property0.Value, options);
+                            monthToDateCharges = ModelSerializationExtensions.JsonDeserialize<BillingAmount>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("nextBillingCycleDetails"u8))
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            nextBillingCycleDetails = NextBillingCycleDetails.DeserializeNextBillingCycleDetails(property0.Value, options);
+                            nextBillingCycleDetails = ModelSerializationExtensions.JsonDeserialize<NextBillingCycleDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("offerId"u8))
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            reseller = CreatedSubscriptionReseller.DeserializeCreatedSubscriptionReseller(property0.Value, options);
+                            reseller = ModelSerializationExtensions.JsonDeserialize<CreatedSubscriptionReseller>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("renewalTermDetails"u8))
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            renewalTermDetails = SubscriptionRenewalTermDetails.DeserializeSubscriptionRenewalTermDetails(property0.Value, options);
+                            renewalTermDetails = ModelSerializationExtensions.JsonDeserialize<SubscriptionRenewalTermDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("skuId"u8))
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            systemOverrides = BillingSystemOverrides.DeserializeBillingSystemOverrides(property0.Value, options);
+                            systemOverrides = ModelSerializationExtensions.JsonDeserialize<BillingSystemOverrides>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resourceUri"u8))

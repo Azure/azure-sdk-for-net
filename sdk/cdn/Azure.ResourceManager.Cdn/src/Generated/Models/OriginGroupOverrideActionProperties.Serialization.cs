@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("originGroup"u8);
-            JsonSerializer.Serialize(writer, OriginGroup);
+            ((IJsonModel<WritableSubResource>)OriginGroup).Write(writer, options);
         }
 
         OriginGroupOverrideActionProperties IJsonModel<OriginGroupOverrideActionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("originGroup"u8))
                 {
-                    originGroup = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    originGroup = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("typeName"u8))

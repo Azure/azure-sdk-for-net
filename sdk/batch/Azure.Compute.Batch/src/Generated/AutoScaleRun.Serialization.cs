@@ -44,7 +44,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<AutoScaleRunError>)Error).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -106,7 +106,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    error = AutoScaleRunError.DeserializeAutoScaleRunError(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<AutoScaleRunError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

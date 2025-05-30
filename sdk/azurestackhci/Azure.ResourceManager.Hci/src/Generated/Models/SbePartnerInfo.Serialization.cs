@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(SbeDeploymentInfo))
             {
                 writer.WritePropertyName("sbeDeploymentInfo"u8);
-                writer.WriteObjectValue(SbeDeploymentInfo, options);
+                ((IJsonModel<SbeDeploymentInfo>)SbeDeploymentInfo).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(PartnerProperties))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in PartnerProperties)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SbePartnerProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in CredentialList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SbeCredentials>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    sbeDeploymentInfo = SbeDeploymentInfo.DeserializeSbeDeploymentInfo(property.Value, options);
+                    sbeDeploymentInfo = ModelSerializationExtensions.JsonDeserialize<SbeDeploymentInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("partnerProperties"u8))

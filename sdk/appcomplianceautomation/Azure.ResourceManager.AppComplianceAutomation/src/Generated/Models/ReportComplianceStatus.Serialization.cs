@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             if (options.Format != "W" && Optional.IsDefined(M365))
             {
                 writer.WritePropertyName("m365"u8);
-                writer.WriteObjectValue(M365, options);
+                ((IJsonModel<ReportOverviewStatus>)M365).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    m365 = ReportOverviewStatus.DeserializeReportOverviewStatus(property.Value, options);
+                    m365 = ModelSerializationExtensions.JsonDeserialize<ReportOverviewStatus>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

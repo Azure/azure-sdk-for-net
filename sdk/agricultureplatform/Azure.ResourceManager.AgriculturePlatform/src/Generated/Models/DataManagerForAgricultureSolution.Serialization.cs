@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("marketPlaceOfferDetails"u8);
-            writer.WriteObjectValue(MarketPlaceOfferDetails, options);
+            ((IJsonModel<MarketPlaceOfferDetails>)MarketPlaceOfferDetails).Write(writer, options);
             writer.WritePropertyName("saasApplicationId"u8);
             writer.WriteStringValue(SaasApplicationId);
             writer.WritePropertyName("accessAzureDataManagerForAgricultureApplicationId"u8);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                 }
                 if (property.NameEquals("marketPlaceOfferDetails"u8))
                 {
-                    marketPlaceOfferDetails = MarketPlaceOfferDetails.DeserializeMarketPlaceOfferDetails(property.Value, options);
+                    marketPlaceOfferDetails = ModelSerializationExtensions.JsonDeserialize<MarketPlaceOfferDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("saasApplicationId"u8))

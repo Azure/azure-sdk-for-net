@@ -54,32 +54,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<BackendProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials, options);
+                ((IJsonModel<BackendCredentialsContract>)Credentials).Write(writer, options);
             }
             if (Optional.IsDefined(Proxy))
             {
                 writer.WritePropertyName("proxy"u8);
-                writer.WriteObjectValue(Proxy, options);
+                ((IJsonModel<BackendProxyContract>)Proxy).Write(writer, options);
             }
             if (Optional.IsDefined(Tls))
             {
                 writer.WritePropertyName("tls"u8);
-                writer.WriteObjectValue(Tls, options);
+                ((IJsonModel<BackendTlsProperties>)Tls).Write(writer, options);
             }
             if (Optional.IsDefined(CircuitBreaker))
             {
                 writer.WritePropertyName("circuitBreaker"u8);
-                writer.WriteObjectValue(CircuitBreaker, options);
+                ((IJsonModel<BackendCircuitBreaker>)CircuitBreaker).Write(writer, options);
             }
             if (Optional.IsDefined(Pool))
             {
                 writer.WritePropertyName("pool"u8);
-                writer.WriteObjectValue(Pool, options);
+                ((IJsonModel<BackendBaseParametersPool>)Pool).Write(writer, options);
             }
             if (Optional.IsDefined(BackendType))
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            properties = BackendProperties.DeserializeBackendProperties(property0.Value, options);
+                            properties = ModelSerializationExtensions.JsonDeserialize<BackendProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("credentials"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            credentials = BackendCredentialsContract.DeserializeBackendCredentialsContract(property0.Value, options);
+                            credentials = ModelSerializationExtensions.JsonDeserialize<BackendCredentialsContract>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("proxy"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            proxy = BackendProxyContract.DeserializeBackendProxyContract(property0.Value, options);
+                            proxy = ModelSerializationExtensions.JsonDeserialize<BackendProxyContract>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tls"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            tls = BackendTlsProperties.DeserializeBackendTlsProperties(property0.Value, options);
+                            tls = ModelSerializationExtensions.JsonDeserialize<BackendTlsProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("circuitBreaker"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            circuitBreaker = BackendCircuitBreaker.DeserializeBackendCircuitBreaker(property0.Value, options);
+                            circuitBreaker = ModelSerializationExtensions.JsonDeserialize<BackendCircuitBreaker>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("pool"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            pool = BackendBaseParametersPool.DeserializeBackendBaseParametersPool(property0.Value, options);
+                            pool = ModelSerializationExtensions.JsonDeserialize<BackendBaseParametersPool>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("type"u8))

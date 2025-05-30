@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Astro.Models
             if (Optional.IsDefined(SingleSignOnProperties))
             {
                 writer.WritePropertyName("singleSignOnProperties"u8);
-                writer.WriteObjectValue(SingleSignOnProperties, options);
+                ((IJsonModel<AstroSingleSignOnProperties>)SingleSignOnProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Astro.Models
                     {
                         continue;
                     }
-                    singleSignOnProperties = AstroSingleSignOnProperties.DeserializeAstroSingleSignOnProperties(property.Value, options);
+                    singleSignOnProperties = ModelSerializationExtensions.JsonDeserialize<AstroSingleSignOnProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

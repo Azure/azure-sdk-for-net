@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Advisor
             if (Optional.IsDefined(ShortDescription))
             {
                 writer.WritePropertyName("shortDescription"u8);
-                writer.WriteObjectValue(ShortDescription, options);
+                ((IJsonModel<ShortDescription>)ShortDescription).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(SuppressionIds))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Advisor
             if (Optional.IsDefined(ResourceMetadata))
             {
                 writer.WritePropertyName("resourceMetadata"u8);
-                writer.WriteObjectValue(ResourceMetadata, options);
+                ((IJsonModel<ResourceMetadata>)ResourceMetadata).Write(writer, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Advisor
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Advisor
                             {
                                 continue;
                             }
-                            shortDescription = ShortDescription.DeserializeShortDescription(property0.Value, options);
+                            shortDescription = ModelSerializationExtensions.JsonDeserialize<ShortDescription>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("suppressionIds"u8))
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Advisor
                             {
                                 continue;
                             }
-                            resourceMetadata = ResourceMetadata.DeserializeResourceMetadata(property0.Value, options);
+                            resourceMetadata = ModelSerializationExtensions.JsonDeserialize<ResourceMetadata>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("description"u8))

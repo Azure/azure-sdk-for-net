@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ScVmmAvailabilitySetData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -45,7 +45,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InstanceViewStatus>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in SubStatuses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InstanceViewStatus>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

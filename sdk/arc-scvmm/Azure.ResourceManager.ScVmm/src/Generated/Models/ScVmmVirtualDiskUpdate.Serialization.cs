@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ScVmm.Models
             if (Optional.IsDefined(StorageQosPolicy))
             {
                 writer.WritePropertyName("storageQoSPolicy"u8);
-                writer.WriteObjectValue(StorageQosPolicy, options);
+                ((IJsonModel<ScVmmStorageQosPolicyDetails>)StorageQosPolicy).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                     {
                         continue;
                     }
-                    storageQosPolicy = ScVmmStorageQosPolicyDetails.DeserializeScVmmStorageQosPolicyDetails(property.Value, options);
+                    storageQosPolicy = ModelSerializationExtensions.JsonDeserialize<ScVmmStorageQosPolicyDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

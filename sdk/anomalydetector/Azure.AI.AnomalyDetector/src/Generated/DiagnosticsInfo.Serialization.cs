@@ -37,7 +37,7 @@ namespace Azure.AI.AnomalyDetector
             if (Optional.IsDefined(ModelState))
             {
                 writer.WritePropertyName("modelState"u8);
-                writer.WriteObjectValue(ModelState, options);
+                ((IJsonModel<ModelState>)ModelState).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(VariableStates))
             {
@@ -45,7 +45,7 @@ namespace Azure.AI.AnomalyDetector
                 writer.WriteStartArray();
                 foreach (var item in VariableStates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VariableState>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +98,7 @@ namespace Azure.AI.AnomalyDetector
                     {
                         continue;
                     }
-                    modelState = ModelState.DeserializeModelState(property.Value, options);
+                    modelState = ModelSerializationExtensions.JsonDeserialize<ModelState>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("variableStates"u8))

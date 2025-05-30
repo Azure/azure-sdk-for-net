@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ServiceAlertSummaryGroupItemInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in AzureQueries)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AzureQueryProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in NonAzureQueries)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NonAzureQueryProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

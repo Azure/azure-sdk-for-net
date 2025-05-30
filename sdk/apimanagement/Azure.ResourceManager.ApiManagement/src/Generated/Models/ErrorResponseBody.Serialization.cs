@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ErrorFieldContract>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             if (Optional.IsDefined(Essentials))
             {
                 writer.WritePropertyName("essentials"u8);
-                writer.WriteObjectValue(Essentials, options);
+                ((IJsonModel<ServiceAlertEssentials>)Essentials).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Context))
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     {
                         continue;
                     }
-                    essentials = ServiceAlertEssentials.DeserializeServiceAlertEssentials(property.Value, options);
+                    essentials = ModelSerializationExtensions.JsonDeserialize<ServiceAlertEssentials>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("context"u8))

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.BillingBenefits
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<BillingBenefitsSku>)Sku).Write(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.BillingBenefits
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties, options);
+                ((IJsonModel<BillingBenefitsAppliedScopeProperties>)AppliedScopeProperties).Write(writer, options);
             }
             if (Optional.IsDefined(Commitment))
             {
                 writer.WritePropertyName("commitment"u8);
-                writer.WriteObjectValue(Commitment, options);
+                ((IJsonModel<BillingBenefitsCommitment>)Commitment).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EffectOn))
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.BillingBenefits
             if (options.Format != "W" && Optional.IsDefined(ExtendedStatusInfo))
             {
                 writer.WritePropertyName("extendedStatusInfo"u8);
-                writer.WriteObjectValue(ExtendedStatusInfo, options);
+                ((IJsonModel<BillingBenefitsExtendedStatusInfo>)ExtendedStatusInfo).Write(writer, options);
             }
             if (Optional.IsDefined(IsRenewed))
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.BillingBenefits
             if (options.Format != "W" && Optional.IsDefined(Utilization))
             {
                 writer.WritePropertyName("utilization"u8);
-                writer.WriteObjectValue(Utilization, options);
+                ((IJsonModel<BillingBenefitsSavingsPlanUtilization>)Utilization).Write(writer, options);
             }
             if (Optional.IsDefined(RenewSource))
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.BillingBenefits
             if (Optional.IsDefined(RenewProperties))
             {
                 writer.WritePropertyName("renewProperties"u8);
-                writer.WriteObjectValue(RenewProperties, options);
+                ((IJsonModel<RenewProperties>)RenewProperties).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = BillingBenefitsSku.DeserializeBillingBenefitsSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<BillingBenefitsSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.BillingBenefits
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.BillingBenefits
                             {
                                 continue;
                             }
-                            appliedScopeProperties = BillingBenefitsAppliedScopeProperties.DeserializeBillingBenefitsAppliedScopeProperties(property0.Value, options);
+                            appliedScopeProperties = ModelSerializationExtensions.JsonDeserialize<BillingBenefitsAppliedScopeProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("commitment"u8))
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.BillingBenefits
                             {
                                 continue;
                             }
-                            commitment = BillingBenefitsCommitment.DeserializeBillingBenefitsCommitment(property0.Value, options);
+                            commitment = ModelSerializationExtensions.JsonDeserialize<BillingBenefitsCommitment>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("effectiveDateTime"u8))
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.BillingBenefits
                             {
                                 continue;
                             }
-                            extendedStatusInfo = BillingBenefitsExtendedStatusInfo.DeserializeBillingBenefitsExtendedStatusInfo(property0.Value, options);
+                            extendedStatusInfo = ModelSerializationExtensions.JsonDeserialize<BillingBenefitsExtendedStatusInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("renew"u8))
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.BillingBenefits
                             {
                                 continue;
                             }
-                            utilization = BillingBenefitsSavingsPlanUtilization.DeserializeBillingBenefitsSavingsPlanUtilization(property0.Value, options);
+                            utilization = ModelSerializationExtensions.JsonDeserialize<BillingBenefitsSavingsPlanUtilization>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("renewSource"u8))
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.BillingBenefits
                             {
                                 continue;
                             }
-                            renewProperties = RenewProperties.DeserializeRenewProperties(property0.Value, options);
+                            renewProperties = ModelSerializationExtensions.JsonDeserialize<RenewProperties>(property0.Value);
                             continue;
                         }
                     }

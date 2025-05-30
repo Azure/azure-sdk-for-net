@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AppComplianceCategory>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

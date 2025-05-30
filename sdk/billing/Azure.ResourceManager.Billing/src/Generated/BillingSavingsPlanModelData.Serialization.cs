@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Billing
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<BillingSku>)Sku).Write(writer, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Billing
             if (Optional.IsDefined(RenewProperties))
             {
                 writer.WritePropertyName("renewProperties"u8);
-                writer.WriteObjectValue(RenewProperties, options);
+                ((IJsonModel<BillingRenewProperties>)RenewProperties).Write(writer, options);
             }
             if (Optional.IsDefined(BillingPlan))
             {
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.Billing
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties, options);
+                ((IJsonModel<BillingAppliedScopeProperties>)AppliedScopeProperties).Write(writer, options);
             }
             if (Optional.IsDefined(Commitment))
             {
                 writer.WritePropertyName("commitment"u8);
-                writer.WriteObjectValue(Commitment, options);
+                ((IJsonModel<BillingBenefitCommitment>)Commitment).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EffectiveOn))
             {
@@ -162,12 +162,12 @@ namespace Azure.ResourceManager.Billing
             if (options.Format != "W" && Optional.IsDefined(Utilization))
             {
                 writer.WritePropertyName("utilization"u8);
-                writer.WriteObjectValue(Utilization, options);
+                ((IJsonModel<SavingsPlanUtilization>)Utilization).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ExtendedStatusInfo))
             {
                 writer.WritePropertyName("extendedStatusInfo"u8);
-                writer.WriteObjectValue(ExtendedStatusInfo, options);
+                ((IJsonModel<ExtendedStatusInfo>)ExtendedStatusInfo).Write(writer, options);
             }
             if (Optional.IsDefined(ProductCode))
             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Billing
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = BillingSku.DeserializeBillingSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<BillingSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            renewProperties = BillingRenewProperties.DeserializeBillingRenewProperties(property0.Value, options);
+                            renewProperties = ModelSerializationExtensions.JsonDeserialize<BillingRenewProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("billingPlan"u8))
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            appliedScopeProperties = BillingAppliedScopeProperties.DeserializeBillingAppliedScopeProperties(property0.Value, options);
+                            appliedScopeProperties = ModelSerializationExtensions.JsonDeserialize<BillingAppliedScopeProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("commitment"u8))
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            commitment = BillingBenefitCommitment.DeserializeBillingBenefitCommitment(property0.Value, options);
+                            commitment = ModelSerializationExtensions.JsonDeserialize<BillingBenefitCommitment>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("effectiveDateTime"u8))
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            utilization = SavingsPlanUtilization.DeserializeSavingsPlanUtilization(property0.Value, options);
+                            utilization = ModelSerializationExtensions.JsonDeserialize<SavingsPlanUtilization>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("extendedStatusInfo"u8))
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            extendedStatusInfo = ExtendedStatusInfo.DeserializeExtendedStatusInfo(property0.Value, options);
+                            extendedStatusInfo = ModelSerializationExtensions.JsonDeserialize<ExtendedStatusInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("productCode"u8))

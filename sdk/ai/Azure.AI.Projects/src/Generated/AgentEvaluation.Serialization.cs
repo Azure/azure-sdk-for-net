@@ -49,7 +49,7 @@ namespace Azure.AI.Projects
                 writer.WriteStartArray();
                 foreach (var item in Result)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AgentEvaluationResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

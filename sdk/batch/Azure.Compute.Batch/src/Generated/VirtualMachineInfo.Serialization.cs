@@ -37,7 +37,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
-                writer.WriteObjectValue(ImageReference, options);
+                ((IJsonModel<ImageReference>)ImageReference).Write(writer, options);
             }
             if (Optional.IsDefined(ScaleSetVmResourceId))
             {
@@ -93,7 +93,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    imageReference = ImageReference.DeserializeImageReference(property.Value, options);
+                    imageReference = ModelSerializationExtensions.JsonDeserialize<ImageReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scaleSetVmResourceId"u8))

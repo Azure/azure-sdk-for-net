@@ -21,7 +21,7 @@ namespace Azure.Security.Attestation
             if (Optional.IsDefined(InternalPolicyCertificate))
             {
                 writer.WritePropertyName("policyCertificate"u8);
-                writer.WriteObjectValue<JsonWebKey>(InternalPolicyCertificate);
+                JsonSerializer.Serialize(writer, InternalPolicyCertificate);
             }
             writer.WriteEndObject();
         }
@@ -41,7 +41,7 @@ namespace Azure.Security.Attestation
                     {
                         continue;
                     }
-                    policyCertificate = JsonWebKey.DeserializeJsonWebKey(property.Value);
+                    policyCertificate = ModelSerializationExtensions.JsonDeserialize<JsonWebKey>(property.Value);
                     continue;
                 }
             }

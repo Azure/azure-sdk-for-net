@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.AppPlatform
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<AppPlatformServiceProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<AppPlatformSku>)Sku).Write(writer, options);
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppPlatform
                     {
                         continue;
                     }
-                    properties = AppPlatformServiceProperties.DeserializeAppPlatformServiceProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<AppPlatformServiceProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppPlatform
                     {
                         continue;
                     }
-                    sku = AppPlatformSku.DeserializeAppPlatformSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<AppPlatformSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppPlatform
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

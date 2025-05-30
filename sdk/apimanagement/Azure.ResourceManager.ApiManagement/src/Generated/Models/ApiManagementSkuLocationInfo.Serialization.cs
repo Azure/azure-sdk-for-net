@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in ZoneDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApiManagementSkuZoneDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

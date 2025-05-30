@@ -53,7 +53,7 @@ namespace Azure.AI.Agents.Persistent
                     writer.WriteStartArray();
                     foreach (var item in Attachments)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<MessageAttachment>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("configuration"u8);
-            writer.WriteObjectValue(Configuration, options);
+            ((IJsonModel<DscConfigurationAssociationProperty>)Configuration).Write(writer, options);
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         if (property0.NameEquals("configuration"u8))
                         {
-                            configuration = DscConfigurationAssociationProperty.DeserializeDscConfigurationAssociationProperty(property0.Value, options);
+                            configuration = ModelSerializationExtensions.JsonDeserialize<DscConfigurationAssociationProperty>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("parameters"u8))

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in Answers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ScopingAnswer>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

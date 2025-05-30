@@ -23,12 +23,12 @@ namespace Azure.Security.Attestation
             if (Optional.IsDefined(RuntimeData))
             {
                 writer.WritePropertyName("runtimeData"u8);
-                writer.WriteObjectValue(RuntimeData);
+                JsonSerializer.Serialize(writer, RuntimeData);
             }
             if (Optional.IsDefined(InitTimeData))
             {
                 writer.WritePropertyName("initTimeData"u8);
-                writer.WriteObjectValue(InitTimeData);
+                JsonSerializer.Serialize(writer, InitTimeData);
             }
             if (Optional.IsDefined(DraftPolicyForAttestation))
             {

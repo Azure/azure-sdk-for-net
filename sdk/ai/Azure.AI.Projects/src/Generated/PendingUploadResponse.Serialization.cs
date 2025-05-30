@@ -35,7 +35,7 @@ namespace Azure.AI.Projects
             }
 
             writer.WritePropertyName("blobReference"u8);
-            writer.WriteObjectValue(BlobReference, options);
+            ((IJsonModel<BlobReference>)BlobReference).Write(writer, options);
             writer.WritePropertyName("pendingUploadId"u8);
             writer.WriteStringValue(PendingUploadId);
             if (Optional.IsDefined(Version))
@@ -92,7 +92,7 @@ namespace Azure.AI.Projects
             {
                 if (property.NameEquals("blobReference"u8))
                 {
-                    blobReference = BlobReference.DeserializeBlobReference(property.Value, options);
+                    blobReference = ModelSerializationExtensions.JsonDeserialize<BlobReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("pendingUploadId"u8))

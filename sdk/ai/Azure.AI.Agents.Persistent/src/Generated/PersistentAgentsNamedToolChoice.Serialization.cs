@@ -39,7 +39,7 @@ namespace Azure.AI.Agents.Persistent
             if (Optional.IsDefined(Function))
             {
                 writer.WritePropertyName("function"u8);
-                writer.WriteObjectValue(Function, options);
+                ((IJsonModel<PersistentAgentsFunctionName>)Function).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -95,7 +95,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    function = PersistentAgentsFunctionName.DeserializePersistentAgentsFunctionName(property.Value, options);
+                    function = ModelSerializationExtensions.JsonDeserialize<PersistentAgentsFunctionName>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

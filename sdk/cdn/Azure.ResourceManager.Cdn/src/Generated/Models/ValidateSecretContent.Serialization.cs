@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WritePropertyName("secretType"u8);
             writer.WriteStringValue(SecretType.ToString());
             writer.WritePropertyName("secretSource"u8);
-            JsonSerializer.Serialize(writer, SecretSource);
+            ((IJsonModel<WritableSubResource>)SecretSource).Write(writer, options);
             if (Optional.IsDefined(SecretVersion))
             {
                 writer.WritePropertyName("secretVersion"u8);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("secretSource"u8))
                 {
-                    secretSource = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    secretSource = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("secretVersion"u8))

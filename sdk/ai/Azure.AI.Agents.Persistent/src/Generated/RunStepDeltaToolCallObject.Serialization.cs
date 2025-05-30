@@ -41,7 +41,7 @@ namespace Azure.AI.Agents.Persistent
                 writer.WriteStartArray();
                 foreach (var item in ToolCalls)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RunStepDeltaToolCall>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

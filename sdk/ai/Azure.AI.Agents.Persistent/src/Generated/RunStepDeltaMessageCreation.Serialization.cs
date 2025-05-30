@@ -38,7 +38,7 @@ namespace Azure.AI.Agents.Persistent
             if (Optional.IsDefined(MessageCreation))
             {
                 writer.WritePropertyName("message_creation"u8);
-                writer.WriteObjectValue(MessageCreation, options);
+                ((IJsonModel<RunStepDeltaMessageCreationObject>)MessageCreation).Write(writer, options);
             }
         }
 
@@ -74,7 +74,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    messageCreation = RunStepDeltaMessageCreationObject.DeserializeRunStepDeltaMessageCreationObject(property.Value, options);
+                    messageCreation = ModelSerializationExtensions.JsonDeserialize<RunStepDeltaMessageCreationObject>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

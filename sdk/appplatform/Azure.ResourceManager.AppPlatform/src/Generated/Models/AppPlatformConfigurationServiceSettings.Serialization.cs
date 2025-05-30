@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(GitProperty))
             {
                 writer.WritePropertyName("gitProperty"u8);
-                writer.WriteObjectValue(GitProperty, options);
+                ((IJsonModel<ConfigurationServiceGitProperty>)GitProperty).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    gitProperty = ConfigurationServiceGitProperty.DeserializeConfigurationServiceGitProperty(property.Value, options);
+                    gitProperty = ModelSerializationExtensions.JsonDeserialize<ConfigurationServiceGitProperty>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

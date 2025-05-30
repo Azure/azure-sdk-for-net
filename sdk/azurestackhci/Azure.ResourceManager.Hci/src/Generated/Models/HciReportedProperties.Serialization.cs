@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.Hci.Models
             if (options.Format != "W" && Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile, options);
+                ((IJsonModel<HciNetworkProfile>)NetworkProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile, options);
+                ((IJsonModel<HciOSProfile>)OSProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SbeDeploymentPackageInfo))
             {
                 writer.WritePropertyName("sbeDeploymentPackageInfo"u8);
-                writer.WriteObjectValue(SbeDeploymentPackageInfo, options);
+                ((IJsonModel<SbeDeploymentPackageInfo>)SbeDeploymentPackageInfo).Write(writer, options);
             }
         }
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    networkProfile = HciNetworkProfile.DeserializeHciNetworkProfile(property.Value, options);
+                    networkProfile = ModelSerializationExtensions.JsonDeserialize<HciNetworkProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("osProfile"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    osProfile = HciOSProfile.DeserializeHciOSProfile(property.Value, options);
+                    osProfile = ModelSerializationExtensions.JsonDeserialize<HciOSProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sbeDeploymentPackageInfo"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    sbeDeploymentPackageInfo = SbeDeploymentPackageInfo.DeserializeSbeDeploymentPackageInfo(property.Value, options);
+                    sbeDeploymentPackageInfo = ModelSerializationExtensions.JsonDeserialize<SbeDeploymentPackageInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deviceState"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    extensionProfile = HciEdgeDeviceExtensionProfile.DeserializeHciEdgeDeviceExtensionProfile(property.Value, options);
+                    extensionProfile = ModelSerializationExtensions.JsonDeserialize<HciEdgeDeviceExtensionProfile>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

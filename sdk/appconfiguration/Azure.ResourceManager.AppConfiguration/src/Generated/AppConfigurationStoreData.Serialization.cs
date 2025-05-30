@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.AppConfiguration
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<AppConfigurationSku>)Sku).Write(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppConfiguration
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<AppConfigurationStoreEncryptionProperties>)Encryption).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     writer.WriteStartArray();
                     foreach (var item in PrivateEndpointConnections)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<AppConfigurationPrivateEndpointConnectionReference>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppConfiguration
             if (Optional.IsDefined(DataPlaneProxy))
             {
                 writer.WritePropertyName("dataPlaneProxy"u8);
-                writer.WriteObjectValue(DataPlaneProxy, options);
+                ((IJsonModel<AppConfigurationDataPlaneProxyProperties>)DataPlaneProxy).Write(writer, options);
             }
             if (Optional.IsDefined(CreateMode))
             {
@@ -167,12 +167,12 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = AppConfigurationSku.DeserializeAppConfigurationSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<AppConfigurationSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.AppConfiguration
                             {
                                 continue;
                             }
-                            encryption = AppConfigurationStoreEncryptionProperties.DeserializeAppConfigurationStoreEncryptionProperties(property0.Value, options);
+                            encryption = ModelSerializationExtensions.JsonDeserialize<AppConfigurationStoreEncryptionProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.AppConfiguration
                             {
                                 continue;
                             }
-                            dataPlaneProxy = AppConfigurationDataPlaneProxyProperties.DeserializeAppConfigurationDataPlaneProxyProperties(property0.Value, options);
+                            dataPlaneProxy = ModelSerializationExtensions.JsonDeserialize<AppConfigurationDataPlaneProxyProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("createMode"u8))

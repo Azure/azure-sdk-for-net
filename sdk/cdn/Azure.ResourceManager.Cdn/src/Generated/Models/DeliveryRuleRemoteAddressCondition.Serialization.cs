@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("parameters"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<RemoteAddressMatchCondition>)Properties).Write(writer, options);
         }
 
         DeliveryRuleRemoteAddressCondition IJsonModel<DeliveryRuleRemoteAddressCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = RemoteAddressMatchCondition.DeserializeRemoteAddressMatchCondition(property.Value, options);
+                    parameters = ModelSerializationExtensions.JsonDeserialize<RemoteAddressMatchCondition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

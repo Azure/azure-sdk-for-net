@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration, options);
+                ((IJsonModel<DscConfigurationAssociationProperty>)Configuration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(StartedBy))
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            configuration = DscConfigurationAssociationProperty.DeserializeDscConfigurationAssociationProperty(property0.Value, options);
+                            configuration = ModelSerializationExtensions.JsonDeserialize<DscConfigurationAssociationProperty>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("startedBy"u8))

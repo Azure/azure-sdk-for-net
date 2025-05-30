@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Hci
             if (options.Format != "W" && Optional.IsDefined(SecurityComplianceStatus))
             {
                 writer.WritePropertyName("securityComplianceStatus"u8);
-                writer.WriteObjectValue(SecurityComplianceStatus, options);
+                ((IJsonModel<SecurityComplianceStatus>)SecurityComplianceStatus).Write(writer, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Hci
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            securityComplianceStatus = SecurityComplianceStatus.DeserializeSecurityComplianceStatus(property0.Value, options);
+                            securityComplianceStatus = ModelSerializationExtensions.JsonDeserialize<SecurityComplianceStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

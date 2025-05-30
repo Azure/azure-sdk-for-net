@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in QueryParams)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataMaskingEntity>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Headers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataMaskingEntity>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

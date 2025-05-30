@@ -42,9 +42,9 @@ namespace Azure.AI.Projects
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
             writer.WritePropertyName("embeddingConfiguration"u8);
-            writer.WriteObjectValue(EmbeddingConfiguration, options);
+            ((IJsonModel<EmbeddingConfiguration>)EmbeddingConfiguration).Write(writer, options);
             writer.WritePropertyName("fieldMapping"u8);
-            writer.WriteObjectValue(FieldMapping, options);
+            ((IJsonModel<FieldMapping>)FieldMapping).Write(writer, options);
         }
 
         CosmosDBIndex IJsonModel<CosmosDBIndex>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -99,12 +99,12 @@ namespace Azure.AI.Projects
                 }
                 if (property.NameEquals("embeddingConfiguration"u8))
                 {
-                    embeddingConfiguration = EmbeddingConfiguration.DeserializeEmbeddingConfiguration(property.Value, options);
+                    embeddingConfiguration = ModelSerializationExtensions.JsonDeserialize<EmbeddingConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("fieldMapping"u8))
                 {
-                    fieldMapping = FieldMapping.DeserializeFieldMapping(property.Value, options);
+                    fieldMapping = ModelSerializationExtensions.JsonDeserialize<FieldMapping>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

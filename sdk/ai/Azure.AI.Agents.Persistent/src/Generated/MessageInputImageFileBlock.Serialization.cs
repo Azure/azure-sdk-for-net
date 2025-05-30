@@ -36,7 +36,7 @@ namespace Azure.AI.Agents.Persistent
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("image_file"u8);
-            writer.WriteObjectValue(ImageFile, options);
+            ((IJsonModel<MessageImageFileParam>)ImageFile).Write(writer, options);
         }
 
         MessageInputImageFileBlock IJsonModel<MessageInputImageFileBlock>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (property.NameEquals("image_file"u8))
                 {
-                    imageFile = MessageImageFileParam.DeserializeMessageImageFileParam(property.Value, options);
+                    imageFile = ModelSerializationExtensions.JsonDeserialize<MessageImageFileParam>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

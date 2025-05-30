@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SmartGroupAggregatedProperty>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 writer.WriteStartArray();
                 foreach (var item in ResourceTypes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SmartGroupAggregatedProperty>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 writer.WriteStartArray();
                 foreach (var item in ResourceGroups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SmartGroupAggregatedProperty>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 writer.WriteStartArray();
                 foreach (var item in MonitorServices)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SmartGroupAggregatedProperty>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 writer.WriteStartArray();
                 foreach (var item in MonitorConditions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SmartGroupAggregatedProperty>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 writer.WriteStartArray();
                 foreach (var item in AlertStates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SmartGroupAggregatedProperty>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 writer.WriteStartArray();
                 foreach (var item in AlertSeverities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SmartGroupAggregatedProperty>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.AlertsManagement
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

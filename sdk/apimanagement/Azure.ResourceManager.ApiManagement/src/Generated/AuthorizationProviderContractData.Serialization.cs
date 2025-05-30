@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Oauth2))
             {
                 writer.WritePropertyName("oauth2"u8);
-                writer.WriteObjectValue(Oauth2, options);
+                ((IJsonModel<AuthorizationProviderOAuth2Settings>)Oauth2).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            oauth2 = AuthorizationProviderOAuth2Settings.DeserializeAuthorizationProviderOAuth2Settings(property0.Value, options);
+                            oauth2 = ModelSerializationExtensions.JsonDeserialize<AuthorizationProviderOAuth2Settings>(property0.Value);
                             continue;
                         }
                     }

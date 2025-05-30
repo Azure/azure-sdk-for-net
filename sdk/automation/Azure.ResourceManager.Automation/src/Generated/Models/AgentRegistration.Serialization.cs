@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Keys))
             {
                 writer.WritePropertyName("keys"u8);
-                writer.WriteObjectValue(Keys, options);
+                ((IJsonModel<AgentRegistrationKeys>)Keys).Write(writer, options);
             }
             if (Optional.IsDefined(Id))
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    keys = AgentRegistrationKeys.DeserializeAgentRegistrationKeys(property.Value, options);
+                    keys = ModelSerializationExtensions.JsonDeserialize<AgentRegistrationKeys>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

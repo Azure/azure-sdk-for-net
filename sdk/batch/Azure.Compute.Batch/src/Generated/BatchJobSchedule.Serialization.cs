@@ -87,14 +87,14 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule, options);
+                ((IJsonModel<BatchJobScheduleConfiguration>)Schedule).Write(writer, options);
             }
             writer.WritePropertyName("jobSpecification"u8);
-            writer.WriteObjectValue(JobSpecification, options);
+            ((IJsonModel<BatchJobSpecification>)JobSpecification).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ExecutionInfo))
             {
                 writer.WritePropertyName("executionInfo"u8);
-                writer.WriteObjectValue(ExecutionInfo, options);
+                ((IJsonModel<BatchJobScheduleExecutionInfo>)ExecutionInfo).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
@@ -102,14 +102,14 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MetadataItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(Stats))
             {
                 writer.WritePropertyName("stats"u8);
-                writer.WriteObjectValue(Stats, options);
+                ((IJsonModel<BatchJobScheduleStatistics>)Stats).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -247,12 +247,12 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    schedule = BatchJobScheduleConfiguration.DeserializeBatchJobScheduleConfiguration(property.Value, options);
+                    schedule = ModelSerializationExtensions.JsonDeserialize<BatchJobScheduleConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("jobSpecification"u8))
                 {
-                    jobSpecification = BatchJobSpecification.DeserializeBatchJobSpecification(property.Value, options);
+                    jobSpecification = ModelSerializationExtensions.JsonDeserialize<BatchJobSpecification>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("executionInfo"u8))
@@ -261,7 +261,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    executionInfo = BatchJobScheduleExecutionInfo.DeserializeBatchJobScheduleExecutionInfo(property.Value, options);
+                    executionInfo = ModelSerializationExtensions.JsonDeserialize<BatchJobScheduleExecutionInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))
@@ -284,7 +284,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    stats = BatchJobScheduleStatistics.DeserializeBatchJobScheduleStatistics(property.Value, options);
+                    stats = ModelSerializationExtensions.JsonDeserialize<BatchJobScheduleStatistics>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Avs.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<AvsSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    sku = AvsSku.DeserializeAvsSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<AvsSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

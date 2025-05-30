@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Hash))
             {
                 writer.WritePropertyName("hash"u8);
-                writer.WriteObjectValue(Hash, options);
+                ((IJsonModel<AutomationContentHash>)Hash).Write(writer, options);
             }
             if (Optional.IsDefined(SourceType))
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    hash = AutomationContentHash.DeserializeAutomationContentHash(property.Value, options);
+                    hash = ModelSerializationExtensions.JsonDeserialize<AutomationContentHash>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(ResourceRequests))
             {
                 writer.WritePropertyName("resourceRequests"u8);
-                writer.WriteObjectValue(ResourceRequests, options);
+                ((IJsonModel<AppPlatformDeploymentResourceRequirements>)ResourceRequests).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
@@ -87,17 +87,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(LivenessProbe))
             {
                 writer.WritePropertyName("livenessProbe"u8);
-                writer.WriteObjectValue(LivenessProbe, options);
+                ((IJsonModel<AppInstanceProbe>)LivenessProbe).Write(writer, options);
             }
             if (Optional.IsDefined(ReadinessProbe))
             {
                 writer.WritePropertyName("readinessProbe"u8);
-                writer.WriteObjectValue(ReadinessProbe, options);
+                ((IJsonModel<AppInstanceProbe>)ReadinessProbe).Write(writer, options);
             }
             if (Optional.IsDefined(StartupProbe))
             {
                 writer.WritePropertyName("startupProbe"u8);
-                writer.WriteObjectValue(StartupProbe, options);
+                ((IJsonModel<AppInstanceProbe>)StartupProbe).Write(writer, options);
             }
             if (Optional.IsDefined(TerminationGracePeriodInSeconds))
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(ContainerProbeSettings))
             {
                 writer.WritePropertyName("containerProbeSettings"u8);
-                writer.WriteObjectValue(ContainerProbeSettings, options);
+                ((IJsonModel<ContainerProbeSettings>)ContainerProbeSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    resourceRequests = AppPlatformDeploymentResourceRequirements.DeserializeAppPlatformDeploymentResourceRequirements(property.Value, options);
+                    resourceRequests = ModelSerializationExtensions.JsonDeserialize<AppPlatformDeploymentResourceRequirements>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("environmentVariables"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    livenessProbe = AppInstanceProbe.DeserializeAppInstanceProbe(property.Value, options);
+                    livenessProbe = ModelSerializationExtensions.JsonDeserialize<AppInstanceProbe>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("readinessProbe"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    readinessProbe = AppInstanceProbe.DeserializeAppInstanceProbe(property.Value, options);
+                    readinessProbe = ModelSerializationExtensions.JsonDeserialize<AppInstanceProbe>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("startupProbe"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    startupProbe = AppInstanceProbe.DeserializeAppInstanceProbe(property.Value, options);
+                    startupProbe = ModelSerializationExtensions.JsonDeserialize<AppInstanceProbe>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("terminationGracePeriodSeconds"u8))
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    containerProbeSettings = ContainerProbeSettings.DeserializeContainerProbeSettings(property.Value, options);
+                    containerProbeSettings = ModelSerializationExtensions.JsonDeserialize<ContainerProbeSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

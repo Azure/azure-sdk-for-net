@@ -47,7 +47,7 @@ namespace Azure.AI.AnomalyDetector
             if (Optional.IsDefined(CorrelationChanges))
             {
                 writer.WritePropertyName("correlationChanges"u8);
-                writer.WriteObjectValue(CorrelationChanges, options);
+                ((IJsonModel<CorrelationChanges>)CorrelationChanges).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -113,7 +113,7 @@ namespace Azure.AI.AnomalyDetector
                     {
                         continue;
                     }
-                    correlationChanges = CorrelationChanges.DeserializeCorrelationChanges(property.Value, options);
+                    correlationChanges = ModelSerializationExtensions.JsonDeserialize<CorrelationChanges>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

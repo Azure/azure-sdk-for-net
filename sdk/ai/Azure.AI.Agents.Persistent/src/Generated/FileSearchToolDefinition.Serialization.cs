@@ -38,7 +38,7 @@ namespace Azure.AI.Agents.Persistent
             if (Optional.IsDefined(FileSearch))
             {
                 writer.WritePropertyName("file_search"u8);
-                writer.WriteObjectValue(FileSearch, options);
+                ((IJsonModel<FileSearchToolDefinitionDetails>)FileSearch).Write(writer, options);
             }
         }
 
@@ -74,7 +74,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    fileSearch = FileSearchToolDefinitionDetails.DeserializeFileSearchToolDefinitionDetails(property.Value, options);
+                    fileSearch = ModelSerializationExtensions.JsonDeserialize<FileSearchToolDefinitionDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

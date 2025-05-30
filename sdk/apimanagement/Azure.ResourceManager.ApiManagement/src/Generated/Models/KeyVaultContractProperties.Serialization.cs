@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(LastStatus))
             {
                 writer.WritePropertyName("lastStatus"u8);
-                writer.WriteObjectValue(LastStatus, options);
+                ((IJsonModel<KeyVaultLastAccessStatusContractProperties>)LastStatus).Write(writer, options);
             }
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    lastStatus = KeyVaultLastAccessStatusContractProperties.DeserializeKeyVaultLastAccessStatusContractProperties(property.Value, options);
+                    lastStatus = ModelSerializationExtensions.JsonDeserialize<KeyVaultLastAccessStatusContractProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("secretIdentifier"u8))

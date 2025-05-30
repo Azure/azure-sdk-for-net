@@ -40,7 +40,7 @@ namespace Azure.AI.AnomalyDetector
                 writer.WriteStartArray();
                 foreach (var item in VariableStates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VariableState>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.AI.AnomalyDetector
                 writer.WriteStartArray();
                 foreach (var item in Results)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AnomalyState>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

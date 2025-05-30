@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Avs
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<AvsSku>)Sku).Write(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ClusterSize))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Avs
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = AvsSku.DeserializeAvsSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<AvsSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Avs
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

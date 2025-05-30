@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AgFoodPlatformPrivateLinkResourceData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

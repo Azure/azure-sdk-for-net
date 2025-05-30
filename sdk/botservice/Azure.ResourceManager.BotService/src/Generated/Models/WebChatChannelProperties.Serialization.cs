@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteStartArray();
                 foreach (var item in Sites)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WebChatSite>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

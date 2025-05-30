@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.ApiManagement
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<ApiManagementServiceSkuProperties>)Sku).Write(writer, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteStartArray();
                 foreach (var item in HostnameConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HostnameConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -167,12 +167,12 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(ConfigurationApi))
             {
                 writer.WritePropertyName("configurationApi"u8);
-                writer.WriteObjectValue(ConfigurationApi, options);
+                ((IJsonModel<ConfigurationApi>)ConfigurationApi).Write(writer, options);
             }
             if (Optional.IsDefined(VirtualNetworkConfiguration))
             {
                 writer.WritePropertyName("virtualNetworkConfiguration"u8);
-                writer.WriteObjectValue(VirtualNetworkConfiguration, options);
+                ((IJsonModel<VirtualNetworkConfiguration>)VirtualNetworkConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AdditionalLocations))
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteStartArray();
                 foreach (var item in AdditionalLocations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AdditionalLocation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteStartArray();
                 foreach (var item in Certificates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CertificateConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(ApiVersionConstraint))
             {
                 writer.WritePropertyName("apiVersionConstraint"u8);
-                writer.WriteObjectValue(ApiVersionConstraint, options);
+                ((IJsonModel<ApiVersionConstraint>)ApiVersionConstraint).Write(writer, options);
             }
             if (Optional.IsDefined(Restore))
             {
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RemotePrivateEndpointConnectionWrapper>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = ApiManagementServiceSkuProperties.DeserializeApiManagementServiceSkuProperties(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<ApiManagementServiceSkuProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            configurationApi = ConfigurationApi.DeserializeConfigurationApi(property0.Value, options);
+                            configurationApi = ModelSerializationExtensions.JsonDeserialize<ConfigurationApi>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("virtualNetworkConfiguration"u8))
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            virtualNetworkConfiguration = VirtualNetworkConfiguration.DeserializeVirtualNetworkConfiguration(property0.Value, options);
+                            virtualNetworkConfiguration = ModelSerializationExtensions.JsonDeserialize<VirtualNetworkConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("additionalLocations"u8))
@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            apiVersionConstraint = ApiVersionConstraint.DeserializeApiVersionConstraint(property0.Value, options);
+                            apiVersionConstraint = ModelSerializationExtensions.JsonDeserialize<ApiVersionConstraint>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("restore"u8))

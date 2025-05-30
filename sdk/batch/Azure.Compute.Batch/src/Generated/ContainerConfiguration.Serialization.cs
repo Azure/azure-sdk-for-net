@@ -52,7 +52,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in ContainerRegistries)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerRegistryReference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -44,7 +44,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(VirtualMachineConfiguration))
             {
                 writer.WritePropertyName("virtualMachineConfiguration"u8);
-                writer.WriteObjectValue(VirtualMachineConfiguration, options);
+                ((IJsonModel<VirtualMachineConfiguration>)VirtualMachineConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(TaskSlotsPerNode))
             {
@@ -54,7 +54,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(TaskSchedulingPolicy))
             {
                 writer.WritePropertyName("taskSchedulingPolicy"u8);
-                writer.WriteObjectValue(TaskSchedulingPolicy, options);
+                ((IJsonModel<BatchTaskSchedulingPolicy>)TaskSchedulingPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(ResizeTimeout))
             {
@@ -99,12 +99,12 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
-                writer.WriteObjectValue(NetworkConfiguration, options);
+                ((IJsonModel<NetworkConfiguration>)NetworkConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(StartTask))
             {
                 writer.WritePropertyName("startTask"u8);
-                writer.WriteObjectValue(StartTask, options);
+                ((IJsonModel<BatchStartTask>)StartTask).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(CertificateReferences))
             {
@@ -112,7 +112,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in CertificateReferences)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BatchCertificateReference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +122,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in ApplicationPackageReferences)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BatchApplicationPackageReference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +132,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in UserAccounts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UserAccount>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -142,7 +142,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MetadataItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -152,7 +152,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in MountConfiguration)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MountConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -164,7 +164,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(UpgradePolicy))
             {
                 writer.WritePropertyName("upgradePolicy"u8);
-                writer.WriteObjectValue(UpgradePolicy, options);
+                ((IJsonModel<UpgradePolicy>)UpgradePolicy).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -245,7 +245,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    virtualMachineConfiguration = VirtualMachineConfiguration.DeserializeVirtualMachineConfiguration(property.Value, options);
+                    virtualMachineConfiguration = ModelSerializationExtensions.JsonDeserialize<VirtualMachineConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("taskSlotsPerNode"u8))
@@ -263,7 +263,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    taskSchedulingPolicy = BatchTaskSchedulingPolicy.DeserializeBatchTaskSchedulingPolicy(property.Value, options);
+                    taskSchedulingPolicy = ModelSerializationExtensions.JsonDeserialize<BatchTaskSchedulingPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resizeTimeout"u8))
@@ -336,7 +336,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    networkConfiguration = NetworkConfiguration.DeserializeNetworkConfiguration(property.Value, options);
+                    networkConfiguration = ModelSerializationExtensions.JsonDeserialize<NetworkConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("startTask"u8))
@@ -345,7 +345,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    startTask = BatchStartTask.DeserializeBatchStartTask(property.Value, options);
+                    startTask = ModelSerializationExtensions.JsonDeserialize<BatchStartTask>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("certificateReferences"u8))
@@ -433,7 +433,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    upgradePolicy = UpgradePolicy.DeserializeUpgradePolicy(property.Value, options);
+                    upgradePolicy = ModelSerializationExtensions.JsonDeserialize<UpgradePolicy>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

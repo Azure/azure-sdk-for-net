@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
-                writer.WriteObjectValue(Certificate, options);
+                ((IJsonModel<CertificateInformation>)Certificate).Write(writer, options);
             }
             if (Optional.IsDefined(CertificateSource))
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    certificate = CertificateInformation.DeserializeCertificateInformation(property.Value, options);
+                    certificate = ModelSerializationExtensions.JsonDeserialize<CertificateInformation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("certificateSource"u8))

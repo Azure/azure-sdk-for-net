@@ -37,7 +37,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(Container))
             {
                 writer.WritePropertyName("container"u8);
-                writer.WriteObjectValue(Container, options);
+                ((IJsonModel<OutputFileBlobContainerDestination>)Container).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    container = OutputFileBlobContainerDestination.DeserializeOutputFileBlobContainerDestination(property.Value, options);
+                    container = ModelSerializationExtensions.JsonDeserialize<OutputFileBlobContainerDestination>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

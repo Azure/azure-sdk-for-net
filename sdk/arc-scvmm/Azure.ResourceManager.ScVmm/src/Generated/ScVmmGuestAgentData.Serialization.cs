@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.ScVmm
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials, options);
+                ((IJsonModel<ScVmmGuestCredential>)Credentials).Write(writer, options);
             }
             if (Optional.IsDefined(HttpProxyConfig))
             {
                 writer.WritePropertyName("httpProxyConfig"u8);
-                writer.WriteObjectValue(HttpProxyConfig, options);
+                ((IJsonModel<ScVmmHttpProxyConfiguration>)HttpProxyConfig).Write(writer, options);
             }
             if (Optional.IsDefined(ProvisioningAction))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ScVmm
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ScVmm
                             {
                                 continue;
                             }
-                            credentials = ScVmmGuestCredential.DeserializeScVmmGuestCredential(property0.Value, options);
+                            credentials = ModelSerializationExtensions.JsonDeserialize<ScVmmGuestCredential>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("httpProxyConfig"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ScVmm
                             {
                                 continue;
                             }
-                            httpProxyConfig = ScVmmHttpProxyConfiguration.DeserializeScVmmHttpProxyConfiguration(property0.Value, options);
+                            httpProxyConfig = ModelSerializationExtensions.JsonDeserialize<ScVmmHttpProxyConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningAction"u8))

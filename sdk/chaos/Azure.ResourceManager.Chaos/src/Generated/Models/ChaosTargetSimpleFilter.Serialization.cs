@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Chaos.Models
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters, options);
+                ((IJsonModel<ChaosTargetSimpleFilterParameters>)Parameters).Write(writer, options);
             }
         }
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    parameters = ChaosTargetSimpleFilterParameters.DeserializeChaosTargetSimpleFilterParameters(property.Value, options);
+                    parameters = ModelSerializationExtensions.JsonDeserialize<ChaosTargetSimpleFilterParameters>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

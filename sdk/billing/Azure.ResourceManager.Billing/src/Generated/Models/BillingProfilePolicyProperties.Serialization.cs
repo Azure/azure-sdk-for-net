@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(EnterpriseAgreementPolicies))
             {
                 writer.WritePropertyName("enterpriseAgreementPolicies"u8);
-                writer.WriteObjectValue(EnterpriseAgreementPolicies, options);
+                ((IJsonModel<EnterpriseAgreementPolicies>)EnterpriseAgreementPolicies).Write(writer, options);
             }
             if (Optional.IsDefined(InvoiceSectionLabelManagement))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in Policies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BillingPolicySummary>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    enterpriseAgreementPolicies = EnterpriseAgreementPolicies.DeserializeEnterpriseAgreementPolicies(property.Value, options);
+                    enterpriseAgreementPolicies = ModelSerializationExtensions.JsonDeserialize<EnterpriseAgreementPolicies>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("invoiceSectionLabelManagement"u8))

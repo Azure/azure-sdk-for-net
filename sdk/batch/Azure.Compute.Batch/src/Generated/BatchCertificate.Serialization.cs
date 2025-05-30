@@ -71,7 +71,7 @@ namespace Azure.Compute.Batch
             if (options.Format != "W" && Optional.IsDefined(DeleteCertificateError))
             {
                 writer.WritePropertyName("deleteCertificateError"u8);
-                writer.WriteObjectValue(DeleteCertificateError, options);
+                ((IJsonModel<DeleteBatchCertificateError>)DeleteCertificateError).Write(writer, options);
             }
             writer.WritePropertyName("data"u8);
             writer.WriteStringValue(Data);
@@ -200,7 +200,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    deleteCertificateError = DeleteBatchCertificateError.DeserializeDeleteBatchCertificateError(property.Value, options);
+                    deleteCertificateError = ModelSerializationExtensions.JsonDeserialize<DeleteBatchCertificateError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("data"u8))

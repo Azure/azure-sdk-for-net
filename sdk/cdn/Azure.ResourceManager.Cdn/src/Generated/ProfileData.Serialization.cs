@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<CdnSku>)Sku).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Cdn
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Cdn
             if (Optional.IsDefined(LogScrubbing))
             {
                 writer.WritePropertyName("logScrubbing"u8);
-                writer.WriteObjectValue(LogScrubbing, options);
+                ((IJsonModel<ProfileLogScrubbing>)LogScrubbing).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = CdnSku.DeserializeCdnSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<CdnSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Cdn
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Cdn
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            logScrubbing = ProfileLogScrubbing.DeserializeProfileLogScrubbing(property0.Value, options);
+                            logScrubbing = ModelSerializationExtensions.JsonDeserialize<ProfileLogScrubbing>(property0.Value);
                             continue;
                         }
                     }

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(TermsOfService))
             {
                 writer.WritePropertyName("termsOfService"u8);
-                writer.WriteObjectValue(TermsOfService, options);
+                ((IJsonModel<TermsOfServiceProperties>)TermsOfService).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            termsOfService = TermsOfServiceProperties.DeserializeTermsOfServiceProperties(property0.Value, options);
+                            termsOfService = ModelSerializationExtensions.JsonDeserialize<TermsOfServiceProperties>(property0.Value);
                             continue;
                         }
                     }

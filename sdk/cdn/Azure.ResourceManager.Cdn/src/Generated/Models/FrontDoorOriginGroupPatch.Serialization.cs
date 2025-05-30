@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(LoadBalancingSettings))
             {
                 writer.WritePropertyName("loadBalancingSettings"u8);
-                writer.WriteObjectValue(LoadBalancingSettings, options);
+                ((IJsonModel<LoadBalancingSettings>)LoadBalancingSettings).Write(writer, options);
             }
             if (Optional.IsDefined(HealthProbeSettings))
             {
                 writer.WritePropertyName("healthProbeSettings"u8);
-                writer.WriteObjectValue(HealthProbeSettings, options);
+                ((IJsonModel<HealthProbeSettings>)HealthProbeSettings).Write(writer, options);
             }
             if (Optional.IsDefined(TrafficRestorationTimeInMinutes))
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             {
                                 continue;
                             }
-                            loadBalancingSettings = LoadBalancingSettings.DeserializeLoadBalancingSettings(property0.Value, options);
+                            loadBalancingSettings = ModelSerializationExtensions.JsonDeserialize<LoadBalancingSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("healthProbeSettings"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             {
                                 continue;
                             }
-                            healthProbeSettings = HealthProbeSettings.DeserializeHealthProbeSettings(property0.Value, options);
+                            healthProbeSettings = ModelSerializationExtensions.JsonDeserialize<HealthProbeSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("trafficRestorationTimeToHealedOrNewEndpointsInMinutes"u8))

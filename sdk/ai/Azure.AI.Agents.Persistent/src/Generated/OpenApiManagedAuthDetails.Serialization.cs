@@ -36,7 +36,7 @@ namespace Azure.AI.Agents.Persistent
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("security_scheme"u8);
-            writer.WriteObjectValue(SecurityScheme, options);
+            ((IJsonModel<OpenApiManagedSecurityScheme>)SecurityScheme).Write(writer, options);
         }
 
         OpenApiManagedAuthDetails IJsonModel<OpenApiManagedAuthDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (property.NameEquals("security_scheme"u8))
                 {
-                    securityScheme = OpenApiManagedSecurityScheme.DeserializeOpenApiManagedSecurityScheme(property.Value, options);
+                    securityScheme = ModelSerializationExtensions.JsonDeserialize<OpenApiManagedSecurityScheme>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

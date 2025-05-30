@@ -37,7 +37,7 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("code"u8);
             writer.WriteNumberValue(Code);
             writer.WritePropertyName("exitOptions"u8);
-            writer.WriteObjectValue(ExitOptions, options);
+            ((IJsonModel<ExitOptions>)ExitOptions).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,7 +88,7 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("exitOptions"u8))
                 {
-                    exitOptions = ExitOptions.DeserializeExitOptions(property.Value, options);
+                    exitOptions = ModelSerializationExtensions.JsonDeserialize<ExitOptions>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")
