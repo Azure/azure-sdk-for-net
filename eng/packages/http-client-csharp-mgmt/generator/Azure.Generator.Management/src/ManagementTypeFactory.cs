@@ -5,7 +5,6 @@ using Azure.Generator.Management.InputTransformation;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Providers.Abstraction;
-using Azure.Generator.Primitives;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -39,9 +38,9 @@ namespace Azure.Generator.Management
             const string armNamespacePrefix = "Azure.ResourceManager.";
             if (PrimaryNamespace.StartsWith(armNamespacePrefix))
             {
-                return PrimaryNamespace[(armNamespacePrefix.Length + 1)..].ToIdentifierName();
+                return PrimaryNamespace[armNamespacePrefix.Length..].ToIdentifierName();
             }
-            return PrimaryNamespace;
+            return PrimaryNamespace.ToIdentifierName();
         }
 
         /// <inheritdoc/>
