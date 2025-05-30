@@ -56,6 +56,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("routingEnrichments"u8);
                 writer.WriteObjectValue(RoutingEnrichments, options);
             }
+            if (Optional.IsDefined(ClientAuthentication))
+            {
+                writer.WritePropertyName("clientAuthentication"u8);
+                writer.WriteObjectValue(ClientAuthentication, options);
+            }
             if (Optional.IsDefined(MaximumSessionExpiryInHours))
             {
                 writer.WritePropertyName("maximumSessionExpiryInHours"u8);
@@ -122,6 +127,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             string routeTopicResourceId = default;
             string hostname = default;
             RoutingEnrichments routingEnrichments = default;
+            ClientAuthenticationSettings clientAuthentication = default;
             int? maximumSessionExpiryInHours = default;
             int? maximumClientSessionsPerAuthenticationName = default;
             RoutingIdentityInfo routingIdentityInfo = default;
@@ -156,6 +162,15 @@ namespace Azure.ResourceManager.EventGrid.Models
                         continue;
                     }
                     routingEnrichments = RoutingEnrichments.DeserializeRoutingEnrichments(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("clientAuthentication"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientAuthentication = ClientAuthenticationSettings.DeserializeClientAuthenticationSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("maximumSessionExpiryInHours"u8))
@@ -210,6 +225,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 routeTopicResourceId,
                 hostname,
                 routingEnrichments,
+                clientAuthentication,
                 maximumSessionExpiryInHours,
                 maximumClientSessionsPerAuthenticationName,
                 routingIdentityInfo,
@@ -301,6 +317,21 @@ namespace Azure.ResourceManager.EventGrid.Models
                 {
                     builder.Append("  routingEnrichments: ");
                     BicepSerializationHelpers.AppendChildObject(builder, RoutingEnrichments, options, 2, false, "  routingEnrichments: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientAuthentication), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  clientAuthentication: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientAuthentication))
+                {
+                    builder.Append("  clientAuthentication: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ClientAuthentication, options, 2, false, "  clientAuthentication: ");
                 }
             }
 

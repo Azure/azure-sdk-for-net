@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="baseEndpoint"> The base URL that represents the endpoint of the destination of an event subscription. </param>
         /// <param name="maxEventsPerBatch"> Maximum number of events per batch. </param>
         /// <param name="preferredBatchSizeInKilobytes"> Preferred batch size in Kilobytes. </param>
-        /// <param name="azureActiveDirectoryTenantId"> The Azure Active Directory Tenant ID to get the access token that will be included as the bearer token in delivery requests. </param>
-        /// <param name="uriOrAzureActiveDirectoryApplicationId"> The Azure Active Directory Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </param>
+        /// <param name="azureActiveDirectoryTenantId"> The Microsoft Entra ID Tenant ID to get the access token that will be included as the bearer token in delivery requests. </param>
+        /// <param name="uriOrAzureActiveDirectoryApplicationId"> The Microsoft Entra ID Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </param>
         /// <param name="deliveryAttributeMappings">
         /// Delivery attribute details.
         /// Please note <see cref="DeliveryAttributeMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Preferred batch size in Kilobytes. </summary>
         [WirePath("properties.preferredBatchSizeInKilobytes")]
         public int? PreferredBatchSizeInKilobytes { get; set; }
-        /// <summary> The Azure Active Directory Tenant ID to get the access token that will be included as the bearer token in delivery requests. </summary>
+        /// <summary> The Microsoft Entra ID Tenant ID to get the access token that will be included as the bearer token in delivery requests. </summary>
         [WirePath("properties.azureActiveDirectoryTenantId")]
         public Guid? AzureActiveDirectoryTenantId { get; set; }
-        /// <summary> The Azure Active Directory Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </summary>
+        /// <summary> The Microsoft Entra ID Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </summary>
         [WirePath("properties.azureActiveDirectoryApplicationIdOrUri")]
         public string UriOrAzureActiveDirectoryApplicationId { get; set; }
         /// <summary>
