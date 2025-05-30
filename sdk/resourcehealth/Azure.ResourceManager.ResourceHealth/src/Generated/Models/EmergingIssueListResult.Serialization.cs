@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ServiceEmergingIssueData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

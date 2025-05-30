@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Resources
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<Tag>)Properties).Write(writer, options);
         }
 
         TagResourceData IJsonModel<TagResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Resources
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = Tag.DeserializeTag(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<Tag>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -80,12 +80,12 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(End1))
             {
                 writer.WritePropertyName("end1"u8);
-                writer.WriteObjectValue(End1, options);
+                ((IJsonModel<AtlasObjectId>)End1).Write(writer, options);
             }
             if (Optional.IsDefined(End2))
             {
                 writer.WritePropertyName("end2"u8);
-                writer.WriteObjectValue(End2, options);
+                ((IJsonModel<AtlasObjectId>)End2).Write(writer, options);
             }
             if (Optional.IsDefined(Guid))
             {
@@ -234,7 +234,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    end1 = AtlasObjectId.DeserializeAtlasObjectId(property.Value, options);
+                    end1 = ModelSerializationExtensions.JsonDeserialize<AtlasObjectId>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("end2"u8))
@@ -243,7 +243,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    end2 = AtlasObjectId.DeserializeAtlasObjectId(property.Value, options);
+                    end2 = ModelSerializationExtensions.JsonDeserialize<AtlasObjectId>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("guid"u8))

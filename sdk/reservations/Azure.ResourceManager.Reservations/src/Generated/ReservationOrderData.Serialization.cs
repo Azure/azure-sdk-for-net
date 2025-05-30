@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Reservations
             if (Optional.IsDefined(PlanInformation))
             {
                 writer.WritePropertyName("planInformation"u8);
-                writer.WriteObjectValue(PlanInformation, options);
+                ((IJsonModel<ReservationOrderBillingPlanInformation>)PlanInformation).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Reservations))
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Reservations
                 writer.WriteStartArray();
                 foreach (var item in Reservations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ReservationDetailData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Reservations
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Reservations
                             {
                                 continue;
                             }
-                            planInformation = ReservationOrderBillingPlanInformation.DeserializeReservationOrderBillingPlanInformation(property0.Value, options);
+                            planInformation = ModelSerializationExtensions.JsonDeserialize<ReservationOrderBillingPlanInformation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("reservations"u8))

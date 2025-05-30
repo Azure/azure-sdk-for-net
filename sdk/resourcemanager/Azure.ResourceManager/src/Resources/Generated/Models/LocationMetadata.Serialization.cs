@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in PairedRegions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PairedRegion>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(PricingCurrencyTotal))
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
-                writer.WriteObjectValue(PricingCurrencyTotal, options);
+                ((IJsonModel<PurchasePrice>)PricingCurrencyTotal).Write(writer, options);
             }
             if (Optional.IsDefined(BillingCurrencyTotal))
             {
                 writer.WritePropertyName("billingCurrencyTotal"u8);
-                writer.WriteObjectValue(BillingCurrencyTotal, options);
+                ((IJsonModel<PurchasePrice>)BillingCurrencyTotal).Write(writer, options);
             }
             if (Optional.IsDefined(BillingAccount))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ExtendedStatusInfo))
             {
                 writer.WritePropertyName("extendedStatusInfo"u8);
-                writer.WriteObjectValue(ExtendedStatusInfo, options);
+                ((IJsonModel<ExtendedStatusInfo>)ExtendedStatusInfo).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    pricingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value, options);
+                    pricingCurrencyTotal = ModelSerializationExtensions.JsonDeserialize<PurchasePrice>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("billingCurrencyTotal"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value, options);
+                    billingCurrencyTotal = ModelSerializationExtensions.JsonDeserialize<PurchasePrice>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("billingAccount"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    extendedStatusInfo = ExtendedStatusInfo.DeserializeExtendedStatusInfo(property.Value, options);
+                    extendedStatusInfo = ModelSerializationExtensions.JsonDeserialize<ExtendedStatusInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

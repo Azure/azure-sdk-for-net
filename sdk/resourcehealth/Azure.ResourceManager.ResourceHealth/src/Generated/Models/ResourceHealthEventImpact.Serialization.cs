@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WriteStartArray();
                 foreach (var item in ImpactedRegions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceHealthEventImpactedServiceRegion>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

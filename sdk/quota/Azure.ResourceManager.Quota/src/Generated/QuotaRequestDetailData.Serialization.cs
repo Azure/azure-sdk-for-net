@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Quota
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<ServiceErrorDetail>)Error).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RequestSubmitOn))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Quota
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<QuotaSubRequestDetail>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Quota
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Quota
                             {
                                 continue;
                             }
-                            error = ServiceErrorDetail.DeserializeServiceErrorDetail(property0.Value, options);
+                            error = ModelSerializationExtensions.JsonDeserialize<ServiceErrorDetail>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("requestSubmitTime"u8))

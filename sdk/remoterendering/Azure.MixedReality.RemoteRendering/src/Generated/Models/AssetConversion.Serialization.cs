@@ -33,7 +33,7 @@ namespace Azure.MixedReality.RemoteRendering
                 }
                 if (property.NameEquals("settings"u8))
                 {
-                    settings = AssetConversionOptions.DeserializeAssetConversionOptions(property.Value);
+                    settings = ModelSerializationExtensions.JsonDeserialize<AssetConversionOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("output"u8))
@@ -42,7 +42,7 @@ namespace Azure.MixedReality.RemoteRendering
                     {
                         continue;
                     }
-                    output = AssetConversionOutput.DeserializeAssetConversionOutput(property.Value);
+                    output = ModelSerializationExtensions.JsonDeserialize<AssetConversionOutput>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -52,7 +52,7 @@ namespace Azure.MixedReality.RemoteRendering
                         error = null;
                         continue;
                     }
-                    error = RemoteRenderingServiceError.DeserializeRemoteRenderingServiceError(property.Value);
+                    error = ModelSerializationExtensions.JsonDeserialize<RemoteRenderingServiceError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))

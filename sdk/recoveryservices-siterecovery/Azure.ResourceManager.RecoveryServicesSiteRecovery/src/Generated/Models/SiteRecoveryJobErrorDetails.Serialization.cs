@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ServiceErrorDetails))
             {
                 writer.WritePropertyName("serviceErrorDetails"u8);
-                writer.WriteObjectValue(ServiceErrorDetails, options);
+                ((IJsonModel<SiteRecoveryServiceError>)ServiceErrorDetails).Write(writer, options);
             }
             if (Optional.IsDefined(ProviderErrorDetails))
             {
                 writer.WritePropertyName("providerErrorDetails"u8);
-                writer.WriteObjectValue(ProviderErrorDetails, options);
+                ((IJsonModel<SiteRecoveryJobProviderError>)ProviderErrorDetails).Write(writer, options);
             }
             if (Optional.IsDefined(ErrorLevel))
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    serviceErrorDetails = SiteRecoveryServiceError.DeserializeSiteRecoveryServiceError(property.Value, options);
+                    serviceErrorDetails = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryServiceError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("providerErrorDetails"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerErrorDetails = SiteRecoveryJobProviderError.DeserializeSiteRecoveryJobProviderError(property.Value, options);
+                    providerErrorDetails = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryJobProviderError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("errorLevel"u8))

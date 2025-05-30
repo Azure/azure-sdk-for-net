@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Models
             if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
-                writer.WriteObjectValue(SystemData, options);
+                ((IJsonModel<SystemData>)SystemData).Write(writer, options);
             }
         }
     }

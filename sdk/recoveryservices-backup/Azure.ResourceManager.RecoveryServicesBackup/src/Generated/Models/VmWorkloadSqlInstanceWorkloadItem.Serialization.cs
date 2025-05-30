@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDirectoryPaths)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SqlDataDirectory>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             if (Optional.IsDefined(CompanyDetails))
             {
                 writer.WritePropertyName("companyDetails"u8);
-                writer.WriteObjectValue(CompanyDetails, options);
+                ((IJsonModel<PureStorageCompanyDetails>)CompanyDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    companyDetails = PureStorageCompanyDetails.DeserializePureStorageCompanyDetails(property.Value, options);
+                    companyDetails = ModelSerializationExtensions.JsonDeserialize<PureStorageCompanyDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

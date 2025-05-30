@@ -42,17 +42,17 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(NetPayable))
             {
                 writer.WritePropertyName("netPayable"u8);
-                writer.WriteObjectValue(NetPayable, options);
+                ((IJsonModel<PurchasePrice>)NetPayable).Write(writer, options);
             }
             if (Optional.IsDefined(RefundsTotal))
             {
                 writer.WritePropertyName("refundsTotal"u8);
-                writer.WriteObjectValue(RefundsTotal, options);
+                ((IJsonModel<PurchasePrice>)RefundsTotal).Write(writer, options);
             }
             if (Optional.IsDefined(PurchasesTotal))
             {
                 writer.WritePropertyName("purchasesTotal"u8);
-                writer.WriteObjectValue(PurchasesTotal, options);
+                ((IJsonModel<PurchasePrice>)PurchasesTotal).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ReservationsToPurchase))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in ReservationsToPurchase)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ReservationToPurchaseExchange>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in SavingsPlansToPurchase)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SavingsPlanToPurchaseExchange>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,14 +80,14 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in ReservationsToExchange)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ReservationToReturnForExchange>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PolicyResult))
             {
                 writer.WritePropertyName("policyResult"u8);
-                writer.WriteObjectValue(PolicyResult, options);
+                ((IJsonModel<ExchangePolicyErrors>)PolicyResult).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    netPayable = PurchasePrice.DeserializePurchasePrice(property.Value, options);
+                    netPayable = ModelSerializationExtensions.JsonDeserialize<PurchasePrice>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("refundsTotal"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    refundsTotal = PurchasePrice.DeserializePurchasePrice(property.Value, options);
+                    refundsTotal = ModelSerializationExtensions.JsonDeserialize<PurchasePrice>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("purchasesTotal"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    purchasesTotal = PurchasePrice.DeserializePurchasePrice(property.Value, options);
+                    purchasesTotal = ModelSerializationExtensions.JsonDeserialize<PurchasePrice>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("reservationsToPurchase"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    policyResult = ExchangePolicyErrors.DeserializeExchangePolicyErrors(property.Value, options);
+                    policyResult = ModelSerializationExtensions.JsonDeserialize<ExchangePolicyErrors>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

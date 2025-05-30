@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in RetentionVolumes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryRetentionVolume>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in DataStores)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryDataStore>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryHealthError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryHealthError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -138,12 +138,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(AgentVersionDetails))
             {
                 writer.WritePropertyName("agentVersionDetails"u8);
-                writer.WriteObjectValue(AgentVersionDetails, options);
+                ((IJsonModel<SiteRecoveryVersionDetails>)AgentVersionDetails).Write(writer, options);
             }
             if (Optional.IsDefined(MarsAgentVersionDetails))
             {
                 writer.WritePropertyName("marsAgentVersionDetails"u8);
-                writer.WriteObjectValue(MarsAgentVersionDetails, options);
+                ((IJsonModel<SiteRecoveryVersionDetails>)MarsAgentVersionDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    agentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value, options);
+                    agentVersionDetails = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryVersionDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("marsAgentVersionDetails"u8))
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    marsAgentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value, options);
+                    marsAgentVersionDetails = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryVersionDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

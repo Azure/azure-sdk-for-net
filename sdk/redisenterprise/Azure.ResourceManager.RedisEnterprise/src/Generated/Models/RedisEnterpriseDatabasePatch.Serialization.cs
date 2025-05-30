@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             if (Optional.IsDefined(Persistence))
             {
                 writer.WritePropertyName("persistence"u8);
-                writer.WriteObjectValue(Persistence, options);
+                ((IJsonModel<RedisPersistenceSettings>)Persistence).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Modules))
             {
@@ -77,14 +77,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 writer.WriteStartArray();
                 foreach (var item in Modules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RedisEnterpriseModule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(GeoReplication))
             {
                 writer.WritePropertyName("geoReplication"u8);
-                writer.WriteObjectValue(GeoReplication, options);
+                ((IJsonModel<RedisEnterpriseDatabaseGeoReplication>)GeoReplication).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RedisVersion))
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                             {
                                 continue;
                             }
-                            persistence = RedisPersistenceSettings.DeserializeRedisPersistenceSettings(property0.Value, options);
+                            persistence = ModelSerializationExtensions.JsonDeserialize<RedisPersistenceSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("modules"u8))
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                             {
                                 continue;
                             }
-                            geoReplication = RedisEnterpriseDatabaseGeoReplication.DeserializeRedisEnterpriseDatabaseGeoReplication(property0.Value, options);
+                            geoReplication = ModelSerializationExtensions.JsonDeserialize<RedisEnterpriseDatabaseGeoReplication>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("redisVersion"u8))

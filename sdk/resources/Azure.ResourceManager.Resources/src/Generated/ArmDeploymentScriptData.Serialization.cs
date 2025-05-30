@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ArmDeploymentScriptManagedIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);

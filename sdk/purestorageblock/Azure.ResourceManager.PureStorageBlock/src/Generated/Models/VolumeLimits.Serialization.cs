@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
 
             writer.WritePropertyName("provisionedSize"u8);
-            writer.WriteObjectValue(ProvisionedSize, options);
+            ((IJsonModel<PropertyValueRangeLimits>)ProvisionedSize).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             {
                 if (property.NameEquals("provisionedSize"u8))
                 {
-                    provisionedSize = PropertyValueRangeLimits.DeserializePropertyValueRangeLimits(property.Value, options);
+                    provisionedSize = ModelSerializationExtensions.JsonDeserialize<PropertyValueRangeLimits>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

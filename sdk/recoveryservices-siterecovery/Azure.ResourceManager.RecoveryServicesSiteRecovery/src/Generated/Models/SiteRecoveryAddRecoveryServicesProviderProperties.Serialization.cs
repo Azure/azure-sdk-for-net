@@ -47,13 +47,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStringValue(BiosId);
             }
             writer.WritePropertyName("authenticationIdentityInput"u8);
-            writer.WriteObjectValue(AuthenticationIdentityContent, options);
+            ((IJsonModel<IdentityProviderContent>)AuthenticationIdentityContent).Write(writer, options);
             writer.WritePropertyName("resourceAccessIdentityInput"u8);
-            writer.WriteObjectValue(ResourceAccessIdentityContent, options);
+            ((IJsonModel<IdentityProviderContent>)ResourceAccessIdentityContent).Write(writer, options);
             if (Optional.IsDefined(DataPlaneAuthenticationIdentityContent))
             {
                 writer.WritePropertyName("dataPlaneAuthenticationIdentityInput"u8);
-                writer.WriteObjectValue(DataPlaneAuthenticationIdentityContent, options);
+                ((IJsonModel<IdentityProviderContent>)DataPlaneAuthenticationIdentityContent).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -119,12 +119,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("authenticationIdentityInput"u8))
                 {
-                    authenticationIdentityContent = IdentityProviderContent.DeserializeIdentityProviderContent(property.Value, options);
+                    authenticationIdentityContent = ModelSerializationExtensions.JsonDeserialize<IdentityProviderContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceAccessIdentityInput"u8))
                 {
-                    resourceAccessIdentityContent = IdentityProviderContent.DeserializeIdentityProviderContent(property.Value, options);
+                    resourceAccessIdentityContent = ModelSerializationExtensions.JsonDeserialize<IdentityProviderContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataPlaneAuthenticationIdentityInput"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    dataPlaneAuthenticationIdentityContent = IdentityProviderContent.DeserializeIdentityProviderContent(property.Value, options);
+                    dataPlaneAuthenticationIdentityContent = ModelSerializationExtensions.JsonDeserialize<IdentityProviderContent>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

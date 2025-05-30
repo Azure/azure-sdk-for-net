@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RetentionDuration))
             {
                 writer.WritePropertyName("retentionDuration"u8);
-                writer.WriteObjectValue(RetentionDuration, options);
+                ((IJsonModel<RetentionDuration>)RetentionDuration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    retentionDuration = RetentionDuration.DeserializeRetentionDuration(property.Value, options);
+                    retentionDuration = ModelSerializationExtensions.JsonDeserialize<RetentionDuration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

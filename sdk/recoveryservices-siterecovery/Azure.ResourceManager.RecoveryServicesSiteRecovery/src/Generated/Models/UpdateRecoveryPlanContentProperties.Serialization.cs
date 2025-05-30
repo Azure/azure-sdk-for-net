@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Groups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryPlanGroup>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

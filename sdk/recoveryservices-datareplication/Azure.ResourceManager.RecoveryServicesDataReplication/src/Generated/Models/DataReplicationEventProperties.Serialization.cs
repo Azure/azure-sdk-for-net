@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataReplicationHealthErrorInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("customProperties"u8);
-            writer.WriteObjectValue(CustomProperties, options);
+            ((IJsonModel<DataReplicationEventCustomProperties>)CustomProperties).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = DataReplicationEventCustomProperties.DeserializeDataReplicationEventCustomProperties(property.Value, options);
+                    customProperties = ModelSerializationExtensions.JsonDeserialize<DataReplicationEventCustomProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

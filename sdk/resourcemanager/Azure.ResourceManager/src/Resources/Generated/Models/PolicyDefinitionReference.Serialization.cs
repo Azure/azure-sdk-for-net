@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<ArmPolicyParameterValue>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }

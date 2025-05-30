@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(InstantRPDetails))
             {
                 writer.WritePropertyName("instantRPDetails"u8);
-                writer.WriteObjectValue(InstantRPDetails, options);
+                ((IJsonModel<InstantRPAdditionalDetails>)InstantRPDetails).Write(writer, options);
             }
             if (Optional.IsDefined(SchedulePolicy))
             {
                 writer.WritePropertyName("schedulePolicy"u8);
-                writer.WriteObjectValue(SchedulePolicy, options);
+                ((IJsonModel<BackupSchedulePolicy>)SchedulePolicy).Write(writer, options);
             }
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue(RetentionPolicy, options);
+                ((IJsonModel<BackupRetentionPolicy>)RetentionPolicy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(TieringPolicy))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 foreach (var item in TieringPolicy)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<BackupTieringPolicy>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    instantRPDetails = InstantRPAdditionalDetails.DeserializeInstantRPAdditionalDetails(property.Value, options);
+                    instantRPDetails = ModelSerializationExtensions.JsonDeserialize<InstantRPAdditionalDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("schedulePolicy"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    schedulePolicy = BackupSchedulePolicy.DeserializeBackupSchedulePolicy(property.Value, options);
+                    schedulePolicy = ModelSerializationExtensions.JsonDeserialize<BackupSchedulePolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("retentionPolicy"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    retentionPolicy = BackupRetentionPolicy.DeserializeBackupRetentionPolicy(property.Value, options);
+                    retentionPolicy = ModelSerializationExtensions.JsonDeserialize<BackupRetentionPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tieringPolicy"u8))

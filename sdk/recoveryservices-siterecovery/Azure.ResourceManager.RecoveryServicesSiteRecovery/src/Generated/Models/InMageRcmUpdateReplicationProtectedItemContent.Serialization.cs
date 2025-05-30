@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InMageRcmNicContent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetVmTags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UserCreatedResourceTag>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetManagedDiskTags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UserCreatedResourceTag>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetNicTags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UserCreatedResourceTag>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 writer.WriteStartArray();
                 foreach (var item in Children)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagementGroupChildInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

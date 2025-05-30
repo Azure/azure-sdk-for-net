@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RetentionScheduleDaily))
             {
                 writer.WritePropertyName("retentionScheduleDaily"u8);
-                writer.WriteObjectValue(RetentionScheduleDaily, options);
+                ((IJsonModel<DailyRetentionFormat>)RetentionScheduleDaily).Write(writer, options);
             }
             if (Optional.IsDefined(RetentionScheduleWeekly))
             {
                 writer.WritePropertyName("retentionScheduleWeekly"u8);
-                writer.WriteObjectValue(RetentionScheduleWeekly, options);
+                ((IJsonModel<WeeklyRetentionFormat>)RetentionScheduleWeekly).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(RetentionTimes))
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RetentionDuration))
             {
                 writer.WritePropertyName("retentionDuration"u8);
-                writer.WriteObjectValue(RetentionDuration, options);
+                ((IJsonModel<RetentionDuration>)RetentionDuration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    retentionScheduleDaily = DailyRetentionFormat.DeserializeDailyRetentionFormat(property.Value, options);
+                    retentionScheduleDaily = ModelSerializationExtensions.JsonDeserialize<DailyRetentionFormat>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("retentionScheduleWeekly"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    retentionScheduleWeekly = WeeklyRetentionFormat.DeserializeWeeklyRetentionFormat(property.Value, options);
+                    retentionScheduleWeekly = ModelSerializationExtensions.JsonDeserialize<WeeklyRetentionFormat>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("retentionTimes"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    retentionDuration = RetentionDuration.DeserializeRetentionDuration(property.Value, options);
+                    retentionDuration = ModelSerializationExtensions.JsonDeserialize<RetentionDuration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

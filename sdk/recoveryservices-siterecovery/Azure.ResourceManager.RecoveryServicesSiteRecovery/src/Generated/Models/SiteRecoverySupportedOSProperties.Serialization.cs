@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedOSList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoverySupportedOSProperty>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

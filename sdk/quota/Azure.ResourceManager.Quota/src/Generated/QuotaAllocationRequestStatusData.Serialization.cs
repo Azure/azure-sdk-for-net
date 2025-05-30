@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Quota
             if (Optional.IsDefined(RequestedResource))
             {
                 writer.WritePropertyName("requestedResource"u8);
-                writer.WriteObjectValue(RequestedResource, options);
+                ((IJsonModel<QuotaAllocationRequestBase>)RequestedResource).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RequestSubmittedOn))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Quota
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Quota
                             {
                                 continue;
                             }
-                            requestedResource = QuotaAllocationRequestBase.DeserializeQuotaAllocationRequestBase(property0.Value, options);
+                            requestedResource = ModelSerializationExtensions.JsonDeserialize<QuotaAllocationRequestBase>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("requestSubmitTime"u8))

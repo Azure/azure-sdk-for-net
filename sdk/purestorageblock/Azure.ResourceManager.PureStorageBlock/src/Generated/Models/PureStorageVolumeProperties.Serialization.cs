@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             if (options.Format != "W" && Optional.IsDefined(Space))
             {
                 writer.WritePropertyName("space"u8);
-                writer.WriteObjectValue(Space, options);
+                ((IJsonModel<PureStorageSpaceUsage>)Space).Write(writer, options);
             }
             writer.WritePropertyName("softDeletion"u8);
-            writer.WriteObjectValue(SoftDeletion, options);
+            ((IJsonModel<PureStorageSoftDeletionState>)SoftDeletion).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(CreatedTimestamp))
             {
                 writer.WritePropertyName("createdTimestamp"u8);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             if (options.Format != "W" && Optional.IsDefined(Avs))
             {
                 writer.WritePropertyName("avs"u8);
-                writer.WriteObjectValue(Avs, options);
+                ((IJsonModel<PureStorageAvsDiskDetails>)Avs).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -168,12 +168,12 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    space = PureStorageSpaceUsage.DeserializePureStorageSpaceUsage(property.Value, options);
+                    space = ModelSerializationExtensions.JsonDeserialize<PureStorageSpaceUsage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("softDeletion"u8))
                 {
-                    softDeletion = PureStorageSoftDeletionState.DeserializePureStorageSoftDeletionState(property.Value, options);
+                    softDeletion = ModelSerializationExtensions.JsonDeserialize<PureStorageSoftDeletionState>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("createdTimestamp"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    avs = PureStorageAvsDiskDetails.DeserializePureStorageAvsDiskDetails(property.Value, options);
+                    avs = ModelSerializationExtensions.JsonDeserialize<PureStorageAvsDiskDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

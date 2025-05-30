@@ -45,7 +45,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Classifications)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasClassification>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -124,7 +124,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(Anchor))
             {
                 writer.WritePropertyName("anchor"u8);
-                writer.WriteObjectValue(Anchor, options);
+                ((IJsonModel<AtlasGlossaryHeader>)Anchor).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Antonyms))
             {
@@ -132,7 +132,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Antonyms)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasRelatedTermHeader>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -152,7 +152,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in HierarchyInfo)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PurviewObjectId>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -162,7 +162,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceLink>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -181,7 +181,7 @@ namespace Azure.Analytics.Purview.DataMap
                     writer.WriteStartArray();
                     foreach (var item0 in item.Value)
                     {
-                        writer.WriteObjectValue(item0, options);
+                        ((IJsonModel<ContactInfo>)item0).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -227,7 +227,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in AssignedEntities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasRelatedObjectId>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -237,7 +237,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasTermCategorizationHeader>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -247,7 +247,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Classifies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasRelatedTermHeader>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -267,7 +267,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in IsA)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasRelatedTermHeader>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -277,7 +277,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in PreferredTerms)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasRelatedTermHeader>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -287,7 +287,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in PreferredToTerms)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasRelatedTermHeader>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -297,7 +297,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in ReplacedBy)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasRelatedTermHeader>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -307,7 +307,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in ReplacementTerms)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasRelatedTermHeader>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -317,7 +317,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in SeeAlso)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasRelatedTermHeader>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -327,7 +327,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Synonyms)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasRelatedTermHeader>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -337,7 +337,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in TranslatedTerms)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasRelatedTermHeader>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -347,7 +347,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in TranslationTerms)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasRelatedTermHeader>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -362,7 +362,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in ValidValues)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasRelatedTermHeader>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -372,7 +372,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in ValidValuesFor)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasRelatedTermHeader>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -558,7 +558,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    anchor = AtlasGlossaryHeader.DeserializeAtlasGlossaryHeader(property.Value, options);
+                    anchor = ModelSerializationExtensions.JsonDeserialize<AtlasGlossaryHeader>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("antonyms"u8))

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in Authorizations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ArmApplicationAuthorization>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in Artifacts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ArmApplicationDefinitionArtifact>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -110,22 +110,22 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(NotificationPolicy))
             {
                 writer.WritePropertyName("notificationPolicy"u8);
-                writer.WriteObjectValue(NotificationPolicy, options);
+                ((IJsonModel<ArmApplicationNotificationPolicy>)NotificationPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(LockingPolicy))
             {
                 writer.WritePropertyName("lockingPolicy"u8);
-                writer.WriteObjectValue(LockingPolicy, options);
+                ((IJsonModel<ArmApplicationPackageLockingPolicy>)LockingPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(DeploymentPolicy))
             {
                 writer.WritePropertyName("deploymentPolicy"u8);
-                writer.WriteObjectValue(DeploymentPolicy, options);
+                ((IJsonModel<ArmApplicationDeploymentPolicy>)DeploymentPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(ManagementPolicy))
             {
                 writer.WritePropertyName("managementPolicy"u8);
-                writer.WriteObjectValue(ManagementPolicy, options);
+                ((IJsonModel<ArmApplicationManagementPolicy>)ManagementPolicy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Policies))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in Policies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ArmApplicationPolicy>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    sku = ArmApplicationSku.DeserializeArmApplicationSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<ArmApplicationSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            notificationPolicy = ArmApplicationNotificationPolicy.DeserializeArmApplicationNotificationPolicy(property0.Value, options);
+                            notificationPolicy = ModelSerializationExtensions.JsonDeserialize<ArmApplicationNotificationPolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("lockingPolicy"u8))
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            lockingPolicy = ArmApplicationPackageLockingPolicy.DeserializeArmApplicationPackageLockingPolicy(property0.Value, options);
+                            lockingPolicy = ModelSerializationExtensions.JsonDeserialize<ArmApplicationPackageLockingPolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("deploymentPolicy"u8))
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            deploymentPolicy = ArmApplicationDeploymentPolicy.DeserializeArmApplicationDeploymentPolicy(property0.Value, options);
+                            deploymentPolicy = ModelSerializationExtensions.JsonDeserialize<ArmApplicationDeploymentPolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("managementPolicy"u8))
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            managementPolicy = ArmApplicationManagementPolicy.DeserializeArmApplicationManagementPolicy(property0.Value, options);
+                            managementPolicy = ModelSerializationExtensions.JsonDeserialize<ArmApplicationManagementPolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("policies"u8))

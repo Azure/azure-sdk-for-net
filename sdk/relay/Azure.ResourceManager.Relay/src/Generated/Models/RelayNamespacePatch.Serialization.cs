@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Relay.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<RelaySku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Relay.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RelayPrivateEndpointConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Relay.Models
                     {
                         continue;
                     }
-                    sku = RelaySku.DeserializeRelaySku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<RelaySku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Relay.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

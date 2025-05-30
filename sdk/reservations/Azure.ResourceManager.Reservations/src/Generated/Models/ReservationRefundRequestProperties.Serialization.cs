@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ReservationToReturn))
             {
                 writer.WritePropertyName("reservationToReturn"u8);
-                writer.WriteObjectValue(ReservationToReturn, options);
+                ((IJsonModel<ReservationToReturn>)ReservationToReturn).Write(writer, options);
             }
             if (Optional.IsDefined(ReturnReason))
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    reservationToReturn = ReservationToReturn.DeserializeReservationToReturn(property.Value, options);
+                    reservationToReturn = ModelSerializationExtensions.JsonDeserialize<ReservationToReturn>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("returnReason"u8))

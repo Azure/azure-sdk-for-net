@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(TemplateLink))
             {
                 writer.WritePropertyName("templateLink"u8);
-                writer.WriteObjectValue(TemplateLink, options);
+                ((IJsonModel<DeploymentStacksTemplateLink>)TemplateLink).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -86,24 +86,24 @@ namespace Azure.ResourceManager.Resources
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<DeploymentParameter>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(ParametersLink))
             {
                 writer.WritePropertyName("parametersLink"u8);
-                writer.WriteObjectValue(ParametersLink, options);
+                ((IJsonModel<DeploymentStacksParametersLink>)ParametersLink).Write(writer, options);
             }
             if (Optional.IsDefined(ActionOnUnmanage))
             {
                 writer.WritePropertyName("actionOnUnmanage"u8);
-                writer.WriteObjectValue(ActionOnUnmanage, options);
+                ((IJsonModel<ActionOnUnmanage>)ActionOnUnmanage).Write(writer, options);
             }
             if (Optional.IsDefined(DebugSetting))
             {
                 writer.WritePropertyName("debugSetting"u8);
-                writer.WriteObjectValue(DebugSetting, options);
+                ((IJsonModel<DeploymentStacksDebugSetting>)DebugSetting).Write(writer, options);
             }
             if (Optional.IsDefined(BypassStackOutOfSyncError))
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(DenySettings))
             {
                 writer.WritePropertyName("denySettings"u8);
-                writer.WriteObjectValue(DenySettings, options);
+                ((IJsonModel<DenySettings>)DenySettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in DetachedResources)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in DeletedResources)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in FailedResources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceReferenceExtended>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedResourceReference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            error = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
+                            error = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("template"u8))
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            templateLink = DeploymentStacksTemplateLink.DeserializeDeploymentStacksTemplateLink(property0.Value, options);
+                            templateLink = ModelSerializationExtensions.JsonDeserialize<DeploymentStacksTemplateLink>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("parameters"u8))
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            parametersLink = DeploymentStacksParametersLink.DeserializeDeploymentStacksParametersLink(property0.Value, options);
+                            parametersLink = ModelSerializationExtensions.JsonDeserialize<DeploymentStacksParametersLink>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("actionOnUnmanage"u8))
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            actionOnUnmanage = ActionOnUnmanage.DeserializeActionOnUnmanage(property0.Value, options);
+                            actionOnUnmanage = ModelSerializationExtensions.JsonDeserialize<ActionOnUnmanage>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("debugSetting"u8))
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            debugSetting = DeploymentStacksDebugSetting.DeserializeDeploymentStacksDebugSetting(property0.Value, options);
+                            debugSetting = ModelSerializationExtensions.JsonDeserialize<DeploymentStacksDebugSetting>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("bypassStackOutOfSyncError"u8))
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            denySettings = DenySettings.DeserializeDenySettings(property0.Value, options);
+                            denySettings = ModelSerializationExtensions.JsonDeserialize<DenySettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Resources
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<SubResource>(item));
                             }
                             detachedResources = array;
                             continue;
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Resources
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<SubResource>(item));
                             }
                             deletedResources = array;
                             continue;

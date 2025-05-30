@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RecoveryPointProperties))
             {
                 writer.WritePropertyName("recoveryPointProperties"u8);
-                writer.WriteObjectValue(RecoveryPointProperties, options);
+                ((IJsonModel<RecoveryPointProperties>)RecoveryPointProperties).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(RecoveryPointTierDetails))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in RecoveryPointTierDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RecoveryPointTierInformation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    recoveryPointProperties = RecoveryPointProperties.DeserializeRecoveryPointProperties(property.Value, options);
+                    recoveryPointProperties = ModelSerializationExtensions.JsonDeserialize<RecoveryPointProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("recoveryPointTierDetails"u8))

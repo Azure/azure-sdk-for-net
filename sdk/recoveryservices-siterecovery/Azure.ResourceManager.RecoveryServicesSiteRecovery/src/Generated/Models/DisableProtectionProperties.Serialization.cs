@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ReplicationProviderContent))
             {
                 writer.WritePropertyName("replicationProviderInput"u8);
-                writer.WriteObjectValue(ReplicationProviderContent, options);
+                ((IJsonModel<DisableProtectionProviderSpecificContent>)ReplicationProviderContent).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    replicationProviderContent = DisableProtectionProviderSpecificContent.DeserializeDisableProtectionProviderSpecificContent(property.Value, options);
+                    replicationProviderContent = ModelSerializationExtensions.JsonDeserialize<DisableProtectionProviderSpecificContent>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Resources
                 foreach (var item in Versions)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<TemplateSpecVersionInfo>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

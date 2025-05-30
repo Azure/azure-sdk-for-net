@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(P1Y))
             {
                 writer.WritePropertyName("p1Y"u8);
-                writer.WriteObjectValue(P1Y, options);
+                ((IJsonModel<PurchasePrice>)P1Y).Write(writer, options);
             }
             if (Optional.IsDefined(P3Y))
             {
                 writer.WritePropertyName("p3Y"u8);
-                writer.WriteObjectValue(P3Y, options);
+                ((IJsonModel<PurchasePrice>)P3Y).Write(writer, options);
             }
             if (Optional.IsDefined(P5Y))
             {
                 writer.WritePropertyName("p5Y"u8);
-                writer.WriteObjectValue(P5Y, options);
+                ((IJsonModel<PurchasePrice>)P5Y).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    p1Y = PurchasePrice.DeserializePurchasePrice(property.Value, options);
+                    p1Y = ModelSerializationExtensions.JsonDeserialize<PurchasePrice>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("p3Y"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    p3Y = PurchasePrice.DeserializePurchasePrice(property.Value, options);
+                    p3Y = ModelSerializationExtensions.JsonDeserialize<PurchasePrice>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("p5Y"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    p5Y = PurchasePrice.DeserializePurchasePrice(property.Value, options);
+                    p5Y = ModelSerializationExtensions.JsonDeserialize<PurchasePrice>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

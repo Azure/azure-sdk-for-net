@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkServiceConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataReplicationPrivateLinkServiceConnection>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in ManualPrivateLinkServiceConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataReplicationPrivateLinkServiceConnection>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkServiceProxies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataReplicationPrivateLinkServiceProxy>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in ConnectionDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RemotePrivateEndpointConnectionDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

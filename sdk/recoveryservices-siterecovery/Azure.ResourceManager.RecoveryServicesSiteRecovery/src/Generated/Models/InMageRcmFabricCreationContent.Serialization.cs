@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WritePropertyName("physicalSiteId"u8);
             writer.WriteStringValue(PhysicalSiteId);
             writer.WritePropertyName("sourceAgentIdentity"u8);
-            writer.WriteObjectValue(SourceAgentIdentity, options);
+            ((IJsonModel<IdentityProviderContent>)SourceAgentIdentity).Write(writer, options);
         }
 
         InMageRcmFabricCreationContent IJsonModel<InMageRcmFabricCreationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("sourceAgentIdentity"u8))
                 {
-                    sourceAgentIdentity = IdentityProviderContent.DeserializeIdentityProviderContent(property.Value, options);
+                    sourceAgentIdentity = ModelSerializationExtensions.JsonDeserialize<IdentityProviderContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))

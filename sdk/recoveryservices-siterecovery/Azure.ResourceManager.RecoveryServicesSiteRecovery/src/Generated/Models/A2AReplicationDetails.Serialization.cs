@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(InitialPrimaryExtendedLocation))
             {
                 writer.WritePropertyName("initialPrimaryExtendedLocation"u8);
-                writer.WriteObjectValue(InitialPrimaryExtendedLocation, options);
+                ((IJsonModel<SiteRecoveryExtendedLocation>)InitialPrimaryExtendedLocation).Write(writer, options);
             }
             if (Optional.IsDefined(InitialRecoveryExtendedLocation))
             {
                 writer.WritePropertyName("initialRecoveryExtendedLocation"u8);
-                writer.WriteObjectValue(InitialRecoveryExtendedLocation, options);
+                ((IJsonModel<SiteRecoveryExtendedLocation>)InitialRecoveryExtendedLocation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(InitialRecoveryFabricLocation))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedDisks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<A2AProtectedDiskDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in UnprotectedDisks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<A2AUnprotectedDiskDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedManagedDisks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<A2AProtectedManagedDiskDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -191,14 +191,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VmNicDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(VmSyncedConfigDetails))
             {
                 writer.WritePropertyName("vmSyncedConfigDetails"u8);
-                writer.WriteObjectValue(VmSyncedConfigDetails, options);
+                ((IJsonModel<A2AVmSyncedConfigDetails>)VmSyncedConfigDetails).Write(writer, options);
             }
             if (Optional.IsDefined(MonitoringPercentageCompletion))
             {
@@ -288,12 +288,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(PrimaryExtendedLocation))
             {
                 writer.WritePropertyName("primaryExtendedLocation"u8);
-                writer.WriteObjectValue(PrimaryExtendedLocation, options);
+                ((IJsonModel<SiteRecoveryExtendedLocation>)PrimaryExtendedLocation).Write(writer, options);
             }
             if (Optional.IsDefined(RecoveryExtendedLocation))
             {
                 writer.WritePropertyName("recoveryExtendedLocation"u8);
-                writer.WriteObjectValue(RecoveryExtendedLocation, options);
+                ((IJsonModel<SiteRecoveryExtendedLocation>)RecoveryExtendedLocation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(VmEncryptionType))
             {
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    initialPrimaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value, options);
+                    initialPrimaryExtendedLocation = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("initialRecoveryExtendedLocation"u8))
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    initialRecoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value, options);
+                    initialRecoveryExtendedLocation = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("initialRecoveryFabricLocation"u8))
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    vmSyncedConfigDetails = A2AVmSyncedConfigDetails.DeserializeA2AVmSyncedConfigDetails(property.Value, options);
+                    vmSyncedConfigDetails = ModelSerializationExtensions.JsonDeserialize<A2AVmSyncedConfigDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("monitoringPercentageCompletion"u8))
@@ -790,7 +790,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    primaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value, options);
+                    primaryExtendedLocation = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("recoveryExtendedLocation"u8))
@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    recoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value, options);
+                    recoveryExtendedLocation = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vmEncryptionType"u8))

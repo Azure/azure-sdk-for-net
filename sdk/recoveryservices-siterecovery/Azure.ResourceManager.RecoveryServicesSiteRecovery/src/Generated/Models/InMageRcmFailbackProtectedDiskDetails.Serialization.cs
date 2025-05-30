@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(IrDetails))
             {
                 writer.WritePropertyName("irDetails"u8);
-                writer.WriteObjectValue(IrDetails, options);
+                ((IJsonModel<InMageRcmFailbackSyncDetails>)IrDetails).Write(writer, options);
             }
             if (Optional.IsDefined(ResyncDetails))
             {
                 writer.WritePropertyName("resyncDetails"u8);
-                writer.WriteObjectValue(ResyncDetails, options);
+                ((IJsonModel<InMageRcmFailbackSyncDetails>)ResyncDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastSyncedOn))
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    irDetails = InMageRcmFailbackSyncDetails.DeserializeInMageRcmFailbackSyncDetails(property.Value, options);
+                    irDetails = ModelSerializationExtensions.JsonDeserialize<InMageRcmFailbackSyncDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resyncDetails"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    resyncDetails = InMageRcmFailbackSyncDetails.DeserializeInMageRcmFailbackSyncDetails(property.Value, options);
+                    resyncDetails = ModelSerializationExtensions.JsonDeserialize<InMageRcmFailbackSyncDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lastSyncTime"u8))

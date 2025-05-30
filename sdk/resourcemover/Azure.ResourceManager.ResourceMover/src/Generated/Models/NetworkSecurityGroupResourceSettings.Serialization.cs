@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in SecurityRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetworkSecurityGroupSecurityRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

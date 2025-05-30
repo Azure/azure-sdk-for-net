@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedItemDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FailoverProtectedItemProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    affectedObjectDetails = AffectedObjectDetails.DeserializeAffectedObjectDetails(property.Value, options);
+                    affectedObjectDetails = ModelSerializationExtensions.JsonDeserialize<AffectedObjectDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

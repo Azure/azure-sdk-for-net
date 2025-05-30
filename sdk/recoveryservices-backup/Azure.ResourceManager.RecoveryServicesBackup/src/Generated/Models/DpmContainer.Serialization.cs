@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo, options);
+                ((IJsonModel<DpmContainerExtendedInfo>)ExtendedInfo).Write(writer, options);
             }
         }
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = DpmContainerExtendedInfo.DeserializeDpmContainerExtendedInfo(property.Value, options);
+                    extendedInfo = ModelSerializationExtensions.JsonDeserialize<DpmContainerExtendedInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("friendlyName"u8))

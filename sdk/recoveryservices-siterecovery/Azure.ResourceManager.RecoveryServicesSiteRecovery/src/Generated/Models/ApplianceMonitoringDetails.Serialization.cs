@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (options.Format != "W" && Optional.IsDefined(CpuDetails))
             {
                 writer.WritePropertyName("cpuDetails"u8);
-                writer.WriteObjectValue(CpuDetails, options);
+                ((IJsonModel<ApplianceResourceDetails>)CpuDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RamDetails))
             {
                 writer.WritePropertyName("ramDetails"u8);
-                writer.WriteObjectValue(RamDetails, options);
+                ((IJsonModel<ApplianceResourceDetails>)RamDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(DatastoreSnapshot))
             {
@@ -50,24 +50,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in DatastoreSnapshot)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataStoreUtilizationDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(DisksReplicationDetails))
             {
                 writer.WritePropertyName("disksReplicationDetails"u8);
-                writer.WriteObjectValue(DisksReplicationDetails, options);
+                ((IJsonModel<ApplianceResourceDetails>)DisksReplicationDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EsxiNfcBuffer))
             {
                 writer.WritePropertyName("esxiNfcBuffer"u8);
-                writer.WriteObjectValue(EsxiNfcBuffer, options);
+                ((IJsonModel<ApplianceResourceDetails>)EsxiNfcBuffer).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(NetworkBandwidth))
             {
                 writer.WritePropertyName("networkBandwidth"u8);
-                writer.WriteObjectValue(NetworkBandwidth, options);
+                ((IJsonModel<ApplianceResourceDetails>)NetworkBandwidth).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    cpuDetails = ApplianceResourceDetails.DeserializeApplianceResourceDetails(property.Value, options);
+                    cpuDetails = ModelSerializationExtensions.JsonDeserialize<ApplianceResourceDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ramDetails"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    ramDetails = ApplianceResourceDetails.DeserializeApplianceResourceDetails(property.Value, options);
+                    ramDetails = ModelSerializationExtensions.JsonDeserialize<ApplianceResourceDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("datastoreSnapshot"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    disksReplicationDetails = ApplianceResourceDetails.DeserializeApplianceResourceDetails(property.Value, options);
+                    disksReplicationDetails = ModelSerializationExtensions.JsonDeserialize<ApplianceResourceDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("esxiNfcBuffer"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    esxiNfcBuffer = ApplianceResourceDetails.DeserializeApplianceResourceDetails(property.Value, options);
+                    esxiNfcBuffer = ModelSerializationExtensions.JsonDeserialize<ApplianceResourceDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("networkBandwidth"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    networkBandwidth = ApplianceResourceDetails.DeserializeApplianceResourceDetails(property.Value, options);
+                    networkBandwidth = ModelSerializationExtensions.JsonDeserialize<ApplianceResourceDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

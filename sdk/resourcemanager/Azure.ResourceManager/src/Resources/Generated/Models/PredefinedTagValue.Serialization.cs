@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
-                writer.WriteObjectValue(Count, options);
+                ((IJsonModel<PredefinedTagCount>)Count).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    count = PredefinedTagCount.DeserializePredefinedTagCount(property.Value, options);
+                    count = ModelSerializationExtensions.JsonDeserialize<PredefinedTagCount>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

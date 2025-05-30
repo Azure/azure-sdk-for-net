@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             if (Optional.IsDefined(ErrorResponse))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(ErrorResponse, options);
+                ((IJsonModel<ErrorResponse>)ErrorResponse).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    error = ErrorResponse.DeserializeErrorResponse(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<ErrorResponse>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

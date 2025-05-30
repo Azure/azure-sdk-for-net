@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryHealthError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(CurrentScenario))
             {
                 writer.WritePropertyName("currentScenario"u8);
-                writer.WriteObjectValue(CurrentScenario, options);
+                ((IJsonModel<CurrentScenarioDetails>)CurrentScenario).Write(writer, options);
             }
             if (Optional.IsDefined(FailoverRecoveryPointId))
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
-                writer.WriteObjectValue(ProviderSpecificDetails, options);
+                ((IJsonModel<ReplicationProviderSpecificSettings>)ProviderSpecificDetails).Write(writer, options);
             }
             if (Optional.IsDefined(RecoveryContainerId))
             {
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    currentScenario = CurrentScenarioDetails.DeserializeCurrentScenarioDetails(property.Value, options);
+                    currentScenario = ModelSerializationExtensions.JsonDeserialize<CurrentScenarioDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("failoverRecoveryPointId"u8))
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = ReplicationProviderSpecificSettings.DeserializeReplicationProviderSpecificSettings(property.Value, options);
+                    providerSpecificDetails = ModelSerializationExtensions.JsonDeserialize<ReplicationProviderSpecificSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("recoveryContainerId"u8))

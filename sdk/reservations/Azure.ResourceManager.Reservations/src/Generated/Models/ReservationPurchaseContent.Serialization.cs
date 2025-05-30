@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<ReservationsSkuName>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Location))
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties, options);
+                ((IJsonModel<AppliedScopeProperties>)AppliedScopeProperties).Write(writer, options);
             }
             if (Optional.IsDefined(IsRenewEnabled))
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ReservedResourceProperties))
             {
                 writer.WritePropertyName("reservedResourceProperties"u8);
-                writer.WriteObjectValue(ReservedResourceProperties, options);
+                ((IJsonModel<PurchaseRequestPropertiesReservedResourceProperties>)ReservedResourceProperties).Write(writer, options);
             }
             if (Optional.IsDefined(ReviewOn))
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    sku = ReservationsSkuName.DeserializeReservationsSkuName(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<ReservationsSkuName>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Reservations.Models
                             {
                                 continue;
                             }
-                            appliedScopeProperties = AppliedScopeProperties.DeserializeAppliedScopeProperties(property0.Value, options);
+                            appliedScopeProperties = ModelSerializationExtensions.JsonDeserialize<AppliedScopeProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("renew"u8))
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Reservations.Models
                             {
                                 continue;
                             }
-                            reservedResourceProperties = PurchaseRequestPropertiesReservedResourceProperties.DeserializePurchaseRequestPropertiesReservedResourceProperties(property0.Value, options);
+                            reservedResourceProperties = ModelSerializationExtensions.JsonDeserialize<PurchaseRequestPropertiesReservedResourceProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("reviewDateTime"u8))

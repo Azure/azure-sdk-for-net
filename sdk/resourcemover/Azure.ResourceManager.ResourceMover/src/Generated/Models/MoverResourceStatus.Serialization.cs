@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (JobStatus != null)
                 {
                     writer.WritePropertyName("jobStatus"u8);
-                    writer.WriteObjectValue(JobStatus, options);
+                    ((IJsonModel<MoverResourceJobStatus>)JobStatus).Write(writer, options);
                 }
                 else
                 {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (Errors != null)
                 {
                     writer.WritePropertyName("errors"u8);
-                    writer.WriteObjectValue(Errors, options);
+                    ((IJsonModel<MoveResourceError>)Errors).Write(writer, options);
                 }
                 else
                 {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         jobStatus = null;
                         continue;
                     }
-                    jobStatus = MoverResourceJobStatus.DeserializeMoverResourceJobStatus(property.Value, options);
+                    jobStatus = ModelSerializationExtensions.JsonDeserialize<MoverResourceJobStatus>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         errors = null;
                         continue;
                     }
-                    errors = MoveResourceError.DeserializeMoveResourceError(property.Value, options);
+                    errors = ModelSerializationExtensions.JsonDeserialize<MoveResourceError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

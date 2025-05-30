@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo, options);
+                ((IJsonModel<WorkloadContainerExtendedInfo>)ExtendedInfo).Write(writer, options);
             }
             if (Optional.IsDefined(WorkloadType))
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = WorkloadContainerExtendedInfo.DeserializeWorkloadContainerExtendedInfo(property.Value, options);
+                    extendedInfo = ModelSerializationExtensions.JsonDeserialize<WorkloadContainerExtendedInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("workloadType"u8))

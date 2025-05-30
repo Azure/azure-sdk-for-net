@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata, options);
+                ((IJsonModel<LocationMetadata>)Metadata).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AvailabilityZoneMappings))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in AvailabilityZoneMappings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AvailabilityZoneMappings>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    metadata = LocationMetadata.DeserializeLocationMetadata(property.Value, options);
+                    metadata = ModelSerializationExtensions.JsonDeserialize<LocationMetadata>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("availabilityZoneMappings"u8))

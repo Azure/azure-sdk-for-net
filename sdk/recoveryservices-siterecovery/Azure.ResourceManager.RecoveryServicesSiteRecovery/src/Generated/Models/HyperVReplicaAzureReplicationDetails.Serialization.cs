@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in AzureVmDiskDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryVmDiskDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(InitialReplicationDetails))
             {
                 writer.WritePropertyName("initialReplicationDetails"u8);
-                writer.WriteObjectValue(InitialReplicationDetails, options);
+                ((IJsonModel<InitialReplicationDetails>)InitialReplicationDetails).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(VmNics))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VmNicDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(OSDetails))
             {
                 writer.WritePropertyName("oSDetails"u8);
-                writer.WriteObjectValue(OSDetails, options);
+                ((IJsonModel<SiteRecoveryOSDetails>)OSDetails).Write(writer, options);
             }
             if (Optional.IsDefined(SourceVmRamSizeInMB))
             {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedManagedDisks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HyperVReplicaAzureManagedDiskDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in AllAvailableOSUpgradeConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<OSUpgradeSupportedVersions>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(TargetVmSecurityProfile))
             {
                 writer.WritePropertyName("targetVmSecurityProfile"u8);
-                writer.WriteObjectValue(TargetVmSecurityProfile, options);
+                ((IJsonModel<RecoveryServicesSiteRecoverySecurityProfileProperties>)TargetVmSecurityProfile).Write(writer, options);
             }
         }
 
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    initialReplicationDetails = InitialReplicationDetails.DeserializeInitialReplicationDetails(property.Value, options);
+                    initialReplicationDetails = ModelSerializationExtensions.JsonDeserialize<InitialReplicationDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vmNics"u8))
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    osDetails = SiteRecoveryOSDetails.DeserializeSiteRecoveryOSDetails(property.Value, options);
+                    osDetails = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryOSDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sourceVmRamSizeInMB"u8))
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    targetVmSecurityProfile = RecoveryServicesSiteRecoverySecurityProfileProperties.DeserializeRecoveryServicesSiteRecoverySecurityProfileProperties(property.Value, options);
+                    targetVmSecurityProfile = ModelSerializationExtensions.JsonDeserialize<RecoveryServicesSiteRecoverySecurityProfileProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))

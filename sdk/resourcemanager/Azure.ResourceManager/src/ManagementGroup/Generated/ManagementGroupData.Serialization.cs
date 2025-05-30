@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ManagementGroups
             if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue(Details, options);
+                ((IJsonModel<ManagementGroupInfo>)Details).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Children))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ManagementGroups
                     writer.WriteStartArray();
                     foreach (var item in Children)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<ManagementGroupChildInfo>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ManagementGroups
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ManagementGroups
                             {
                                 continue;
                             }
-                            details = ManagementGroupInfo.DeserializeManagementGroupInfo(property0.Value, options);
+                            details = ModelSerializationExtensions.JsonDeserialize<ManagementGroupInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("children"u8))

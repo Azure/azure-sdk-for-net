@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = DpmContainerExtendedInfo.DeserializeDpmContainerExtendedInfo(property.Value, options);
+                    extendedInfo = ModelSerializationExtensions.JsonDeserialize<DpmContainerExtendedInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("friendlyName"u8))

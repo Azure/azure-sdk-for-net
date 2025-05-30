@@ -89,14 +89,14 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Facets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SearchFacetItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(TaxonomySetting))
             {
                 writer.WritePropertyName("taxonomySetting"u8);
-                writer.WriteObjectValue(TaxonomySetting, options);
+                ((IJsonModel<SearchTaxonomySetting>)TaxonomySetting).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -215,7 +215,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    taxonomySetting = SearchTaxonomySetting.DeserializeSearchTaxonomySetting(property.Value, options);
+                    taxonomySetting = ModelSerializationExtensions.JsonDeserialize<SearchTaxonomySetting>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

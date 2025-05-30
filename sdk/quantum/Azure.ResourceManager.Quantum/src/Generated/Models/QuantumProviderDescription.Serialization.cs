@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Quantum.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<QuantumProviderProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     {
                         continue;
                     }
-                    properties = QuantumProviderProperties.DeserializeQuantumProviderProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<QuantumProviderProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

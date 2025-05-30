@@ -41,7 +41,7 @@ namespace Azure.Analytics.Purview.DataMap
                 foreach (var item in GuidHeaderMap)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<AtlasEntityHeader>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NicIPConfigurationResourceSettings>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

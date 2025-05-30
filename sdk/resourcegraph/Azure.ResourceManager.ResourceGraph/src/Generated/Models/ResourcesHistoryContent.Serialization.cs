@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue(Options, options);
+                ((IJsonModel<ResourcesHistoryRequestOptions>)Options).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ManagementGroups))
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     {
                         continue;
                     }
-                    options0 = ResourcesHistoryRequestOptions.DeserializeResourcesHistoryRequestOptions(property.Value, options);
+                    options0 = ModelSerializationExtensions.JsonDeserialize<ResourcesHistoryRequestOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("managementGroups"u8))

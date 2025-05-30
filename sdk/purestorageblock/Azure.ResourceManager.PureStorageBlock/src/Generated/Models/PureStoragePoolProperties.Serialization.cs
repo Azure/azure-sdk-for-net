@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             writer.WritePropertyName("availabilityZone"u8);
             writer.WriteStringValue(AvailabilityZone);
             writer.WritePropertyName("vnetInjection"u8);
-            writer.WriteObjectValue(VnetInjection, options);
+            ((IJsonModel<PureStoragePoolVnetInjection>)VnetInjection).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(DataRetentionPeriod))
             {
                 writer.WritePropertyName("dataRetentionPeriod"u8);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             if (options.Format != "W" && Optional.IsDefined(Avs))
             {
                 writer.WritePropertyName("avs"u8);
-                writer.WriteObjectValue(Avs, options);
+                ((IJsonModel<PureStorageAvs>)Avs).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 }
                 if (property.NameEquals("vnetInjection"u8))
                 {
-                    vnetInjection = PureStoragePoolVnetInjection.DeserializePureStoragePoolVnetInjection(property.Value, options);
+                    vnetInjection = ModelSerializationExtensions.JsonDeserialize<PureStoragePoolVnetInjection>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataRetentionPeriod"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    avs = PureStorageAvs.DeserializePureStorageAvs(property.Value, options);
+                    avs = ModelSerializationExtensions.JsonDeserialize<PureStorageAvs>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

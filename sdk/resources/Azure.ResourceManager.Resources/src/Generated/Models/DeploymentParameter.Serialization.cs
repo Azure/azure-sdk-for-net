@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Reference))
             {
                 writer.WritePropertyName("reference"u8);
-                writer.WriteObjectValue(Reference, options);
+                ((IJsonModel<KeyVaultParameterReference>)Reference).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    reference = KeyVaultParameterReference.DeserializeKeyVaultParameterReference(property.Value, options);
+                    reference = ModelSerializationExtensions.JsonDeserialize<KeyVaultParameterReference>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

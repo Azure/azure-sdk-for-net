@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in AdditionalInfo)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ErrorAdditionalInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

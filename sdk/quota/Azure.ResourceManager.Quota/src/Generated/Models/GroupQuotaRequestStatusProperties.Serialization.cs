@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Quota.Models
             if (Optional.IsDefined(RequestedResource))
             {
                 writer.WritePropertyName("requestedResource"u8);
-                writer.WriteObjectValue(RequestedResource, options);
+                ((IJsonModel<GroupQuotaRequestBase>)RequestedResource).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RequestSubmittedOn))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    requestedResource = GroupQuotaRequestBase.DeserializeGroupQuotaRequestBase(property.Value, options);
+                    requestedResource = ModelSerializationExtensions.JsonDeserialize<GroupQuotaRequestBase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("requestSubmitTime"u8))

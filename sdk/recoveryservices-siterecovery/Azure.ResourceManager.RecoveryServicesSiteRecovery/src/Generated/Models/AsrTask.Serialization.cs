@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(CustomDetails))
             {
                 writer.WritePropertyName("customDetails"u8);
-                writer.WriteObjectValue(CustomDetails, options);
+                ((IJsonModel<SiteRecoveryTaskTypeDetails>)CustomDetails).Write(writer, options);
             }
             if (Optional.IsDefined(GroupTaskCustomDetails))
             {
                 writer.WritePropertyName("groupTaskCustomDetails"u8);
-                writer.WriteObjectValue(GroupTaskCustomDetails, options);
+                ((IJsonModel<SiteRecoveryGroupTaskDetails>)GroupTaskCustomDetails).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Errors))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryJobErrorDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    customDetails = SiteRecoveryTaskTypeDetails.DeserializeSiteRecoveryTaskTypeDetails(property.Value, options);
+                    customDetails = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryTaskTypeDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("groupTaskCustomDetails"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    groupTaskCustomDetails = SiteRecoveryGroupTaskDetails.DeserializeSiteRecoveryGroupTaskDetails(property.Value, options);
+                    groupTaskCustomDetails = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryGroupTaskDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("errors"u8))

@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(PreBackupValidation))
             {
                 writer.WritePropertyName("prebackupvalidation"u8);
-                writer.WriteObjectValue(PreBackupValidation, options);
+                ((IJsonModel<PreBackupValidation>)PreBackupValidation).Write(writer, options);
             }
             if (Optional.IsDefined(IsProtectable))
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    prebackupvalidation = PreBackupValidation.DeserializePreBackupValidation(property.Value, options);
+                    prebackupvalidation = ModelSerializationExtensions.JsonDeserialize<PreBackupValidation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isProtectable"u8))

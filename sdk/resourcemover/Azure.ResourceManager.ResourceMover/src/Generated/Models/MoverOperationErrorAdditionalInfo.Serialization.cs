@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (options.Format != "W" && Optional.IsDefined(Info))
             {
                 writer.WritePropertyName("info"u8);
-                writer.WriteObjectValue(Info, options);
+                ((IJsonModel<MoveErrorInfo>)Info).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     {
                         continue;
                     }
-                    info = MoveErrorInfo.DeserializeMoveErrorInfo(property.Value, options);
+                    info = ModelSerializationExtensions.JsonDeserialize<MoveErrorInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

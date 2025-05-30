@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ResourceConnector
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResourceConnector
             if (Optional.IsDefined(InfrastructureConfig))
             {
                 writer.WritePropertyName("infrastructureConfig"u8);
-                writer.WriteObjectValue(InfrastructureConfig, options);
+                ((IJsonModel<AppliancePropertiesInfrastructureConfig>)InfrastructureConfig).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ResourceConnector
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ResourceConnector
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ResourceConnector
                             {
                                 continue;
                             }
-                            infrastructureConfig = AppliancePropertiesInfrastructureConfig.DeserializeAppliancePropertiesInfrastructureConfig(property0.Value, options);
+                            infrastructureConfig = ModelSerializationExtensions.JsonDeserialize<AppliancePropertiesInfrastructureConfig>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

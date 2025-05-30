@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
-                writer.WriteObjectValue(ProviderSpecificDetails, options);
+                ((IJsonModel<ClusterProviderSpecificRecoveryPointDetails>)ProviderSpecificDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = ClusterProviderSpecificRecoveryPointDetails.DeserializeClusterProviderSpecificRecoveryPointDetails(property.Value, options);
+                    providerSpecificDetails = ModelSerializationExtensions.JsonDeserialize<ClusterProviderSpecificRecoveryPointDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

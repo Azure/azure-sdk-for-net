@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<UpdateProtectionContainerMappingContentProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    properties = UpdateProtectionContainerMappingContentProperties.DeserializeUpdateProtectionContainerMappingContentProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<UpdateProtectionContainerMappingContentProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

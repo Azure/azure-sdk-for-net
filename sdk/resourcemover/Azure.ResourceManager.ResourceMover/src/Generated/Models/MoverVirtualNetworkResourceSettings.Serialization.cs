@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteStartArray();
                     foreach (var item in Subnets)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<SubnetResourceSettings>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }

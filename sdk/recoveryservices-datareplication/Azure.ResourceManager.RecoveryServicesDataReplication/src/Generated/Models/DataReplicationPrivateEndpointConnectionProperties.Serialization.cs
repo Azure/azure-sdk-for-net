@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
+                ((IJsonModel<WritableSubResource>)PrivateEndpoint).Write(writer, options);
             }
             if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+                ((IJsonModel<DataReplicationPrivateLinkServiceConnectionState>)PrivateLinkServiceConnectionState).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    privateEndpoint = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("privateLinkServiceConnectionState"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    privateLinkServiceConnectionState = DataReplicationPrivateLinkServiceConnectionState.DeserializeDataReplicationPrivateLinkServiceConnectionState(property.Value, options);
+                    privateLinkServiceConnectionState = ModelSerializationExtensions.JsonDeserialize<DataReplicationPrivateLinkServiceConnectionState>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

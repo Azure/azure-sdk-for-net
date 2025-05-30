@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(HourlySchedule))
             {
                 writer.WritePropertyName("hourlySchedule"u8);
-                writer.WriteObjectValue(HourlySchedule, options);
+                ((IJsonModel<BackupHourlySchedule>)HourlySchedule).Write(writer, options);
             }
             if (Optional.IsDefined(ScheduleWeeklyFrequency))
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    hourlySchedule = BackupHourlySchedule.DeserializeBackupHourlySchedule(property.Value, options);
+                    hourlySchedule = ModelSerializationExtensions.JsonDeserialize<BackupHourlySchedule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scheduleWeeklyFrequency"u8))

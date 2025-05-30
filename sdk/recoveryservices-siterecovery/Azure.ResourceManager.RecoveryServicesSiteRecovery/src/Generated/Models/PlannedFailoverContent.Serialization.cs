@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<PlannedFailoverProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    properties = PlannedFailoverProperties.DeserializePlannedFailoverProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<PlannedFailoverProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

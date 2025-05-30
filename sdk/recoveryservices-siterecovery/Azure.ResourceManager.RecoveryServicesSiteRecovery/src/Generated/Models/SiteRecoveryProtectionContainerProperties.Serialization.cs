@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(FabricSpecificDetails))
             {
                 writer.WritePropertyName("fabricSpecificDetails"u8);
-                writer.WriteObjectValue(FabricSpecificDetails, options);
+                ((IJsonModel<ProtectionContainerFabricSpecificDetails>)FabricSpecificDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    fabricSpecificDetails = ProtectionContainerFabricSpecificDetails.DeserializeProtectionContainerFabricSpecificDetails(property.Value, options);
+                    fabricSpecificDetails = ModelSerializationExtensions.JsonDeserialize<ProtectionContainerFabricSpecificDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

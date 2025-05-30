@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in MoverResources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AffectedMoverResourceInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

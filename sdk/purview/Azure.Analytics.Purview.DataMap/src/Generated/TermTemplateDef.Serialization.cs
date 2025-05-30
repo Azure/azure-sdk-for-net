@@ -52,7 +52,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(DateFormatter))
             {
                 writer.WritePropertyName("dateFormatter"u8);
-                writer.WriteObjectValue(DateFormatter, options);
+                ((IJsonModel<AtlasDateFormat>)DateFormatter).Write(writer, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -116,7 +116,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in AttributeDefs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasAttributeDef>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -205,7 +205,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    dateFormatter = AtlasDateFormat.DeserializeAtlasDateFormat(property.Value, options);
+                    dateFormatter = ModelSerializationExtensions.JsonDeserialize<AtlasDateFormat>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))

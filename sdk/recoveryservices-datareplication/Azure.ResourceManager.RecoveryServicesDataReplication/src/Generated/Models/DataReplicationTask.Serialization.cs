@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (Optional.IsDefined(CustomProperties))
             {
                 writer.WritePropertyName("customProperties"u8);
-                writer.WriteObjectValue(CustomProperties, options);
+                ((IJsonModel<DataReplicationTaskCustomProperties>)CustomProperties).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ChildrenJobs))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in ChildrenJobs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataReplicationJobData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    customProperties = DataReplicationTaskCustomProperties.DeserializeDataReplicationTaskCustomProperties(property.Value, options);
+                    customProperties = ModelSerializationExtensions.JsonDeserialize<DataReplicationTaskCustomProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("childrenJobs"u8))

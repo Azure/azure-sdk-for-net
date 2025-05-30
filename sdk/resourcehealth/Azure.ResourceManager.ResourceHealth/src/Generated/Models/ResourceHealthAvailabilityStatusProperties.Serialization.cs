@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             if (Optional.IsDefined(RecentlyResolved))
             {
                 writer.WritePropertyName("recentlyResolved"u8);
-                writer.WriteObjectValue(RecentlyResolved, options);
+                ((IJsonModel<ResourceHealthAvailabilityStateRecentlyResolved>)RecentlyResolved).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(RecommendedActions))
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WriteStartArray();
                 foreach (var item in RecommendedActions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceHealthRecommendedAction>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceImpactingEvents)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ServiceImpactingEvent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    recentlyResolved = ResourceHealthAvailabilityStateRecentlyResolved.DeserializeResourceHealthAvailabilityStateRecentlyResolved(property.Value, options);
+                    recentlyResolved = ModelSerializationExtensions.JsonDeserialize<ResourceHealthAvailabilityStateRecentlyResolved>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("recommendedActions"u8))

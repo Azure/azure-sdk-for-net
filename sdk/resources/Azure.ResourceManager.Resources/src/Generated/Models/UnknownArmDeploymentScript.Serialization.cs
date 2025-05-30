@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    identity = ArmDeploymentScriptManagedIdentity.DeserializeArmDeploymentScriptManagedIdentity(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ArmDeploymentScriptManagedIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

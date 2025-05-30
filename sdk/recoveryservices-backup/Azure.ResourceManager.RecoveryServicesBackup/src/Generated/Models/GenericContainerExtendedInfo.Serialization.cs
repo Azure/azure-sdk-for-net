@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ContainerIdentityInfo))
             {
                 writer.WritePropertyName("containerIdentityInfo"u8);
-                writer.WriteObjectValue(ContainerIdentityInfo, options);
+                ((IJsonModel<ContainerIdentityInfo>)ContainerIdentityInfo).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ServiceEndpoints))
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    containerIdentityInfo = ContainerIdentityInfo.DeserializeContainerIdentityInfo(property.Value, options);
+                    containerIdentityInfo = ModelSerializationExtensions.JsonDeserialize<ContainerIdentityInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("serviceEndpoints"u8))

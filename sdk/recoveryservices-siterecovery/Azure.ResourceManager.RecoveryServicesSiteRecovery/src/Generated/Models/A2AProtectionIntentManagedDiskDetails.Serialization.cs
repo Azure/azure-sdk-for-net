@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(PrimaryStagingStorageAccountCustomContent))
             {
                 writer.WritePropertyName("primaryStagingStorageAccountCustomInput"u8);
-                writer.WriteObjectValue(PrimaryStagingStorageAccountCustomContent, options);
+                ((IJsonModel<StorageAccountCustomDetails>)PrimaryStagingStorageAccountCustomContent).Write(writer, options);
             }
             if (Optional.IsDefined(RecoveryResourceGroupCustomContent))
             {
                 writer.WritePropertyName("recoveryResourceGroupCustomInput"u8);
-                writer.WriteObjectValue(RecoveryResourceGroupCustomContent, options);
+                ((IJsonModel<RecoveryResourceGroupCustomDetails>)RecoveryResourceGroupCustomContent).Write(writer, options);
             }
             if (Optional.IsDefined(RecoveryReplicaDiskAccountType))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(DiskEncryptionInfo))
             {
                 writer.WritePropertyName("diskEncryptionInfo"u8);
-                writer.WriteObjectValue(DiskEncryptionInfo, options);
+                ((IJsonModel<SiteRecoveryDiskEncryptionInfo>)DiskEncryptionInfo).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    primaryStagingStorageAccountCustomContent = StorageAccountCustomDetails.DeserializeStorageAccountCustomDetails(property.Value, options);
+                    primaryStagingStorageAccountCustomContent = ModelSerializationExtensions.JsonDeserialize<StorageAccountCustomDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("recoveryResourceGroupCustomInput"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    recoveryResourceGroupCustomContent = RecoveryResourceGroupCustomDetails.DeserializeRecoveryResourceGroupCustomDetails(property.Value, options);
+                    recoveryResourceGroupCustomContent = ModelSerializationExtensions.JsonDeserialize<RecoveryResourceGroupCustomDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("recoveryReplicaDiskAccountType"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(property.Value, options);
+                    diskEncryptionInfo = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryDiskEncryptionInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

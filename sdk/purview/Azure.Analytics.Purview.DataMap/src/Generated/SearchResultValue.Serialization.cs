@@ -42,7 +42,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(SearchHighlights))
             {
                 writer.WritePropertyName("@search.highlights"u8);
-                writer.WriteObjectValue(SearchHighlights, options);
+                ((IJsonModel<SearchHighlights>)SearchHighlights).Write(writer, options);
             }
             if (Optional.IsDefined(ObjectType))
             {
@@ -125,7 +125,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Term)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TermSearchResultValue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -135,7 +135,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Contact)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContactSearchResultValue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -257,7 +257,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    searchHighlights = SearchHighlights.DeserializeSearchHighlights(property.Value, options);
+                    searchHighlights = ModelSerializationExtensions.JsonDeserialize<SearchHighlights>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))

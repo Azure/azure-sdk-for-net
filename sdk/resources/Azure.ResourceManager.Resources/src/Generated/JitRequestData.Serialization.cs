@@ -57,14 +57,14 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in JitAuthorizationPolicies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<JitAuthorizationPolicies>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(JitSchedulingPolicy))
             {
                 writer.WritePropertyName("jitSchedulingPolicy"u8);
-                writer.WriteObjectValue(JitSchedulingPolicy, options);
+                ((IJsonModel<JitSchedulingPolicy>)JitSchedulingPolicy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.Resources
             if (options.Format != "W" && Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue(CreatedBy, options);
+                ((IJsonModel<ArmApplicationDetails>)CreatedBy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
-                writer.WriteObjectValue(UpdatedBy, options);
+                ((IJsonModel<ArmApplicationDetails>)UpdatedBy).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            jitSchedulingPolicy = JitSchedulingPolicy.DeserializeJitSchedulingPolicy(property0.Value, options);
+                            jitSchedulingPolicy = ModelSerializationExtensions.JsonDeserialize<JitSchedulingPolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            createdBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value, options);
+                            createdBy = ModelSerializationExtensions.JsonDeserialize<ArmApplicationDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("updatedBy"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            updatedBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value, options);
+                            updatedBy = ModelSerializationExtensions.JsonDeserialize<ArmApplicationDetails>(property0.Value);
                             continue;
                         }
                     }

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<ClusterTestFailoverContentProperties>)Properties).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = ClusterTestFailoverContentProperties.DeserializeClusterTestFailoverContentProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ClusterTestFailoverContentProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

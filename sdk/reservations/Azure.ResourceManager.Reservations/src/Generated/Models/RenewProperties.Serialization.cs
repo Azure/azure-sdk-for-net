@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(PurchaseProperties))
             {
                 writer.WritePropertyName("purchaseProperties"u8);
-                writer.WriteObjectValue(PurchaseProperties, options);
+                ((IJsonModel<ReservationPurchaseContent>)PurchaseProperties).Write(writer, options);
             }
             if (Optional.IsDefined(PricingCurrencyTotal))
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
-                writer.WriteObjectValue(PricingCurrencyTotal, options);
+                ((IJsonModel<RenewPropertiesPricingCurrencyTotal>)PricingCurrencyTotal).Write(writer, options);
             }
             if (Optional.IsDefined(BillingCurrencyTotal))
             {
                 writer.WritePropertyName("billingCurrencyTotal"u8);
-                writer.WriteObjectValue(BillingCurrencyTotal, options);
+                ((IJsonModel<RenewPropertiesBillingCurrencyTotal>)BillingCurrencyTotal).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    purchaseProperties = ReservationPurchaseContent.DeserializeReservationPurchaseContent(property.Value, options);
+                    purchaseProperties = ModelSerializationExtensions.JsonDeserialize<ReservationPurchaseContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("pricingCurrencyTotal"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    pricingCurrencyTotal = RenewPropertiesPricingCurrencyTotal.DeserializeRenewPropertiesPricingCurrencyTotal(property.Value, options);
+                    pricingCurrencyTotal = ModelSerializationExtensions.JsonDeserialize<RenewPropertiesPricingCurrencyTotal>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("billingCurrencyTotal"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingCurrencyTotal = RenewPropertiesBillingCurrencyTotal.DeserializeRenewPropertiesBillingCurrencyTotal(property.Value, options);
+                    billingCurrencyTotal = ModelSerializationExtensions.JsonDeserialize<RenewPropertiesBillingCurrencyTotal>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

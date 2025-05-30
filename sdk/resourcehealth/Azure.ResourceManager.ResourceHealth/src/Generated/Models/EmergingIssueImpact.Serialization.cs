@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WriteStartArray();
                 foreach (var item in Regions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EmergingIssueImpactedRegion>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     writer.WriteStartArray();
                     foreach (var item in PolicyErrors)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<ExchangePolicyError>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }

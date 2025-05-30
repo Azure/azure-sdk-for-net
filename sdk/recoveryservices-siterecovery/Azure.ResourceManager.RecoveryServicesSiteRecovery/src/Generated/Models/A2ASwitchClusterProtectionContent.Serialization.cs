@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedItemsDetail)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<A2AProtectedItemDetail>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -243,7 +243,7 @@ namespace Azure.Quantum.Jobs.Models
                         costEstimate = null;
                         continue;
                     }
-                    costEstimate = CostEstimate.DeserializeCostEstimate(property.Value);
+                    costEstimate = ModelSerializationExtensions.JsonDeserialize<CostEstimate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("errorData"u8))
@@ -253,7 +253,7 @@ namespace Azure.Quantum.Jobs.Models
                         errorData = null;
                         continue;
                     }
-                    errorData = ErrorData.DeserializeErrorData(property.Value);
+                    errorData = ModelSerializationExtensions.JsonDeserialize<ErrorData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

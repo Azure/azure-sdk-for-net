@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<RecoveryServicesPrivateEndpointConnection>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    properties = RecoveryServicesPrivateEndpointConnection.DeserializeRecoveryServicesPrivateEndpointConnection(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<RecoveryServicesPrivateEndpointConnection>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

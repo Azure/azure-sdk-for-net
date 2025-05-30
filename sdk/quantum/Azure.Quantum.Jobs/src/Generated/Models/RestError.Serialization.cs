@@ -26,7 +26,7 @@ namespace Azure.Quantum.Jobs.Models
                     {
                         continue;
                     }
-                    error = ErrorData.DeserializeErrorData(property.Value);
+                    error = ModelSerializationExtensions.JsonDeserialize<ErrorData>(property.Value);
                     continue;
                 }
             }

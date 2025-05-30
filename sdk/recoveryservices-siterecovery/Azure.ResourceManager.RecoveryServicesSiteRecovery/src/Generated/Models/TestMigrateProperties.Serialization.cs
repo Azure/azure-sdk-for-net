@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WritePropertyName("providerSpecificDetails"u8);
-            writer.WriteObjectValue(ProviderSpecificDetails, options);
+            ((IJsonModel<TestMigrateProviderSpecificContent>)ProviderSpecificDetails).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 if (property.NameEquals("providerSpecificDetails"u8))
                 {
-                    providerSpecificDetails = TestMigrateProviderSpecificContent.DeserializeTestMigrateProviderSpecificContent(property.Value, options);
+                    providerSpecificDetails = ModelSerializationExtensions.JsonDeserialize<TestMigrateProviderSpecificContent>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

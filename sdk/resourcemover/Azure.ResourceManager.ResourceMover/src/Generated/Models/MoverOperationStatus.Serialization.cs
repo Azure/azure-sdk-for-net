@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (Error != null)
                 {
                     writer.WritePropertyName("error"u8);
-                    writer.WriteObjectValue(Error, options);
+                    ((IJsonModel<MoverOperationStatusError>)Error).Write(writer, options);
                 }
                 else
                 {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         error = null;
                         continue;
                     }
-                    error = MoverOperationStatusError.DeserializeMoverOperationStatusError(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<MoverOperationStatusError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

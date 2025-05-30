@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ExchangeRequestProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    properties = ExchangeRequestProperties.DeserializeExchangeRequestProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ExchangeRequestProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

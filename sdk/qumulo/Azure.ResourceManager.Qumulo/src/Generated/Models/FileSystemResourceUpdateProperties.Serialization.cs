@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Qumulo.Models
             if (Optional.IsDefined(MarketplaceDetails))
             {
                 writer.WritePropertyName("marketplaceDetails"u8);
-                writer.WriteObjectValue(MarketplaceDetails, options);
+                ((IJsonModel<MarketplaceDetails>)MarketplaceDetails).Write(writer, options);
             }
             if (Optional.IsDefined(UserDetails))
             {
                 writer.WritePropertyName("userDetails"u8);
-                writer.WriteObjectValue(UserDetails, options);
+                ((IJsonModel<QumuloUserDetails>)UserDetails).Write(writer, options);
             }
             if (Optional.IsDefined(DelegatedSubnetId))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                     {
                         continue;
                     }
-                    marketplaceDetails = MarketplaceDetails.DeserializeMarketplaceDetails(property.Value, options);
+                    marketplaceDetails = ModelSerializationExtensions.JsonDeserialize<MarketplaceDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userDetails"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                     {
                         continue;
                     }
-                    userDetails = QumuloUserDetails.DeserializeQumuloUserDetails(property.Value, options);
+                    userDetails = ModelSerializationExtensions.JsonDeserialize<QumuloUserDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("delegatedSubnetId"u8))

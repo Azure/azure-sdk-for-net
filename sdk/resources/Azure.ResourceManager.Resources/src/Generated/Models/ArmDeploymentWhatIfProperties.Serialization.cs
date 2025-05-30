@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(WhatIfSettings))
             {
                 writer.WritePropertyName("whatIfSettings"u8);
-                writer.WriteObjectValue(WhatIfSettings, options);
+                ((IJsonModel<ArmDeploymentWhatIfSettings>)WhatIfSettings).Write(writer, options);
             }
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    whatIfSettings = ArmDeploymentWhatIfSettings.DeserializeArmDeploymentWhatIfSettings(property.Value, options);
+                    whatIfSettings = ModelSerializationExtensions.JsonDeserialize<ArmDeploymentWhatIfSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("template"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    templateLink = ArmDeploymentTemplateLink.DeserializeArmDeploymentTemplateLink(property.Value, options);
+                    templateLink = ModelSerializationExtensions.JsonDeserialize<ArmDeploymentTemplateLink>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    parametersLink = ArmDeploymentParametersLink.DeserializeArmDeploymentParametersLink(property.Value, options);
+                    parametersLink = ModelSerializationExtensions.JsonDeserialize<ArmDeploymentParametersLink>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mode"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    debugSetting = DebugSetting.DeserializeDebugSetting(property.Value, options);
+                    debugSetting = ModelSerializationExtensions.JsonDeserialize<DebugSetting>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("onErrorDeployment"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    onErrorDeployment = ErrorDeployment.DeserializeErrorDeployment(property.Value, options);
+                    onErrorDeployment = ModelSerializationExtensions.JsonDeserialize<ErrorDeployment>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("expressionEvaluationOptions"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    expressionEvaluationOptions = ExpressionEvaluationOptions.DeserializeExpressionEvaluationOptions(property.Value, options);
+                    expressionEvaluationOptions = ModelSerializationExtensions.JsonDeserialize<ExpressionEvaluationOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("validationLevel"u8))

@@ -40,24 +40,24 @@ namespace Azure.ResourceManager.Purview
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<PurviewAccountSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(AccountStatus))
             {
                 writer.WritePropertyName("accountStatus"u8);
-                writer.WriteObjectValue(AccountStatus, options);
+                ((IJsonModel<PurviewAccountStatus>)AccountStatus).Write(writer, options);
             }
             if (Optional.IsDefined(CloudConnectors))
             {
                 writer.WritePropertyName("cloudConnectors"u8);
-                writer.WriteObjectValue(CloudConnectors, options);
+                ((IJsonModel<CloudConnectors>)CloudConnectors).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Purview
             if (options.Format != "W" && Optional.IsDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
-                writer.WriteObjectValue(Endpoints, options);
+                ((IJsonModel<PurviewAccountEndpoint>)Endpoints).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Purview
             if (Optional.IsDefined(IngestionStorage))
             {
                 writer.WritePropertyName("ingestionStorage"u8);
-                writer.WriteObjectValue(IngestionStorage, options);
+                ((IJsonModel<PurviewIngestionStorage>)IngestionStorage).Write(writer, options);
             }
             if (Optional.IsDefined(ManagedEventHubState))
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Purview
             if (options.Format != "W" && Optional.IsDefined(ManagedResources))
             {
                 writer.WritePropertyName("managedResources"u8);
-                writer.WriteObjectValue(ManagedResources, options);
+                ((IJsonModel<PurviewManagedResource>)ManagedResources).Write(writer, options);
             }
             if (Optional.IsDefined(ManagedResourcesPublicNetworkAccess))
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Purview
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PurviewPrivateEndpointConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Purview
                     {
                         continue;
                     }
-                    sku = PurviewAccountSku.DeserializePurviewAccountSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<PurviewAccountSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Purview
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Purview
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Purview
                             {
                                 continue;
                             }
-                            accountStatus = PurviewAccountStatus.DeserializePurviewAccountStatus(property0.Value, options);
+                            accountStatus = ModelSerializationExtensions.JsonDeserialize<PurviewAccountStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cloudConnectors"u8))
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Purview
                             {
                                 continue;
                             }
-                            cloudConnectors = CloudConnectors.DeserializeCloudConnectors(property0.Value, options);
+                            cloudConnectors = ModelSerializationExtensions.JsonDeserialize<CloudConnectors>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("createdAt"u8))
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Purview
                             {
                                 continue;
                             }
-                            endpoints = PurviewAccountEndpoint.DeserializePurviewAccountEndpoint(property0.Value, options);
+                            endpoints = ModelSerializationExtensions.JsonDeserialize<PurviewAccountEndpoint>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("friendlyName"u8))
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Purview
                             {
                                 continue;
                             }
-                            ingestionStorage = PurviewIngestionStorage.DeserializePurviewIngestionStorage(property0.Value, options);
+                            ingestionStorage = ModelSerializationExtensions.JsonDeserialize<PurviewIngestionStorage>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("managedEventHubState"u8))
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Purview
                             {
                                 continue;
                             }
-                            managedResources = PurviewManagedResource.DeserializePurviewManagedResource(property0.Value, options);
+                            managedResources = ModelSerializationExtensions.JsonDeserialize<PurviewManagedResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("managedResourcesPublicNetworkAccess"u8))

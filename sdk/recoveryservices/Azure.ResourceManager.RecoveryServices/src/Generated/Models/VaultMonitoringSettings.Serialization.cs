@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(AzureMonitorAlertSettings))
             {
                 writer.WritePropertyName("azureMonitorAlertSettings"u8);
-                writer.WriteObjectValue(AzureMonitorAlertSettings, options);
+                ((IJsonModel<AzureMonitorAlertSettings>)AzureMonitorAlertSettings).Write(writer, options);
             }
             if (Optional.IsDefined(ClassicAlertSettings))
             {
                 writer.WritePropertyName("classicAlertSettings"u8);
-                writer.WriteObjectValue(ClassicAlertSettings, options);
+                ((IJsonModel<ClassicAlertSettings>)ClassicAlertSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    azureMonitorAlertSettings = AzureMonitorAlertSettings.DeserializeAzureMonitorAlertSettings(property.Value, options);
+                    azureMonitorAlertSettings = ModelSerializationExtensions.JsonDeserialize<AzureMonitorAlertSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("classicAlertSettings"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    classicAlertSettings = ClassicAlertSettings.DeserializeClassicAlertSettings(property.Value, options);
+                    classicAlertSettings = ModelSerializationExtensions.JsonDeserialize<ClassicAlertSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

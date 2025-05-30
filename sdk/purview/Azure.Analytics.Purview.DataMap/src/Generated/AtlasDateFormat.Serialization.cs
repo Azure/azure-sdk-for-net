@@ -52,17 +52,17 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(DateInstance))
             {
                 writer.WritePropertyName("dateInstance"u8);
-                writer.WriteObjectValue(DateInstance, options);
+                ((IJsonModel<AtlasDateFormat>)DateInstance).Write(writer, options);
             }
             if (Optional.IsDefined(DateTimeInstance))
             {
                 writer.WritePropertyName("dateTimeInstance"u8);
-                writer.WriteObjectValue(DateTimeInstance, options);
+                ((IJsonModel<AtlasDateFormat>)DateTimeInstance).Write(writer, options);
             }
             if (Optional.IsDefined(Instance))
             {
                 writer.WritePropertyName("instance"u8);
-                writer.WriteObjectValue(Instance, options);
+                ((IJsonModel<AtlasDateFormat>)Instance).Write(writer, options);
             }
             if (Optional.IsDefined(Lenient))
             {
@@ -72,17 +72,17 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(NumberFormat))
             {
                 writer.WritePropertyName("numberFormat"u8);
-                writer.WriteObjectValue(NumberFormat, options);
+                ((IJsonModel<AtlasNumberFormat>)NumberFormat).Write(writer, options);
             }
             if (Optional.IsDefined(TimeInstance))
             {
                 writer.WritePropertyName("timeInstance"u8);
-                writer.WriteObjectValue(TimeInstance, options);
+                ((IJsonModel<AtlasDateFormat>)TimeInstance).Write(writer, options);
             }
             if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
-                writer.WriteObjectValue(TimeZone, options);
+                ((IJsonModel<AtlasTimeZone>)TimeZone).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -163,7 +163,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    dateInstance = DeserializeAtlasDateFormat(property.Value, options);
+                    dateInstance = ModelSerializationExtensions.JsonDeserialize<AtlasDateFormat>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dateTimeInstance"u8))
@@ -172,7 +172,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    dateTimeInstance = DeserializeAtlasDateFormat(property.Value, options);
+                    dateTimeInstance = ModelSerializationExtensions.JsonDeserialize<AtlasDateFormat>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("instance"u8))
@@ -181,7 +181,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    instance = DeserializeAtlasDateFormat(property.Value, options);
+                    instance = ModelSerializationExtensions.JsonDeserialize<AtlasDateFormat>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lenient"u8))
@@ -199,7 +199,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    numberFormat = AtlasNumberFormat.DeserializeAtlasNumberFormat(property.Value, options);
+                    numberFormat = ModelSerializationExtensions.JsonDeserialize<AtlasNumberFormat>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("timeInstance"u8))
@@ -208,7 +208,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    timeInstance = DeserializeAtlasDateFormat(property.Value, options);
+                    timeInstance = ModelSerializationExtensions.JsonDeserialize<AtlasDateFormat>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("timeZone"u8))
@@ -217,7 +217,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    timeZone = AtlasTimeZone.DeserializeAtlasTimeZone(property.Value, options);
+                    timeZone = ModelSerializationExtensions.JsonDeserialize<AtlasTimeZone>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

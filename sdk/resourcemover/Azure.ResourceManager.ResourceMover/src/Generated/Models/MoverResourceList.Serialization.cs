@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MoverResourceData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (SummaryCollection != null)
                 {
                     writer.WritePropertyName("summaryCollection"u8);
-                    writer.WriteObjectValue(SummaryCollection, options);
+                    ((IJsonModel<MoverSummaryList>)SummaryCollection).Write(writer, options);
                 }
                 else
                 {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         summaryCollection = null;
                         continue;
                     }
-                    summaryCollection = MoverSummaryList.DeserializeMoverSummaryList(property.Value, options);
+                    summaryCollection = ModelSerializationExtensions.JsonDeserialize<MoverSummaryList>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("totalCount"u8))

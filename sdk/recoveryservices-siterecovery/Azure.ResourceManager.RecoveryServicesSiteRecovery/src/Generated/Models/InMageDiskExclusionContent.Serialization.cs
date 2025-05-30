@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VolumeOptions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InMageVolumeExclusionOptions>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in DiskSignatureOptions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InMageDiskSignatureExclusionOptions>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

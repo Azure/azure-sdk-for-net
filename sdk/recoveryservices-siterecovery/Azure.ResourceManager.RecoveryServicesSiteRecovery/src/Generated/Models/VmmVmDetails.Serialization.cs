@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    osDetails = SiteRecoveryOSDetails.DeserializeSiteRecoveryOSDetails(property.Value, options);
+                    osDetails = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryOSDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("diskDetails"u8))

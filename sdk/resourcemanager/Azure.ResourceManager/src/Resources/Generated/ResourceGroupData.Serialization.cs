@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ResourceGroupProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(ManagedBy))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    properties = ResourceGroupProperties.DeserializeResourceGroupProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ResourceGroupProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("managedBy"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

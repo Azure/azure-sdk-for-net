@@ -52,7 +52,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(CurrencyInstance))
             {
                 writer.WritePropertyName("currencyInstance"u8);
-                writer.WriteObjectValue(CurrencyInstance, options);
+                ((IJsonModel<AtlasNumberFormat>)CurrencyInstance).Write(writer, options);
             }
             if (Optional.IsDefined(GroupingUsed))
             {
@@ -62,12 +62,12 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(Instance))
             {
                 writer.WritePropertyName("instance"u8);
-                writer.WriteObjectValue(Instance, options);
+                ((IJsonModel<AtlasNumberFormat>)Instance).Write(writer, options);
             }
             if (Optional.IsDefined(IntegerInstance))
             {
                 writer.WritePropertyName("integerInstance"u8);
-                writer.WriteObjectValue(IntegerInstance, options);
+                ((IJsonModel<AtlasNumberFormat>)IntegerInstance).Write(writer, options);
             }
             if (Optional.IsDefined(MaximumFractionDigits))
             {
@@ -92,7 +92,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(NumberInstance))
             {
                 writer.WritePropertyName("numberInstance"u8);
-                writer.WriteObjectValue(NumberInstance, options);
+                ((IJsonModel<AtlasNumberFormat>)NumberInstance).Write(writer, options);
             }
             if (Optional.IsDefined(ParseIntegerOnly))
             {
@@ -102,7 +102,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(PercentInstance))
             {
                 writer.WritePropertyName("percentInstance"u8);
-                writer.WriteObjectValue(PercentInstance, options);
+                ((IJsonModel<AtlasNumberFormat>)PercentInstance).Write(writer, options);
             }
             if (Optional.IsDefined(RoundingMode))
             {
@@ -189,7 +189,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    currencyInstance = DeserializeAtlasNumberFormat(property.Value, options);
+                    currencyInstance = ModelSerializationExtensions.JsonDeserialize<AtlasNumberFormat>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("groupingUsed"u8))
@@ -207,7 +207,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    instance = DeserializeAtlasNumberFormat(property.Value, options);
+                    instance = ModelSerializationExtensions.JsonDeserialize<AtlasNumberFormat>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("integerInstance"u8))
@@ -216,7 +216,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    integerInstance = DeserializeAtlasNumberFormat(property.Value, options);
+                    integerInstance = ModelSerializationExtensions.JsonDeserialize<AtlasNumberFormat>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("maximumFractionDigits"u8))
@@ -261,7 +261,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    numberInstance = DeserializeAtlasNumberFormat(property.Value, options);
+                    numberInstance = ModelSerializationExtensions.JsonDeserialize<AtlasNumberFormat>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parseIntegerOnly"u8))
@@ -279,7 +279,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    percentInstance = DeserializeAtlasNumberFormat(property.Value, options);
+                    percentInstance = ModelSerializationExtensions.JsonDeserialize<AtlasNumberFormat>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("roundingMode"u8))

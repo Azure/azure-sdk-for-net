@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ReplicationProtectedItems)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RecoveryPlanProtectedItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in StartGroupActions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RecoveryPlanAction>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in EndGroupActions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RecoveryPlanAction>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

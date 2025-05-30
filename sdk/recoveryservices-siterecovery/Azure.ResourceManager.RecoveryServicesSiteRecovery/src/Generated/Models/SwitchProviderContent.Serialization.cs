@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<SwitchProviderProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    properties = SwitchProviderProperties.DeserializeSwitchProviderProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<SwitchProviderProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

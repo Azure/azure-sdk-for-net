@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             writer.WritePropertyName("usedCapacityPercentage"u8);
             writer.WriteNumberValue(UsedCapacityPercentage);
             writer.WritePropertyName("bandwidthUsage"u8);
-            writer.WriteObjectValue(BandwidthUsage, options);
+            ((IJsonModel<PureStorageBandwidthUsage>)BandwidthUsage).Write(writer, options);
             writer.WritePropertyName("iopsUsage"u8);
-            writer.WriteObjectValue(IopsUsage, options);
+            ((IJsonModel<PureStorageIopsUsage>)IopsUsage).Write(writer, options);
             writer.WritePropertyName("space"u8);
-            writer.WriteObjectValue(Space, options);
+            ((IJsonModel<PureStorageSpaceUsage>)Space).Write(writer, options);
             writer.WritePropertyName("dataReductionRatio"u8);
             writer.WriteNumberValue(DataReductionRatio);
             writer.WritePropertyName("estimatedMaxCapacity"u8);
@@ -100,17 +100,17 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 }
                 if (property.NameEquals("bandwidthUsage"u8))
                 {
-                    bandwidthUsage = PureStorageBandwidthUsage.DeserializePureStorageBandwidthUsage(property.Value, options);
+                    bandwidthUsage = ModelSerializationExtensions.JsonDeserialize<PureStorageBandwidthUsage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("iopsUsage"u8))
                 {
-                    iopsUsage = PureStorageIopsUsage.DeserializePureStorageIopsUsage(property.Value, options);
+                    iopsUsage = ModelSerializationExtensions.JsonDeserialize<PureStorageIopsUsage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("space"u8))
                 {
-                    space = PureStorageSpaceUsage.DeserializePureStorageSpaceUsage(property.Value, options);
+                    space = ModelSerializationExtensions.JsonDeserialize<PureStorageSpaceUsage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataReductionRatio"u8))

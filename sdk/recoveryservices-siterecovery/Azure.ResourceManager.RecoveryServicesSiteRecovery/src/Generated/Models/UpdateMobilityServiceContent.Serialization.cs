@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<UpdateMobilityServiceRequestProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    properties = UpdateMobilityServiceRequestProperties.DeserializeUpdateMobilityServiceRequestProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<UpdateMobilityServiceRequestProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

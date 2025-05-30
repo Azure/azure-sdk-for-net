@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartArray();
             foreach (var item in Groups)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<SiteRecoveryPlanGroup>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(ProviderSpecificContent))
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProviderSpecificContent)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RecoveryPlanProviderSpecificContent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

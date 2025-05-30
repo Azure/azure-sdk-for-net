@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
+                ((IJsonModel<ReservationResourceName>)Name).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    name = ReservationResourceName.DeserializeReservationResourceName(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<ReservationResourceName>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceType"u8))

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(TemplateLink))
             {
                 writer.WritePropertyName("templateLink"u8);
-                writer.WriteObjectValue(TemplateLink, options);
+                ((IJsonModel<DeploymentStacksTemplateLink>)TemplateLink).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    templateLink = DeploymentStacksTemplateLink.DeserializeDeploymentStacksTemplateLink(property.Value, options);
+                    templateLink = ModelSerializationExtensions.JsonDeserialize<DeploymentStacksTemplateLink>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

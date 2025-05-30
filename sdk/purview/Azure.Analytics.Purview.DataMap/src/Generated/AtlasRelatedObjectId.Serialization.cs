@@ -85,7 +85,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(RelationshipAttributes))
             {
                 writer.WritePropertyName("relationshipAttributes"u8);
-                writer.WriteObjectValue(RelationshipAttributes, options);
+                ((IJsonModel<AtlasStruct>)RelationshipAttributes).Write(writer, options);
             }
             if (Optional.IsDefined(RelationshipGuid))
             {
@@ -203,7 +203,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    relationshipAttributes = AtlasStruct.DeserializeAtlasStruct(property.Value, options);
+                    relationshipAttributes = ModelSerializationExtensions.JsonDeserialize<AtlasStruct>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("relationshipGuid"u8))

@@ -49,14 +49,14 @@ namespace Azure.ResourceManager.Redis.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RedisConfiguration))
             {
                 writer.WritePropertyName("redisConfiguration"u8);
-                writer.WriteObjectValue(RedisConfiguration, options);
+                ((IJsonModel<RedisCommonConfiguration>)RedisConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(RedisVersion))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Redis.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<RedisSku>)Sku).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Redis.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Redis.Models
                             {
                                 continue;
                             }
-                            redisConfiguration = RedisCommonConfiguration.DeserializeRedisCommonConfiguration(property0.Value, options);
+                            redisConfiguration = ModelSerializationExtensions.JsonDeserialize<RedisCommonConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("redisVersion"u8))
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Redis.Models
                             {
                                 continue;
                             }
-                            sku = RedisSku.DeserializeRedisSku(property0.Value, options);
+                            sku = ModelSerializationExtensions.JsonDeserialize<RedisSku>(property0.Value);
                             continue;
                         }
                     }

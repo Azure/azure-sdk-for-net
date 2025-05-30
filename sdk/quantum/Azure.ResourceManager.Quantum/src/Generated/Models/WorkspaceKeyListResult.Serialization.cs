@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Quantum.Models
             if (Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
-                writer.WriteObjectValue(PrimaryKey, options);
+                ((IJsonModel<WorkspaceApiKey>)PrimaryKey).Write(writer, options);
             }
             if (Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
-                writer.WriteObjectValue(SecondaryKey, options);
+                ((IJsonModel<WorkspaceApiKey>)SecondaryKey).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PrimaryConnectionString))
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     {
                         continue;
                     }
-                    primaryKey = WorkspaceApiKey.DeserializeWorkspaceApiKey(property.Value, options);
+                    primaryKey = ModelSerializationExtensions.JsonDeserialize<WorkspaceApiKey>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("secondaryKey"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     {
                         continue;
                     }
-                    secondaryKey = WorkspaceApiKey.DeserializeWorkspaceApiKey(property.Value, options);
+                    secondaryKey = ModelSerializationExtensions.JsonDeserialize<WorkspaceApiKey>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("primaryConnectionString"u8))

@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(RecoveryAzureStorageAccountCustomContent))
             {
                 writer.WritePropertyName("recoveryAzureStorageAccountCustomInput"u8);
-                writer.WriteObjectValue(RecoveryAzureStorageAccountCustomContent, options);
+                ((IJsonModel<StorageAccountCustomDetails>)RecoveryAzureStorageAccountCustomContent).Write(writer, options);
             }
             if (Optional.IsDefined(PrimaryStagingStorageAccountCustomContent))
             {
                 writer.WritePropertyName("primaryStagingStorageAccountCustomInput"u8);
-                writer.WriteObjectValue(PrimaryStagingStorageAccountCustomContent, options);
+                ((IJsonModel<StorageAccountCustomDetails>)PrimaryStagingStorageAccountCustomContent).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    recoveryAzureStorageAccountCustomContent = StorageAccountCustomDetails.DeserializeStorageAccountCustomDetails(property.Value, options);
+                    recoveryAzureStorageAccountCustomContent = ModelSerializationExtensions.JsonDeserialize<StorageAccountCustomDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("primaryStagingStorageAccountCustomInput"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    primaryStagingStorageAccountCustomContent = StorageAccountCustomDetails.DeserializeStorageAccountCustomDetails(property.Value, options);
+                    primaryStagingStorageAccountCustomContent = ModelSerializationExtensions.JsonDeserialize<StorageAccountCustomDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

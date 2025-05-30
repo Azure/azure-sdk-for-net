@@ -67,14 +67,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 foreach (var item in KpisHealths)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<KpiResourceHealthDetails>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo, options);
+                ((IJsonModel<FileshareProtectedItemExtendedInfo>)ExtendedInfo).Write(writer, options);
             }
         }
 
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = FileshareProtectedItemExtendedInfo.DeserializeFileshareProtectedItemExtendedInfo(property.Value, options);
+                    extendedInfo = ModelSerializationExtensions.JsonDeserialize<FileshareProtectedItemExtendedInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("protectedItemType"u8))

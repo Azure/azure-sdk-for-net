@@ -40,7 +40,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in FailedImportInfoList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ImportInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in SuccessImportInfoList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ImportInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

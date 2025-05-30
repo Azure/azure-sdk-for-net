@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(TemplateLink))
             {
                 writer.WritePropertyName("templateLink"u8);
-                writer.WriteObjectValue(TemplateLink, options);
+                ((IJsonModel<ArmDeploymentTemplateLink>)TemplateLink).Write(writer, options);
             }
             if (Optional.IsDefined(Parameters))
             {
@@ -66,24 +66,24 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(ParametersLink))
             {
                 writer.WritePropertyName("parametersLink"u8);
-                writer.WriteObjectValue(ParametersLink, options);
+                ((IJsonModel<ArmDeploymentParametersLink>)ParametersLink).Write(writer, options);
             }
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToSerialString());
             if (Optional.IsDefined(DebugSetting))
             {
                 writer.WritePropertyName("debugSetting"u8);
-                writer.WriteObjectValue(DebugSetting, options);
+                ((IJsonModel<DebugSetting>)DebugSetting).Write(writer, options);
             }
             if (Optional.IsDefined(ErrorDeployment))
             {
                 writer.WritePropertyName("onErrorDeployment"u8);
-                writer.WriteObjectValue(ErrorDeployment, options);
+                ((IJsonModel<ErrorDeployment>)ErrorDeployment).Write(writer, options);
             }
             if (Optional.IsDefined(ExpressionEvaluation))
             {
                 writer.WritePropertyName("expressionEvaluationOptions"u8);
-                writer.WriteObjectValue(ExpressionEvaluation, options);
+                ((IJsonModel<ExpressionEvaluationOptions>)ExpressionEvaluation).Write(writer, options);
             }
             if (Optional.IsDefined(ValidationLevel))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    templateLink = ArmDeploymentTemplateLink.DeserializeArmDeploymentTemplateLink(property.Value, options);
+                    templateLink = ModelSerializationExtensions.JsonDeserialize<ArmDeploymentTemplateLink>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    parametersLink = ArmDeploymentParametersLink.DeserializeArmDeploymentParametersLink(property.Value, options);
+                    parametersLink = ModelSerializationExtensions.JsonDeserialize<ArmDeploymentParametersLink>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mode"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    debugSetting = DebugSetting.DeserializeDebugSetting(property.Value, options);
+                    debugSetting = ModelSerializationExtensions.JsonDeserialize<DebugSetting>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("onErrorDeployment"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    onErrorDeployment = ErrorDeployment.DeserializeErrorDeployment(property.Value, options);
+                    onErrorDeployment = ModelSerializationExtensions.JsonDeserialize<ErrorDeployment>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("expressionEvaluationOptions"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    expressionEvaluationOptions = ExpressionEvaluationOptions.DeserializeExpressionEvaluationOptions(property.Value, options);
+                    expressionEvaluationOptions = ModelSerializationExtensions.JsonDeserialize<ExpressionEvaluationOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("validationLevel"u8))

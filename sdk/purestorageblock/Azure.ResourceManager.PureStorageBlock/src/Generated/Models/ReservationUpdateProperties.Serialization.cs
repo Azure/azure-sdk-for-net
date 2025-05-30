@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             if (Optional.IsDefined(User))
             {
                 writer.WritePropertyName("user"u8);
-                writer.WriteObjectValue(User, options);
+                ((IJsonModel<PureStorageUserDetails>)User).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    user = PureStorageUserDetails.DeserializePureStorageUserDetails(property.Value, options);
+                    user = ModelSerializationExtensions.JsonDeserialize<PureStorageUserDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

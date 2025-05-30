@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(InquiryValidation))
             {
                 writer.WritePropertyName("inquiryValidation"u8);
-                writer.WriteObjectValue(InquiryValidation, options);
+                ((IJsonModel<InquiryValidation>)InquiryValidation).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    inquiryValidation = InquiryValidation.DeserializeInquiryValidation(property.Value, options);
+                    inquiryValidation = ModelSerializationExtensions.JsonDeserialize<InquiryValidation>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -60,7 +60,7 @@ namespace Azure.Analytics.Purview.DataMap
                     writer.WriteStartArray();
                     foreach (var item0 in item.Value)
                     {
-                        writer.WriteObjectValue(item0, options);
+                        ((IJsonModel<AtlasEntityHeader>)item0).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in PartialUpdatedEntities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasEntityHeader>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(ThirdPartyProviderConsent))
             {
                 writer.WritePropertyName("thirdPartyProviderConsent"u8);
-                writer.WriteObjectValue(ThirdPartyProviderConsent, options);
+                ((IJsonModel<ProviderConsentDefinition>)ThirdPartyProviderConsent).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    thirdPartyProviderConsent = ProviderConsentDefinition.DeserializeProviderConsentDefinition(property.Value, options);
+                    thirdPartyProviderConsent = ModelSerializationExtensions.JsonDeserialize<ProviderConsentDefinition>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

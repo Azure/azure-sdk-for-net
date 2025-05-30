@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<ServiceImpactingEventStatus>)Status).Write(writer, options);
             }
             if (Optional.IsDefined(IncidentProperties))
             {
                 writer.WritePropertyName("incidentProperties"u8);
-                writer.WriteObjectValue(IncidentProperties, options);
+                ((IJsonModel<ServiceImpactingEventIncidentProperties>)IncidentProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    status = ServiceImpactingEventStatus.DeserializeServiceImpactingEventStatus(property.Value, options);
+                    status = ModelSerializationExtensions.JsonDeserialize<ServiceImpactingEventStatus>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("incidentProperties"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    incidentProperties = ServiceImpactingEventIncidentProperties.DeserializeServiceImpactingEventIncidentProperties(property.Value, options);
+                    incidentProperties = ModelSerializationExtensions.JsonDeserialize<ServiceImpactingEventIncidentProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

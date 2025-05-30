@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             writer.WriteStartArray();
             foreach (var item in BillingUsageProperties)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<PureStorageBillingUsageProperty>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("overallStatusMessage"u8);

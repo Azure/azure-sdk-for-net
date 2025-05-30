@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (options.Format != "W" && Optional.IsDefined(GatewayOperationDetails))
             {
                 writer.WritePropertyName("gatewayOperationDetails"u8);
-                writer.WriteObjectValue(GatewayOperationDetails, options);
+                ((IJsonModel<GatewayOperationDetails>)GatewayOperationDetails).Write(writer, options);
             }
             if (Optional.IsDefined(SectorSizeInBytes))
             {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    gatewayOperationDetails = GatewayOperationDetails.DeserializeGatewayOperationDetails(property.Value, options);
+                    gatewayOperationDetails = ModelSerializationExtensions.JsonDeserialize<GatewayOperationDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sectorSizeInBytes"u8))

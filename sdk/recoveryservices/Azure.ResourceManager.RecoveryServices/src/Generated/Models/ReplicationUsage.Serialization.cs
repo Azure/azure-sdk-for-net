@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(MonitoringSummary))
             {
                 writer.WritePropertyName("monitoringSummary"u8);
-                writer.WriteObjectValue(MonitoringSummary, options);
+                ((IJsonModel<VaultMonitoringSummary>)MonitoringSummary).Write(writer, options);
             }
             if (Optional.IsDefined(JobsSummary))
             {
                 writer.WritePropertyName("jobsSummary"u8);
-                writer.WriteObjectValue(JobsSummary, options);
+                ((IJsonModel<ReplicationJobSummary>)JobsSummary).Write(writer, options);
             }
             if (Optional.IsDefined(ProtectedItemCount))
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    monitoringSummary = VaultMonitoringSummary.DeserializeVaultMonitoringSummary(property.Value, options);
+                    monitoringSummary = ModelSerializationExtensions.JsonDeserialize<VaultMonitoringSummary>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("jobsSummary"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    jobsSummary = ReplicationJobSummary.DeserializeReplicationJobSummary(property.Value, options);
+                    jobsSummary = ModelSerializationExtensions.JsonDeserialize<ReplicationJobSummary>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("protectedItemCount"u8))

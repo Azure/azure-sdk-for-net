@@ -52,7 +52,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(SearchFacets))
             {
                 writer.WritePropertyName("@search.facets"u8);
-                writer.WriteObjectValue(SearchFacets, options);
+                ((IJsonModel<SearchFacetResultValue>)SearchFacets).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Value))
             {
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SearchResultValue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -139,7 +139,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    searchFacets = SearchFacetResultValue.DeserializeSearchFacetResultValue(property.Value, options);
+                    searchFacets = ModelSerializationExtensions.JsonDeserialize<SearchFacetResultValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("value"u8))

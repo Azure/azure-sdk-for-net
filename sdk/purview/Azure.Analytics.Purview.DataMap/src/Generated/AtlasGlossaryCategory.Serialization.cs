@@ -45,7 +45,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Classifications)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasClassification>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -97,7 +97,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(Anchor))
             {
                 writer.WritePropertyName("anchor"u8);
-                writer.WriteObjectValue(Anchor, options);
+                ((IJsonModel<AtlasGlossaryHeader>)Anchor).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ChildrenCategories))
             {
@@ -105,14 +105,14 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in ChildrenCategories)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasRelatedCategoryHeader>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ParentCategory))
             {
                 writer.WritePropertyName("parentCategory"u8);
-                writer.WriteObjectValue(ParentCategory, options);
+                ((IJsonModel<AtlasRelatedCategoryHeader>)ParentCategory).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Terms))
             {
@@ -120,7 +120,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Terms)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasRelatedTermHeader>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -258,7 +258,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    anchor = AtlasGlossaryHeader.DeserializeAtlasGlossaryHeader(property.Value, options);
+                    anchor = ModelSerializationExtensions.JsonDeserialize<AtlasGlossaryHeader>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("childrenCategories"u8))
@@ -281,7 +281,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    parentCategory = AtlasRelatedCategoryHeader.DeserializeAtlasRelatedCategoryHeader(property.Value, options);
+                    parentCategory = ModelSerializationExtensions.JsonDeserialize<AtlasRelatedCategoryHeader>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("terms"u8))

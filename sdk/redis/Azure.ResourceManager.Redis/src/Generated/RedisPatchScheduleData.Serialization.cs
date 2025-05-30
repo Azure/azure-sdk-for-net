@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Redis
             writer.WriteStartArray();
             foreach (var item in ScheduleEntries)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<RedisPatchScheduleSetting>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Redis
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

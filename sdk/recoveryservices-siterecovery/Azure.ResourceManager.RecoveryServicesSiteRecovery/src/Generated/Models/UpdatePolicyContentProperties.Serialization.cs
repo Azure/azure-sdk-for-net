@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ReplicationProviderSettings))
             {
                 writer.WritePropertyName("replicationProviderSettings"u8);
-                writer.WriteObjectValue(ReplicationProviderSettings, options);
+                ((IJsonModel<PolicyProviderSpecificContent>)ReplicationProviderSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    replicationProviderSettings = PolicyProviderSpecificContent.DeserializePolicyProviderSpecificContent(property.Value, options);
+                    replicationProviderSettings = ModelSerializationExtensions.JsonDeserialize<PolicyProviderSpecificContent>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

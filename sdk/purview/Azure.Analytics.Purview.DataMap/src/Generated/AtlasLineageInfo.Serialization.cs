@@ -46,7 +46,7 @@ namespace Azure.Analytics.Purview.DataMap
                 foreach (var item in GuidEntityMap)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<AtlasEntityHeader>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -110,7 +110,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in ParentRelations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ParentRelation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -120,7 +120,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Relations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LineageRelation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

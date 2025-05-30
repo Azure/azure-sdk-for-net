@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WritePropertyName("recoveryPointType"u8);
             writer.WriteStringValue(RecoveryPointType.ToString());
             writer.WritePropertyName("customProperties"u8);
-            writer.WriteObjectValue(CustomProperties, options);
+            ((IJsonModel<DataReplicationRecoveryPointCustomProperties>)CustomProperties).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = DataReplicationRecoveryPointCustomProperties.DeserializeDataReplicationRecoveryPointCustomProperties(property.Value, options);
+                    customProperties = ModelSerializationExtensions.JsonDeserialize<DataReplicationRecoveryPointCustomProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

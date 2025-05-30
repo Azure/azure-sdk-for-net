@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
 
             writer.WritePropertyName("provisionedBandwidthMbPerSec"u8);
-            writer.WriteObjectValue(ProvisionedBandwidthMbPerSec, options);
+            ((IJsonModel<PropertyValueRangeLimits>)ProvisionedBandwidthMbPerSec).Write(writer, options);
             writer.WritePropertyName("provisionedIops"u8);
-            writer.WriteObjectValue(ProvisionedIops, options);
+            ((IJsonModel<PropertyValueRangeLimits>)ProvisionedIops).Write(writer, options);
             writer.WritePropertyName("physicalAvailabilityZones"u8);
             writer.WriteStartArray();
             foreach (var item in PhysicalAvailabilityZones)
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             {
                 if (property.NameEquals("provisionedBandwidthMbPerSec"u8))
                 {
-                    provisionedBandwidthMbPerSec = PropertyValueRangeLimits.DeserializePropertyValueRangeLimits(property.Value, options);
+                    provisionedBandwidthMbPerSec = ModelSerializationExtensions.JsonDeserialize<PropertyValueRangeLimits>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisionedIops"u8))
                 {
-                    provisionedIops = PropertyValueRangeLimits.DeserializePropertyValueRangeLimits(property.Value, options);
+                    provisionedIops = ModelSerializationExtensions.JsonDeserialize<PropertyValueRangeLimits>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("physicalAvailabilityZones"u8))

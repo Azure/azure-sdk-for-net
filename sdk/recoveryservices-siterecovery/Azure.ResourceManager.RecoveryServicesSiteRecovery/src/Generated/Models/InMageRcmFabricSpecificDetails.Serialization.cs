@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(SourceAgentIdentityDetails))
             {
                 writer.WritePropertyName("sourceAgentIdentityDetails"u8);
-                writer.WriteObjectValue(SourceAgentIdentityDetails, options);
+                ((IJsonModel<IdentityProviderDetails>)SourceAgentIdentityDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ProcessServers))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProcessServers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryProcessServerDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in RcmProxies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RcmProxyDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in PushInstallers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PushInstallerDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ReplicationAgents)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ReplicationAgentDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ReprotectAgents)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ReprotectAgentDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in MarsAgents)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MarsAgentDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Dras)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryDraDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in AgentDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryAgentDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    sourceAgentIdentityDetails = IdentityProviderDetails.DeserializeIdentityProviderDetails(property.Value, options);
+                    sourceAgentIdentityDetails = ModelSerializationExtensions.JsonDeserialize<IdentityProviderDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("processServers"u8))

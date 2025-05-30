@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 writer.WriteStringValue(SubscriptionStatus.Value.ToString());
             }
             writer.WritePropertyName("offerDetails"u8);
-            writer.WriteObjectValue(OfferDetails, options);
+            ((IJsonModel<PureStorageOfferDetails>)OfferDetails).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 }
                 if (property.NameEquals("offerDetails"u8))
                 {
-                    offerDetails = PureStorageOfferDetails.DeserializePureStorageOfferDetails(property.Value, options);
+                    offerDetails = ModelSerializationExtensions.JsonDeserialize<PureStorageOfferDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(InitialPrimaryExtendedLocation))
             {
                 writer.WritePropertyName("initialPrimaryExtendedLocation"u8);
-                writer.WriteObjectValue(InitialPrimaryExtendedLocation, options);
+                ((IJsonModel<SiteRecoveryExtendedLocation>)InitialPrimaryExtendedLocation).Write(writer, options);
             }
             if (Optional.IsDefined(InitialRecoveryExtendedLocation))
             {
                 writer.WritePropertyName("initialRecoveryExtendedLocation"u8);
-                writer.WriteObjectValue(InitialRecoveryExtendedLocation, options);
+                ((IJsonModel<SiteRecoveryExtendedLocation>)InitialRecoveryExtendedLocation).Write(writer, options);
             }
             if (Optional.IsDefined(InitialPrimaryFabricLocation))
             {
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(PrimaryExtendedLocation))
             {
                 writer.WritePropertyName("primaryExtendedLocation"u8);
-                writer.WriteObjectValue(PrimaryExtendedLocation, options);
+                ((IJsonModel<SiteRecoveryExtendedLocation>)PrimaryExtendedLocation).Write(writer, options);
             }
             if (Optional.IsDefined(RecoveryExtendedLocation))
             {
                 writer.WritePropertyName("recoveryExtendedLocation"u8);
-                writer.WriteObjectValue(RecoveryExtendedLocation, options);
+                ((IJsonModel<SiteRecoveryExtendedLocation>)RecoveryExtendedLocation).Write(writer, options);
             }
             if (Optional.IsDefined(PrimaryFabricLocation))
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    initialPrimaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value, options);
+                    initialPrimaryExtendedLocation = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("initialRecoveryExtendedLocation"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    initialRecoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value, options);
+                    initialRecoveryExtendedLocation = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("initialPrimaryFabricLocation"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    primaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value, options);
+                    primaryExtendedLocation = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("recoveryExtendedLocation"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    recoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value, options);
+                    recoveryExtendedLocation = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("primaryFabricLocation"u8))

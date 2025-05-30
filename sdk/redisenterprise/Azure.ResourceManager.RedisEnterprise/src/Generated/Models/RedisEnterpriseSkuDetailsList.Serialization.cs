@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 writer.WriteStartArray();
                 foreach (var item in Skus)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RedisEnterpriseSkuDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

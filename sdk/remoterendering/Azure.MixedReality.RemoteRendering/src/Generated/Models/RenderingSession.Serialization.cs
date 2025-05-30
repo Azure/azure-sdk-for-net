@@ -103,7 +103,7 @@ namespace Azure.MixedReality.RemoteRendering
                         error = null;
                         continue;
                     }
-                    error = RemoteRenderingServiceError.DeserializeRemoteRenderingServiceError(property.Value);
+                    error = ModelSerializationExtensions.JsonDeserialize<RemoteRenderingServiceError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("creationTime"u8))

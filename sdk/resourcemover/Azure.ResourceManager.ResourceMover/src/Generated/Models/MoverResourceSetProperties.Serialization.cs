@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (Errors != null)
                 {
                     writer.WritePropertyName("errors"u8);
-                    writer.WriteObjectValue(Errors, options);
+                    ((IJsonModel<MoveCollectionPropertiesErrors>)Errors).Write(writer, options);
                 }
                 else
                 {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         errors = null;
                         continue;
                     }
-                    errors = MoveCollectionPropertiesErrors.DeserializeMoveCollectionPropertiesErrors(property.Value, options);
+                    errors = ModelSerializationExtensions.JsonDeserialize<MoveCollectionPropertiesErrors>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<FailoverProcessServerProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    properties = FailoverProcessServerProperties.DeserializeFailoverProcessServerProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<FailoverProcessServerProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

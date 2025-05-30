@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Qumulo
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("marketplaceDetails"u8);
-            writer.WriteObjectValue(MarketplaceDetails, options);
+            ((IJsonModel<MarketplaceDetails>)MarketplaceDetails).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Qumulo
             writer.WritePropertyName("storageSku"u8);
             writer.WriteStringValue(StorageSku.ToSerialString());
             writer.WritePropertyName("userDetails"u8);
-            writer.WriteObjectValue(UserDetails, options);
+            ((IJsonModel<QumuloUserDetails>)UserDetails).Write(writer, options);
             writer.WritePropertyName("delegatedSubnetId"u8);
             writer.WriteStringValue(DelegatedSubnetId);
             if (Optional.IsDefined(ClusterLoginUri))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Qumulo
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Qumulo
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Qumulo
                     {
                         if (property0.NameEquals("marketplaceDetails"u8))
                         {
-                            marketplaceDetails = MarketplaceDetails.DeserializeMarketplaceDetails(property0.Value, options);
+                            marketplaceDetails = ModelSerializationExtensions.JsonDeserialize<MarketplaceDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Qumulo
                         }
                         if (property0.NameEquals("userDetails"u8))
                         {
-                            userDetails = QumuloUserDetails.DeserializeQumuloUserDetails(property0.Value, options);
+                            userDetails = ModelSerializationExtensions.JsonDeserialize<QumuloUserDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("delegatedSubnetId"u8))

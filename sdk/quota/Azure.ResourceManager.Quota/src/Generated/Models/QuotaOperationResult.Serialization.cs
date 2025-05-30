@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Quota.Models
             if (Optional.IsDefined(Display))
             {
                 writer.WritePropertyName("display"u8);
-                writer.WriteObjectValue(Display, options);
+                ((IJsonModel<QuotaOperationDisplay>)Display).Write(writer, options);
             }
             if (Optional.IsDefined(Origin))
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    display = QuotaOperationDisplay.DeserializeQuotaOperationDisplay(property.Value, options);
+                    display = ModelSerializationExtensions.JsonDeserialize<QuotaOperationDisplay>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("origin"u8))

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (ResourceSettings != null)
                 {
                     writer.WritePropertyName("resourceSettings"u8);
-                    writer.WriteObjectValue(ResourceSettings, options);
+                    ((IJsonModel<MoverResourceSettings>)ResourceSettings).Write(writer, options);
                 }
                 else
                 {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (SourceResourceSettings != null)
                 {
                     writer.WritePropertyName("sourceResourceSettings"u8);
-                    writer.WriteObjectValue(SourceResourceSettings, options);
+                    ((IJsonModel<MoverResourceSettings>)SourceResourceSettings).Write(writer, options);
                 }
                 else
                 {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (options.Format != "W" && Optional.IsDefined(MoveStatus))
             {
                 writer.WritePropertyName("moveStatus"u8);
-                writer.WriteObjectValue(MoveStatus, options);
+                ((IJsonModel<MoverResourcePropertiesMoveStatus>)MoveStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(DependsOn))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MoverResourceDependency>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOnOverrides)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MoverResourceDependencyOverride>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (Errors != null)
                 {
                     writer.WritePropertyName("errors"u8);
-                    writer.WriteObjectValue(Errors, options);
+                    ((IJsonModel<MoveResourcePropertiesErrors>)Errors).Write(writer, options);
                 }
                 else
                 {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         resourceSettings = null;
                         continue;
                     }
-                    resourceSettings = MoverResourceSettings.DeserializeMoverResourceSettings(property.Value, options);
+                    resourceSettings = ModelSerializationExtensions.JsonDeserialize<MoverResourceSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sourceResourceSettings"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         sourceResourceSettings = null;
                         continue;
                     }
-                    sourceResourceSettings = MoverResourceSettings.DeserializeMoverResourceSettings(property.Value, options);
+                    sourceResourceSettings = ModelSerializationExtensions.JsonDeserialize<MoverResourceSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("moveStatus"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     {
                         continue;
                     }
-                    moveStatus = MoverResourcePropertiesMoveStatus.DeserializeMoverResourcePropertiesMoveStatus(property.Value, options);
+                    moveStatus = ModelSerializationExtensions.JsonDeserialize<MoverResourcePropertiesMoveStatus>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dependsOn"u8))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         errors = null;
                         continue;
                     }
-                    errors = MoveResourcePropertiesErrors.DeserializeMoveResourcePropertiesErrors(property.Value, options);
+                    errors = ModelSerializationExtensions.JsonDeserialize<MoveResourcePropertiesErrors>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

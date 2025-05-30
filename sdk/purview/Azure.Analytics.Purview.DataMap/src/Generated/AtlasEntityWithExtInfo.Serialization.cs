@@ -41,14 +41,14 @@ namespace Azure.Analytics.Purview.DataMap
                 foreach (var item in ReferredEntities)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<AtlasEntity>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(Entity))
             {
                 writer.WritePropertyName("entity"u8);
-                writer.WriteObjectValue(Entity, options);
+                ((IJsonModel<AtlasEntity>)Entity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -113,7 +113,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    entity = AtlasEntity.DeserializeAtlasEntity(property.Value, options);
+                    entity = ModelSerializationExtensions.JsonDeserialize<AtlasEntity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

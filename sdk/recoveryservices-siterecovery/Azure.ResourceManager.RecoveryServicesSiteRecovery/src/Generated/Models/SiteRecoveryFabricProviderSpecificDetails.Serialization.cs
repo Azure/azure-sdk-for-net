@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Zones)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<A2AZoneDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ExtendedLocations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<A2AExtendedLocationDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in LocationDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<A2AFabricSpecificLocationDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

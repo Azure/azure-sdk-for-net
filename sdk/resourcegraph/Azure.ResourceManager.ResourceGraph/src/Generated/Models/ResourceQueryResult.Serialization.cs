@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 writer.WriteStartArray();
                 foreach (var item in Facets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<Facet>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

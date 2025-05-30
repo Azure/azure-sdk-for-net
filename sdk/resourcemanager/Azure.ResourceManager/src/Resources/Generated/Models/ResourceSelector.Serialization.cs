@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Selectors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceSelectorExpression>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

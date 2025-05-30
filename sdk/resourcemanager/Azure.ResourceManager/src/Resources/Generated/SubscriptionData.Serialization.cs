@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(SubscriptionPolicies))
             {
                 writer.WritePropertyName("subscriptionPolicies"u8);
-                writer.WriteObjectValue(SubscriptionPolicies, options);
+                ((IJsonModel<SubscriptionPolicies>)SubscriptionPolicies).Write(writer, options);
             }
             if (Optional.IsDefined(AuthorizationSource))
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in ManagedByTenants)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedByTenant>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    subscriptionPolicies = SubscriptionPolicies.DeserializeSubscriptionPolicies(property.Value, options);
+                    subscriptionPolicies = ModelSerializationExtensions.JsonDeserialize<SubscriptionPolicies>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("authorizationSource"u8))

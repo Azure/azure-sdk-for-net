@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in SiteRecoveryInnerHealthErrorsList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryInnerHealthError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

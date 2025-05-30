@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(LastBackupErrorDetail))
             {
                 writer.WritePropertyName("lastBackupErrorDetail"u8);
-                writer.WriteObjectValue(LastBackupErrorDetail, options);
+                ((IJsonModel<BackupErrorDetail>)LastBackupErrorDetail).Write(writer, options);
             }
             if (Optional.IsDefined(ProtectedItemDataSourceId))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo, options);
+                ((IJsonModel<VmWorkloadProtectedItemExtendedInfo>)ExtendedInfo).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(KpisHealths))
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 foreach (var item in KpisHealths)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<KpiResourceHealthDetails>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in NodesList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DistributedNodesInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    lastBackupErrorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value, options);
+                    lastBackupErrorDetail = ModelSerializationExtensions.JsonDeserialize<BackupErrorDetail>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("protectedItemDataSourceId"u8))
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = VmWorkloadProtectedItemExtendedInfo.DeserializeVmWorkloadProtectedItemExtendedInfo(property.Value, options);
+                    extendedInfo = ModelSerializationExtensions.JsonDeserialize<VmWorkloadProtectedItemExtendedInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kpisHealths"u8))

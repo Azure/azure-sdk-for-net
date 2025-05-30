@@ -38,22 +38,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(DailySchedule))
             {
                 writer.WritePropertyName("dailySchedule"u8);
-                writer.WriteObjectValue(DailySchedule, options);
+                ((IJsonModel<DailyRetentionSchedule>)DailySchedule).Write(writer, options);
             }
             if (Optional.IsDefined(WeeklySchedule))
             {
                 writer.WritePropertyName("weeklySchedule"u8);
-                writer.WriteObjectValue(WeeklySchedule, options);
+                ((IJsonModel<WeeklyRetentionSchedule>)WeeklySchedule).Write(writer, options);
             }
             if (Optional.IsDefined(MonthlySchedule))
             {
                 writer.WritePropertyName("monthlySchedule"u8);
-                writer.WriteObjectValue(MonthlySchedule, options);
+                ((IJsonModel<MonthlyRetentionSchedule>)MonthlySchedule).Write(writer, options);
             }
             if (Optional.IsDefined(YearlySchedule))
             {
                 writer.WritePropertyName("yearlySchedule"u8);
-                writer.WriteObjectValue(YearlySchedule, options);
+                ((IJsonModel<YearlyRetentionSchedule>)YearlySchedule).Write(writer, options);
             }
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    dailySchedule = DailyRetentionSchedule.DeserializeDailyRetentionSchedule(property.Value, options);
+                    dailySchedule = ModelSerializationExtensions.JsonDeserialize<DailyRetentionSchedule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("weeklySchedule"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    weeklySchedule = WeeklyRetentionSchedule.DeserializeWeeklyRetentionSchedule(property.Value, options);
+                    weeklySchedule = ModelSerializationExtensions.JsonDeserialize<WeeklyRetentionSchedule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("monthlySchedule"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    monthlySchedule = MonthlyRetentionSchedule.DeserializeMonthlyRetentionSchedule(property.Value, options);
+                    monthlySchedule = ModelSerializationExtensions.JsonDeserialize<MonthlyRetentionSchedule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("yearlySchedule"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    yearlySchedule = YearlyRetentionSchedule.DeserializeYearlyRetentionSchedule(property.Value, options);
+                    yearlySchedule = ModelSerializationExtensions.JsonDeserialize<YearlyRetentionSchedule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("retentionPolicyType"u8))

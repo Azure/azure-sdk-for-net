@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.RecoveryServices
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<RecoveryServicesVaultProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<RecoveryServicesSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(ETag))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServices
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServices
                     {
                         continue;
                     }
-                    properties = RecoveryServicesVaultProperties.DeserializeRecoveryServicesVaultProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<RecoveryServicesVaultProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServices
                     {
                         continue;
                     }
-                    sku = RecoveryServicesSku.DeserializeRecoveryServicesSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<RecoveryServicesSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.RecoveryServices
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

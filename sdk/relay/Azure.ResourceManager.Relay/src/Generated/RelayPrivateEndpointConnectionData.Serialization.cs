@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.Relay
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
+                ((IJsonModel<WritableSubResource>)PrivateEndpoint).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState, options);
+                ((IJsonModel<RelayPrivateLinkServiceConnectionState>)ConnectionState).Write(writer, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Relay
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Relay
                             {
                                 continue;
                             }
-                            privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            privateEndpoint = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Relay
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = RelayPrivateLinkServiceConnectionState.DeserializeRelayPrivateLinkServiceConnectionState(property0.Value, options);
+                            privateLinkServiceConnectionState = ModelSerializationExtensions.JsonDeserialize<RelayPrivateLinkServiceConnectionState>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

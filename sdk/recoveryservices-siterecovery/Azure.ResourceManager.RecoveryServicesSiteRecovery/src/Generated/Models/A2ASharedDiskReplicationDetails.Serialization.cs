@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in UnprotectedDisks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<A2AUnprotectedDiskDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedManagedDisks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<A2AProtectedManagedDiskDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in SharedDiskIRErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<A2ASharedDiskIRErrorDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

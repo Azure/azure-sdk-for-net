@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IaasVmHealthDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 foreach (var item in KpisHealths)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<KpiResourceHealthDetails>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo, options);
+                ((IJsonModel<IaasVmProtectedItemExtendedInfo>)ExtendedInfo).Write(writer, options);
             }
             if (Optional.IsDefined(ExtendedProperties))
             {
                 writer.WritePropertyName("extendedProperties"u8);
-                writer.WriteObjectValue(ExtendedProperties, options);
+                ((IJsonModel<IaasVmBackupExtendedProperties>)ExtendedProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PolicyType))
             {
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = IaasVmProtectedItemExtendedInfo.DeserializeIaasVmProtectedItemExtendedInfo(property.Value, options);
+                    extendedInfo = ModelSerializationExtensions.JsonDeserialize<IaasVmProtectedItemExtendedInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extendedProperties"u8))
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedProperties = IaasVmBackupExtendedProperties.DeserializeIaasVmBackupExtendedProperties(property.Value, options);
+                    extendedProperties = ModelSerializationExtensions.JsonDeserialize<IaasVmBackupExtendedProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policyType"u8))

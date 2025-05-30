@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WritePropertyName("vaultRetention"u8);
-            writer.WriteObjectValue(VaultRetention, options);
+            ((IJsonModel<BackupRetentionPolicy>)VaultRetention).Write(writer, options);
             writer.WritePropertyName("snapshotRetentionInDays"u8);
             writer.WriteNumberValue(SnapshotRetentionInDays);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 if (property.NameEquals("vaultRetention"u8))
                 {
-                    vaultRetention = BackupRetentionPolicy.DeserializeBackupRetentionPolicy(property.Value, options);
+                    vaultRetention = ModelSerializationExtensions.JsonDeserialize<BackupRetentionPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("snapshotRetentionInDays"u8))

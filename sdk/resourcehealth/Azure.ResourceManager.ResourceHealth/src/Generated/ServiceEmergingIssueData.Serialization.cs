@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WriteStartArray();
                 foreach (var item in StatusBanners)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EmergingIssueBannerType>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WriteStartArray();
                 foreach (var item in StatusActiveEvents)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EmergingIssueActiveEventType>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ResourceHealth
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

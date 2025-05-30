@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in DisksToInclude)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InMageRcmDiskContent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DisksDefault))
             {
                 writer.WritePropertyName("disksDefault"u8);
-                writer.WriteObjectValue(DisksDefault, options);
+                ((IJsonModel<InMageRcmDisksDefaultContent>)DisksDefault).Write(writer, options);
             }
             writer.WritePropertyName("targetResourceGroupId"u8);
             writer.WriteStringValue(TargetResourceGroupId);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetVmTags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UserCreatedResourceTag>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in SeedManagedDiskTags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UserCreatedResourceTag>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetManagedDiskTags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UserCreatedResourceTag>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetNicTags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UserCreatedResourceTag>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(TargetVmSecurityProfile))
             {
                 writer.WritePropertyName("targetVmSecurityProfile"u8);
-                writer.WriteObjectValue(TargetVmSecurityProfile, options);
+                ((IJsonModel<RecoveryServicesSiteRecoverySecurityProfileProperties>)TargetVmSecurityProfile).Write(writer, options);
             }
         }
 
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    disksDefault = InMageRcmDisksDefaultContent.DeserializeInMageRcmDisksDefaultContent(property.Value, options);
+                    disksDefault = ModelSerializationExtensions.JsonDeserialize<InMageRcmDisksDefaultContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetResourceGroupId"u8))
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    targetVmSecurityProfile = RecoveryServicesSiteRecoverySecurityProfileProperties.DeserializeRecoveryServicesSiteRecoverySecurityProfileProperties(property.Value, options);
+                    targetVmSecurityProfile = ModelSerializationExtensions.JsonDeserialize<RecoveryServicesSiteRecoverySecurityProfileProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))

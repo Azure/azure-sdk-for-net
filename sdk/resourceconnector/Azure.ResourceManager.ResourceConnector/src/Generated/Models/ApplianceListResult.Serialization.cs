@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceConnectorApplianceData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

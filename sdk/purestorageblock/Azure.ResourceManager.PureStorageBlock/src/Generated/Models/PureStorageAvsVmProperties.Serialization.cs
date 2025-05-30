@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             if (Optional.IsDefined(SoftDeletion))
             {
                 writer.WritePropertyName("softDeletion"u8);
-                writer.WriteObjectValue(SoftDeletion, options);
+                ((IJsonModel<PureStorageSoftDeletionState>)SoftDeletion).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(VolumeContainerType))
             {
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             if (options.Format != "W" && Optional.IsDefined(Avs))
             {
                 writer.WritePropertyName("avs"u8);
-                writer.WriteObjectValue(Avs, options);
+                ((IJsonModel<PureStorageAvsVmDetails>)Avs).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Space))
             {
                 writer.WritePropertyName("space"u8);
-                writer.WriteObjectValue(Space, options);
+                ((IJsonModel<PureStorageSpaceUsage>)Space).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    softDeletion = PureStorageSoftDeletionState.DeserializePureStorageSoftDeletionState(property.Value, options);
+                    softDeletion = ModelSerializationExtensions.JsonDeserialize<PureStorageSoftDeletionState>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("volumeContainerType"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    avs = PureStorageAvsVmDetails.DeserializePureStorageAvsVmDetails(property.Value, options);
+                    avs = ModelSerializationExtensions.JsonDeserialize<PureStorageAvsVmDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("space"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    space = PureStorageSpaceUsage.DeserializePureStorageSpaceUsage(property.Value, options);
+                    space = ModelSerializationExtensions.JsonDeserialize<PureStorageSpaceUsage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

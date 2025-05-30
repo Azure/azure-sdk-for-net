@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    lastBackupErrorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value, options);
+                    lastBackupErrorDetail = ModelSerializationExtensions.JsonDeserialize<BackupErrorDetail>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("protectedItemDataSourceId"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = VmWorkloadProtectedItemExtendedInfo.DeserializeVmWorkloadProtectedItemExtendedInfo(property.Value, options);
+                    extendedInfo = ModelSerializationExtensions.JsonDeserialize<VmWorkloadProtectedItemExtendedInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kpisHealths"u8))

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RecoveryPointProperties))
             {
                 writer.WritePropertyName("recoveryPointProperties"u8);
-                writer.WriteObjectValue(RecoveryPointProperties, options);
+                ((IJsonModel<RecoveryPointProperties>)RecoveryPointProperties).Write(writer, options);
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    recoveryPointProperties = RecoveryPointProperties.DeserializeRecoveryPointProperties(property.Value, options);
+                    recoveryPointProperties = ModelSerializationExtensions.JsonDeserialize<RecoveryPointProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))

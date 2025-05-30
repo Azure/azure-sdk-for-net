@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(ContainerSettings))
             {
                 writer.WritePropertyName("containerSettings"u8);
-                writer.WriteObjectValue(ContainerSettings, options);
+                ((IJsonModel<ContainerConfiguration>)ContainerSettings).Write(writer, options);
             }
             if (Optional.IsDefined(StorageAccountSettings))
             {
                 writer.WritePropertyName("storageAccountSettings"u8);
-                writer.WriteObjectValue(StorageAccountSettings, options);
+                ((IJsonModel<ScriptStorageConfiguration>)StorageAccountSettings).Write(writer, options);
             }
             if (Optional.IsDefined(CleanupPreference))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<ScriptStatus>)Status).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Outputs))
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    containerSettings = ContainerConfiguration.DeserializeContainerConfiguration(property.Value, options);
+                    containerSettings = ModelSerializationExtensions.JsonDeserialize<ContainerConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storageAccountSettings"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    storageAccountSettings = ScriptStorageConfiguration.DeserializeScriptStorageConfiguration(property.Value, options);
+                    storageAccountSettings = ModelSerializationExtensions.JsonDeserialize<ScriptStorageConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("cleanupPreference"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    status = ScriptStatus.DeserializeScriptStatus(property.Value, options);
+                    status = ModelSerializationExtensions.JsonDeserialize<ScriptStatus>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("outputs"u8))

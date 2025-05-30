@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Reservations
                 writer.WriteStartArray();
                 foreach (var item in QuotaRequestValue)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SubContent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Reservations
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(ActionOnUnmanage))
             {
                 writer.WritePropertyName("actionOnUnmanage"u8);
-                writer.WriteObjectValue(ActionOnUnmanage, options);
+                ((IJsonModel<ActionOnUnmanage>)ActionOnUnmanage).Write(writer, options);
             }
             if (Optional.IsDefined(CorrelationId))
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(DenySettings))
             {
                 writer.WritePropertyName("denySettings"u8);
-                writer.WriteObjectValue(DenySettings, options);
+                ((IJsonModel<DenySettings>)DenySettings).Write(writer, options);
             }
             if (Optional.IsDefined(DeploymentScope))
             {
@@ -68,14 +68,14 @@ namespace Azure.ResourceManager.Resources.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<DeploymentParameter>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(TemplateLink))
             {
                 writer.WritePropertyName("templateLink"u8);
-                writer.WriteObjectValue(TemplateLink, options);
+                ((IJsonModel<DeploymentStacksTemplateLink>)TemplateLink).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ValidatedResources))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidatedResources)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    actionOnUnmanage = ActionOnUnmanage.DeserializeActionOnUnmanage(property.Value, options);
+                    actionOnUnmanage = ModelSerializationExtensions.JsonDeserialize<ActionOnUnmanage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("correlationId"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    denySettings = DenySettings.DeserializeDenySettings(property.Value, options);
+                    denySettings = ModelSerializationExtensions.JsonDeserialize<DenySettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deploymentScope"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    templateLink = DeploymentStacksTemplateLink.DeserializeDeploymentStacksTemplateLink(property.Value, options);
+                    templateLink = ModelSerializationExtensions.JsonDeserialize<DeploymentStacksTemplateLink>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("validatedResources"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<SubResource> array = new List<SubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                        array.Add(ModelSerializationExtensions.JsonDeserialize<SubResource>(item));
                     }
                     validatedResources = array;
                     continue;

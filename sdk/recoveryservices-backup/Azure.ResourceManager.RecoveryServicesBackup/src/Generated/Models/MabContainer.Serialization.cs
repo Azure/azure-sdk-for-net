@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo, options);
+                ((IJsonModel<MabContainerExtendedInfo>)ExtendedInfo).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(MabContainerHealthDetails))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in MabContainerHealthDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MabContainerHealthDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = MabContainerExtendedInfo.DeserializeMabContainerExtendedInfo(property.Value, options);
+                    extendedInfo = ModelSerializationExtensions.JsonDeserialize<MabContainerExtendedInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mabContainerHealthDetails"u8))

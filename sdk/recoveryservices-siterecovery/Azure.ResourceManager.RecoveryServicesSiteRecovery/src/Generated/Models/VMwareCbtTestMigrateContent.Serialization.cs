@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VMwareCbtNicContent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in PostMigrationSteps)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedRunCommandScriptContent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ReservationPurchaseContent>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(BillingCurrencyTotal))
             {
                 writer.WritePropertyName("billingCurrencyTotal"u8);
-                writer.WriteObjectValue(BillingCurrencyTotal, options);
+                ((IJsonModel<PurchasePrice>)BillingCurrencyTotal).Write(writer, options);
             }
             if (Optional.IsDefined(Status))
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    properties = ReservationPurchaseContent.DeserializeReservationPurchaseContent(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ReservationPurchaseContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("billingCurrencyTotal"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value, options);
+                    billingCurrencyTotal = ModelSerializationExtensions.JsonDeserialize<PurchasePrice>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))

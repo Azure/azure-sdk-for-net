@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Quota
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<GroupQuotaSubscriptionRequestStatusProperties>)Properties).Write(writer, options);
             }
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Quota
                     {
                         continue;
                     }
-                    properties = GroupQuotaSubscriptionRequestStatusProperties.DeserializeGroupQuotaSubscriptionRequestStatusProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<GroupQuotaSubscriptionRequestStatusProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Quota
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

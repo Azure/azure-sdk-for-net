@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
 
             writer.WritePropertyName("storagePool"u8);
-            writer.WriteObjectValue(StoragePool, options);
+            ((IJsonModel<StoragePoolLimits>)StoragePool).Write(writer, options);
             writer.WritePropertyName("volume"u8);
-            writer.WriteObjectValue(Volume, options);
+            ((IJsonModel<VolumeLimits>)Volume).Write(writer, options);
             writer.WritePropertyName("protectionPolicy"u8);
-            writer.WriteObjectValue(ProtectionPolicy, options);
+            ((IJsonModel<ProtectionPolicyLimits>)ProtectionPolicy).Write(writer, options);
             writer.WritePropertyName("performancePolicy"u8);
-            writer.WriteObjectValue(PerformancePolicy, options);
+            ((IJsonModel<PerformancePolicyLimits>)PerformancePolicy).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,22 +89,22 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             {
                 if (property.NameEquals("storagePool"u8))
                 {
-                    storagePool = StoragePoolLimits.DeserializeStoragePoolLimits(property.Value, options);
+                    storagePool = ModelSerializationExtensions.JsonDeserialize<StoragePoolLimits>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("volume"u8))
                 {
-                    volume = VolumeLimits.DeserializeVolumeLimits(property.Value, options);
+                    volume = ModelSerializationExtensions.JsonDeserialize<VolumeLimits>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("protectionPolicy"u8))
                 {
-                    protectionPolicy = ProtectionPolicyLimits.DeserializeProtectionPolicyLimits(property.Value, options);
+                    protectionPolicy = ModelSerializationExtensions.JsonDeserialize<ProtectionPolicyLimits>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("performancePolicy"u8))
                 {
-                    performancePolicy = PerformancePolicyLimits.DeserializePerformancePolicyLimits(property.Value, options);
+                    performancePolicy = ModelSerializationExtensions.JsonDeserialize<PerformancePolicyLimits>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

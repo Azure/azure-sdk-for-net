@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(HourlySchedule))
             {
                 writer.WritePropertyName("hourlySchedule"u8);
-                writer.WriteObjectValue(HourlySchedule, options);
+                ((IJsonModel<BackupHourlySchedule>)HourlySchedule).Write(writer, options);
             }
             if (Optional.IsDefined(DailySchedule))
             {
                 writer.WritePropertyName("dailySchedule"u8);
-                writer.WriteObjectValue(DailySchedule, options);
+                ((IJsonModel<BackupDailySchedule>)DailySchedule).Write(writer, options);
             }
             if (Optional.IsDefined(WeeklySchedule))
             {
                 writer.WritePropertyName("weeklySchedule"u8);
-                writer.WriteObjectValue(WeeklySchedule, options);
+                ((IJsonModel<BackupWeeklySchedule>)WeeklySchedule).Write(writer, options);
             }
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    hourlySchedule = BackupHourlySchedule.DeserializeBackupHourlySchedule(property.Value, options);
+                    hourlySchedule = ModelSerializationExtensions.JsonDeserialize<BackupHourlySchedule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dailySchedule"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    dailySchedule = BackupDailySchedule.DeserializeBackupDailySchedule(property.Value, options);
+                    dailySchedule = ModelSerializationExtensions.JsonDeserialize<BackupDailySchedule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("weeklySchedule"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    weeklySchedule = BackupWeeklySchedule.DeserializeBackupWeeklySchedule(property.Value, options);
+                    weeklySchedule = ModelSerializationExtensions.JsonDeserialize<BackupWeeklySchedule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("schedulePolicyType"u8))

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ReservationUpdateProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    properties = ReservationUpdateProperties.DeserializeReservationUpdateProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ReservationUpdateProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

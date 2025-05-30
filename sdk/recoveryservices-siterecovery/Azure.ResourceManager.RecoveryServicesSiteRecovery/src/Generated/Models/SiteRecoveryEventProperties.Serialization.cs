@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
-                writer.WriteObjectValue(ProviderSpecificDetails, options);
+                ((IJsonModel<SiteRecoveryEventProviderSpecificDetails>)ProviderSpecificDetails).Write(writer, options);
             }
             if (Optional.IsDefined(EventSpecificDetails))
             {
                 writer.WritePropertyName("eventSpecificDetails"u8);
-                writer.WriteObjectValue(EventSpecificDetails, options);
+                ((IJsonModel<SiteRecoveryEventSpecificDetails>)EventSpecificDetails).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(HealthErrors))
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryHealthError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = SiteRecoveryEventProviderSpecificDetails.DeserializeSiteRecoveryEventProviderSpecificDetails(property.Value, options);
+                    providerSpecificDetails = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryEventProviderSpecificDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eventSpecificDetails"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    eventSpecificDetails = SiteRecoveryEventSpecificDetails.DeserializeSiteRecoveryEventSpecificDetails(property.Value, options);
+                    eventSpecificDetails = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryEventSpecificDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("healthErrors"u8))

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 if (Parent != null)
                 {
                     writer.WritePropertyName("parent"u8);
-                    writer.WriteObjectValue(Parent, options);
+                    ((IJsonModel<DescendantParentGroupInfo>)Parent).Write(writer, options);
                 }
                 else
                 {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ManagementGroups
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ManagementGroups
                                 parent = null;
                                 continue;
                             }
-                            parent = DescendantParentGroupInfo.DeserializeDescendantParentGroupInfo(property0.Value, options);
+                            parent = ModelSerializationExtensions.JsonDeserialize<DescendantParentGroupInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("state"u8))

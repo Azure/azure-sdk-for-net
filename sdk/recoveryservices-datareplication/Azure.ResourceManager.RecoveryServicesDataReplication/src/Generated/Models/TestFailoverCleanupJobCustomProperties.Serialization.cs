@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    affectedObjectDetails = AffectedObjectDetails.DeserializeAffectedObjectDetails(property.Value, options);
+                    affectedObjectDetails = ModelSerializationExtensions.JsonDeserialize<AffectedObjectDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

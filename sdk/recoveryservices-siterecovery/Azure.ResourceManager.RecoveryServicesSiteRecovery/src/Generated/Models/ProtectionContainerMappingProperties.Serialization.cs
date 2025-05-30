@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
-                writer.WriteObjectValue(ProviderSpecificDetails, options);
+                ((IJsonModel<ProtectionContainerMappingProviderSpecificDetails>)ProviderSpecificDetails).Write(writer, options);
             }
             if (Optional.IsDefined(Health))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrorDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryHealthError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = ProtectionContainerMappingProviderSpecificDetails.DeserializeProtectionContainerMappingProviderSpecificDetails(property.Value, options);
+                    providerSpecificDetails = ModelSerializationExtensions.JsonDeserialize<ProtectionContainerMappingProviderSpecificDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("health"u8))

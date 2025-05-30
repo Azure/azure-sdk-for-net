@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata, options);
+                ((IJsonModel<ParameterDefinitionsValueMetadata>)Metadata).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    metadata = ParameterDefinitionsValueMetadata.DeserializeParameterDefinitionsValueMetadata(property.Value, options);
+                    metadata = ModelSerializationExtensions.JsonDeserialize<ParameterDefinitionsValueMetadata>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

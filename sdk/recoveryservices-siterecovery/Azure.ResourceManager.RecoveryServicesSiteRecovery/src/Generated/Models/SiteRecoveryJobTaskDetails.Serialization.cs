@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(JobTask))
             {
                 writer.WritePropertyName("jobTask"u8);
-                writer.WriteObjectValue(JobTask, options);
+                ((IJsonModel<SiteRecoveryJobEntity>)JobTask).Write(writer, options);
             }
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    jobTask = SiteRecoveryJobEntity.DeserializeSiteRecoveryJobEntity(property.Value, options);
+                    jobTask = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryJobEntity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))

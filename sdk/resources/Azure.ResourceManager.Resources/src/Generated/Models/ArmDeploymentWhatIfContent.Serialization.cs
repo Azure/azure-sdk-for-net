@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<ArmDeploymentWhatIfProperties>)Properties).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = ArmDeploymentWhatIfProperties.DeserializeArmDeploymentWhatIfProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ArmDeploymentWhatIfProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

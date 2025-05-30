@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("customProperties"u8);
-            writer.WriteObjectValue(CustomProperties, options);
+            ((IJsonModel<DataReplicationExtensionCustomProperties>)CustomProperties).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = DataReplicationExtensionCustomProperties.DeserializeDataReplicationExtensionCustomProperties(property.Value, options);
+                    customProperties = ModelSerializationExtensions.JsonDeserialize<DataReplicationExtensionCustomProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")
