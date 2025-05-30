@@ -72,8 +72,15 @@ public class SqlSpecification() :
         RemoveModel<DiffBackupIntervalInHours>(); // TODO: Maybe support extensible enums of other types?
         CustomizeProperty<BackupShortTermRetentionPolicyResource>("DiffBackupIntervalInHours", p => p.PropertyType = TypeRegistry.Get<int>());
         CustomizePropertyIsoDuration<SqlServerJobSchedule>("Interval");
+        OrderEnum<ManagedInstancePropertiesProvisioningState>("Creating", "Deleting", "Updating", "Unknown", "Succeeded", "Failed", "Accepted", "Created", "Deleted", "Unrecognized", "Running", "Canceled", "NotSpecified", "Registering", "TimedOut");
         // Not generated today:
         // CustomizePropertyIsoDuration<MaintenanceWindowTimeRange>("Duration");
+        IncludeVersions<ManagedInstanceAdvancedThreatProtectionResource>("2021-11-01");
+        IncludeVersions<ManagedDatabaseAdvancedThreatProtectionResource>("2021-11-01");
+        IncludeVersions<ManagedLedgerDigestUploadResource>("2021-11-01");
+        IncludeVersions<SqlServerSqlVulnerabilityAssessmentResource>("2014-01-01", "2014-04-01", "2021-11-01");
+        IncludeVersions<SqlServerSqlVulnerabilityAssessmentBaselineResource>("2014-01-01", "2014-04-01", "2021-11-01");
+        IncludeVersions<SqlServerSqlVulnerabilityAssessmentBaselineRuleResource>("2014-01-01", "2014-04-01", "2021-11-01");
 
         // Naming requirements
         AddNameRequirements<ManagedInstanceResource>(min: 1, max: 63, lower: true, digits: true, hyphen: true);

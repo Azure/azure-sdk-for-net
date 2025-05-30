@@ -37,10 +37,13 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubEntityStatus> Status { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> UpdatedOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> UserMetadata { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventHubs.EventHub FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_09_01;
+            public static readonly string V2015_08_01;
             public static readonly string V2017_04_01;
             public static readonly string V2021_11_01;
             public static readonly string V2024_01_01;
@@ -62,6 +65,8 @@ namespace Azure.Provisioning.EventHubs
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_09_01;
+            public static readonly string V2015_08_01;
             public static readonly string V2017_04_01;
             public static readonly string V2021_11_01;
             public static readonly string V2024_01_01;
@@ -235,6 +240,8 @@ namespace Azure.Provisioning.EventHubs
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_09_01;
+            public static readonly string V2015_08_01;
             public static readonly string V2017_04_01;
             public static readonly string V2021_11_01;
             public static readonly string V2024_01_01;
@@ -313,6 +320,7 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> DisableLocalAuth { get { throw null; } set { } }
         public Azure.Provisioning.EventHubs.EventHubsEncryption Encryption { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.EventHubs.NamespaceGeoDataReplicationProperties GeoDataReplication { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
@@ -364,6 +372,8 @@ namespace Azure.Provisioning.EventHubs
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_09_01;
+            public static readonly string V2015_08_01;
             public static readonly string V2017_04_01;
             public static readonly string V2021_11_01;
             public static readonly string V2024_01_01;
@@ -552,6 +562,7 @@ namespace Azure.Provisioning.EventHubs
         [System.Runtime.Serialization.DataMemberAttribute(Name="1.2")]
         Tls1_2 = 2,
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class NamespaceGeoDataReplicationProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public NamespaceGeoDataReplicationProperties() { }
@@ -559,11 +570,13 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.BicepValue<int> MaxReplicationLagDurationInSeconds { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public enum NamespaceGeoDRRoleType
     {
         Primary = 0,
         Secondary = 1,
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class NamespaceReplicaLocation : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public NamespaceReplicaLocation() { }

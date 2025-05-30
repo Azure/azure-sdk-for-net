@@ -30,6 +30,16 @@ public partial class CognitiveServicesNetworkRuleSet : ProvisionableConstruct
     private BicepValue<CognitiveServicesNetworkRuleAction>? _defaultAction;
 
     /// <summary>
+    /// Setting for trusted services.
+    /// </summary>
+    public BicepValue<TrustedServicesByPassSelection> Bypass 
+    {
+        get { Initialize(); return _bypass!; }
+        set { Initialize(); _bypass!.Assign(value); }
+    }
+    private BicepValue<TrustedServicesByPassSelection>? _bypass;
+
+    /// <summary>
     /// The list of IP address rules.
     /// </summary>
     public BicepList<CognitiveServicesIPRule> IPRules 
@@ -64,6 +74,7 @@ public partial class CognitiveServicesNetworkRuleSet : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _defaultAction = DefineProperty<CognitiveServicesNetworkRuleAction>("DefaultAction", ["defaultAction"]);
+        _bypass = DefineProperty<TrustedServicesByPassSelection>("Bypass", ["bypass"]);
         _iPRules = DefineListProperty<CognitiveServicesIPRule>("IPRules", ["ipRules"]);
         _virtualNetworkRules = DefineListProperty<CognitiveServicesVirtualNetworkRule>("VirtualNetworkRules", ["virtualNetworkRules"]);
     }

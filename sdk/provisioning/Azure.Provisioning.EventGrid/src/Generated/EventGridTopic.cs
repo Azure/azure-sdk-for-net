@@ -62,16 +62,6 @@ public partial class EventGridTopic : ProvisionableResource
     private PartnerTopicEventTypeInfo? _eventTypeInfo;
 
     /// <summary>
-    /// Extended location of the resource.
-    /// </summary>
-    public ExtendedAzureLocation ExtendedLocation 
-    {
-        get { Initialize(); return _extendedLocation!; }
-        set { Initialize(); AssignOrReplace(ref _extendedLocation, value); }
-    }
-    private ExtendedAzureLocation? _extendedLocation;
-
-    /// <summary>
     /// Identity information for the resource.
     /// </summary>
     public ManagedServiceIdentity Identity 
@@ -135,16 +125,6 @@ public partial class EventGridTopic : ProvisionableResource
     private BicepValue<bool>? _isLocalAuthDisabled;
 
     /// <summary>
-    /// Kind of the resource.
-    /// </summary>
-    public BicepValue<ResourceKind> Kind 
-    {
-        get { Initialize(); return _kind!; }
-        set { Initialize(); _kind!.Assign(value); }
-    }
-    private BicepValue<ResourceKind>? _kind;
-
-    /// <summary>
     /// Minimum TLS version of the publisher allowed to publish to this topic.
     /// </summary>
     public BicepValue<TlsVersion> MinimumTlsVersionAllowed 
@@ -167,16 +147,6 @@ public partial class EventGridTopic : ProvisionableResource
         set { Initialize(); _publicNetworkAccess!.Assign(value); }
     }
     private BicepValue<EventGridPublicNetworkAccess>? _publicNetworkAccess;
-
-    /// <summary>
-    /// The Sku name of the resource. The possible values are: Basic or Premium.
-    /// </summary>
-    public BicepValue<EventGridSku> SkuName 
-    {
-        get { Initialize(); return _skuName!; }
-        set { Initialize(); _skuName!.Assign(value); }
-    }
-    private BicepValue<EventGridSku>? _skuName;
 
     /// <summary>
     /// Gets or sets the Tags.
@@ -253,7 +223,7 @@ public partial class EventGridTopic : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the EventGridTopic.</param>
     public EventGridTopic(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.EventGrid/topics", resourceVersion ?? "2022-06-15")
+        : base(bicepIdentifier, "Microsoft.EventGrid/topics", resourceVersion ?? "2025-02-15")
     {
     }
 
@@ -266,16 +236,13 @@ public partial class EventGridTopic : ProvisionableResource
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _dataResidencyBoundary = DefineProperty<DataResidencyBoundary>("DataResidencyBoundary", ["properties", "dataResidencyBoundary"]);
         _eventTypeInfo = DefineModelProperty<PartnerTopicEventTypeInfo>("EventTypeInfo", ["properties", "eventTypeInfo"]);
-        _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
         _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
         _inboundIPRules = DefineListProperty<EventGridInboundIPRule>("InboundIPRules", ["properties", "inboundIpRules"]);
         _inputSchema = DefineProperty<EventGridInputSchema>("InputSchema", ["properties", "inputSchema"]);
         _inputSchemaMapping = DefineModelProperty<EventGridInputSchemaMapping>("InputSchemaMapping", ["properties", "inputSchemaMapping"]);
         _isLocalAuthDisabled = DefineProperty<bool>("IsLocalAuthDisabled", ["properties", "disableLocalAuth"]);
-        _kind = DefineProperty<ResourceKind>("Kind", ["kind"]);
         _minimumTlsVersionAllowed = DefineProperty<TlsVersion>("MinimumTlsVersionAllowed", ["properties", "minimumTlsVersionAllowed"]);
         _publicNetworkAccess = DefineProperty<EventGridPublicNetworkAccess>("PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
-        _skuName = DefineProperty<EventGridSku>("SkuName", ["sku", "name"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _endpoint = DefineProperty<Uri>("Endpoint", ["properties", "endpoint"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
@@ -290,6 +257,11 @@ public partial class EventGridTopic : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-02-15.
+        /// </summary>
+        public static readonly string V2025_02_15 = "2025-02-15";
+
         /// <summary>
         /// 2022-06-15.
         /// </summary>

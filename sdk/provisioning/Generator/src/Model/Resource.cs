@@ -19,6 +19,7 @@ public class Resource(Specification spec, Type armType)
     public string? ResourceNamespace { get; set; }
     public string? DefaultResourceVersion { get; set; }
     public IList<string>? ResourceVersions { get; set; }
+    public IList<string>? HiddenResourceVersions { get; set; }
     public NameRequirements? NameRequirements { get; set; }
     public bool GenerateRoleAssignment { get; set; } = false;
     public Resource? ParentResource { get; set; }
@@ -53,7 +54,7 @@ public class Resource(Specification spec, Type armType)
                 // Add the usings
                 HashSet<string> namespaces = CollectNamespaces();
                 if (FromExpression || GenerateRoleAssignment || GetKeysType is not null) { namespaces.Add("Azure.Provisioning.Expressions"); }
-                if (FromExpression || NameRequirements is not null || GetKeysType is not null) { namespaces.Add("System.ComponentModel"); }
+                if (FromExpression || NameRequirements is not null || GetKeysType is not null || HiddenResourceVersions is not null) { namespaces.Add("System.ComponentModel"); }
                 if (GenerateRoleAssignment) { namespaces.Add("Azure.Provisioning.Authorization"); namespaces.Add("Azure.Provisioning.Roles"); }
                 namespaces.Remove(Namespace!);
                 foreach (string ns in namespaces.Order())
@@ -210,6 +211,21 @@ public class Resource(Specification spec, Type armType)
                                 writer.WriteLine($"/// {version}.");
                                 writer.WriteLine($"/// </summary>");
                                 writer.WriteLine($"public static readonly string {name} = \"{version}\";");
+                            }
+
+                            if (HiddenResourceVersions is not null)
+                            {
+                                foreach (string version in HiddenResourceVersions)
+                                {
+                                    if (fence.RequiresSeparator) { writer.WriteLine(); }
+
+                                    string name = $"V{version.Replace("-", "_")}";
+                                    writer.WriteLine($"/// <summary>");
+                                    writer.WriteLine($"/// {version}.");
+                                    writer.WriteLine($"/// </summary>");
+                                    writer.WriteLine($"[EditorBrowsable(EditorBrowsableState.Never)]");
+                                    writer.WriteLine($"public static readonly string {name} = \"{version}\";");
+                                }
                             }
                         }
                     }

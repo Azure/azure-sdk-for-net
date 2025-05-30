@@ -64,6 +64,16 @@ public partial class OperationalInsightsWorkspace : ProvisionableResource
     private BicepValue<ETag>? _eTag;
 
     /// <summary>
+    /// workspace failover properties.
+    /// </summary>
+    public OperationalInsightsWorkspaceFailoverProperties Failover 
+    {
+        get { Initialize(); return _failover!; }
+        set { Initialize(); AssignOrReplace(ref _failover, value); }
+    }
+    private OperationalInsightsWorkspaceFailoverProperties? _failover;
+
+    /// <summary>
     /// Workspace features.
     /// </summary>
     public OperationalInsightsWorkspaceFeatures Features 
@@ -114,6 +124,16 @@ public partial class OperationalInsightsWorkspace : ProvisionableResource
         set { Initialize(); _publicNetworkAccessForQuery!.Assign(value); }
     }
     private BicepValue<OperationalInsightsPublicNetworkAccessType>? _publicNetworkAccessForQuery;
+
+    /// <summary>
+    /// workspace replication properties.
+    /// </summary>
+    public OperationalInsightsWorkspaceReplicationProperties Replication 
+    {
+        get { Initialize(); return _replication!; }
+        set { Initialize(); AssignOrReplace(ref _replication, value); }
+    }
+    private OperationalInsightsWorkspaceReplicationProperties? _replication;
 
     /// <summary>
     /// The workspace data retention in days. Allowed values are per pricing
@@ -231,7 +251,7 @@ public partial class OperationalInsightsWorkspace : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the OperationalInsightsWorkspace.</param>
     public OperationalInsightsWorkspace(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.OperationalInsights/workspaces", resourceVersion ?? "2023-09-01")
+        : base(bicepIdentifier, "Microsoft.OperationalInsights/workspaces", resourceVersion ?? "2025-02-01")
     {
     }
 
@@ -244,11 +264,13 @@ public partial class OperationalInsightsWorkspace : ProvisionableResource
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _defaultDataCollectionRuleResourceId = DefineProperty<ResourceIdentifier>("DefaultDataCollectionRuleResourceId", ["properties", "defaultDataCollectionRuleResourceId"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"]);
+        _failover = DefineModelProperty<OperationalInsightsWorkspaceFailoverProperties>("Failover", ["properties", "failover"]);
         _features = DefineModelProperty<OperationalInsightsWorkspaceFeatures>("Features", ["properties", "features"]);
         _forceCmkForQuery = DefineProperty<bool>("ForceCmkForQuery", ["properties", "forceCmkForQuery"]);
         _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
         _publicNetworkAccessForIngestion = DefineProperty<OperationalInsightsPublicNetworkAccessType>("PublicNetworkAccessForIngestion", ["properties", "publicNetworkAccessForIngestion"]);
         _publicNetworkAccessForQuery = DefineProperty<OperationalInsightsPublicNetworkAccessType>("PublicNetworkAccessForQuery", ["properties", "publicNetworkAccessForQuery"]);
+        _replication = DefineModelProperty<OperationalInsightsWorkspaceReplicationProperties>("Replication", ["properties", "replication"]);
         _retentionInDays = DefineProperty<int>("RetentionInDays", ["properties", "retentionInDays"]);
         _sku = DefineModelProperty<OperationalInsightsWorkspaceSku>("Sku", ["properties", "sku"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
@@ -267,6 +289,11 @@ public partial class OperationalInsightsWorkspace : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-02-01.
+        /// </summary>
+        public static readonly string V2025_02_01 = "2025-02-01";
+
         /// <summary>
         /// 2023-09-01.
         /// </summary>

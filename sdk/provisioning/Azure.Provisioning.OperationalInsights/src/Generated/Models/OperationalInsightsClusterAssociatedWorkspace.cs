@@ -17,7 +17,7 @@ namespace Azure.Provisioning.OperationalInsights;
 public partial class OperationalInsightsClusterAssociatedWorkspace : ProvisionableConstruct
 {
     /// <summary>
-    /// The id of the assigned workspace.
+    /// Associated workspace immutable id.
     /// </summary>
     public BicepValue<Guid> WorkspaceId 
     {
@@ -26,7 +26,7 @@ public partial class OperationalInsightsClusterAssociatedWorkspace : Provisionab
     private BicepValue<Guid>? _workspaceId;
 
     /// <summary>
-    /// The name id the assigned workspace.
+    /// Associated workspace resource name.
     /// </summary>
     public BicepValue<string> WorkspaceName 
     {
@@ -35,7 +35,8 @@ public partial class OperationalInsightsClusterAssociatedWorkspace : Provisionab
     private BicepValue<string>? _workspaceName;
 
     /// <summary>
-    /// The ResourceId id the assigned workspace.
+    /// Associated workspace arm resource id, in the form of:
+    /// &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}.
     /// </summary>
     public BicepValue<ResourceIdentifier> ResourceId 
     {

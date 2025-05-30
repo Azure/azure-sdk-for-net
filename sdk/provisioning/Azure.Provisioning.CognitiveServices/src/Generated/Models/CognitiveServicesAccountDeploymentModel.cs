@@ -5,6 +5,7 @@
 
 #nullable enable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using System;
@@ -16,6 +17,16 @@ namespace Azure.Provisioning.CognitiveServices;
 /// </summary>
 public partial class CognitiveServicesAccountDeploymentModel : ProvisionableConstruct
 {
+    /// <summary>
+    /// Deployment model publisher.
+    /// </summary>
+    public BicepValue<string> Publisher 
+    {
+        get { Initialize(); return _publisher!; }
+        set { Initialize(); _publisher!.Assign(value); }
+    }
+    private BicepValue<string>? _publisher;
+
     /// <summary>
     /// Deployment model format.
     /// </summary>
@@ -61,6 +72,17 @@ public partial class CognitiveServicesAccountDeploymentModel : ProvisionableCons
     private BicepValue<string>? _source;
 
     /// <summary>
+    /// Optional. Source of the model, another Microsoft.CognitiveServices
+    /// accounts ARM resource ID.
+    /// </summary>
+    public BicepValue<ResourceIdentifier> SourceAccount 
+    {
+        get { Initialize(); return _sourceAccount!; }
+        set { Initialize(); _sourceAccount!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _sourceAccount;
+
+    /// <summary>
     /// The call rate limit Cognitive Services account.
     /// </summary>
     public ServiceAccountCallRateLimit CallRateLimit 
@@ -83,10 +105,12 @@ public partial class CognitiveServicesAccountDeploymentModel : ProvisionableCons
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
+        _publisher = DefineProperty<string>("Publisher", ["publisher"]);
         _format = DefineProperty<string>("Format", ["format"]);
         _name = DefineProperty<string>("Name", ["name"]);
         _version = DefineProperty<string>("Version", ["version"]);
         _source = DefineProperty<string>("Source", ["source"]);
+        _sourceAccount = DefineProperty<ResourceIdentifier>("SourceAccount", ["sourceAccount"]);
         _callRateLimit = DefineModelProperty<ServiceAccountCallRateLimit>("CallRateLimit", ["callRateLimit"], isOutput: true);
     }
 }

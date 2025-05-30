@@ -22,4 +22,10 @@ public enum SearchBypass
     /// the rules defined in the &apos;ipRules&apos; section.
     /// </summary>
     AzurePortal,
+
+    /// <summary>
+    /// Indicates that requests originating from Azure trusted services can
+    /// bypass the rules defined in the &apos;ipRules&apos; section.
+    /// </summary>
+    AzureServices,
 }

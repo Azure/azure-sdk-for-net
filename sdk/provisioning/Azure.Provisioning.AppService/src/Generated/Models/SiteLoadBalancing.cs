@@ -39,4 +39,9 @@ public enum SiteLoadBalancing
     /// PerSiteRoundRobin.
     /// </summary>
     PerSiteRoundRobin,
+
+    /// <summary>
+    /// LeastRequestsWithTieBreaker.
+    /// </summary>
+    LeastRequestsWithTieBreaker,
 }

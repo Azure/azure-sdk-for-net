@@ -48,7 +48,7 @@ public partial class HelmOperatorProperties : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _chartVersion = DefineProperty<string>("ChartVersion", ["chartVersion"]);
-        _chartValues = DefineProperty<string>("ChartValues", ["chartValues"]);
+        _chartVersion = DefineProperty<string>("ChartVersion", ["ChartVersion"]);
+        _chartValues = DefineProperty<string>("ChartValues", ["ChartValues"]);
     }
 }

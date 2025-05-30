@@ -69,6 +69,16 @@ public partial class OperationalInsightsWorkspaceFeatures : ProvisionableConstru
     private BicepValue<bool>? _isLocalAuthDisabled;
 
     /// <summary>
+    /// An indication if the specify workspace is limited to sentinel&apos;s
+    /// unified billing model only.
+    /// </summary>
+    public BicepValue<bool> IsUnifiedSentinelBillingOnly 
+    {
+        get { Initialize(); return _isUnifiedSentinelBillingOnly!; }
+    }
+    private BicepValue<bool>? _isUnifiedSentinelBillingOnly;
+
+    /// <summary>
     /// Additional Properties                          To assign an object to
     /// the value of this property use
     /// System.BinaryData.FromObjectAsJson``1(``0,System.Text.Json.JsonSerializerOptions).
@@ -110,6 +120,7 @@ public partial class OperationalInsightsWorkspaceFeatures : ProvisionableConstru
         _isLogAccessUsingOnlyResourcePermissionsEnabled = DefineProperty<bool>("IsLogAccessUsingOnlyResourcePermissionsEnabled", ["enableLogAccessUsingOnlyResourcePermissions"]);
         _clusterResourceId = DefineProperty<ResourceIdentifier>("ClusterResourceId", ["clusterResourceId"]);
         _isLocalAuthDisabled = DefineProperty<bool>("IsLocalAuthDisabled", ["disableLocalAuth"]);
+        _isUnifiedSentinelBillingOnly = DefineProperty<bool>("IsUnifiedSentinelBillingOnly", ["unifiedSentinelBillingOnly"], isOutput: true);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

@@ -236,7 +236,7 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the KubernetesClusterExtension.</param>
     public KubernetesClusterExtension(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.KubernetesConfiguration/extensions", resourceVersion ?? "2023-05-01")
+        : base(bicepIdentifier, "Microsoft.KubernetesConfiguration/extensions", resourceVersion ?? "2024-11-01")
     {
     }
 
@@ -246,24 +246,24 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _aksAssignedIdentity = DefineModelProperty<ManagedServiceIdentity>("AksAssignedIdentity", ["properties", "aksAssignedIdentity"]);
-        _autoUpgradeMinorVersion = DefineProperty<bool>("AutoUpgradeMinorVersion", ["properties", "autoUpgradeMinorVersion"]);
-        _configurationProtectedSettings = DefineDictionaryProperty<string>("ConfigurationProtectedSettings", ["properties", "configurationProtectedSettings"]);
-        _configurationSettings = DefineDictionaryProperty<string>("ConfigurationSettings", ["properties", "configurationSettings"]);
-        _extensionType = DefineProperty<string>("ExtensionType", ["properties", "extensionType"]);
-        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
-        _plan = DefineModelProperty<ArmPlan>("Plan", ["plan"]);
-        _releaseTrain = DefineProperty<string>("ReleaseTrain", ["properties", "releaseTrain"]);
-        _scope = DefineModelProperty<KubernetesClusterExtensionScope>("Scope", ["properties", "scope"]);
-        _statuses = DefineListProperty<KubernetesClusterExtensionStatus>("Statuses", ["properties", "statuses"]);
-        _version = DefineProperty<string>("Version", ["properties", "version"]);
-        _currentVersion = DefineProperty<string>("CurrentVersion", ["properties", "currentVersion"], isOutput: true);
-        _customLocationSettings = DefineDictionaryProperty<string>("CustomLocationSettings", ["properties", "customLocationSettings"], isOutput: true);
-        _errorInfo = DefineProperty<ResponseError>("ErrorInfo", ["properties", "errorInfo"], isOutput: true);
+        _aksAssignedIdentity = DefineModelProperty<ManagedServiceIdentity>("AksAssignedIdentity", ["AksAssignedIdentity"]);
+        _autoUpgradeMinorVersion = DefineProperty<bool>("AutoUpgradeMinorVersion", ["AutoUpgradeMinorVersion"]);
+        _configurationProtectedSettings = DefineDictionaryProperty<string>("ConfigurationProtectedSettings", ["ConfigurationProtectedSettings"]);
+        _configurationSettings = DefineDictionaryProperty<string>("ConfigurationSettings", ["ConfigurationSettings"]);
+        _extensionType = DefineProperty<string>("ExtensionType", ["ExtensionType"]);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["Identity"]);
+        _plan = DefineModelProperty<ArmPlan>("Plan", ["Plan"]);
+        _releaseTrain = DefineProperty<string>("ReleaseTrain", ["ReleaseTrain"]);
+        _scope = DefineModelProperty<KubernetesClusterExtensionScope>("Scope", ["Scope"]);
+        _statuses = DefineListProperty<KubernetesClusterExtensionStatus>("Statuses", ["Statuses"]);
+        _version = DefineProperty<string>("Version", ["Version"]);
+        _currentVersion = DefineProperty<string>("CurrentVersion", ["CurrentVersion"], isOutput: true);
+        _customLocationSettings = DefineDictionaryProperty<string>("CustomLocationSettings", ["CustomLocationSettings"], isOutput: true);
+        _errorInfo = DefineProperty<ResponseError>("ErrorInfo", ["ErrorInfo"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
-        _isSystemExtension = DefineProperty<bool>("IsSystemExtension", ["properties", "isSystemExtension"], isOutput: true);
-        _packageUri = DefineProperty<Uri>("PackageUri", ["properties", "packageUri"], isOutput: true);
-        _provisioningState = DefineProperty<KubernetesConfigurationProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _isSystemExtension = DefineProperty<bool>("IsSystemExtension", ["IsSystemExtension"], isOutput: true);
+        _packageUri = DefineProperty<Uri>("PackageUri", ["PackageUri"], isOutput: true);
+        _provisioningState = DefineProperty<KubernetesConfigurationProvisioningState>("ProvisioningState", ["ProvisioningState"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
@@ -272,6 +272,11 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-11-01.
+        /// </summary>
+        public static readonly string V2024_11_01 = "2024-11-01";
+
         /// <summary>
         /// 2023-05-01.
         /// </summary>

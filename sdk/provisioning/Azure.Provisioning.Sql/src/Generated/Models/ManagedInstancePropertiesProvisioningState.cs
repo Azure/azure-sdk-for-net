@@ -6,7 +6,7 @@
 namespace Azure.Provisioning.Sql;
 
 /// <summary>
-/// The ManagedInstancePropertiesProvisioningState.
+/// Provisioning state of managed instance.
 /// </summary>
 public enum ManagedInstancePropertiesProvisioningState
 {
@@ -84,4 +84,9 @@ public enum ManagedInstancePropertiesProvisioningState
     /// TimedOut.
     /// </summary>
     TimedOut,
+
+    /// <summary>
+    /// InProgress.
+    /// </summary>
+    InProgress,
 }

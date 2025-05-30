@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Linq;
 using Azure.Provisioning.Generator.Model;
 using Azure.ResourceManager.CognitiveServices;
 using Azure.ResourceManager.CognitiveServices.Models;
@@ -22,6 +23,7 @@ public class CognitiveServicesSpecification() :
         // Patch models
         CustomizeProperty<ServiceAccountApiKeys>("Key1", p => p.IsSecure = true);
         CustomizeProperty<ServiceAccountApiKeys>("Key2", p => p.IsSecure = true);
+        OrderEnum<ModelLifecycleStatus>("GenerallyAvailable", "Preview");
 
         // Naming requirements
         AddNameRequirements<CognitiveServicesAccountResource>(min: 2, max: 64, lower: true, upper: true, digits: true, hyphen: true);

@@ -71,9 +71,9 @@ public partial class KubernetesGitRepositoryRef : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _branch = DefineProperty<string>("Branch", ["branch"]);
-        _tag = DefineProperty<string>("Tag", ["tag"]);
-        _semver = DefineProperty<string>("Semver", ["semver"]);
-        _commit = DefineProperty<string>("Commit", ["commit"]);
+        _branch = DefineProperty<string>("Branch", ["Branch"]);
+        _tag = DefineProperty<string>("Tag", ["Tag"]);
+        _semver = DefineProperty<string>("Semver", ["Semver"]);
+        _commit = DefineProperty<string>("Commit", ["Commit"]);
     }
 }
