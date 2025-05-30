@@ -383,18 +383,13 @@ namespace Azure.Storage.Sas
                     null, // AgentObjectId - enabled only in HNS accounts
                     null, // CorrelationId
                     null, // SignedKeyDelegatedUserTenantId, will be added in a future release.
-                    null, // SignedDelegatedUserObjectId, will be added in future release.
-                    IPRange.ToString(),
-                    SasExtensions.ToProtocolString(Protocol),
-                    Version,
-                    Constants.Sas.Resource.Queue,
-                    null, // Snapshot ?? BlobVersionId,
-                    null, // EncryptionScope,
-                    null, // CacheControl,
-                    null, // ContentDisposition,
-                    null, // ContentEncoding,
-                    null, // ContentLanguage
-                    null); // ContentType
+                    //null, // SignedDelegatedUserObjectId, will be added in future release.
+                    //IPRange.ToString(),
+                    //SasExtensions.ToProtocolString(Protocol),
+                    //null, // Unknown
+                    //null, // Unknown
+                    //null, // Unknown
+                    Version);
         }
 
         /// <summary>

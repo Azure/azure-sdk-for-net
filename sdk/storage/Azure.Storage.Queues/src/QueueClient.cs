@@ -3507,13 +3507,6 @@ namespace Azure.Storage.Queues
                     nameof(QueueSasBuilder),
                     nameof(Name));
             }
-            if (!string.IsNullOrEmpty(builder.QueueName))
-            {
-                throw Errors.SasBuilderEmptyParam(
-                nameof(builder),
-                    nameof(builder.QueueName),
-                    nameof(Constants.Queue.Name));
-            }
         }
     }
 }

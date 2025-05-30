@@ -364,6 +364,40 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
+        [RecordedTest]
+        //[ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task CreateAsync_UserDelegationSas()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_OAuth();
+
+            Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
+
+            QueueClient queueClient = service.GetQueueClient(queueName);
+            string stringToSign = null;
+            Uri queueUri = queueClient.GenerateUserDelegationSasUri(QueueSasPermissions.All, Recording.UtcNow.AddHours(1), userDelegationKey, out stringToSign);
+
+            QueueClient queue = InstrumentClient(new QueueClient(queueUri, GetOptions()));
+
+            try
+            {
+                // Act
+                Response result = await queue.CreateAsync();
+
+                // Assert
+                Assert.IsNotNull(result.Headers.RequestId, $"{nameof(result)} may not be populated");
+            }
+            finally
+            {
+                await queue.DeleteIfExistsAsync();
+            }
+        }
+
         // Not possible to record
         [LiveOnly]
         [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2021_06_08)]
@@ -1282,6 +1316,35 @@ namespace Azure.Storage.Queues.Test
                 visibilityTimeout: new TimeSpan(0, 0, 1),
                 timeToLive: new TimeSpan(1, 0, 0));
 
+            // Assert
+            Assert.NotNull(response.Value);
+        }
+
+        [RecordedTest]
+        //[ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task SendMessageAsync_UserDelegationSAS()
+        {
+            // Arrange
+            string queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_OAuth();
+            await using DisposingQueue test = await GetTestQueueAsync(service);
+
+            Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
+
+            string stringToSign = null;
+            Uri queueUri = test.Queue.GenerateUserDelegationSasUri(QueueSasPermissions.All, Recording.UtcNow.AddHours(1), userDelegationKey, out stringToSign);
+
+            QueueClient queueClient = InstrumentClient(new QueueClient(queueUri, GetOptions()));
+
+            // Act
+            Response<SendReceipt> response = await queueClient.SendMessageAsync(
+                messageText: GetNewString(),
+                visibilityTimeout: new TimeSpan(0, 0, 1),
+                timeToLive: new TimeSpan(1, 0, 0));
             // Assert
             Assert.NotNull(response.Value);
         }
