@@ -59,14 +59,16 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="server"> The Docker image registry server without a protocol such as "http" and "https". </param>
         /// <param name="username"> The username for the private registry. </param>
         /// <param name="password"> The password for the private registry. </param>
+        /// <param name="passwordReference"> The reference for the private registry password. </param>
         /// <param name="identity"> The identity for the private registry. </param>
         /// <param name="identityUri"> The identity URL for the private registry. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupImageRegistryCredential(string server, string username, string password, string identity, Uri identityUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerGroupImageRegistryCredential(string server, string username, string password, string passwordReference, string identity, Uri identityUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Server = server;
             Username = username;
             Password = password;
+            PasswordReference = passwordReference;
             Identity = identity;
             IdentityUri = identityUri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -83,6 +85,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public string Username { get; set; }
         /// <summary> The password for the private registry. </summary>
         public string Password { get; set; }
+        /// <summary> The reference for the private registry password. </summary>
+        public string PasswordReference { get; set; }
         /// <summary> The identity for the private registry. </summary>
         public string Identity { get; set; }
         /// <summary> The identity URL for the private registry. </summary>

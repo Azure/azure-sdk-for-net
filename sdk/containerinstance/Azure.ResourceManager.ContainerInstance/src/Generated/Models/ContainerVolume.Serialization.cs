@@ -64,6 +64,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsCollectionDefined(SecretReference))
+            {
+                writer.WritePropertyName("secretReference"u8);
+                writer.WriteStartObject();
+                foreach (var item in SecretReference)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             if (Optional.IsDefined(GitRepo))
             {
                 writer.WritePropertyName("gitRepo"u8);
@@ -110,6 +121,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             ContainerInstanceAzureFileVolume azureFile = default;
             BinaryData emptyDir = default;
             IDictionary<string, string> secret = default;
+            IDictionary<string, string> secretReference = default;
             ContainerInstanceGitRepoVolume gitRepo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -152,6 +164,20 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     secret = dictionary;
                     continue;
                 }
+                if (property.NameEquals("secretReference"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    secretReference = dictionary;
+                    continue;
+                }
                 if (property.NameEquals("gitRepo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -172,6 +198,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 azureFile,
                 emptyDir,
                 secret ?? new ChangeTrackingDictionary<string, string>(),
+                secretReference ?? new ChangeTrackingDictionary<string, string>(),
                 gitRepo,
                 serializedAdditionalRawData);
         }

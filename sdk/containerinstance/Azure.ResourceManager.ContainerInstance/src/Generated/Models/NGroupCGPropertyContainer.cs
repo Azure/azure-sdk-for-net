@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    /// <summary> The standby pool profile reference. </summary>
-    public partial class StandbyPoolProfileDefinition
+    /// <summary> Container properties that can be provided with NGroups object. </summary>
+    public partial class NGroupCGPropertyContainer
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,25 +45,35 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StandbyPoolProfileDefinition"/>. </summary>
-        public StandbyPoolProfileDefinition()
+        /// <summary> Initializes a new instance of <see cref="NGroupCGPropertyContainer"/>. </summary>
+        public NGroupCGPropertyContainer()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyPoolProfileDefinition"/>. </summary>
-        /// <param name="id"> The standby pool profile reference id.This will be an ARM resource id in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyPoolName}'. </param>
-        /// <param name="failContainerGroupCreateOnReuseFailure"> The flag to determine whether ACI should fail the create request if the container group can not be obtained from standby pool. </param>
+        /// <summary> Initializes a new instance of <see cref="NGroupCGPropertyContainer"/>. </summary>
+        /// <param name="name"> container name. </param>
+        /// <param name="properties"> container properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyPoolProfileDefinition(ResourceIdentifier id, bool? failContainerGroupCreateOnReuseFailure, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NGroupCGPropertyContainer(string name, NGroupCGPropertyContainerProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
-            FailContainerGroupCreateOnReuseFailure = failContainerGroupCreateOnReuseFailure;
+            Name = name;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The standby pool profile reference id.This will be an ARM resource id in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyPoolName}'. </summary>
-        public ResourceIdentifier Id { get; set; }
-        /// <summary> The flag to determine whether ACI should fail the create request if the container group can not be obtained from standby pool. </summary>
-        public bool? FailContainerGroupCreateOnReuseFailure { get; set; }
+        /// <summary> container name. </summary>
+        public string Name { get; set; }
+        /// <summary> container properties. </summary>
+        internal NGroupCGPropertyContainerProperties Properties { get; set; }
+        /// <summary> Gets the n group cg property container volume mounts. </summary>
+        public IList<ContainerVolumeMount> NGroupCGPropertyContainerVolumeMounts
+        {
+            get
+            {
+                if (Properties is null)
+                    Properties = new NGroupCGPropertyContainerProperties();
+                return Properties.VolumeMounts;
+            }
+        }
     }
 }
