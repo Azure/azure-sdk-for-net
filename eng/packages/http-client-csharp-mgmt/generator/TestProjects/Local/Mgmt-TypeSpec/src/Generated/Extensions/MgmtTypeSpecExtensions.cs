@@ -58,12 +58,12 @@ namespace MgmtTypeSpec
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="fooName"/> is null. </exception>
-        public static Response<FooResource> Get(this ResourceGroupResource resourceGroupResource, string fooName, CancellationToken cancellationToken = default)
+        public static Response<FooResource> GetFoo(this ResourceGroupResource resourceGroupResource, string fooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
             Argument.AssertNotNull(fooName, nameof(fooName));
 
-            return GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).Get(fooName, cancellationToken);
+            return GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetFoo(fooName, cancellationToken);
         }
 
         /// <summary> Get a Foo. </summary>
@@ -71,12 +71,12 @@ namespace MgmtTypeSpec
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="fooName"/> is null. </exception>
-        public static async Task<Response<FooResource>> GetAsync(this ResourceGroupResource resourceGroupResource, string fooName, CancellationToken cancellationToken = default)
+        public static async Task<Response<FooResource>> GetFooAsync(this ResourceGroupResource resourceGroupResource, string fooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
             Argument.AssertNotNull(fooName, nameof(fooName));
 
-            return await GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetAsync(fooName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetFooAsync(fooName, cancellationToken).ConfigureAwait(false);
         }
     }
 }

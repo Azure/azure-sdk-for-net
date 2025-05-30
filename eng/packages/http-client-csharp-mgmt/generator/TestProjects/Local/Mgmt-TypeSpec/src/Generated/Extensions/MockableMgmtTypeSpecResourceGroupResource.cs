@@ -41,7 +41,7 @@ namespace MgmtTypeSpec
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
-        public virtual Response<FooResource> Get(string fooName, CancellationToken cancellationToken = default)
+        public virtual Response<FooResource> GetFoo(string fooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(fooName, nameof(fooName));
 
@@ -52,7 +52,7 @@ namespace MgmtTypeSpec
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
-        public virtual async Task<Response<FooResource>> GetAsync(string fooName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FooResource>> GetFooAsync(string fooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(fooName, nameof(fooName));
 

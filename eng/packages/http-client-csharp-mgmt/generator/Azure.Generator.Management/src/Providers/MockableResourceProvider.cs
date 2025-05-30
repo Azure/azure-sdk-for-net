@@ -106,9 +106,8 @@ namespace Azure.Generator.Management.Providers
                 if (getMethod is not null)
                 {
                     // we should be sure that this would never be null, but this null check here is just ensuring that we never crash
-                    // TODO -- figure out how to remove the parameter validation
                     var getResourceMethodSignature = new MethodSignature(
-                        getMethod.Signature.Name,
+                        $"Get{collection.SpecName}",
                         getMethod.Signature.Description,
                         getMethod.Signature.Modifiers,
                         getMethod.Signature.ReturnType,
@@ -129,9 +128,8 @@ namespace Azure.Generator.Management.Providers
                 if (getAsyncMethod is not null)
                 {
                     // we should be sure that this would never be null, but this null check here is just ensuring that we never crash
-                    // TODO -- figure out how to remove the parameter validation
                     var getResourceAsyncMethodSignature = new MethodSignature(
-                        getAsyncMethod.Signature.Name,
+                        $"Get{collection.SpecName}Async",
                         getAsyncMethod.Signature.Description,
                         getAsyncMethod.Signature.Modifiers,
                         getAsyncMethod.Signature.ReturnType,
