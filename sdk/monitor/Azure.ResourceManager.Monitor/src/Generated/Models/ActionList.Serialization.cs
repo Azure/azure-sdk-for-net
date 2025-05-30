@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in ActionGroups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ActivityLogAlertActionGroup>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

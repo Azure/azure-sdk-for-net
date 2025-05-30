@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Pipelines)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TriggerPipelineReference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(BalanceSummary))
             {
                 writer.WritePropertyName("balanceSummary"u8);
-                writer.WriteObjectValue(BalanceSummary, options);
+                ((IJsonModel<CreditBalanceSummary>)BalanceSummary).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PendingCreditAdjustments))
             {
                 writer.WritePropertyName("pendingCreditAdjustments"u8);
-                writer.WriteObjectValue(PendingCreditAdjustments, options);
+                ((IJsonModel<ConsumptionAmount>)PendingCreditAdjustments).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ExpiredCredit))
             {
                 writer.WritePropertyName("expiredCredit"u8);
-                writer.WriteObjectValue(ExpiredCredit, options);
+                ((IJsonModel<ConsumptionAmount>)ExpiredCredit).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PendingEligibleCharges))
             {
                 writer.WritePropertyName("pendingEligibleCharges"u8);
-                writer.WriteObjectValue(PendingEligibleCharges, options);
+                ((IJsonModel<ConsumptionAmount>)PendingEligibleCharges).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreditCurrency))
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(Reseller))
             {
                 writer.WritePropertyName("reseller"u8);
-                writer.WriteObjectValue(Reseller, options);
+                ((IJsonModel<ConsumptionReseller>)Reseller).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            balanceSummary = CreditBalanceSummary.DeserializeCreditBalanceSummary(property0.Value, options);
+                            balanceSummary = ModelSerializationExtensions.JsonDeserialize<CreditBalanceSummary>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("pendingCreditAdjustments"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            pendingCreditAdjustments = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
+                            pendingCreditAdjustments = ModelSerializationExtensions.JsonDeserialize<ConsumptionAmount>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("expiredCredit"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            expiredCredit = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
+                            expiredCredit = ModelSerializationExtensions.JsonDeserialize<ConsumptionAmount>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("pendingEligibleCharges"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            pendingEligibleCharges = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
+                            pendingEligibleCharges = ModelSerializationExtensions.JsonDeserialize<ConsumptionAmount>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("creditCurrency"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            reseller = ConsumptionReseller.DeserializeConsumptionReseller(property0.Value, options);
+                            reseller = ModelSerializationExtensions.JsonDeserialize<ConsumptionReseller>(property0.Value);
                             continue;
                         }
                     }

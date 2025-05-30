@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
-                writer.WriteObjectValue(PlanData, options);
+                ((IJsonModel<NewRelicPlanDetails>)PlanData).Write(writer, options);
             }
             if (Optional.IsDefined(OrgCreationSource))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                             {
                                 continue;
                             }
-                            planData = NewRelicPlanDetails.DeserializeNewRelicPlanDetails(property0.Value, options);
+                            planData = ModelSerializationExtensions.JsonDeserialize<NewRelicPlanDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("orgCreationSource"u8))

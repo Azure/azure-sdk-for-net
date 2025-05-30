@@ -28,7 +28,7 @@ namespace Azure.Maps.Routing.Models
                     {
                         continue;
                     }
-                    response = RouteDirectionsBatchItemResponse.DeserializeRouteDirectionsBatchItemResponse(property.Value);
+                    response = ModelSerializationExtensions.JsonDeserialize<RouteDirectionsBatchItemResponse>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("statusCode"u8))

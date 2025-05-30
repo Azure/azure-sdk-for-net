@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WriteStartArray();
                 foreach (var item in ProductFeatures)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HybridComputeProductFeature>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WriteStartArray();
                 foreach (var item in EsuKeys)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EsuKey>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.HybridCompute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.HybridCompute
                                     {
                                         continue;
                                     }
-                                    error = JsonSerializer.Deserialize<ResponseError>(property1.Value.GetRawText());
+                                    error = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property1.Value);
                                     continue;
                                 }
                                 if (property1.NameEquals("productFeatures"u8))

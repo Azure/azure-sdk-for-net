@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(Multichannel))
             {
                 writer.WritePropertyName("multichannel"u8);
-                writer.WriteObjectValue(Multichannel, options);
+                ((IJsonModel<Multichannel>)Multichannel).Write(writer, options);
             }
             if (Optional.IsDefined(Versions))
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    multichannel = Multichannel.DeserializeMultichannel(property.Value, options);
+                    multichannel = ModelSerializationExtensions.JsonDeserialize<Multichannel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("versions"u8))

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Blueprint
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<BlueprintStatus>)Status).Write(writer, options);
             }
             if (Optional.IsDefined(TargetScope))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Blueprint
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<ParameterDefinition>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Blueprint
                 foreach (var item in ResourceGroups)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<ResourceGroupDefinition>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Blueprint
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Blueprint
                             {
                                 continue;
                             }
-                            status = BlueprintStatus.DeserializeBlueprintStatus(property0.Value, options);
+                            status = ModelSerializationExtensions.JsonDeserialize<BlueprintStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("targetScope"u8))

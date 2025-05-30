@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                JsonSerializer.Serialize(writer, ExtendedLocation);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<PublicIPPrefixSku>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPTags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IPTag>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -95,19 +95,19 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in PublicIPAddresses)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(LoadBalancerFrontendIPConfiguration))
             {
                 writer.WritePropertyName("loadBalancerFrontendIpConfiguration"u8);
-                JsonSerializer.Serialize(writer, LoadBalancerFrontendIPConfiguration);
+                ((IJsonModel<WritableSubResource>)LoadBalancerFrontendIPConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(CustomIPPrefix))
             {
                 writer.WritePropertyName("customIPPrefix"u8);
-                JsonSerializer.Serialize(writer, CustomIPPrefix);
+                ((IJsonModel<WritableSubResource>)CustomIPPrefix).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(NatGateway))
             {
                 writer.WritePropertyName("natGateway"u8);
-                writer.WriteObjectValue(NatGateway, options);
+                ((IJsonModel<NatGatewayData>)NatGateway).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<ExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    sku = PublicIPPrefixSku.DeserializePublicIPPrefixSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<PublicIPPrefixSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Network
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<SubResource>(item));
                             }
                             publicIPAddresses = array;
                             continue;
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            loadBalancerFrontendIPConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            loadBalancerFrontendIPConfiguration = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("customIPPrefix"u8))
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            customIPPrefix = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            customIPPrefix = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resourceGuid"u8))
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            natGateway = NatGatewayData.DeserializeNatGatewayData(property0.Value, options);
+                            natGateway = ModelSerializationExtensions.JsonDeserialize<NatGatewayData>(property0.Value);
                             continue;
                         }
                     }

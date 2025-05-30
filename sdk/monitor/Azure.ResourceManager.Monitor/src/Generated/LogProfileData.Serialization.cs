@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor
             }
             writer.WriteEndArray();
             writer.WritePropertyName("retentionPolicy"u8);
-            writer.WriteObjectValue(RetentionPolicy, options);
+            ((IJsonModel<RetentionPolicy>)RetentionPolicy).Write(writer, options);
             writer.WriteEndObject();
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Monitor
                         }
                         if (property0.NameEquals("retentionPolicy"u8))
                         {
-                            retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(property0.Value, options);
+                            retentionPolicy = ModelSerializationExtensions.JsonDeserialize<RetentionPolicy>(property0.Value);
                             continue;
                         }
                     }

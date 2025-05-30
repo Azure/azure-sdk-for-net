@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Scale))
             {
                 writer.WritePropertyName("scale"u8);
-                writer.WriteObjectValue(Scale, options);
+                ((IJsonModel<ContainerAppJobScale>)Scale).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    scale = ContainerAppJobScale.DeserializeContainerAppJobScale(property.Value, options);
+                    scale = ModelSerializationExtensions.JsonDeserialize<ContainerAppJobScale>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

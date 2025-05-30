@@ -40,7 +40,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteStartArray();
             foreach (var item in Inferences)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<TrialMatcherInference>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(NeededClinicalInfo))
@@ -49,7 +49,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in NeededClinicalInfo)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExtendedClinicalCodedElement>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

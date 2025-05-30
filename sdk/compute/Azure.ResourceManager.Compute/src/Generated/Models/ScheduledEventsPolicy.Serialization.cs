@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(UserInitiatedRedeploy))
             {
                 writer.WritePropertyName("userInitiatedRedeploy"u8);
-                writer.WriteObjectValue(UserInitiatedRedeploy, options);
+                ((IJsonModel<UserInitiatedRedeploy>)UserInitiatedRedeploy).Write(writer, options);
             }
             if (Optional.IsDefined(UserInitiatedReboot))
             {
                 writer.WritePropertyName("userInitiatedReboot"u8);
-                writer.WriteObjectValue(UserInitiatedReboot, options);
+                ((IJsonModel<UserInitiatedReboot>)UserInitiatedReboot).Write(writer, options);
             }
             if (Optional.IsDefined(ScheduledEventsAdditionalPublishingTargets))
             {
                 writer.WritePropertyName("scheduledEventsAdditionalPublishingTargets"u8);
-                writer.WriteObjectValue(ScheduledEventsAdditionalPublishingTargets, options);
+                ((IJsonModel<ScheduledEventsAdditionalPublishingTargets>)ScheduledEventsAdditionalPublishingTargets).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    userInitiatedRedeploy = UserInitiatedRedeploy.DeserializeUserInitiatedRedeploy(property.Value, options);
+                    userInitiatedRedeploy = ModelSerializationExtensions.JsonDeserialize<UserInitiatedRedeploy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userInitiatedReboot"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    userInitiatedReboot = UserInitiatedReboot.DeserializeUserInitiatedReboot(property.Value, options);
+                    userInitiatedReboot = ModelSerializationExtensions.JsonDeserialize<UserInitiatedReboot>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scheduledEventsAdditionalPublishingTargets"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    scheduledEventsAdditionalPublishingTargets = ScheduledEventsAdditionalPublishingTargets.DeserializeScheduledEventsAdditionalPublishingTargets(property.Value, options);
+                    scheduledEventsAdditionalPublishingTargets = ModelSerializationExtensions.JsonDeserialize<ScheduledEventsAdditionalPublishingTargets>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             if (Optional.IsDefined(UnitsSupported))
             {
                 writer.WritePropertyName("unitsSupported"u8);
-                writer.WriteObjectValue(UnitsSupported, options);
+                ((IJsonModel<UnitSystemsInfo>)UnitsSupported).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ApiInputParameters))
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     {
                         continue;
                     }
-                    unitsSupported = UnitSystemsInfo.DeserializeUnitSystemsInfo(property.Value, options);
+                    unitsSupported = ModelSerializationExtensions.JsonDeserialize<UnitSystemsInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("apiInputParameters"u8))

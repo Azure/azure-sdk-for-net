@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevCenter
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DevCenter
             if (Optional.IsDefined(CreatorRoleAssignment))
             {
                 writer.WritePropertyName("creatorRoleAssignment"u8);
-                writer.WriteObjectValue(CreatorRoleAssignment, options);
+                ((IJsonModel<ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment>)CreatorRoleAssignment).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(UserRoleAssignments))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DevCenter
                 foreach (var item in UserRoleAssignments)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<DevCenterUserRoleAssignments>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DevCenter
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DevCenter
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            creatorRoleAssignment = ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment.DeserializeProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(property0.Value, options);
+                            creatorRoleAssignment = ModelSerializationExtensions.JsonDeserialize<ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("userRoleAssignments"u8))

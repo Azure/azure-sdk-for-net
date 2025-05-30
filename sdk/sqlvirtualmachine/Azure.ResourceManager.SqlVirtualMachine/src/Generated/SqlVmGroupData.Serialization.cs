@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             if (Optional.IsDefined(WindowsServerFailoverClusterDomainProfile))
             {
                 writer.WritePropertyName("wsfcDomainProfile"u8);
-                writer.WriteObjectValue(WindowsServerFailoverClusterDomainProfile, options);
+                ((IJsonModel<WindowsServerFailoverClusterDomainProfile>)WindowsServerFailoverClusterDomainProfile).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             {
                                 continue;
                             }
-                            windowsServerFailoverClusterDomainProfile = WindowsServerFailoverClusterDomainProfile.DeserializeWindowsServerFailoverClusterDomainProfile(property0.Value, options);
+                            windowsServerFailoverClusterDomainProfile = ModelSerializationExtensions.JsonDeserialize<WindowsServerFailoverClusterDomainProfile>(property0.Value);
                             continue;
                         }
                     }

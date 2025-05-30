@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("error"u8);
-            writer.WriteObjectValue(Error);
+            JsonSerializer.Serialize(writer, Error);
             writer.WriteEndObject();
         }
 
@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("error"u8))
                 {
-                    error = Error.DeserializeError(property.Value);
+                    error = ModelSerializationExtensions.JsonDeserialize<Error>(property.Value);
                     continue;
                 }
             }

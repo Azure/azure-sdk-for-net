@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(FileShare))
             {
                 writer.WritePropertyName("fileShare"u8);
-                writer.WriteObjectValue(FileShare, options);
+                ((IJsonModel<SqlFileShare>)FileShare).Write(writer, options);
             }
             if (Optional.IsDefined(AzureBlob))
             {
                 writer.WritePropertyName("azureBlob"u8);
-                writer.WriteObjectValue(AzureBlob, options);
+                ((IJsonModel<AzureBlob>)AzureBlob).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(FileStorageType))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    fileShare = SqlFileShare.DeserializeSqlFileShare(property.Value, options);
+                    fileShare = ModelSerializationExtensions.JsonDeserialize<SqlFileShare>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azureBlob"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    azureBlob = AzureBlob.DeserializeAzureBlob(property.Value, options);
+                    azureBlob = ModelSerializationExtensions.JsonDeserialize<AzureBlob>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("fileStorageType"u8))

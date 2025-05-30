@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Routes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RouteData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Subnets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SubnetData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

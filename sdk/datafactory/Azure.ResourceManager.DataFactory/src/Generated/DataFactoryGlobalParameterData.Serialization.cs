@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory
             foreach (var item in Properties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                ((IJsonModel<DataFactoryGlobalParameterProperties>)item.Value).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && Optional.IsDefined(ETag))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

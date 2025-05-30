@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataLakeStoreAccountBasicData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

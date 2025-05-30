@@ -89,32 +89,32 @@ namespace Azure.ResourceManager.Hci
             if (Optional.IsDefined(SoftwareAssuranceProperties))
             {
                 writer.WritePropertyName("softwareAssuranceProperties"u8);
-                writer.WriteObjectValue(SoftwareAssuranceProperties, options);
+                ((IJsonModel<SoftwareAssuranceProperties>)SoftwareAssuranceProperties).Write(writer, options);
             }
             if (Optional.IsDefined(LogCollectionProperties))
             {
                 writer.WritePropertyName("logCollectionProperties"u8);
-                writer.WriteObjectValue(LogCollectionProperties, options);
+                ((IJsonModel<LogCollectionProperties>)LogCollectionProperties).Write(writer, options);
             }
             if (Optional.IsDefined(RemoteSupportProperties))
             {
                 writer.WritePropertyName("remoteSupportProperties"u8);
-                writer.WriteObjectValue(RemoteSupportProperties, options);
+                ((IJsonModel<RemoteSupportProperties>)RemoteSupportProperties).Write(writer, options);
             }
             if (Optional.IsDefined(DesiredProperties))
             {
                 writer.WritePropertyName("desiredProperties"u8);
-                writer.WriteObjectValue(DesiredProperties, options);
+                ((IJsonModel<HciClusterDesiredProperties>)DesiredProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReportedProperties))
             {
                 writer.WritePropertyName("reportedProperties"u8);
-                writer.WriteObjectValue(ReportedProperties, options);
+                ((IJsonModel<HciClusterReportedProperties>)ReportedProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsolatedVmAttestationConfiguration))
             {
                 writer.WritePropertyName("isolatedVmAttestationConfiguration"u8);
-                writer.WriteObjectValue(IsolatedVmAttestationConfiguration, options);
+                ((IJsonModel<IsolatedVmAttestationConfiguration>)IsolatedVmAttestationConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TrialDaysRemaining))
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Hci
                 foreach (var item in UserAssignedIdentities)
                 {
                     writer.WritePropertyName(item.Key);
-                    JsonSerializer.Serialize(writer, item.Value);
+                    ((IJsonModel<UserAssignedIdentity>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Hci
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            softwareAssuranceProperties = SoftwareAssuranceProperties.DeserializeSoftwareAssuranceProperties(property0.Value, options);
+                            softwareAssuranceProperties = ModelSerializationExtensions.JsonDeserialize<SoftwareAssuranceProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("logCollectionProperties"u8))
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            logCollectionProperties = LogCollectionProperties.DeserializeLogCollectionProperties(property0.Value, options);
+                            logCollectionProperties = ModelSerializationExtensions.JsonDeserialize<LogCollectionProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("remoteSupportProperties"u8))
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            remoteSupportProperties = RemoteSupportProperties.DeserializeRemoteSupportProperties(property0.Value, options);
+                            remoteSupportProperties = ModelSerializationExtensions.JsonDeserialize<RemoteSupportProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("desiredProperties"u8))
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            desiredProperties = HciClusterDesiredProperties.DeserializeHciClusterDesiredProperties(property0.Value, options);
+                            desiredProperties = ModelSerializationExtensions.JsonDeserialize<HciClusterDesiredProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("reportedProperties"u8))
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            reportedProperties = HciClusterReportedProperties.DeserializeHciClusterReportedProperties(property0.Value, options);
+                            reportedProperties = ModelSerializationExtensions.JsonDeserialize<HciClusterReportedProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("isolatedVmAttestationConfiguration"u8))
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            isolatedVmAttestationConfiguration = IsolatedVmAttestationConfiguration.DeserializeIsolatedVmAttestationConfiguration(property0.Value, options);
+                            isolatedVmAttestationConfiguration = ModelSerializationExtensions.JsonDeserialize<IsolatedVmAttestationConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("trialDaysRemaining"u8))
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.Hci
                             Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, JsonSerializer.Deserialize<UserAssignedIdentity>(property1.Value.GetRawText()));
+                                dictionary.Add(property1.Name, ModelSerializationExtensions.JsonDeserialize<UserAssignedIdentity>(property1.Value));
                             }
                             userAssignedIdentities = dictionary;
                             continue;

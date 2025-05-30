@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(TagSettings))
             {
                 writer.WritePropertyName("tagSettings"u8);
-                writer.WriteObjectValue(TagSettings, options);
+                ((IJsonModel<QueryTagSettingsProperties>)TagSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    tagSettings = QueryTagSettingsProperties.DeserializeQueryTagSettingsProperties(property.Value, options);
+                    tagSettings = ModelSerializationExtensions.JsonDeserialize<QueryTagSettingsProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

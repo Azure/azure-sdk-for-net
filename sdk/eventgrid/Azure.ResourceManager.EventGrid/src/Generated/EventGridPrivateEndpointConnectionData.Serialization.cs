@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
+                ((IJsonModel<WritableSubResource>)PrivateEndpoint).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(GroupIds))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState, options);
+                ((IJsonModel<EventGridPrivateEndpointConnectionState>)ConnectionState).Write(writer, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.EventGrid
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            privateEndpoint = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("groupIds"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = EventGridPrivateEndpointConnectionState.DeserializeEventGridPrivateEndpointConnectionState(property0.Value, options);
+                            privateLinkServiceConnectionState = ModelSerializationExtensions.JsonDeserialize<EventGridPrivateEndpointConnectionState>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

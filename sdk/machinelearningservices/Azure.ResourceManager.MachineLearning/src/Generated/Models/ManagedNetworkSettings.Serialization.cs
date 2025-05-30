@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in OutboundRules)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value, options);
+                        ((IJsonModel<MachineLearningOutboundRule>)item.Value).Write(writer, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<ManagedNetworkProvisionStatus>)Status).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    status = ManagedNetworkProvisionStatus.DeserializeManagedNetworkProvisionStatus(property.Value, options);
+                    status = ModelSerializationExtensions.JsonDeserialize<ManagedNetworkProvisionStatus>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

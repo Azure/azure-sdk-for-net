@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("queueDetails"u8);
-            writer.WriteObjectValue(QueueDetails, options);
+            ((IJsonModel<AcsRouterQueueDetails>)QueueDetails).Write(writer, options);
             if (Optional.IsDefined(ClassificationPolicyId))
             {
                 writer.WritePropertyName("classificationPolicyId"u8);
@@ -53,7 +53,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStartArray();
                 foreach (var item in AttachedWorkerSelectors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AcsRouterWorkerSelector>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +95,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("queueDetails"u8))
                 {
-                    queueDetails = AcsRouterQueueDetails.DeserializeAcsRouterQueueDetails(property.Value, options);
+                    queueDetails = ModelSerializationExtensions.JsonDeserialize<AcsRouterQueueDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("classificationPolicyId"u8))

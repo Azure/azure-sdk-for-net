@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in HttpErrorRanges)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HttpErrorRange>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

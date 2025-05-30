@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(RampUpStartTime))
             {
                 writer.WritePropertyName("rampUpStartTime"u8);
-                writer.WriteObjectValue(RampUpStartTime, options);
+                ((IJsonModel<ScalingActionTime>)RampUpStartTime).Write(writer, options);
             }
             if (Optional.IsDefined(RampUpLoadBalancingAlgorithm))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(PeakStartTime))
             {
                 writer.WritePropertyName("peakStartTime"u8);
-                writer.WriteObjectValue(PeakStartTime, options);
+                ((IJsonModel<ScalingActionTime>)PeakStartTime).Write(writer, options);
             }
             if (Optional.IsDefined(PeakLoadBalancingAlgorithm))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(RampDownStartTime))
             {
                 writer.WritePropertyName("rampDownStartTime"u8);
-                writer.WriteObjectValue(RampDownStartTime, options);
+                ((IJsonModel<ScalingActionTime>)RampDownStartTime).Write(writer, options);
             }
             if (Optional.IsDefined(RampDownLoadBalancingAlgorithm))
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(OffPeakStartTime))
             {
                 writer.WritePropertyName("offPeakStartTime"u8);
-                writer.WriteObjectValue(OffPeakStartTime, options);
+                ((IJsonModel<ScalingActionTime>)OffPeakStartTime).Write(writer, options);
             }
             if (Optional.IsDefined(OffPeakLoadBalancingAlgorithm))
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             {
                                 continue;
                             }
-                            rampUpStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value, options);
+                            rampUpStartTime = ModelSerializationExtensions.JsonDeserialize<ScalingActionTime>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("rampUpLoadBalancingAlgorithm"u8))
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             {
                                 continue;
                             }
-                            peakStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value, options);
+                            peakStartTime = ModelSerializationExtensions.JsonDeserialize<ScalingActionTime>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("peakLoadBalancingAlgorithm"u8))
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             {
                                 continue;
                             }
-                            rampDownStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value, options);
+                            rampDownStartTime = ModelSerializationExtensions.JsonDeserialize<ScalingActionTime>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("rampDownLoadBalancingAlgorithm"u8))
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             {
                                 continue;
                             }
-                            offPeakStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value, options);
+                            offPeakStartTime = ModelSerializationExtensions.JsonDeserialize<ScalingActionTime>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("offPeakLoadBalancingAlgorithm"u8))

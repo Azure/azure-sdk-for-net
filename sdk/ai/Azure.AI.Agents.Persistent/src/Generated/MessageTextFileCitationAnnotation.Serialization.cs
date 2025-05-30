@@ -36,7 +36,7 @@ namespace Azure.AI.Agents.Persistent
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("file_citation"u8);
-            writer.WriteObjectValue<InternalMessageTextFileCitationDetails>(InternalDetails, options);
+            ((IJsonModel<InternalMessageTextFileCitationDetails>)InternalDetails).Write(writer, options);
             if (Optional.IsDefined(StartIndex))
             {
                 writer.WritePropertyName("start_index"u8);
@@ -80,7 +80,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (property.NameEquals("file_citation"u8))
                 {
-                    fileCitation = InternalMessageTextFileCitationDetails.DeserializeInternalMessageTextFileCitationDetails(property.Value, options);
+                    fileCitation = ModelSerializationExtensions.JsonDeserialize<InternalMessageTextFileCitationDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("start_index"u8))

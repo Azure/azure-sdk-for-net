@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DatabaseWatcherHealthValidationData>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration, options);
+                ((IJsonModel<FirewallPolicyIntrusionDetectionConfiguration>)Configuration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    configuration = FirewallPolicyIntrusionDetectionConfiguration.DeserializeFirewallPolicyIntrusionDetectionConfiguration(property.Value, options);
+                    configuration = ModelSerializationExtensions.JsonDeserialize<FirewallPolicyIntrusionDetectionConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

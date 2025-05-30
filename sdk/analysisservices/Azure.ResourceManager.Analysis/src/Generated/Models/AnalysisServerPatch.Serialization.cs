@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Analysis.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<AnalysisResourceSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Analysis.Models
             if (Optional.IsDefined(AsAdministrators))
             {
                 writer.WritePropertyName("asAdministrators"u8);
-                writer.WriteObjectValue(AsAdministrators, options);
+                ((IJsonModel<ServerAdministrators>)AsAdministrators).Write(writer, options);
             }
             if (Optional.IsDefined(BackupBlobContainerUri))
             {
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.Analysis.Models
             if (Optional.IsDefined(GatewayDetails))
             {
                 writer.WritePropertyName("gatewayDetails"u8);
-                writer.WriteObjectValue(GatewayDetails, options);
+                ((IJsonModel<AnalysisGatewayDetails>)GatewayDetails).Write(writer, options);
             }
             if (Optional.IsDefined(IPV4FirewallSettings))
             {
                 writer.WritePropertyName("ipV4FirewallSettings"u8);
-                writer.WriteObjectValue(IPV4FirewallSettings, options);
+                ((IJsonModel<AnalysisIPv4FirewallSettings>)IPV4FirewallSettings).Write(writer, options);
             }
             if (Optional.IsDefined(QuerypoolConnectionMode))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Analysis.Models
                     {
                         continue;
                     }
-                    sku = AnalysisResourceSku.DeserializeAnalysisResourceSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<AnalysisResourceSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Analysis.Models
                             {
                                 continue;
                             }
-                            asAdministrators = ServerAdministrators.DeserializeServerAdministrators(property0.Value, options);
+                            asAdministrators = ModelSerializationExtensions.JsonDeserialize<ServerAdministrators>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("backupBlobContainerUri"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Analysis.Models
                             {
                                 continue;
                             }
-                            gatewayDetails = AnalysisGatewayDetails.DeserializeAnalysisGatewayDetails(property0.Value, options);
+                            gatewayDetails = ModelSerializationExtensions.JsonDeserialize<AnalysisGatewayDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ipV4FirewallSettings"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Analysis.Models
                             {
                                 continue;
                             }
-                            ipV4FirewallSettings = AnalysisIPv4FirewallSettings.DeserializeAnalysisIPv4FirewallSettings(property0.Value, options);
+                            ipV4FirewallSettings = ModelSerializationExtensions.JsonDeserialize<AnalysisIPv4FirewallSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("querypoolConnectionMode"u8))

@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WritePropertyName("productDetails"u8);
-            writer.WriteObjectValue(ProductDetails, options);
+            ((IJsonModel<ProductDetails>)ProductDetails).Write(writer, options);
             writer.WritePropertyName("orderItemType"u8);
             writer.WriteStringValue(OrderItemType.ToString());
             if (options.Format != "W" && Optional.IsDefined(CurrentStage))
             {
                 writer.WritePropertyName("currentStage"u8);
-                writer.WriteObjectValue(CurrentStage, options);
+                ((IJsonModel<EdgeOrderStageDetails>)CurrentStage).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(OrderItemStageHistory))
             {
@@ -49,24 +49,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in OrderItemStageHistory)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EdgeOrderStageDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
-                writer.WriteObjectValue(Preferences, options);
+                ((IJsonModel<OrderItemPreferences>)Preferences).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ForwardShippingDetails))
             {
                 writer.WritePropertyName("forwardShippingDetails"u8);
-                writer.WriteObjectValue(ForwardShippingDetails, options);
+                ((IJsonModel<ForwardShippingDetails>)ForwardShippingDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReverseShippingDetails))
             {
                 writer.WritePropertyName("reverseShippingDetails"u8);
-                writer.WriteObjectValue(ReverseShippingDetails, options);
+                ((IJsonModel<ReverseShippingDetails>)ReverseShippingDetails).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(NotificationEmailList))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (options.Format != "W" && Optional.IsDefined(FirstOrDefaultManagement))
             {
                 writer.WritePropertyName("managementRpDetails"u8);
-                writer.WriteObjectValue(FirstOrDefaultManagement, options);
+                ((IJsonModel<ResourceProviderDetails>)FirstOrDefaultManagement).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ManagementRPDetailsList))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in ManagementRPDetailsList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceProviderDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 if (property.NameEquals("productDetails"u8))
                 {
-                    productDetails = ProductDetails.DeserializeProductDetails(property.Value, options);
+                    productDetails = ModelSerializationExtensions.JsonDeserialize<ProductDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("orderItemType"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    currentStage = EdgeOrderStageDetails.DeserializeEdgeOrderStageDetails(property.Value, options);
+                    currentStage = ModelSerializationExtensions.JsonDeserialize<EdgeOrderStageDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("orderItemStageHistory"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    preferences = OrderItemPreferences.DeserializeOrderItemPreferences(property.Value, options);
+                    preferences = ModelSerializationExtensions.JsonDeserialize<OrderItemPreferences>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("forwardShippingDetails"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    forwardShippingDetails = ForwardShippingDetails.DeserializeForwardShippingDetails(property.Value, options);
+                    forwardShippingDetails = ModelSerializationExtensions.JsonDeserialize<ForwardShippingDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("reverseShippingDetails"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    reverseShippingDetails = ReverseShippingDetails.DeserializeReverseShippingDetails(property.Value, options);
+                    reverseShippingDetails = ModelSerializationExtensions.JsonDeserialize<ReverseShippingDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("notificationEmailList"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    managementRPDetails = ResourceProviderDetails.DeserializeResourceProviderDetails(property.Value, options);
+                    managementRPDetails = ModelSerializationExtensions.JsonDeserialize<ResourceProviderDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("managementRpDetailsList"u8))
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

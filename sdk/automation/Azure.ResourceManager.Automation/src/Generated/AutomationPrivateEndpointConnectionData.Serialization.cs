@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
+                ((IJsonModel<WritableSubResource>)PrivateEndpoint).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(GroupIds))
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState, options);
+                ((IJsonModel<AutomationPrivateLinkServiceConnectionStateProperty>)ConnectionState).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            privateEndpoint = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("groupIds"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = AutomationPrivateLinkServiceConnectionStateProperty.DeserializeAutomationPrivateLinkServiceConnectionStateProperty(property0.Value, options);
+                            privateLinkServiceConnectionState = ModelSerializationExtensions.JsonDeserialize<AutomationPrivateLinkServiceConnectionStateProperty>(property0.Value);
                             continue;
                         }
                     }

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (EarlyTermination != null)
                 {
                     writer.WritePropertyName("earlyTermination"u8);
-                    writer.WriteObjectValue(EarlyTermination, options);
+                    ((IJsonModel<MachineLearningEarlyTerminationPolicy>)EarlyTermination).Write(writer, options);
                 }
                 else
                 {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         earlyTermination = null;
                         continue;
                     }
-                    earlyTermination = MachineLearningEarlyTerminationPolicy.DeserializeMachineLearningEarlyTerminationPolicy(property.Value, options);
+                    earlyTermination = ModelSerializationExtensions.JsonDeserialize<MachineLearningEarlyTerminationPolicy>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in CustomDomains)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FrontDoorActivatedResourceInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OriginGroup))
             {
                 writer.WritePropertyName("originGroup"u8);
-                JsonSerializer.Serialize(writer, OriginGroup);
+                ((IJsonModel<WritableSubResource>)OriginGroup).Write(writer, options);
             }
             if (Optional.IsDefined(OriginPath))
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in RuleSets)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Cdn
                 if (CacheConfiguration != null)
                 {
                     writer.WritePropertyName("cacheConfiguration"u8);
-                    writer.WriteObjectValue(CacheConfiguration, options);
+                    ((IJsonModel<FrontDoorRouteCacheConfiguration>)CacheConfiguration).Write(writer, options);
                 }
                 else
                 {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Cdn
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            originGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            originGroup = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("originPath"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Cdn
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             ruleSets = array;
                             continue;
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Cdn
                                 cacheConfiguration = null;
                                 continue;
                             }
-                            cacheConfiguration = FrontDoorRouteCacheConfiguration.DeserializeFrontDoorRouteCacheConfiguration(property0.Value, options);
+                            cacheConfiguration = ModelSerializationExtensions.JsonDeserialize<FrontDoorRouteCacheConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("forwardingProtocol"u8))

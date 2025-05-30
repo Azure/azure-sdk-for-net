@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartArray();
             foreach (var item in Sims)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<SimNameAndProperties>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

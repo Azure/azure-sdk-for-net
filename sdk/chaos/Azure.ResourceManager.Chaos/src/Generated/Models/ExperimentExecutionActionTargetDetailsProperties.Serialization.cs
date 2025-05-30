@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Chaos.Models
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<ExperimentExecutionActionTargetDetailsError>)Error).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    error = ExperimentExecutionActionTargetDetailsError.DeserializeExperimentExecutionActionTargetDetailsError(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<ExperimentExecutionActionTargetDetailsError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

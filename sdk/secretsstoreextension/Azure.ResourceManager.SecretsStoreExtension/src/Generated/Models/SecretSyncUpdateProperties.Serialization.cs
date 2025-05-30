@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 writer.WriteStartArray();
                 foreach (var item in ObjectSecretMapping)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<KubernetesSecretObjectMapping>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in CompatibleWith)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CompatibleVersions>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -19,7 +19,7 @@ namespace Azure.Monitor.Query.Models
             writer.WriteStartArray();
             foreach (var item in Requests)
             {
-                writer.WriteObjectValue(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

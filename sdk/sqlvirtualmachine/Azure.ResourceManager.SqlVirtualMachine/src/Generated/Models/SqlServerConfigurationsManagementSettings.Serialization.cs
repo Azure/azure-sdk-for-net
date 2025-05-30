@@ -37,27 +37,27 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             if (Optional.IsDefined(SqlConnectivityUpdateSettings))
             {
                 writer.WritePropertyName("sqlConnectivityUpdateSettings"u8);
-                writer.WriteObjectValue(SqlConnectivityUpdateSettings, options);
+                ((IJsonModel<SqlConnectivityUpdateSettings>)SqlConnectivityUpdateSettings).Write(writer, options);
             }
             if (Optional.IsDefined(SqlWorkloadTypeUpdateSettings))
             {
                 writer.WritePropertyName("sqlWorkloadTypeUpdateSettings"u8);
-                writer.WriteObjectValue(SqlWorkloadTypeUpdateSettings, options);
+                ((IJsonModel<SqlWorkloadTypeUpdateSettings>)SqlWorkloadTypeUpdateSettings).Write(writer, options);
             }
             if (Optional.IsDefined(SqlStorageUpdateSettings))
             {
                 writer.WritePropertyName("sqlStorageUpdateSettings"u8);
-                writer.WriteObjectValue(SqlStorageUpdateSettings, options);
+                ((IJsonModel<SqlStorageUpdateSettings>)SqlStorageUpdateSettings).Write(writer, options);
             }
             if (Optional.IsDefined(AdditionalFeaturesServerConfigurations))
             {
                 writer.WritePropertyName("additionalFeaturesServerConfigurations"u8);
-                writer.WriteObjectValue(AdditionalFeaturesServerConfigurations, options);
+                ((IJsonModel<AdditionalFeaturesServerConfigurations>)AdditionalFeaturesServerConfigurations).Write(writer, options);
             }
             if (Optional.IsDefined(SqlInstanceSettings))
             {
                 writer.WritePropertyName("sqlInstanceSettings"u8);
-                writer.WriteObjectValue(SqlInstanceSettings, options);
+                ((IJsonModel<SqlInstanceSettings>)SqlInstanceSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    sqlConnectivityUpdateSettings = SqlConnectivityUpdateSettings.DeserializeSqlConnectivityUpdateSettings(property.Value, options);
+                    sqlConnectivityUpdateSettings = ModelSerializationExtensions.JsonDeserialize<SqlConnectivityUpdateSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sqlWorkloadTypeUpdateSettings"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    sqlWorkloadTypeUpdateSettings = SqlWorkloadTypeUpdateSettings.DeserializeSqlWorkloadTypeUpdateSettings(property.Value, options);
+                    sqlWorkloadTypeUpdateSettings = ModelSerializationExtensions.JsonDeserialize<SqlWorkloadTypeUpdateSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sqlStorageUpdateSettings"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    sqlStorageUpdateSettings = SqlStorageUpdateSettings.DeserializeSqlStorageUpdateSettings(property.Value, options);
+                    sqlStorageUpdateSettings = ModelSerializationExtensions.JsonDeserialize<SqlStorageUpdateSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("additionalFeaturesServerConfigurations"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    additionalFeaturesServerConfigurations = AdditionalFeaturesServerConfigurations.DeserializeAdditionalFeaturesServerConfigurations(property.Value, options);
+                    additionalFeaturesServerConfigurations = ModelSerializationExtensions.JsonDeserialize<AdditionalFeaturesServerConfigurations>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sqlInstanceSettings"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    sqlInstanceSettings = SqlInstanceSettings.DeserializeSqlInstanceSettings(property.Value, options);
+                    sqlInstanceSettings = ModelSerializationExtensions.JsonDeserialize<SqlInstanceSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

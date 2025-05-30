@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in And)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ReportConfigFilter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,19 +50,19 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Or)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ReportConfigFilter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
-                writer.WriteObjectValue(Dimensions, options);
+                ((IJsonModel<ReportConfigComparisonExpression>)Dimensions).Write(writer, options);
             }
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
-                writer.WriteObjectValue(Tags, options);
+                ((IJsonModel<ReportConfigComparisonExpression>)Tags).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    dimensions = ReportConfigComparisonExpression.DeserializeReportConfigComparisonExpression(property.Value, options);
+                    dimensions = ModelSerializationExtensions.JsonDeserialize<ReportConfigComparisonExpression>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    tags = ReportConfigComparisonExpression.DeserializeReportConfigComparisonExpression(property.Value, options);
+                    tags = ModelSerializationExtensions.JsonDeserialize<ReportConfigComparisonExpression>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

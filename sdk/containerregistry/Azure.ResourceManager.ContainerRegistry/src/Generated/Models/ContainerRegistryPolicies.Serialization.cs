@@ -38,27 +38,27 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(QuarantinePolicy))
             {
                 writer.WritePropertyName("quarantinePolicy"u8);
-                writer.WriteObjectValue(QuarantinePolicy, options);
+                ((IJsonModel<ContainerRegistryQuarantinePolicy>)QuarantinePolicy).Write(writer, options);
             }
             if (Optional.IsDefined(TrustPolicy))
             {
                 writer.WritePropertyName("trustPolicy"u8);
-                writer.WriteObjectValue(TrustPolicy, options);
+                ((IJsonModel<ContainerRegistryTrustPolicy>)TrustPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue(RetentionPolicy, options);
+                ((IJsonModel<ContainerRegistryRetentionPolicy>)RetentionPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(ExportPolicy))
             {
                 writer.WritePropertyName("exportPolicy"u8);
-                writer.WriteObjectValue(ExportPolicy, options);
+                ((IJsonModel<ContainerRegistryExportPolicy>)ExportPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(AzureADAuthenticationAsArmPolicy))
             {
                 writer.WritePropertyName("azureADAuthenticationAsArmPolicy"u8);
-                writer.WriteObjectValue(AzureADAuthenticationAsArmPolicy, options);
+                ((IJsonModel<AzureADAuthenticationAsArmPolicy>)AzureADAuthenticationAsArmPolicy).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    quarantinePolicy = ContainerRegistryQuarantinePolicy.DeserializeContainerRegistryQuarantinePolicy(property.Value, options);
+                    quarantinePolicy = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryQuarantinePolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("trustPolicy"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    trustPolicy = ContainerRegistryTrustPolicy.DeserializeContainerRegistryTrustPolicy(property.Value, options);
+                    trustPolicy = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryTrustPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("retentionPolicy"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    retentionPolicy = ContainerRegistryRetentionPolicy.DeserializeContainerRegistryRetentionPolicy(property.Value, options);
+                    retentionPolicy = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryRetentionPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("exportPolicy"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    exportPolicy = ContainerRegistryExportPolicy.DeserializeContainerRegistryExportPolicy(property.Value, options);
+                    exportPolicy = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryExportPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azureADAuthenticationAsArmPolicy"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    azureADAuthenticationAsArmPolicy = AzureADAuthenticationAsArmPolicy.DeserializeAzureADAuthenticationAsArmPolicy(property.Value, options);
+                    azureADAuthenticationAsArmPolicy = ModelSerializationExtensions.JsonDeserialize<AzureADAuthenticationAsArmPolicy>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

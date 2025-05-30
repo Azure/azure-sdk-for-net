@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (options.Format != "W" && Optional.IsDefined(PolicyDetails))
             {
                 writer.WritePropertyName("policyDetails"u8);
-                writer.WriteObjectValue(PolicyDetails, options);
+                ((IJsonModel<PolicyDetails>)PolicyDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DeploymentId))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    policyDetails = PolicyDetails.DeserializePolicyDetails(property.Value, options);
+                    policyDetails = ModelSerializationExtensions.JsonDeserialize<PolicyDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deploymentId"u8))

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EventTypeUnderTopic>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

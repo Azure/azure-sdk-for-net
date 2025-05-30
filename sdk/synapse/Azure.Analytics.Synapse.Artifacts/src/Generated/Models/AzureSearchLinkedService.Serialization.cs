@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                JsonSerializer.Serialize(writer, ConnectVia);
             }
             if (Optional.IsDefined(Description))
             {
@@ -43,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    JsonSerializer.Serialize(writer, item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -69,7 +69,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
-                writer.WriteObjectValue(Key);
+                JsonSerializer.Serialize(writer, Key);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -120,7 +120,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
+                    connectVia = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -183,7 +183,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            key = SecretBase.DeserializeSecretBase(property0.Value);
+                            key = ModelSerializationExtensions.JsonDeserialize<SecretBase>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

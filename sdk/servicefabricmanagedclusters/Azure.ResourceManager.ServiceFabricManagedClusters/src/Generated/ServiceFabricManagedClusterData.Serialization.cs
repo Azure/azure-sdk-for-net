@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<ServiceFabricManagedClustersSku>)Sku).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancingRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedClusterLoadBalancingRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in NetworkSecurityRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ServiceFabricManagedNetworkSecurityRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -145,14 +145,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in Clients)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedClusterClientCertificate>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AzureActiveDirectory))
             {
                 writer.WritePropertyName("azureActiveDirectory"u8);
-                writer.WriteObjectValue(AzureActiveDirectory, options);
+                ((IJsonModel<ManagedClusterAzureActiveDirectory>)AzureActiveDirectory).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(FabricSettings))
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in FabricSettings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ClusterFabricSettingsSection>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             if (Optional.IsDefined(ApplicationTypeVersionsCleanupPolicy))
             {
                 writer.WritePropertyName("applicationTypeVersionsCleanupPolicy"u8);
-                writer.WriteObjectValue(ApplicationTypeVersionsCleanupPolicy, options);
+                ((IJsonModel<ApplicationTypeVersionsCleanupPolicy>)ApplicationTypeVersionsCleanupPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(IsIPv6Enabled))
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in IPTags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedClusterIPTag>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in AuxiliarySubnets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedClusterSubnet>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in ServiceEndpoints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedClusterServiceEndpoint>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             if (Optional.IsDefined(UpgradeDescription))
             {
                 writer.WritePropertyName("upgradeDescription"u8);
-                writer.WriteObjectValue(UpgradeDescription, options);
+                ((IJsonModel<ManagedClusterUpgradePolicy>)UpgradeDescription).Write(writer, options);
             }
             if (Optional.IsDefined(HttpGatewayTokenAuthConnectionPort))
             {
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = ServiceFabricManagedClustersSku.DeserializeServiceFabricManagedClustersSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<ServiceFabricManagedClustersSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             {
                                 continue;
                             }
-                            azureActiveDirectory = ManagedClusterAzureActiveDirectory.DeserializeManagedClusterAzureActiveDirectory(property0.Value, options);
+                            azureActiveDirectory = ModelSerializationExtensions.JsonDeserialize<ManagedClusterAzureActiveDirectory>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("fabricSettings"u8))
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             {
                                 continue;
                             }
-                            applicationTypeVersionsCleanupPolicy = ApplicationTypeVersionsCleanupPolicy.DeserializeApplicationTypeVersionsCleanupPolicy(property0.Value, options);
+                            applicationTypeVersionsCleanupPolicy = ModelSerializationExtensions.JsonDeserialize<ApplicationTypeVersionsCleanupPolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enableIpv6"u8))
@@ -809,7 +809,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             {
                                 continue;
                             }
-                            upgradeDescription = ManagedClusterUpgradePolicy.DeserializeManagedClusterUpgradePolicy(property0.Value, options);
+                            upgradeDescription = ModelSerializationExtensions.JsonDeserialize<ManagedClusterUpgradePolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("httpGatewayTokenAuthConnectionPort"u8))

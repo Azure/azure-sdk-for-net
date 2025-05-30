@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Labels)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MipSensitivityLabel>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomInfoTypes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UserDefinedInformationType>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in BuiltInInfoTypes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BuiltInInfoType>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

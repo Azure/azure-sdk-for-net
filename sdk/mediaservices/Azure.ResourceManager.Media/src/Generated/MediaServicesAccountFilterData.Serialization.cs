@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(PresentationTimeRange))
             {
                 writer.WritePropertyName("presentationTimeRange"u8);
-                writer.WriteObjectValue(PresentationTimeRange, options);
+                ((IJsonModel<PresentationTimeRange>)PresentationTimeRange).Write(writer, options);
             }
             if (Optional.IsDefined(FirstQuality))
             {
                 writer.WritePropertyName("firstQuality"u8);
-                writer.WriteObjectValue(FirstQuality, options);
+                ((IJsonModel<FirstQuality>)FirstQuality).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tracks))
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Media
                 writer.WriteStartArray();
                 foreach (var item in Tracks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FilterTrackSelection>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Media
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            presentationTimeRange = PresentationTimeRange.DeserializePresentationTimeRange(property0.Value, options);
+                            presentationTimeRange = ModelSerializationExtensions.JsonDeserialize<PresentationTimeRange>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("firstQuality"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            firstQuality = FirstQuality.DeserializeFirstQuality(property0.Value, options);
+                            firstQuality = ModelSerializationExtensions.JsonDeserialize<FirstQuality>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tracks"u8))

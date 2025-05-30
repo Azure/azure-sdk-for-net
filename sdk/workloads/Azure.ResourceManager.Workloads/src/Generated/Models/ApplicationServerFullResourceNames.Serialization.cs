@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualMachines)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VirtualMachineResourceNames>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    upgradeSettings = AgentPoolUpgradeSettings.DeserializeAgentPoolUpgradeSettings(property.Value, options);
+                    upgradeSettings = ModelSerializationExtensions.JsonDeserialize<AgentPoolUpgradeSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    powerState = ContainerServicePowerState.DeserializeContainerServicePowerState(property.Value, options);
+                    powerState = ModelSerializationExtensions.JsonDeserialize<ContainerServicePowerState>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("availabilityZones"u8))
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    kubeletConfig = KubeletConfig.DeserializeKubeletConfig(property.Value, options);
+                    kubeletConfig = ModelSerializationExtensions.JsonDeserialize<KubeletConfig>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("linuxOSConfig"u8))
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    linuxOSConfig = LinuxOSConfig.DeserializeLinuxOSConfig(property.Value, options);
+                    linuxOSConfig = ModelSerializationExtensions.JsonDeserialize<LinuxOSConfig>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("enableEncryptionAtHost"u8))
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    creationData = ContainerServiceCreationData.DeserializeContainerServiceCreationData(property.Value, options);
+                    creationData = ModelSerializationExtensions.JsonDeserialize<ContainerServiceCreationData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("capacityReservationGroupID"u8))
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    networkProfile = AgentPoolNetworkProfile.DeserializeAgentPoolNetworkProfile(property.Value, options);
+                    networkProfile = ModelSerializationExtensions.JsonDeserialize<AgentPoolNetworkProfile>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -34,7 +34,7 @@ namespace Azure.Maps.Search.Models
                 }
                 if (property.NameEquals("geometry"u8))
                 {
-                    geometry = GeoJsonGeometryCollection.DeserializeGeoJsonGeometryCollection(property.Value);
+                    geometry = ModelSerializationExtensions.JsonDeserialize<GeoJsonGeometryCollection>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -43,7 +43,7 @@ namespace Azure.Maps.Search.Models
                     {
                         continue;
                     }
-                    properties = BoundaryProperties.DeserializeBoundaryProperties(property.Value);
+                    properties = ModelSerializationExtensions.JsonDeserialize<BoundaryProperties>(property.Value);
                     continue;
                 }
             }

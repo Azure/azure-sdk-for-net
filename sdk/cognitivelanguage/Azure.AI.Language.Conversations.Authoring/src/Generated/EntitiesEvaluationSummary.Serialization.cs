@@ -39,7 +39,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             foreach (var item in ConfusionMatrix)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                ((IJsonModel<ConversationAuthoringConfusionMatrixRow>)item.Value).Write(writer, options);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("entities"u8);
@@ -47,7 +47,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             foreach (var item in Entities)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                ((IJsonModel<ConversationAuthoringEntityEvalSummary>)item.Value).Write(writer, options);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("microF1"u8);

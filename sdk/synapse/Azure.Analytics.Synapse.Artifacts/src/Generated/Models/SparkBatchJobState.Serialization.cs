@@ -112,7 +112,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    jobCreationRequest = SparkRequest.DeserializeSparkRequest(property.Value);
+                    jobCreationRequest = ModelSerializationExtensions.JsonDeserialize<SparkRequest>(property.Value);
                     continue;
                 }
             }

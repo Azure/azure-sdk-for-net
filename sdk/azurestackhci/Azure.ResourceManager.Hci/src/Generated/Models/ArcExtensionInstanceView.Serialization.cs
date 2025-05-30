@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<ArcExtensionInstanceViewStatus>)Status).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    status = ArcExtensionInstanceViewStatus.DeserializeArcExtensionInstanceViewStatus(property.Value, options);
+                    status = ModelSerializationExtensions.JsonDeserialize<ArcExtensionInstanceViewStatus>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

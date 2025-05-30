@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ElasticSanVirtualNetworkRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

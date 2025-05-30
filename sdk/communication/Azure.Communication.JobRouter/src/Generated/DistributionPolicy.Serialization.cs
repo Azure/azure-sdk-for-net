@@ -57,7 +57,7 @@ namespace Azure.Communication.JobRouter
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
-                writer.WriteObjectValue<DistributionMode>(Mode, options);
+                ((IJsonModel<DistributionMode>)Mode).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -131,7 +131,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    mode = DistributionMode.DeserializeDistributionMode(property.Value, options);
+                    mode = ModelSerializationExtensions.JsonDeserialize<DistributionMode>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

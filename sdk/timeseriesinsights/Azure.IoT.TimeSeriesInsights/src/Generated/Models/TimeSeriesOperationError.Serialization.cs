@@ -48,7 +48,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     {
                         continue;
                     }
-                    innerError = DeserializeTimeSeriesOperationError(property.Value);
+                    innerError = ModelSerializationExtensions.JsonDeserialize<TimeSeriesOperationError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("details"u8))

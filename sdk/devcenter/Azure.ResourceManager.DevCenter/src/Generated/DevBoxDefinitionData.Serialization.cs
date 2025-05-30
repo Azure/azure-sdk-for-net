@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.DevCenter
             if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
-                writer.WriteObjectValue(ImageReference, options);
+                ((IJsonModel<DevCenterImageReference>)ImageReference).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<DevCenterSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(OSStorageType))
             {
@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.DevCenter
             if (options.Format != "W" && Optional.IsDefined(ImageValidationErrorDetails))
             {
                 writer.WritePropertyName("imageValidationErrorDetails"u8);
-                writer.WriteObjectValue(ImageValidationErrorDetails, options);
+                ((IJsonModel<ImageValidationErrorDetails>)ImageValidationErrorDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ActiveImageReference))
             {
                 writer.WritePropertyName("activeImageReference"u8);
-                writer.WriteObjectValue(ActiveImageReference, options);
+                ((IJsonModel<DevCenterImageReference>)ActiveImageReference).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DevCenter
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            imageReference = DevCenterImageReference.DeserializeDevCenterImageReference(property0.Value, options);
+                            imageReference = ModelSerializationExtensions.JsonDeserialize<DevCenterImageReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sku"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            sku = DevCenterSku.DeserializeDevCenterSku(property0.Value, options);
+                            sku = ModelSerializationExtensions.JsonDeserialize<DevCenterSku>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("osStorageType"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            imageValidationErrorDetails = ImageValidationErrorDetails.DeserializeImageValidationErrorDetails(property0.Value, options);
+                            imageValidationErrorDetails = ModelSerializationExtensions.JsonDeserialize<ImageValidationErrorDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("activeImageReference"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            activeImageReference = DevCenterImageReference.DeserializeDevCenterImageReference(property0.Value, options);
+                            activeImageReference = ModelSerializationExtensions.JsonDeserialize<DevCenterImageReference>(property0.Value);
                             continue;
                         }
                     }

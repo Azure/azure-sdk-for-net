@@ -38,7 +38,7 @@ namespace Azure.Storage.Files.DataLake.Models
                     {
                         continue;
                     }
-                    error = StorageErrorError.DeserializeStorageErrorError(property.Value);
+                    error = ModelSerializationExtensions.JsonDeserialize<StorageErrorError>(property.Value);
                     continue;
                 }
             }

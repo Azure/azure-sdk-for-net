@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(BackupSchedule))
             {
                 writer.WritePropertyName("backupSchedule"u8);
-                writer.WriteObjectValue(BackupSchedule, options);
+                ((IJsonModel<WebAppBackupSchedule>)BackupSchedule).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Databases))
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Databases)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AppServiceDatabaseBackupSetting>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            backupSchedule = WebAppBackupSchedule.DeserializeWebAppBackupSchedule(property0.Value, options);
+                            backupSchedule = ModelSerializationExtensions.JsonDeserialize<WebAppBackupSchedule>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("databases"u8))

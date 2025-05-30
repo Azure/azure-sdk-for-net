@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(FixedScale))
             {
                 writer.WritePropertyName("fixedScale"u8);
-                writer.WriteObjectValue(FixedScale, options);
+                ((IJsonModel<BatchAccountFixedScaleSettings>)FixedScale).Write(writer, options);
             }
             if (Optional.IsDefined(AutoScale))
             {
                 writer.WritePropertyName("autoScale"u8);
-                writer.WriteObjectValue(AutoScale, options);
+                ((IJsonModel<BatchAccountAutoScaleSettings>)AutoScale).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    fixedScale = BatchAccountFixedScaleSettings.DeserializeBatchAccountFixedScaleSettings(property.Value, options);
+                    fixedScale = ModelSerializationExtensions.JsonDeserialize<BatchAccountFixedScaleSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("autoScale"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    autoScale = BatchAccountAutoScaleSettings.DeserializeBatchAccountAutoScaleSettings(property.Value, options);
+                    autoScale = ModelSerializationExtensions.JsonDeserialize<BatchAccountAutoScaleSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -40,37 +40,37 @@ namespace Azure.AI.Language.Text
             writer.WriteStartArray();
             foreach (var item in Warnings)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DocumentWarning>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics, options);
+                ((IJsonModel<DocumentStatistics>)Statistics).Write(writer, options);
             }
             writer.WritePropertyName("entities"u8);
             writer.WriteStartArray();
             foreach (var item in Entities)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<HealthcareEntity>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("relations"u8);
             writer.WriteStartArray();
             foreach (var item in Relations)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<HealthcareRelation>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(FhirBundle))
             {
                 writer.WritePropertyName("fhirBundle"u8);
-                writer.WriteObjectValue(FhirBundle, options);
+                ((IJsonModel<FhirBundle>)FhirBundle).Write(writer, options);
             }
             if (Optional.IsDefined(DetectedLanguage))
             {
                 writer.WritePropertyName("detectedLanguage"u8);
-                writer.WriteObjectValue(DetectedLanguage, options);
+                ((IJsonModel<DetectedLanguage>)DetectedLanguage).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -141,7 +141,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value, options);
+                    statistics = ModelSerializationExtensions.JsonDeserialize<DocumentStatistics>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("entities"u8))
@@ -170,7 +170,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    fhirBundle = FhirBundle.DeserializeFhirBundle(property.Value, options);
+                    fhirBundle = ModelSerializationExtensions.JsonDeserialize<FhirBundle>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("detectedLanguage"u8))
@@ -179,7 +179,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    detectedLanguage = DetectedLanguage.DeserializeDetectedLanguage(property.Value, options);
+                    detectedLanguage = ModelSerializationExtensions.JsonDeserialize<DetectedLanguage>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

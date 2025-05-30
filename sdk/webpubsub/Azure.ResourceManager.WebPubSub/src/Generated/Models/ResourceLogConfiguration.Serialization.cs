@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceLogCategory>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

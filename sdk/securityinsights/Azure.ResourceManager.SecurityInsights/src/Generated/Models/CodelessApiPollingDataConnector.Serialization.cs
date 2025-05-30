@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(ConnectorUiConfig))
             {
                 writer.WritePropertyName("connectorUiConfig"u8);
-                writer.WriteObjectValue(ConnectorUiConfig, options);
+                ((IJsonModel<CodelessUiConnectorConfigProperties>)ConnectorUiConfig).Write(writer, options);
             }
             if (Optional.IsDefined(PollingConfig))
             {
                 writer.WritePropertyName("pollingConfig"u8);
-                writer.WriteObjectValue(PollingConfig, options);
+                ((IJsonModel<CodelessConnectorPollingConfigProperties>)PollingConfig).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            connectorUiConfig = CodelessUiConnectorConfigProperties.DeserializeCodelessUiConnectorConfigProperties(property0.Value, options);
+                            connectorUiConfig = ModelSerializationExtensions.JsonDeserialize<CodelessUiConnectorConfigProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("pollingConfig"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            pollingConfig = CodelessConnectorPollingConfigProperties.DeserializeCodelessConnectorPollingConfigProperties(property0.Value, options);
+                            pollingConfig = ModelSerializationExtensions.JsonDeserialize<CodelessConnectorPollingConfigProperties>(property0.Value);
                             continue;
                         }
                     }

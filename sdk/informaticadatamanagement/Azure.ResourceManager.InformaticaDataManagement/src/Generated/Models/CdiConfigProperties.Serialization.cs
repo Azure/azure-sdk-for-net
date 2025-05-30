@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             writer.WriteStartArray();
             foreach (var item in ApplicationConfigs)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<InformaticaApplicationConfigs>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

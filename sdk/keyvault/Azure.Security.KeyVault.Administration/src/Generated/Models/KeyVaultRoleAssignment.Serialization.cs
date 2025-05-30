@@ -44,7 +44,7 @@ namespace Azure.Security.KeyVault.Administration
                     {
                         continue;
                     }
-                    properties = KeyVaultRoleAssignmentProperties.DeserializeKeyVaultRoleAssignmentProperties(property.Value);
+                    properties = ModelSerializationExtensions.JsonDeserialize<KeyVaultRoleAssignmentProperties>(property.Value);
                     continue;
                 }
             }

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<LoadBalancerInboundNatPoolProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    properties = LoadBalancerInboundNatPoolProperties.DeserializeLoadBalancerInboundNatPoolProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<LoadBalancerInboundNatPoolProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))

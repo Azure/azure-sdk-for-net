@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(PlayRight))
             {
                 writer.WritePropertyName("playRight"u8);
-                writer.WriteObjectValue(PlayRight, options);
+                ((IJsonModel<ContentKeyPolicyPlayReadyPlayRight>)PlayRight).Write(writer, options);
             }
             writer.WritePropertyName("licenseType"u8);
             writer.WriteStringValue(LicenseType.ToString());
             writer.WritePropertyName("contentKeyLocation"u8);
-            writer.WriteObjectValue(ContentKeyLocation, options);
+            ((IJsonModel<ContentKeyPolicyPlayReadyContentKeyLocation>)ContentKeyLocation).Write(writer, options);
             writer.WritePropertyName("contentType"u8);
             writer.WriteStringValue(ContentType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    playRight = ContentKeyPolicyPlayReadyPlayRight.DeserializeContentKeyPolicyPlayReadyPlayRight(property.Value, options);
+                    playRight = ModelSerializationExtensions.JsonDeserialize<ContentKeyPolicyPlayReadyPlayRight>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("licenseType"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (property.NameEquals("contentKeyLocation"u8))
                 {
-                    contentKeyLocation = ContentKeyPolicyPlayReadyContentKeyLocation.DeserializeContentKeyPolicyPlayReadyContentKeyLocation(property.Value, options);
+                    contentKeyLocation = ModelSerializationExtensions.JsonDeserialize<ContentKeyPolicyPlayReadyContentKeyLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("contentType"u8))

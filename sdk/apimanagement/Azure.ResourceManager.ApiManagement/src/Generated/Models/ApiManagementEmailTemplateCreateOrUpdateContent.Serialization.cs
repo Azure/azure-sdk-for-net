@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EmailTemplateParametersContractProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

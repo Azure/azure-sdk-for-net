@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(AMLParameters))
             {
                 writer.WritePropertyName("amlParameters"u8);
-                writer.WriteObjectValue(AMLParameters);
+                JsonSerializer.Serialize(writer, AMLParameters);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(VectorizerName);
@@ -44,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    amlParameters = AzureMachineLearningParameters.DeserializeAzureMachineLearningParameters(property.Value);
+                    amlParameters = ModelSerializationExtensions.JsonDeserialize<AzureMachineLearningParameters>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

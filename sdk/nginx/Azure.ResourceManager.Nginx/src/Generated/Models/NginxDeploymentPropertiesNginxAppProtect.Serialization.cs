@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.Nginx.Models
             }
 
             writer.WritePropertyName("webApplicationFirewallSettings"u8);
-            writer.WriteObjectValue(WebApplicationFirewallSettings, options);
+            ((IJsonModel<WebApplicationFirewallSettings>)WebApplicationFirewallSettings).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(WebApplicationFirewallStatus))
             {
                 writer.WritePropertyName("webApplicationFirewallStatus"u8);
-                writer.WriteObjectValue(WebApplicationFirewallStatus, options);
+                ((IJsonModel<WebApplicationFirewallStatus>)WebApplicationFirewallStatus).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 if (property.NameEquals("webApplicationFirewallSettings"u8))
                 {
-                    webApplicationFirewallSettings = WebApplicationFirewallSettings.DeserializeWebApplicationFirewallSettings(property.Value, options);
+                    webApplicationFirewallSettings = ModelSerializationExtensions.JsonDeserialize<WebApplicationFirewallSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("webApplicationFirewallStatus"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    webApplicationFirewallStatus = WebApplicationFirewallStatus.DeserializeWebApplicationFirewallStatus(property.Value, options);
+                    webApplicationFirewallStatus = ModelSerializationExtensions.JsonDeserialize<WebApplicationFirewallStatus>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

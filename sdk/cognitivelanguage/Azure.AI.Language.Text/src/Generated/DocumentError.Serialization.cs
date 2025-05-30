@@ -37,7 +37,7 @@ namespace Azure.AI.Language.Text
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("error"u8);
-            writer.WriteObjectValue(Error, options);
+            ((IJsonModel<AnalyzeTextError>)Error).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,7 +88,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("error"u8))
                 {
-                    error = AnalyzeTextError.DeserializeAnalyzeTextError(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<AnalyzeTextError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

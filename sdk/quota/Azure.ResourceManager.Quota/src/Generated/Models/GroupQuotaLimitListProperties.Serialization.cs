@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Quota.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<GroupQuotaLimit>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

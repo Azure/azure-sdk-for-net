@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ExpressRouteCircuit))
             {
                 writer.WritePropertyName("expressRouteCircuit"u8);
-                JsonSerializer.Serialize(writer, ExpressRouteCircuit);
+                ((IJsonModel<WritableSubResource>)ExpressRouteCircuit).Write(writer, options);
             }
             if (Optional.IsDefined(ServiceProviderProvisioningState))
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Peerings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExpressRouteCrossConnectionPeeringData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            expressRouteCircuit = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            expressRouteCircuit = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("serviceProviderProvisioningState"u8))

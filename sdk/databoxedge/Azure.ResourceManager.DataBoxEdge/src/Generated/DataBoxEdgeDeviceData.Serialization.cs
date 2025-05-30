@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<DataBoxEdgeSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(ETag))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Kind))
             {
@@ -137,17 +137,17 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (options.Format != "W" && Optional.IsDefined(ResourceMoveDetails))
             {
                 writer.WritePropertyName("resourceMoveDetails"u8);
-                writer.WriteObjectValue(ResourceMoveDetails, options);
+                ((IJsonModel<DataBoxEdgeResourceMoveDetails>)ResourceMoveDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EdgeProfile))
             {
                 writer.WritePropertyName("edgeProfile"u8);
-                writer.WriteObjectValue(EdgeProfile, options);
+                ((IJsonModel<EdgeProfile>)EdgeProfile).Write(writer, options);
             }
             if (Optional.IsDefined(DataResidency))
             {
                 writer.WritePropertyName("dataResidency"u8);
-                writer.WriteObjectValue(DataResidency, options);
+                ((IJsonModel<DataResidency>)DataResidency).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     {
                         continue;
                     }
-                    sku = DataBoxEdgeSku.DeserializeDataBoxEdgeSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<DataBoxEdgeSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            resourceMoveDetails = DataBoxEdgeResourceMoveDetails.DeserializeDataBoxEdgeResourceMoveDetails(property0.Value, options);
+                            resourceMoveDetails = ModelSerializationExtensions.JsonDeserialize<DataBoxEdgeResourceMoveDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("edgeProfile"u8))
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            edgeProfile = EdgeProfile.DeserializeEdgeProfile(property0.Value, options);
+                            edgeProfile = ModelSerializationExtensions.JsonDeserialize<EdgeProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dataResidency"u8))
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            dataResidency = DataResidency.DeserializeDataResidency(property0.Value, options);
+                            dataResidency = ModelSerializationExtensions.JsonDeserialize<DataResidency>(property0.Value);
                             continue;
                         }
                     }

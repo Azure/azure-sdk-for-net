@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<VpnLinkConnectionSharedKeyProperties>)Properties).Write(writer, options);
             }
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    properties = VpnLinkConnectionSharedKeyProperties.DeserializeVpnLinkConnectionSharedKeyProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<VpnLinkConnectionSharedKeyProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

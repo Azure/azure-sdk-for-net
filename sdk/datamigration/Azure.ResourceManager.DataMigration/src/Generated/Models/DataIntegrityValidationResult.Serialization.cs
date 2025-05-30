@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(ValidationErrors))
             {
                 writer.WritePropertyName("validationErrors"u8);
-                writer.WriteObjectValue(ValidationErrors, options);
+                ((IJsonModel<ValidationError>)ValidationErrors).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    validationErrors = ValidationError.DeserializeValidationError(property.Value, options);
+                    validationErrors = ModelSerializationExtensions.JsonDeserialize<ValidationError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

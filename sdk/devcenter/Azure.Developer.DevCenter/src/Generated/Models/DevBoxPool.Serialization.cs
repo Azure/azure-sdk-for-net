@@ -49,7 +49,7 @@ namespace Azure.Developer.DevCenter.Models
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile, options);
+                ((IJsonModel<DevBoxHardwareProfile>)HardwareProfile).Write(writer, options);
             }
             if (Optional.IsDefined(HibernateSupport))
             {
@@ -59,12 +59,12 @@ namespace Azure.Developer.DevCenter.Models
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile, options);
+                ((IJsonModel<DevBoxStorageProfile>)StorageProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
-                writer.WriteObjectValue(ImageReference, options);
+                ((IJsonModel<DevBoxImageReference>)ImageReference).Write(writer, options);
             }
             if (Optional.IsDefined(LocalAdministratorStatus))
             {
@@ -74,7 +74,7 @@ namespace Azure.Developer.DevCenter.Models
             if (Optional.IsDefined(StopOnDisconnect))
             {
                 writer.WritePropertyName("stopOnDisconnect"u8);
-                writer.WriteObjectValue(StopOnDisconnect, options);
+                ((IJsonModel<StopOnDisconnectConfiguration>)StopOnDisconnect).Write(writer, options);
             }
             writer.WritePropertyName("healthStatus"u8);
             writer.WriteStringValue(HealthStatus.ToString());
@@ -154,7 +154,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    hardwareProfile = DevBoxHardwareProfile.DeserializeDevBoxHardwareProfile(property.Value, options);
+                    hardwareProfile = ModelSerializationExtensions.JsonDeserialize<DevBoxHardwareProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("hibernateSupport"u8))
@@ -172,7 +172,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    storageProfile = DevBoxStorageProfile.DeserializeDevBoxStorageProfile(property.Value, options);
+                    storageProfile = ModelSerializationExtensions.JsonDeserialize<DevBoxStorageProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("imageReference"u8))
@@ -181,7 +181,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    imageReference = DevBoxImageReference.DeserializeDevBoxImageReference(property.Value, options);
+                    imageReference = ModelSerializationExtensions.JsonDeserialize<DevBoxImageReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("localAdministrator"u8))
@@ -199,7 +199,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    stopOnDisconnect = StopOnDisconnectConfiguration.DeserializeStopOnDisconnectConfiguration(property.Value, options);
+                    stopOnDisconnect = ModelSerializationExtensions.JsonDeserialize<StopOnDisconnectConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("healthStatus"u8))

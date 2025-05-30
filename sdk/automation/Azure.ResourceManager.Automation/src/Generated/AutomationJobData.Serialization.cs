@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Runbook))
             {
                 writer.WritePropertyName("runbook"u8);
-                writer.WriteObjectValue(Runbook, options);
+                ((IJsonModel<RunbookAssociationProperty>)Runbook).Write(writer, options);
             }
             if (Optional.IsDefined(StartedBy))
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            runbook = RunbookAssociationProperty.DeserializeRunbookAssociationProperty(property0.Value, options);
+                            runbook = ModelSerializationExtensions.JsonDeserialize<RunbookAssociationProperty>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("startedBy"u8))

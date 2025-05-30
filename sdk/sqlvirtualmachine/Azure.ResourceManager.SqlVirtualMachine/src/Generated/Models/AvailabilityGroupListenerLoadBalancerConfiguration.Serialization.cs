@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
-                writer.WriteObjectValue(PrivateIPAddress, options);
+                ((IJsonModel<AvailabilityGroupListenerPrivateIPAddress>)PrivateIPAddress).Write(writer, options);
             }
             if (Optional.IsDefined(PublicIPAddressResourceId))
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    privateIPAddress = AvailabilityGroupListenerPrivateIPAddress.DeserializeAvailabilityGroupListenerPrivateIPAddress(property.Value, options);
+                    privateIPAddress = ModelSerializationExtensions.JsonDeserialize<AvailabilityGroupListenerPrivateIPAddress>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("publicIpAddressResourceId"u8))

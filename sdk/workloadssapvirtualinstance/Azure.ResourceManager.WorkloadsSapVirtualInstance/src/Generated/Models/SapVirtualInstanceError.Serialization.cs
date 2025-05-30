@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<SapVirtualInstanceErrorDetail>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     {
                         continue;
                     }
-                    properties = SapVirtualInstanceErrorDetail.DeserializeSapVirtualInstanceErrorDetail(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<SapVirtualInstanceErrorDetail>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

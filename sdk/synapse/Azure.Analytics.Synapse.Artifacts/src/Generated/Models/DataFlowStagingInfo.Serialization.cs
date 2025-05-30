@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
-                writer.WriteObjectValue(LinkedService);
+                JsonSerializer.Serialize(writer, LinkedService);
             }
             if (Optional.IsDefined(FolderPath))
             {
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    linkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    linkedService = ModelSerializationExtensions.JsonDeserialize<LinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("folderPath"u8))

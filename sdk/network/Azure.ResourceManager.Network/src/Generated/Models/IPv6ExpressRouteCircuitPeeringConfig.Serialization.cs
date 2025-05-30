@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(MicrosoftPeeringConfig))
             {
                 writer.WritePropertyName("microsoftPeeringConfig"u8);
-                writer.WriteObjectValue(MicrosoftPeeringConfig, options);
+                ((IJsonModel<ExpressRouteCircuitPeeringConfig>)MicrosoftPeeringConfig).Write(writer, options);
             }
             if (Optional.IsDefined(RouteFilter))
             {
                 writer.WritePropertyName("routeFilter"u8);
-                JsonSerializer.Serialize(writer, RouteFilter);
+                ((IJsonModel<WritableSubResource>)RouteFilter).Write(writer, options);
             }
             if (Optional.IsDefined(State))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    microsoftPeeringConfig = ExpressRouteCircuitPeeringConfig.DeserializeExpressRouteCircuitPeeringConfig(property.Value, options);
+                    microsoftPeeringConfig = ModelSerializationExtensions.JsonDeserialize<ExpressRouteCircuitPeeringConfig>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("routeFilter"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    routeFilter = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    routeFilter = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("state"u8))

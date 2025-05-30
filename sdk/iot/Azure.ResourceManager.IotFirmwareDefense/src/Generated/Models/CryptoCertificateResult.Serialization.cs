@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             if (Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
-                writer.WriteObjectValue(Subject, options);
+                ((IJsonModel<CryptoCertificateEntity>)Subject).Write(writer, options);
             }
             if (Optional.IsDefined(Issuer))
             {
                 writer.WritePropertyName("issuer"u8);
-                writer.WriteObjectValue(Issuer, options);
+                ((IJsonModel<CryptoCertificateEntity>)Issuer).Write(writer, options);
             }
             if (Optional.IsDefined(IssuedOn))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             if (Optional.IsDefined(PairedKey))
             {
                 writer.WritePropertyName("pairedKey"u8);
-                writer.WriteObjectValue(PairedKey, options);
+                ((IJsonModel<CryptoPairedKey>)PairedKey).Write(writer, options);
             }
             if (Optional.IsDefined(IsExpired))
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                             {
                                 continue;
                             }
-                            subject = CryptoCertificateEntity.DeserializeCryptoCertificateEntity(property0.Value, options);
+                            subject = ModelSerializationExtensions.JsonDeserialize<CryptoCertificateEntity>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("issuer"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                             {
                                 continue;
                             }
-                            issuer = CryptoCertificateEntity.DeserializeCryptoCertificateEntity(property0.Value, options);
+                            issuer = ModelSerializationExtensions.JsonDeserialize<CryptoCertificateEntity>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("issuedDate"u8))
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                             {
                                 continue;
                             }
-                            pairedKey = CryptoPairedKey.DeserializeCryptoPairedKey(property0.Value, options);
+                            pairedKey = ModelSerializationExtensions.JsonDeserialize<CryptoPairedKey>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("isExpired"u8))

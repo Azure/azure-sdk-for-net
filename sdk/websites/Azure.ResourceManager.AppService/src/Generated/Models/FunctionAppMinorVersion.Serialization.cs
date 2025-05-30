@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(StackSettings))
             {
                 writer.WritePropertyName("stackSettings"u8);
-                writer.WriteObjectValue(StackSettings, options);
+                ((IJsonModel<FunctionAppRuntimes>)StackSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    stackSettings = FunctionAppRuntimes.DeserializeFunctionAppRuntimes(property.Value, options);
+                    stackSettings = ModelSerializationExtensions.JsonDeserialize<FunctionAppRuntimes>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

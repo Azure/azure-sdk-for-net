@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(Exec))
             {
                 writer.WritePropertyName("exec"u8);
-                writer.WriteObjectValue(Exec, options);
+                ((IJsonModel<ContainerExec>)Exec).Write(writer, options);
             }
             if (Optional.IsDefined(HttpGet))
             {
                 writer.WritePropertyName("httpGet"u8);
-                writer.WriteObjectValue(HttpGet, options);
+                ((IJsonModel<ContainerHttpGet>)HttpGet).Write(writer, options);
             }
             if (Optional.IsDefined(InitialDelayInSeconds))
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    exec = ContainerExec.DeserializeContainerExec(property.Value, options);
+                    exec = ModelSerializationExtensions.JsonDeserialize<ContainerExec>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("httpGet"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    httpGet = ContainerHttpGet.DeserializeContainerHttpGet(property.Value, options);
+                    httpGet = ModelSerializationExtensions.JsonDeserialize<ContainerHttpGet>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("initialDelaySeconds"u8))

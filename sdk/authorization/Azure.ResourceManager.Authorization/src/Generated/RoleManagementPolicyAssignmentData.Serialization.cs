@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.Authorization
                 writer.WriteStartArray();
                 foreach (var item in EffectiveRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RoleManagementPolicyRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(PolicyAssignmentProperties))
             {
                 writer.WritePropertyName("policyAssignmentProperties"u8);
-                writer.WriteObjectValue(PolicyAssignmentProperties, options);
+                ((IJsonModel<PolicyAssignmentProperties>)PolicyAssignmentProperties).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Authorization
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Authorization
                             {
                                 continue;
                             }
-                            policyAssignmentProperties = PolicyAssignmentProperties.DeserializePolicyAssignmentProperties(property0.Value, options);
+                            policyAssignmentProperties = ModelSerializationExtensions.JsonDeserialize<PolicyAssignmentProperties>(property0.Value);
                             continue;
                         }
                     }

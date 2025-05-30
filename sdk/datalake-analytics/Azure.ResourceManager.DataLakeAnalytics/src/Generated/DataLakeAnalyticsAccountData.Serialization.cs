@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 writer.WriteStartArray();
                 foreach (var item in DataLakeStoreAccounts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataLakeStoreAccountInformationData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 writer.WriteStartArray();
                 foreach (var item in PublicDataLakeStoreAccounts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataLakeStoreAccountInformationData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataLakeAnalyticsStorageAccountInformationData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 writer.WriteStartArray();
                 foreach (var item in ComputePolicies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataLakeAnalyticsComputePolicyData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 writer.WriteStartArray();
                 foreach (var item in HiveMetastores)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataLakeAnalyticsHiveMetastore>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataLakeAnalyticsVirtualNetworkRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 writer.WriteStartArray();
                 foreach (var item in FirewallRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataLakeAnalyticsFirewallRuleData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

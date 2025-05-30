@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 writer.WriteStartArray();
                 foreach (var item in MigrationGuidelineContext)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MigrationGuidelineContext>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -45,8 +45,7 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -68,22 +67,22 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(ConfigurationAccess))
             {
                 writer.WritePropertyName("configurationAccess"u8);
-                writer.WriteObjectValue(ConfigurationAccess, options);
+                ((IJsonModel<DataCollectionEndpointConfigurationAccess>)ConfigurationAccess).Write(writer, options);
             }
             if (Optional.IsDefined(LogsIngestion))
             {
                 writer.WritePropertyName("logsIngestion"u8);
-                writer.WriteObjectValue(LogsIngestion, options);
+                ((IJsonModel<DataCollectionEndpointLogsIngestion>)LogsIngestion).Write(writer, options);
             }
             if (Optional.IsDefined(MetricsIngestion))
             {
                 writer.WritePropertyName("metricsIngestion"u8);
-                writer.WriteObjectValue(MetricsIngestion, options);
+                ((IJsonModel<DataCollectionEndpointMetricsIngestion>)MetricsIngestion).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkAcls, options);
+                ((IJsonModel<DataCollectionEndpointNetworkAcls>)NetworkAcls).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -96,19 +95,19 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkScopedResources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataCollectionRulePrivateLinkScopedResourceInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(FailoverConfiguration))
             {
                 writer.WritePropertyName("failoverConfiguration"u8);
-                writer.WriteObjectValue(FailoverConfiguration, options);
+                ((IJsonModel<DataCollectionEndpointFailoverConfiguration>)FailoverConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata, options);
+                ((IJsonModel<DataCollectionEndpointMetadata>)Metadata).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -172,7 +171,7 @@ namespace Azure.ResourceManager.Monitor
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -224,7 +223,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -252,7 +251,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            configurationAccess = DataCollectionEndpointConfigurationAccess.DeserializeDataCollectionEndpointConfigurationAccess(property0.Value, options);
+                            configurationAccess = ModelSerializationExtensions.JsonDeserialize<DataCollectionEndpointConfigurationAccess>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("logsIngestion"u8))
@@ -261,7 +260,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            logsIngestion = DataCollectionEndpointLogsIngestion.DeserializeDataCollectionEndpointLogsIngestion(property0.Value, options);
+                            logsIngestion = ModelSerializationExtensions.JsonDeserialize<DataCollectionEndpointLogsIngestion>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("metricsIngestion"u8))
@@ -270,7 +269,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            metricsIngestion = DataCollectionEndpointMetricsIngestion.DeserializeDataCollectionEndpointMetricsIngestion(property0.Value, options);
+                            metricsIngestion = ModelSerializationExtensions.JsonDeserialize<DataCollectionEndpointMetricsIngestion>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkAcls"u8))
@@ -279,7 +278,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            networkAcls = DataCollectionEndpointNetworkAcls.DeserializeDataCollectionEndpointNetworkAcls(property0.Value, options);
+                            networkAcls = ModelSerializationExtensions.JsonDeserialize<DataCollectionEndpointNetworkAcls>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -311,7 +310,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            failoverConfiguration = DataCollectionEndpointFailoverConfiguration.DeserializeDataCollectionEndpointFailoverConfiguration(property0.Value, options);
+                            failoverConfiguration = ModelSerializationExtensions.JsonDeserialize<DataCollectionEndpointFailoverConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("metadata"u8))
@@ -320,7 +319,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            metadata = DataCollectionEndpointMetadata.DeserializeDataCollectionEndpointMetadata(property0.Value, options);
+                            metadata = ModelSerializationExtensions.JsonDeserialize<DataCollectionEndpointMetadata>(property0.Value);
                             continue;
                         }
                     }

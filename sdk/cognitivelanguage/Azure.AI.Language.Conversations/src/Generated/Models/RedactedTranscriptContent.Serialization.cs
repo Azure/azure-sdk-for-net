@@ -60,7 +60,7 @@ namespace Azure.AI.Language.Conversations.Models
                 writer.WriteStartArray();
                 foreach (var item in AudioTimings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AudioTiming>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

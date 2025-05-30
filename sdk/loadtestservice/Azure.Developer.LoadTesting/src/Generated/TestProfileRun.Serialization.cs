@@ -62,7 +62,7 @@ namespace Azure.Developer.LoadTesting
             if (options.Format != "W" && Optional.IsDefined(TargetResourceConfigurations))
             {
                 writer.WritePropertyName("targetResourceConfigurations"u8);
-                writer.WriteObjectValue(TargetResourceConfigurations, options);
+                ((IJsonModel<TargetResourceConfigurations>)TargetResourceConfigurations).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -75,7 +75,7 @@ namespace Azure.Developer.LoadTesting
                 writer.WriteStartArray();
                 foreach (var item in ErrorDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ErrorDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -101,7 +101,7 @@ namespace Azure.Developer.LoadTesting
                 foreach (var item in TestRunDetails)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<TestRunDetail>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -111,7 +111,7 @@ namespace Azure.Developer.LoadTesting
                 writer.WriteStartArray();
                 foreach (var item in Recommendations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TestProfileRunRecommendation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -228,7 +228,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    targetResourceConfigurations = TargetResourceConfigurations.DeserializeTargetResourceConfigurations(property.Value, options);
+                    targetResourceConfigurations = ModelSerializationExtensions.JsonDeserialize<TargetResourceConfigurations>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))

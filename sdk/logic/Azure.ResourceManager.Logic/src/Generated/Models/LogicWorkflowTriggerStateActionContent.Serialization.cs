@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source, options);
+            ((IJsonModel<LogicWorkflowTriggerReference>)Source).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 if (property.NameEquals("source"u8))
                 {
-                    source = LogicWorkflowTriggerReference.DeserializeLogicWorkflowTriggerReference(property.Value, options);
+                    source = ModelSerializationExtensions.JsonDeserialize<LogicWorkflowTriggerReference>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

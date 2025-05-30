@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 writer.WriteStartArray();
                 foreach (var item in EventHandlers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WebPubSubEventHandler>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

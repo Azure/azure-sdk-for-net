@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             writer.WriteStartObject();
             writer.WritePropertyName("parameters"u8);
-            writer.WriteObjectValue<ServicePrincipalParam>(Parameters);
+            JsonSerializer.Serialize(writer, Parameters);
             writer.WritePropertyName("dataSourceCredentialType"u8);
             writer.WriteStringValue(CredentialKind.ToString());
             writer.WritePropertyName("dataSourceCredentialName"u8);
@@ -45,7 +45,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = ServicePrincipalParam.DeserializeServicePrincipalParam(property.Value);
+                    parameters = ModelSerializationExtensions.JsonDeserialize<ServicePrincipalParam>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataSourceCredentialType"u8))

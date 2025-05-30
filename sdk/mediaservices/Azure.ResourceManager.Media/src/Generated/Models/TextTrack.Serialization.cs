@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(HlsSettings))
             {
                 writer.WritePropertyName("hlsSettings"u8);
-                writer.WriteObjectValue(HlsSettings, options);
+                ((IJsonModel<HlsSettings>)HlsSettings).Write(writer, options);
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    hlsSettings = HlsSettings.DeserializeHlsSettings(property.Value, options);
+                    hlsSettings = ModelSerializationExtensions.JsonDeserialize<HlsSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))

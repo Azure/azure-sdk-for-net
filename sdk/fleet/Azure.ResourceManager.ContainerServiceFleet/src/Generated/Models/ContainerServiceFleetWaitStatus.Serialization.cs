@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<ContainerServiceFleetUpdateStatus>)Status).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(WaitDurationInSeconds))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    status = ContainerServiceFleetUpdateStatus.DeserializeContainerServiceFleetUpdateStatus(property.Value, options);
+                    status = ModelSerializationExtensions.JsonDeserialize<ContainerServiceFleetUpdateStatus>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("waitDurationInSeconds"u8))

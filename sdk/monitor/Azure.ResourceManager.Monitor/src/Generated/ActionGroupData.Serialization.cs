@@ -40,8 +40,7 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in EmailReceivers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MonitorEmailReceiver>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in SmsReceivers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MonitorSmsReceiver>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -81,7 +80,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in WebhookReceivers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MonitorWebhookReceiver>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in ItsmReceivers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MonitorItsmReceiver>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -101,7 +100,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in AzureAppPushReceivers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MonitorAzureAppPushReceiver>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in AutomationRunbookReceivers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MonitorAutomationRunbookReceiver>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -121,7 +120,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in VoiceReceivers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MonitorVoiceReceiver>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -131,7 +130,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in LogicAppReceivers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MonitorLogicAppReceiver>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -141,7 +140,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in AzureFunctionReceivers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MonitorAzureFunctionReceiver>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -151,7 +150,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in ArmRoleReceivers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MonitorArmRoleReceiver>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -161,7 +160,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in EventHubReceivers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MonitorEventHubReceiver>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -171,7 +170,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in IncidentReceivers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IncidentReceiver>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -230,7 +229,7 @@ namespace Azure.ResourceManager.Monitor
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -273,7 +272,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

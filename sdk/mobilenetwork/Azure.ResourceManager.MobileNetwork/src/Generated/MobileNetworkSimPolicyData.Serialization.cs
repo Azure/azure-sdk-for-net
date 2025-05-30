@@ -59,9 +59,9 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteEndObject();
             }
             writer.WritePropertyName("ueAmbr"u8);
-            writer.WriteObjectValue(UEAmbr, options);
+            ((IJsonModel<Ambr>)UEAmbr).Write(writer, options);
             writer.WritePropertyName("defaultSlice"u8);
-            JsonSerializer.Serialize(writer, DefaultSlice);
+            ((IJsonModel<WritableSubResource>)DefaultSlice).Write(writer, options);
             if (Optional.IsDefined(RfspIndex))
             {
                 writer.WritePropertyName("rfspIndex"u8);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WriteStartArray();
             foreach (var item in SliceConfigurations)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<MobileNetworkSliceConfiguration>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -196,12 +196,12 @@ namespace Azure.ResourceManager.MobileNetwork
                         }
                         if (property0.NameEquals("ueAmbr"u8))
                         {
-                            ueAmbr = Ambr.DeserializeAmbr(property0.Value, options);
+                            ueAmbr = ModelSerializationExtensions.JsonDeserialize<Ambr>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("defaultSlice"u8))
                         {
-                            defaultSlice = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            defaultSlice = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("rfspIndex"u8))

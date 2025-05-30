@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    resources = AppContainerResources.DeserializeAppContainerResources(property.Value, options);
+                    resources = ModelSerializationExtensions.JsonDeserialize<AppContainerResources>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("volumeMounts"u8))

@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(ArcAutoProvisioning))
             {
                 writer.WritePropertyName("arcAutoProvisioning"u8);
-                writer.WriteObjectValue(ArcAutoProvisioning, options);
+                ((IJsonModel<DefenderForDatabasesGcpOfferingArcAutoProvisioning>)ArcAutoProvisioning).Write(writer, options);
             }
             if (Optional.IsDefined(DefenderForDatabasesArcAutoProvisioning))
             {
                 writer.WritePropertyName("defenderForDatabasesArcAutoProvisioning"u8);
-                writer.WriteObjectValue(DefenderForDatabasesArcAutoProvisioning, options);
+                ((IJsonModel<GcpDefenderForDatabasesArcAutoProvisioning>)DefenderForDatabasesArcAutoProvisioning).Write(writer, options);
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    arcAutoProvisioning = DefenderForDatabasesGcpOfferingArcAutoProvisioning.DeserializeDefenderForDatabasesGcpOfferingArcAutoProvisioning(property.Value, options);
+                    arcAutoProvisioning = ModelSerializationExtensions.JsonDeserialize<DefenderForDatabasesGcpOfferingArcAutoProvisioning>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("defenderForDatabasesArcAutoProvisioning"u8))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    defenderForDatabasesArcAutoProvisioning = GcpDefenderForDatabasesArcAutoProvisioning.DeserializeGcpDefenderForDatabasesArcAutoProvisioning(property.Value, options);
+                    defenderForDatabasesArcAutoProvisioning = ModelSerializationExtensions.JsonDeserialize<GcpDefenderForDatabasesArcAutoProvisioning>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("offeringType"u8))

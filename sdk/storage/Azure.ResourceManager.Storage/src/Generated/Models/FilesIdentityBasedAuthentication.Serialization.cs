@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(ActiveDirectoryProperties))
             {
                 writer.WritePropertyName("activeDirectoryProperties"u8);
-                writer.WriteObjectValue(ActiveDirectoryProperties, options);
+                ((IJsonModel<StorageActiveDirectoryProperties>)ActiveDirectoryProperties).Write(writer, options);
             }
             if (Optional.IsDefined(DefaultSharePermission))
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    activeDirectoryProperties = StorageActiveDirectoryProperties.DeserializeStorageActiveDirectoryProperties(property.Value, options);
+                    activeDirectoryProperties = ModelSerializationExtensions.JsonDeserialize<StorageActiveDirectoryProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("defaultSharePermission"u8))

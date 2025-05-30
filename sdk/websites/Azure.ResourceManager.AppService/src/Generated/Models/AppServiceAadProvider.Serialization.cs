@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
-                writer.WriteObjectValue(Registration, options);
+                ((IJsonModel<AppServiceAadRegistration>)Registration).Write(writer, options);
             }
             if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
-                writer.WriteObjectValue(Login, options);
+                ((IJsonModel<AppServiceAadLoginFlow>)Login).Write(writer, options);
             }
             if (Optional.IsDefined(Validation))
             {
                 writer.WritePropertyName("validation"u8);
-                writer.WriteObjectValue(Validation, options);
+                ((IJsonModel<AppServiceAadValidation>)Validation).Write(writer, options);
             }
             if (Optional.IsDefined(IsAutoProvisioned))
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    registration = AppServiceAadRegistration.DeserializeAppServiceAadRegistration(property.Value, options);
+                    registration = ModelSerializationExtensions.JsonDeserialize<AppServiceAadRegistration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("login"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    login = AppServiceAadLoginFlow.DeserializeAppServiceAadLoginFlow(property.Value, options);
+                    login = ModelSerializationExtensions.JsonDeserialize<AppServiceAadLoginFlow>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("validation"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    validation = AppServiceAadValidation.DeserializeAppServiceAadValidation(property.Value, options);
+                    validation = ModelSerializationExtensions.JsonDeserialize<AppServiceAadValidation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isAutoProvisioned"u8))

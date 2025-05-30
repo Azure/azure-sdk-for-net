@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    subscores = QueryResultDocumentSubscores.DeserializeQueryResultDocumentSubscores(property.Value);
+                    subscores = ModelSerializationExtensions.JsonDeserialize<QueryResultDocumentSubscores>(property.Value);
                     continue;
                 }
             }

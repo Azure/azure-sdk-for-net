@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(CapacityReservationGroup))
             {
                 writer.WritePropertyName("capacityReservationGroup"u8);
-                JsonSerializer.Serialize(writer, CapacityReservationGroup);
+                ((IJsonModel<WritableSubResource>)CapacityReservationGroup).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    capacityReservationGroup = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    capacityReservationGroup = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

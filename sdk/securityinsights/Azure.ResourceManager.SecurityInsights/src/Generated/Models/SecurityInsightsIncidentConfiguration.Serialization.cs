@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(GroupingConfiguration))
             {
                 writer.WritePropertyName("groupingConfiguration"u8);
-                writer.WriteObjectValue(GroupingConfiguration, options);
+                ((IJsonModel<SecurityInsightsGroupingConfiguration>)GroupingConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    groupingConfiguration = SecurityInsightsGroupingConfiguration.DeserializeSecurityInsightsGroupingConfiguration(property.Value, options);
+                    groupingConfiguration = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsGroupingConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

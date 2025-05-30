@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Aliases)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceTypeAlias>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

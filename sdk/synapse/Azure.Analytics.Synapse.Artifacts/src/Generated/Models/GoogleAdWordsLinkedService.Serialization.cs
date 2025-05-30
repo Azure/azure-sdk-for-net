@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                JsonSerializer.Serialize(writer, ConnectVia);
             }
             if (Optional.IsDefined(Description))
             {
@@ -43,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    JsonSerializer.Serialize(writer, item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -77,7 +77,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(DeveloperToken))
             {
                 writer.WritePropertyName("developerToken"u8);
-                writer.WriteObjectValue(DeveloperToken);
+                JsonSerializer.Serialize(writer, DeveloperToken);
             }
             if (Optional.IsDefined(AuthenticationType))
             {
@@ -87,7 +87,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(RefreshToken))
             {
                 writer.WritePropertyName("refreshToken"u8);
-                writer.WriteObjectValue(RefreshToken);
+                JsonSerializer.Serialize(writer, RefreshToken);
             }
             if (Optional.IsDefined(ClientId))
             {
@@ -97,7 +97,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
-                writer.WriteObjectValue(ClientSecret);
+                JsonSerializer.Serialize(writer, ClientSecret);
             }
             if (Optional.IsDefined(Email))
             {
@@ -122,7 +122,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PrivateKey))
             {
                 writer.WritePropertyName("privateKey"u8);
-                writer.WriteObjectValue(PrivateKey);
+                JsonSerializer.Serialize(writer, PrivateKey);
             }
             if (Optional.IsDefined(LoginCustomerID))
             {
@@ -201,7 +201,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
+                    connectVia = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -277,7 +277,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            developerToken = SecretBase.DeserializeSecretBase(property0.Value);
+                            developerToken = ModelSerializationExtensions.JsonDeserialize<SecretBase>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("authenticationType"u8))
@@ -295,7 +295,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            refreshToken = SecretBase.DeserializeSecretBase(property0.Value);
+                            refreshToken = ModelSerializationExtensions.JsonDeserialize<SecretBase>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clientId"u8))
@@ -313,7 +313,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            clientSecret = SecretBase.DeserializeSecretBase(property0.Value);
+                            clientSecret = ModelSerializationExtensions.JsonDeserialize<SecretBase>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("email"u8))
@@ -358,7 +358,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            privateKey = SecretBase.DeserializeSecretBase(property0.Value);
+                            privateKey = ModelSerializationExtensions.JsonDeserialize<SecretBase>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("loginCustomerID"u8))

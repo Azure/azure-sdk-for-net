@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata, options);
+                ((IJsonModel<ConfluentListMetadata>)Metadata).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Data))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AccessEnvironmentRecord>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     {
                         continue;
                     }
-                    metadata = ConfluentListMetadata.DeserializeConfluentListMetadata(property.Value, options);
+                    metadata = ModelSerializationExtensions.JsonDeserialize<ConfluentListMetadata>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("data"u8))

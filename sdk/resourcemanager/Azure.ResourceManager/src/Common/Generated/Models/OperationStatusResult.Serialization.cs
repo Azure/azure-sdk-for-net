@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Models
                 writer.WriteStartArray();
                 foreach (var item in Operations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<OperationStatusResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Models
                     List<OperationStatusResult> array = new List<OperationStatusResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<OperationStatusResult>(item.GetRawText()));
+                        array.Add(ModelSerializationExtensions.JsonDeserialize<OperationStatusResult>(item));
                     }
                     operations = array;
                     continue;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Models
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value);
                     continue;
                 }
             }

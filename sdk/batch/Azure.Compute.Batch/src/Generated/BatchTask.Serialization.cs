@@ -67,7 +67,7 @@ namespace Azure.Compute.Batch
             if (options.Format != "W" && Optional.IsDefined(ExitConditions))
             {
                 writer.WritePropertyName("exitConditions"u8);
-                writer.WriteObjectValue(ExitConditions, options);
+                ((IJsonModel<ExitConditions>)ExitConditions).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(State))
             {
@@ -97,7 +97,7 @@ namespace Azure.Compute.Batch
             if (options.Format != "W" && Optional.IsDefined(ContainerSettings))
             {
                 writer.WritePropertyName("containerSettings"u8);
-                writer.WriteObjectValue(ContainerSettings, options);
+                ((IJsonModel<BatchTaskContainerSettings>)ContainerSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ResourceFiles))
             {
@@ -105,7 +105,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in ResourceFiles)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceFile>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -115,7 +115,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in OutputFiles)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<OutputFile>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -125,19 +125,19 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in EnvironmentSettings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EnvironmentSetting>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(AffinityInfo))
             {
                 writer.WritePropertyName("affinityInfo"u8);
-                writer.WriteObjectValue(AffinityInfo, options);
+                ((IJsonModel<AffinityInfo>)AffinityInfo).Write(writer, options);
             }
             if (Optional.IsDefined(Constraints))
             {
                 writer.WritePropertyName("constraints"u8);
-                writer.WriteObjectValue(Constraints, options);
+                ((IJsonModel<BatchTaskConstraints>)Constraints).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RequiredSlots))
             {
@@ -147,32 +147,32 @@ namespace Azure.Compute.Batch
             if (options.Format != "W" && Optional.IsDefined(UserIdentity))
             {
                 writer.WritePropertyName("userIdentity"u8);
-                writer.WriteObjectValue(UserIdentity, options);
+                ((IJsonModel<UserIdentity>)UserIdentity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ExecutionInfo))
             {
                 writer.WritePropertyName("executionInfo"u8);
-                writer.WriteObjectValue(ExecutionInfo, options);
+                ((IJsonModel<BatchTaskExecutionInfo>)ExecutionInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(NodeInfo))
             {
                 writer.WritePropertyName("nodeInfo"u8);
-                writer.WriteObjectValue(NodeInfo, options);
+                ((IJsonModel<BatchNodeInfo>)NodeInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MultiInstanceSettings))
             {
                 writer.WritePropertyName("multiInstanceSettings"u8);
-                writer.WriteObjectValue(MultiInstanceSettings, options);
+                ((IJsonModel<MultiInstanceSettings>)MultiInstanceSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Stats))
             {
                 writer.WritePropertyName("stats"u8);
-                writer.WriteObjectValue(Stats, options);
+                ((IJsonModel<BatchTaskStatistics>)Stats).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
-                writer.WriteObjectValue(DependsOn, options);
+                ((IJsonModel<BatchTaskDependencies>)DependsOn).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ApplicationPackageReferences))
             {
@@ -180,14 +180,14 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in ApplicationPackageReferences)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BatchApplicationPackageReference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(AuthenticationTokenSettings))
             {
                 writer.WritePropertyName("authenticationTokenSettings"u8);
-                writer.WriteObjectValue(AuthenticationTokenSettings, options);
+                ((IJsonModel<AuthenticationTokenSettings>)AuthenticationTokenSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -301,7 +301,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    exitConditions = ExitConditions.DeserializeExitConditions(property.Value, options);
+                    exitConditions = ModelSerializationExtensions.JsonDeserialize<ExitConditions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("state"u8))
@@ -351,7 +351,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    containerSettings = BatchTaskContainerSettings.DeserializeBatchTaskContainerSettings(property.Value, options);
+                    containerSettings = ModelSerializationExtensions.JsonDeserialize<BatchTaskContainerSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceFiles"u8))
@@ -402,7 +402,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    affinityInfo = AffinityInfo.DeserializeAffinityInfo(property.Value, options);
+                    affinityInfo = ModelSerializationExtensions.JsonDeserialize<AffinityInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("constraints"u8))
@@ -411,7 +411,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    constraints = BatchTaskConstraints.DeserializeBatchTaskConstraints(property.Value, options);
+                    constraints = ModelSerializationExtensions.JsonDeserialize<BatchTaskConstraints>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("requiredSlots"u8))
@@ -429,7 +429,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    userIdentity = UserIdentity.DeserializeUserIdentity(property.Value, options);
+                    userIdentity = ModelSerializationExtensions.JsonDeserialize<UserIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("executionInfo"u8))
@@ -438,7 +438,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    executionInfo = BatchTaskExecutionInfo.DeserializeBatchTaskExecutionInfo(property.Value, options);
+                    executionInfo = ModelSerializationExtensions.JsonDeserialize<BatchTaskExecutionInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nodeInfo"u8))
@@ -447,7 +447,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    nodeInfo = BatchNodeInfo.DeserializeBatchNodeInfo(property.Value, options);
+                    nodeInfo = ModelSerializationExtensions.JsonDeserialize<BatchNodeInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("multiInstanceSettings"u8))
@@ -456,7 +456,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    multiInstanceSettings = MultiInstanceSettings.DeserializeMultiInstanceSettings(property.Value, options);
+                    multiInstanceSettings = ModelSerializationExtensions.JsonDeserialize<MultiInstanceSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("stats"u8))
@@ -465,7 +465,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    stats = BatchTaskStatistics.DeserializeBatchTaskStatistics(property.Value, options);
+                    stats = ModelSerializationExtensions.JsonDeserialize<BatchTaskStatistics>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dependsOn"u8))
@@ -474,7 +474,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    dependsOn = BatchTaskDependencies.DeserializeBatchTaskDependencies(property.Value, options);
+                    dependsOn = ModelSerializationExtensions.JsonDeserialize<BatchTaskDependencies>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("applicationPackageReferences"u8))
@@ -497,7 +497,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    authenticationTokenSettings = AuthenticationTokenSettings.DeserializeAuthenticationTokenSettings(property.Value, options);
+                    authenticationTokenSettings = ModelSerializationExtensions.JsonDeserialize<AuthenticationTokenSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

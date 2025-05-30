@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Items)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConnectionMonitorEndpointFilterItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

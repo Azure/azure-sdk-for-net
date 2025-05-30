@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(RoleDefinition))
             {
                 writer.WritePropertyName("roleDefinition"u8);
-                writer.WriteObjectValue(RoleDefinition, options);
+                ((IJsonModel<AzureRoleDefinition>)RoleDefinition).Write(writer, options);
             }
             if (Optional.IsDefined(ManagedByRoleDefinition))
             {
                 writer.WritePropertyName("managedByRoleDefinition"u8);
-                writer.WriteObjectValue(ManagedByRoleDefinition, options);
+                ((IJsonModel<AzureRoleDefinition>)ManagedByRoleDefinition).Write(writer, options);
             }
             if (Optional.IsDefined(ProviderAuthorizationConsentState))
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    roleDefinition = AzureRoleDefinition.DeserializeAzureRoleDefinition(property.Value, options);
+                    roleDefinition = ModelSerializationExtensions.JsonDeserialize<AzureRoleDefinition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("managedByRoleDefinition"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    managedByRoleDefinition = AzureRoleDefinition.DeserializeAzureRoleDefinition(property.Value, options);
+                    managedByRoleDefinition = ModelSerializationExtensions.JsonDeserialize<AzureRoleDefinition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("providerAuthorizationConsentState"u8))

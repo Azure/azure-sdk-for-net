@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<WebAppKeyInfoProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    properties = WebAppKeyInfoProperties.DeserializeWebAppKeyInfoProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<WebAppKeyInfoProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

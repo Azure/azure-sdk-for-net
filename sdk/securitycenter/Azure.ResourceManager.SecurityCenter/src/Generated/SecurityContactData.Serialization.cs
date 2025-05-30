@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(AlertNotifications))
             {
                 writer.WritePropertyName("alertNotifications"u8);
-                writer.WriteObjectValue(AlertNotifications, options);
+                ((IJsonModel<SecurityContactPropertiesAlertNotifications>)AlertNotifications).Write(writer, options);
             }
             if (Optional.IsDefined(NotificationsByRole))
             {
                 writer.WritePropertyName("notificationsByRole"u8);
-                writer.WriteObjectValue(NotificationsByRole, options);
+                ((IJsonModel<SecurityContactPropertiesNotificationsByRole>)NotificationsByRole).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            alertNotifications = SecurityContactPropertiesAlertNotifications.DeserializeSecurityContactPropertiesAlertNotifications(property0.Value, options);
+                            alertNotifications = ModelSerializationExtensions.JsonDeserialize<SecurityContactPropertiesAlertNotifications>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("notificationsByRole"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            notificationsByRole = SecurityContactPropertiesNotificationsByRole.DeserializeSecurityContactPropertiesNotificationsByRole(property0.Value, options);
+                            notificationsByRole = ModelSerializationExtensions.JsonDeserialize<SecurityContactPropertiesNotificationsByRole>(property0.Value);
                             continue;
                         }
                     }

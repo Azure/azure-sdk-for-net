@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in AssetFileEncryptionMetadata)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MediaAssetFileEncryptionMetadata>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

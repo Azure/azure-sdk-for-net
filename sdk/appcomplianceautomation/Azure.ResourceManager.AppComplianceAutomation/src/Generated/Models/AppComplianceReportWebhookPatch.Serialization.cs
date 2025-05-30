@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<AppComplianceReportWebhookProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    properties = AppComplianceReportWebhookProperties.DeserializeAppComplianceReportWebhookProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<AppComplianceReportWebhookProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

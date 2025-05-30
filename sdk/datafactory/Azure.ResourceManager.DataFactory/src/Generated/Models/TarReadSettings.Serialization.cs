@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PreserveCompressionFileNameAsFolder))
             {
                 writer.WritePropertyName("preserveCompressionFileNameAsFolder"u8);
-                JsonSerializer.Serialize(writer, PreserveCompressionFileNameAsFolder);
+                ((IJsonModel<DataFactoryElement<T>>)PreserveCompressionFileNameAsFolder).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    preserveCompressionFileNameAsFolder = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    preserveCompressionFileNameAsFolder = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

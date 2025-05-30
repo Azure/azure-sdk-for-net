@@ -60,12 +60,12 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property0.NameEquals("rootNode"u8))
                 {
-                    rootNode = SeriesIdentity.DeserializeSeriesIdentity(property0.Value);
+                    rootNode = ModelSerializationExtensions.JsonDeserialize<SeriesIdentity>(property0.Value);
                     continue;
                 }
                 if (property0.NameEquals("property"u8))
                 {
-                    property = IncidentProperty.DeserializeIncidentProperty(property0.Value);
+                    property = ModelSerializationExtensions.JsonDeserialize<IncidentProperty>(property0.Value);
                     continue;
                 }
             }

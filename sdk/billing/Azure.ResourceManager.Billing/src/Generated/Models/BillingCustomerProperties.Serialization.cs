@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in EnabledAzurePlans)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BillingAzurePlan>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in Resellers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CreatedSubscriptionReseller>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

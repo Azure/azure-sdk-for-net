@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Components)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResiliencyRecommendationComponents>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

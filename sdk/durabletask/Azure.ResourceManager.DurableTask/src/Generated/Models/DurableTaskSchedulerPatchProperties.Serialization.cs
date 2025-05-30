@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DurableTask.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<DurableTaskSchedulerSkuUpdate>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DurableTask.Models
                     {
                         continue;
                     }
-                    sku = DurableTaskSchedulerSkuUpdate.DeserializeDurableTaskSchedulerSkuUpdate(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<DurableTaskSchedulerSkuUpdate>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

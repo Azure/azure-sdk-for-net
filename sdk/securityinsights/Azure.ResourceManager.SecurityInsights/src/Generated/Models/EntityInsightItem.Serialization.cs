@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(QueryTimeInterval))
             {
                 writer.WritePropertyName("queryTimeInterval"u8);
-                writer.WriteObjectValue(QueryTimeInterval, options);
+                ((IJsonModel<EntityInsightItemQueryTimeInterval>)QueryTimeInterval).Write(writer, options);
             }
             if (Optional.IsDefined(TableQueryResults))
             {
                 writer.WritePropertyName("tableQueryResults"u8);
-                writer.WriteObjectValue(TableQueryResults, options);
+                ((IJsonModel<InsightsTableResult>)TableQueryResults).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ChartQueryResults))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in ChartQueryResults)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InsightsTableResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    queryTimeInterval = EntityInsightItemQueryTimeInterval.DeserializeEntityInsightItemQueryTimeInterval(property.Value, options);
+                    queryTimeInterval = ModelSerializationExtensions.JsonDeserialize<EntityInsightItemQueryTimeInterval>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tableQueryResults"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    tableQueryResults = InsightsTableResult.DeserializeInsightsTableResult(property.Value, options);
+                    tableQueryResults = ModelSerializationExtensions.JsonDeserialize<InsightsTableResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("chartQueryResults"u8))

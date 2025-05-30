@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Runbook))
             {
                 writer.WritePropertyName("runbook"u8);
-                writer.WriteObjectValue(Runbook, options);
+                ((IJsonModel<RunbookAssociationProperty>)Runbook).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            runbook = RunbookAssociationProperty.DeserializeRunbookAssociationProperty(property0.Value, options);
+                            runbook = ModelSerializationExtensions.JsonDeserialize<RunbookAssociationProperty>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("parameters"u8))

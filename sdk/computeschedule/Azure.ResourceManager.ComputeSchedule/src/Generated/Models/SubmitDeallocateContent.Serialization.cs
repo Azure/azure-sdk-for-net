@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
 
             writer.WritePropertyName("schedule"u8);
-            writer.WriteObjectValue(Schedule, options);
+            ((IJsonModel<UserRequestSchedule>)Schedule).Write(writer, options);
             writer.WritePropertyName("executionParameters"u8);
-            writer.WriteObjectValue(ExecutionParameters, options);
+            ((IJsonModel<ScheduledActionExecutionParameterDetail>)ExecutionParameters).Write(writer, options);
             writer.WritePropertyName("resources"u8);
-            writer.WriteObjectValue(Resources, options);
+            ((IJsonModel<UserRequestResources>)Resources).Write(writer, options);
             writer.WritePropertyName("correlationid"u8);
             writer.WriteStringValue(CorrelationId);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -89,17 +89,17 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 if (property.NameEquals("schedule"u8))
                 {
-                    schedule = UserRequestSchedule.DeserializeUserRequestSchedule(property.Value, options);
+                    schedule = ModelSerializationExtensions.JsonDeserialize<UserRequestSchedule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("executionParameters"u8))
                 {
-                    executionParameters = ScheduledActionExecutionParameterDetail.DeserializeScheduledActionExecutionParameterDetail(property.Value, options);
+                    executionParameters = ModelSerializationExtensions.JsonDeserialize<ScheduledActionExecutionParameterDetail>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resources"u8))
                 {
-                    resources = UserRequestResources.DeserializeUserRequestResources(property.Value, options);
+                    resources = ModelSerializationExtensions.JsonDeserialize<UserRequestResources>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("correlationid"u8))

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ReportableException>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

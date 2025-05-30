@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
-                writer.WriteObjectValue(Registration, options);
+                ((IJsonModel<ContainerAppOpenIdConnectRegistration>)Registration).Write(writer, options);
             }
             if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
-                writer.WriteObjectValue(Login, options);
+                ((IJsonModel<ContainerAppOpenIdConnectLogin>)Login).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    registration = ContainerAppOpenIdConnectRegistration.DeserializeContainerAppOpenIdConnectRegistration(property.Value, options);
+                    registration = ModelSerializationExtensions.JsonDeserialize<ContainerAppOpenIdConnectRegistration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("login"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    login = ContainerAppOpenIdConnectLogin.DeserializeContainerAppOpenIdConnectLogin(property.Value, options);
+                    login = ModelSerializationExtensions.JsonDeserialize<ContainerAppOpenIdConnectLogin>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

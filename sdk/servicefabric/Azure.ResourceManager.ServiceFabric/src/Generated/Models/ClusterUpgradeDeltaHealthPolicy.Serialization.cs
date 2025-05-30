@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 foreach (var item in ApplicationDeltaHealthPolicies)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<ApplicationDeltaHealthPolicy>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }

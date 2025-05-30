@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Providers)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<ResourceProviderData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,14 +84,14 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Dependencies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ArmDependency>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(TemplateLink))
             {
                 writer.WritePropertyName("templateLink"u8);
-                writer.WriteObjectValue(TemplateLink, options);
+                ((IJsonModel<ArmDeploymentTemplateLink>)TemplateLink).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Parameters))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(ParametersLink))
             {
                 writer.WritePropertyName("parametersLink"u8);
-                writer.WriteObjectValue(ParametersLink, options);
+                ((IJsonModel<ArmDeploymentParametersLink>)ParametersLink).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Mode))
             {
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(DebugSetting))
             {
                 writer.WritePropertyName("debugSetting"u8);
-                writer.WriteObjectValue(DebugSetting, options);
+                ((IJsonModel<DebugSetting>)DebugSetting).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ErrorDeployment))
             {
                 writer.WritePropertyName("onErrorDeployment"u8);
-                writer.WriteObjectValue(ErrorDeployment, options);
+                ((IJsonModel<ErrorDeploymentExtended>)ErrorDeployment).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TemplateHash))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in OutputResources)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidatedResources)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Diagnostics)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DeploymentDiagnosticsDefinition>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ResourceProviderData> array = new List<ResourceProviderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<ResourceProviderData>(item.GetRawText()));
+                        array.Add(ModelSerializationExtensions.JsonDeserialize<ResourceProviderData>(item));
                     }
                     providers = array;
                     continue;
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    templateLink = ArmDeploymentTemplateLink.DeserializeArmDeploymentTemplateLink(property.Value, options);
+                    templateLink = ModelSerializationExtensions.JsonDeserialize<ArmDeploymentTemplateLink>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    parametersLink = ArmDeploymentParametersLink.DeserializeArmDeploymentParametersLink(property.Value, options);
+                    parametersLink = ModelSerializationExtensions.JsonDeserialize<ArmDeploymentParametersLink>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mode"u8))
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    debugSetting = DebugSetting.DeserializeDebugSetting(property.Value, options);
+                    debugSetting = ModelSerializationExtensions.JsonDeserialize<DebugSetting>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("onErrorDeployment"u8))
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    onErrorDeployment = ErrorDeploymentExtended.DeserializeErrorDeploymentExtended(property.Value, options);
+                    onErrorDeployment = ModelSerializationExtensions.JsonDeserialize<ErrorDeploymentExtended>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("templateHash"u8))
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<SubResource> array = new List<SubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                        array.Add(ModelSerializationExtensions.JsonDeserialize<SubResource>(item));
                     }
                     outputResources = array;
                     continue;
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<SubResource> array = new List<SubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                        array.Add(ModelSerializationExtensions.JsonDeserialize<SubResource>(item));
                     }
                     validatedResources = array;
                     continue;
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("diagnostics"u8))

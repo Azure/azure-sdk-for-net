@@ -37,17 +37,17 @@ namespace Azure.AI.Agents.Persistent
             if (Optional.IsDefined(CodeInterpreter))
             {
                 writer.WritePropertyName("code_interpreter"u8);
-                writer.WriteObjectValue(CodeInterpreter, options);
+                ((IJsonModel<CodeInterpreterToolResource>)CodeInterpreter).Write(writer, options);
             }
             if (Optional.IsDefined(FileSearch))
             {
                 writer.WritePropertyName("file_search"u8);
-                writer.WriteObjectValue(FileSearch, options);
+                ((IJsonModel<FileSearchToolResource>)FileSearch).Write(writer, options);
             }
             if (Optional.IsDefined(AzureAISearch))
             {
                 writer.WritePropertyName("azure_ai_search"u8);
-                writer.WriteObjectValue(AzureAISearch, options);
+                ((IJsonModel<AzureAISearchToolResource>)AzureAISearch).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    codeInterpreter = CodeInterpreterToolResource.DeserializeCodeInterpreterToolResource(property.Value, options);
+                    codeInterpreter = ModelSerializationExtensions.JsonDeserialize<CodeInterpreterToolResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("file_search"u8))
@@ -108,7 +108,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    fileSearch = FileSearchToolResource.DeserializeFileSearchToolResource(property.Value, options);
+                    fileSearch = ModelSerializationExtensions.JsonDeserialize<FileSearchToolResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azure_ai_search"u8))
@@ -117,7 +117,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    azureAiSearch = AzureAISearchToolResource.DeserializeAzureAISearchToolResource(property.Value, options);
+                    azureAiSearch = ModelSerializationExtensions.JsonDeserialize<AzureAISearchToolResource>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

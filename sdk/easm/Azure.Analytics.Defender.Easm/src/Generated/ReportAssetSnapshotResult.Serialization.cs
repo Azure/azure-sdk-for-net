@@ -62,7 +62,7 @@ namespace Azure.Analytics.Defender.Easm
             if (Optional.IsDefined(Assets))
             {
                 writer.WritePropertyName("assets"u8);
-                writer.WriteObjectValue(Assets, options);
+                ((IJsonModel<AssetPageResult>)Assets).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -146,7 +146,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    assets = AssetPageResult.DeserializeAssetPageResult(property.Value, options);
+                    assets = ModelSerializationExtensions.JsonDeserialize<AssetPageResult>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

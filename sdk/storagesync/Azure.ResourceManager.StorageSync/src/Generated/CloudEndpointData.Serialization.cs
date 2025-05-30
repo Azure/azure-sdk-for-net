@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.StorageSync
             if (options.Format != "W" && Optional.IsDefined(ChangeEnumerationStatus))
             {
                 writer.WritePropertyName("changeEnumerationStatus"u8);
-                writer.WriteObjectValue(ChangeEnumerationStatus, options);
+                ((IJsonModel<CloudEndpointChangeEnumerationStatus>)ChangeEnumerationStatus).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.StorageSync
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.StorageSync
                             {
                                 continue;
                             }
-                            changeEnumerationStatus = CloudEndpointChangeEnumerationStatus.DeserializeCloudEndpointChangeEnumerationStatus(property0.Value, options);
+                            changeEnumerationStatus = ModelSerializationExtensions.JsonDeserialize<CloudEndpointChangeEnumerationStatus>(property0.Value);
                             continue;
                         }
                     }

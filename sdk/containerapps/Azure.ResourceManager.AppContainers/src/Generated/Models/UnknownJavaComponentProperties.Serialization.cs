@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    scale = JavaComponentPropertiesScale.DeserializeJavaComponentPropertiesScale(property.Value, options);
+                    scale = ModelSerializationExtensions.JsonDeserialize<JavaComponentPropertiesScale>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("serviceBinds"u8))

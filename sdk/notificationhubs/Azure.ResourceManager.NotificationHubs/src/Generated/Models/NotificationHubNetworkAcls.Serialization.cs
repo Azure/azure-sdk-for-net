@@ -40,14 +40,14 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NotificationHubIPRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PublicNetworkRule))
             {
                 writer.WritePropertyName("publicNetworkRule"u8);
-                writer.WriteObjectValue(PublicNetworkRule, options);
+                ((IJsonModel<PublicInternetAuthorizationRule>)PublicNetworkRule).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     {
                         continue;
                     }
-                    publicNetworkRule = PublicInternetAuthorizationRule.DeserializePublicInternetAuthorizationRule(property.Value, options);
+                    publicNetworkRule = ModelSerializationExtensions.JsonDeserialize<PublicInternetAuthorizationRule>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

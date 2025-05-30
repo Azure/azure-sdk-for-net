@@ -37,17 +37,17 @@ namespace Azure.Communication.Messages
             if (Optional.IsDefined(Header))
             {
                 writer.WritePropertyName("header"u8);
-                writer.WriteObjectValue(Header, options);
+                ((IJsonModel<MessageContent>)Header).Write(writer, options);
             }
             writer.WritePropertyName("body"u8);
-            writer.WriteObjectValue(Body, options);
+            ((IJsonModel<TextMessageContent>)Body).Write(writer, options);
             if (Optional.IsDefined(Footer))
             {
                 writer.WritePropertyName("footer"u8);
-                writer.WriteObjectValue(Footer, options);
+                ((IJsonModel<TextMessageContent>)Footer).Write(writer, options);
             }
             writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue(Action, options);
+            ((IJsonModel<ActionBindings>)Action).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -99,12 +99,12 @@ namespace Azure.Communication.Messages
                     {
                         continue;
                     }
-                    header = MessageContent.DeserializeMessageContent(property.Value, options);
+                    header = ModelSerializationExtensions.JsonDeserialize<MessageContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("body"u8))
                 {
-                    body = TextMessageContent.DeserializeTextMessageContent(property.Value, options);
+                    body = ModelSerializationExtensions.JsonDeserialize<TextMessageContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("footer"u8))
@@ -113,12 +113,12 @@ namespace Azure.Communication.Messages
                     {
                         continue;
                     }
-                    footer = TextMessageContent.DeserializeTextMessageContent(property.Value, options);
+                    footer = ModelSerializationExtensions.JsonDeserialize<TextMessageContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("action"u8))
                 {
-                    action = ActionBindings.DeserializeActionBindings(property.Value, options);
+                    action = ModelSerializationExtensions.JsonDeserialize<ActionBindings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in PolicyEvaluations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PolicyEvaluationResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

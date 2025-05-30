@@ -50,14 +50,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Insights)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SelfHelpDiagnosticInsight>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<SelfHelpError>)Error).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    error = SelfHelpError.DeserializeSelfHelpError(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<SelfHelpError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Triggers))
             {
                 writer.WritePropertyName("triggers"u8);
-                writer.WriteObjectValue(Triggers, options);
+                ((IJsonModel<AutoHealTriggers>)Triggers).Write(writer, options);
             }
             if (Optional.IsDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
-                writer.WriteObjectValue(Actions, options);
+                ((IJsonModel<AutoHealActions>)Actions).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    triggers = AutoHealTriggers.DeserializeAutoHealTriggers(property.Value, options);
+                    triggers = ModelSerializationExtensions.JsonDeserialize<AutoHealTriggers>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("actions"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    actions = AutoHealActions.DeserializeAutoHealActions(property.Value, options);
+                    actions = ModelSerializationExtensions.JsonDeserialize<AutoHealActions>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

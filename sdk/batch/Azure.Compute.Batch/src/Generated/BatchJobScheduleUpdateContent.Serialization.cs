@@ -37,12 +37,12 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule, options);
+                ((IJsonModel<BatchJobScheduleConfiguration>)Schedule).Write(writer, options);
             }
             if (Optional.IsDefined(JobSpecification))
             {
                 writer.WritePropertyName("jobSpecification"u8);
-                writer.WriteObjectValue(JobSpecification, options);
+                ((IJsonModel<BatchJobSpecification>)JobSpecification).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
@@ -50,7 +50,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MetadataItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    schedule = BatchJobScheduleConfiguration.DeserializeBatchJobScheduleConfiguration(property.Value, options);
+                    schedule = ModelSerializationExtensions.JsonDeserialize<BatchJobScheduleConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("jobSpecification"u8))
@@ -113,7 +113,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    jobSpecification = BatchJobSpecification.DeserializeBatchJobSpecification(property.Value, options);
+                    jobSpecification = ModelSerializationExtensions.JsonDeserialize<BatchJobSpecification>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))

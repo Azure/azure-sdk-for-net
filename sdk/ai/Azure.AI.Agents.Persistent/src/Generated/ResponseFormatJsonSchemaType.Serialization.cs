@@ -37,7 +37,7 @@ namespace Azure.AI.Agents.Persistent
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("json_schema"u8);
-            writer.WriteObjectValue(JsonSchema, options);
+            ((IJsonModel<ResponseFormatJsonSchema>)JsonSchema).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,7 +88,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (property.NameEquals("json_schema"u8))
                 {
-                    jsonSchema = ResponseFormatJsonSchema.DeserializeResponseFormatJsonSchema(property.Value, options);
+                    jsonSchema = ModelSerializationExtensions.JsonDeserialize<ResponseFormatJsonSchema>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

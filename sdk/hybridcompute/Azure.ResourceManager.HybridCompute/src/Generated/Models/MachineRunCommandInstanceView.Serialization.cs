@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExtensionsResourceStatus>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

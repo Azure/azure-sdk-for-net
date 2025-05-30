@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteStartArray();
                 foreach (var item in PhoneNumbers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TelephonyPhoneNumbers>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteStartArray();
                 foreach (var item in ApiConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TelephonyChannelResourceApiConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

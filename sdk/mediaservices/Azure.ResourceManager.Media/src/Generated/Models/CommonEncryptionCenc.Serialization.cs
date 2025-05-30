@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(EnabledProtocols))
             {
                 writer.WritePropertyName("enabledProtocols"u8);
-                writer.WriteObjectValue(EnabledProtocols, options);
+                ((IJsonModel<MediaEnabledProtocols>)EnabledProtocols).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ClearTracks))
             {
@@ -45,24 +45,24 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in ClearTracks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MediaTrackSelection>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ContentKeys))
             {
                 writer.WritePropertyName("contentKeys"u8);
-                writer.WriteObjectValue(ContentKeys, options);
+                ((IJsonModel<StreamingPolicyContentKeys>)ContentKeys).Write(writer, options);
             }
             if (Optional.IsDefined(Drm))
             {
                 writer.WritePropertyName("drm"u8);
-                writer.WriteObjectValue(Drm, options);
+                ((IJsonModel<CencDrmConfiguration>)Drm).Write(writer, options);
             }
             if (Optional.IsDefined(ClearKeyEncryptionConfiguration))
             {
                 writer.WritePropertyName("clearKeyEncryptionConfiguration"u8);
-                writer.WriteObjectValue(ClearKeyEncryptionConfiguration, options);
+                ((IJsonModel<ClearKeyEncryptionConfiguration>)ClearKeyEncryptionConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    enabledProtocols = MediaEnabledProtocols.DeserializeMediaEnabledProtocols(property.Value, options);
+                    enabledProtocols = ModelSerializationExtensions.JsonDeserialize<MediaEnabledProtocols>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("clearTracks"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    contentKeys = StreamingPolicyContentKeys.DeserializeStreamingPolicyContentKeys(property.Value, options);
+                    contentKeys = ModelSerializationExtensions.JsonDeserialize<StreamingPolicyContentKeys>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("drm"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    drm = CencDrmConfiguration.DeserializeCencDrmConfiguration(property.Value, options);
+                    drm = ModelSerializationExtensions.JsonDeserialize<CencDrmConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("clearKeyEncryptionConfiguration"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    clearKeyEncryptionConfiguration = ClearKeyEncryptionConfiguration.DeserializeClearKeyEncryptionConfiguration(property.Value, options);
+                    clearKeyEncryptionConfiguration = ModelSerializationExtensions.JsonDeserialize<ClearKeyEncryptionConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

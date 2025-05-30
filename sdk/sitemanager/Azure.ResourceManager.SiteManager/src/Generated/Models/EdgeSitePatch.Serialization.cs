@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SiteManager.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<EdgeSitePatchProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SiteManager.Models
                     {
                         continue;
                     }
-                    properties = EdgeSitePatchProperties.DeserializeEdgeSitePatchProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<EdgeSitePatchProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

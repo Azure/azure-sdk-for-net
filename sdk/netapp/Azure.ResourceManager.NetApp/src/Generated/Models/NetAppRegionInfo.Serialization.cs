@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in AvailabilityZoneMappings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AvailabilityZoneMapping>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

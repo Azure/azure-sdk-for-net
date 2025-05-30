@@ -54,7 +54,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in Evidence)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TrialMatcherInferenceEvidence>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -71,7 +71,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata, options);
+                ((IJsonModel<ClinicalTrialMetadata>)Metadata).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -180,7 +180,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     {
                         continue;
                     }
-                    metadata = ClinicalTrialMetadata.DeserializeClinicalTrialMetadata(property.Value, options);
+                    metadata = ModelSerializationExtensions.JsonDeserialize<ClinicalTrialMetadata>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

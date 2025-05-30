@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Features != null)
                 {
                     writer.WritePropertyName("features"u8);
-                    writer.WriteObjectValue(Features, options);
+                    ((IJsonModel<MonitoringFeatureFilterBase>)Features).Write(writer, options);
                 }
                 else
                 {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (FeatureImportanceSettings != null)
                 {
                     writer.WritePropertyName("featureImportanceSettings"u8);
-                    writer.WriteObjectValue(FeatureImportanceSettings, options);
+                    ((IJsonModel<FeatureImportanceSettings>)FeatureImportanceSettings).Write(writer, options);
                 }
                 else
                 {
@@ -65,13 +65,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartArray();
             foreach (var item in MetricThresholds)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DataDriftMetricThresholdBase>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("productionData"u8);
-            writer.WriteObjectValue(ProductionData, options);
+            ((IJsonModel<MonitoringInputDataBase>)ProductionData).Write(writer, options);
             writer.WritePropertyName("referenceData"u8);
-            writer.WriteObjectValue(ReferenceData, options);
+            ((IJsonModel<MonitoringInputDataBase>)ReferenceData).Write(writer, options);
             if (Optional.IsCollectionDefined(FeatureDataTypeOverride))
             {
                 if (FeatureDataTypeOverride != null)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         features = null;
                         continue;
                     }
-                    features = MonitoringFeatureFilterBase.DeserializeMonitoringFeatureFilterBase(property.Value, options);
+                    features = ModelSerializationExtensions.JsonDeserialize<MonitoringFeatureFilterBase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("featureImportanceSettings"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         featureImportanceSettings = null;
                         continue;
                     }
-                    featureImportanceSettings = FeatureImportanceSettings.DeserializeFeatureImportanceSettings(property.Value, options);
+                    featureImportanceSettings = ModelSerializationExtensions.JsonDeserialize<FeatureImportanceSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metricThresholds"u8))
@@ -157,12 +157,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("productionData"u8))
                 {
-                    productionData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
+                    productionData = ModelSerializationExtensions.JsonDeserialize<MonitoringInputDataBase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("referenceData"u8))
                 {
-                    referenceData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
+                    referenceData = ModelSerializationExtensions.JsonDeserialize<MonitoringInputDataBase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("featureDataTypeOverride"u8))

@@ -54,15 +54,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ConsistencyPolicy))
             {
                 writer.WritePropertyName("consistencyPolicy"u8);
-                writer.WriteObjectValue(ConsistencyPolicy, options);
+                ((IJsonModel<ConsistencyPolicy>)ConsistencyPolicy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Locations))
             {
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CosmosDBAccountLocation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CosmosDBIPAddressOrRange>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CosmosDBAccountCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CosmosDBVirtualNetworkRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -157,7 +156,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(ApiProperties))
             {
                 writer.WritePropertyName("apiProperties"u8);
-                writer.WriteObjectValue(ApiProperties, options);
+                ((IJsonModel<ApiProperties>)ApiProperties).Write(writer, options);
             }
             if (Optional.IsDefined(IsAnalyticalStorageEnabled))
             {
@@ -167,12 +166,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(AnalyticalStorageConfiguration))
             {
                 writer.WritePropertyName("analyticalStorageConfiguration"u8);
-                writer.WriteObjectValue(AnalyticalStorageConfiguration, options);
+                ((IJsonModel<AnalyticalStorageConfiguration>)AnalyticalStorageConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(BackupPolicy))
             {
                 writer.WritePropertyName("backupPolicy"u8);
-                writer.WriteObjectValue(BackupPolicy, options);
+                ((IJsonModel<CosmosDBAccountBackupPolicy>)BackupPolicy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Cors))
             {
@@ -180,7 +179,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Cors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CosmosDBAccountCorsPolicy>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -207,7 +206,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(DiagnosticLogSettings))
             {
                 writer.WritePropertyName("diagnosticLogSettings"u8);
-                writer.WriteObjectValue(DiagnosticLogSettings, options);
+                ((IJsonModel<DiagnosticLogSettings>)DiagnosticLogSettings).Write(writer, options);
             }
             if (Optional.IsDefined(DisableLocalAuth))
             {
@@ -217,7 +216,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity, options);
+                ((IJsonModel<CosmosDBAccountCapacity>)Capacity).Write(writer, options);
             }
             if (Optional.IsDefined(CapacityMode))
             {
@@ -232,7 +231,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (options.Format != "W" && Optional.IsDefined(KeysMetadata))
             {
                 writer.WritePropertyName("keysMetadata"u8);
-                writer.WriteObjectValue(KeysMetadata, options);
+                ((IJsonModel<DatabaseAccountKeysMetadata>)KeysMetadata).Write(writer, options);
             }
             if (Optional.IsDefined(EnablePartitionMerge))
             {
@@ -379,7 +378,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -397,7 +396,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 continue;
                             }
-                            consistencyPolicy = ConsistencyPolicy.DeserializeConsistencyPolicy(property0.Value, options);
+                            consistencyPolicy = ModelSerializationExtensions.JsonDeserialize<ConsistencyPolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("locations"u8))
@@ -548,7 +547,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 continue;
                             }
-                            apiProperties = ApiProperties.DeserializeApiProperties(property0.Value, options);
+                            apiProperties = ModelSerializationExtensions.JsonDeserialize<ApiProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enableAnalyticalStorage"u8))
@@ -566,7 +565,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 continue;
                             }
-                            analyticalStorageConfiguration = AnalyticalStorageConfiguration.DeserializeAnalyticalStorageConfiguration(property0.Value, options);
+                            analyticalStorageConfiguration = ModelSerializationExtensions.JsonDeserialize<AnalyticalStorageConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("backupPolicy"u8))
@@ -575,7 +574,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 continue;
                             }
-                            backupPolicy = CosmosDBAccountBackupPolicy.DeserializeCosmosDBAccountBackupPolicy(property0.Value, options);
+                            backupPolicy = ModelSerializationExtensions.JsonDeserialize<CosmosDBAccountBackupPolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cors"u8))
@@ -628,7 +627,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 continue;
                             }
-                            diagnosticLogSettings = DiagnosticLogSettings.DeserializeDiagnosticLogSettings(property0.Value, options);
+                            diagnosticLogSettings = ModelSerializationExtensions.JsonDeserialize<DiagnosticLogSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("disableLocalAuth"u8))
@@ -646,7 +645,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 continue;
                             }
-                            capacity = CosmosDBAccountCapacity.DeserializeCosmosDBAccountCapacity(property0.Value, options);
+                            capacity = ModelSerializationExtensions.JsonDeserialize<CosmosDBAccountCapacity>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("capacityMode"u8))
@@ -673,7 +672,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 continue;
                             }
-                            keysMetadata = DatabaseAccountKeysMetadata.DeserializeDatabaseAccountKeysMetadata(property0.Value, options);
+                            keysMetadata = ModelSerializationExtensions.JsonDeserialize<DatabaseAccountKeysMetadata>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enablePartitionMerge"u8))

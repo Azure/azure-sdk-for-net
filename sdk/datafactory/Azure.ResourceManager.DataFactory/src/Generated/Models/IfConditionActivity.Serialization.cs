@@ -38,14 +38,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("expression"u8);
-            writer.WriteObjectValue(Expression, options);
+            ((IJsonModel<DataFactoryExpression>)Expression).Write(writer, options);
             if (Optional.IsCollectionDefined(IfTrueActivities))
             {
                 writer.WritePropertyName("ifTrueActivities"u8);
                 writer.WriteStartArray();
                 foreach (var item in IfTrueActivities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PipelineActivity>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in IfFalseActivities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PipelineActivity>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("expression"u8))
                         {
-                            expression = DataFactoryExpression.DeserializeDataFactoryExpression(property0.Value, options);
+                            expression = ModelSerializationExtensions.JsonDeserialize<DataFactoryExpression>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ifTrueActivities"u8))

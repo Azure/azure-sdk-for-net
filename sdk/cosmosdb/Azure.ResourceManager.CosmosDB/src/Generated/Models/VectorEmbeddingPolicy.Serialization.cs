@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in VectorEmbeddings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CosmosDBVectorEmbedding>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<IotFirmwareDefenseSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                     {
                         continue;
                     }
-                    sku = IotFirmwareDefenseSku.DeserializeIotFirmwareDefenseSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<IotFirmwareDefenseSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

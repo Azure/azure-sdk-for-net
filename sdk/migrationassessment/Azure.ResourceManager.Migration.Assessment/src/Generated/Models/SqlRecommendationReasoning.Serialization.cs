@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 writer.WriteStartArray();
                 foreach (var item in ContextParameters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SqlRecommendationReasoningContext>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

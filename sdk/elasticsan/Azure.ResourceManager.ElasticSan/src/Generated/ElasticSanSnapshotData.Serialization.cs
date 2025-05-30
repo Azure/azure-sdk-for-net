@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ElasticSan
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("creationData"u8);
-            writer.WriteObjectValue(CreationData, options);
+            ((IJsonModel<SnapshotCreationInfo>)CreationData).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ElasticSan
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ElasticSan
                     {
                         if (property0.NameEquals("creationData"u8))
                         {
-                            creationData = SnapshotCreationInfo.DeserializeSnapshotCreationInfo(property0.Value, options);
+                            creationData = ModelSerializationExtensions.JsonDeserialize<SnapshotCreationInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

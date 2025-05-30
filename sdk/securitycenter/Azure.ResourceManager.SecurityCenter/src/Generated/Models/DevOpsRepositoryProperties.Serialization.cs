@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(ActionableRemediation))
             {
                 writer.WritePropertyName("actionableRemediation"u8);
-                writer.WriteObjectValue(ActionableRemediation, options);
+                ((IJsonModel<ActionableRemediation>)ActionableRemediation).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    actionableRemediation = ActionableRemediation.DeserializeActionableRemediation(property.Value, options);
+                    actionableRemediation = ModelSerializationExtensions.JsonDeserialize<ActionableRemediation>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

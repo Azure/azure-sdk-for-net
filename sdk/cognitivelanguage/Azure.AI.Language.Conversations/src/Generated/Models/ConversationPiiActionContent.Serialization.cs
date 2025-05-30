@@ -82,7 +82,7 @@ namespace Azure.AI.Language.Conversations.Models
             if (Optional.IsDefined(RedactionPolicy))
             {
                 writer.WritePropertyName("redactionPolicy"u8);
-                writer.WriteObjectValue(RedactionPolicy, options);
+                ((IJsonModel<BaseRedactionPolicy>)RedactionPolicy).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -208,7 +208,7 @@ namespace Azure.AI.Language.Conversations.Models
                     {
                         continue;
                     }
-                    redactionPolicy = BaseRedactionPolicy.DeserializeBaseRedactionPolicy(property.Value, options);
+                    redactionPolicy = ModelSerializationExtensions.JsonDeserialize<BaseRedactionPolicy>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartArray();
             foreach (var item in Lifecycles)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<SourceLifeCycle>)item).Write(writer, options);
             }
             writer.WriteEndArray();
         }

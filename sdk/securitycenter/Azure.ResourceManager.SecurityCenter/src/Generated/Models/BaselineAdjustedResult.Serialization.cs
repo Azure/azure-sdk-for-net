@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(Baseline))
             {
                 writer.WritePropertyName("baseline"u8);
-                writer.WriteObjectValue(Baseline, options);
+                ((IJsonModel<SqlVulnerabilityAssessmentBaseline>)Baseline).Write(writer, options);
             }
             if (Optional.IsDefined(Status))
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    baseline = SqlVulnerabilityAssessmentBaseline.DeserializeSqlVulnerabilityAssessmentBaseline(property.Value, options);
+                    baseline = ModelSerializationExtensions.JsonDeserialize<SqlVulnerabilityAssessmentBaseline>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))

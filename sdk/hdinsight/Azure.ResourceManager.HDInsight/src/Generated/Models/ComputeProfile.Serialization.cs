@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in Roles)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HDInsightClusterRole>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

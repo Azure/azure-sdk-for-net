@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Subnets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoverySubnet>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

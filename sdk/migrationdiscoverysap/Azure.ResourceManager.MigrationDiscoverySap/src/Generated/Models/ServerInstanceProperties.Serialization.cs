@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             if (options.Format != "W" && Optional.IsDefined(ConfigurationData))
             {
                 writer.WritePropertyName("configurationData"u8);
-                writer.WriteObjectValue(ConfigurationData, options);
+                ((IJsonModel<ConfigurationDetail>)ConfigurationData).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PerformanceData))
             {
                 writer.WritePropertyName("performanceData"u8);
-                writer.WriteObjectValue(PerformanceData, options);
+                ((IJsonModel<PerformanceDetail>)PerformanceData).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
-                writer.WriteObjectValue(Errors, options);
+                ((IJsonModel<SapMigrateError>)Errors).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                     {
                         continue;
                     }
-                    configurationData = ConfigurationDetail.DeserializeConfigurationDetail(property.Value, options);
+                    configurationData = ModelSerializationExtensions.JsonDeserialize<ConfigurationDetail>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("performanceData"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                     {
                         continue;
                     }
-                    performanceData = PerformanceDetail.DeserializePerformanceDetail(property.Value, options);
+                    performanceData = ModelSerializationExtensions.JsonDeserialize<PerformanceDetail>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                     {
                         continue;
                     }
-                    errors = SapMigrateError.DeserializeSapMigrateError(property.Value, options);
+                    errors = ModelSerializationExtensions.JsonDeserialize<SapMigrateError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

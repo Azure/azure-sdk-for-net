@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (property.NameEquals("warning"u8))
                 {
-                    warning = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    warning = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Quota.Models
             if (options.Format != "W" && Optional.IsDefined(AllocatedToSubscriptions))
             {
                 writer.WritePropertyName("allocatedToSubscriptions"u8);
-                writer.WriteObjectValue(AllocatedToSubscriptions, options);
+                ((IJsonModel<AllocatedQuotaToSubscriptionList>)AllocatedToSubscriptions).Write(writer, options);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStartObject();
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    allocatedToSubscriptions = AllocatedQuotaToSubscriptionList.DeserializeAllocatedQuotaToSubscriptionList(property.Value, options);
+                    allocatedToSubscriptions = ModelSerializationExtensions.JsonDeserialize<AllocatedQuotaToSubscriptionList>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

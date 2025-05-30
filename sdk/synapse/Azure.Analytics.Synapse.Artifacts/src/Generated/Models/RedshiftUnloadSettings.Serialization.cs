@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("s3LinkedServiceName"u8);
-            writer.WriteObjectValue(S3LinkedServiceName);
+            JsonSerializer.Serialize(writer, S3LinkedServiceName);
             writer.WritePropertyName("bucketName"u8);
             writer.WriteObjectValue<object>(BucketName);
             writer.WriteEndObject();
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("s3LinkedServiceName"u8))
                 {
-                    s3LinkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    s3LinkedServiceName = ModelSerializationExtensions.JsonDeserialize<LinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("bucketName"u8))

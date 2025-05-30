@@ -78,16 +78,16 @@ namespace Azure.ResourceManager.Support
                 writer.WriteStringValue(SupportPlanId);
             }
             writer.WritePropertyName("contactDetails"u8);
-            writer.WriteObjectValue(ContactDetails, options);
+            ((IJsonModel<SupportContactProfile>)ContactDetails).Write(writer, options);
             if (Optional.IsDefined(ServiceLevelAgreement))
             {
                 writer.WritePropertyName("serviceLevelAgreement"u8);
-                writer.WriteObjectValue(ServiceLevelAgreement, options);
+                ((IJsonModel<SupportServiceLevelAgreement>)ServiceLevelAgreement).Write(writer, options);
             }
             if (Optional.IsDefined(SupportEngineer))
             {
                 writer.WritePropertyName("supportEngineer"u8);
-                writer.WriteObjectValue(SupportEngineer, options);
+                ((IJsonModel<SupportEngineer>)SupportEngineer).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SupportPlanType))
             {
@@ -141,12 +141,12 @@ namespace Azure.ResourceManager.Support
             if (Optional.IsDefined(TechnicalTicketDetails))
             {
                 writer.WritePropertyName("technicalTicketDetails"u8);
-                writer.WriteObjectValue(TechnicalTicketDetails, options);
+                ((IJsonModel<TechnicalTicketDetails>)TechnicalTicketDetails).Write(writer, options);
             }
             if (Optional.IsDefined(QuotaTicketDetails))
             {
                 writer.WritePropertyName("quotaTicketDetails"u8);
-                writer.WriteObjectValue(QuotaTicketDetails, options);
+                ((IJsonModel<QuotaTicketDetails>)QuotaTicketDetails).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(SecondaryConsent))
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Support
                 writer.WriteStartArray();
                 foreach (var item in SecondaryConsent)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SecondaryConsent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Support
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Support
                         }
                         if (property0.NameEquals("contactDetails"u8))
                         {
-                            contactDetails = SupportContactProfile.DeserializeSupportContactProfile(property0.Value, options);
+                            contactDetails = ModelSerializationExtensions.JsonDeserialize<SupportContactProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("serviceLevelAgreement"u8))
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Support
                             {
                                 continue;
                             }
-                            serviceLevelAgreement = SupportServiceLevelAgreement.DeserializeSupportServiceLevelAgreement(property0.Value, options);
+                            serviceLevelAgreement = ModelSerializationExtensions.JsonDeserialize<SupportServiceLevelAgreement>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("supportEngineer"u8))
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Support
                             {
                                 continue;
                             }
-                            supportEngineer = SupportEngineer.DeserializeSupportEngineer(property0.Value, options);
+                            supportEngineer = ModelSerializationExtensions.JsonDeserialize<SupportEngineer>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("supportPlanType"u8))
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.Support
                             {
                                 continue;
                             }
-                            technicalTicketDetails = TechnicalTicketDetails.DeserializeTechnicalTicketDetails(property0.Value, options);
+                            technicalTicketDetails = ModelSerializationExtensions.JsonDeserialize<TechnicalTicketDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("quotaTicketDetails"u8))
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Support
                             {
                                 continue;
                             }
-                            quotaTicketDetails = QuotaTicketDetails.DeserializeQuotaTicketDetails(property0.Value, options);
+                            quotaTicketDetails = ModelSerializationExtensions.JsonDeserialize<QuotaTicketDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("secondaryConsent"u8))

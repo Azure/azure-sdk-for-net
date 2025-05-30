@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomDomains)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourcesResponseEndpointsPropertiesItemsItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

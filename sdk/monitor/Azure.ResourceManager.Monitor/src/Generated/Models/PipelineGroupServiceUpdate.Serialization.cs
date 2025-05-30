@@ -40,14 +40,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Pipelines)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PipelineGroupServicePipeline>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Persistence))
             {
                 writer.WritePropertyName("persistence"u8);
-                writer.WriteObjectValue(Persistence, options);
+                ((IJsonModel<PipelineGroupServicePersistenceConfigurationsUpdate>)Persistence).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    persistence = PipelineGroupServicePersistenceConfigurationsUpdate.DeserializePipelineGroupServicePersistenceConfigurationsUpdate(property.Value, options);
+                    persistence = ModelSerializationExtensions.JsonDeserialize<PipelineGroupServicePersistenceConfigurationsUpdate>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(ParametersSchema))
             {
                 writer.WritePropertyName("parametersSchema"u8);
-                writer.WriteObjectValue(ParametersSchema, options);
+                ((IJsonModel<IntegrationAccountMapPropertiesParametersSchema>)ParametersSchema).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W" && Optional.IsDefined(ContentLink))
             {
                 writer.WritePropertyName("contentLink"u8);
-                writer.WriteObjectValue(ContentLink, options);
+                ((IJsonModel<LogicContentLink>)ContentLink).Write(writer, options);
             }
             if (Optional.IsDefined(Metadata))
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Logic
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            parametersSchema = IntegrationAccountMapPropertiesParametersSchema.DeserializeIntegrationAccountMapPropertiesParametersSchema(property0.Value, options);
+                            parametersSchema = ModelSerializationExtensions.JsonDeserialize<IntegrationAccountMapPropertiesParametersSchema>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("createdTime"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            contentLink = LogicContentLink.DeserializeLogicContentLink(property0.Value, options);
+                            contentLink = ModelSerializationExtensions.JsonDeserialize<LogicContentLink>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("metadata"u8))

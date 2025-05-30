@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             if (Optional.IsDefined(SecurityHardeningFeatures))
             {
                 writer.WritePropertyName("securityHardeningFeatures"u8);
-                writer.WriteObjectValue(SecurityHardeningFeatures, options);
+                ((IJsonModel<BinaryHardeningFeatures>)SecurityHardeningFeatures).Write(writer, options);
             }
             if (Optional.IsDefined(ExecutableArchitecture))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                             {
                                 continue;
                             }
-                            securityHardeningFeatures = BinaryHardeningFeatures.DeserializeBinaryHardeningFeatures(property0.Value, options);
+                            securityHardeningFeatures = ModelSerializationExtensions.JsonDeserialize<BinaryHardeningFeatures>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("executableArchitecture"u8))

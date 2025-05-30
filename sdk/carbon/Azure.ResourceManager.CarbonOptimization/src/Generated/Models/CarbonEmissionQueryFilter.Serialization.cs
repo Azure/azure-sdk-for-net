@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             writer.WritePropertyName("reportType"u8);
             writer.WriteStringValue(ReportType.ToString());
             writer.WritePropertyName("dateRange"u8);
-            writer.WriteObjectValue(DateRange, options);
+            ((IJsonModel<CarbonEmissionQueryDateRange>)DateRange).Write(writer, options);
             writer.WritePropertyName("subscriptionList"u8);
             writer.WriteStartArray();
             foreach (var item in SubscriptionList)

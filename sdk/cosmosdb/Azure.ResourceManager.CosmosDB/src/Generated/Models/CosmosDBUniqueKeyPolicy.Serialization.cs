@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in UniqueKeys)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CosmosDBUniqueKey>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

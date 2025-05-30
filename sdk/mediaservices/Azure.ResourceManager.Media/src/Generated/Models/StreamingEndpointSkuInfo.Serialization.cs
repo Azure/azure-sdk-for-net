@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity, options);
+                ((IJsonModel<StreamingEndpointCapacity>)Capacity).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<StreamingEndpointSku>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    capacity = StreamingEndpointCapacity.DeserializeStreamingEndpointCapacity(property.Value, options);
+                    capacity = ModelSerializationExtensions.JsonDeserialize<StreamingEndpointCapacity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    sku = StreamingEndpointSku.DeserializeStreamingEndpointSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<StreamingEndpointSku>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

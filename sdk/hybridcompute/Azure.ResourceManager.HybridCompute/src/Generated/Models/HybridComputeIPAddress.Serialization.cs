@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (options.Format != "W" && Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                writer.WriteObjectValue(Subnet, options);
+                ((IJsonModel<HybridComputeSubnet>)Subnet).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    subnet = HybridComputeSubnet.DeserializeHybridComputeSubnet(property.Value, options);
+                    subnet = ModelSerializationExtensions.JsonDeserialize<HybridComputeSubnet>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

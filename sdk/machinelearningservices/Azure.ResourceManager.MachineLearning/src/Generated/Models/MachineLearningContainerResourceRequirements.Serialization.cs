@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ContainerResourceRequests != null)
                 {
                     writer.WritePropertyName("containerResourceRequests"u8);
-                    writer.WriteObjectValue(ContainerResourceRequests, options);
+                    ((IJsonModel<MachineLearningContainerResourceSettings>)ContainerResourceRequests).Write(writer, options);
                 }
                 else
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ContainerResourceLimits != null)
                 {
                     writer.WritePropertyName("containerResourceLimits"u8);
-                    writer.WriteObjectValue(ContainerResourceLimits, options);
+                    ((IJsonModel<MachineLearningContainerResourceSettings>)ContainerResourceLimits).Write(writer, options);
                 }
                 else
                 {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         containerResourceRequests = null;
                         continue;
                     }
-                    containerResourceRequests = MachineLearningContainerResourceSettings.DeserializeMachineLearningContainerResourceSettings(property.Value, options);
+                    containerResourceRequests = ModelSerializationExtensions.JsonDeserialize<MachineLearningContainerResourceSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("containerResourceLimits"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         containerResourceLimits = null;
                         continue;
                     }
-                    containerResourceLimits = MachineLearningContainerResourceSettings.DeserializeMachineLearningContainerResourceSettings(property.Value, options);
+                    containerResourceLimits = ModelSerializationExtensions.JsonDeserialize<MachineLearningContainerResourceSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

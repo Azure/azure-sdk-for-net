@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             if (Optional.IsDefined(EncryptionConfig))
             {
                 writer.WritePropertyName("encryptionConfig"u8);
-                writer.WriteObjectValue(EncryptionConfig, options);
+                ((IJsonModel<UpdateEncryptionConfig>)EncryptionConfig).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(FirewallRules))
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 writer.WriteStartArray();
                 foreach (var item in FirewallRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FirewallRuleForDataLakeStoreAccountUpdateContent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VirtualNetworkRuleForDataLakeStoreAccountUpdateContent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 writer.WriteStartArray();
                 foreach (var item in TrustedIdProviders)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TrustedIdProviderForDataLakeStoreAccountUpdateContent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                             {
                                 continue;
                             }
-                            encryptionConfig = UpdateEncryptionConfig.DeserializeUpdateEncryptionConfig(property0.Value, options);
+                            encryptionConfig = ModelSerializationExtensions.JsonDeserialize<UpdateEncryptionConfig>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("firewallRules"u8))

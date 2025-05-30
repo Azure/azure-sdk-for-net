@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             if (Optional.IsDefined(CertRecord))
             {
                 writer.WritePropertyName("certRecord"u8);
-                writer.WriteObjectValue(CertRecord, options);
+                ((IJsonModel<CertSyncRecord>)CertRecord).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    certRecord = CertSyncRecord.DeserializeCertSyncRecord(property.Value, options);
+                    certRecord = ModelSerializationExtensions.JsonDeserialize<CertSyncRecord>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DataFlow))
             {
                 writer.WritePropertyName("dataFlow"u8);
-                writer.WriteObjectValue(DataFlow, options);
+                ((IJsonModel<DataFactoryDataFlowDebugInfo>)DataFlow).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DataFlows))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DataFlows)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataFactoryDataFlowDebugInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Datasets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataFactoryDatasetDebugInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,19 +70,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in LinkedServices)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataFactoryLinkedServiceDebugInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Staging))
             {
                 writer.WritePropertyName("staging"u8);
-                writer.WriteObjectValue(Staging, options);
+                ((IJsonModel<DataFlowStagingInfo>)Staging).Write(writer, options);
             }
             if (Optional.IsDefined(DebugSettings))
             {
                 writer.WritePropertyName("debugSettings"u8);
-                writer.WriteObjectValue(DebugSettings, options);
+                ((IJsonModel<DataFlowDebugPackageDebugSettings>)DebugSettings).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    dataFlow = DataFactoryDataFlowDebugInfo.DeserializeDataFactoryDataFlowDebugInfo(property.Value, options);
+                    dataFlow = ModelSerializationExtensions.JsonDeserialize<DataFactoryDataFlowDebugInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataFlows"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    staging = DataFlowStagingInfo.DeserializeDataFlowStagingInfo(property.Value, options);
+                    staging = ModelSerializationExtensions.JsonDeserialize<DataFlowStagingInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("debugSettings"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    debugSettings = DataFlowDebugPackageDebugSettings.DeserializeDataFlowDebugPackageDebugSettings(property.Value, options);
+                    debugSettings = ModelSerializationExtensions.JsonDeserialize<DataFlowDebugPackageDebugSettings>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

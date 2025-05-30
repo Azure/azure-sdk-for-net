@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(BaseBlob))
             {
                 writer.WritePropertyName("baseBlob"u8);
-                writer.WriteObjectValue(BaseBlob, options);
+                ((IJsonModel<ManagementPolicyBaseBlob>)BaseBlob).Write(writer, options);
             }
             if (Optional.IsDefined(Snapshot))
             {
                 writer.WritePropertyName("snapshot"u8);
-                writer.WriteObjectValue(Snapshot, options);
+                ((IJsonModel<ManagementPolicySnapShot>)Snapshot).Write(writer, options);
             }
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
-                writer.WriteObjectValue(Version, options);
+                ((IJsonModel<ManagementPolicyVersion>)Version).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    baseBlob = ManagementPolicyBaseBlob.DeserializeManagementPolicyBaseBlob(property.Value, options);
+                    baseBlob = ModelSerializationExtensions.JsonDeserialize<ManagementPolicyBaseBlob>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("snapshot"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    snapshot = ManagementPolicySnapShot.DeserializeManagementPolicySnapShot(property.Value, options);
+                    snapshot = ModelSerializationExtensions.JsonDeserialize<ManagementPolicySnapShot>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("version"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    version = ManagementPolicyVersion.DeserializeManagementPolicyVersion(property.Value, options);
+                    version = ModelSerializationExtensions.JsonDeserialize<ManagementPolicyVersion>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

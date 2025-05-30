@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<SapVirtualInstanceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration, options);
+                ((IJsonModel<SapConfiguration>)Configuration).Write(writer, options);
             }
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration, options);
+                ((IJsonModel<ManagedRGConfiguration>)ManagedResourceGroupConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
-                writer.WriteObjectValue(Errors, options);
+                ((IJsonModel<SapVirtualInstanceError>)Errors).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                     {
                         continue;
                     }
-                    identity = SapVirtualInstanceIdentity.DeserializeSapVirtualInstanceIdentity(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<SapVirtualInstanceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                             {
                                 continue;
                             }
-                            configuration = SapConfiguration.DeserializeSapConfiguration(property0.Value, options);
+                            configuration = ModelSerializationExtensions.JsonDeserialize<SapConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("managedResourceGroupConfiguration"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                             {
                                 continue;
                             }
-                            managedResourceGroupConfiguration = ManagedRGConfiguration.DeserializeManagedRGConfiguration(property0.Value, options);
+                            managedResourceGroupConfiguration = ModelSerializationExtensions.JsonDeserialize<ManagedRGConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                             {
                                 continue;
                             }
-                            errors = SapVirtualInstanceError.DeserializeSapVirtualInstanceError(property0.Value, options);
+                            errors = ModelSerializationExtensions.JsonDeserialize<SapVirtualInstanceError>(property0.Value);
                             continue;
                         }
                     }

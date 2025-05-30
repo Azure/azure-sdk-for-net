@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<KustoDataConnectionData>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         continue;
                     }
-                    properties = KustoDataConnectionData.DeserializeKustoDataConnectionData(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<KustoDataConnectionData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

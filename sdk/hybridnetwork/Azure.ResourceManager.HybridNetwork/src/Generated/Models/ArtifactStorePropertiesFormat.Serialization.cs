@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration, options);
+                ((IJsonModel<ArtifactStorePropertiesFormatManagedResourceGroupConfiguration>)ManagedResourceGroupConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(StorageResourceId))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    managedResourceGroupConfiguration = ArtifactStorePropertiesFormatManagedResourceGroupConfiguration.DeserializeArtifactStorePropertiesFormatManagedResourceGroupConfiguration(property.Value, options);
+                    managedResourceGroupConfiguration = ModelSerializationExtensions.JsonDeserialize<ArtifactStorePropertiesFormatManagedResourceGroupConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storageResourceId"u8))

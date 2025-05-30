@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(UpgradeDetails))
             {
                 writer.WritePropertyName("upgradeDetails"u8);
-                writer.WriteObjectValue(UpgradeDetails, options);
+                ((IJsonModel<VaultUpgradeDetails>)UpgradeDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RecoveryServicesPrivateEndpointConnectionVaultProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<VaultPropertiesEncryption>)Encryption).Write(writer, options);
             }
             if (Optional.IsDefined(MoveDetails))
             {
                 writer.WritePropertyName("moveDetails"u8);
-                writer.WriteObjectValue(MoveDetails, options);
+                ((IJsonModel<VaultPropertiesMoveDetails>)MoveDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MoveState))
             {
@@ -92,22 +92,22 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(MonitoringSettings))
             {
                 writer.WritePropertyName("monitoringSettings"u8);
-                writer.WriteObjectValue(MonitoringSettings, options);
+                ((IJsonModel<VaultMonitoringSettings>)MonitoringSettings).Write(writer, options);
             }
             if (Optional.IsDefined(RestoreSettings))
             {
                 writer.WritePropertyName("restoreSettings"u8);
-                writer.WriteObjectValue(RestoreSettings, options);
+                ((IJsonModel<RestoreSettings>)RestoreSettings).Write(writer, options);
             }
             if (Optional.IsDefined(RedundancySettings))
             {
                 writer.WritePropertyName("redundancySettings"u8);
-                writer.WriteObjectValue(RedundancySettings, options);
+                ((IJsonModel<VaultPropertiesRedundancySettings>)RedundancySettings).Write(writer, options);
             }
             if (Optional.IsDefined(SecuritySettings))
             {
                 writer.WritePropertyName("securitySettings"u8);
-                writer.WriteObjectValue(SecuritySettings, options);
+                ((IJsonModel<RecoveryServicesSecuritySettings>)SecuritySettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SecureScore))
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    upgradeDetails = VaultUpgradeDetails.DeserializeVaultUpgradeDetails(property.Value, options);
+                    upgradeDetails = ModelSerializationExtensions.JsonDeserialize<VaultUpgradeDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("privateEndpointConnections"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    encryption = VaultPropertiesEncryption.DeserializeVaultPropertiesEncryption(property.Value, options);
+                    encryption = ModelSerializationExtensions.JsonDeserialize<VaultPropertiesEncryption>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("moveDetails"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    moveDetails = VaultPropertiesMoveDetails.DeserializeVaultPropertiesMoveDetails(property.Value, options);
+                    moveDetails = ModelSerializationExtensions.JsonDeserialize<VaultPropertiesMoveDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("moveState"u8))
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    monitoringSettings = VaultMonitoringSettings.DeserializeVaultMonitoringSettings(property.Value, options);
+                    monitoringSettings = ModelSerializationExtensions.JsonDeserialize<VaultMonitoringSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("restoreSettings"u8))
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    restoreSettings = RestoreSettings.DeserializeRestoreSettings(property.Value, options);
+                    restoreSettings = ModelSerializationExtensions.JsonDeserialize<RestoreSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("redundancySettings"u8))
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    redundancySettings = VaultPropertiesRedundancySettings.DeserializeVaultPropertiesRedundancySettings(property.Value, options);
+                    redundancySettings = ModelSerializationExtensions.JsonDeserialize<VaultPropertiesRedundancySettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("securitySettings"u8))
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    securitySettings = RecoveryServicesSecuritySettings.DeserializeRecoveryServicesSecuritySettings(property.Value, options);
+                    securitySettings = ModelSerializationExtensions.JsonDeserialize<RecoveryServicesSecuritySettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("secureScore"u8))

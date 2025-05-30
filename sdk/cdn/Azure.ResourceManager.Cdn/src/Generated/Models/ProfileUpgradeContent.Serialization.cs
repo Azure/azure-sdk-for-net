@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartArray();
             foreach (var item in WafMappingList)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ProfileChangeSkuWafMapping>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

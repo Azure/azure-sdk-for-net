@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IPv6FirewallRuleData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

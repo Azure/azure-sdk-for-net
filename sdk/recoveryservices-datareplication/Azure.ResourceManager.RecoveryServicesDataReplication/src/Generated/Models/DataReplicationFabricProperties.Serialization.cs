@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataReplicationHealthErrorInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("customProperties"u8);
-            writer.WriteObjectValue(CustomProperties, options);
+            ((IJsonModel<DataReplicationFabricCustomProperties>)CustomProperties).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = DataReplicationFabricCustomProperties.DeserializeDataReplicationFabricCustomProperties(property.Value, options);
+                    customProperties = ModelSerializationExtensions.JsonDeserialize<DataReplicationFabricCustomProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

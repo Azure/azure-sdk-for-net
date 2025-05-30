@@ -45,13 +45,13 @@ namespace Azure.Health.Deidentification
                 writer.WriteStringValue(OperationType.Value.ToString());
             }
             writer.WritePropertyName("sourceLocation"u8);
-            writer.WriteObjectValue(SourceLocation, options);
+            ((IJsonModel<SourceStorageLocation>)SourceLocation).Write(writer, options);
             writer.WritePropertyName("targetLocation"u8);
-            writer.WriteObjectValue(TargetLocation, options);
+            ((IJsonModel<TargetStorageLocation>)TargetLocation).Write(writer, options);
             if (Optional.IsDefined(Customizations))
             {
                 writer.WritePropertyName("customizations"u8);
-                writer.WriteObjectValue(Customizations, options);
+                ((IJsonModel<DeidentificationJobCustomizationOptions>)Customizations).Write(writer, options);
             }
             if (options.Format != "W")
             {
@@ -81,7 +81,7 @@ namespace Azure.Health.Deidentification
             if (options.Format != "W" && Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
-                writer.WriteObjectValue(Summary, options);
+                ((IJsonModel<DeidentificationJobSummary>)Summary).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -151,12 +151,12 @@ namespace Azure.Health.Deidentification
                 }
                 if (property.NameEquals("sourceLocation"u8))
                 {
-                    sourceLocation = SourceStorageLocation.DeserializeSourceStorageLocation(property.Value, options);
+                    sourceLocation = ModelSerializationExtensions.JsonDeserialize<SourceStorageLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetLocation"u8))
                 {
-                    targetLocation = TargetStorageLocation.DeserializeTargetStorageLocation(property.Value, options);
+                    targetLocation = ModelSerializationExtensions.JsonDeserialize<TargetStorageLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("customizations"u8))
@@ -165,7 +165,7 @@ namespace Azure.Health.Deidentification
                     {
                         continue;
                     }
-                    customizations = DeidentificationJobCustomizationOptions.DeserializeDeidentificationJobCustomizationOptions(property.Value, options);
+                    customizations = ModelSerializationExtensions.JsonDeserialize<DeidentificationJobCustomizationOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -179,7 +179,7 @@ namespace Azure.Health.Deidentification
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lastUpdatedAt"u8))
@@ -207,7 +207,7 @@ namespace Azure.Health.Deidentification
                     {
                         continue;
                     }
-                    summary = DeidentificationJobSummary.DeserializeDeidentificationJobSummary(property.Value, options);
+                    summary = ModelSerializationExtensions.JsonDeserialize<DeidentificationJobSummary>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

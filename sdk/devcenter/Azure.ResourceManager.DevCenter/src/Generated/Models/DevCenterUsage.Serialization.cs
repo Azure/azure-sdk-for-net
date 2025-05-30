@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
+                ((IJsonModel<DevCenterUsageName>)Name).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    name = DevCenterUsageName.DeserializeDevCenterUsageName(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<DevCenterUsageName>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

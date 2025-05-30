@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
             writer.WritePropertyName("virtualNetwork"u8);
-            writer.WriteObjectValue(VirtualNetwork, options);
+            ((IJsonModel<AppServiceVirtualNetworkProfile>)VirtualNetwork).Write(writer, options);
             if (Optional.IsDefined(InternalLoadBalancingMode))
             {
                 writer.WritePropertyName("internalLoadBalancingMode"u8);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in ClusterSettings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AppServiceNameValuePair>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CustomDnsSuffixConfiguration))
             {
                 writer.WritePropertyName("customDnsSuffixConfiguration"u8);
-                writer.WriteObjectValue(CustomDnsSuffixConfiguration, options);
+                ((IJsonModel<CustomDnsSuffixConfigurationData>)CustomDnsSuffixConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkingConfiguration))
             {
                 writer.WritePropertyName("networkingConfiguration"u8);
-                writer.WriteObjectValue(NetworkingConfiguration, options);
+                ((IJsonModel<AseV3NetworkingConfigurationData>)NetworkingConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(UpgradeAvailability))
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("virtualNetwork"u8))
                 {
-                    virtualNetwork = AppServiceVirtualNetworkProfile.DeserializeAppServiceVirtualNetworkProfile(property.Value, options);
+                    virtualNetwork = ModelSerializationExtensions.JsonDeserialize<AppServiceVirtualNetworkProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("internalLoadBalancingMode"u8))
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    customDnsSuffixConfiguration = CustomDnsSuffixConfigurationData.DeserializeCustomDnsSuffixConfigurationData(property.Value, options);
+                    customDnsSuffixConfiguration = ModelSerializationExtensions.JsonDeserialize<CustomDnsSuffixConfigurationData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("networkingConfiguration"u8))
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    networkingConfiguration = AseV3NetworkingConfigurationData.DeserializeAseV3NetworkingConfigurationData(property.Value, options);
+                    networkingConfiguration = ModelSerializationExtensions.JsonDeserialize<AseV3NetworkingConfigurationData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("upgradeAvailability"u8))

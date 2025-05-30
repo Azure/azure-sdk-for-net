@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in StatusList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<OverviewStatusItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

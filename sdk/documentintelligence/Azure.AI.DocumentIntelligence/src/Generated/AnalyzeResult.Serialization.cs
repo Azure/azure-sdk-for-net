@@ -51,7 +51,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartArray();
             foreach (var item in Pages)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DocumentPage>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Paragraphs))
@@ -60,7 +60,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Paragraphs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DocumentParagraph>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Tables)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DocumentTable>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Figures)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DocumentFigure>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,7 +90,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Sections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DocumentSection>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +100,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in KeyValuePairs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DocumentKeyValuePair>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +110,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Styles)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DocumentStyle>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -120,7 +120,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Languages)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DocumentLanguage>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -130,7 +130,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Documents)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AnalyzedDocument>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -140,7 +140,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Warnings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DocumentIntelligenceWarning>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

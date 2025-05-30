@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(DependsOnProfile))
             {
                 writer.WritePropertyName("dependsOnProfile"u8);
-                writer.WriteObjectValue(DependsOnProfile, options);
+                ((IJsonModel<DependsOnProfile>)DependsOnProfile).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    dependsOnProfile = DependsOnProfile.DeserializeDependsOnProfile(property.Value, options);
+                    dependsOnProfile = ModelSerializationExtensions.JsonDeserialize<DependsOnProfile>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

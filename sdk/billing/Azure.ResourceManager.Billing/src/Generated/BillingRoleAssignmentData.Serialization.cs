@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Billing
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<BillingRoleAssignmentProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         continue;
                     }
-                    properties = BillingRoleAssignmentProperties.DeserializeBillingRoleAssignmentProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<BillingRoleAssignmentProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

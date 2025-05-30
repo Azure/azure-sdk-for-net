@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<HealthBotProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.HealthBot.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<HealthBotSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Location))
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                     {
                         continue;
                     }
-                    properties = HealthBotProperties.DeserializeHealthBotProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<HealthBotProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                     {
                         continue;
                     }
-                    sku = HealthBotSku.DeserializeHealthBotSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<HealthBotSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"u8))

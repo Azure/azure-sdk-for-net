@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             if (options.Format != "W" && Optional.IsDefined(DBServerPatchingDetails))
             {
                 writer.WritePropertyName("dbServerPatchingDetails"u8);
-                writer.WriteObjectValue(DBServerPatchingDetails, options);
+                ((IJsonModel<DBServerPatchingDetails>)DBServerPatchingDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MaxMemoryInGbs))
             {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    dbServerPatchingDetails = DBServerPatchingDetails.DeserializeDBServerPatchingDetails(property.Value, options);
+                    dbServerPatchingDetails = ModelSerializationExtensions.JsonDeserialize<DBServerPatchingDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("maxMemoryInGbs"u8))

@@ -57,17 +57,17 @@ namespace Azure.ResourceManager.Migration.Assessment
             if (options.Format != "W" && Optional.IsDefined(ProductSupportStatus))
             {
                 writer.WritePropertyName("productSupportStatus"u8);
-                writer.WriteObjectValue(ProductSupportStatus, options);
+                ((IJsonModel<AssessmentProductSupportStatus>)ProductSupportStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AzureSqlMISuitabilityDetails))
             {
                 writer.WritePropertyName("azureSqlMISuitabilityDetails"u8);
-                writer.WriteObjectValue(AzureSqlMISuitabilityDetails, options);
+                ((IJsonModel<SqlAssessmentV2PaasSuitabilityDetails>)AzureSqlMISuitabilityDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AzureSqlDBSuitabilityDetails))
             {
                 writer.WritePropertyName("azureSqlDBSuitabilityDetails"u8);
-                writer.WriteObjectValue(AzureSqlDBSuitabilityDetails, options);
+                ((IJsonModel<SqlAssessmentV2PaasSuitabilityDetails>)AzureSqlDBSuitabilityDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsDatabaseHighlyAvailable))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Migration.Assessment
             if (options.Format != "W" && Optional.IsDefined(LinkedAvailabilityGroupOverview))
             {
                 writer.WritePropertyName("linkedAvailabilityGroupOverview"u8);
-                writer.WriteObjectValue(LinkedAvailabilityGroupOverview, options);
+                ((IJsonModel<SqlAvailabilityGroupDataOverview>)LinkedAvailabilityGroupOverview).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MachineArmId))
             {
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                             {
                                 continue;
                             }
-                            productSupportStatus = AssessmentProductSupportStatus.DeserializeAssessmentProductSupportStatus(property0.Value, options);
+                            productSupportStatus = ModelSerializationExtensions.JsonDeserialize<AssessmentProductSupportStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("azureSqlMISuitabilityDetails"u8))
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                             {
                                 continue;
                             }
-                            azureSqlMISuitabilityDetails = SqlAssessmentV2PaasSuitabilityDetails.DeserializeSqlAssessmentV2PaasSuitabilityDetails(property0.Value, options);
+                            azureSqlMISuitabilityDetails = ModelSerializationExtensions.JsonDeserialize<SqlAssessmentV2PaasSuitabilityDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("azureSqlDBSuitabilityDetails"u8))
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                             {
                                 continue;
                             }
-                            azureSqlDBSuitabilityDetails = SqlAssessmentV2PaasSuitabilityDetails.DeserializeSqlAssessmentV2PaasSuitabilityDetails(property0.Value, options);
+                            azureSqlDBSuitabilityDetails = ModelSerializationExtensions.JsonDeserialize<SqlAssessmentV2PaasSuitabilityDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("isDatabaseHighlyAvailable"u8))
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                             {
                                 continue;
                             }
-                            linkedAvailabilityGroupOverview = SqlAvailabilityGroupDataOverview.DeserializeSqlAvailabilityGroupDataOverview(property0.Value, options);
+                            linkedAvailabilityGroupOverview = ModelSerializationExtensions.JsonDeserialize<SqlAvailabilityGroupDataOverview>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("machineArmId"u8))

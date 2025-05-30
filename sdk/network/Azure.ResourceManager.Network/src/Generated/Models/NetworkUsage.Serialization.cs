@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WritePropertyName("limit"u8);
             writer.WriteNumberValue(Limit);
             writer.WritePropertyName("name"u8);
-            writer.WriteObjectValue(Name, options);
+            ((IJsonModel<NetworkUsageName>)Name).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("name"u8))
                 {
-                    name = NetworkUsageName.DeserializeNetworkUsageName(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<NetworkUsageName>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

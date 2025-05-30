@@ -40,7 +40,7 @@ namespace Azure.AI.OpenAI.Assistants
                 writer.WriteStartArray();
                 foreach (var item in Messages)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ThreadInitializationMessage>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

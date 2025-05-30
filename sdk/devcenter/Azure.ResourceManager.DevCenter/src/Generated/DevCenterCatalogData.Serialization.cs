@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.DevCenter
             if (Optional.IsDefined(GitHub))
             {
                 writer.WritePropertyName("gitHub"u8);
-                writer.WriteObjectValue(GitHub, options);
+                ((IJsonModel<DevCenterGitCatalog>)GitHub).Write(writer, options);
             }
             if (Optional.IsDefined(AdoGit))
             {
                 writer.WritePropertyName("adoGit"u8);
-                writer.WriteObjectValue(AdoGit, options);
+                ((IJsonModel<DevCenterGitCatalog>)AdoGit).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DevCenter
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            gitHub = DevCenterGitCatalog.DeserializeDevCenterGitCatalog(property0.Value, options);
+                            gitHub = ModelSerializationExtensions.JsonDeserialize<DevCenterGitCatalog>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("adoGit"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            adoGit = DevCenterGitCatalog.DeserializeDevCenterGitCatalog(property0.Value, options);
+                            adoGit = ModelSerializationExtensions.JsonDeserialize<DevCenterGitCatalog>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

@@ -42,7 +42,7 @@ namespace Azure.AI.Vision.Face
             if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
-                writer.WriteObjectValue(Target, options);
+                ((IJsonModel<LivenessOutputsTarget>)Target).Write(writer, options);
             }
             if (Optional.IsDefined(ModelVersionUsed))
             {
@@ -52,7 +52,7 @@ namespace Azure.AI.Vision.Face
             if (Optional.IsDefined(VerifyResult))
             {
                 writer.WritePropertyName("verifyResult"u8);
-                writer.WriteObjectValue(VerifyResult, options);
+                ((IJsonModel<LivenessWithVerifyOutputs>)VerifyResult).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -111,7 +111,7 @@ namespace Azure.AI.Vision.Face
                     {
                         continue;
                     }
-                    target = LivenessOutputsTarget.DeserializeLivenessOutputsTarget(property.Value, options);
+                    target = ModelSerializationExtensions.JsonDeserialize<LivenessOutputsTarget>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("modelVersionUsed"u8))
@@ -129,7 +129,7 @@ namespace Azure.AI.Vision.Face
                     {
                         continue;
                     }
-                    verifyResult = LivenessWithVerifyOutputs.DeserializeLivenessWithVerifyOutputs(property.Value, options);
+                    verifyResult = ModelSerializationExtensions.JsonDeserialize<LivenessWithVerifyOutputs>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

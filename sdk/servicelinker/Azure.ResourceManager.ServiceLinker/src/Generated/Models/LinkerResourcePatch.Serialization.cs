@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             if (Optional.IsDefined(TargetService))
             {
                 writer.WritePropertyName("targetService"u8);
-                writer.WriteObjectValue(TargetService, options);
+                ((IJsonModel<TargetServiceBaseInfo>)TargetService).Write(writer, options);
             }
             if (Optional.IsDefined(AuthInfo))
             {
                 writer.WritePropertyName("authInfo"u8);
-                writer.WriteObjectValue(AuthInfo, options);
+                ((IJsonModel<AuthBaseInfo>)AuthInfo).Write(writer, options);
             }
             if (Optional.IsDefined(ClientType))
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 if (VnetSolution != null)
                 {
                     writer.WritePropertyName("vNetSolution"u8);
-                    writer.WriteObjectValue(VnetSolution, options);
+                    ((IJsonModel<VnetSolution>)VnetSolution).Write(writer, options);
                 }
                 else
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 if (SecretStore != null)
                 {
                     writer.WritePropertyName("secretStore"u8);
-                    writer.WriteObjectValue(SecretStore, options);
+                    ((IJsonModel<LinkerSecretStore>)SecretStore).Write(writer, options);
                 }
                 else
                 {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                             {
                                 continue;
                             }
-                            targetService = TargetServiceBaseInfo.DeserializeTargetServiceBaseInfo(property0.Value, options);
+                            targetService = ModelSerializationExtensions.JsonDeserialize<TargetServiceBaseInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("authInfo"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                             {
                                 continue;
                             }
-                            authInfo = AuthBaseInfo.DeserializeAuthBaseInfo(property0.Value, options);
+                            authInfo = ModelSerializationExtensions.JsonDeserialize<AuthBaseInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clientType"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                                 vnetSolution = null;
                                 continue;
                             }
-                            vnetSolution = VnetSolution.DeserializeVnetSolution(property0.Value, options);
+                            vnetSolution = ModelSerializationExtensions.JsonDeserialize<VnetSolution>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("secretStore"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                                 secretStore = null;
                                 continue;
                             }
-                            secretStore = LinkerSecretStore.DeserializeLinkerSecretStore(property0.Value, options);
+                            secretStore = ModelSerializationExtensions.JsonDeserialize<LinkerSecretStore>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("scope"u8))

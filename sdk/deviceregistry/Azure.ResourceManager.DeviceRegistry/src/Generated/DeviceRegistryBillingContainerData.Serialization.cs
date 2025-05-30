@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<BillingContainerProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     {
                         continue;
                     }
-                    properties = BillingContainerProperties.DeserializeBillingContainerProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<BillingContainerProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

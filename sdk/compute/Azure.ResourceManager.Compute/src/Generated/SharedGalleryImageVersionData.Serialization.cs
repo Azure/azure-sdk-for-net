@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile, options);
+                ((IJsonModel<SharedGalleryImageVersionStorageProfile>)StorageProfile).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ArtifactTags))
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            storageProfile = SharedGalleryImageVersionStorageProfile.DeserializeSharedGalleryImageVersionStorageProfile(property0.Value, options);
+                            storageProfile = ModelSerializationExtensions.JsonDeserialize<SharedGalleryImageVersionStorageProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("artifactTags"u8))

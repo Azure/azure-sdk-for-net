@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(TerminalSize))
             {
                 writer.WritePropertyName("terminalSize"u8);
-                writer.WriteObjectValue(TerminalSize, options);
+                ((IJsonModel<ContainerExecRequestTerminalSize>)TerminalSize).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    terminalSize = ContainerExecRequestTerminalSize.DeserializeContainerExecRequestTerminalSize(property.Value, options);
+                    terminalSize = ModelSerializationExtensions.JsonDeserialize<ContainerExecRequestTerminalSize>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

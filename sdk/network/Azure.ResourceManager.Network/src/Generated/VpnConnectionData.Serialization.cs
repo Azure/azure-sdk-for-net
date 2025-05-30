@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(RemoteVpnSite))
             {
                 writer.WritePropertyName("remoteVpnSite"u8);
-                JsonSerializer.Serialize(writer, RemoteVpnSite);
+                ((IJsonModel<WritableSubResource>)RemoteVpnSite).Write(writer, options);
             }
             if (Optional.IsDefined(RoutingWeight))
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPsecPolicies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IPsecPolicy>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in TrafficSelectorPolicies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TrafficSelectorPolicy>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -145,14 +145,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VpnLinkConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VpnSiteLinkConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(RoutingConfiguration))
             {
                 writer.WritePropertyName("routingConfiguration"u8);
-                writer.WriteObjectValue(RoutingConfiguration, options);
+                ((IJsonModel<RoutingConfiguration>)RoutingConfiguration).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            remoteVpnSite = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            remoteVpnSite = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("routingWeight"u8))
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            routingConfiguration = RoutingConfiguration.DeserializeRoutingConfiguration(property0.Value, options);
+                            routingConfiguration = ModelSerializationExtensions.JsonDeserialize<RoutingConfiguration>(property0.Value);
                             continue;
                         }
                     }

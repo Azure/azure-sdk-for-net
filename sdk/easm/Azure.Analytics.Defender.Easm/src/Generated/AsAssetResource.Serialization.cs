@@ -36,7 +36,7 @@ namespace Azure.Analytics.Defender.Easm
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("asset"u8);
-            writer.WriteObjectValue(Asset, options);
+            ((IJsonModel<AsAsset>)Asset).Write(writer, options);
         }
 
         AsAssetResource IJsonModel<AsAssetResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -80,7 +80,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 if (property.NameEquals("asset"u8))
                 {
-                    asset = AsAsset.DeserializeAsAsset(property.Value, options);
+                    asset = ModelSerializationExtensions.JsonDeserialize<AsAsset>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

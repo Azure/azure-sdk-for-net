@@ -42,12 +42,12 @@ namespace Azure.AI.Agents.Persistent
             if (Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("data_source"u8);
-                writer.WriteObjectValue(DataSource, options);
+                ((IJsonModel<VectorStoreDataSource>)DataSource).Write(writer, options);
             }
             if (Optional.IsDefined(ChunkingStrategy))
             {
                 writer.WritePropertyName("chunking_strategy"u8);
-                writer.WriteObjectValue(ChunkingStrategy, options);
+                ((IJsonModel<VectorStoreChunkingStrategy>)ChunkingStrategy).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -104,7 +104,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    dataSource = VectorStoreDataSource.DeserializeVectorStoreDataSource(property.Value, options);
+                    dataSource = ModelSerializationExtensions.JsonDeserialize<VectorStoreDataSource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("chunking_strategy"u8))
@@ -113,7 +113,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    chunkingStrategy = VectorStoreChunkingStrategy.DeserializeVectorStoreChunkingStrategy(property.Value, options);
+                    chunkingStrategy = ModelSerializationExtensions.JsonDeserialize<VectorStoreChunkingStrategy>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

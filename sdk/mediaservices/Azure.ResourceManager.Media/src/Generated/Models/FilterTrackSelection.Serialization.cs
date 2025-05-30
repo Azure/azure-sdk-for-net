@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartArray();
             foreach (var item in TrackSelections)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<FilterTrackPropertyCondition>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

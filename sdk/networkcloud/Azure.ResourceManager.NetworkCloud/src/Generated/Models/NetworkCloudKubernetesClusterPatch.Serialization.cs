@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(AdministratorConfiguration))
             {
                 writer.WritePropertyName("administratorConfiguration"u8);
-                writer.WriteObjectValue(AdministratorConfiguration, options);
+                ((IJsonModel<AdministratorConfigurationPatch>)AdministratorConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ControlPlaneNodeConfiguration))
             {
                 writer.WritePropertyName("controlPlaneNodeConfiguration"u8);
-                writer.WriteObjectValue(ControlPlaneNodeConfiguration, options);
+                ((IJsonModel<ControlPlaneNodePatchConfiguration>)ControlPlaneNodeConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(KubernetesVersion))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             {
                                 continue;
                             }
-                            administratorConfiguration = AdministratorConfigurationPatch.DeserializeAdministratorConfigurationPatch(property0.Value, options);
+                            administratorConfiguration = ModelSerializationExtensions.JsonDeserialize<AdministratorConfigurationPatch>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("controlPlaneNodeConfiguration"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             {
                                 continue;
                             }
-                            controlPlaneNodeConfiguration = ControlPlaneNodePatchConfiguration.DeserializeControlPlaneNodePatchConfiguration(property0.Value, options);
+                            controlPlaneNodeConfiguration = ModelSerializationExtensions.JsonDeserialize<ControlPlaneNodePatchConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("kubernetesVersion"u8))

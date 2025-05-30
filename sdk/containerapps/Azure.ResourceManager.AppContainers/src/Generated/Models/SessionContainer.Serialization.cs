@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Env)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerAppEnvironmentVariable>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
-                writer.WriteObjectValue(Resources, options);
+                ((IJsonModel<SessionContainerResources>)Resources).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    resources = SessionContainerResources.DeserializeSessionContainerResources(property.Value, options);
+                    resources = ModelSerializationExtensions.JsonDeserialize<SessionContainerResources>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

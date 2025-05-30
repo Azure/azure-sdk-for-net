@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AppServiceGeoRegion>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in HostingEnvironments)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AppServiceEnvironmentProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in HostingEnvironmentDeploymentInfos)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HostingEnvironmentDeploymentInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

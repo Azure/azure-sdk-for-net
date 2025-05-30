@@ -40,7 +40,7 @@ namespace Azure.AI.Agents.Persistent
                 writer.WriteStartArray();
                 foreach (var item in IndexList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AISearchIndexResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

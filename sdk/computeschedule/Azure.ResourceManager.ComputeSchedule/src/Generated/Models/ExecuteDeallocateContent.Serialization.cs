@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
 
             writer.WritePropertyName("executionParameters"u8);
-            writer.WriteObjectValue(ExecutionParameters, options);
+            ((IJsonModel<ScheduledActionExecutionParameterDetail>)ExecutionParameters).Write(writer, options);
             writer.WritePropertyName("resources"u8);
-            writer.WriteObjectValue(Resources, options);
+            ((IJsonModel<UserRequestResources>)Resources).Write(writer, options);
             writer.WritePropertyName("correlationid"u8);
             writer.WriteStringValue(CorrelationId);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -86,12 +86,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 if (property.NameEquals("executionParameters"u8))
                 {
-                    executionParameters = ScheduledActionExecutionParameterDetail.DeserializeScheduledActionExecutionParameterDetail(property.Value, options);
+                    executionParameters = ModelSerializationExtensions.JsonDeserialize<ScheduledActionExecutionParameterDetail>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resources"u8))
                 {
-                    resources = UserRequestResources.DeserializeUserRequestResources(property.Value, options);
+                    resources = ModelSerializationExtensions.JsonDeserialize<UserRequestResources>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("correlationid"u8))

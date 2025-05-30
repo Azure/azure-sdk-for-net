@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source, options);
+                ((IJsonModel<ConnectionMonitorSource>)Source).Write(writer, options);
             }
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination, options);
+                ((IJsonModel<ConnectionMonitorDestination>)Destination).Write(writer, options);
             }
             if (Optional.IsDefined(AutoStart))
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConnectionMonitorEndpoint>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in TestConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConnectionMonitorTestConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in TestGroups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConnectionMonitorTestGroup>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConnectionMonitorOutput>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            source = ConnectionMonitorSource.DeserializeConnectionMonitorSource(property0.Value, options);
+                            source = ModelSerializationExtensions.JsonDeserialize<ConnectionMonitorSource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("destination"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            destination = ConnectionMonitorDestination.DeserializeConnectionMonitorDestination(property0.Value, options);
+                            destination = ModelSerializationExtensions.JsonDeserialize<ConnectionMonitorDestination>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("autoStart"u8))

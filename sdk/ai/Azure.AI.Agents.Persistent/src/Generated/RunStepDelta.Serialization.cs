@@ -37,7 +37,7 @@ namespace Azure.AI.Agents.Persistent
             if (Optional.IsDefined(StepDetails))
             {
                 writer.WritePropertyName("step_details"u8);
-                writer.WriteObjectValue(StepDetails, options);
+                ((IJsonModel<RunStepDeltaDetail>)StepDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    stepDetails = RunStepDeltaDetail.DeserializeRunStepDeltaDetail(property.Value, options);
+                    stepDetails = ModelSerializationExtensions.JsonDeserialize<RunStepDeltaDetail>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

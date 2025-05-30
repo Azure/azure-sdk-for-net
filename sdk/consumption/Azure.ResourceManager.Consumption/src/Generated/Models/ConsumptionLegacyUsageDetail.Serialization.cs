@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(MeterDetails))
             {
                 writer.WritePropertyName("meterDetails"u8);
-                writer.WriteObjectValue(MeterDetails, options);
+                ((IJsonModel<ConsumptionMeterDetailsInfo>)MeterDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Quantity))
             {
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            meterDetails = ConsumptionMeterDetailsInfo.DeserializeConsumptionMeterDetailsInfo(property0.Value, options);
+                            meterDetails = ModelSerializationExtensions.JsonDeserialize<ConsumptionMeterDetailsInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("quantity"u8))

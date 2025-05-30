@@ -50,7 +50,7 @@ namespace Azure.AI.Agents.Persistent
                 writer.WriteStartArray();
                 foreach (var item in DataSources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VectorStoreDataSource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

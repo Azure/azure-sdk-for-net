@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartArray();
             foreach (var item in Aggregations)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<TimelineAggregation>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Errors))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TimelineError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

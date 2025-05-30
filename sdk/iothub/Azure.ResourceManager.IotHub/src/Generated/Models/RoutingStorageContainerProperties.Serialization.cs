@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    identity = ManagedIdentity.DeserializeManagedIdentity(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

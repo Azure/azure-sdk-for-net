@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HybridCompute
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source, options);
+                ((IJsonModel<MachineRunCommandScriptSource>)Source).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RunCommandInputParameter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WriteStartArray();
                 foreach (var item in ProtectedParameters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RunCommandInputParameter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.HybridCompute
             if (Optional.IsDefined(OutputBlobManagedIdentity))
             {
                 writer.WritePropertyName("outputBlobManagedIdentity"u8);
-                writer.WriteObjectValue(OutputBlobManagedIdentity, options);
+                ((IJsonModel<RunCommandManagedIdentity>)OutputBlobManagedIdentity).Write(writer, options);
             }
             if (Optional.IsDefined(ErrorBlobManagedIdentity))
             {
                 writer.WritePropertyName("errorBlobManagedIdentity"u8);
-                writer.WriteObjectValue(ErrorBlobManagedIdentity, options);
+                ((IJsonModel<RunCommandManagedIdentity>)ErrorBlobManagedIdentity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HybridCompute
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView, options);
+                ((IJsonModel<MachineRunCommandInstanceView>)InstanceView).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.HybridCompute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            source = MachineRunCommandScriptSource.DeserializeMachineRunCommandScriptSource(property0.Value, options);
+                            source = ModelSerializationExtensions.JsonDeserialize<MachineRunCommandScriptSource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("parameters"u8))
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            outputBlobManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property0.Value, options);
+                            outputBlobManagedIdentity = ModelSerializationExtensions.JsonDeserialize<RunCommandManagedIdentity>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("errorBlobManagedIdentity"u8))
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            errorBlobManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property0.Value, options);
+                            errorBlobManagedIdentity = ModelSerializationExtensions.JsonDeserialize<RunCommandManagedIdentity>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            instanceView = MachineRunCommandInstanceView.DeserializeMachineRunCommandInstanceView(property0.Value, options);
+                            instanceView = ModelSerializationExtensions.JsonDeserialize<MachineRunCommandInstanceView>(property0.Value);
                             continue;
                         }
                     }

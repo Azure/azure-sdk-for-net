@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedGrafanaData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

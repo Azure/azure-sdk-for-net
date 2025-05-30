@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<BackupResourceVaultConfigProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(ETag))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     {
                         continue;
                     }
-                    properties = BackupResourceVaultConfigProperties.DeserializeBackupResourceVaultConfigProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<BackupResourceVaultConfigProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eTag"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

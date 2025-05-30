@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(OSDetails))
             {
                 writer.WritePropertyName("osDetails"u8);
-                writer.WriteObjectValue(OSDetails, options);
+                ((IJsonModel<SiteRecoveryOSDetails>)OSDetails).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DiskDetails))
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in DiskDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryDiskDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    osDetails = SiteRecoveryOSDetails.DeserializeSiteRecoveryOSDetails(property.Value, options);
+                    osDetails = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryOSDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("diskDetails"u8))

@@ -40,7 +40,7 @@ namespace Azure.AI.ContentSafety
                 writer.WriteStartArray();
                 foreach (var item in BlocklistsMatch)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TextBlocklistMatch>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -48,7 +48,7 @@ namespace Azure.AI.ContentSafety
             writer.WriteStartArray();
             foreach (var item in CategoriesAnalysis)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<TextCategoriesAnalysis>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

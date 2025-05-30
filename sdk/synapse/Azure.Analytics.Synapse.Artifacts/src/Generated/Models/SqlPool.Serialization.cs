@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                JsonSerializer.Serialize(writer, Sku);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -117,7 +117,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    sku = Sku.DeserializeSku(property.Value);
+                    sku = ModelSerializationExtensions.JsonDeserialize<Sku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

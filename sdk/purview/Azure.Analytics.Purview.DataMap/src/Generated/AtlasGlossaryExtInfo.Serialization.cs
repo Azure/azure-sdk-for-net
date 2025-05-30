@@ -45,7 +45,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Classifications)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasClassification>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +100,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasRelatedCategoryHeader>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -115,7 +115,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Terms)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasRelatedTermHeader>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -131,7 +131,7 @@ namespace Azure.Analytics.Purview.DataMap
                 foreach (var item in CategoryInfo)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<AtlasGlossaryCategory>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -142,7 +142,7 @@ namespace Azure.Analytics.Purview.DataMap
                 foreach (var item in TermInfo)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<AtlasGlossaryTerm>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }

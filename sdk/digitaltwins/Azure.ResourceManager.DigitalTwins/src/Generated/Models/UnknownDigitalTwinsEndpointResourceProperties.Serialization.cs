@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         identity = null;
                         continue;
                     }
-                    identity = DigitalTwinsManagedIdentityReference.DeserializeDigitalTwinsManagedIdentityReference(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<DigitalTwinsManagedIdentityReference>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

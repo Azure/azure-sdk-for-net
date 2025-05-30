@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(AuthenticationSettings))
             {
                 writer.WritePropertyName("authenticationSettings"u8);
-                writer.WriteObjectValue(AuthenticationSettings, options);
+                ((IJsonModel<AuthenticationSettingsContract>)AuthenticationSettings).Write(writer, options);
             }
             if (Optional.IsDefined(SubscriptionKeyParameterNames))
             {
                 writer.WritePropertyName("subscriptionKeyParameterNames"u8);
-                writer.WriteObjectValue(SubscriptionKeyParameterNames, options);
+                ((IJsonModel<SubscriptionKeyParameterNamesContract>)SubscriptionKeyParameterNames).Write(writer, options);
             }
             if (Optional.IsDefined(ApiType))
             {
@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Contact))
             {
                 writer.WritePropertyName("contact"u8);
-                writer.WriteObjectValue(Contact, options);
+                ((IJsonModel<ApiContactInformation>)Contact).Write(writer, options);
             }
             if (Optional.IsDefined(License))
             {
                 writer.WritePropertyName("license"u8);
-                writer.WriteObjectValue(License, options);
+                ((IJsonModel<ApiLicenseInformation>)License).Write(writer, options);
             }
             if (Optional.IsDefined(SourceApiId))
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(ApiVersionSet))
             {
                 writer.WritePropertyName("apiVersionSet"u8);
-                writer.WriteObjectValue(ApiVersionSet, options);
+                ((IJsonModel<ApiVersionSetContractDetails>)ApiVersionSet).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            authenticationSettings = AuthenticationSettingsContract.DeserializeAuthenticationSettingsContract(property0.Value, options);
+                            authenticationSettings = ModelSerializationExtensions.JsonDeserialize<AuthenticationSettingsContract>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("subscriptionKeyParameterNames"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            subscriptionKeyParameterNames = SubscriptionKeyParameterNamesContract.DeserializeSubscriptionKeyParameterNamesContract(property0.Value, options);
+                            subscriptionKeyParameterNames = ModelSerializationExtensions.JsonDeserialize<SubscriptionKeyParameterNamesContract>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("type"u8))
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            contact = ApiContactInformation.DeserializeApiContactInformation(property0.Value, options);
+                            contact = ModelSerializationExtensions.JsonDeserialize<ApiContactInformation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("license"u8))
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            license = ApiLicenseInformation.DeserializeApiLicenseInformation(property0.Value, options);
+                            license = ModelSerializationExtensions.JsonDeserialize<ApiLicenseInformation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sourceApiId"u8))
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            apiVersionSet = ApiVersionSetContractDetails.DeserializeApiVersionSetContractDetails(property0.Value, options);
+                            apiVersionSet = ModelSerializationExtensions.JsonDeserialize<ApiVersionSetContractDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

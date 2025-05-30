@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StorageInsightData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

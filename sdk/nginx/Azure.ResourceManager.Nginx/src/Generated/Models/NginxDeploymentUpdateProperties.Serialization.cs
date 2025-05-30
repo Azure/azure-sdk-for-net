@@ -42,32 +42,32 @@ namespace Azure.ResourceManager.Nginx.Models
             if (Optional.IsDefined(Logging))
             {
                 writer.WritePropertyName("logging"u8);
-                writer.WriteObjectValue(Logging, options);
+                ((IJsonModel<NginxLogging>)Logging).Write(writer, options);
             }
             if (Optional.IsDefined(ScalingProperties))
             {
                 writer.WritePropertyName("scalingProperties"u8);
-                writer.WriteObjectValue(ScalingProperties, options);
+                ((IJsonModel<NginxDeploymentScalingProperties>)ScalingProperties).Write(writer, options);
             }
             if (Optional.IsDefined(UserProfile))
             {
                 writer.WritePropertyName("userProfile"u8);
-                writer.WriteObjectValue(UserProfile, options);
+                ((IJsonModel<NginxDeploymentUserProfile>)UserProfile).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile, options);
+                ((IJsonModel<NginxNetworkProfile>)NetworkProfile).Write(writer, options);
             }
             if (Optional.IsDefined(AutoUpgradeProfile))
             {
                 writer.WritePropertyName("autoUpgradeProfile"u8);
-                writer.WriteObjectValue(AutoUpgradeProfile, options);
+                ((IJsonModel<AutoUpgradeProfile>)AutoUpgradeProfile).Write(writer, options);
             }
             if (Optional.IsDefined(NginxAppProtect))
             {
                 writer.WritePropertyName("nginxAppProtect"u8);
-                writer.WriteObjectValue(NginxAppProtect, options);
+                ((IJsonModel<NginxDeploymentUpdatePropertiesNginxAppProtect>)NginxAppProtect).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    logging = NginxLogging.DeserializeNginxLogging(property.Value, options);
+                    logging = ModelSerializationExtensions.JsonDeserialize<NginxLogging>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scalingProperties"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    scalingProperties = NginxDeploymentScalingProperties.DeserializeNginxDeploymentScalingProperties(property.Value, options);
+                    scalingProperties = ModelSerializationExtensions.JsonDeserialize<NginxDeploymentScalingProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userProfile"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    userProfile = NginxDeploymentUserProfile.DeserializeNginxDeploymentUserProfile(property.Value, options);
+                    userProfile = ModelSerializationExtensions.JsonDeserialize<NginxDeploymentUserProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("networkProfile"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    networkProfile = NginxNetworkProfile.DeserializeNginxNetworkProfile(property.Value, options);
+                    networkProfile = ModelSerializationExtensions.JsonDeserialize<NginxNetworkProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("autoUpgradeProfile"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    autoUpgradeProfile = AutoUpgradeProfile.DeserializeAutoUpgradeProfile(property.Value, options);
+                    autoUpgradeProfile = ModelSerializationExtensions.JsonDeserialize<AutoUpgradeProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nginxAppProtect"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    nginxAppProtect = NginxDeploymentUpdatePropertiesNginxAppProtect.DeserializeNginxDeploymentUpdatePropertiesNginxAppProtect(property.Value, options);
+                    nginxAppProtect = ModelSerializationExtensions.JsonDeserialize<NginxDeploymentUpdatePropertiesNginxAppProtect>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

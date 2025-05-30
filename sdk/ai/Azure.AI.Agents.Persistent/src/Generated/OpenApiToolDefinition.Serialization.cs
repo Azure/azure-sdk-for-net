@@ -36,7 +36,7 @@ namespace Azure.AI.Agents.Persistent
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("openapi"u8);
-            writer.WriteObjectValue(Openapi, options);
+            ((IJsonModel<OpenApiFunctionDefinition>)Openapi).Write(writer, options);
         }
 
         OpenApiToolDefinition IJsonModel<OpenApiToolDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (property.NameEquals("openapi"u8))
                 {
-                    openapi = OpenApiFunctionDefinition.DeserializeOpenApiFunctionDefinition(property.Value, options);
+                    openapi = ModelSerializationExtensions.JsonDeserialize<OpenApiFunctionDefinition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

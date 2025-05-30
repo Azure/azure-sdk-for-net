@@ -37,7 +37,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             writer.WritePropertyName("backendName"u8);
             writer.WriteStringValue(BackendName);
             writer.WritePropertyName("circuitBreaker"u8);
-            writer.WriteObjectValue(CircuitBreaker, options);
+            ((IJsonModel<ApiManagementCircuitBreakerProperties>)CircuitBreaker).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,7 +88,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("circuitBreaker"u8))
                 {
-                    circuitBreaker = ApiManagementCircuitBreakerProperties.DeserializeApiManagementCircuitBreakerProperties(property.Value, options);
+                    circuitBreaker = ModelSerializationExtensions.JsonDeserialize<ApiManagementCircuitBreakerProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

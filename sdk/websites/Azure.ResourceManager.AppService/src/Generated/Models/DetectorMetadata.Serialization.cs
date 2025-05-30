@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("dataSource"u8);
-                writer.WriteObjectValue(DataSource, options);
+                ((IJsonModel<DetectorDataSource>)DataSource).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    dataSource = DetectorDataSource.DeserializeDetectorDataSource(property.Value, options);
+                    dataSource = ModelSerializationExtensions.JsonDeserialize<DetectorDataSource>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(DeadLetterDestinationWithResourceIdentity))
             {
                 writer.WritePropertyName("deadLetterDestinationWithResourceIdentity"u8);
-                writer.WriteObjectValue(DeadLetterDestinationWithResourceIdentity, options);
+                ((IJsonModel<DeadLetterWithResourceIdentity>)DeadLetterDestinationWithResourceIdentity).Write(writer, options);
             }
             if (Optional.IsDefined(DeliveryWithResourceIdentity))
             {
                 writer.WritePropertyName("deliveryWithResourceIdentity"u8);
-                writer.WriteObjectValue(DeliveryWithResourceIdentity, options);
+                ((IJsonModel<DeliveryWithResourceIdentity>)DeliveryWithResourceIdentity).Write(writer, options);
             }
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination, options);
+                ((IJsonModel<EventSubscriptionDestination>)Destination).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    deadLetterDestinationWithResourceIdentity = DeadLetterWithResourceIdentity.DeserializeDeadLetterWithResourceIdentity(property.Value, options);
+                    deadLetterDestinationWithResourceIdentity = ModelSerializationExtensions.JsonDeserialize<DeadLetterWithResourceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deliveryWithResourceIdentity"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    deliveryWithResourceIdentity = DeliveryWithResourceIdentity.DeserializeDeliveryWithResourceIdentity(property.Value, options);
+                    deliveryWithResourceIdentity = ModelSerializationExtensions.JsonDeserialize<DeliveryWithResourceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("destination"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    destination = EventSubscriptionDestination.DeserializeEventSubscriptionDestination(property.Value, options);
+                    destination = ModelSerializationExtensions.JsonDeserialize<EventSubscriptionDestination>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

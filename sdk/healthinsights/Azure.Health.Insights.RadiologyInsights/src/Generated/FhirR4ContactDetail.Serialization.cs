@@ -46,7 +46,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Telecom)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FhirR4ContactPoint>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

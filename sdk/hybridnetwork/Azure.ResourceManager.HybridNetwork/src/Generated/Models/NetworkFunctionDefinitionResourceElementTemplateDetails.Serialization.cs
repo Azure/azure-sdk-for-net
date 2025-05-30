@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration, options);
+                ((IJsonModel<ArmResourceDefinitionResourceElementTemplate>)Configuration).Write(writer, options);
             }
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    configuration = ArmResourceDefinitionResourceElementTemplate.DeserializeArmResourceDefinitionResourceElementTemplate(property.Value, options);
+                    configuration = ModelSerializationExtensions.JsonDeserialize<ArmResourceDefinitionResourceElementTemplate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    dependsOnProfile = DependsOnProfile.DeserializeDependsOnProfile(property.Value, options);
+                    dependsOnProfile = ModelSerializationExtensions.JsonDeserialize<DependsOnProfile>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -47,7 +47,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                         error = null;
                         continue;
                     }
-                    error = KeyVaultServiceError.DeserializeKeyVaultServiceError(property.Value);
+                    error = ModelSerializationExtensions.JsonDeserialize<KeyVaultServiceError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("jobId"u8))

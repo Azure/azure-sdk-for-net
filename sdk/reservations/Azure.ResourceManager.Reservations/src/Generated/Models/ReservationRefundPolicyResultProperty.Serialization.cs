@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ConsumedRefundsTotal))
             {
                 writer.WritePropertyName("consumedRefundsTotal"u8);
-                writer.WriteObjectValue(ConsumedRefundsTotal, options);
+                ((IJsonModel<PurchasePrice>)ConsumedRefundsTotal).Write(writer, options);
             }
             if (Optional.IsDefined(MaxRefundLimit))
             {
                 writer.WritePropertyName("maxRefundLimit"u8);
-                writer.WriteObjectValue(MaxRefundLimit, options);
+                ((IJsonModel<PurchasePrice>)MaxRefundLimit).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(PolicyErrors))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in PolicyErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ReservationRefundPolicyError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    consumedRefundsTotal = PurchasePrice.DeserializePurchasePrice(property.Value, options);
+                    consumedRefundsTotal = ModelSerializationExtensions.JsonDeserialize<PurchasePrice>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("maxRefundLimit"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    maxRefundLimit = PurchasePrice.DeserializePurchasePrice(property.Value, options);
+                    maxRefundLimit = ModelSerializationExtensions.JsonDeserialize<PurchasePrice>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policyErrors"u8))

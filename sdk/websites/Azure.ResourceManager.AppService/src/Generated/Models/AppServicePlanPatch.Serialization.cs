@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(HostingEnvironmentProfile))
             {
                 writer.WritePropertyName("hostingEnvironmentProfile"u8);
-                writer.WriteObjectValue(HostingEnvironmentProfile, options);
+                ((IJsonModel<HostingEnvironmentProfile>)HostingEnvironmentProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MaximumNumberOfWorkers))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(KubeEnvironmentProfile))
             {
                 writer.WritePropertyName("kubeEnvironmentProfile"u8);
-                writer.WriteObjectValue(KubeEnvironmentProfile, options);
+                ((IJsonModel<KubeEnvironmentProfile>)KubeEnvironmentProfile).Write(writer, options);
             }
             if (Optional.IsDefined(IsZoneRedundant))
             {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            hostingEnvironmentProfile = HostingEnvironmentProfile.DeserializeHostingEnvironmentProfile(property0.Value, options);
+                            hostingEnvironmentProfile = ModelSerializationExtensions.JsonDeserialize<HostingEnvironmentProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("maximumNumberOfWorkers"u8))
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            kubeEnvironmentProfile = KubeEnvironmentProfile.DeserializeKubeEnvironmentProfile(property0.Value, options);
+                            kubeEnvironmentProfile = ModelSerializationExtensions.JsonDeserialize<KubeEnvironmentProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("zoneRedundant"u8))

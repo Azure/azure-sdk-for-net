@@ -42,7 +42,7 @@ namespace Azure.AI.Projects
             if (Optional.IsDefined(FieldMapping))
             {
                 writer.WritePropertyName("fieldMapping"u8);
-                writer.WriteObjectValue(FieldMapping, options);
+                ((IJsonModel<FieldMapping>)FieldMapping).Write(writer, options);
             }
         }
 
@@ -95,7 +95,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    fieldMapping = FieldMapping.DeserializeFieldMapping(property.Value, options);
+                    fieldMapping = ModelSerializationExtensions.JsonDeserialize<FieldMapping>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             if (Optional.IsDefined(StorageBillingProperties))
             {
                 writer.WritePropertyName("storageBillingProperties"u8);
-                writer.WriteObjectValue(StorageBillingProperties, options);
+                ((IJsonModel<LargeInstanceStorageBillingProperties>)StorageBillingProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     {
                         continue;
                     }
-                    storageBillingProperties = LargeInstanceStorageBillingProperties.DeserializeLargeInstanceStorageBillingProperties(property.Value, options);
+                    storageBillingProperties = ModelSerializationExtensions.JsonDeserialize<LargeInstanceStorageBillingProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

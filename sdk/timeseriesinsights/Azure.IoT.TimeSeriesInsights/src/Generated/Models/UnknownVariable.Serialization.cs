@@ -20,7 +20,7 @@ namespace Azure.IoT.TimeSeriesInsights
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                JsonSerializer.Serialize(writer, Filter);
             }
             writer.WriteEndObject();
         }
@@ -46,7 +46,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     {
                         continue;
                     }
-                    filter = TimeSeriesExpression.DeserializeTimeSeriesExpression(property.Value);
+                    filter = ModelSerializationExtensions.JsonDeserialize<TimeSeriesExpression>(property.Value);
                     continue;
                 }
             }

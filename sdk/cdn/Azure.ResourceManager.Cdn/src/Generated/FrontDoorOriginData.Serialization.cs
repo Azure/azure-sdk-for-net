@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Cdn
             if (Optional.IsDefined(Origin))
             {
                 writer.WritePropertyName("azureOrigin"u8);
-                JsonSerializer.Serialize(writer, Origin);
+                ((IJsonModel<WritableSubResource>)Origin).Write(writer, options);
             }
             if (Optional.IsDefined(HostName))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Cdn
                 if (SharedPrivateLinkResource != null)
                 {
                     writer.WritePropertyName("sharedPrivateLinkResource"u8);
-                    writer.WriteObjectValue(SharedPrivateLinkResource, options);
+                    ((IJsonModel<SharedPrivateLinkResourceProperties>)SharedPrivateLinkResource).Write(writer, options);
                 }
                 else
                 {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Cdn
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            azureOrigin = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            azureOrigin = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hostName"u8))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Cdn
                                 sharedPrivateLinkResource = null;
                                 continue;
                             }
-                            sharedPrivateLinkResource = SharedPrivateLinkResourceProperties.DeserializeSharedPrivateLinkResourceProperties(property0.Value, options);
+                            sharedPrivateLinkResource = ModelSerializationExtensions.JsonDeserialize<SharedPrivateLinkResourceProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enabledState"u8))

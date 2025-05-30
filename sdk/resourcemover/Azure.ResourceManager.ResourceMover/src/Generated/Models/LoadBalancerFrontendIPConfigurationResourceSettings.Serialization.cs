@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                writer.WriteObjectValue(Subnet, options);
+                ((IJsonModel<SubnetReferenceInfo>)Subnet).Write(writer, options);
             }
             if (Optional.IsDefined(Zones))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     {
                         continue;
                     }
-                    subnet = SubnetReferenceInfo.DeserializeSubnetReferenceInfo(property.Value, options);
+                    subnet = ModelSerializationExtensions.JsonDeserialize<SubnetReferenceInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))

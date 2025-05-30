@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StreamAnalyticsStorageAccount>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

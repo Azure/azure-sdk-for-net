@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Hci.Models
             if (options.Format != "W" && Optional.IsDefined(ValidationStatus))
             {
                 writer.WritePropertyName("validationStatus"u8);
-                writer.WriteObjectValue(ValidationStatus, options);
+                ((IJsonModel<EceActionStatus>)ValidationStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DeploymentStatus))
             {
                 writer.WritePropertyName("deploymentStatus"u8);
-                writer.WriteObjectValue(DeploymentStatus, options);
+                ((IJsonModel<EceActionStatus>)DeploymentStatus).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    validationStatus = EceActionStatus.DeserializeEceActionStatus(property.Value, options);
+                    validationStatus = ModelSerializationExtensions.JsonDeserialize<EceActionStatus>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deploymentStatus"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    deploymentStatus = EceActionStatus.DeserializeEceActionStatus(property.Value, options);
+                    deploymentStatus = ModelSerializationExtensions.JsonDeserialize<EceActionStatus>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -47,7 +47,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(Facet))
             {
                 writer.WritePropertyName("facet"u8);
-                writer.WriteObjectValue(Facet, options);
+                ((IJsonModel<SearchFacetItem>)Facet).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    facet = SearchFacetItem.DeserializeSearchFacetItem(property.Value, options);
+                    facet = ModelSerializationExtensions.JsonDeserialize<SearchFacetItem>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

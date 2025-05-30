@@ -43,20 +43,19 @@ namespace Azure.ResourceManager.CosmosDB
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                JsonSerializer.Serialize(writer, Resource);
+                ((IJsonModel<WritableSubResource>)Resource).Write(writer, options);
             }
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue(Options, options);
+                ((IJsonModel<GraphResourceGetPropertiesOptions>)Options).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -101,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -144,7 +143,7 @@ namespace Azure.ResourceManager.CosmosDB
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -162,7 +161,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            resource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            resource = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("options"u8))
@@ -171,7 +170,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            options0 = GraphResourceGetPropertiesOptions.DeserializeGraphResourceGetPropertiesOptions(property0.Value, options);
+                            options0 = ModelSerializationExtensions.JsonDeserialize<GraphResourceGetPropertiesOptions>(property0.Value);
                             continue;
                         }
                     }

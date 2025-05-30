@@ -125,7 +125,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Term)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TermSearchResultValue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -135,7 +135,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Contact)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContactSearchResultValue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

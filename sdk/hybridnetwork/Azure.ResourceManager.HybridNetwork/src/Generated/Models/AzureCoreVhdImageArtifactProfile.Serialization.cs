@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(VhdArtifactProfile))
             {
                 writer.WritePropertyName("vhdArtifactProfile"u8);
-                writer.WriteObjectValue(VhdArtifactProfile, options);
+                ((IJsonModel<VhdImageArtifactProfile>)VhdArtifactProfile).Write(writer, options);
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    vhdArtifactProfile = VhdImageArtifactProfile.DeserializeVhdImageArtifactProfile(property.Value, options);
+                    vhdArtifactProfile = ModelSerializationExtensions.JsonDeserialize<VhdImageArtifactProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("artifactStore"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    artifactStore = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    artifactStore = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

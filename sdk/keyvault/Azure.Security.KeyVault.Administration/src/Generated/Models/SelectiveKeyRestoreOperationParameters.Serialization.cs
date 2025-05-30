@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sasTokenParameters"u8);
-            writer.WriteObjectValue(SasTokenParameters);
+            JsonSerializer.Serialize(writer, SasTokenParameters);
             writer.WritePropertyName("folder"u8);
             writer.WriteStringValue(Folder);
             writer.WriteEndObject();

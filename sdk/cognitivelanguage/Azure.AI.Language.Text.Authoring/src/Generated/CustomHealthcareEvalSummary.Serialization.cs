@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Text.Authoring
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("customHealthcareEvaluation"u8);
-            writer.WriteObjectValue(CustomHealthcareEvaluation, options);
+            ((IJsonModel<EntityRecognitionEvalSummary>)CustomHealthcareEvaluation).Write(writer, options);
         }
 
         CustomHealthcareEvalSummary IJsonModel<CustomHealthcareEvalSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -68,7 +68,7 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 if (property.NameEquals("customHealthcareEvaluation"u8))
                 {
-                    customHealthcareEvaluation = EntityRecognitionEvalSummary.DeserializeEntityRecognitionEvalSummary(property.Value, options);
+                    customHealthcareEvaluation = ModelSerializationExtensions.JsonDeserialize<EntityRecognitionEvalSummary>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("projectKind"u8))
@@ -78,7 +78,7 @@ namespace Azure.AI.Language.Text.Authoring
                 }
                 if (property.NameEquals("evaluationOptions"u8))
                 {
-                    evaluationOptions = TextAuthoringEvaluationDetails.DeserializeTextAuthoringEvaluationDetails(property.Value, options);
+                    evaluationOptions = ModelSerializationExtensions.JsonDeserialize<TextAuthoringEvaluationDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

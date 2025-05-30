@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HealthMonitorData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

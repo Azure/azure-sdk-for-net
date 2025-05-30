@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(FlowAnalyticsConfiguration))
             {
                 writer.WritePropertyName("flowAnalyticsConfiguration"u8);
-                writer.WriteObjectValue(FlowAnalyticsConfiguration, options);
+                ((IJsonModel<TrafficAnalyticsProperties>)FlowAnalyticsConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue(RetentionPolicy, options);
+                ((IJsonModel<RetentionPolicyParameters>)RetentionPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
-                writer.WriteObjectValue(Format, options);
+                ((IJsonModel<FlowLogProperties>)Format).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    flowAnalyticsConfiguration = TrafficAnalyticsProperties.DeserializeTrafficAnalyticsProperties(property.Value, options);
+                    flowAnalyticsConfiguration = ModelSerializationExtensions.JsonDeserialize<TrafficAnalyticsProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            retentionPolicy = RetentionPolicyParameters.DeserializeRetentionPolicyParameters(property0.Value, options);
+                            retentionPolicy = ModelSerializationExtensions.JsonDeserialize<RetentionPolicyParameters>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("format"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            format = FlowLogProperties.DeserializeFlowLogProperties(property0.Value, options);
+                            format = ModelSerializationExtensions.JsonDeserialize<FlowLogProperties>(property0.Value);
                             continue;
                         }
                     }

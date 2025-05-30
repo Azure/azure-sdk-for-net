@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerService
             writer.WriteStartArray();
             foreach (var item in OSOptionPropertyList)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ContainerServiceOSOptionProperty>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerService
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

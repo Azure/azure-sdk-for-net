@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
 
             writer.WritePropertyName("geoReplication"u8);
-            writer.WriteObjectValue(GeoReplication, options);
+            ((IJsonModel<ForceLinkParametersGeoReplication>)GeoReplication).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 if (property.NameEquals("geoReplication"u8))
                 {
-                    geoReplication = ForceLinkParametersGeoReplication.DeserializeForceLinkParametersGeoReplication(property.Value, options);
+                    geoReplication = ModelSerializationExtensions.JsonDeserialize<ForceLinkParametersGeoReplication>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(PublishingProfile))
             {
                 writer.WritePropertyName("publishingProfile"u8);
-                writer.WriteObjectValue(PublishingProfile, options);
+                ((IJsonModel<GalleryApplicationVersionPublishingProfile>)PublishingProfile).Write(writer, options);
             }
             if (Optional.IsDefined(SafetyProfile))
             {
                 writer.WritePropertyName("safetyProfile"u8);
-                writer.WriteObjectValue(SafetyProfile, options);
+                ((IJsonModel<GalleryApplicationVersionSafetyProfile>)SafetyProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute
             if (options.Format != "W" && Optional.IsDefined(ReplicationStatus))
             {
                 writer.WritePropertyName("replicationStatus"u8);
-                writer.WriteObjectValue(ReplicationStatus, options);
+                ((IJsonModel<ReplicationStatus>)ReplicationStatus).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            publishingProfile = GalleryApplicationVersionPublishingProfile.DeserializeGalleryApplicationVersionPublishingProfile(property0.Value, options);
+                            publishingProfile = ModelSerializationExtensions.JsonDeserialize<GalleryApplicationVersionPublishingProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("safetyProfile"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            safetyProfile = GalleryApplicationVersionSafetyProfile.DeserializeGalleryApplicationVersionSafetyProfile(property0.Value, options);
+                            safetyProfile = ModelSerializationExtensions.JsonDeserialize<GalleryApplicationVersionSafetyProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            replicationStatus = ReplicationStatus.DeserializeReplicationStatus(property0.Value, options);
+                            replicationStatus = ModelSerializationExtensions.JsonDeserialize<ReplicationStatus>(property0.Value);
                             continue;
                         }
                     }

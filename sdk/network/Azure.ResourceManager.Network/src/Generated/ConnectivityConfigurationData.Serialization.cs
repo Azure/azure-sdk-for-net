@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Hubs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConnectivityHub>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ConnectivityCapabilities))
             {
                 writer.WritePropertyName("connectivityCapabilities"u8);
-                writer.WriteObjectValue(ConnectivityCapabilities, options);
+                ((IJsonModel<ConnectivityConfigurationPropertiesConnectivityCapabilities>)ConnectivityCapabilities).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AppliesToGroups))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in AppliesToGroups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConnectivityGroupItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            connectivityCapabilities = ConnectivityConfigurationPropertiesConnectivityCapabilities.DeserializeConnectivityConfigurationPropertiesConnectivityCapabilities(property0.Value, options);
+                            connectivityCapabilities = ModelSerializationExtensions.JsonDeserialize<ConnectivityConfigurationPropertiesConnectivityCapabilities>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("appliesToGroups"u8))

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ServiceTagInformationPropertiesFormat>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    properties = ServiceTagInformationPropertiesFormat.DeserializeServiceTagInformationPropertiesFormat(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ServiceTagInformationPropertiesFormat>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

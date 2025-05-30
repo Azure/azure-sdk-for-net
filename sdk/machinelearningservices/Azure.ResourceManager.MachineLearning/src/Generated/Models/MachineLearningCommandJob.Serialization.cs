@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
-                writer.WriteObjectValue(Resources, options);
+                ((IJsonModel<MachineLearningJobResourceConfiguration>)Resources).Write(writer, options);
             }
             if (Optional.IsDefined(CodeId))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Inputs)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value, options);
+                        ((IJsonModel<MachineLearningJobInput>)item.Value).Write(writer, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Outputs)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value, options);
+                        ((IJsonModel<MachineLearningJobOutput>)item.Value).Write(writer, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Distribution != null)
                 {
                     writer.WritePropertyName("distribution"u8);
-                    writer.WriteObjectValue(Distribution, options);
+                    ((IJsonModel<MachineLearningDistributionConfiguration>)Distribution).Write(writer, options);
                 }
                 else
                 {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Limits != null)
                 {
                     writer.WritePropertyName("limits"u8);
-                    writer.WriteObjectValue(Limits, options);
+                    ((IJsonModel<MachineLearningCommandJobLimits>)Limits).Write(writer, options);
                 }
                 else
                 {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (QueueSettings != null)
                 {
                     writer.WritePropertyName("queueSettings"u8);
-                    writer.WriteObjectValue(QueueSettings, options);
+                    ((IJsonModel<JobQueueSettings>)QueueSettings).Write(writer, options);
                 }
                 else
                 {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    resources = MachineLearningJobResourceConfiguration.DeserializeMachineLearningJobResourceConfiguration(property.Value, options);
+                    resources = ModelSerializationExtensions.JsonDeserialize<MachineLearningJobResourceConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("codeId"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         distribution = null;
                         continue;
                     }
-                    distribution = MachineLearningDistributionConfiguration.DeserializeMachineLearningDistributionConfiguration(property.Value, options);
+                    distribution = ModelSerializationExtensions.JsonDeserialize<MachineLearningDistributionConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("limits"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         limits = null;
                         continue;
                     }
-                    limits = MachineLearningCommandJobLimits.DeserializeMachineLearningCommandJobLimits(property.Value, options);
+                    limits = ModelSerializationExtensions.JsonDeserialize<MachineLearningCommandJobLimits>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("environmentVariables"u8))
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         queueSettings = null;
                         continue;
                     }
-                    queueSettings = JobQueueSettings.DeserializeJobQueueSettings(property.Value, options);
+                    queueSettings = ModelSerializationExtensions.JsonDeserialize<JobQueueSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("jobType"u8))
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         identity = null;
                         continue;
                     }
-                    identity = MachineLearningIdentityConfiguration.DeserializeMachineLearningIdentityConfiguration(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<MachineLearningIdentityConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("componentId"u8))
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         notificationSetting = null;
                         continue;
                     }
-                    notificationSetting = NotificationSetting.DeserializeNotificationSetting(property.Value, options);
+                    notificationSetting = ModelSerializationExtensions.JsonDeserialize<NotificationSetting>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))

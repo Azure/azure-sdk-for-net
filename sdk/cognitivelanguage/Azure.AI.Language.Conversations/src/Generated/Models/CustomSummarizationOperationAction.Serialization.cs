@@ -38,7 +38,7 @@ namespace Azure.AI.Language.Conversations.Models
             if (Optional.IsDefined(ActionContent))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(ActionContent, options);
+                ((IJsonModel<CustomConversationSummarizationActionContent>)ActionContent).Write(writer, options);
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.AI.Language.Conversations.Models
                     {
                         continue;
                     }
-                    parameters = CustomConversationSummarizationActionContent.DeserializeCustomConversationSummarizationActionContent(property.Value, options);
+                    parameters = ModelSerializationExtensions.JsonDeserialize<CustomConversationSummarizationActionContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("taskName"u8))

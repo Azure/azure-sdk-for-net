@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    utilizationInfo = CapacityReservationUtilization.DeserializeCapacityReservationUtilization(property.Value, options);
+                    utilizationInfo = ModelSerializationExtensions.JsonDeserialize<CapacityReservationUtilization>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("statuses"u8))

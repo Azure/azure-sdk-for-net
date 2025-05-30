@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceSkuCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -35,7 +35,7 @@ namespace Azure.AI.ContentSafety
             }
 
             writer.WritePropertyName("image"u8);
-            writer.WriteObjectValue(Image, options);
+            ((IJsonModel<ContentSafetyImageData>)Image).Write(writer, options);
             if (Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
@@ -97,7 +97,7 @@ namespace Azure.AI.ContentSafety
             {
                 if (property.NameEquals("image"u8))
                 {
-                    image = ContentSafetyImageData.DeserializeContentSafetyImageData(property.Value, options);
+                    image = ModelSerializationExtensions.JsonDeserialize<ContentSafetyImageData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("categories"u8))

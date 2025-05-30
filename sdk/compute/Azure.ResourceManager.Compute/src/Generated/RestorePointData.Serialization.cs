@@ -46,14 +46,14 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in ExcludeDisks)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SourceMetadata))
             {
                 writer.WritePropertyName("sourceMetadata"u8);
-                writer.WriteObjectValue(SourceMetadata, options);
+                ((IJsonModel<RestorePointSourceMetadata>)SourceMetadata).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(SourceRestorePoint))
             {
                 writer.WritePropertyName("sourceRestorePoint"u8);
-                JsonSerializer.Serialize(writer, SourceRestorePoint);
+                ((IJsonModel<WritableSubResource>)SourceRestorePoint).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView, options);
+                ((IJsonModel<RestorePointInstanceView>)InstanceView).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Compute
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             excludeDisks = array;
                             continue;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            sourceMetadata = RestorePointSourceMetadata.DeserializeRestorePointSourceMetadata(property0.Value, options);
+                            sourceMetadata = ModelSerializationExtensions.JsonDeserialize<RestorePointSourceMetadata>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            sourceRestorePoint = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            sourceRestorePoint = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("instanceView"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            instanceView = RestorePointInstanceView.DeserializeRestorePointInstanceView(property0.Value, options);
+                            instanceView = ModelSerializationExtensions.JsonDeserialize<RestorePointInstanceView>(property0.Value);
                             continue;
                         }
                     }

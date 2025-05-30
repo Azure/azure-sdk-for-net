@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in ContainerRegistries)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BatchVmContainerRegistry>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

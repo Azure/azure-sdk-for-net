@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Batch
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Batch
             if (Optional.IsDefined(DeploymentConfiguration))
             {
                 writer.WritePropertyName("deploymentConfiguration"u8);
-                writer.WriteObjectValue<BatchDeploymentConfiguration>(DeploymentConfiguration, options);
+                ((IJsonModel<BatchDeploymentConfiguration>)DeploymentConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CurrentDedicatedNodes))
             {
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.Batch
             if (Optional.IsDefined(ScaleSettings))
             {
                 writer.WritePropertyName("scaleSettings"u8);
-                writer.WriteObjectValue(ScaleSettings, options);
+                ((IJsonModel<BatchAccountPoolScaleSettings>)ScaleSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AutoScaleRun))
             {
                 writer.WritePropertyName("autoScaleRun"u8);
-                writer.WriteObjectValue(AutoScaleRun, options);
+                ((IJsonModel<BatchAccountPoolAutoScaleRun>)AutoScaleRun).Write(writer, options);
             }
             if (Optional.IsDefined(InterNodeCommunication))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Batch
             if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
-                writer.WriteObjectValue(NetworkConfiguration, options);
+                ((IJsonModel<BatchNetworkConfiguration>)NetworkConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(TaskSlotsPerNode))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Batch
             if (Optional.IsDefined(TaskSchedulingPolicy))
             {
                 writer.WritePropertyName("taskSchedulingPolicy"u8);
-                writer.WriteObjectValue(TaskSchedulingPolicy, options);
+                ((IJsonModel<TaskSchedulingPolicy>)TaskSchedulingPolicy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(UserAccounts))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Batch
                 writer.WriteStartArray();
                 foreach (var item in UserAccounts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BatchUserAccount>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.Batch
                 writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BatchAccountPoolMetadataItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(StartTask))
             {
                 writer.WritePropertyName("startTask"u8);
-                writer.WriteObjectValue(StartTask, options);
+                ((IJsonModel<BatchAccountPoolStartTask>)StartTask).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Certificates))
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Batch
                 writer.WriteStartArray();
                 foreach (var item in Certificates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BatchCertificateReference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Batch
                 writer.WriteStartArray();
                 foreach (var item in ApplicationPackages)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BatchApplicationPackageReference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Batch
             if (options.Format != "W" && Optional.IsDefined(ResizeOperationStatus))
             {
                 writer.WritePropertyName("resizeOperationStatus"u8);
-                writer.WriteObjectValue(ResizeOperationStatus, options);
+                ((IJsonModel<BatchResizeOperationStatus>)ResizeOperationStatus).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(MountConfiguration))
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Batch
                 writer.WriteStartArray();
                 foreach (var item in MountConfiguration)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BatchMountConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Batch
             if (Optional.IsDefined(UpgradePolicy))
             {
                 writer.WritePropertyName("upgradePolicy"u8);
-                writer.WriteObjectValue(UpgradePolicy, options);
+                ((IJsonModel<UpgradePolicy>)UpgradePolicy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ResourceTags))
             {
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Batch
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Batch
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            deploymentConfiguration = BatchDeploymentConfiguration.DeserializeBatchDeploymentConfiguration(property0.Value, options);
+                            deploymentConfiguration = ModelSerializationExtensions.JsonDeserialize<BatchDeploymentConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("currentDedicatedNodes"u8))
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            scaleSettings = BatchAccountPoolScaleSettings.DeserializeBatchAccountPoolScaleSettings(property0.Value, options);
+                            scaleSettings = ModelSerializationExtensions.JsonDeserialize<BatchAccountPoolScaleSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("autoScaleRun"u8))
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            autoScaleRun = BatchAccountPoolAutoScaleRun.DeserializeBatchAccountPoolAutoScaleRun(property0.Value, options);
+                            autoScaleRun = ModelSerializationExtensions.JsonDeserialize<BatchAccountPoolAutoScaleRun>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("interNodeCommunication"u8))
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            networkConfiguration = BatchNetworkConfiguration.DeserializeBatchNetworkConfiguration(property0.Value, options);
+                            networkConfiguration = ModelSerializationExtensions.JsonDeserialize<BatchNetworkConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("taskSlotsPerNode"u8))
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            taskSchedulingPolicy = TaskSchedulingPolicy.DeserializeTaskSchedulingPolicy(property0.Value, options);
+                            taskSchedulingPolicy = ModelSerializationExtensions.JsonDeserialize<TaskSchedulingPolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("userAccounts"u8))
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            startTask = BatchAccountPoolStartTask.DeserializeBatchAccountPoolStartTask(property0.Value, options);
+                            startTask = ModelSerializationExtensions.JsonDeserialize<BatchAccountPoolStartTask>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("certificates"u8))
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            resizeOperationStatus = BatchResizeOperationStatus.DeserializeBatchResizeOperationStatus(property0.Value, options);
+                            resizeOperationStatus = ModelSerializationExtensions.JsonDeserialize<BatchResizeOperationStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("mountConfiguration"u8))
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            upgradePolicy = UpgradePolicy.DeserializeUpgradePolicy(property0.Value, options);
+                            upgradePolicy = ModelSerializationExtensions.JsonDeserialize<UpgradePolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resourceTags"u8))

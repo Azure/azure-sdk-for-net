@@ -51,22 +51,22 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(HttpConfiguration))
             {
                 writer.WritePropertyName("httpConfiguration"u8);
-                writer.WriteObjectValue(HttpConfiguration, options);
+                ((IJsonModel<ConnectionMonitorHttpConfiguration>)HttpConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(TcpConfiguration))
             {
                 writer.WritePropertyName("tcpConfiguration"u8);
-                writer.WriteObjectValue(TcpConfiguration, options);
+                ((IJsonModel<ConnectionMonitorTcpConfiguration>)TcpConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(IcmpConfiguration))
             {
                 writer.WritePropertyName("icmpConfiguration"u8);
-                writer.WriteObjectValue(IcmpConfiguration, options);
+                ((IJsonModel<ConnectionMonitorIcmpConfiguration>)IcmpConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(SuccessThreshold))
             {
                 writer.WritePropertyName("successThreshold"u8);
-                writer.WriteObjectValue(SuccessThreshold, options);
+                ((IJsonModel<ConnectionMonitorSuccessThreshold>)SuccessThreshold).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    httpConfiguration = ConnectionMonitorHttpConfiguration.DeserializeConnectionMonitorHttpConfiguration(property.Value, options);
+                    httpConfiguration = ModelSerializationExtensions.JsonDeserialize<ConnectionMonitorHttpConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tcpConfiguration"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    tcpConfiguration = ConnectionMonitorTcpConfiguration.DeserializeConnectionMonitorTcpConfiguration(property.Value, options);
+                    tcpConfiguration = ModelSerializationExtensions.JsonDeserialize<ConnectionMonitorTcpConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("icmpConfiguration"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    icmpConfiguration = ConnectionMonitorIcmpConfiguration.DeserializeConnectionMonitorIcmpConfiguration(property.Value, options);
+                    icmpConfiguration = ModelSerializationExtensions.JsonDeserialize<ConnectionMonitorIcmpConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("successThreshold"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    successThreshold = ConnectionMonitorSuccessThreshold.DeserializeConnectionMonitorSuccessThreshold(property.Value, options);
+                    successThreshold = ModelSerializationExtensions.JsonDeserialize<ConnectionMonitorSuccessThreshold>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(AddressMailing))
             {
                 writer.WritePropertyName("addressMailing"u8);
-                writer.WriteObjectValue(AddressMailing, options);
+                ((IJsonModel<RegistrationAddressInfo>)AddressMailing).Write(writer, options);
             }
             writer.WritePropertyName("email"u8);
             writer.WriteStringValue(Email);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    addressMailing = RegistrationAddressInfo.DeserializeRegistrationAddressInfo(property.Value, options);
+                    addressMailing = ModelSerializationExtensions.JsonDeserialize<RegistrationAddressInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("email"u8))

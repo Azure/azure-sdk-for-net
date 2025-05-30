@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Hops)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConnectivityHopInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

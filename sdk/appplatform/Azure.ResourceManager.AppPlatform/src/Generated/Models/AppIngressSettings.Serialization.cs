@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(ClientAuth))
             {
                 writer.WritePropertyName("clientAuth"u8);
-                writer.WriteObjectValue(ClientAuth, options);
+                ((IJsonModel<IngressSettingsClientAuth>)ClientAuth).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    clientAuth = IngressSettingsClientAuth.DeserializeIngressSettingsClientAuth(property.Value, options);
+                    clientAuth = ModelSerializationExtensions.JsonDeserialize<IngressSettingsClientAuth>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

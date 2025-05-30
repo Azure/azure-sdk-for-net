@@ -27,7 +27,7 @@ namespace Azure.Containers.ContainerRegistry
                     {
                         continue;
                     }
-                    jwk = JWKHeader.DeserializeJWKHeader(property.Value);
+                    jwk = ModelSerializationExtensions.JsonDeserialize<JWKHeader>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("alg"u8))

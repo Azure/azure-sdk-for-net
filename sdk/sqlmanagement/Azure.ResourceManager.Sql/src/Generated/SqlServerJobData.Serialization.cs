@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule, options);
+                ((IJsonModel<SqlServerJobSchedule>)Schedule).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            schedule = SqlServerJobSchedule.DeserializeSqlServerJobSchedule(property0.Value, options);
+                            schedule = ModelSerializationExtensions.JsonDeserialize<SqlServerJobSchedule>(property0.Value);
                             continue;
                         }
                     }

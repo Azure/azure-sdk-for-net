@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in Filters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EventGridFilter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

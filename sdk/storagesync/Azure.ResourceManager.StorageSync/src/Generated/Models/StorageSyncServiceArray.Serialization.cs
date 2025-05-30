@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StorageSyncServiceData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("Properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ApplicationInsightsComponentAnalyticsItemProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    properties = ApplicationInsightsComponentAnalyticsItemProperties.DeserializeApplicationInsightsComponentAnalyticsItemProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ApplicationInsightsComponentAnalyticsItemProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

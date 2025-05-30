@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in RestoreDatabaseNameErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ReportableException>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in BackupFolderErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ReportableException>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in BackupShareCredentialsErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ReportableException>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in BackupStorageAccountErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ReportableException>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,14 +90,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ExistingBackupErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ReportableException>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DatabaseBackupInfo))
             {
                 writer.WritePropertyName("databaseBackupInfo"u8);
-                writer.WriteObjectValue(DatabaseBackupInfo, options);
+                ((IJsonModel<DatabaseBackupInfo>)DatabaseBackupInfo).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    databaseBackupInfo = DatabaseBackupInfo.DeserializeDatabaseBackupInfo(property.Value, options);
+                    databaseBackupInfo = ModelSerializationExtensions.JsonDeserialize<DatabaseBackupInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

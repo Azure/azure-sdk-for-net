@@ -39,7 +39,7 @@ namespace Azure.AI.Projects
             writer.WritePropertyName("storageAccountArmId"u8);
             writer.WriteStringValue(StorageAccountArmId);
             writer.WritePropertyName("credential"u8);
-            writer.WriteObjectValue(Credential, options);
+            ((IJsonModel<SasCredential>)Credential).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -96,7 +96,7 @@ namespace Azure.AI.Projects
                 }
                 if (property.NameEquals("credential"u8))
                 {
-                    credential = SasCredential.DeserializeSasCredential(property.Value, options);
+                    credential = ModelSerializationExtensions.JsonDeserialize<SasCredential>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

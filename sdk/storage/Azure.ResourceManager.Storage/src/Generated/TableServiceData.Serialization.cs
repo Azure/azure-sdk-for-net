@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(Cors))
             {
                 writer.WritePropertyName("cors"u8);
-                writer.WriteObjectValue(Cors, options);
+                ((IJsonModel<StorageCorsRules>)Cors).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            cors = StorageCorsRules.DeserializeStorageCorsRules(property0.Value, options);
+                            cors = ModelSerializationExtensions.JsonDeserialize<StorageCorsRules>(property0.Value);
                             continue;
                         }
                     }

@@ -39,12 +39,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("removedByCommunicationIdentifier"u8))
                 {
-                    removedByCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    removedByCommunicationIdentifier = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("participantRemoved"u8))
                 {
-                    participantRemoved = AcsChatThreadParticipantProperties.DeserializeAcsChatThreadParticipantProperties(property.Value);
+                    participantRemoved = ModelSerializationExtensions.JsonDeserialize<AcsChatThreadParticipantProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("version"u8))

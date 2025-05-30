@@ -16,11 +16,11 @@ namespace Azure.Communication.CallingServer
         {
             writer.WriteStartObject();
             writer.WritePropertyName("targetParticipant"u8);
-            writer.WriteObjectValue(TargetParticipant);
+            JsonSerializer.Serialize(writer, TargetParticipant);
             if (Optional.IsDefined(TransfereeCallerId))
             {
                 writer.WritePropertyName("transfereeCallerId"u8);
-                writer.WriteObjectValue(TransfereeCallerId);
+                JsonSerializer.Serialize(writer, TransfereeCallerId);
             }
             if (Optional.IsDefined(UserToUserInformation))
             {

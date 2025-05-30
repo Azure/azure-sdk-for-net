@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in AlwaysReady)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FunctionAppAlwaysReadyConfig>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Triggers))
             {
                 writer.WritePropertyName("triggers"u8);
-                writer.WriteObjectValue(Triggers, options);
+                ((IJsonModel<FunctionsScaleAndConcurrencyTriggers>)Triggers).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    triggers = FunctionsScaleAndConcurrencyTriggers.DeserializeFunctionsScaleAndConcurrencyTriggers(property.Value, options);
+                    triggers = ModelSerializationExtensions.JsonDeserialize<FunctionsScaleAndConcurrencyTriggers>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

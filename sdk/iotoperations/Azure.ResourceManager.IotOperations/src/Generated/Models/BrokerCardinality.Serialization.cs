@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
 
             writer.WritePropertyName("backendChain"u8);
-            writer.WriteObjectValue(BackendChain, options);
+            ((IJsonModel<BrokerBackendChain>)BackendChain).Write(writer, options);
             writer.WritePropertyName("frontend"u8);
-            writer.WriteObjectValue(Frontend, options);
+            ((IJsonModel<BrokerFrontend>)Frontend).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 if (property.NameEquals("backendChain"u8))
                 {
-                    backendChain = BrokerBackendChain.DeserializeBrokerBackendChain(property.Value, options);
+                    backendChain = ModelSerializationExtensions.JsonDeserialize<BrokerBackendChain>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("frontend"u8))
                 {
-                    frontend = BrokerFrontend.DeserializeBrokerFrontend(property.Value, options);
+                    frontend = ModelSerializationExtensions.JsonDeserialize<BrokerFrontend>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

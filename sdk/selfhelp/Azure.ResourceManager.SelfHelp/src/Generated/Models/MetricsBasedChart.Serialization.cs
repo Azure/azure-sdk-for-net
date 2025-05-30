@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             if (Optional.IsDefined(FilterGroup))
             {
                 writer.WritePropertyName("filterGroup"u8);
-                writer.WriteObjectValue(FilterGroup, options);
+                ((IJsonModel<ChartFilterGroup>)FilterGroup).Write(writer, options);
             }
             if (Optional.IsDefined(ReplacementKey))
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    filterGroup = ChartFilterGroup.DeserializeChartFilterGroup(property.Value, options);
+                    filterGroup = ModelSerializationExtensions.JsonDeserialize<ChartFilterGroup>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("replacementKey"u8))

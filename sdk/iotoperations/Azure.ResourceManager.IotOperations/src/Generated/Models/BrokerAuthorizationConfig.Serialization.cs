@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BrokerAuthorizationRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

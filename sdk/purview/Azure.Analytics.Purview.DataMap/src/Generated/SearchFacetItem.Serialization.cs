@@ -47,7 +47,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(Sort))
             {
                 writer.WritePropertyName("sort"u8);
-                writer.WriteObjectValue(Sort, options);
+                ((IJsonModel<SearchFacetSort>)Sort).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -113,7 +113,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    sort = SearchFacetSort.DeserializeSearchFacetSort(property.Value, options);
+                    sort = ModelSerializationExtensions.JsonDeserialize<SearchFacetSort>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

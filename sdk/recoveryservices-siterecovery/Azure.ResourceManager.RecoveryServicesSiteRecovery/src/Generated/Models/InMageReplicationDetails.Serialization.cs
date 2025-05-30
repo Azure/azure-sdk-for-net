@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(OSDetails))
             {
                 writer.WritePropertyName("osDetails"u8);
-                writer.WriteObjectValue(OSDetails, options);
+                ((IJsonModel<SiteRecoveryOSDiskDetails>)OSDetails).Write(writer, options);
             }
             if (Optional.IsDefined(ProtectionStage))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ResyncDetails))
             {
                 writer.WritePropertyName("resyncDetails"u8);
-                writer.WriteObjectValue(ResyncDetails, options);
+                ((IJsonModel<InitialReplicationDetails>)ResyncDetails).Write(writer, options);
             }
             if (Optional.IsDefined(RetentionWindowStartOn))
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedDisks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InMageProtectedDiskDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(AgentDetails))
             {
                 writer.WritePropertyName("agentDetails"u8);
-                writer.WriteObjectValue(AgentDetails, options);
+                ((IJsonModel<InMageAgentDetails>)AgentDetails).Write(writer, options);
             }
             if (Optional.IsDefined(VCenterInfrastructureId))
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VmNicDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryHealthError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    osDetails = SiteRecoveryOSDiskDetails.DeserializeSiteRecoveryOSDiskDetails(property.Value, options);
+                    osDetails = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryOSDiskDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("protectionStage"u8))
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    resyncDetails = InitialReplicationDetails.DeserializeInitialReplicationDetails(property.Value, options);
+                    resyncDetails = ModelSerializationExtensions.JsonDeserialize<InitialReplicationDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("retentionWindowStart"u8))
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    agentDetails = InMageAgentDetails.DeserializeInMageAgentDetails(property.Value, options);
+                    agentDetails = ModelSerializationExtensions.JsonDeserialize<InMageAgentDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vCenterInfrastructureId"u8))

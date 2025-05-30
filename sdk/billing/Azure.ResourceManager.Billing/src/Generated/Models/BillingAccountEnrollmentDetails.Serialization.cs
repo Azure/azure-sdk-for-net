@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(IndirectRelationshipInfo))
             {
                 writer.WritePropertyName("indirectRelationshipInfo"u8);
-                writer.WriteObjectValue(IndirectRelationshipInfo, options);
+                ((IJsonModel<IndirectRelationshipInfo>)IndirectRelationshipInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(InvoiceRecipient))
             {
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    indirectRelationshipInfo = IndirectRelationshipInfo.DeserializeIndirectRelationshipInfo(property.Value, options);
+                    indirectRelationshipInfo = ModelSerializationExtensions.JsonDeserialize<IndirectRelationshipInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("invoiceRecipient"u8))

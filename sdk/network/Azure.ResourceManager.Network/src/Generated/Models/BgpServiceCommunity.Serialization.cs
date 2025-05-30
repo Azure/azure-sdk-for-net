@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in BgpCommunities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BgpCommunity>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

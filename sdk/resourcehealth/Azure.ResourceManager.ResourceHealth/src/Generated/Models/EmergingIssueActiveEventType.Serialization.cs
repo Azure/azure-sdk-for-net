@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WriteStartArray();
                 foreach (var item in Impacts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EmergingIssueImpact>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

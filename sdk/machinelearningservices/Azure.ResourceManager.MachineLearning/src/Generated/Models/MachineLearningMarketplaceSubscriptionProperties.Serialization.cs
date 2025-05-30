@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (MarketplacePlan != null)
                 {
                     writer.WritePropertyName("marketplacePlan"u8);
-                    writer.WriteObjectValue(MarketplacePlan, options);
+                    ((IJsonModel<MachineLearningMarketplacePlan>)MarketplacePlan).Write(writer, options);
                 }
                 else
                 {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         marketplacePlan = null;
                         continue;
                     }
-                    marketplacePlan = MachineLearningMarketplacePlan.DeserializeMachineLearningMarketplacePlan(property.Value, options);
+                    marketplacePlan = ModelSerializationExtensions.JsonDeserialize<MachineLearningMarketplacePlan>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("marketplaceSubscriptionStatus"u8))

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 writer.WriteStartArray();
                 foreach (var item in Regions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TrafficManagerRegion>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

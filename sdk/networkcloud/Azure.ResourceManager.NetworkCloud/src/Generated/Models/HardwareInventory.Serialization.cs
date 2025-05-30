@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in Interfaces)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HardwareInventoryNetworkInterface>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in Nics)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetworkCloudNic>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

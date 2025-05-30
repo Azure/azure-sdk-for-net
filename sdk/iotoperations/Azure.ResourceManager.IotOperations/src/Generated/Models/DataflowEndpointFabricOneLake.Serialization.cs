@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
 
             writer.WritePropertyName("authentication"u8);
-            writer.WriteObjectValue(Authentication, options);
+            ((IJsonModel<DataflowEndpointFabricOneLakeAuthentication>)Authentication).Write(writer, options);
             writer.WritePropertyName("names"u8);
-            writer.WriteObjectValue(Names, options);
+            ((IJsonModel<DataflowEndpointFabricOneLakeNames>)Names).Write(writer, options);
             writer.WritePropertyName("oneLakePathType"u8);
             writer.WriteStringValue(OneLakePathType.ToString());
             writer.WritePropertyName("host"u8);
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             if (Optional.IsDefined(Batching))
             {
                 writer.WritePropertyName("batching"u8);
-                writer.WriteObjectValue(Batching, options);
+                ((IJsonModel<IotOperationsBatchingConfig>)Batching).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 if (property.NameEquals("authentication"u8))
                 {
-                    authentication = DataflowEndpointFabricOneLakeAuthentication.DeserializeDataflowEndpointFabricOneLakeAuthentication(property.Value, options);
+                    authentication = ModelSerializationExtensions.JsonDeserialize<DataflowEndpointFabricOneLakeAuthentication>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("names"u8))
                 {
-                    names = DataflowEndpointFabricOneLakeNames.DeserializeDataflowEndpointFabricOneLakeNames(property.Value, options);
+                    names = ModelSerializationExtensions.JsonDeserialize<DataflowEndpointFabricOneLakeNames>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("oneLakePathType"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    batching = IotOperationsBatchingConfig.DeserializeIotOperationsBatchingConfig(property.Value, options);
+                    batching = ModelSerializationExtensions.JsonDeserialize<IotOperationsBatchingConfig>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

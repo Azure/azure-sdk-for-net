@@ -33,7 +33,7 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("tasks"u8))
                 {
-                    tasks = AnalyzeTasks.DeserializeAnalyzeTasks(property.Value);
+                    tasks = ModelSerializationExtensions.JsonDeserialize<AnalyzeTasks>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("statistics"u8))
@@ -42,7 +42,7 @@ namespace Azure.AI.TextAnalytics.Models
                     {
                         continue;
                     }
-                    statistics = TextDocumentBatchStatistics.DeserializeTextDocumentBatchStatistics(property.Value);
+                    statistics = ModelSerializationExtensions.JsonDeserialize<TextDocumentBatchStatistics>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))

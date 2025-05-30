@@ -43,32 +43,32 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
-                writer.WriteObjectValue(Platform, options);
+                ((IJsonModel<ContainerAppAuthPlatform>)Platform).Write(writer, options);
             }
             if (Optional.IsDefined(GlobalValidation))
             {
                 writer.WritePropertyName("globalValidation"u8);
-                writer.WriteObjectValue(GlobalValidation, options);
+                ((IJsonModel<ContainerAppGlobalValidation>)GlobalValidation).Write(writer, options);
             }
             if (Optional.IsDefined(IdentityProviders))
             {
                 writer.WritePropertyName("identityProviders"u8);
-                writer.WriteObjectValue(IdentityProviders, options);
+                ((IJsonModel<ContainerAppIdentityProvidersConfiguration>)IdentityProviders).Write(writer, options);
             }
             if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
-                writer.WriteObjectValue(Login, options);
+                ((IJsonModel<ContainerAppLogin>)Login).Write(writer, options);
             }
             if (Optional.IsDefined(HttpSettings))
             {
                 writer.WritePropertyName("httpSettings"u8);
-                writer.WriteObjectValue(HttpSettings, options);
+                ((IJsonModel<ContainerAppHttpSettings>)HttpSettings).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
-                writer.WriteObjectValue(EncryptionSettings, options);
+                ((IJsonModel<EncryptionSettings>)EncryptionSettings).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            platform = ContainerAppAuthPlatform.DeserializeContainerAppAuthPlatform(property0.Value, options);
+                            platform = ModelSerializationExtensions.JsonDeserialize<ContainerAppAuthPlatform>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("globalValidation"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            globalValidation = ContainerAppGlobalValidation.DeserializeContainerAppGlobalValidation(property0.Value, options);
+                            globalValidation = ModelSerializationExtensions.JsonDeserialize<ContainerAppGlobalValidation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("identityProviders"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            identityProviders = ContainerAppIdentityProvidersConfiguration.DeserializeContainerAppIdentityProvidersConfiguration(property0.Value, options);
+                            identityProviders = ModelSerializationExtensions.JsonDeserialize<ContainerAppIdentityProvidersConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("login"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            login = ContainerAppLogin.DeserializeContainerAppLogin(property0.Value, options);
+                            login = ModelSerializationExtensions.JsonDeserialize<ContainerAppLogin>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("httpSettings"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            httpSettings = ContainerAppHttpSettings.DeserializeContainerAppHttpSettings(property0.Value, options);
+                            httpSettings = ModelSerializationExtensions.JsonDeserialize<ContainerAppHttpSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptionSettings"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            encryptionSettings = EncryptionSettings.DeserializeEncryptionSettings(property0.Value, options);
+                            encryptionSettings = ModelSerializationExtensions.JsonDeserialize<EncryptionSettings>(property0.Value);
                             continue;
                         }
                     }

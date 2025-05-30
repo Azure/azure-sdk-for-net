@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WritePropertyName("api"u8);
-            writer.WriteObjectValue(Api, options);
+            ((IJsonModel<MonitorWorkspaceLogsApiConfig>)Api).Write(writer, options);
             if (Optional.IsDefined(Concurrency))
             {
                 writer.WritePropertyName("concurrency"u8);
-                writer.WriteObjectValue(Concurrency, options);
+                ((IJsonModel<MonitorWorkspaceLogsExporterConcurrencyConfiguration>)Concurrency).Write(writer, options);
             }
             if (Optional.IsDefined(Cache))
             {
                 writer.WritePropertyName("cache"u8);
-                writer.WriteObjectValue(Cache, options);
+                ((IJsonModel<MonitorWorkspaceLogsExporterCacheConfiguration>)Cache).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (property.NameEquals("api"u8))
                 {
-                    api = MonitorWorkspaceLogsApiConfig.DeserializeMonitorWorkspaceLogsApiConfig(property.Value, options);
+                    api = ModelSerializationExtensions.JsonDeserialize<MonitorWorkspaceLogsApiConfig>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("concurrency"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    concurrency = MonitorWorkspaceLogsExporterConcurrencyConfiguration.DeserializeMonitorWorkspaceLogsExporterConcurrencyConfiguration(property.Value, options);
+                    concurrency = ModelSerializationExtensions.JsonDeserialize<MonitorWorkspaceLogsExporterConcurrencyConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("cache"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    cache = MonitorWorkspaceLogsExporterCacheConfiguration.DeserializeMonitorWorkspaceLogsExporterCacheConfiguration(property.Value, options);
+                    cache = ModelSerializationExtensions.JsonDeserialize<MonitorWorkspaceLogsExporterCacheConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

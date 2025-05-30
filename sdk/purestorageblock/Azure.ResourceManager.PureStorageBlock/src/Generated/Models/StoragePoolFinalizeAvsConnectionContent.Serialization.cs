@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             if (Optional.IsDefined(ServiceInitializationData))
             {
                 writer.WritePropertyName("serviceInitializationData"u8);
-                writer.WriteObjectValue(ServiceInitializationData, options);
+                ((IJsonModel<ServiceInitializationInfo>)ServiceInitializationData).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    serviceInitializationData = ServiceInitializationInfo.DeserializeServiceInitializationInfo(property.Value, options);
+                    serviceInitializationData = ModelSerializationExtensions.JsonDeserialize<ServiceInitializationInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -17,7 +17,7 @@ namespace Azure.Communication.Chat
         {
             writer.WriteStartObject();
             writer.WritePropertyName("communicationIdentifier"u8);
-            writer.WriteObjectValue(CommunicationIdentifier);
+            JsonSerializer.Serialize(writer, CommunicationIdentifier);
             if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
@@ -44,7 +44,7 @@ namespace Azure.Communication.Chat
             {
                 if (property.NameEquals("communicationIdentifier"u8))
                 {
-                    communicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    communicationIdentifier = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))

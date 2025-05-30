@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartArray();
             foreach (var item in Events)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<IntegrationAccountTrackingEvent>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

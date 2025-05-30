@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStringValue(GetDebugInfo.Value.ToString());
             }
             writer.WritePropertyName("className"u8);
-            JsonSerializer.Serialize(writer, ClassName);
+            ((IJsonModel<DataFactoryElement<T>>)ClassName).Write(writer, options);
             writer.WritePropertyName("jarFilePath"u8);
-            JsonSerializer.Serialize(writer, JarFilePath);
+            ((IJsonModel<DataFactoryElement<T>>)JarFilePath).Write(writer, options);
             if (Optional.IsDefined(JarLinkedService))
             {
                 writer.WritePropertyName("jarLinkedService"u8);
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
+                    policy = ModelSerializationExtensions.JsonDeserialize<PipelineActivityPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(item));
                             }
                             storageLinkedServices = array;
                             continue;
@@ -319,12 +319,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("className"u8))
                         {
-                            className = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            className = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("jarFilePath"u8))
                         {
-                            jarFilePath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            jarFilePath = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("jarLinkedService"u8))
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            jarLinkedService = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
+                            jarLinkedService = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("jarLibs"u8))

@@ -37,7 +37,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (Schedule != null)
                 {
                     writer.WritePropertyName("schedule"u8);
-                    writer.WriteObjectValue(Schedule);
+                    JsonSerializer.Serialize(writer, Schedule);
                 }
                 else
                 {
@@ -49,7 +49,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (Parameters != null)
                 {
                     writer.WritePropertyName("parameters"u8);
-                    writer.WriteObjectValue(Parameters);
+                    JsonSerializer.Serialize(writer, Parameters);
                 }
                 else
                 {
@@ -62,7 +62,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in FieldMappings)
                 {
-                    writer.WriteObjectValue<FieldMapping>(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in OutputFieldMappings)
                 {
-                    writer.WriteObjectValue<FieldMapping>(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +98,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (EncryptionKey != null)
                 {
                     writer.WritePropertyName("encryptionKey"u8);
-                    writer.WriteObjectValue(EncryptionKey);
+                    JsonSerializer.Serialize(writer, EncryptionKey);
                 }
                 else
                 {
@@ -110,7 +110,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (Cache != null)
                 {
                     writer.WritePropertyName("cache"u8);
-                    writer.WriteObjectValue(Cache);
+                    JsonSerializer.Serialize(writer, Cache);
                 }
                 else
                 {
@@ -173,7 +173,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         schedule = null;
                         continue;
                     }
-                    schedule = IndexingSchedule.DeserializeIndexingSchedule(property.Value);
+                    schedule = ModelSerializationExtensions.JsonDeserialize<IndexingSchedule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
@@ -183,7 +183,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         parameters = null;
                         continue;
                     }
-                    parameters = IndexingParameters.DeserializeIndexingParameters(property.Value);
+                    parameters = ModelSerializationExtensions.JsonDeserialize<IndexingParameters>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("fieldMappings"u8))
@@ -236,7 +236,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         encryptionKey = null;
                         continue;
                     }
-                    encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(property.Value);
+                    encryptionKey = ModelSerializationExtensions.JsonDeserialize<SearchResourceEncryptionKey>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("cache"u8))
@@ -246,7 +246,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         cache = null;
                         continue;
                     }
-                    cache = SearchIndexerCache.DeserializeSearchIndexerCache(property.Value);
+                    cache = ModelSerializationExtensions.JsonDeserialize<SearchIndexerCache>(property.Value);
                     continue;
                 }
             }

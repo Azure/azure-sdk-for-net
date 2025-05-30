@@ -40,7 +40,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in OrderedProcedures)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<OrderedProcedure>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

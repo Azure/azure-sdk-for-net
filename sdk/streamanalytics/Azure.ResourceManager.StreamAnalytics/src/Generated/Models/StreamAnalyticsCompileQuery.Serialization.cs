@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StreamAnalyticsQueryInput>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Functions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StreamAnalyticsQueryFunction>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

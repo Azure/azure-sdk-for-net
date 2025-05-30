@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 foreach (var item in IPFirewallRules)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<SynapseIPFirewallRuleProperties>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }

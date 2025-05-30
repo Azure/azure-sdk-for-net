@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Schema)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MapperTableSchema>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DslConnectorProperties)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MapperDslConnectorProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

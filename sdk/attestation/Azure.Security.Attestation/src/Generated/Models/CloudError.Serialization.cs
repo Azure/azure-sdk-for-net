@@ -26,7 +26,7 @@ namespace Azure.Security.Attestation.Models
                     {
                         continue;
                     }
-                    error = CloudErrorBody.DeserializeCloudErrorBody(property.Value);
+                    error = ModelSerializationExtensions.JsonDeserialize<CloudErrorBody>(property.Value);
                     continue;
                 }
             }

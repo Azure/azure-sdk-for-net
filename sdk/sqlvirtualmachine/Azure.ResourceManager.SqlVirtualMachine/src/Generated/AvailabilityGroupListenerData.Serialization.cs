@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AvailabilityGroupListenerLoadBalancerConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 writer.WriteStartArray();
                 foreach (var item in MultiSubnetIPConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MultiSubnetIPConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             if (Optional.IsDefined(AvailabilityGroupConfiguration))
             {
                 writer.WritePropertyName("availabilityGroupConfiguration"u8);
-                writer.WriteObjectValue(AvailabilityGroupConfiguration, options);
+                ((IJsonModel<AvailabilityGroupConfiguration>)AvailabilityGroupConfiguration).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             {
                                 continue;
                             }
-                            availabilityGroupConfiguration = AvailabilityGroupConfiguration.DeserializeAvailabilityGroupConfiguration(property0.Value, options);
+                            availabilityGroupConfiguration = ModelSerializationExtensions.JsonDeserialize<AvailabilityGroupConfiguration>(property0.Value);
                             continue;
                         }
                     }

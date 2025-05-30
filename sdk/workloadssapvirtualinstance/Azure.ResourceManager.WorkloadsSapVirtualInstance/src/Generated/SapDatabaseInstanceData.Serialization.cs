@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             if (options.Format != "W" && Optional.IsDefined(LoadBalancerDetails))
             {
                 writer.WritePropertyName("loadBalancerDetails"u8);
-                JsonSerializer.Serialize(writer, LoadBalancerDetails);
+                ((IJsonModel<SubResource>)LoadBalancerDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(VmDetails))
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 writer.WriteStartArray();
                 foreach (var item in VmDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DatabaseVmDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
-                writer.WriteObjectValue(Errors, options);
+                ((IJsonModel<SapVirtualInstanceError>)Errors).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                             {
                                 continue;
                             }
-                            loadBalancerDetails = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
+                            loadBalancerDetails = ModelSerializationExtensions.JsonDeserialize<SubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("vmDetails"u8))
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                             {
                                 continue;
                             }
-                            errors = SapVirtualInstanceError.DeserializeSapVirtualInstanceError(property0.Value, options);
+                            errors = ModelSerializationExtensions.JsonDeserialize<SapVirtualInstanceError>(property0.Value);
                             continue;
                         }
                     }

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ScriptUriManagedIdentity))
             {
                 writer.WritePropertyName("scriptUriManagedIdentity"u8);
-                writer.WriteObjectValue(ScriptUriManagedIdentity, options);
+                ((IJsonModel<RunCommandManagedIdentity>)ScriptUriManagedIdentity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    scriptUriManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property.Value, options);
+                    scriptUriManagedIdentity = ModelSerializationExtensions.JsonDeserialize<RunCommandManagedIdentity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

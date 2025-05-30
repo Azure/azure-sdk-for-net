@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Requests))
             {
                 writer.WritePropertyName("requests"u8);
-                writer.WriteObjectValue(Requests, options);
+                ((IJsonModel<RequestsBasedTrigger>)Requests).Write(writer, options);
             }
             if (Optional.IsDefined(PrivateBytesInKB))
             {
@@ -52,14 +52,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in StatusCodes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StatusCodesBasedTrigger>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SlowRequests))
             {
                 writer.WritePropertyName("slowRequests"u8);
-                writer.WriteObjectValue(SlowRequests, options);
+                ((IJsonModel<SlowRequestsBasedTrigger>)SlowRequests).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(SlowRequestsWithPath))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in SlowRequestsWithPath)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SlowRequestsBasedTrigger>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in StatusCodesRange)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StatusCodesRangeBasedTrigger>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    requests = RequestsBasedTrigger.DeserializeRequestsBasedTrigger(property.Value, options);
+                    requests = ModelSerializationExtensions.JsonDeserialize<RequestsBasedTrigger>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("privateBytesInKB"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    slowRequests = SlowRequestsBasedTrigger.DeserializeSlowRequestsBasedTrigger(property.Value, options);
+                    slowRequests = ModelSerializationExtensions.JsonDeserialize<SlowRequestsBasedTrigger>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("slowRequestsWithPath"u8))

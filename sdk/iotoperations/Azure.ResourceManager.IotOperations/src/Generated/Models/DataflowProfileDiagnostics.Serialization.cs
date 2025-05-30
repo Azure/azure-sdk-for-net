@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.IotOperations.Models
             if (Optional.IsDefined(Logs))
             {
                 writer.WritePropertyName("logs"u8);
-                writer.WriteObjectValue(Logs, options);
+                ((IJsonModel<DiagnosticsLogs>)Logs).Write(writer, options);
             }
             if (Optional.IsDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
-                writer.WriteObjectValue(Metrics, options);
+                ((IJsonModel<IotOperationsMetrics>)Metrics).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    logs = DiagnosticsLogs.DeserializeDiagnosticsLogs(property.Value, options);
+                    logs = ModelSerializationExtensions.JsonDeserialize<DiagnosticsLogs>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metrics"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    metrics = IotOperationsMetrics.DeserializeIotOperationsMetrics(property.Value, options);
+                    metrics = ModelSerializationExtensions.JsonDeserialize<IotOperationsMetrics>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

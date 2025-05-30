@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             if (options.Format != "W" && Optional.IsDefined(MessageSchemaReference))
             {
                 writer.WritePropertyName("messageSchemaReference"u8);
-                writer.WriteObjectValue(MessageSchemaReference, options);
+                ((IJsonModel<MessageSchemaReference>)MessageSchemaReference).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     {
                         continue;
                     }
-                    messageSchemaReference = MessageSchemaReference.DeserializeMessageSchemaReference(property.Value, options);
+                    messageSchemaReference = ModelSerializationExtensions.JsonDeserialize<MessageSchemaReference>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

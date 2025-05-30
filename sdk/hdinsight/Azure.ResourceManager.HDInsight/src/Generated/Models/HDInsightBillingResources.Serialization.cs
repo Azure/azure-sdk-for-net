@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in BillingMeters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HDInsightBillingMeters>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in DiskBillingMeters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HDInsightDiskBillingMeters>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

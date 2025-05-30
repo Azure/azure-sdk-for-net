@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedStorageEditions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MySqlFlexibleServerStorageEditionCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedSkus)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SkuCapabilityV2>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

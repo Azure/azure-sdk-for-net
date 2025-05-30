@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(MicrosoftPeeringConfig))
             {
                 writer.WritePropertyName("microsoftPeeringConfig"u8);
-                writer.WriteObjectValue(MicrosoftPeeringConfig, options);
+                ((IJsonModel<ExpressRouteCircuitPeeringConfig>)MicrosoftPeeringConfig).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(IPv6PeeringConfig))
             {
                 writer.WritePropertyName("ipv6PeeringConfig"u8);
-                writer.WriteObjectValue(IPv6PeeringConfig, options);
+                ((IJsonModel<IPv6ExpressRouteCircuitPeeringConfig>)IPv6PeeringConfig).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            microsoftPeeringConfig = ExpressRouteCircuitPeeringConfig.DeserializeExpressRouteCircuitPeeringConfig(property0.Value, options);
+                            microsoftPeeringConfig = ModelSerializationExtensions.JsonDeserialize<ExpressRouteCircuitPeeringConfig>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            ipv6PeeringConfig = IPv6ExpressRouteCircuitPeeringConfig.DeserializeIPv6ExpressRouteCircuitPeeringConfig(property0.Value, options);
+                            ipv6PeeringConfig = ModelSerializationExtensions.JsonDeserialize<IPv6ExpressRouteCircuitPeeringConfig>(property0.Value);
                             continue;
                         }
                     }

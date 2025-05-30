@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in ControlPlaneStatus)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ProvisionedClusterAddonStatusProfile>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

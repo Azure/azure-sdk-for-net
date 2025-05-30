@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 writer.WriteStartArray();
                 foreach (var item in FilteringTags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FilteringTag>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 writer.WriteStartArray();
                 foreach (var item in Attributes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<Attributes>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

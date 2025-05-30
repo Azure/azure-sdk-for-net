@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("database"u8);
-            writer.WriteObjectValue(Database, options);
+            ((IJsonModel<RangerAdminSpecDatabase>)Database).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (property.NameEquals("database"u8))
                 {
-                    database = RangerAdminSpecDatabase.DeserializeRangerAdminSpecDatabase(property.Value, options);
+                    database = ModelSerializationExtensions.JsonDeserialize<RangerAdminSpecDatabase>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

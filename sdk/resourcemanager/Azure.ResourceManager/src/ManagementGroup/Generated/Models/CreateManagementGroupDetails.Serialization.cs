@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             if (Optional.IsDefined(Parent))
             {
                 writer.WritePropertyName("parent"u8);
-                writer.WriteObjectValue(Parent, options);
+                ((IJsonModel<ManagementGroupParentCreateOptions>)Parent).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     {
                         continue;
                     }
-                    parent = ManagementGroupParentCreateOptions.DeserializeManagementGroupParentCreateOptions(property.Value, options);
+                    parent = ModelSerializationExtensions.JsonDeserialize<ManagementGroupParentCreateOptions>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

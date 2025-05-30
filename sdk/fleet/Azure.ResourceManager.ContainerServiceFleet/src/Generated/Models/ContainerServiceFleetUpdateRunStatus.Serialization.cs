@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<ContainerServiceFleetUpdateStatus>)Status).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Stages))
             {
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WriteStartArray();
                 foreach (var item in Stages)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerServiceFleetUpdateStageStatus>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(NodeImageSelection))
             {
                 writer.WritePropertyName("nodeImageSelection"u8);
-                writer.WriteObjectValue(NodeImageSelection, options);
+                ((IJsonModel<NodeImageSelectionStatus>)NodeImageSelection).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    status = ContainerServiceFleetUpdateStatus.DeserializeContainerServiceFleetUpdateStatus(property.Value, options);
+                    status = ModelSerializationExtensions.JsonDeserialize<ContainerServiceFleetUpdateStatus>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("stages"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    nodeImageSelection = NodeImageSelectionStatus.DeserializeNodeImageSelectionStatus(property.Value, options);
+                    nodeImageSelection = ModelSerializationExtensions.JsonDeserialize<NodeImageSelectionStatus>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

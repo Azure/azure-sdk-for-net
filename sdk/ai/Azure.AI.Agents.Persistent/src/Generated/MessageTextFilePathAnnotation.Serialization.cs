@@ -36,7 +36,7 @@ namespace Azure.AI.Agents.Persistent
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("file_path"u8);
-            writer.WriteObjectValue<InternalMessageTextFilePathDetails>(InternalDetails, options);
+            ((IJsonModel<InternalMessageTextFilePathDetails>)InternalDetails).Write(writer, options);
             if (Optional.IsDefined(StartIndex))
             {
                 writer.WritePropertyName("start_index"u8);
@@ -80,7 +80,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (property.NameEquals("file_path"u8))
                 {
-                    filePath = InternalMessageTextFilePathDetails.DeserializeInternalMessageTextFilePathDetails(property.Value, options);
+                    filePath = ModelSerializationExtensions.JsonDeserialize<InternalMessageTextFilePathDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("start_index"u8))

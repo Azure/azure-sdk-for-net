@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<DeviceProvisioningServiceProperties>)Properties).Write(writer, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<DeviceProvisioningServicesSkuInfo>)Sku).Write(writer, options);
         }
 
         DeviceProvisioningServiceData IJsonModel<DeviceProvisioningServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DeviceProvisioningServiceProperties.DeserializeDeviceProvisioningServiceProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<DeviceProvisioningServiceProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = DeviceProvisioningServicesSkuInfo.DeserializeDeviceProvisioningServicesSkuInfo(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<DeviceProvisioningServicesSkuInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

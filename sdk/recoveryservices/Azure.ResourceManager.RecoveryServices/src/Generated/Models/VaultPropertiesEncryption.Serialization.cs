@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties, options);
+                ((IJsonModel<CmkKeyVaultProperties>)KeyVaultProperties).Write(writer, options);
             }
             if (Optional.IsDefined(KekIdentity))
             {
                 writer.WritePropertyName("kekIdentity"u8);
-                writer.WriteObjectValue(KekIdentity, options);
+                ((IJsonModel<CmkKekIdentity>)KekIdentity).Write(writer, options);
             }
             if (Optional.IsDefined(InfrastructureEncryption))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = CmkKeyVaultProperties.DeserializeCmkKeyVaultProperties(property.Value, options);
+                    keyVaultProperties = ModelSerializationExtensions.JsonDeserialize<CmkKeyVaultProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kekIdentity"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    kekIdentity = CmkKekIdentity.DeserializeCmkKekIdentity(property.Value, options);
+                    kekIdentity = ModelSerializationExtensions.JsonDeserialize<CmkKekIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("infrastructureEncryption"u8))

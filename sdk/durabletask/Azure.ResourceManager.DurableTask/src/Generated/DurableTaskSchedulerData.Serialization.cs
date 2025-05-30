@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DurableTask
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<DurableTaskSchedulerProperties>)Properties).Write(writer, options);
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DurableTask
                     {
                         continue;
                     }
-                    properties = DurableTaskSchedulerProperties.DeserializeDurableTaskSchedulerProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<DurableTaskSchedulerProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DurableTask
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

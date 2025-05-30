@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WriteStartArray();
             foreach (var item in Parameters)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ChaosKeyValuePair>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("selectorId"u8);

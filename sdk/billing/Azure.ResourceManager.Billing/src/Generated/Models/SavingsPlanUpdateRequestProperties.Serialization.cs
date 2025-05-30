@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties, options);
+                ((IJsonModel<BillingAppliedScopeProperties>)AppliedScopeProperties).Write(writer, options);
             }
             if (Optional.IsDefined(IsRenewed))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(RenewProperties))
             {
                 writer.WritePropertyName("renewProperties"u8);
-                writer.WriteObjectValue(RenewProperties, options);
+                ((IJsonModel<BillingRenewProperties>)RenewProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    appliedScopeProperties = BillingAppliedScopeProperties.DeserializeBillingAppliedScopeProperties(property.Value, options);
+                    appliedScopeProperties = ModelSerializationExtensions.JsonDeserialize<BillingAppliedScopeProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("renew"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    renewProperties = BillingRenewProperties.DeserializeBillingRenewProperties(property.Value, options);
+                    renewProperties = ModelSerializationExtensions.JsonDeserialize<BillingRenewProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

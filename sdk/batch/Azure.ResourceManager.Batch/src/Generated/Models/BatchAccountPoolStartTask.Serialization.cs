@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceFiles)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BatchResourceFile>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,14 +55,14 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in EnvironmentSettings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BatchEnvironmentSetting>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(UserIdentity))
             {
                 writer.WritePropertyName("userIdentity"u8);
-                writer.WriteObjectValue(UserIdentity, options);
+                ((IJsonModel<BatchUserIdentity>)UserIdentity).Write(writer, options);
             }
             if (Optional.IsDefined(MaxTaskRetryCount))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(ContainerSettings))
             {
                 writer.WritePropertyName("containerSettings"u8);
-                writer.WriteObjectValue(ContainerSettings, options);
+                ((IJsonModel<BatchTaskContainerSettings>)ContainerSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    userIdentity = BatchUserIdentity.DeserializeBatchUserIdentity(property.Value, options);
+                    userIdentity = ModelSerializationExtensions.JsonDeserialize<BatchUserIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("maxTaskRetryCount"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    containerSettings = BatchTaskContainerSettings.DeserializeBatchTaskContainerSettings(property.Value, options);
+                    containerSettings = ModelSerializationExtensions.JsonDeserialize<BatchTaskContainerSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

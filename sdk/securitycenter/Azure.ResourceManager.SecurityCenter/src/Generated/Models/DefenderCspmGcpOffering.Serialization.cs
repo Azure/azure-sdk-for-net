@@ -38,27 +38,27 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(CiemDiscovery))
             {
                 writer.WritePropertyName("ciemDiscovery"u8);
-                writer.WriteObjectValue(CiemDiscovery, options);
+                ((IJsonModel<DefenderCspmGcpOfferingCiemDiscovery>)CiemDiscovery).Write(writer, options);
             }
             if (Optional.IsDefined(VmScanners))
             {
                 writer.WritePropertyName("vmScanners"u8);
-                writer.WriteObjectValue(VmScanners, options);
+                ((IJsonModel<DefenderCspmGcpOfferingVmScanners>)VmScanners).Write(writer, options);
             }
             if (Optional.IsDefined(DataSensitivityDiscovery))
             {
                 writer.WritePropertyName("dataSensitivityDiscovery"u8);
-                writer.WriteObjectValue(DataSensitivityDiscovery, options);
+                ((IJsonModel<DefenderCspmGcpOfferingDataSensitivityDiscovery>)DataSensitivityDiscovery).Write(writer, options);
             }
             if (Optional.IsDefined(MdcContainersImageAssessment))
             {
                 writer.WritePropertyName("mdcContainersImageAssessment"u8);
-                writer.WriteObjectValue(MdcContainersImageAssessment, options);
+                ((IJsonModel<DefenderCspmGcpOfferingMdcContainersImageAssessment>)MdcContainersImageAssessment).Write(writer, options);
             }
             if (Optional.IsDefined(MdcContainersAgentlessDiscoveryK8S))
             {
                 writer.WritePropertyName("mdcContainersAgentlessDiscoveryK8s"u8);
-                writer.WriteObjectValue(MdcContainersAgentlessDiscoveryK8S, options);
+                ((IJsonModel<DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S>)MdcContainersAgentlessDiscoveryK8S).Write(writer, options);
             }
         }
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    ciemDiscovery = DefenderCspmGcpOfferingCiemDiscovery.DeserializeDefenderCspmGcpOfferingCiemDiscovery(property.Value, options);
+                    ciemDiscovery = ModelSerializationExtensions.JsonDeserialize<DefenderCspmGcpOfferingCiemDiscovery>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vmScanners"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    vmScanners = DefenderCspmGcpOfferingVmScanners.DeserializeDefenderCspmGcpOfferingVmScanners(property.Value, options);
+                    vmScanners = ModelSerializationExtensions.JsonDeserialize<DefenderCspmGcpOfferingVmScanners>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataSensitivityDiscovery"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    dataSensitivityDiscovery = DefenderCspmGcpOfferingDataSensitivityDiscovery.DeserializeDefenderCspmGcpOfferingDataSensitivityDiscovery(property.Value, options);
+                    dataSensitivityDiscovery = ModelSerializationExtensions.JsonDeserialize<DefenderCspmGcpOfferingDataSensitivityDiscovery>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mdcContainersImageAssessment"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    mdcContainersImageAssessment = DefenderCspmGcpOfferingMdcContainersImageAssessment.DeserializeDefenderCspmGcpOfferingMdcContainersImageAssessment(property.Value, options);
+                    mdcContainersImageAssessment = ModelSerializationExtensions.JsonDeserialize<DefenderCspmGcpOfferingMdcContainersImageAssessment>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mdcContainersAgentlessDiscoveryK8s"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    mdcContainersAgentlessDiscoveryK8S = DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S.DeserializeDefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S(property.Value, options);
+                    mdcContainersAgentlessDiscoveryK8S = ModelSerializationExtensions.JsonDeserialize<DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("offeringType"u8))

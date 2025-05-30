@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Groups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SharingProfileGroup>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

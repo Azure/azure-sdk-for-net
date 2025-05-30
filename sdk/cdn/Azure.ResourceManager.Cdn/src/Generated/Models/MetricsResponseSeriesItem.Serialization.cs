@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Groups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MetricsResponseSeriesPropertiesItemsItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

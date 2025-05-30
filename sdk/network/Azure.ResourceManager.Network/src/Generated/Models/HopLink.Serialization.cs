@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Issues)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConnectivityIssueInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

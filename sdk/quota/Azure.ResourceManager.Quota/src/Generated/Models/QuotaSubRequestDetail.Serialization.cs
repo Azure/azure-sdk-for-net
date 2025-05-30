@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Quota.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
+                ((IJsonModel<QuotaRequestResourceName>)Name).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceTypeName))
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Quota.Models
             if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
-                writer.WriteObjectValue(Limit, options);
+                ((IJsonModel<QuotaLimitJsonObject>)Limit).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    name = QuotaRequestResourceName.DeserializeQuotaRequestResourceName(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<QuotaRequestResourceName>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceType"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    limit = QuotaLimitJsonObject.DeserializeQuotaLimitJsonObject(property.Value, options);
+                    limit = ModelSerializationExtensions.JsonDeserialize<QuotaLimitJsonObject>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

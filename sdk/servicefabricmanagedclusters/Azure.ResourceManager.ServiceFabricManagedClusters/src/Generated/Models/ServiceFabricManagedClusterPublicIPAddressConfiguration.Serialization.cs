@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WriteStartArray();
                 foreach (var item in IPTags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedClusterIPTag>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

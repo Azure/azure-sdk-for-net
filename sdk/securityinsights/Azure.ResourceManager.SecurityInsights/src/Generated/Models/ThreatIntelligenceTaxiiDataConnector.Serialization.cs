@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(TaxiiClient))
             {
                 writer.WritePropertyName("taxiiClient"u8);
-                writer.WriteObjectValue(TaxiiClient, options);
+                ((IJsonModel<DataConnectorDataTypeCommon>)TaxiiClient).Write(writer, options);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                     {
                                         continue;
                                     }
-                                    taxiiClient = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property1.Value, options);
+                                    taxiiClient = ModelSerializationExtensions.JsonDeserialize<DataConnectorDataTypeCommon>(property1.Value);
                                     continue;
                                 }
                             }

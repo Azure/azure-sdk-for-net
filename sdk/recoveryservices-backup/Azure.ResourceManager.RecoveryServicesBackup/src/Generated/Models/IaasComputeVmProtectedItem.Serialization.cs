@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = IaasVmProtectedItemExtendedInfo.DeserializeIaasVmProtectedItemExtendedInfo(property.Value, options);
+                    extendedInfo = ModelSerializationExtensions.JsonDeserialize<IaasVmProtectedItemExtendedInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extendedProperties"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedProperties = IaasVmBackupExtendedProperties.DeserializeIaasVmBackupExtendedProperties(property.Value, options);
+                    extendedProperties = ModelSerializationExtensions.JsonDeserialize<IaasVmBackupExtendedProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policyType"u8))

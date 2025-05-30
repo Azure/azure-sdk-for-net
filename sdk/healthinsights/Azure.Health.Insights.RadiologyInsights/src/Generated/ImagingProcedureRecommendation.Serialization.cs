@@ -41,7 +41,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in ProcedureCodes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FhirR4CodeableConcept>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -49,7 +49,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteStartArray();
             foreach (var item in ImagingProcedures)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ImagingProcedure>)item).Write(writer, options);
             }
             writer.WriteEndArray();
         }

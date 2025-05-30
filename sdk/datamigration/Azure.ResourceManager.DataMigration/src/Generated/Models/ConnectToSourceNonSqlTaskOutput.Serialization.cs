@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(ServerProperties))
             {
                 writer.WritePropertyName("serverProperties"u8);
-                writer.WriteObjectValue(ServerProperties, options);
+                ((IJsonModel<ServerProperties>)ServerProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Databases))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ReportableException>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    serverProperties = ServerProperties.DeserializeServerProperties(property.Value, options);
+                    serverProperties = ModelSerializationExtensions.JsonDeserialize<ServerProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("databases"u8))

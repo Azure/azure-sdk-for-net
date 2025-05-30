@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Attestation.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<AttestationServicePatchSpecificParams>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     {
                         continue;
                     }
-                    properties = AttestationServicePatchSpecificParams.DeserializeAttestationServicePatchSpecificParams(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<AttestationServicePatchSpecificParams>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

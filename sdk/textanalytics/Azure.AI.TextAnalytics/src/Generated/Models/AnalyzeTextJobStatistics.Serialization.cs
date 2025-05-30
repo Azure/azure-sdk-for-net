@@ -26,7 +26,7 @@ namespace Azure.AI.TextAnalytics.Models
                     {
                         continue;
                     }
-                    statistics = TextDocumentBatchStatistics.DeserializeTextDocumentBatchStatistics(property.Value);
+                    statistics = ModelSerializationExtensions.JsonDeserialize<TextDocumentBatchStatistics>(property.Value);
                     continue;
                 }
             }

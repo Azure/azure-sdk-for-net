@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.Monitor
             if (options.Format != "W" && Optional.IsDefined(DefaultIngestionSettings))
             {
                 writer.WritePropertyName("defaultIngestionSettings"u8);
-                writer.WriteObjectValue(DefaultIngestionSettings, options);
+                ((IJsonModel<MonitorWorkspaceDefaultIngestionSettings>)DefaultIngestionSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
-                writer.WriteObjectValue(Metrics, options);
+                ((IJsonModel<MonitorWorkspaceMetrics>)Metrics).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(MetricsPropertiesMetrics))
             {
                 writer.WritePropertyName("metrics"u8);
-                writer.WriteObjectValue(MetricsPropertiesMetrics, options);
+                ((IJsonModel<MonitorWorkspaceMetricProperties>)MetricsPropertiesMetrics).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Monitor
             if (options.Format != "W" && Optional.IsDefined(DefaultIngestionSettingsPropertiesDefaultIngestionSettings))
             {
                 writer.WritePropertyName("defaultIngestionSettings"u8);
-                writer.WriteObjectValue(DefaultIngestionSettingsPropertiesDefaultIngestionSettings, options);
+                ((IJsonModel<MonitorWorkspaceIngestionSettings>)DefaultIngestionSettingsPropertiesDefaultIngestionSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MonitorWorkspacePrivateEndpointConnection>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         continue;
                     }
-                    defaultIngestionSettings = MonitorWorkspaceDefaultIngestionSettings.DeserializeMonitorWorkspaceDefaultIngestionSettings(property.Value, options);
+                    defaultIngestionSettings = ModelSerializationExtensions.JsonDeserialize<MonitorWorkspaceDefaultIngestionSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metrics"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         continue;
                     }
-                    metrics = MonitorWorkspaceMetrics.DeserializeMonitorWorkspaceMetrics(property.Value, options);
+                    metrics = ModelSerializationExtensions.JsonDeserialize<MonitorWorkspaceMetrics>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            metrics0 = MonitorWorkspaceMetricProperties.DeserializeMonitorWorkspaceMetricProperties(property0.Value, options);
+                            metrics0 = ModelSerializationExtensions.JsonDeserialize<MonitorWorkspaceMetricProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            defaultIngestionSettings0 = MonitorWorkspaceIngestionSettings.DeserializeMonitorWorkspaceIngestionSettings(property0.Value, options);
+                            defaultIngestionSettings0 = ModelSerializationExtensions.JsonDeserialize<MonitorWorkspaceIngestionSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))

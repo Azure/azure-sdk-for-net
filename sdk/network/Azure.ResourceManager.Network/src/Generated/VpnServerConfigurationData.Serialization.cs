@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VpnClientRootCertificates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VpnServerConfigVpnClientRootCertificate>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VpnClientRevokedCertificates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VpnServerConfigVpnClientRevokedCertificate>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in RadiusServerRootCertificates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VpnServerConfigRadiusServerRootCertificate>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in RadiusClientRootCertificates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VpnServerConfigRadiusClientRootCertificate>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VpnClientIPsecPolicies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IPsecPolicy>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -129,14 +129,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in RadiusServers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RadiusServer>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AadAuthenticationParameters))
             {
                 writer.WritePropertyName("aadAuthenticationParameters"u8);
-                writer.WriteObjectValue(AadAuthenticationParameters, options);
+                ((IJsonModel<AadAuthenticationParameters>)AadAuthenticationParameters).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in P2SVpnGateways)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<P2SVpnGatewayData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ConfigurationPolicyGroups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VpnServerConfigurationPolicyGroupData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            aadAuthenticationParameters = AadAuthenticationParameters.DeserializeAadAuthenticationParameters(property0.Value, options);
+                            aadAuthenticationParameters = ModelSerializationExtensions.JsonDeserialize<AadAuthenticationParameters>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

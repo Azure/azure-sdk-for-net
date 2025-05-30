@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageAccountList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ReportStorageInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Java))
             {
                 writer.WritePropertyName("java"u8);
-                writer.WriteObjectValue(Java, options);
+                ((IJsonModel<RuntimeJava>)Java).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    java = RuntimeJava.DeserializeRuntimeJava(property.Value, options);
+                    java = ModelSerializationExtensions.JsonDeserialize<RuntimeJava>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

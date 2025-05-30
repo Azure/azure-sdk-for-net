@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MachineLearningOutboundRuleBasicData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

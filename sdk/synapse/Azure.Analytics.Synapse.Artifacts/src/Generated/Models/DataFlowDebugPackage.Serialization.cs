@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(DataFlow))
             {
                 writer.WritePropertyName("dataFlow"u8);
-                writer.WriteObjectValue(DataFlow);
+                JsonSerializer.Serialize(writer, DataFlow);
             }
             if (Optional.IsCollectionDefined(DataFlows))
             {
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DataFlows)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Datasets)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -55,19 +55,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in LinkedServices)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Staging))
             {
                 writer.WritePropertyName("staging"u8);
-                writer.WriteObjectValue(Staging);
+                JsonSerializer.Serialize(writer, Staging);
             }
             if (Optional.IsDefined(DebugSettings))
             {
                 writer.WritePropertyName("debugSettings"u8);
-                writer.WriteObjectValue(DebugSettings);
+                JsonSerializer.Serialize(writer, DebugSettings);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -105,7 +105,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    dataFlow = DataFlowDebugResource.DeserializeDataFlowDebugResource(property.Value);
+                    dataFlow = ModelSerializationExtensions.JsonDeserialize<DataFlowDebugResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataFlows"u8))
@@ -156,7 +156,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    staging = DataFlowStagingInfo.DeserializeDataFlowStagingInfo(property.Value);
+                    staging = ModelSerializationExtensions.JsonDeserialize<DataFlowStagingInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("debugSettings"u8))
@@ -165,7 +165,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    debugSettings = DataFlowDebugPackageDebugSettings.DeserializeDataFlowDebugPackageDebugSettings(property.Value);
+                    debugSettings = ModelSerializationExtensions.JsonDeserialize<DataFlowDebugPackageDebugSettings>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());

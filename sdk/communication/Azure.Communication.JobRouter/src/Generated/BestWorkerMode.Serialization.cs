@@ -38,12 +38,12 @@ namespace Azure.Communication.JobRouter
             if (Optional.IsDefined(ScoringRule))
             {
                 writer.WritePropertyName("scoringRule"u8);
-                writer.WriteObjectValue<RouterRule>(ScoringRule, options);
+                ((IJsonModel<RouterRule>)ScoringRule).Write(writer, options);
             }
             if (Optional.IsDefined(ScoringRuleOptions))
             {
                 writer.WritePropertyName("scoringRuleOptions"u8);
-                writer.WriteObjectValue<ScoringRuleOptions>(ScoringRuleOptions, options);
+                ((IJsonModel<ScoringRuleOptions>)ScoringRuleOptions).Write(writer, options);
             }
         }
 
@@ -83,7 +83,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    scoringRule = RouterRule.DeserializeRouterRule(property.Value, options);
+                    scoringRule = ModelSerializationExtensions.JsonDeserialize<RouterRule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scoringRuleOptions"u8))
@@ -92,7 +92,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    scoringRuleOptions = JobRouter.ScoringRuleOptions.DeserializeScoringRuleOptions(property.Value, options);
+                    scoringRuleOptions = ModelSerializationExtensions.JsonDeserialize<ScoringRuleOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("minConcurrentOffers"u8))

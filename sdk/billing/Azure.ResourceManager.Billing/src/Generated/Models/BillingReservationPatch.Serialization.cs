@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<ReservationSkuProperty>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties, options);
+                ((IJsonModel<ReservationAppliedScopeProperties>)AppliedScopeProperties).Write(writer, options);
             }
             if (Optional.IsDefined(InstanceFlexibility))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(PurchaseProperties))
             {
                 writer.WritePropertyName("purchaseProperties"u8);
-                writer.WriteObjectValue(PurchaseProperties, options);
+                ((IJsonModel<ReservationPurchaseRequest>)PurchaseProperties).Write(writer, options);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    sku = ReservationSkuProperty.DeserializeReservationSkuProperty(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<ReservationSkuProperty>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Billing.Models
                             {
                                 continue;
                             }
-                            appliedScopeProperties = ReservationAppliedScopeProperties.DeserializeReservationAppliedScopeProperties(property0.Value, options);
+                            appliedScopeProperties = ModelSerializationExtensions.JsonDeserialize<ReservationAppliedScopeProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("instanceFlexibility"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Billing.Models
                                     {
                                         continue;
                                     }
-                                    purchaseProperties = ReservationPurchaseRequest.DeserializeReservationPurchaseRequest(property1.Value, options);
+                                    purchaseProperties = ModelSerializationExtensions.JsonDeserialize<ReservationPurchaseRequest>(property1.Value);
                                     continue;
                                 }
                             }

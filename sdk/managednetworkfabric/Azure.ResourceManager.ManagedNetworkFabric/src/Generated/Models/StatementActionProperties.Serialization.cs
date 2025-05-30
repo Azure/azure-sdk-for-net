@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(IPCommunityProperties))
             {
                 writer.WritePropertyName("ipCommunityProperties"u8);
-                writer.WriteObjectValue(IPCommunityProperties, options);
+                ((IJsonModel<ActionIPCommunityProperties>)IPCommunityProperties).Write(writer, options);
             }
             if (Optional.IsDefined(IPExtendedCommunityProperties))
             {
                 writer.WritePropertyName("ipExtendedCommunityProperties"u8);
-                writer.WriteObjectValue(IPExtendedCommunityProperties, options);
+                ((IJsonModel<ActionIPExtendedCommunityProperties>)IPExtendedCommunityProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    ipCommunityProperties = ActionIPCommunityProperties.DeserializeActionIPCommunityProperties(property.Value, options);
+                    ipCommunityProperties = ModelSerializationExtensions.JsonDeserialize<ActionIPCommunityProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ipExtendedCommunityProperties"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    ipExtendedCommunityProperties = ActionIPExtendedCommunityProperties.DeserializeActionIPExtendedCommunityProperties(property.Value, options);
+                    ipExtendedCommunityProperties = ModelSerializationExtensions.JsonDeserialize<ActionIPExtendedCommunityProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

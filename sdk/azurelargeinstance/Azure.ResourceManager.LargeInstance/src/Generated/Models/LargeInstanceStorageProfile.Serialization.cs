@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in OSDisks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LargeInstanceDisk>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -62,17 +62,17 @@ namespace Azure.ResourceManager.Consumption
             if (Optional.IsDefined(TimePeriod))
             {
                 writer.WritePropertyName("timePeriod"u8);
-                writer.WriteObjectValue(TimePeriod, options);
+                ((IJsonModel<BudgetTimePeriod>)TimePeriod).Write(writer, options);
             }
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter, options);
+                ((IJsonModel<ConsumptionBudgetFilter>)Filter).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CurrentSpend))
             {
                 writer.WritePropertyName("currentSpend"u8);
-                writer.WriteObjectValue(CurrentSpend, options);
+                ((IJsonModel<BudgetCurrentSpend>)CurrentSpend).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Notifications))
             {
@@ -81,14 +81,14 @@ namespace Azure.ResourceManager.Consumption
                 foreach (var item in Notifications)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<BudgetAssociatedNotification>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
             if (options.Format != "W" && Optional.IsDefined(ForecastSpend))
             {
                 writer.WritePropertyName("forecastSpend"u8);
-                writer.WriteObjectValue(ForecastSpend, options);
+                ((IJsonModel<BudgetForecastSpend>)ForecastSpend).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Consumption
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Consumption
                             {
                                 continue;
                             }
-                            timePeriod = BudgetTimePeriod.DeserializeBudgetTimePeriod(property0.Value, options);
+                            timePeriod = ModelSerializationExtensions.JsonDeserialize<BudgetTimePeriod>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("filter"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Consumption
                             {
                                 continue;
                             }
-                            filter = ConsumptionBudgetFilter.DeserializeConsumptionBudgetFilter(property0.Value, options);
+                            filter = ModelSerializationExtensions.JsonDeserialize<ConsumptionBudgetFilter>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("currentSpend"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Consumption
                             {
                                 continue;
                             }
-                            currentSpend = BudgetCurrentSpend.DeserializeBudgetCurrentSpend(property0.Value, options);
+                            currentSpend = ModelSerializationExtensions.JsonDeserialize<BudgetCurrentSpend>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("notifications"u8))
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Consumption
                             {
                                 continue;
                             }
-                            forecastSpend = BudgetForecastSpend.DeserializeBudgetForecastSpend(property0.Value, options);
+                            forecastSpend = ModelSerializationExtensions.JsonDeserialize<BudgetForecastSpend>(property0.Value);
                             continue;
                         }
                     }

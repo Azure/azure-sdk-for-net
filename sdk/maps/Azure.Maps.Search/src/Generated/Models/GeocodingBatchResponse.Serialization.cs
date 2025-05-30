@@ -30,7 +30,7 @@ namespace Azure.Maps.Search.Models
                     {
                         continue;
                     }
-                    summary = GeocodingBatchResponseSummary.DeserializeGeocodingBatchResponseSummary(property.Value);
+                    summary = ModelSerializationExtensions.JsonDeserialize<GeocodingBatchResponseSummary>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("batchItems"u8))

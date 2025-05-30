@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ScalingPlanPooledScheduleData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

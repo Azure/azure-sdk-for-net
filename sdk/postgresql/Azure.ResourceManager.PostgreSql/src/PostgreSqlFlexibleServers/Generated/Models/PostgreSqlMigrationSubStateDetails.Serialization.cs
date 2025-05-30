@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 foreach (var item in DbDetails)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<DbMigrationStatus>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(ValidationDetails))
             {
                 writer.WritePropertyName("validationDetails"u8);
-                writer.WriteObjectValue(ValidationDetails, options);
+                ((IJsonModel<PostgreSqlFlexibleServersValidationDetails>)ValidationDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    validationDetails = PostgreSqlFlexibleServersValidationDetails.DeserializePostgreSqlFlexibleServersValidationDetails(property.Value, options);
+                    validationDetails = ModelSerializationExtensions.JsonDeserialize<PostgreSqlFlexibleServersValidationDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

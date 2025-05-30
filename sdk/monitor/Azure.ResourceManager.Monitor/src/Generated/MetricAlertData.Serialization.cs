@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Monitor
             if (Criteria != null)
             {
                 writer.WritePropertyName("criteria"u8);
-                writer.WriteObjectValue(Criteria, options);
+                ((IJsonModel<MetricAlertCriteria>)Criteria).Write(writer, options);
             }
             else
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MetricAlertAction>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Monitor
                                 criteria = null;
                                 continue;
                             }
-                            criteria = MetricAlertCriteria.DeserializeMetricAlertCriteria(property0.Value, options);
+                            criteria = ModelSerializationExtensions.JsonDeserialize<MetricAlertCriteria>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("autoMitigate"u8))

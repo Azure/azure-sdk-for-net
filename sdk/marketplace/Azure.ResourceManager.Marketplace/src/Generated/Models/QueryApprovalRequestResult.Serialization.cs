@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 foreach (var item in PlansDetails)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<PrivateStorePlanDetails>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }

@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (Optional.IsDefined(DisplayInfo))
             {
                 writer.WritePropertyName("displayInfo"u8);
-                writer.WriteObjectValue(DisplayInfo, options);
+                ((IJsonModel<ProductDisplayInfo>)DisplayInfo).Write(writer, options);
             }
             writer.WritePropertyName("hierarchyInformation"u8);
-            writer.WriteObjectValue(HierarchyInformation, options);
+            ((IJsonModel<HierarchyInformation>)HierarchyInformation).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in DeviceDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EdgeOrderProductDeviceDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -113,12 +113,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    displayInfo = ProductDisplayInfo.DeserializeProductDisplayInfo(property.Value, options);
+                    displayInfo = ModelSerializationExtensions.JsonDeserialize<ProductDisplayInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("hierarchyInformation"u8))
                 {
-                    hierarchyInformation = HierarchyInformation.DeserializeHierarchyInformation(property.Value, options);
+                    hierarchyInformation = ModelSerializationExtensions.JsonDeserialize<HierarchyInformation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("count"u8))

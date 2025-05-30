@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ServiceEndpointPolicyDefinitions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ServiceEndpointPolicyDefinitionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Subnets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SubnetData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

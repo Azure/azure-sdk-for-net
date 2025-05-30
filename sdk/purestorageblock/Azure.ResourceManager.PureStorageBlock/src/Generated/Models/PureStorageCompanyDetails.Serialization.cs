@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
-                writer.WriteObjectValue(Address, options);
+                ((IJsonModel<PureStorageAddressDetails>)Address).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    address = PureStorageAddressDetails.DeserializePureStorageAddressDetails(property.Value, options);
+                    address = ModelSerializationExtensions.JsonDeserialize<PureStorageAddressDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

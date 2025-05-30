@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Datadog.Models
             if (Optional.IsDefined(DatadogOrganizationProperties))
             {
                 writer.WritePropertyName("datadogOrganizationProperties"u8);
-                writer.WriteObjectValue(DatadogOrganizationProperties, options);
+                ((IJsonModel<DatadogOrganizationProperties>)DatadogOrganizationProperties).Write(writer, options);
             }
             if (Optional.IsDefined(UserInfo))
             {
                 writer.WritePropertyName("userInfo"u8);
-                writer.WriteObjectValue(UserInfo, options);
+                ((IJsonModel<UserInfo>)UserInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LiftrResourceCategory))
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    datadogOrganizationProperties = DatadogOrganizationProperties.DeserializeDatadogOrganizationProperties(property.Value, options);
+                    datadogOrganizationProperties = ModelSerializationExtensions.JsonDeserialize<DatadogOrganizationProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userInfo"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    userInfo = UserInfo.DeserializeUserInfo(property.Value, options);
+                    userInfo = ModelSerializationExtensions.JsonDeserialize<UserInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("liftrResourceCategory"u8))

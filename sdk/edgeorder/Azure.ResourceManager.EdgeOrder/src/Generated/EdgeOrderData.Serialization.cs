@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EdgeOrder
             if (options.Format != "W" && Optional.IsDefined(CurrentStage))
             {
                 writer.WritePropertyName("currentStage"u8);
-                writer.WriteObjectValue(CurrentStage, options);
+                ((IJsonModel<EdgeOrderStageDetails>)CurrentStage).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(OrderStageHistory))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 writer.WriteStartArray();
                 foreach (var item in OrderStageHistory)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EdgeOrderStageDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.EdgeOrder
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.EdgeOrder
                             {
                                 continue;
                             }
-                            currentStage = EdgeOrderStageDetails.DeserializeEdgeOrderStageDetails(property0.Value, options);
+                            currentStage = ModelSerializationExtensions.JsonDeserialize<EdgeOrderStageDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("orderStageHistory"u8))

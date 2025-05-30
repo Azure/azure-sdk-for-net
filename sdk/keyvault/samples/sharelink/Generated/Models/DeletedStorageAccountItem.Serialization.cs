@@ -67,7 +67,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     {
                         continue;
                     }
-                    attributes = StorageAccountAttributes.DeserializeStorageAccountAttributes(property.Value);
+                    attributes = ModelSerializationExtensions.JsonDeserialize<StorageAccountAttributes>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

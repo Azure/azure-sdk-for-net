@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
 
             writer.WritePropertyName("health"u8);
-            writer.WriteObjectValue(Health, options);
+            ((IJsonModel<PureStorageHealthDetails>)Health).Write(writer, options);
             writer.WritePropertyName("alerts"u8);
             writer.WriteStartArray();
             foreach (var item in Alerts)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<PureStorageHealthAlert>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             {
                 if (property.NameEquals("health"u8))
                 {
-                    health = PureStorageHealthDetails.DeserializePureStorageHealthDetails(property.Value, options);
+                    health = ModelSerializationExtensions.JsonDeserialize<PureStorageHealthDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("alerts"u8))

@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 }
                 if (property.NameEquals("detectedLanguage"u8))
                 {
-                    detectedLanguage = DetectedLanguage.DeserializeDetectedLanguage(property.Value);
+                    detectedLanguage = ModelSerializationExtensions.JsonDeserialize<DetectedLanguage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("warnings"u8))
@@ -50,7 +50,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     {
                         continue;
                     }
-                    statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value);
+                    statistics = ModelSerializationExtensions.JsonDeserialize<DocumentStatistics>(property.Value);
                     continue;
                 }
             }

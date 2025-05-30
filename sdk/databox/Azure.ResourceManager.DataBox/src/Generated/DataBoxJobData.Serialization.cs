@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.DataBox
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<DataBoxSku>)Sku).Write(writer, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBox
             if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue(Details, options);
+                ((IJsonModel<DataBoxBasicJobDetails>)Details).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CancellationReason))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataBox
             if (Optional.IsDefined(DeliveryInfo))
             {
                 writer.WritePropertyName("deliveryInfo"u8);
-                writer.WriteObjectValue(DeliveryInfo, options);
+                ((IJsonModel<JobDeliveryInfo>)DeliveryInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsCancellableWithoutFee))
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DataBox
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = DataBoxSku.DeserializeDataBoxSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<DataBoxSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataBox
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DataBox
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.DataBox
                             {
                                 continue;
                             }
-                            error = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
+                            error = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("details"u8))
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.DataBox
                             {
                                 continue;
                             }
-                            details = DataBoxBasicJobDetails.DeserializeDataBoxBasicJobDetails(property0.Value, options);
+                            details = ModelSerializationExtensions.JsonDeserialize<DataBoxBasicJobDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cancellationReason"u8))
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.DataBox
                             {
                                 continue;
                             }
-                            deliveryInfo = JobDeliveryInfo.DeserializeJobDeliveryInfo(property0.Value, options);
+                            deliveryInfo = ModelSerializationExtensions.JsonDeserialize<JobDeliveryInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("isCancellableWithoutFee"u8))

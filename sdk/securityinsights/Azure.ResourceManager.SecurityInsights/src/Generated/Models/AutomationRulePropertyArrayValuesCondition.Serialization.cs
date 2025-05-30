@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in ItemConditions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SecurityInsightsAutomationRuleCondition>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Text
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("results"u8);
-            writer.WriteObjectValue(Results, options);
+            ((IJsonModel<CustomLabelClassificationResult>)Results).Write(writer, options);
         }
 
         CustomMultiLabelClassificationOperationResult IJsonModel<CustomMultiLabelClassificationOperationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -70,7 +70,7 @@ namespace Azure.AI.Language.Text
             {
                 if (property.NameEquals("results"u8))
                 {
-                    results = CustomLabelClassificationResult.DeserializeCustomLabelClassificationResult(property.Value, options);
+                    results = ModelSerializationExtensions.JsonDeserialize<CustomLabelClassificationResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lastUpdateDateTime"u8))

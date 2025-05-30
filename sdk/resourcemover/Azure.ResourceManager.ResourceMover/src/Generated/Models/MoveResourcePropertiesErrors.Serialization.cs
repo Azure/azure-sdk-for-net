@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     {
                         continue;
                     }
-                    properties = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    properties = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

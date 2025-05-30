@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomerContacts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<OracleCustomerContact>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             if (options.Format != "W" && Optional.IsDefined(LocalStandbyDB))
             {
                 writer.WritePropertyName("localStandbyDb"u8);
-                writer.WriteObjectValue(LocalStandbyDB, options);
+                ((IJsonModel<AutonomousDatabaseStandbySummary>)LocalStandbyDB).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(FailedDataRecoveryInSeconds))
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             if (Optional.IsDefined(ScheduledOperations))
             {
                 writer.WritePropertyName("scheduledOperations"u8);
-                writer.WriteObjectValue(ScheduledOperations, options);
+                ((IJsonModel<ScheduledOperationsType>)ScheduledOperations).Write(writer, options);
             }
             if (Optional.IsDefined(PrivateEndpointIP))
             {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             if (options.Format != "W" && Optional.IsDefined(ApexDetails))
             {
                 writer.WritePropertyName("apexDetails"u8);
-                writer.WriteObjectValue(ApexDetails, options);
+                ((IJsonModel<OracleApexDetailsType>)ApexDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AvailableUpgradeVersions))
             {
@@ -259,12 +259,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             if (options.Format != "W" && Optional.IsDefined(ConnectionStrings))
             {
                 writer.WritePropertyName("connectionStrings"u8);
-                writer.WriteObjectValue(ConnectionStrings, options);
+                ((IJsonModel<AutonomousDatabaseConnectionStrings>)ConnectionStrings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ConnectionUrls))
             {
                 writer.WritePropertyName("connectionUrls"u8);
-                writer.WriteObjectValue(ConnectionUrls, options);
+                ((IJsonModel<AutonomousDatabaseConnectionUrls>)ConnectionUrls).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DataSafeStatus))
             {
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             if (Optional.IsDefined(LongTermBackupSchedule))
             {
                 writer.WritePropertyName("longTermBackupSchedule"u8);
-                writer.WriteObjectValue(LongTermBackupSchedule, options);
+                ((IJsonModel<LongTermBackUpScheduleDetails>)LongTermBackupSchedule).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsPreview))
             {

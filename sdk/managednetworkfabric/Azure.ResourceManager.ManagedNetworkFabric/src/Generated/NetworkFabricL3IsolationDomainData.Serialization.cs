@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             if (Optional.IsDefined(AggregateRouteConfiguration))
             {
                 writer.WritePropertyName("aggregateRouteConfiguration"u8);
-                writer.WriteObjectValue(AggregateRouteConfiguration, options);
+                ((IJsonModel<AggregateRouteConfiguration>)AggregateRouteConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectedSubnetRoutePolicy))
             {
                 writer.WritePropertyName("connectedSubnetRoutePolicy"u8);
-                writer.WriteObjectValue(ConnectedSubnetRoutePolicy, options);
+                ((IJsonModel<ConnectedSubnetRoutePolicy>)ConnectedSubnetRoutePolicy).Write(writer, options);
             }
             writer.WritePropertyName("networkFabricId"u8);
             writer.WriteStringValue(NetworkFabricId);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            aggregateRouteConfiguration = AggregateRouteConfiguration.DeserializeAggregateRouteConfiguration(property0.Value, options);
+                            aggregateRouteConfiguration = ModelSerializationExtensions.JsonDeserialize<AggregateRouteConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("connectedSubnetRoutePolicy"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            connectedSubnetRoutePolicy = ConnectedSubnetRoutePolicy.DeserializeConnectedSubnetRoutePolicy(property0.Value, options);
+                            connectedSubnetRoutePolicy = ModelSerializationExtensions.JsonDeserialize<ConnectedSubnetRoutePolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkFabricId"u8))

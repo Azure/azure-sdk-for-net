@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BasicArmDependency>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

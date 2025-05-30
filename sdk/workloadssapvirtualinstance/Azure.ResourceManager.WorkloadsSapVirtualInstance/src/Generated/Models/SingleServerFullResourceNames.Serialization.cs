@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             if (Optional.IsDefined(VirtualMachine))
             {
                 writer.WritePropertyName("virtualMachine"u8);
-                writer.WriteObjectValue(VirtualMachine, options);
+                ((IJsonModel<VirtualMachineResourceNames>)VirtualMachine).Write(writer, options);
             }
         }
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     {
                         continue;
                     }
-                    virtualMachine = VirtualMachineResourceNames.DeserializeVirtualMachineResourceNames(property.Value, options);
+                    virtualMachine = ModelSerializationExtensions.JsonDeserialize<VirtualMachineResourceNames>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("namingPatternType"u8))

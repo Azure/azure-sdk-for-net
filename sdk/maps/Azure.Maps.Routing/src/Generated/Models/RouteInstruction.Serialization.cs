@@ -64,7 +64,7 @@ namespace Azure.Maps.Routing.Models
                     {
                         continue;
                     }
-                    point = LatLongPair.DeserializeLatLongPair(property.Value);
+                    point = ModelSerializationExtensions.JsonDeserialize<LatLongPair>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("pointIndex"u8))

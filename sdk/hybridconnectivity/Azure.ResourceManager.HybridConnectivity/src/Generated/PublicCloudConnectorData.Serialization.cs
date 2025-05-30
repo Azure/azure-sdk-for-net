@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<PublicCloudConnectorProperties>)Properties).Write(writer, options);
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                     {
                         continue;
                     }
-                    properties = PublicCloudConnectorProperties.DeserializePublicCloudConnectorProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<PublicCloudConnectorProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

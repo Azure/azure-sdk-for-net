@@ -41,7 +41,7 @@ namespace Azure.AI.Language.Text.Authoring
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
-                writer.WriteObjectValue(Settings, options);
+                ((IJsonModel<TextAuthoringProjectSettings>)Settings).Write(writer, options);
             }
             writer.WritePropertyName("projectName"u8);
             writer.WriteStringValue(ProjectName);
@@ -121,7 +121,7 @@ namespace Azure.AI.Language.Text.Authoring
                     {
                         continue;
                     }
-                    settings = TextAuthoringProjectSettings.DeserializeTextAuthoringProjectSettings(property.Value, options);
+                    settings = ModelSerializationExtensions.JsonDeserialize<TextAuthoringProjectSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("projectName"u8))

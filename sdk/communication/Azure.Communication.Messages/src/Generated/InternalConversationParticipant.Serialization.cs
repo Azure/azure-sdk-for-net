@@ -36,7 +36,7 @@ namespace Azure.Communication.Messages
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("contact"u8);
-            writer.WriteObjectValue(Contact, options);
+            ((IJsonModel<ConversationContact>)Contact).Write(writer, options);
         }
 
         InternalConversationParticipant IJsonModel<InternalConversationParticipant>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -69,7 +69,7 @@ namespace Azure.Communication.Messages
             {
                 if (property.NameEquals("contact"u8))
                 {
-                    contact = ConversationContact.DeserializeConversationContact(property.Value, options);
+                    contact = ModelSerializationExtensions.JsonDeserialize<ConversationContact>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

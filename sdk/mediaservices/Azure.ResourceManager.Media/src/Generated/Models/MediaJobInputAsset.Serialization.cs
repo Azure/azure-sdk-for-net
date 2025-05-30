@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    start = ClipTime.DeserializeClipTime(property.Value, options);
+                    start = ModelSerializationExtensions.JsonDeserialize<ClipTime>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("end"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    end = ClipTime.DeserializeClipTime(property.Value, options);
+                    end = ModelSerializationExtensions.JsonDeserialize<ClipTime>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("label"u8))

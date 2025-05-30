@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<NodeTypeSupportedSku>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity, options);
+                ((IJsonModel<NodeTypeSkuCapacity>)Capacity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    sku = NodeTypeSupportedSku.DeserializeNodeTypeSupportedSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<NodeTypeSupportedSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    capacity = NodeTypeSkuCapacity.DeserializeNodeTypeSkuCapacity(property.Value, options);
+                    capacity = ModelSerializationExtensions.JsonDeserialize<NodeTypeSkuCapacity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

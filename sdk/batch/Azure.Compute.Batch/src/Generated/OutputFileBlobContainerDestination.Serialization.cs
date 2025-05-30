@@ -44,7 +44,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(IdentityReference))
             {
                 writer.WritePropertyName("identityReference"u8);
-                writer.WriteObjectValue(IdentityReference, options);
+                ((IJsonModel<BatchNodeIdentityReference>)IdentityReference).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(UploadHeaders))
             {
@@ -52,7 +52,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in UploadHeaders)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HttpHeader>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -117,7 +117,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    identityReference = BatchNodeIdentityReference.DeserializeBatchNodeIdentityReference(property.Value, options);
+                    identityReference = ModelSerializationExtensions.JsonDeserialize<BatchNodeIdentityReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("uploadHeaders"u8))

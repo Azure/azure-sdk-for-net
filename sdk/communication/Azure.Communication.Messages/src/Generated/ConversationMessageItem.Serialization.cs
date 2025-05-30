@@ -45,7 +45,7 @@ namespace Azure.Communication.Messages
                 writer.WriteNumberValue(SequenceId.Value);
             }
             writer.WritePropertyName("message"u8);
-            writer.WriteObjectValue(Message, options);
+            ((IJsonModel<ConversationMessageContent>)Message).Write(writer, options);
             if (Optional.IsDefined(SenderDisplayName))
             {
                 writer.WritePropertyName("senderDisplayName"u8);
@@ -118,7 +118,7 @@ namespace Azure.Communication.Messages
                 }
                 if (property.NameEquals("message"u8))
                 {
-                    message = ConversationMessageContent.DeserializeConversationMessageContent(property.Value, options);
+                    message = ModelSerializationExtensions.JsonDeserialize<ConversationMessageContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("senderDisplayName"u8))

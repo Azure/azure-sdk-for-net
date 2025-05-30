@@ -40,7 +40,7 @@ namespace Azure.AI.Language.Text.Authoring
                 writer.WriteStartArray();
                 foreach (var item in SentimentSpans)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExportedDocumentSentimentLabel>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

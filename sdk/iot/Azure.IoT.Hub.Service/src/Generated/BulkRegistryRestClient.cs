@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
@@ -55,7 +56,7 @@ namespace Azure.IoT.Hub.Service
             content.JsonWriter.WriteStartArray();
             foreach (var item in devices)
             {
-                content.JsonWriter.WriteObjectValue(item);
+                ((IJsonModel<ExportImportDevice>)item).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("tableLevelSharingProperties"u8);
-            writer.WriteObjectValue(TableLevelSharingProperties, options);
+            ((IJsonModel<TableLevelSharingProperties>)TableLevelSharingProperties).Write(writer, options);
             writer.WriteEndObject();
         }
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         }
                         if (property0.NameEquals("tableLevelSharingProperties"u8))
                         {
-                            tableLevelSharingProperties = TableLevelSharingProperties.DeserializeTableLevelSharingProperties(property0.Value, options);
+                            tableLevelSharingProperties = ModelSerializationExtensions.JsonDeserialize<TableLevelSharingProperties>(property0.Value);
                             continue;
                         }
                     }

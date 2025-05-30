@@ -42,7 +42,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(RecentJob))
             {
                 writer.WritePropertyName("recentJob"u8);
-                writer.WriteObjectValue(RecentJob, options);
+                ((IJsonModel<RecentBatchJob>)RecentJob).Write(writer, options);
             }
             if (Optional.IsDefined(EndTime))
             {
@@ -108,7 +108,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    recentJob = RecentBatchJob.DeserializeRecentBatchJob(property.Value, options);
+                    recentJob = ModelSerializationExtensions.JsonDeserialize<RecentBatchJob>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("endTime"u8))

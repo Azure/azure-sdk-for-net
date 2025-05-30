@@ -41,7 +41,7 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
-                writer.WriteObjectValue(Content);
+                JsonSerializer.Serialize(writer, Content);
             }
             if (Optional.IsDefined(TargetCondition))
             {
@@ -66,12 +66,12 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(SystemMetrics))
             {
                 writer.WritePropertyName("systemMetrics"u8);
-                writer.WriteObjectValue(SystemMetrics);
+                JsonSerializer.Serialize(writer, SystemMetrics);
             }
             if (Optional.IsDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
-                writer.WriteObjectValue(Metrics);
+                JsonSerializer.Serialize(writer, Metrics);
             }
             if (Optional.IsDefined(Etag))
             {
@@ -130,7 +130,7 @@ namespace Azure.IoT.Hub.Service.Models
                     {
                         continue;
                     }
-                    content = ConfigurationContent.DeserializeConfigurationContent(property.Value);
+                    content = ModelSerializationExtensions.JsonDeserialize<ConfigurationContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetCondition"u8))
@@ -171,7 +171,7 @@ namespace Azure.IoT.Hub.Service.Models
                     {
                         continue;
                     }
-                    systemMetrics = ConfigurationMetrics.DeserializeConfigurationMetrics(property.Value);
+                    systemMetrics = ModelSerializationExtensions.JsonDeserialize<ConfigurationMetrics>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metrics"u8))
@@ -180,7 +180,7 @@ namespace Azure.IoT.Hub.Service.Models
                     {
                         continue;
                     }
-                    metrics = ConfigurationMetrics.DeserializeConfigurationMetrics(property.Value);
+                    metrics = ModelSerializationExtensions.JsonDeserialize<ConfigurationMetrics>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))

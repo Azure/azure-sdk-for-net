@@ -22,7 +22,7 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(CustomCallingContext))
             {
                 writer.WritePropertyName("customCallingContext"u8);
-                writer.WriteObjectValue(CustomCallingContext);
+                JsonSerializer.Serialize(writer, CustomCallingContext);
             }
             if (Optional.IsDefined(OperationContext))
             {
@@ -32,22 +32,22 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(CallIntelligenceOptions))
             {
                 writer.WritePropertyName("callIntelligenceOptions"u8);
-                writer.WriteObjectValue(CallIntelligenceOptions);
+                JsonSerializer.Serialize(writer, CallIntelligenceOptions);
             }
             if (Optional.IsDefined(AnsweredBy))
             {
                 writer.WritePropertyName("answeredBy"u8);
-                writer.WriteObjectValue(AnsweredBy);
+                JsonSerializer.Serialize(writer, AnsweredBy);
             }
             if (Optional.IsDefined(MediaStreamingOptions))
             {
                 writer.WritePropertyName("mediaStreamingOptions"u8);
-                writer.WriteObjectValue(MediaStreamingOptions);
+                JsonSerializer.Serialize(writer, MediaStreamingOptions);
             }
             if (Optional.IsDefined(TranscriptionOptions))
             {
                 writer.WritePropertyName("transcriptionOptions"u8);
-                writer.WriteObjectValue(TranscriptionOptions);
+                JsonSerializer.Serialize(writer, TranscriptionOptions);
             }
             writer.WriteEndObject();
         }

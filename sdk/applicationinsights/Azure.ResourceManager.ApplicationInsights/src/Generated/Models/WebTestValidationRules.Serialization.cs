@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             if (Optional.IsDefined(ContentValidation))
             {
                 writer.WritePropertyName("ContentValidation"u8);
-                writer.WriteObjectValue(ContentValidation, options);
+                ((IJsonModel<WebTestContentValidation>)ContentValidation).Write(writer, options);
             }
             if (Optional.IsDefined(CheckSsl))
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    contentValidation = WebTestContentValidation.DeserializeWebTestContentValidation(property.Value, options);
+                    contentValidation = ModelSerializationExtensions.JsonDeserialize<WebTestContentValidation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("SSLCheck"u8))

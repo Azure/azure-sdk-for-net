@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(TargetInfo))
             {
                 writer.WritePropertyName("targetInfo"u8);
-                writer.WriteObjectValue(TargetInfo, options);
+                ((IJsonModel<TargetRestoreInfo>)TargetInfo).Write(writer, options);
             }
             if (Optional.IsDefined(RecoveryMode))
             {
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(UserAssignedManagedIdentityDetails))
             {
                 writer.WritePropertyName("userAssignedManagedIdentityDetails"u8);
-                writer.WriteObjectValue(UserAssignedManagedIdentityDetails, options);
+                ((IJsonModel<UserAssignedManagedIdentityDetails>)UserAssignedManagedIdentityDetails).Write(writer, options);
             }
             if (Optional.IsDefined(SnapshotRestoreParameters))
             {
                 writer.WritePropertyName("snapshotRestoreParameters"u8);
-                writer.WriteObjectValue(SnapshotRestoreParameters, options);
+                ((IJsonModel<SnapshotRestoreContent>)SnapshotRestoreParameters).Write(writer, options);
             }
             if (Optional.IsDefined(TargetVirtualMachineId))
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    targetInfo = TargetRestoreInfo.DeserializeTargetRestoreInfo(property.Value, options);
+                    targetInfo = ModelSerializationExtensions.JsonDeserialize<TargetRestoreInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("recoveryMode"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    userAssignedManagedIdentityDetails = UserAssignedManagedIdentityDetails.DeserializeUserAssignedManagedIdentityDetails(property.Value, options);
+                    userAssignedManagedIdentityDetails = ModelSerializationExtensions.JsonDeserialize<UserAssignedManagedIdentityDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("snapshotRestoreParameters"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    snapshotRestoreParameters = SnapshotRestoreContent.DeserializeSnapshotRestoreContent(property.Value, options);
+                    snapshotRestoreParameters = ModelSerializationExtensions.JsonDeserialize<SnapshotRestoreContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetVirtualMachineId"u8))

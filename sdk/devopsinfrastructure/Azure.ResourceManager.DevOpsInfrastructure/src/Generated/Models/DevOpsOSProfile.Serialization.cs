@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             if (Optional.IsDefined(SecretsManagementSettings))
             {
                 writer.WritePropertyName("secretsManagementSettings"u8);
-                writer.WriteObjectValue(SecretsManagementSettings, options);
+                ((IJsonModel<SecretsManagementSettings>)SecretsManagementSettings).Write(writer, options);
             }
             if (Optional.IsDefined(LogonType))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     {
                         continue;
                     }
-                    secretsManagementSettings = SecretsManagementSettings.DeserializeSecretsManagementSettings(property.Value, options);
+                    secretsManagementSettings = ModelSerializationExtensions.JsonDeserialize<SecretsManagementSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("logonType"u8))

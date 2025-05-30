@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Orbital.Models
             writer.WritePropertyName("bandwidthMHz"u8);
             writer.WriteNumberValue(BandwidthMHz);
             writer.WritePropertyName("endPoint"u8);
-            writer.WriteObjectValue(EndPoint, options);
+            ((IJsonModel<OrbitalContactEndpoint>)EndPoint).Write(writer, options);
             if (Optional.IsDefined(ModulationConfiguration))
             {
                 writer.WritePropertyName("modulationConfiguration"u8);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Orbital.Models
                 }
                 if (property.NameEquals("endPoint"u8))
                 {
-                    endPoint = OrbitalContactEndpoint.DeserializeOrbitalContactEndpoint(property.Value, options);
+                    endPoint = ModelSerializationExtensions.JsonDeserialize<OrbitalContactEndpoint>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("modulationConfiguration"u8))

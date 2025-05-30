@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DurableTask.Models
                 writer.WriteStartArray();
                 foreach (var item in RetentionPolicies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DurableTaskRetentionPolicyDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

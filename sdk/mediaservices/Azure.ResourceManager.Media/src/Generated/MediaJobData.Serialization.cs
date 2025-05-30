@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue(Input, options);
+                ((IJsonModel<MediaJobInputBasicProperties>)Input).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Media
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MediaJobOutput>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Media
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            input = MediaJobInputBasicProperties.DeserializeMediaJobInputBasicProperties(property0.Value, options);
+                            input = ModelSerializationExtensions.JsonDeserialize<MediaJobInputBasicProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("lastModified"u8))

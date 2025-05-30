@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             if (Optional.IsDefined(WindowsServerFailoverClusterDomainCredentials))
             {
                 writer.WritePropertyName("wsfcDomainCredentials"u8);
-                writer.WriteObjectValue(WindowsServerFailoverClusterDomainCredentials, options);
+                ((IJsonModel<WindowsServerFailoverClusterDomainCredentials>)WindowsServerFailoverClusterDomainCredentials).Write(writer, options);
             }
             if (Optional.IsDefined(WindowsServerFailoverClusterStaticIP))
             {
@@ -93,32 +93,32 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             if (Optional.IsDefined(AutoPatchingSettings))
             {
                 writer.WritePropertyName("autoPatchingSettings"u8);
-                writer.WriteObjectValue(AutoPatchingSettings, options);
+                ((IJsonModel<SqlVmAutoPatchingSettings>)AutoPatchingSettings).Write(writer, options);
             }
             if (Optional.IsDefined(AutoBackupSettings))
             {
                 writer.WritePropertyName("autoBackupSettings"u8);
-                writer.WriteObjectValue(AutoBackupSettings, options);
+                ((IJsonModel<SqlVmAutoBackupSettings>)AutoBackupSettings).Write(writer, options);
             }
             if (Optional.IsDefined(KeyVaultCredentialSettings))
             {
                 writer.WritePropertyName("keyVaultCredentialSettings"u8);
-                writer.WriteObjectValue(KeyVaultCredentialSettings, options);
+                ((IJsonModel<SqlVmKeyVaultCredentialSettings>)KeyVaultCredentialSettings).Write(writer, options);
             }
             if (Optional.IsDefined(ServerConfigurationsManagementSettings))
             {
                 writer.WritePropertyName("serverConfigurationsManagementSettings"u8);
-                writer.WriteObjectValue(ServerConfigurationsManagementSettings, options);
+                ((IJsonModel<SqlServerConfigurationsManagementSettings>)ServerConfigurationsManagementSettings).Write(writer, options);
             }
             if (Optional.IsDefined(StorageConfigurationSettings))
             {
                 writer.WritePropertyName("storageConfigurationSettings"u8);
-                writer.WriteObjectValue(StorageConfigurationSettings, options);
+                ((IJsonModel<SqlVmStorageConfigurationSettings>)StorageConfigurationSettings).Write(writer, options);
             }
             if (Optional.IsDefined(AssessmentSettings))
             {
                 writer.WritePropertyName("assessmentSettings"u8);
-                writer.WriteObjectValue(AssessmentSettings, options);
+                ((IJsonModel<SqlVmAssessmentSettings>)AssessmentSettings).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             {
                                 continue;
                             }
-                            windowsServerFailoverClusterDomainCredentials = WindowsServerFailoverClusterDomainCredentials.DeserializeWindowsServerFailoverClusterDomainCredentials(property0.Value, options);
+                            windowsServerFailoverClusterDomainCredentials = ModelSerializationExtensions.JsonDeserialize<WindowsServerFailoverClusterDomainCredentials>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("wsfcStaticIp"u8))
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             {
                                 continue;
                             }
-                            autoPatchingSettings = SqlVmAutoPatchingSettings.DeserializeSqlVmAutoPatchingSettings(property0.Value, options);
+                            autoPatchingSettings = ModelSerializationExtensions.JsonDeserialize<SqlVmAutoPatchingSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("autoBackupSettings"u8))
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             {
                                 continue;
                             }
-                            autoBackupSettings = SqlVmAutoBackupSettings.DeserializeSqlVmAutoBackupSettings(property0.Value, options);
+                            autoBackupSettings = ModelSerializationExtensions.JsonDeserialize<SqlVmAutoBackupSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("keyVaultCredentialSettings"u8))
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             {
                                 continue;
                             }
-                            keyVaultCredentialSettings = SqlVmKeyVaultCredentialSettings.DeserializeSqlVmKeyVaultCredentialSettings(property0.Value, options);
+                            keyVaultCredentialSettings = ModelSerializationExtensions.JsonDeserialize<SqlVmKeyVaultCredentialSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("serverConfigurationsManagementSettings"u8))
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             {
                                 continue;
                             }
-                            serverConfigurationsManagementSettings = SqlServerConfigurationsManagementSettings.DeserializeSqlServerConfigurationsManagementSettings(property0.Value, options);
+                            serverConfigurationsManagementSettings = ModelSerializationExtensions.JsonDeserialize<SqlServerConfigurationsManagementSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("storageConfigurationSettings"u8))
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             {
                                 continue;
                             }
-                            storageConfigurationSettings = SqlVmStorageConfigurationSettings.DeserializeSqlVmStorageConfigurationSettings(property0.Value, options);
+                            storageConfigurationSettings = ModelSerializationExtensions.JsonDeserialize<SqlVmStorageConfigurationSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("assessmentSettings"u8))
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             {
                                 continue;
                             }
-                            assessmentSettings = SqlVmAssessmentSettings.DeserializeSqlVmAssessmentSettings(property0.Value, options);
+                            assessmentSettings = ModelSerializationExtensions.JsonDeserialize<SqlVmAssessmentSettings>(property0.Value);
                             continue;
                         }
                     }

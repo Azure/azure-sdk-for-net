@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Threshold != null)
                 {
                     writer.WritePropertyName("threshold"u8);
-                    writer.WriteObjectValue(Threshold, options);
+                    ((IJsonModel<MonitoringThreshold>)Threshold).Write(writer, options);
                 }
                 else
                 {

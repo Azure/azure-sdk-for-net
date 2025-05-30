@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(MetricType);
             writer.WritePropertyName("name"u8);
-            writer.WriteObjectValue(Name, options);
+            ((IJsonModel<MonitorLocalizableString>)Name).Write(writer, options);
             if (Optional.IsDefined(DisplayDescription))
             {
                 writer.WritePropertyName("displayDescription"u8);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartArray();
             foreach (var item in Timeseries)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<MonitorTimeSeriesElement>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("name"u8))
                 {
-                    name = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<MonitorLocalizableString>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("displayDescription"u8))

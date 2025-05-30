@@ -52,24 +52,24 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WriteStartArray();
                 foreach (var item in ProvisioningIssues)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HybridComputeProvisioningIssue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(NetworkSecurityPerimeter))
             {
                 writer.WritePropertyName("networkSecurityPerimeter"u8);
-                writer.WriteObjectValue(NetworkSecurityPerimeter, options);
+                ((IJsonModel<NetworkSecurityPerimeter>)NetworkSecurityPerimeter).Write(writer, options);
             }
             if (Optional.IsDefined(ResourceAssociation))
             {
                 writer.WritePropertyName("resourceAssociation"u8);
-                writer.WriteObjectValue(ResourceAssociation, options);
+                ((IJsonModel<HybridComputeResourceAssociation>)ResourceAssociation).Write(writer, options);
             }
             if (Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
-                writer.WriteObjectValue(Profile, options);
+                ((IJsonModel<NetworkSecurityPerimeterProfile>)Profile).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HybridCompute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            networkSecurityPerimeter = NetworkSecurityPerimeter.DeserializeNetworkSecurityPerimeter(property0.Value, options);
+                            networkSecurityPerimeter = ModelSerializationExtensions.JsonDeserialize<NetworkSecurityPerimeter>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resourceAssociation"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            resourceAssociation = HybridComputeResourceAssociation.DeserializeHybridComputeResourceAssociation(property0.Value, options);
+                            resourceAssociation = ModelSerializationExtensions.JsonDeserialize<HybridComputeResourceAssociation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("profile"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            profile = NetworkSecurityPerimeterProfile.DeserializeNetworkSecurityPerimeterProfile(property0.Value, options);
+                            profile = ModelSerializationExtensions.JsonDeserialize<NetworkSecurityPerimeterProfile>(property0.Value);
                             continue;
                         }
                     }

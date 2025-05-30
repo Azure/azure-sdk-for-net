@@ -38,14 +38,14 @@ namespace Azure.AI.Language.Conversations.Authoring
             writer.WriteStartArray();
             foreach (var item in ExpectedEntities)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<UtteranceEntityEvaluationResult>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("predictedEntities"u8);
             writer.WriteStartArray();
             foreach (var item in PredictedEntities)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<UtteranceEntityEvaluationResult>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
-                writer.WriteObjectValue(Recurrence, options);
+                ((IJsonModel<LogicWorkflowTriggerRecurrence>)Recurrence).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    recurrence = LogicWorkflowTriggerRecurrence.DeserializeLogicWorkflowTriggerRecurrence(property.Value, options);
+                    recurrence = ModelSerializationExtensions.JsonDeserialize<LogicWorkflowTriggerRecurrence>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

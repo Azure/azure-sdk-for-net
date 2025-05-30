@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Ssh))
             {
                 writer.WritePropertyName("ssh"u8);
-                writer.WriteObjectValue(Ssh, options);
+                ((IJsonModel<SshConfiguration>)Ssh).Write(writer, options);
             }
             if (Optional.IsDefined(ProvisionVmAgent))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PatchSettings))
             {
                 writer.WritePropertyName("patchSettings"u8);
-                writer.WriteObjectValue(PatchSettings, options);
+                ((IJsonModel<LinuxPatchSettings>)PatchSettings).Write(writer, options);
             }
             if (Optional.IsDefined(IsVmAgentPlatformUpdatesEnabled))
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    ssh = SshConfiguration.DeserializeSshConfiguration(property.Value, options);
+                    ssh = ModelSerializationExtensions.JsonDeserialize<SshConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisionVMAgent"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    patchSettings = LinuxPatchSettings.DeserializeLinuxPatchSettings(property.Value, options);
+                    patchSettings = ModelSerializationExtensions.JsonDeserialize<LinuxPatchSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("enableVMAgentPlatformUpdates"u8))

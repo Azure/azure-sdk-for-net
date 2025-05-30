@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(EncryptionDetails))
             {
                 writer.WritePropertyName("encryptionDetails"u8);
-                writer.WriteObjectValue(EncryptionDetails, options);
+                ((IJsonModel<SiteRecoveryEncryptionDetails>)EncryptionDetails).Write(writer, options);
             }
             if (Optional.IsDefined(RolloverEncryptionDetails))
             {
                 writer.WritePropertyName("rolloverEncryptionDetails"u8);
-                writer.WriteObjectValue(RolloverEncryptionDetails, options);
+                ((IJsonModel<SiteRecoveryEncryptionDetails>)RolloverEncryptionDetails).Write(writer, options);
             }
             if (Optional.IsDefined(InternalIdentifier))
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(CustomDetails))
             {
                 writer.WritePropertyName("customDetails"u8);
-                writer.WriteObjectValue(CustomDetails, options);
+                ((IJsonModel<FabricSpecificDetails>)CustomDetails).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(HealthErrorDetails))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrorDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryHealthError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    encryptionDetails = SiteRecoveryEncryptionDetails.DeserializeSiteRecoveryEncryptionDetails(property.Value, options);
+                    encryptionDetails = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryEncryptionDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rolloverEncryptionDetails"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    rolloverEncryptionDetails = SiteRecoveryEncryptionDetails.DeserializeSiteRecoveryEncryptionDetails(property.Value, options);
+                    rolloverEncryptionDetails = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryEncryptionDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("internalIdentifier"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    customDetails = FabricSpecificDetails.DeserializeFabricSpecificDetails(property.Value, options);
+                    customDetails = ModelSerializationExtensions.JsonDeserialize<FabricSpecificDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("healthErrorDetails"u8))

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             if (options.Format != "W" && Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
-                writer.WriteObjectValue(Data, options);
+                ((IJsonModel<ApplianceSupportedVersionCatalogVersionProperties>)Data).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     {
                         continue;
                     }
-                    data = ApplianceSupportedVersionCatalogVersionProperties.DeserializeApplianceSupportedVersionCatalogVersionProperties(property.Value, options);
+                    data = ModelSerializationExtensions.JsonDeserialize<ApplianceSupportedVersionCatalogVersionProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

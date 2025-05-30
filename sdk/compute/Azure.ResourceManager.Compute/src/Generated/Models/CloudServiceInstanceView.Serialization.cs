@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(RoleInstance))
             {
                 writer.WritePropertyName("roleInstance"u8);
-                writer.WriteObjectValue(RoleInstance, options);
+                ((IJsonModel<InstanceViewStatusesSummary>)RoleInstance).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SdkVersion))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceInstanceViewStatus>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    roleInstance = InstanceViewStatusesSummary.DeserializeInstanceViewStatusesSummary(property.Value, options);
+                    roleInstance = ModelSerializationExtensions.JsonDeserialize<InstanceViewStatusesSummary>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sdkVersion"u8))

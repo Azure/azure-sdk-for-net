@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in SourceSettings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataFlowSourceSetting>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

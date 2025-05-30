@@ -82,22 +82,22 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(RoleProfile))
             {
                 writer.WritePropertyName("roleProfile"u8);
-                writer.WriteObjectValue(RoleProfile, options);
+                ((IJsonModel<CloudServiceRoleProfile>)RoleProfile).Write(writer, options);
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile, options);
+                ((IJsonModel<CloudServiceOSProfile>)OSProfile).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile, options);
+                ((IJsonModel<CloudServiceNetworkProfile>)NetworkProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ExtensionProfile))
             {
                 writer.WritePropertyName("extensionProfile"u8);
-                writer.WriteObjectValue(ExtensionProfile, options);
+                ((IJsonModel<CloudServiceExtensionProfile>)ExtensionProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            roleProfile = CloudServiceRoleProfile.DeserializeCloudServiceRoleProfile(property0.Value, options);
+                            roleProfile = ModelSerializationExtensions.JsonDeserialize<CloudServiceRoleProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("osProfile"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            osProfile = CloudServiceOSProfile.DeserializeCloudServiceOSProfile(property0.Value, options);
+                            osProfile = ModelSerializationExtensions.JsonDeserialize<CloudServiceOSProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"u8))
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            networkProfile = CloudServiceNetworkProfile.DeserializeCloudServiceNetworkProfile(property0.Value, options);
+                            networkProfile = ModelSerializationExtensions.JsonDeserialize<CloudServiceNetworkProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("extensionProfile"u8))
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            extensionProfile = CloudServiceExtensionProfile.DeserializeCloudServiceExtensionProfile(property0.Value, options);
+                            extensionProfile = ModelSerializationExtensions.JsonDeserialize<CloudServiceExtensionProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

@@ -52,12 +52,12 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(JobPreparationTaskExecutionInfo))
             {
                 writer.WritePropertyName("jobPreparationTaskExecutionInfo"u8);
-                writer.WriteObjectValue(JobPreparationTaskExecutionInfo, options);
+                ((IJsonModel<BatchJobPreparationTaskExecutionInfo>)JobPreparationTaskExecutionInfo).Write(writer, options);
             }
             if (Optional.IsDefined(JobReleaseTaskExecutionInfo))
             {
                 writer.WritePropertyName("jobReleaseTaskExecutionInfo"u8);
-                writer.WriteObjectValue(JobReleaseTaskExecutionInfo, options);
+                ((IJsonModel<BatchJobReleaseTaskExecutionInfo>)JobReleaseTaskExecutionInfo).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -126,7 +126,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    jobPreparationTaskExecutionInfo = BatchJobPreparationTaskExecutionInfo.DeserializeBatchJobPreparationTaskExecutionInfo(property.Value, options);
+                    jobPreparationTaskExecutionInfo = ModelSerializationExtensions.JsonDeserialize<BatchJobPreparationTaskExecutionInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("jobReleaseTaskExecutionInfo"u8))
@@ -135,7 +135,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    jobReleaseTaskExecutionInfo = BatchJobReleaseTaskExecutionInfo.DeserializeBatchJobReleaseTaskExecutionInfo(property.Value, options);
+                    jobReleaseTaskExecutionInfo = ModelSerializationExtensions.JsonDeserialize<BatchJobReleaseTaskExecutionInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

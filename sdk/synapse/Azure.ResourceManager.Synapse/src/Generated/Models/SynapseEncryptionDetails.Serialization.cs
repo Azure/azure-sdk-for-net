@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(Cmk))
             {
                 writer.WritePropertyName("cmk"u8);
-                writer.WriteObjectValue(Cmk, options);
+                ((IJsonModel<WorkspaceCustomerManagedKeyDetails>)Cmk).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    cmk = WorkspaceCustomerManagedKeyDetails.DeserializeWorkspaceCustomerManagedKeyDetails(property.Value, options);
+                    cmk = ModelSerializationExtensions.JsonDeserialize<WorkspaceCustomerManagedKeyDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

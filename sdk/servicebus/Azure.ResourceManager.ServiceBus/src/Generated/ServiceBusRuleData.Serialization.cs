@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ServiceBus
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteObjectValue(Action, options);
+                ((IJsonModel<ServiceBusFilterAction>)Action).Write(writer, options);
             }
             if (Optional.IsDefined(FilterType))
             {
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.ServiceBus
             if (Optional.IsDefined(SqlFilter))
             {
                 writer.WritePropertyName("sqlFilter"u8);
-                writer.WriteObjectValue(SqlFilter, options);
+                ((IJsonModel<ServiceBusSqlFilter>)SqlFilter).Write(writer, options);
             }
             if (Optional.IsDefined(CorrelationFilter))
             {
                 writer.WritePropertyName("correlationFilter"u8);
-                writer.WriteObjectValue(CorrelationFilter, options);
+                ((IJsonModel<ServiceBusCorrelationFilter>)CorrelationFilter).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ServiceBus
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ServiceBus
                             {
                                 continue;
                             }
-                            action = ServiceBusFilterAction.DeserializeServiceBusFilterAction(property0.Value, options);
+                            action = ModelSerializationExtensions.JsonDeserialize<ServiceBusFilterAction>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("filterType"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ServiceBus
                             {
                                 continue;
                             }
-                            sqlFilter = ServiceBusSqlFilter.DeserializeServiceBusSqlFilter(property0.Value, options);
+                            sqlFilter = ModelSerializationExtensions.JsonDeserialize<ServiceBusSqlFilter>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("correlationFilter"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ServiceBus
                             {
                                 continue;
                             }
-                            correlationFilter = ServiceBusCorrelationFilter.DeserializeServiceBusCorrelationFilter(property0.Value, options);
+                            correlationFilter = ModelSerializationExtensions.JsonDeserialize<ServiceBusCorrelationFilter>(property0.Value);
                             continue;
                         }
                     }

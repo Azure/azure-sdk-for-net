@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in PublicKeys)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LinuxSshPublicKey>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

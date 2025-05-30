@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(AutoscaleSettings))
             {
                 writer.WritePropertyName("autoscaleSettings"u8);
-                writer.WriteObjectValue(AutoscaleSettings, options);
+                ((IJsonModel<AutoscaleSettingsResourceInfo>)AutoscaleSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MinimumThroughput))
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in ThroughputBuckets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CosmosDBThroughputBucket>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    autoscaleSettings = AutoscaleSettingsResourceInfo.DeserializeAutoscaleSettingsResourceInfo(property.Value, options);
+                    autoscaleSettings = ModelSerializationExtensions.JsonDeserialize<AutoscaleSettingsResourceInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("minimumThroughput"u8))

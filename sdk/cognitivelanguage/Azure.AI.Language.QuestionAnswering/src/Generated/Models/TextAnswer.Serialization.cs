@@ -50,7 +50,7 @@ namespace Azure.AI.Language.QuestionAnswering
                     {
                         continue;
                     }
-                    answerSpan = AnswerSpan.DeserializeAnswerSpan(property.Value);
+                    answerSpan = ModelSerializationExtensions.JsonDeserialize<AnswerSpan>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("offset"u8))

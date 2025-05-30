@@ -76,7 +76,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("twin"u8))
                 {
-                    twin = DeviceTwinInfo.DeserializeDeviceTwinInfo(property.Value, options);
+                    twin = ModelSerializationExtensions.JsonDeserialize<DeviceTwinInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

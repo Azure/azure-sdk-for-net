@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.Billing.Models
             if (options.Format != "W" && Optional.IsDefined(AmountDue))
             {
                 writer.WritePropertyName("amountDue"u8);
-                writer.WriteObjectValue(AmountDue, options);
+                ((IJsonModel<BillingAmount>)AmountDue).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AzurePrepaymentApplied))
             {
                 writer.WritePropertyName("azurePrepaymentApplied"u8);
-                writer.WriteObjectValue(AzurePrepaymentApplied, options);
+                ((IJsonModel<BillingAmount>)AzurePrepaymentApplied).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(BilledAmount))
             {
                 writer.WritePropertyName("billedAmount"u8);
-                writer.WriteObjectValue(BilledAmount, options);
+                ((IJsonModel<BillingAmount>)BilledAmount).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(BilledDocumentId))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (options.Format != "W" && Optional.IsDefined(CreditAmount))
             {
                 writer.WritePropertyName("creditAmount"u8);
-                writer.WriteObjectValue(CreditAmount, options);
+                ((IJsonModel<BillingAmount>)CreditAmount).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreditForDocumentId))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in Documents)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InvoiceDocument>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,14 +102,14 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in FailedPayments)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BillingInvoiceFailedPayment>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(FreeAzureCreditApplied))
             {
                 writer.WritePropertyName("freeAzureCreditApplied"u8);
-                writer.WriteObjectValue(FreeAzureCreditApplied, options);
+                ((IJsonModel<BillingAmount>)FreeAzureCreditApplied).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(InvoiceOn))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in Payments)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BillingInvoicePayment>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (options.Format != "W" && Optional.IsDefined(RebillDetails))
             {
                 writer.WritePropertyName("rebillDetails"u8);
-                writer.WriteObjectValue(RebillDetails, options);
+                ((IJsonModel<RebillDetails>)RebillDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -179,22 +179,22 @@ namespace Azure.ResourceManager.Billing.Models
             if (options.Format != "W" && Optional.IsDefined(SubTotal))
             {
                 writer.WritePropertyName("subTotal"u8);
-                writer.WriteObjectValue(SubTotal, options);
+                ((IJsonModel<BillingAmount>)SubTotal).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TaxAmount))
             {
                 writer.WritePropertyName("taxAmount"u8);
-                writer.WriteObjectValue(TaxAmount, options);
+                ((IJsonModel<BillingAmount>)TaxAmount).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TotalAmount))
             {
                 writer.WritePropertyName("totalAmount"u8);
-                writer.WriteObjectValue(TotalAmount, options);
+                ((IJsonModel<BillingAmount>)TotalAmount).Write(writer, options);
             }
             if (Optional.IsDefined(RefundDetails))
             {
                 writer.WritePropertyName("refundDetails"u8);
-                writer.WriteObjectValue(RefundDetails, options);
+                ((IJsonModel<RefundDetailsSummary>)RefundDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    amountDue = BillingAmount.DeserializeBillingAmount(property.Value, options);
+                    amountDue = ModelSerializationExtensions.JsonDeserialize<BillingAmount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azurePrepaymentApplied"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    azurePrepaymentApplied = BillingAmount.DeserializeBillingAmount(property.Value, options);
+                    azurePrepaymentApplied = ModelSerializationExtensions.JsonDeserialize<BillingAmount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("billedAmount"u8))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    billedAmount = BillingAmount.DeserializeBillingAmount(property.Value, options);
+                    billedAmount = ModelSerializationExtensions.JsonDeserialize<BillingAmount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("billedDocumentId"u8))
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    creditAmount = BillingAmount.DeserializeBillingAmount(property.Value, options);
+                    creditAmount = ModelSerializationExtensions.JsonDeserialize<BillingAmount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("creditForDocumentId"u8))
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    freeAzureCreditApplied = BillingAmount.DeserializeBillingAmount(property.Value, options);
+                    freeAzureCreditApplied = ModelSerializationExtensions.JsonDeserialize<BillingAmount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("invoiceDate"u8))
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    rebillDetails = RebillDetails.DeserializeRebillDetails(property.Value, options);
+                    rebillDetails = ModelSerializationExtensions.JsonDeserialize<RebillDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    subTotal = BillingAmount.DeserializeBillingAmount(property.Value, options);
+                    subTotal = ModelSerializationExtensions.JsonDeserialize<BillingAmount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("taxAmount"u8))
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    taxAmount = BillingAmount.DeserializeBillingAmount(property.Value, options);
+                    taxAmount = ModelSerializationExtensions.JsonDeserialize<BillingAmount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("totalAmount"u8))
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    totalAmount = BillingAmount.DeserializeBillingAmount(property.Value, options);
+                    totalAmount = ModelSerializationExtensions.JsonDeserialize<BillingAmount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("refundDetails"u8))
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    refundDetails = RefundDetailsSummary.DeserializeRefundDetailsSummary(property.Value, options);
+                    refundDetails = ModelSerializationExtensions.JsonDeserialize<RefundDetailsSummary>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

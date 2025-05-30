@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(RestrictionInfo))
             {
                 writer.WritePropertyName("restrictionInfo"u8);
-                writer.WriteObjectValue(RestrictionInfo, options);
+                ((IJsonModel<AppPlatformSkuRestrictionInfo>)RestrictionInfo).Write(writer, options);
             }
             if (Optional.IsDefined(ReasonCode))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    restrictionInfo = AppPlatformSkuRestrictionInfo.DeserializeAppPlatformSkuRestrictionInfo(property.Value, options);
+                    restrictionInfo = ModelSerializationExtensions.JsonDeserialize<AppPlatformSkuRestrictionInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("reasonCode"u8))

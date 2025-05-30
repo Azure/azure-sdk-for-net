@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Health))
             {
                 writer.WritePropertyName("health"u8);
-                writer.WriteObjectValue(Health, options);
+                ((IJsonModel<WorkflowHealth>)Health).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    health = WorkflowHealth.DeserializeWorkflowHealth(property.Value, options);
+                    health = ModelSerializationExtensions.JsonDeserialize<WorkflowHealth>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

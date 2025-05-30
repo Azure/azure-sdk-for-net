@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (LimitSettings != null)
                 {
                     writer.WritePropertyName("limitSettings"u8);
-                    writer.WriteObjectValue(LimitSettings, options);
+                    ((IJsonModel<NlpVerticalLimitSettings>)LimitSettings).Write(writer, options);
                 }
                 else
                 {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (FeaturizationSettings != null)
                 {
                     writer.WritePropertyName("featurizationSettings"u8);
-                    writer.WriteObjectValue(FeaturizationSettings, options);
+                    ((IJsonModel<NlpVerticalFeaturizationSettings>)FeaturizationSettings).Write(writer, options);
                 }
                 else
                 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ValidationData != null)
                 {
                     writer.WritePropertyName("validationData"u8);
-                    writer.WriteObjectValue(ValidationData, options);
+                    ((IJsonModel<MachineLearningTableJobInput>)ValidationData).Write(writer, options);
                 }
                 else
                 {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         limitSettings = null;
                         continue;
                     }
-                    limitSettings = NlpVerticalLimitSettings.DeserializeNlpVerticalLimitSettings(property.Value, options);
+                    limitSettings = ModelSerializationExtensions.JsonDeserialize<NlpVerticalLimitSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("featurizationSettings"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         featurizationSettings = null;
                         continue;
                     }
-                    featurizationSettings = NlpVerticalFeaturizationSettings.DeserializeNlpVerticalFeaturizationSettings(property.Value, options);
+                    featurizationSettings = ModelSerializationExtensions.JsonDeserialize<NlpVerticalFeaturizationSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("validationData"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         validationData = null;
                         continue;
                     }
-                    validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
+                    validationData = ModelSerializationExtensions.JsonDeserialize<MachineLearningTableJobInput>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("taskType"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("trainingData"u8))
                 {
-                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
+                    trainingData = ModelSerializationExtensions.JsonDeserialize<MachineLearningTableJobInput>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetColumnName"u8))

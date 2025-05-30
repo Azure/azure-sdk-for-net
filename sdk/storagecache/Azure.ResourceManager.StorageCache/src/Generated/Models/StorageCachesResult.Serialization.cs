@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StorageCacheData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

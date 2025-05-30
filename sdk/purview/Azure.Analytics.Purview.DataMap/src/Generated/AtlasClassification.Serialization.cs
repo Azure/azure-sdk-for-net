@@ -88,7 +88,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in ValidityPeriods)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TimeBoundary>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

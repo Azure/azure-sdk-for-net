@@ -36,7 +36,7 @@ namespace Azure.Communication.Messages
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("interactiveMessage"u8);
-            writer.WriteObjectValue(InteractiveMessage, options);
+            ((IJsonModel<InteractiveMessage>)InteractiveMessage).Write(writer, options);
         }
 
         InteractiveNotificationContent IJsonModel<InteractiveNotificationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -69,7 +69,7 @@ namespace Azure.Communication.Messages
             {
                 if (property.NameEquals("interactiveMessage"u8))
                 {
-                    interactiveMessage = InteractiveMessage.DeserializeInteractiveMessage(property.Value, options);
+                    interactiveMessage = ModelSerializationExtensions.JsonDeserialize<InteractiveMessage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("channelRegistrationId"u8))

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Quota.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<GroupQuotaLimitProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    properties = GroupQuotaLimitProperties.DeserializeGroupQuotaLimitProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<GroupQuotaLimitProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

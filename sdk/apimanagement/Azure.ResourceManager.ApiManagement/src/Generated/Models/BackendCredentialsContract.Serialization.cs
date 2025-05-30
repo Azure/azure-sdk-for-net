@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
-                writer.WriteObjectValue(Authorization, options);
+                ((IJsonModel<BackendAuthorizationHeaderCredentials>)Authorization).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    authorization = BackendAuthorizationHeaderCredentials.DeserializeBackendAuthorizationHeaderCredentials(property.Value, options);
+                    authorization = ModelSerializationExtensions.JsonDeserialize<BackendAuthorizationHeaderCredentials>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

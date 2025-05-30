@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RecordSets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RecordSet>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

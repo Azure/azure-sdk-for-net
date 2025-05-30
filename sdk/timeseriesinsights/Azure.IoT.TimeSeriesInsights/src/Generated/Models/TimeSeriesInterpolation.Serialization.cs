@@ -23,7 +23,7 @@ namespace Azure.IoT.TimeSeriesInsights
             if (Optional.IsDefined(Boundary))
             {
                 writer.WritePropertyName("boundary"u8);
-                writer.WriteObjectValue(Boundary);
+                JsonSerializer.Serialize(writer, Boundary);
             }
             writer.WriteEndObject();
         }
@@ -53,7 +53,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     {
                         continue;
                     }
-                    boundary = InterpolationBoundary.DeserializeInterpolationBoundary(property.Value);
+                    boundary = ModelSerializationExtensions.JsonDeserialize<InterpolationBoundary>(property.Value);
                     continue;
                 }
             }

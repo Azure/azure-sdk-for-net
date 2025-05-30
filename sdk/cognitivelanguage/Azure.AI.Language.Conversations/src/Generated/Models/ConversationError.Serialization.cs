@@ -49,14 +49,14 @@ namespace Azure.AI.Language.Conversations.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConversationError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(Innererror, options);
+                ((IJsonModel<InnerErrorModel>)Innererror).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.AI.Language.Conversations.Models
                     {
                         continue;
                     }
-                    innererror = InnerErrorModel.DeserializeInnerErrorModel(property.Value, options);
+                    innererror = ModelSerializationExtensions.JsonDeserialize<InnerErrorModel>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

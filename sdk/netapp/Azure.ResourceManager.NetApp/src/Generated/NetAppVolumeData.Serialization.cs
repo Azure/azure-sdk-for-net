@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.NetApp
             if (Optional.IsDefined(ExportPolicy))
             {
                 writer.WritePropertyName("exportPolicy"u8);
-                writer.WriteObjectValue(ExportPolicy, options);
+                ((IJsonModel<VolumePropertiesExportPolicy>)ExportPolicy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ProtocolTypes))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetApp
                 writer.WriteStartArray();
                 foreach (var item in MountTargets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetAppVolumeMountTarget>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.NetApp
             if (Optional.IsDefined(DataProtection))
             {
                 writer.WritePropertyName("dataProtection"u8);
-                writer.WriteObjectValue(DataProtection, options);
+                ((IJsonModel<NetAppVolumeDataProtection>)DataProtection).Write(writer, options);
             }
             if (Optional.IsDefined(IsSnapshotDirectoryVisible))
             {
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.NetApp
                 writer.WriteStartArray();
                 foreach (var item in PlacementRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetAppVolumePlacementRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.NetApp
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            exportPolicy = VolumePropertiesExportPolicy.DeserializeVolumePropertiesExportPolicy(property0.Value, options);
+                            exportPolicy = ModelSerializationExtensions.JsonDeserialize<VolumePropertiesExportPolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("protocolTypes"u8))
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            dataProtection = NetAppVolumeDataProtection.DeserializeNetAppVolumeDataProtection(property0.Value, options);
+                            dataProtection = ModelSerializationExtensions.JsonDeserialize<NetAppVolumeDataProtection>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("snapshotDirectoryVisible"u8))

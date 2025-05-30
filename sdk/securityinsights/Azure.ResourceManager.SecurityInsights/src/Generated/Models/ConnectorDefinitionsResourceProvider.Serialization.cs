@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WritePropertyName("scope"u8);
             writer.WriteStringValue(Scope.ToString());
             writer.WritePropertyName("requiredPermissions"u8);
-            writer.WriteObjectValue(RequiredPermissions, options);
+            ((IJsonModel<ConnectorResourceProviderRequiredPermissions>)RequiredPermissions).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (property.NameEquals("requiredPermissions"u8))
                 {
-                    requiredPermissions = ConnectorResourceProviderRequiredPermissions.DeserializeConnectorResourceProviderRequiredPermissions(property.Value, options);
+                    requiredPermissions = ModelSerializationExtensions.JsonDeserialize<ConnectorResourceProviderRequiredPermissions>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

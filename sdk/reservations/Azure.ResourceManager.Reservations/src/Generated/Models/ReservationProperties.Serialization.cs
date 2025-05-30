@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ExtendedStatusInfo))
             {
                 writer.WritePropertyName("extendedStatusInfo"u8);
-                writer.WriteObjectValue(ExtendedStatusInfo, options);
+                ((IJsonModel<ExtendedStatusInfo>)ExtendedStatusInfo).Write(writer, options);
             }
             if (Optional.IsDefined(BillingPlan))
             {
@@ -152,22 +152,22 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(SplitProperties))
             {
                 writer.WritePropertyName("splitProperties"u8);
-                writer.WriteObjectValue(SplitProperties, options);
+                ((IJsonModel<ReservationSplitProperties>)SplitProperties).Write(writer, options);
             }
             if (Optional.IsDefined(MergeProperties))
             {
                 writer.WritePropertyName("mergeProperties"u8);
-                writer.WriteObjectValue(MergeProperties, options);
+                ((IJsonModel<ReservationMergeProperties>)MergeProperties).Write(writer, options);
             }
             if (Optional.IsDefined(SwapProperties))
             {
                 writer.WritePropertyName("swapProperties"u8);
-                writer.WriteObjectValue(SwapProperties, options);
+                ((IJsonModel<ReservationSwapProperties>)SwapProperties).Write(writer, options);
             }
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties, options);
+                ((IJsonModel<AppliedScopeProperties>)AppliedScopeProperties).Write(writer, options);
             }
             if (Optional.IsDefined(BillingScopeId))
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(RenewProperties))
             {
                 writer.WritePropertyName("renewProperties"u8);
-                writer.WriteObjectValue(RenewProperties, options);
+                ((IJsonModel<RenewProperties>)RenewProperties).Write(writer, options);
             }
             if (Optional.IsDefined(Term))
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (options.Format != "W" && Optional.IsDefined(Utilization))
             {
                 writer.WritePropertyName("utilization"u8);
-                writer.WriteObjectValue(Utilization, options);
+                ((IJsonModel<ReservationPropertiesUtilization>)Utilization).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    extendedStatusInfo = ExtendedStatusInfo.DeserializeExtendedStatusInfo(property.Value, options);
+                    extendedStatusInfo = ModelSerializationExtensions.JsonDeserialize<ExtendedStatusInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("billingPlan"u8))
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    splitProperties = ReservationSplitProperties.DeserializeReservationSplitProperties(property.Value, options);
+                    splitProperties = ModelSerializationExtensions.JsonDeserialize<ReservationSplitProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mergeProperties"u8))
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    mergeProperties = ReservationMergeProperties.DeserializeReservationMergeProperties(property.Value, options);
+                    mergeProperties = ModelSerializationExtensions.JsonDeserialize<ReservationMergeProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("swapProperties"u8))
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    swapProperties = ReservationSwapProperties.DeserializeReservationSwapProperties(property.Value, options);
+                    swapProperties = ModelSerializationExtensions.JsonDeserialize<ReservationSwapProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("appliedScopeProperties"u8))
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    appliedScopeProperties = AppliedScopeProperties.DeserializeAppliedScopeProperties(property.Value, options);
+                    appliedScopeProperties = ModelSerializationExtensions.JsonDeserialize<AppliedScopeProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("billingScopeId"u8))
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    renewProperties = RenewProperties.DeserializeRenewProperties(property.Value, options);
+                    renewProperties = ModelSerializationExtensions.JsonDeserialize<RenewProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("term"u8))
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    utilization = ReservationPropertiesUtilization.DeserializeReservationPropertiesUtilization(property.Value, options);
+                    utilization = ModelSerializationExtensions.JsonDeserialize<ReservationPropertiesUtilization>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

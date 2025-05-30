@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(CommunityMetadata))
             {
                 writer.WritePropertyName("communityMetadata"u8);
-                writer.WriteObjectValue(CommunityMetadata, options);
+                ((IJsonModel<CommunityGalleryMetadata>)CommunityMetadata).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            communityMetadata = CommunityGalleryMetadata.DeserializeCommunityGalleryMetadata(property0.Value, options);
+                            communityMetadata = ModelSerializationExtensions.JsonDeserialize<CommunityGalleryMetadata>(property0.Value);
                             continue;
                         }
                     }

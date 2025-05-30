@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in VirtualMachines)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ComputeSubResourceDataWithColocationStatus>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in VirtualMachineScaleSets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ComputeSubResourceDataWithColocationStatus>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,19 +80,19 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in AvailabilitySets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ComputeSubResourceDataWithColocationStatus>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ColocationStatus))
             {
                 writer.WritePropertyName("colocationStatus"u8);
-                writer.WriteObjectValue(ColocationStatus, options);
+                ((IJsonModel<InstanceViewStatus>)ColocationStatus).Write(writer, options);
             }
             if (Optional.IsDefined(Intent))
             {
                 writer.WritePropertyName("intent"u8);
-                writer.WriteObjectValue(Intent, options);
+                ((IJsonModel<ProximityPlacementGroupPropertiesIntent>)Intent).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            colocationStatus = InstanceViewStatus.DeserializeInstanceViewStatus(property0.Value, options);
+                            colocationStatus = ModelSerializationExtensions.JsonDeserialize<InstanceViewStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("intent"u8))
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            intent = ProximityPlacementGroupPropertiesIntent.DeserializeProximityPlacementGroupPropertiesIntent(property0.Value, options);
+                            intent = ModelSerializationExtensions.JsonDeserialize<ProximityPlacementGroupPropertiesIntent>(property0.Value);
                             continue;
                         }
                     }

@@ -22,7 +22,7 @@ namespace Azure.AI.MetricsAdvisor
             writer.WritePropertyName("endTime"u8);
             writer.WriteStringValue(EndsOn, "O");
             writer.WritePropertyName("value"u8);
-            writer.WriteObjectValue<AnomalyFeedbackValue>(ValueInternal);
+            JsonSerializer.Serialize(writer, ValueInternal);
             if (Optional.IsDefined(DetectionConfigurationId))
             {
                 if (DetectionConfigurationId != null)
@@ -40,7 +40,7 @@ namespace Azure.AI.MetricsAdvisor
                 if (DetectionConfigurationSnapshot != null)
                 {
                     writer.WritePropertyName("anomalyDetectionConfigurationSnapshot"u8);
-                    writer.WriteObjectValue<AnomalyDetectionConfiguration>(DetectionConfigurationSnapshot);
+                    JsonSerializer.Serialize(writer, DetectionConfigurationSnapshot);
                 }
                 else
                 {
@@ -52,7 +52,7 @@ namespace Azure.AI.MetricsAdvisor
             writer.WritePropertyName("metricId"u8);
             writer.WriteStringValue(MetricId);
             writer.WritePropertyName("dimensionFilter"u8);
-            writer.WriteObjectValue<FeedbackFilter>(DimensionFilter);
+            JsonSerializer.Serialize(writer, DimensionFilter);
             writer.WriteEndObject();
         }
 
@@ -87,7 +87,7 @@ namespace Azure.AI.MetricsAdvisor
                 }
                 if (property.NameEquals("value"u8))
                 {
-                    value = AnomalyFeedbackValue.DeserializeAnomalyFeedbackValue(property.Value);
+                    value = ModelSerializationExtensions.JsonDeserialize<AnomalyFeedbackValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("anomalyDetectionConfigurationId"u8))
@@ -107,7 +107,7 @@ namespace Azure.AI.MetricsAdvisor
                         anomalyDetectionConfigurationSnapshot = null;
                         continue;
                     }
-                    anomalyDetectionConfigurationSnapshot = AnomalyDetectionConfiguration.DeserializeAnomalyDetectionConfiguration(property.Value);
+                    anomalyDetectionConfigurationSnapshot = ModelSerializationExtensions.JsonDeserialize<AnomalyDetectionConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("feedbackType"u8))
@@ -141,7 +141,7 @@ namespace Azure.AI.MetricsAdvisor
                 }
                 if (property.NameEquals("dimensionFilter"u8))
                 {
-                    dimensionFilter = FeedbackFilter.DeserializeFeedbackFilter(property.Value);
+                    dimensionFilter = ModelSerializationExtensions.JsonDeserialize<FeedbackFilter>(property.Value);
                     continue;
                 }
             }

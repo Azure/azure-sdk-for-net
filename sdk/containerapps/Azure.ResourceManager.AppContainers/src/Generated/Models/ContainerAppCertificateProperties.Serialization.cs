@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(CertificateKeyVaultProperties))
             {
                 writer.WritePropertyName("certificateKeyVaultProperties"u8);
-                writer.WriteObjectValue(CertificateKeyVaultProperties, options);
+                ((IJsonModel<ContainerAppCertificateKeyVaultProperties>)CertificateKeyVaultProperties).Write(writer, options);
             }
             if (Optional.IsDefined(Password))
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    certificateKeyVaultProperties = ContainerAppCertificateKeyVaultProperties.DeserializeContainerAppCertificateKeyVaultProperties(property.Value, options);
+                    certificateKeyVaultProperties = ModelSerializationExtensions.JsonDeserialize<ContainerAppCertificateKeyVaultProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("password"u8))

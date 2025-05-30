@@ -37,22 +37,22 @@ namespace Azure.ResourceManager.Nginx.Models
             if (options.Format != "W" && Optional.IsDefined(AttackSignaturesPackage))
             {
                 writer.WritePropertyName("attackSignaturesPackage"u8);
-                writer.WriteObjectValue(AttackSignaturesPackage, options);
+                ((IJsonModel<WebApplicationFirewallPackage>)AttackSignaturesPackage).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(BotSignaturesPackage))
             {
                 writer.WritePropertyName("botSignaturesPackage"u8);
-                writer.WriteObjectValue(BotSignaturesPackage, options);
+                ((IJsonModel<WebApplicationFirewallPackage>)BotSignaturesPackage).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ThreatCampaignsPackage))
             {
                 writer.WritePropertyName("threatCampaignsPackage"u8);
-                writer.WriteObjectValue(ThreatCampaignsPackage, options);
+                ((IJsonModel<WebApplicationFirewallPackage>)ThreatCampaignsPackage).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ComponentVersions))
             {
                 writer.WritePropertyName("componentVersions"u8);
-                writer.WriteObjectValue(ComponentVersions, options);
+                ((IJsonModel<WebApplicationFirewallComponentVersions>)ComponentVersions).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    attackSignaturesPackage = WebApplicationFirewallPackage.DeserializeWebApplicationFirewallPackage(property.Value, options);
+                    attackSignaturesPackage = ModelSerializationExtensions.JsonDeserialize<WebApplicationFirewallPackage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("botSignaturesPackage"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    botSignaturesPackage = WebApplicationFirewallPackage.DeserializeWebApplicationFirewallPackage(property.Value, options);
+                    botSignaturesPackage = ModelSerializationExtensions.JsonDeserialize<WebApplicationFirewallPackage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("threatCampaignsPackage"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    threatCampaignsPackage = WebApplicationFirewallPackage.DeserializeWebApplicationFirewallPackage(property.Value, options);
+                    threatCampaignsPackage = ModelSerializationExtensions.JsonDeserialize<WebApplicationFirewallPackage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("componentVersions"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    componentVersions = WebApplicationFirewallComponentVersions.DeserializeWebApplicationFirewallComponentVersions(property.Value, options);
+                    componentVersions = ModelSerializationExtensions.JsonDeserialize<WebApplicationFirewallComponentVersions>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

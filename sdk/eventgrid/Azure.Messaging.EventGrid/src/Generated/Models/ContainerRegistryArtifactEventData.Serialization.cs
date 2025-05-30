@@ -58,7 +58,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    target = ContainerRegistryArtifactEventTarget.DeserializeContainerRegistryArtifactEventTarget(property.Value);
+                    target = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryArtifactEventTarget>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("connectedRegistry"u8))
@@ -67,7 +67,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    connectedRegistry = ContainerRegistryEventConnectedRegistry.DeserializeContainerRegistryEventConnectedRegistry(property.Value);
+                    connectedRegistry = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryEventConnectedRegistry>(property.Value);
                     continue;
                 }
             }

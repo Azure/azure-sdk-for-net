@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Text.Authoring
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("customMultiLabelClassificationEvaluation"u8);
-            writer.WriteObjectValue(CustomMultiLabelClassificationEvaluation, options);
+            ((IJsonModel<MultiLabelClassificationEvalSummary>)CustomMultiLabelClassificationEvaluation).Write(writer, options);
         }
 
         CustomMultiLabelClassificationEvalSummary IJsonModel<CustomMultiLabelClassificationEvalSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -68,7 +68,7 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 if (property.NameEquals("customMultiLabelClassificationEvaluation"u8))
                 {
-                    customMultiLabelClassificationEvaluation = MultiLabelClassificationEvalSummary.DeserializeMultiLabelClassificationEvalSummary(property.Value, options);
+                    customMultiLabelClassificationEvaluation = ModelSerializationExtensions.JsonDeserialize<MultiLabelClassificationEvalSummary>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("projectKind"u8))
@@ -78,7 +78,7 @@ namespace Azure.AI.Language.Text.Authoring
                 }
                 if (property.NameEquals("evaluationOptions"u8))
                 {
-                    evaluationOptions = TextAuthoringEvaluationDetails.DeserializeTextAuthoringEvaluationDetails(property.Value, options);
+                    evaluationOptions = ModelSerializationExtensions.JsonDeserialize<TextAuthoringEvaluationDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in ExecutionSummary)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ScriptActionExecutionSummary>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 writer.WriteStartArray();
                 foreach (var item in Attribute)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<Attributes>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             if (Optional.IsDefined(DefaultEndpointSettings))
             {
                 writer.WritePropertyName("defaultEndpointSettings"u8);
-                writer.WriteObjectValue(DefaultEndpointSettings, options);
+                ((IJsonModel<DefaultEndpointSettings>)DefaultEndpointSettings).Write(writer, options);
             }
             if (Optional.IsDefined(Branch))
             {
                 writer.WritePropertyName("branch"u8);
-                writer.WriteObjectValue(Branch, options);
+                ((IJsonModel<NeonBranchProperties>)Branch).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Roles))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 writer.WriteStartArray();
                 foreach (var item in Roles)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NeonRoleProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 writer.WriteStartArray();
                 foreach (var item in Databases)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NeonDatabaseProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NeonEndpointProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                     {
                         continue;
                     }
-                    defaultEndpointSettings = DefaultEndpointSettings.DeserializeDefaultEndpointSettings(property.Value, options);
+                    defaultEndpointSettings = ModelSerializationExtensions.JsonDeserialize<DefaultEndpointSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("branch"u8))
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                     {
                         continue;
                     }
-                    branch = NeonBranchProperties.DeserializeNeonBranchProperties(property.Value, options);
+                    branch = ModelSerializationExtensions.JsonDeserialize<NeonBranchProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("roles"u8))

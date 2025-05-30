@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(ProtectionMode))
             {
                 writer.WritePropertyName("protectionMode"u8);
-                writer.WriteObjectValue(ProtectionMode, options);
+                ((IJsonModel<SecurityCenterFileProtectionMode>)ProtectionMode).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ConfigurationStatus))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Issues)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AdaptiveApplicationControlIssueSummary>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in VmRecommendations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VmRecommendation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in PathRecommendations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PathRecommendation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            protectionMode = SecurityCenterFileProtectionMode.DeserializeSecurityCenterFileProtectionMode(property0.Value, options);
+                            protectionMode = ModelSerializationExtensions.JsonDeserialize<SecurityCenterFileProtectionMode>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("configurationStatus"u8))

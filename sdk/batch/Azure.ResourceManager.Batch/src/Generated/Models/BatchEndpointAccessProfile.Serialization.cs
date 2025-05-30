@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BatchIPRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

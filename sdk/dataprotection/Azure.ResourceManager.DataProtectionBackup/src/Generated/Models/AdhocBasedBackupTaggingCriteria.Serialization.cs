@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(TagInfo))
             {
                 writer.WritePropertyName("tagInfo"u8);
-                writer.WriteObjectValue(TagInfo, options);
+                ((IJsonModel<DataProtectionBackupRetentionTag>)TagInfo).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    tagInfo = DataProtectionBackupRetentionTag.DeserializeDataProtectionBackupRetentionTag(property.Value, options);
+                    tagInfo = ModelSerializationExtensions.JsonDeserialize<DataProtectionBackupRetentionTag>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

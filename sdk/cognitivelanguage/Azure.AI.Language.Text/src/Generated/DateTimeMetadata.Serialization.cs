@@ -41,7 +41,7 @@ namespace Azure.AI.Language.Text
                 writer.WriteStartArray();
                 foreach (var item in Dates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DateValue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

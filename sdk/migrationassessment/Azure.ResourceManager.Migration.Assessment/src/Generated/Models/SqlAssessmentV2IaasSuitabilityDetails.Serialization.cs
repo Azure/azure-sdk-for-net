@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
             if (options.Format != "W" && Optional.IsDefined(AzureSqlSku))
             {
                 writer.WritePropertyName("azureSqlSku"u8);
-                writer.WriteObjectValue(AzureSqlSku, options);
+                ((IJsonModel<AssessmentAzureSqlIaasSkuDto>)AzureSqlSku).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ReplicaAzureSqlSku))
             {
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 writer.WriteStartArray();
                 foreach (var item in ReplicaAzureSqlSku)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AssessmentAzureSqlIaasSkuDto>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(SharedResources))
             {
                 writer.WritePropertyName("sharedResources"u8);
-                writer.WriteObjectValue(SharedResources, options);
+                ((IJsonModel<SharedResourcesDto>)SharedResources).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MonthlyComputeCost))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 writer.WriteStartArray();
                 foreach (var item in CostComponents)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AssessmentCostComponent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 writer.WriteStartArray();
                 foreach (var item in MigrationGuidelines)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SqlMigrationGuideline>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 writer.WriteStartArray();
                 foreach (var item in RecommendationReasonings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SqlRecommendationReasoning>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 writer.WriteStartArray();
                 foreach (var item in MigrationIssues)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SqlAssessmentMigrationIssue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                     {
                         continue;
                     }
-                    azureSqlSku = AssessmentAzureSqlIaasSkuDto.DeserializeAssessmentAzureSqlIaasSkuDto(property.Value, options);
+                    azureSqlSku = ModelSerializationExtensions.JsonDeserialize<AssessmentAzureSqlIaasSkuDto>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("replicaAzureSqlSku"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                     {
                         continue;
                     }
-                    sharedResources = SharedResourcesDto.DeserializeSharedResourcesDto(property.Value, options);
+                    sharedResources = ModelSerializationExtensions.JsonDeserialize<SharedResourcesDto>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("monthlyComputeCost"u8))

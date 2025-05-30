@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             if (Optional.IsDefined(SqlDataSettings))
             {
                 writer.WritePropertyName("sqlDataSettings"u8);
-                writer.WriteObjectValue(SqlDataSettings, options);
+                ((IJsonModel<SqlStorageSettings>)SqlDataSettings).Write(writer, options);
             }
             if (Optional.IsDefined(SqlLogSettings))
             {
                 writer.WritePropertyName("sqlLogSettings"u8);
-                writer.WriteObjectValue(SqlLogSettings, options);
+                ((IJsonModel<SqlStorageSettings>)SqlLogSettings).Write(writer, options);
             }
             if (Optional.IsDefined(SqlTempDBSettings))
             {
                 writer.WritePropertyName("sqlTempDbSettings"u8);
-                writer.WriteObjectValue(SqlTempDBSettings, options);
+                ((IJsonModel<SqlTempDBSettings>)SqlTempDBSettings).Write(writer, options);
             }
             if (Optional.IsDefined(IsSqlSystemDBOnDataDisk))
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    sqlDataSettings = SqlStorageSettings.DeserializeSqlStorageSettings(property.Value, options);
+                    sqlDataSettings = ModelSerializationExtensions.JsonDeserialize<SqlStorageSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sqlLogSettings"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    sqlLogSettings = SqlStorageSettings.DeserializeSqlStorageSettings(property.Value, options);
+                    sqlLogSettings = ModelSerializationExtensions.JsonDeserialize<SqlStorageSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sqlTempDbSettings"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    sqlTempDBSettings = SqlTempDBSettings.DeserializeSqlTempDBSettings(property.Value, options);
+                    sqlTempDBSettings = ModelSerializationExtensions.JsonDeserialize<SqlTempDBSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sqlSystemDbOnDataDisk"u8))

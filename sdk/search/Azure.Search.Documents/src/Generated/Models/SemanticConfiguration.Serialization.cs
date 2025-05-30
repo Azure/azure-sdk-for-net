@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("prioritizedFields"u8);
-            writer.WriteObjectValue(PrioritizedFields);
+            JsonSerializer.Serialize(writer, PrioritizedFields);
             if (Optional.IsDefined(RankingOrder))
             {
                 if (RankingOrder != null)
@@ -58,7 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("prioritizedFields"u8))
                 {
-                    prioritizedFields = SemanticPrioritizedFields.DeserializeSemanticPrioritizedFields(property.Value);
+                    prioritizedFields = ModelSerializationExtensions.JsonDeserialize<SemanticPrioritizedFields>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rankingOrder"u8))

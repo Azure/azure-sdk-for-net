@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PodEvent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

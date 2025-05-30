@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SapDiscoveryErrorDetail>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

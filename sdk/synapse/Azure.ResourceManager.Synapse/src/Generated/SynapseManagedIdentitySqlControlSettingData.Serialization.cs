@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(GrantSqlControlToManagedIdentity))
             {
                 writer.WritePropertyName("grantSqlControlToManagedIdentity"u8);
-                writer.WriteObjectValue(GrantSqlControlToManagedIdentity, options);
+                ((IJsonModel<SynapseGrantSqlControlToManagedIdentity>)GrantSqlControlToManagedIdentity).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Synapse
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            grantSqlControlToManagedIdentity = SynapseGrantSqlControlToManagedIdentity.DeserializeSynapseGrantSqlControlToManagedIdentity(property0.Value, options);
+                            grantSqlControlToManagedIdentity = ModelSerializationExtensions.JsonDeserialize<SynapseGrantSqlControlToManagedIdentity>(property0.Value);
                             continue;
                         }
                     }

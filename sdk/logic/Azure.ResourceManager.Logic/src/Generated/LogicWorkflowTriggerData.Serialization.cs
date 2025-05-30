@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W" && Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
-                writer.WriteObjectValue(Recurrence, options);
+                ((IJsonModel<LogicWorkflowTriggerRecurrence>)Recurrence).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Workflow))
             {
                 writer.WritePropertyName("workflow"u8);
-                writer.WriteObjectValue(Workflow, options);
+                ((IJsonModel<LogicResourceReference>)Workflow).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Logic
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            recurrence = LogicWorkflowTriggerRecurrence.DeserializeLogicWorkflowTriggerRecurrence(property0.Value, options);
+                            recurrence = ModelSerializationExtensions.JsonDeserialize<LogicWorkflowTriggerRecurrence>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("workflow"u8))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            workflow = LogicResourceReference.DeserializeLogicResourceReference(property0.Value, options);
+                            workflow = ModelSerializationExtensions.JsonDeserialize<LogicResourceReference>(property0.Value);
                             continue;
                         }
                     }

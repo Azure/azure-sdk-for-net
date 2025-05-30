@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(WindowsOSInfo))
             {
                 writer.WritePropertyName("windowsOsInfo"u8);
-                writer.WriteObjectValue(WindowsOSInfo, options);
+                ((IJsonModel<WindowsOSInfo>)WindowsOSInfo).Write(writer, options);
             }
             if (Optional.IsDefined(LinuxOSInfo))
             {
                 writer.WritePropertyName("linuxOsInfo"u8);
-                writer.WriteObjectValue(LinuxOSInfo, options);
+                ((IJsonModel<LinuxOSInfo>)LinuxOSInfo).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    windowsOSInfo = WindowsOSInfo.DeserializeWindowsOSInfo(property.Value, options);
+                    windowsOSInfo = ModelSerializationExtensions.JsonDeserialize<WindowsOSInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("linuxOsInfo"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    linuxOSInfo = LinuxOSInfo.DeserializeLinuxOSInfo(property.Value, options);
+                    linuxOSInfo = ModelSerializationExtensions.JsonDeserialize<LinuxOSInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

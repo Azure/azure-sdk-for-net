@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in MoboBrokerResources)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                     List<SubResource> array = new List<SubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                        array.Add(ModelSerializationExtensions.JsonDeserialize<SubResource>(item));
                     }
                     moboBrokerResources = array;
                     continue;

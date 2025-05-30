@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(SourceLocation))
             {
                 writer.WritePropertyName("sourceLocation"u8);
-                writer.WriteObjectValue(SourceLocation, options);
+                ((IJsonModel<SourceLocation>)SourceLocation).Write(writer, options);
             }
             if (Optional.IsDefined(TargetLocation))
             {
                 writer.WritePropertyName("targetLocation"u8);
-                writer.WriteObjectValue(TargetLocation, options);
+                ((IJsonModel<TargetLocation>)TargetLocation).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    sourceLocation = SourceLocation.DeserializeSourceLocation(property.Value, options);
+                    sourceLocation = ModelSerializationExtensions.JsonDeserialize<SourceLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetLocation"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    targetLocation = TargetLocation.DeserializeTargetLocation(property.Value, options);
+                    targetLocation = ModelSerializationExtensions.JsonDeserialize<TargetLocation>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

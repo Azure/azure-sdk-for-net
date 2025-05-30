@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VMwareVirtualDiskUpdate>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

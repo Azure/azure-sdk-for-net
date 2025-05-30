@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(Datasource))
             {
                 writer.WritePropertyName("datasource"u8);
-                writer.WriteObjectValue(Datasource, options);
+                ((IJsonModel<StreamInputDataSource>)Datasource).Write(writer, options);
             }
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    datasource = StreamInputDataSource.DeserializeStreamInputDataSource(property.Value, options);
+                    datasource = ModelSerializationExtensions.JsonDeserialize<StreamInputDataSource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    serialization = StreamAnalyticsDataSerialization.DeserializeStreamAnalyticsDataSerialization(property.Value, options);
+                    serialization = ModelSerializationExtensions.JsonDeserialize<StreamAnalyticsDataSerialization>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("diagnostics"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    diagnostics = StreamingJobDiagnostics.DeserializeStreamingJobDiagnostics(property.Value, options);
+                    diagnostics = ModelSerializationExtensions.JsonDeserialize<StreamingJobDiagnostics>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    compression = StreamingCompression.DeserializeStreamingCompression(property.Value, options);
+                    compression = ModelSerializationExtensions.JsonDeserialize<StreamingCompression>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("partitionKey"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    watermarkSettings = StreamingJobInputWatermarkProperties.DeserializeStreamingJobInputWatermarkProperties(property.Value, options);
+                    watermarkSettings = ModelSerializationExtensions.JsonDeserialize<StreamingJobInputWatermarkProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

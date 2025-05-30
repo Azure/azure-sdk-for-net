@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in DelayInformation)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<JobDelayDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

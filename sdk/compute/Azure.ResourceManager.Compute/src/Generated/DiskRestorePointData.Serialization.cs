@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
-                writer.WriteObjectValue(PurchasePlan, options);
+                ((IJsonModel<DiskPurchasePlan>)PurchasePlan).Write(writer, options);
             }
             if (Optional.IsDefined(SupportedCapabilities))
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
-                writer.WriteObjectValue(SupportedCapabilities, options);
+                ((IJsonModel<SupportedCapabilities>)SupportedCapabilities).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(FamilyId))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Compute
             if (options.Format != "W" && Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<DiskEncryption>)Encryption).Write(writer, options);
             }
             if (Optional.IsDefined(SupportsHibernation))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile, options);
+                ((IJsonModel<DiskSecurityProfile>)SecurityProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LogicalSectorSize))
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            purchasePlan = DiskPurchasePlan.DeserializeDiskPurchasePlan(property0.Value, options);
+                            purchasePlan = ModelSerializationExtensions.JsonDeserialize<DiskPurchasePlan>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("supportedCapabilities"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            supportedCapabilities = SupportedCapabilities.DeserializeSupportedCapabilities(property0.Value, options);
+                            supportedCapabilities = ModelSerializationExtensions.JsonDeserialize<SupportedCapabilities>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("familyId"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            encryption = DiskEncryption.DeserializeDiskEncryption(property0.Value, options);
+                            encryption = ModelSerializationExtensions.JsonDeserialize<DiskEncryption>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("supportsHibernation"u8))
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            securityProfile = DiskSecurityProfile.DeserializeDiskSecurityProfile(property0.Value, options);
+                            securityProfile = ModelSerializationExtensions.JsonDeserialize<DiskSecurityProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("logicalSectorSize"u8))

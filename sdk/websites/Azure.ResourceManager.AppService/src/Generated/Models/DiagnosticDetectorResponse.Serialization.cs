@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(DetectorDefinition))
             {
                 writer.WritePropertyName("detectorDefinition"u8);
-                writer.WriteObjectValue(DetectorDefinition, options);
+                ((IJsonModel<DetectorDefinition>)DetectorDefinition).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Metrics))
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DiagnosticMetricSet>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in AbnormalTimePeriods)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DetectorAbnormalTimePeriod>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteStartArray();
                     foreach (var item0 in item)
                     {
-                        writer.WriteObjectValue(item0, options);
+                        ((IJsonModel<AppServiceNameValuePair>)item0).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ResponseMetaData))
             {
                 writer.WritePropertyName("responseMetaData"u8);
-                writer.WriteObjectValue(ResponseMetaData, options);
+                ((IJsonModel<DetectorMetadata>)ResponseMetaData).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            detectorDefinition = DetectorDefinition.DeserializeDetectorDefinition(property0.Value, options);
+                            detectorDefinition = ModelSerializationExtensions.JsonDeserialize<DetectorDefinition>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("metrics"u8))
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            responseMetaData = DetectorMetadata.DeserializeDetectorMetadata(property0.Value, options);
+                            responseMetaData = ModelSerializationExtensions.JsonDeserialize<DetectorMetadata>(property0.Value);
                             continue;
                         }
                     }

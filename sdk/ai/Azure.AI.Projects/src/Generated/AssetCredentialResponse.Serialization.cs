@@ -35,7 +35,7 @@ namespace Azure.AI.Projects
             }
 
             writer.WritePropertyName("blobReference"u8);
-            writer.WriteObjectValue(BlobReference, options);
+            ((IJsonModel<BlobReference>)BlobReference).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,7 +80,7 @@ namespace Azure.AI.Projects
             {
                 if (property.NameEquals("blobReference"u8))
                 {
-                    blobReference = BlobReference.DeserializeBlobReference(property.Value, options);
+                    blobReference = ModelSerializationExtensions.JsonDeserialize<BlobReference>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

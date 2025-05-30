@@ -40,7 +40,7 @@ namespace Azure.Developer.LoadTesting
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NameAndDescription>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +85,7 @@ namespace Azure.Developer.LoadTesting
                 writer.WriteStartArray();
                 foreach (var item in MetricAvailabilities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MetricAvailability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

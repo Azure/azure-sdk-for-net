@@ -44,7 +44,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             writer.WritePropertyName("hubName"u8);
             writer.WriteStringValue(HubName);
             writer.WritePropertyName("deviceConnectionStateEventInfo"u8);
-            writer.WriteObjectValue(DeviceConnectionStateEventInfo, options);
+            ((IJsonModel<DeviceConnectionStateEventInfo>)DeviceConnectionStateEventInfo).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -107,7 +107,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("deviceConnectionStateEventInfo"u8))
                 {
-                    deviceConnectionStateEventInfo = DeviceConnectionStateEventInfo.DeserializeDeviceConnectionStateEventInfo(property.Value, options);
+                    deviceConnectionStateEventInfo = ModelSerializationExtensions.JsonDeserialize<DeviceConnectionStateEventInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

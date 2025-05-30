@@ -24,7 +24,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 if (property.NameEquals("key"u8))
                 {
-                    key = DocumentKeyValueElement.DeserializeDocumentKeyValueElement(property.Value);
+                    key = ModelSerializationExtensions.JsonDeserialize<DocumentKeyValueElement>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("value"u8))
@@ -33,7 +33,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     {
                         continue;
                     }
-                    value = DocumentKeyValueElement.DeserializeDocumentKeyValueElement(property.Value);
+                    value = ModelSerializationExtensions.JsonDeserialize<DocumentKeyValueElement>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("confidence"u8))

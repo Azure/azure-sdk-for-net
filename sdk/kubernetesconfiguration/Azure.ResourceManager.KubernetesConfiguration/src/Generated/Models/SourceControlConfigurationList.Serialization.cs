@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<KubernetesSourceControlConfigurationData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in PrivateDnsZoneConfigs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PrivateDnsZoneConfig>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

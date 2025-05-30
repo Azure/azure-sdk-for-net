@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("dataSource"u8);
-                writer.WriteObjectValue(DataSource, options);
+                ((IJsonModel<RuleDataSource>)DataSource).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

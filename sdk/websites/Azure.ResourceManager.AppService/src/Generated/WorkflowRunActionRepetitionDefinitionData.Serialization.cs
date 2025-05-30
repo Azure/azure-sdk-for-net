@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(Correlation))
             {
                 writer.WritePropertyName("correlation"u8);
-                writer.WriteObjectValue(Correlation, options);
+                ((IJsonModel<WebAppRunActionCorrelation>)Correlation).Write(writer, options);
             }
             if (Optional.IsDefined(Status))
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService
             if (options.Format != "W" && Optional.IsDefined(InputsLink))
             {
                 writer.WritePropertyName("inputsLink"u8);
-                writer.WriteObjectValue(InputsLink, options);
+                ((IJsonModel<WebAppContentLink>)InputsLink).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Outputs))
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService
             if (options.Format != "W" && Optional.IsDefined(OutputsLink))
             {
                 writer.WritePropertyName("outputsLink"u8);
-                writer.WriteObjectValue(OutputsLink, options);
+                ((IJsonModel<WebAppContentLink>)OutputsLink).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TrackedProperties))
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in RetryHistory)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WebAppRetryHistory>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in RepetitionIndexes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WorkflowRunActionRepetitionIndex>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            correlation = WebAppRunActionCorrelation.DeserializeWebAppRunActionCorrelation(property0.Value, options);
+                            correlation = ModelSerializationExtensions.JsonDeserialize<WebAppRunActionCorrelation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            inputsLink = WebAppContentLink.DeserializeWebAppContentLink(property0.Value, options);
+                            inputsLink = ModelSerializationExtensions.JsonDeserialize<WebAppContentLink>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("outputs"u8))
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            outputsLink = WebAppContentLink.DeserializeWebAppContentLink(property0.Value, options);
+                            outputsLink = ModelSerializationExtensions.JsonDeserialize<WebAppContentLink>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("trackedProperties"u8))

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WriteStartArray();
                 foreach (var item in AccessPolicies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NfsAccessPolicy>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

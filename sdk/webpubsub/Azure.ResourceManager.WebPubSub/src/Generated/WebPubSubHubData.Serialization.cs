@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.WebPubSub
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<WebPubSubHubProperties>)Properties).Write(writer, options);
         }
 
         WebPubSubHubData IJsonModel<WebPubSubHubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = WebPubSubHubProperties.DeserializeWebPubSubHubProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<WebPubSubHubProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.WebPubSub
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

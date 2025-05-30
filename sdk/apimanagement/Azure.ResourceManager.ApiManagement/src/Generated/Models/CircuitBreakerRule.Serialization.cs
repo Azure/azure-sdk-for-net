@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(FailureCondition))
             {
                 writer.WritePropertyName("failureCondition"u8);
-                writer.WriteObjectValue(FailureCondition, options);
+                ((IJsonModel<CircuitBreakerFailureCondition>)FailureCondition).Write(writer, options);
             }
             if (Optional.IsDefined(TripDuration))
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    failureCondition = CircuitBreakerFailureCondition.DeserializeCircuitBreakerFailureCondition(property.Value, options);
+                    failureCondition = ModelSerializationExtensions.JsonDeserialize<CircuitBreakerFailureCondition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tripDuration"u8))

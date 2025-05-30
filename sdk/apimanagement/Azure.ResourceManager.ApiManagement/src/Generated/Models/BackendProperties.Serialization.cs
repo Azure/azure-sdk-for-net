@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(ServiceFabricCluster))
             {
                 writer.WritePropertyName("serviceFabricCluster"u8);
-                writer.WriteObjectValue(ServiceFabricCluster, options);
+                ((IJsonModel<BackendServiceFabricClusterProperties>)ServiceFabricCluster).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    serviceFabricCluster = BackendServiceFabricClusterProperties.DeserializeBackendServiceFabricClusterProperties(property.Value, options);
+                    serviceFabricCluster = ModelSerializationExtensions.JsonDeserialize<BackendServiceFabricClusterProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

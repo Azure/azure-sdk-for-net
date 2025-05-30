@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(MetaData))
             {
                 writer.WritePropertyName("metaData"u8);
-                writer.WriteObjectValue(MetaData, options);
+                ((IJsonModel<TimelineResultsMetadata>)MetaData).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Value))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EntityTimelineItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    metaData = TimelineResultsMetadata.DeserializeTimelineResultsMetadata(property.Value, options);
+                    metaData = ModelSerializationExtensions.JsonDeserialize<TimelineResultsMetadata>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("value"u8))

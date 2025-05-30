@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Variables)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SsisVariable>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

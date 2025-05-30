@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WritePropertyName("biosId"u8);
             writer.WriteStringValue(BiosId);
             writer.WritePropertyName("marsAuthenticationIdentity"u8);
-            writer.WriteObjectValue(MarsAuthenticationIdentity, options);
+            ((IJsonModel<DataReplicationIdentity>)MarsAuthenticationIdentity).Write(writer, options);
         }
 
         VMwareFabricAgentCustomProperties IJsonModel<VMwareFabricAgentCustomProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("marsAuthenticationIdentity"u8))
                 {
-                    marsAuthenticationIdentity = DataReplicationIdentity.DeserializeDataReplicationIdentity(property.Value, options);
+                    marsAuthenticationIdentity = ModelSerializationExtensions.JsonDeserialize<DataReplicationIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))

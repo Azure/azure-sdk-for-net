@@ -60,7 +60,7 @@ namespace Azure.Maps.Search.Models
                     {
                         continue;
                     }
-                    address = Address.DeserializeAddress(property.Value);
+                    address = ModelSerializationExtensions.JsonDeserialize<Address>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("geocodePoints"u8))

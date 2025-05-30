@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CpuUsage))
             {
                 writer.WritePropertyName("cpuUsage"u8);
-                writer.WriteObjectValue(CpuUsage, options);
+                ((IJsonModel<ContainerCpuUsage>)CpuUsage).Write(writer, options);
             }
             if (Optional.IsDefined(SystemCpuUsage))
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ThrottlingData))
             {
                 writer.WritePropertyName("throttlingData"u8);
-                writer.WriteObjectValue(ThrottlingData, options);
+                ((IJsonModel<ContainerThrottlingInfo>)ThrottlingData).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    cpuUsage = ContainerCpuUsage.DeserializeContainerCpuUsage(property.Value, options);
+                    cpuUsage = ModelSerializationExtensions.JsonDeserialize<ContainerCpuUsage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("systemCpuUsage"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    throttlingData = ContainerThrottlingInfo.DeserializeContainerThrottlingInfo(property.Value, options);
+                    throttlingData = ModelSerializationExtensions.JsonDeserialize<ContainerThrottlingInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

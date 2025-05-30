@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in Intents)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HciEdgeDeviceIntents>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageNetworks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HciEdgeDeviceStorageNetworks>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

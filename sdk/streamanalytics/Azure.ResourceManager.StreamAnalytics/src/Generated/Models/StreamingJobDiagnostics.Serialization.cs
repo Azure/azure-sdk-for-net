@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Conditions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StreamingJobDiagnosticCondition>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

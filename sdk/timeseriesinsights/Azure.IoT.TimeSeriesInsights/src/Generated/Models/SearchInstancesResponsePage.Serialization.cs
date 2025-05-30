@@ -27,7 +27,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     {
                         continue;
                     }
-                    instances = SearchInstancesResponse.DeserializeSearchInstancesResponse(property.Value);
+                    instances = ModelSerializationExtensions.JsonDeserialize<SearchInstancesResponse>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("hierarchyNodes"u8))
@@ -36,7 +36,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     {
                         continue;
                     }
-                    hierarchyNodes = SearchHierarchyNodesResponse.DeserializeSearchHierarchyNodesResponse(property.Value);
+                    hierarchyNodes = ModelSerializationExtensions.JsonDeserialize<SearchHierarchyNodesResponse>(property.Value);
                     continue;
                 }
             }

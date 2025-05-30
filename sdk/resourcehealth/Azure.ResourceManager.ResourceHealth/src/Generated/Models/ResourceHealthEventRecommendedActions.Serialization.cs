@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceHealthEventRecommendedActionsItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

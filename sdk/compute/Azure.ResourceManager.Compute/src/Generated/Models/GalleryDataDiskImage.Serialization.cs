@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    source = GalleryDiskImageSource.DeserializeGalleryDiskImageSource(property.Value, options);
+                    source = ModelSerializationExtensions.JsonDeserialize<GalleryDiskImageSource>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

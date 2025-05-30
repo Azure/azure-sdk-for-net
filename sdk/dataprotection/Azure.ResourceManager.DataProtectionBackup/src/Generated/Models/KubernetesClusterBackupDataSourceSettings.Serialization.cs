@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in BackupHookReferences)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NamespacedName>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

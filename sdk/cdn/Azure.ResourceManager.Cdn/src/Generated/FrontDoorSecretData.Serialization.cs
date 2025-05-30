@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<FrontDoorSecretProperties>)Properties).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Cdn
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            parameters = FrontDoorSecretProperties.DeserializeFrontDoorSecretProperties(property0.Value, options);
+                            parameters = ModelSerializationExtensions.JsonDeserialize<FrontDoorSecretProperties>(property0.Value);
                             continue;
                         }
                     }

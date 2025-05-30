@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
             if (Optional.IsDefined(Display))
             {
                 writer.WritePropertyName("display"u8);
-                writer.WriteObjectValue(Display, options);
+                ((IJsonModel<OperationDisplay>)Display).Write(writer, options);
             }
             if (Optional.IsDefined(Origin))
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                     {
                         continue;
                     }
-                    display = OperationDisplay.DeserializeOperationDisplay(property.Value, options);
+                    display = ModelSerializationExtensions.JsonDeserialize<OperationDisplay>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("origin"u8))

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in NicsToInclude)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VMwareToAzStackHciNicInput>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (Optional.IsDefined(DynamicMemoryConfig))
             {
                 writer.WritePropertyName("dynamicMemoryConfig"u8);
-                writer.WriteObjectValue(DynamicMemoryConfig, options);
+                ((IJsonModel<ProtectedItemDynamicMemoryConfig>)DynamicMemoryConfig).Write(writer, options);
             }
             if (Optional.IsDefined(TargetMemoryInMegaBytes))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    dynamicMemoryConfig = ProtectedItemDynamicMemoryConfig.DeserializeProtectedItemDynamicMemoryConfig(property.Value, options);
+                    dynamicMemoryConfig = ModelSerializationExtensions.JsonDeserialize<ProtectedItemDynamicMemoryConfig>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetMemoryInMegaBytes"u8))

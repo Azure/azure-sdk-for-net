@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("customDetails"u8);
-            writer.WriteObjectValue(CustomDetails, options);
+            ((IJsonModel<RecoveryPlanActionDetails>)CustomDetails).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("customDetails"u8))
                 {
-                    customDetails = RecoveryPlanActionDetails.DeserializeRecoveryPlanActionDetails(property.Value, options);
+                    customDetails = ModelSerializationExtensions.JsonDeserialize<RecoveryPlanActionDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -66,7 +67,7 @@ namespace Azure.Communication.Identity
             }
             var model = communicationIdentityCreateRequest;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            ((IJsonModel<CommunicationIdentityCreateRequest>)model).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }
@@ -319,7 +320,7 @@ namespace Azure.Communication.Identity
             request.Headers.Add("Content-Type", "application/json");
             var model = new TeamsUserExchangeTokenRequest(token, appId, userId);
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            ((IJsonModel<TeamsUserExchangeTokenRequest>)model).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }
@@ -417,7 +418,7 @@ namespace Azure.Communication.Identity
                 ExpiresInMinutes = expiresInMinutes
             };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            ((IJsonModel<CommunicationIdentityAccessTokenRequest>)model).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }

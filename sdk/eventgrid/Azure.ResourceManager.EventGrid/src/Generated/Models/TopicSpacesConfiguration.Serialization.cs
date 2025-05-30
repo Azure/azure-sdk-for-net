@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(RoutingEnrichments))
             {
                 writer.WritePropertyName("routingEnrichments"u8);
-                writer.WriteObjectValue(RoutingEnrichments, options);
+                ((IJsonModel<RoutingEnrichments>)RoutingEnrichments).Write(writer, options);
             }
             if (Optional.IsDefined(MaximumSessionExpiryInHours))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(RoutingIdentityInfo))
             {
                 writer.WritePropertyName("routingIdentityInfo"u8);
-                writer.WriteObjectValue(RoutingIdentityInfo, options);
+                ((IJsonModel<RoutingIdentityInfo>)RoutingIdentityInfo).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(CustomDomains))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomDomains)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CustomDomainConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    routingEnrichments = RoutingEnrichments.DeserializeRoutingEnrichments(property.Value, options);
+                    routingEnrichments = ModelSerializationExtensions.JsonDeserialize<RoutingEnrichments>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("maximumSessionExpiryInHours"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    routingIdentityInfo = RoutingIdentityInfo.DeserializeRoutingIdentityInfo(property.Value, options);
+                    routingIdentityInfo = ModelSerializationExtensions.JsonDeserialize<RoutingIdentityInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("customDomains"u8))

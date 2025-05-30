@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(ShardKey))
             {
                 writer.WritePropertyName("shardKey"u8);
-                writer.WriteObjectValue(ShardKey, options);
+                ((IJsonModel<MongoDBShardKeySetting>)ShardKey).Write(writer, options);
             }
             if (Optional.IsDefined(TargetRUs))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    shardKey = MongoDBShardKeySetting.DeserializeMongoDBShardKeySetting(property.Value, options);
+                    shardKey = ModelSerializationExtensions.JsonDeserialize<MongoDBShardKeySetting>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetRUs"u8))

@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(KekDetails))
             {
                 writer.WritePropertyName("kekDetails"u8);
-                writer.WriteObjectValue(KekDetails, options);
+                ((IJsonModel<KekDetails>)KekDetails).Write(writer, options);
             }
             if (Optional.IsDefined(BekDetails))
             {
                 writer.WritePropertyName("bekDetails"u8);
-                writer.WriteObjectValue(BekDetails, options);
+                ((IJsonModel<BekDetails>)BekDetails).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptionMechanism))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    kekDetails = KekDetails.DeserializeKekDetails(property.Value, options);
+                    kekDetails = ModelSerializationExtensions.JsonDeserialize<KekDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("bekDetails"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    bekDetails = BekDetails.DeserializeBekDetails(property.Value, options);
+                    bekDetails = ModelSerializationExtensions.JsonDeserialize<BekDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("encryptionMechanism"u8))

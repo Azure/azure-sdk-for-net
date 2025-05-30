@@ -37,32 +37,32 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             if (Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
-                writer.WriteObjectValue(StorageAccount, options);
+                ((IJsonModel<StorageAccountCredentials>)StorageAccount).Write(writer, options);
             }
             if (Optional.IsDefined(ContainerRegistry))
             {
                 writer.WritePropertyName("containerRegistry"u8);
-                writer.WriteObjectValue(ContainerRegistry, options);
+                ((IJsonModel<ContainerRegistryCredentials>)ContainerRegistry).Write(writer, options);
             }
             if (Optional.IsDefined(ContainerService))
             {
                 writer.WritePropertyName("containerService"u8);
-                writer.WriteObjectValue(ContainerService, options);
+                ((IJsonModel<ContainerServiceCredentials>)ContainerService).Write(writer, options);
             }
             if (Optional.IsDefined(AppInsights))
             {
                 writer.WritePropertyName("appInsights"u8);
-                writer.WriteObjectValue(AppInsights, options);
+                ((IJsonModel<AppInsightsCredentials>)AppInsights).Write(writer, options);
             }
             if (Optional.IsDefined(ServiceAuthConfiguration))
             {
                 writer.WritePropertyName("serviceAuthConfiguration"u8);
-                writer.WriteObjectValue(ServiceAuthConfiguration, options);
+                ((IJsonModel<ServiceAuthConfiguration>)ServiceAuthConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(SslConfiguration))
             {
                 writer.WritePropertyName("sslConfiguration"u8);
-                writer.WriteObjectValue(SslConfiguration, options);
+                ((IJsonModel<SslConfiguration>)SslConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    storageAccount = StorageAccountCredentials.DeserializeStorageAccountCredentials(property.Value, options);
+                    storageAccount = ModelSerializationExtensions.JsonDeserialize<StorageAccountCredentials>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("containerRegistry"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    containerRegistry = ContainerRegistryCredentials.DeserializeContainerRegistryCredentials(property.Value, options);
+                    containerRegistry = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryCredentials>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("containerService"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    containerService = ContainerServiceCredentials.DeserializeContainerServiceCredentials(property.Value, options);
+                    containerService = ModelSerializationExtensions.JsonDeserialize<ContainerServiceCredentials>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("appInsights"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    appInsights = AppInsightsCredentials.DeserializeAppInsightsCredentials(property.Value, options);
+                    appInsights = ModelSerializationExtensions.JsonDeserialize<AppInsightsCredentials>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("serviceAuthConfiguration"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    serviceAuthConfiguration = ServiceAuthConfiguration.DeserializeServiceAuthConfiguration(property.Value, options);
+                    serviceAuthConfiguration = ModelSerializationExtensions.JsonDeserialize<ServiceAuthConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sslConfiguration"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    sslConfiguration = SslConfiguration.DeserializeSslConfiguration(property.Value, options);
+                    sslConfiguration = ModelSerializationExtensions.JsonDeserialize<SslConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

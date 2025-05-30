@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VMwareVirtualDisk>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WriteStartArray();
                 foreach (var item in ScsiControllers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VirtualScsiController>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
-                writer.WriteObjectValue(Content, options);
+                ((IJsonModel<ContainerRegistryWebhookEventContent>)Content).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Headers))
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    content = ContainerRegistryWebhookEventContent.DeserializeContainerRegistryWebhookEventContent(property.Value, options);
+                    content = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryWebhookEventContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("headers"u8))

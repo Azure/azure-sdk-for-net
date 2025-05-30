@@ -80,7 +80,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Seeds)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DiscoverySource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

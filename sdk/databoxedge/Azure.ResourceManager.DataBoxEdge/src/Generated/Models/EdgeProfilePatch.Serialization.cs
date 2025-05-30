@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(Subscription))
             {
                 writer.WritePropertyName("subscription"u8);
-                JsonSerializer.Serialize(writer, Subscription);
+                ((IJsonModel<WritableSubResource>)Subscription).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    subscription = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    subscription = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

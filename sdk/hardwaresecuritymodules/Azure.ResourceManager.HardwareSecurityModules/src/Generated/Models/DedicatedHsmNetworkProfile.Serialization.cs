@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                writer.WriteObjectValue(Subnet, options);
+                ((IJsonModel<ApiEntityReference>)Subnet).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(NetworkInterfaces))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DedicatedHsmNetworkInterface>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     {
                         continue;
                     }
-                    subnet = ApiEntityReference.DeserializeApiEntityReference(property.Value, options);
+                    subnet = ModelSerializationExtensions.JsonDeserialize<ApiEntityReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("networkInterfaces"u8))

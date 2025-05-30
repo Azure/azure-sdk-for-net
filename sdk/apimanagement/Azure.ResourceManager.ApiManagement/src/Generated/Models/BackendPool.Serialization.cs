@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Services)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BackendPoolItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

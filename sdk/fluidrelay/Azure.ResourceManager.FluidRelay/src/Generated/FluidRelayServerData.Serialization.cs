@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.FluidRelay
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FluidRelay
             if (options.Format != "W" && Optional.IsDefined(FluidRelayEndpoints))
             {
                 writer.WritePropertyName("fluidRelayEndpoints"u8);
-                writer.WriteObjectValue(FluidRelayEndpoints, options);
+                ((IJsonModel<FluidRelayEndpoints>)FluidRelayEndpoints).Write(writer, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.FluidRelay
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<Models.EncryptionProperties>)Encryption).Write(writer, options);
             }
             if (Optional.IsDefined(StorageSku))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.FluidRelay
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.FluidRelay
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.FluidRelay
                             {
                                 continue;
                             }
-                            fluidRelayEndpoints = FluidRelayEndpoints.DeserializeFluidRelayEndpoints(property0.Value, options);
+                            fluidRelayEndpoints = ModelSerializationExtensions.JsonDeserialize<FluidRelayEndpoints>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.FluidRelay
                             {
                                 continue;
                             }
-                            encryption = Models.EncryptionProperties.DeserializeEncryptionProperties(property0.Value, options);
+                            encryption = ModelSerializationExtensions.JsonDeserialize<Models.EncryptionProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("storagesku"u8))

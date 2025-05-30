@@ -42,16 +42,16 @@ namespace Azure.Compute.Batch
                 writer.WriteStringValue(DisplayName);
             }
             writer.WritePropertyName("schedule"u8);
-            writer.WriteObjectValue(Schedule, options);
+            ((IJsonModel<BatchJobScheduleConfiguration>)Schedule).Write(writer, options);
             writer.WritePropertyName("jobSpecification"u8);
-            writer.WriteObjectValue(JobSpecification, options);
+            ((IJsonModel<BatchJobSpecification>)JobSpecification).Write(writer, options);
             if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MetadataItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -113,12 +113,12 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("schedule"u8))
                 {
-                    schedule = BatchJobScheduleConfiguration.DeserializeBatchJobScheduleConfiguration(property.Value, options);
+                    schedule = ModelSerializationExtensions.JsonDeserialize<BatchJobScheduleConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("jobSpecification"u8))
                 {
-                    jobSpecification = BatchJobSpecification.DeserializeBatchJobSpecification(property.Value, options);
+                    jobSpecification = ModelSerializationExtensions.JsonDeserialize<BatchJobSpecification>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))

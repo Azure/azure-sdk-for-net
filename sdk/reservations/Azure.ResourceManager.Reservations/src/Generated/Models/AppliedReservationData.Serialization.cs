@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ReservationOrderIds))
             {
                 writer.WritePropertyName("reservationOrderIds"u8);
-                writer.WriteObjectValue(ReservationOrderIds, options);
+                ((IJsonModel<AppliedReservationList>)ReservationOrderIds).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Reservations.Models
                             {
                                 continue;
                             }
-                            reservationOrderIds = AppliedReservationList.DeserializeAppliedReservationList(property0.Value, options);
+                            reservationOrderIds = ModelSerializationExtensions.JsonDeserialize<AppliedReservationList>(property0.Value);
                             continue;
                         }
                     }

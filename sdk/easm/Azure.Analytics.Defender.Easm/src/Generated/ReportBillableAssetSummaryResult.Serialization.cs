@@ -40,7 +40,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in AssetSummaries)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ReportBillableAssetSnapshotResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

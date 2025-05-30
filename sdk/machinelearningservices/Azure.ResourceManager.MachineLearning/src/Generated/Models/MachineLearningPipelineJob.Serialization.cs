@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Inputs)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value, options);
+                        ((IJsonModel<MachineLearningJobInput>)item.Value).Write(writer, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Outputs)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value, options);
+                        ((IJsonModel<MachineLearningJobOutput>)item.Value).Write(writer, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         identity = null;
                         continue;
                     }
-                    identity = MachineLearningIdentityConfiguration.DeserializeMachineLearningIdentityConfiguration(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<MachineLearningIdentityConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("componentId"u8))
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         notificationSetting = null;
                         continue;
                     }
-                    notificationSetting = NotificationSetting.DeserializeNotificationSetting(property.Value, options);
+                    notificationSetting = ModelSerializationExtensions.JsonDeserialize<NotificationSetting>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))

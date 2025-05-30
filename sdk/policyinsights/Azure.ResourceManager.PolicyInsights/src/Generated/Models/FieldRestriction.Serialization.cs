@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (options.Format != "W" && Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy, options);
+                ((IJsonModel<PolicyReference>)Policy).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    policy = PolicyReference.DeserializePolicyReference(property.Value, options);
+                    policy = ModelSerializationExtensions.JsonDeserialize<PolicyReference>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

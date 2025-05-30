@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.SecurityInsights
             writer.WritePropertyName("order"u8);
             writer.WriteNumberValue(Order);
             writer.WritePropertyName("triggeringLogic"u8);
-            writer.WriteObjectValue(TriggeringLogic, options);
+            ((IJsonModel<SecurityInsightsAutomationRuleTriggeringLogic>)TriggeringLogic).Write(writer, options);
             writer.WritePropertyName("actions"u8);
             writer.WriteStartArray();
             foreach (var item in Actions)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<SecurityInsightsAutomationRuleAction>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.SecurityInsights
             if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
-                writer.WriteObjectValue(LastModifiedBy, options);
+                ((IJsonModel<SecurityInsightsClientInfo>)LastModifiedBy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue(CreatedBy, options);
+                ((IJsonModel<SecurityInsightsClientInfo>)CreatedBy).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.SecurityInsights
                         }
                         if (property0.NameEquals("triggeringLogic"u8))
                         {
-                            triggeringLogic = SecurityInsightsAutomationRuleTriggeringLogic.DeserializeSecurityInsightsAutomationRuleTriggeringLogic(property0.Value, options);
+                            triggeringLogic = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsAutomationRuleTriggeringLogic>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("actions"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            lastModifiedBy = SecurityInsightsClientInfo.DeserializeSecurityInsightsClientInfo(property0.Value, options);
+                            lastModifiedBy = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsClientInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("createdBy"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            createdBy = SecurityInsightsClientInfo.DeserializeSecurityInsightsClientInfo(property0.Value, options);
+                            createdBy = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsClientInfo>(property0.Value);
                             continue;
                         }
                     }

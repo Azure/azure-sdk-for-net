@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in ZoneDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ComputeResourceSkuZoneDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

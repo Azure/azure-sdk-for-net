@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in Logos)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PaymentMethodLogo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

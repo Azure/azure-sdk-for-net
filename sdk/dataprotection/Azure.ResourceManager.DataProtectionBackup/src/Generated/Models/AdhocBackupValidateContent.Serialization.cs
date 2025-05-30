@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WritePropertyName("backupInstance"u8);
-            writer.WriteObjectValue(BackupInstance, options);
+            ((IJsonModel<DataProtectionBackupInstanceProperties>)BackupInstance).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 if (property.NameEquals("backupInstance"u8))
                 {
-                    backupInstance = DataProtectionBackupInstanceProperties.DeserializeDataProtectionBackupInstanceProperties(property.Value, options);
+                    backupInstance = ModelSerializationExtensions.JsonDeserialize<DataProtectionBackupInstanceProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

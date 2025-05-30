@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 foreach (var item in AuthorizationAttributes)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<BrokerAuthenticatorMethodX509Attributes>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(InputsLink))
             {
                 writer.WritePropertyName("inputsLink"u8);
-                writer.WriteObjectValue(InputsLink, options);
+                ((IJsonModel<WebAppContentLink>)InputsLink).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Outputs))
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(OutputsLink))
             {
                 writer.WritePropertyName("outputsLink"u8);
-                writer.WriteObjectValue(OutputsLink, options);
+                ((IJsonModel<WebAppContentLink>)OutputsLink).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ScheduledOn))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Correlation))
             {
                 writer.WritePropertyName("correlation"u8);
-                writer.WriteObjectValue(Correlation, options);
+                ((IJsonModel<Correlation>)Correlation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Code))
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    inputsLink = WebAppContentLink.DeserializeWebAppContentLink(property.Value, options);
+                    inputsLink = ModelSerializationExtensions.JsonDeserialize<WebAppContentLink>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("outputs"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    outputsLink = WebAppContentLink.DeserializeWebAppContentLink(property.Value, options);
+                    outputsLink = ModelSerializationExtensions.JsonDeserialize<WebAppContentLink>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scheduledTime"u8))
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    correlation = Correlation.DeserializeCorrelation(property.Value, options);
+                    correlation = ModelSerializationExtensions.JsonDeserialize<Correlation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("code"u8))

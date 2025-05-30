@@ -45,16 +45,16 @@ namespace Azure.AI.Vision.Face
                 writer.WriteStringValue(RecognitionModel.Value.ToString());
             }
             writer.WritePropertyName("faceRectangle"u8);
-            writer.WriteObjectValue(FaceRectangle, options);
+            ((IJsonModel<FaceRectangle>)FaceRectangle).Write(writer, options);
             if (Optional.IsDefined(FaceLandmarks))
             {
                 writer.WritePropertyName("faceLandmarks"u8);
-                writer.WriteObjectValue(FaceLandmarks, options);
+                ((IJsonModel<FaceLandmarks>)FaceLandmarks).Write(writer, options);
             }
             if (Optional.IsDefined(FaceAttributes))
             {
                 writer.WritePropertyName("faceAttributes"u8);
-                writer.WriteObjectValue(FaceAttributes, options);
+                ((IJsonModel<FaceAttributes>)FaceAttributes).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -122,7 +122,7 @@ namespace Azure.AI.Vision.Face
                 }
                 if (property.NameEquals("faceRectangle"u8))
                 {
-                    faceRectangle = FaceRectangle.DeserializeFaceRectangle(property.Value, options);
+                    faceRectangle = ModelSerializationExtensions.JsonDeserialize<FaceRectangle>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("faceLandmarks"u8))
@@ -131,7 +131,7 @@ namespace Azure.AI.Vision.Face
                     {
                         continue;
                     }
-                    faceLandmarks = FaceLandmarks.DeserializeFaceLandmarks(property.Value, options);
+                    faceLandmarks = ModelSerializationExtensions.JsonDeserialize<FaceLandmarks>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("faceAttributes"u8))
@@ -140,7 +140,7 @@ namespace Azure.AI.Vision.Face
                     {
                         continue;
                     }
-                    faceAttributes = FaceAttributes.DeserializeFaceAttributes(property.Value, options);
+                    faceAttributes = ModelSerializationExtensions.JsonDeserialize<FaceAttributes>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

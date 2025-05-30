@@ -51,7 +51,7 @@ namespace Azure.Developer.DevCenter.Models
             if (Optional.IsDefined(NextAction))
             {
                 writer.WritePropertyName("next"u8);
-                writer.WriteObjectValue(NextAction, options);
+                ((IJsonModel<DevBoxNextAction>)NextAction).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -129,7 +129,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    next = DevBoxNextAction.DeserializeDevBoxNextAction(property.Value, options);
+                    next = ModelSerializationExtensions.JsonDeserialize<DevBoxNextAction>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

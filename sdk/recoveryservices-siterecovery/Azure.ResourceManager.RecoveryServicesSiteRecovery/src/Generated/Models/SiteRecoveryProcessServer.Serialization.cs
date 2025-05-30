@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in MobilityServiceUpdates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MobilityServiceUpdate>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryHealthError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(AgentVersionDetails))
             {
                 writer.WritePropertyName("agentVersionDetails"u8);
-                writer.WriteObjectValue(AgentVersionDetails, options);
+                ((IJsonModel<SiteRecoveryVersionDetails>)AgentVersionDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Health))
             {
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    agentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value, options);
+                    agentVersionDetails = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryVersionDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("health"u8))

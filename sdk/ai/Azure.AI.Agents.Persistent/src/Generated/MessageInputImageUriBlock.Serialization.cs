@@ -36,7 +36,7 @@ namespace Azure.AI.Agents.Persistent
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("image_url"u8);
-            writer.WriteObjectValue(ImageUrl, options);
+            ((IJsonModel<MessageImageUriParam>)ImageUrl).Write(writer, options);
         }
 
         MessageInputImageUriBlock IJsonModel<MessageInputImageUriBlock>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (property.NameEquals("image_url"u8))
                 {
-                    imageUrl = MessageImageUriParam.DeserializeMessageImageUriParam(property.Value, options);
+                    imageUrl = ModelSerializationExtensions.JsonDeserialize<MessageImageUriParam>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

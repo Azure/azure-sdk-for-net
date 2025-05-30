@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ServerInstanceProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                     {
                         continue;
                     }
-                    properties = ServerInstanceProperties.DeserializeServerInstanceProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ServerInstanceProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

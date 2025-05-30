@@ -48,7 +48,7 @@ namespace Azure.Communication.CallingServer
                     {
                         continue;
                     }
-                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
+                    resultInformation = ModelSerializationExtensions.JsonDeserialize<ResultInformation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("callConnectionId"u8))

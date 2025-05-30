@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("store"u8);
-            writer.WriteObjectValue(Store);
+            JsonSerializer.Serialize(writer, Store);
             writer.WritePropertyName("secretName"u8);
             writer.WriteObjectValue<object>(SecretName);
             if (Optional.IsDefined(SecretVersion))
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("store"u8))
                 {
-                    store = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    store = ModelSerializationExtensions.JsonDeserialize<LinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("secretName"u8))

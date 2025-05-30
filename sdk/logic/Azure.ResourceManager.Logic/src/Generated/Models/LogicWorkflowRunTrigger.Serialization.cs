@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (options.Format != "W" && Optional.IsDefined(InputsLink))
             {
                 writer.WritePropertyName("inputsLink"u8);
-                writer.WriteObjectValue(InputsLink, options);
+                ((IJsonModel<LogicContentLink>)InputsLink).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Outputs))
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (options.Format != "W" && Optional.IsDefined(OutputsLink))
             {
                 writer.WritePropertyName("outputsLink"u8);
-                writer.WriteObjectValue(OutputsLink, options);
+                ((IJsonModel<LogicContentLink>)OutputsLink).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ScheduledOn))
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Correlation))
             {
                 writer.WritePropertyName("correlation"u8);
-                writer.WriteObjectValue(Correlation, options);
+                ((IJsonModel<Correlation>)Correlation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Code))
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    inputsLink = LogicContentLink.DeserializeLogicContentLink(property.Value, options);
+                    inputsLink = ModelSerializationExtensions.JsonDeserialize<LogicContentLink>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("outputs"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    outputsLink = LogicContentLink.DeserializeLogicContentLink(property.Value, options);
+                    outputsLink = ModelSerializationExtensions.JsonDeserialize<LogicContentLink>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scheduledTime"u8))
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    correlation = Correlation.DeserializeCorrelation(property.Value, options);
+                    correlation = ModelSerializationExtensions.JsonDeserialize<Correlation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("code"u8))

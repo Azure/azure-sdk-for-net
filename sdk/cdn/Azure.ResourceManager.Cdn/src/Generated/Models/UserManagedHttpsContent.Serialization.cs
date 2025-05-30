@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("certificateSourceParameters"u8);
-            writer.WriteObjectValue(CertificateSourceParameters, options);
+            ((IJsonModel<KeyVaultCertificateSource>)CertificateSourceParameters).Write(writer, options);
         }
 
         UserManagedHttpsContent IJsonModel<UserManagedHttpsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("certificateSourceParameters"u8))
                 {
-                    certificateSourceParameters = KeyVaultCertificateSource.DeserializeKeyVaultCertificateSource(property.Value, options);
+                    certificateSourceParameters = ModelSerializationExtensions.JsonDeserialize<KeyVaultCertificateSource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("certificateSource"u8))

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<SnapshotSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(EncryptionSettingsGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection"u8);
-                writer.WriteObjectValue(EncryptionSettingsGroup, options);
+                ((IJsonModel<EncryptionSettingsGroup>)EncryptionSettingsGroup).Write(writer, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<DiskEncryption>)Encryption).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkAccessPolicy))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SupportedCapabilities))
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
-                writer.WriteObjectValue(SupportedCapabilities, options);
+                ((IJsonModel<SupportedCapabilities>)SupportedCapabilities).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    sku = SnapshotSku.DeserializeSnapshotSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<SnapshotSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            encryptionSettingsGroup = EncryptionSettingsGroup.DeserializeEncryptionSettingsGroup(property0.Value, options);
+                            encryptionSettingsGroup = ModelSerializationExtensions.JsonDeserialize<EncryptionSettingsGroup>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            encryption = DiskEncryption.DeserializeDiskEncryption(property0.Value, options);
+                            encryption = ModelSerializationExtensions.JsonDeserialize<DiskEncryption>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkAccessPolicy"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            supportedCapabilities = SupportedCapabilities.DeserializeSupportedCapabilities(property0.Value, options);
+                            supportedCapabilities = ModelSerializationExtensions.JsonDeserialize<SupportedCapabilities>(property0.Value);
                             continue;
                         }
                     }

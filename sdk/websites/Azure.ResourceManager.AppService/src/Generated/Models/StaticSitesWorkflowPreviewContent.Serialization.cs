@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(BuildProperties))
             {
                 writer.WritePropertyName("buildProperties"u8);
-                writer.WriteObjectValue(BuildProperties, options);
+                ((IJsonModel<StaticSiteBuildProperties>)BuildProperties).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            buildProperties = StaticSiteBuildProperties.DeserializeStaticSiteBuildProperties(property0.Value, options);
+                            buildProperties = ModelSerializationExtensions.JsonDeserialize<StaticSiteBuildProperties>(property0.Value);
                             continue;
                         }
                     }

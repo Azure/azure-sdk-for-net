@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(TargetCost))
             {
                 writer.WritePropertyName("targetCost"u8);
-                writer.WriteObjectValue(TargetCost, options);
+                ((IJsonModel<DevTestLabTargetCost>)TargetCost).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LabCostSummary))
             {
                 writer.WritePropertyName("labCostSummary"u8);
-                writer.WriteObjectValue(LabCostSummary, options);
+                ((IJsonModel<LabCostSummaryProperties>)LabCostSummary).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(LabCostDetails))
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WriteStartArray();
                 foreach (var item in LabCostDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DevTestLabCostDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WriteStartArray();
                 foreach (var item in ResourceCosts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DevTestLabResourceCost>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            targetCost = DevTestLabTargetCost.DeserializeDevTestLabTargetCost(property0.Value, options);
+                            targetCost = ModelSerializationExtensions.JsonDeserialize<DevTestLabTargetCost>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("labCostSummary"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            labCostSummary = LabCostSummaryProperties.DeserializeLabCostSummaryProperties(property0.Value, options);
+                            labCostSummary = ModelSerializationExtensions.JsonDeserialize<LabCostSummaryProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("labCostDetails"u8))

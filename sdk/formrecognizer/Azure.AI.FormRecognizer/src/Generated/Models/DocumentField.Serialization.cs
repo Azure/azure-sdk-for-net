@@ -148,7 +148,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     {
                         continue;
                     }
-                    valueCurrency = CurrencyValue.DeserializeCurrencyValue(property.Value);
+                    valueCurrency = ModelSerializationExtensions.JsonDeserialize<CurrencyValue?>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("valueAddress"u8))
@@ -157,7 +157,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     {
                         continue;
                     }
-                    valueAddress = AddressValue.DeserializeAddressValue(property.Value);
+                    valueAddress = ModelSerializationExtensions.JsonDeserialize<AddressValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("valueBoolean"u8))

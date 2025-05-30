@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(OfflineRentalConfiguration))
             {
                 writer.WritePropertyName("offlineRentalConfiguration"u8);
-                writer.WriteObjectValue(OfflineRentalConfiguration, options);
+                ((IJsonModel<ContentKeyPolicyFairPlayOfflineRentalConfiguration>)OfflineRentalConfiguration).Write(writer, options);
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    offlineRentalConfiguration = ContentKeyPolicyFairPlayOfflineRentalConfiguration.DeserializeContentKeyPolicyFairPlayOfflineRentalConfiguration(property.Value, options);
+                    offlineRentalConfiguration = ModelSerializationExtensions.JsonDeserialize<ContentKeyPolicyFairPlayOfflineRentalConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))

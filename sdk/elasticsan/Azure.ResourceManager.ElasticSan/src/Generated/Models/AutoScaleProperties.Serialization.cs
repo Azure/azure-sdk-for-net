@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             if (Optional.IsDefined(ScaleUpProperties))
             {
                 writer.WritePropertyName("scaleUpProperties"u8);
-                writer.WriteObjectValue(ScaleUpProperties, options);
+                ((IJsonModel<ElasticSanScaleUpProperties>)ScaleUpProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     {
                         continue;
                     }
-                    scaleUpProperties = ElasticSanScaleUpProperties.DeserializeElasticSanScaleUpProperties(property.Value, options);
+                    scaleUpProperties = ModelSerializationExtensions.JsonDeserialize<ElasticSanScaleUpProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

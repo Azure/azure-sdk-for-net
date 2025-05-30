@@ -70,19 +70,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryHealthError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(CurrentScenario))
             {
                 writer.WritePropertyName("currentScenario"u8);
-                writer.WriteObjectValue(CurrentScenario, options);
+                ((IJsonModel<CurrentScenarioDetails>)CurrentScenario).Write(writer, options);
             }
             if (Optional.IsDefined(SharedDiskProviderSpecificDetails))
             {
                 writer.WritePropertyName("sharedDiskProviderSpecificDetails"u8);
-                writer.WriteObjectValue(SharedDiskProviderSpecificDetails, options);
+                ((IJsonModel<SharedDiskReplicationProviderSpecificSettings>)SharedDiskProviderSpecificDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    currentScenario = CurrentScenarioDetails.DeserializeCurrentScenarioDetails(property.Value, options);
+                    currentScenario = ModelSerializationExtensions.JsonDeserialize<CurrentScenarioDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sharedDiskProviderSpecificDetails"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    sharedDiskProviderSpecificDetails = SharedDiskReplicationProviderSpecificSettings.DeserializeSharedDiskReplicationProviderSpecificSettings(property.Value, options);
+                    sharedDiskProviderSpecificDetails = ModelSerializationExtensions.JsonDeserialize<SharedDiskReplicationProviderSpecificSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

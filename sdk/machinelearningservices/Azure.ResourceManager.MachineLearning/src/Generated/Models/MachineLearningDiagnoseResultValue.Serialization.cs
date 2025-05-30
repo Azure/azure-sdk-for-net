@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in UserDefinedRouteResults)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MachineLearningDiagnoseResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkSecurityRuleResults)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MachineLearningDiagnoseResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceLockResults)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MachineLearningDiagnoseResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in DnsResolutionResults)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MachineLearningDiagnoseResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageAccountResults)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MachineLearningDiagnoseResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in KeyVaultResults)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MachineLearningDiagnoseResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in ContainerRegistryResults)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MachineLearningDiagnoseResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in ApplicationInsightsResults)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MachineLearningDiagnoseResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in OtherResults)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MachineLearningDiagnoseResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

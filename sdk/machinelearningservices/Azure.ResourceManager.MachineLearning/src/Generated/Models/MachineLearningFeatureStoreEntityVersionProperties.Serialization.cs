@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in IndexColumns)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<IndexColumn>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }

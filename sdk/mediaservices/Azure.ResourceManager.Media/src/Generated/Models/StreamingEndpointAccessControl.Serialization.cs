@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Akamai))
             {
                 writer.WritePropertyName("akamai"u8);
-                writer.WriteObjectValue(Akamai, options);
+                ((IJsonModel<AkamaiAccessControl>)Akamai).Write(writer, options);
             }
             if (Optional.IsDefined(IPs))
             {
                 writer.WritePropertyName("ip"u8);
-                writer.WriteObjectValue(IPs, options);
+                ((IJsonModel<IPAccessControl>)IPs).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    akamai = AkamaiAccessControl.DeserializeAkamaiAccessControl(property.Value, options);
+                    akamai = ModelSerializationExtensions.JsonDeserialize<AkamaiAccessControl>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ip"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    ip = IPAccessControl.DeserializeIPAccessControl(property.Value, options);
+                    ip = ModelSerializationExtensions.JsonDeserialize<IPAccessControl>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in IPPools)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DeploymentSettingIPPools>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

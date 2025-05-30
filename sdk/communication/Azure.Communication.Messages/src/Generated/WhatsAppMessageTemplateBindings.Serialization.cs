@@ -41,7 +41,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 writer.WriteStartArray();
                 foreach (var item in Header)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WhatsAppMessageTemplateBindingsComponent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -51,7 +51,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 writer.WriteStartArray();
                 foreach (var item in Body)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WhatsAppMessageTemplateBindingsComponent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -61,7 +61,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 writer.WriteStartArray();
                 foreach (var item in Footer)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WhatsAppMessageTemplateBindingsComponent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -71,7 +71,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 writer.WriteStartArray();
                 foreach (var item in Buttons)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WhatsAppMessageTemplateBindingsButton>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

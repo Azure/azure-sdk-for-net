@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Elastic.Models
             if (Optional.IsDefined(LogRules))
             {
                 writer.WritePropertyName("logRules"u8);
-                writer.WriteObjectValue(LogRules, options);
+                ((IJsonModel<ElasticLogRules>)LogRules).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    logRules = ElasticLogRules.DeserializeElasticLogRules(property.Value, options);
+                    logRules = ModelSerializationExtensions.JsonDeserialize<ElasticLogRules>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

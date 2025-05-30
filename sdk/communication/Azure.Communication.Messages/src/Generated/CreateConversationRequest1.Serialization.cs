@@ -35,11 +35,11 @@ namespace Azure.Communication.Messages
             }
 
             writer.WritePropertyName("conversation"u8);
-            writer.WriteObjectValue(Conversation, options);
+            ((IJsonModel<CommunicationConversation>)Conversation).Write(writer, options);
             if (Optional.IsDefined(InitialMessage))
             {
                 writer.WritePropertyName("initialMessage"u8);
-                writer.WriteObjectValue(InitialMessage, options);
+                ((IJsonModel<ConversationMessage>)InitialMessage).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -86,7 +86,7 @@ namespace Azure.Communication.Messages
             {
                 if (property.NameEquals("conversation"u8))
                 {
-                    conversation = CommunicationConversation.DeserializeCommunicationConversation(property.Value, options);
+                    conversation = ModelSerializationExtensions.JsonDeserialize<CommunicationConversation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("initialMessage"u8))
@@ -95,7 +95,7 @@ namespace Azure.Communication.Messages
                     {
                         continue;
                     }
-                    initialMessage = ConversationMessage.DeserializeConversationMessage(property.Value, options);
+                    initialMessage = ModelSerializationExtensions.JsonDeserialize<ConversationMessage>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

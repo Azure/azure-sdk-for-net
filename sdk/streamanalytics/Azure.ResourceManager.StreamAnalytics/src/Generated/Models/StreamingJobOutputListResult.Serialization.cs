@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StreamingJobOutputData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

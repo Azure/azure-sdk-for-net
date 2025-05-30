@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
-                writer.WriteObjectValue(Registration, options);
+                ((IJsonModel<ClientRegistration>)Registration).Write(writer, options);
             }
             if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
-                writer.WriteObjectValue(Login, options);
+                ((IJsonModel<LoginScopes>)Login).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    registration = ClientRegistration.DeserializeClientRegistration(property.Value, options);
+                    registration = ModelSerializationExtensions.JsonDeserialize<ClientRegistration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("login"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    login = Models.LoginScopes.DeserializeLoginScopes(property.Value, options);
+                    login = ModelSerializationExtensions.JsonDeserialize<LoginScopes>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

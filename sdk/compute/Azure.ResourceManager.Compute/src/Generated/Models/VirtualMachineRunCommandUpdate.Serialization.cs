@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source, options);
+                ((IJsonModel<VirtualMachineRunCommandScriptSource>)Source).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RunCommandInputParameter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedParameters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RunCommandInputParameter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(OutputBlobManagedIdentity))
             {
                 writer.WritePropertyName("outputBlobManagedIdentity"u8);
-                writer.WriteObjectValue(OutputBlobManagedIdentity, options);
+                ((IJsonModel<RunCommandManagedIdentity>)OutputBlobManagedIdentity).Write(writer, options);
             }
             if (Optional.IsDefined(ErrorBlobManagedIdentity))
             {
                 writer.WritePropertyName("errorBlobManagedIdentity"u8);
-                writer.WriteObjectValue(ErrorBlobManagedIdentity, options);
+                ((IJsonModel<RunCommandManagedIdentity>)ErrorBlobManagedIdentity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView, options);
+                ((IJsonModel<VirtualMachineRunCommandInstanceView>)InstanceView).Write(writer, options);
             }
             if (Optional.IsDefined(TreatFailureAsDeploymentFailure))
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            source = VirtualMachineRunCommandScriptSource.DeserializeVirtualMachineRunCommandScriptSource(property0.Value, options);
+                            source = ModelSerializationExtensions.JsonDeserialize<VirtualMachineRunCommandScriptSource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("parameters"u8))
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            outputBlobManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property0.Value, options);
+                            outputBlobManagedIdentity = ModelSerializationExtensions.JsonDeserialize<RunCommandManagedIdentity>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("errorBlobManagedIdentity"u8))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            errorBlobManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property0.Value, options);
+                            errorBlobManagedIdentity = ModelSerializationExtensions.JsonDeserialize<RunCommandManagedIdentity>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            instanceView = VirtualMachineRunCommandInstanceView.DeserializeVirtualMachineRunCommandInstanceView(property0.Value, options);
+                            instanceView = ModelSerializationExtensions.JsonDeserialize<VirtualMachineRunCommandInstanceView>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("treatFailureAsDeploymentFailure"u8))

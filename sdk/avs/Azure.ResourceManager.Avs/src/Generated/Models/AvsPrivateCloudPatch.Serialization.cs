@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.Avs.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<AvsSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ManagementCluster))
             {
                 writer.WritePropertyName("managementCluster"u8);
-                writer.WriteObjectValue(ManagementCluster, options);
+                ((IJsonModel<AvsManagementCluster>)ManagementCluster).Write(writer, options);
             }
             if (Optional.IsDefined(Internet))
             {
@@ -74,19 +74,19 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WriteStartArray();
                 foreach (var item in IdentitySources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SingleSignOnIdentitySource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Availability))
             {
                 writer.WritePropertyName("availability"u8);
-                writer.WriteObjectValue(Availability, options);
+                ((IJsonModel<PrivateCloudAvailabilityProperties>)Availability).Write(writer, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<CustomerManagedEncryption>)Encryption).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ExtendedNetworkBlocks))
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    sku = AvsSku.DeserializeAvsSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<AvsSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Avs.Models
                             {
                                 continue;
                             }
-                            managementCluster = AvsManagementCluster.DeserializeAvsManagementCluster(property0.Value, options);
+                            managementCluster = ModelSerializationExtensions.JsonDeserialize<AvsManagementCluster>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("internet"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Avs.Models
                             {
                                 continue;
                             }
-                            availability = PrivateCloudAvailabilityProperties.DeserializePrivateCloudAvailabilityProperties(property0.Value, options);
+                            availability = ModelSerializationExtensions.JsonDeserialize<PrivateCloudAvailabilityProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Avs.Models
                             {
                                 continue;
                             }
-                            encryption = CustomerManagedEncryption.DeserializeCustomerManagedEncryption(property0.Value, options);
+                            encryption = ModelSerializationExtensions.JsonDeserialize<CustomerManagedEncryption>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("extendedNetworkBlocks"u8))

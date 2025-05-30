@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration, options);
+                ((IJsonModel<ReportConfigDatasetConfiguration>)Configuration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Aggregation))
             {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 foreach (var item in Aggregation)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<ReportConfigAggregation>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Grouping)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ReportConfigGrouping>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -71,14 +71,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Sorting)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ReportConfigSorting>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter, options);
+                ((IJsonModel<ReportConfigFilter>)Filter).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    configuration = ReportConfigDatasetConfiguration.DeserializeReportConfigDatasetConfiguration(property.Value, options);
+                    configuration = ModelSerializationExtensions.JsonDeserialize<ReportConfigDatasetConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("aggregation"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    filter = ReportConfigFilter.DeserializeReportConfigFilter(property.Value, options);
+                    filter = ModelSerializationExtensions.JsonDeserialize<ReportConfigFilter>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

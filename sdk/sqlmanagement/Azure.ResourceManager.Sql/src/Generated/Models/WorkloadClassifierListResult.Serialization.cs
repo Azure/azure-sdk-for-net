@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WorkloadClassifierData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

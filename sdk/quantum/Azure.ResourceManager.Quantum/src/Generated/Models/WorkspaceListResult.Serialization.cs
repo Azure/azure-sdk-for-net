@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<QuantumWorkspaceData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

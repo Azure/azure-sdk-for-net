@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(TerminateNotificationProfile))
             {
                 writer.WritePropertyName("terminateNotificationProfile"u8);
-                writer.WriteObjectValue(TerminateNotificationProfile, options);
+                ((IJsonModel<ComputeFleetTerminateNotificationProfile>)TerminateNotificationProfile).Write(writer, options);
             }
             if (Optional.IsDefined(OSImageNotificationProfile))
             {
                 writer.WritePropertyName("osImageNotificationProfile"u8);
-                writer.WriteObjectValue(OSImageNotificationProfile, options);
+                ((IJsonModel<ComputeFleetOSImageNotificationProfile>)OSImageNotificationProfile).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    terminateNotificationProfile = ComputeFleetTerminateNotificationProfile.DeserializeComputeFleetTerminateNotificationProfile(property.Value, options);
+                    terminateNotificationProfile = ModelSerializationExtensions.JsonDeserialize<ComputeFleetTerminateNotificationProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("osImageNotificationProfile"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    osImageNotificationProfile = ComputeFleetOSImageNotificationProfile.DeserializeComputeFleetOSImageNotificationProfile(property.Value, options);
+                    osImageNotificationProfile = ModelSerializationExtensions.JsonDeserialize<ComputeFleetOSImageNotificationProfile>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in Options)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StringKeyValuePair>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

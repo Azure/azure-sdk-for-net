@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(SecurityMonitoring))
             {
                 writer.WritePropertyName("securityMonitoring"u8);
-                writer.WriteObjectValue(SecurityMonitoring, options);
+                ((IJsonModel<ManagedClusterSecurityProfileDefenderSecurityMonitoring>)SecurityMonitoring).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    securityMonitoring = ManagedClusterSecurityProfileDefenderSecurityMonitoring.DeserializeManagedClusterSecurityProfileDefenderSecurityMonitoring(property.Value, options);
+                    securityMonitoring = ModelSerializationExtensions.JsonDeserialize<ManagedClusterSecurityProfileDefenderSecurityMonitoring>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<StreamAnalyticsClusterSku>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<StreamAnalyticsClusterProperties>)Properties).Write(writer, options);
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     {
                         continue;
                     }
-                    sku = StreamAnalyticsClusterSku.DeserializeStreamAnalyticsClusterSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<StreamAnalyticsClusterSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     {
                         continue;
                     }
-                    properties = StreamAnalyticsClusterProperties.DeserializeStreamAnalyticsClusterProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<StreamAnalyticsClusterProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

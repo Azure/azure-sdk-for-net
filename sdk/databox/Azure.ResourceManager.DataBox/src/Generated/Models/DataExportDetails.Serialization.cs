@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WritePropertyName("transferConfiguration"u8);
-            writer.WriteObjectValue(TransferConfiguration, options);
+            ((IJsonModel<TransferConfiguration>)TransferConfiguration).Write(writer, options);
             if (Optional.IsDefined(LogCollectionLevel))
             {
                 writer.WritePropertyName("logCollectionLevel"u8);
                 writer.WriteStringValue(LogCollectionLevel.Value.ToSerialString());
             }
             writer.WritePropertyName("accountDetails"u8);
-            writer.WriteObjectValue(AccountDetails, options);
+            ((IJsonModel<DataAccountDetails>)AccountDetails).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 if (property.NameEquals("transferConfiguration"u8))
                 {
-                    transferConfiguration = TransferConfiguration.DeserializeTransferConfiguration(property.Value, options);
+                    transferConfiguration = ModelSerializationExtensions.JsonDeserialize<TransferConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("logCollectionLevel"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (property.NameEquals("accountDetails"u8))
                 {
-                    accountDetails = DataAccountDetails.DeserializeDataAccountDetails(property.Value, options);
+                    accountDetails = ModelSerializationExtensions.JsonDeserialize<DataAccountDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

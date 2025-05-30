@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 writer.WriteStartArray();
                 foreach (var item in Results)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceOperationResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

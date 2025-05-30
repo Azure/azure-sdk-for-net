@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             if (Optional.IsDefined(DisplayText))
             {
                 writer.WritePropertyName("displayText"u8);
-                writer.WriteObjectValue(DisplayText, options);
+                ((IJsonModel<ResourceHealthEventLinkDisplayText>)DisplayText).Write(writer, options);
             }
             if (Optional.IsDefined(ExtensionName))
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    displayText = ResourceHealthEventLinkDisplayText.DeserializeResourceHealthEventLinkDisplayText(property.Value, options);
+                    displayText = ModelSerializationExtensions.JsonDeserialize<ResourceHealthEventLinkDisplayText>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extensionName"u8))

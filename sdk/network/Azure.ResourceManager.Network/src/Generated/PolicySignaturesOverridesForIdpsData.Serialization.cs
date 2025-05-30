@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<PolicySignaturesOverridesForIdpsProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    properties = PolicySignaturesOverridesForIdpsProperties.DeserializePolicySignaturesOverridesForIdpsProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<PolicySignaturesOverridesForIdpsProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

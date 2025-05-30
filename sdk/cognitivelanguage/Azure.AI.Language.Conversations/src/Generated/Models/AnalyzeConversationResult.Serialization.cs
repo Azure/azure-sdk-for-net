@@ -42,7 +42,7 @@ namespace Azure.AI.Language.Conversations.Models
                 writer.WriteStringValue(DetectedLanguage);
             }
             writer.WritePropertyName("prediction"u8);
-            writer.WriteObjectValue(Prediction, options);
+            ((IJsonModel<PredictionBase>)Prediction).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -99,7 +99,7 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (property.NameEquals("prediction"u8))
                 {
-                    prediction = PredictionBase.DeserializePredictionBase(property.Value, options);
+                    prediction = ModelSerializationExtensions.JsonDeserialize<PredictionBase>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

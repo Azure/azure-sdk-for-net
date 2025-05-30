@@ -35,7 +35,7 @@ namespace Azure.AI.Vision.Face
             }
 
             writer.WritePropertyName("body"u8);
-            writer.WriteObjectValue(Body, options);
+            ((IJsonModel<LivenessResponseBody>)Body).Write(writer, options);
             writer.WritePropertyName("statusCode"u8);
             writer.WriteNumberValue(StatusCode);
             writer.WritePropertyName("latencyInMilliseconds"u8);
@@ -86,7 +86,7 @@ namespace Azure.AI.Vision.Face
             {
                 if (property.NameEquals("body"u8))
                 {
-                    body = LivenessResponseBody.DeserializeLivenessResponseBody(property.Value, options);
+                    body = ModelSerializationExtensions.JsonDeserialize<LivenessResponseBody>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("statusCode"u8))

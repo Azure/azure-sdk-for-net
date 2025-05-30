@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<SynapseDataSourceSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity, options);
+                ((IJsonModel<SynapseDataSourceCapacity>)Capacity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    sku = SynapseDataSourceSku.DeserializeSynapseDataSourceSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<SynapseDataSourceSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    capacity = SynapseDataSourceCapacity.DeserializeSynapseDataSourceCapacity(property.Value, options);
+                    capacity = ModelSerializationExtensions.JsonDeserialize<SynapseDataSourceCapacity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Quota.Models
             if (Optional.IsDefined(Usages))
             {
                 writer.WritePropertyName("usages"u8);
-                writer.WriteObjectValue(Usages, options);
+                ((IJsonModel<QuotaUsagesObject>)Usages).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Unit))
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Quota.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
+                ((IJsonModel<QuotaRequestResourceName>)Name).Write(writer, options);
             }
             if (Optional.IsDefined(ResourceTypeName))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    usages = QuotaUsagesObject.DeserializeQuotaUsagesObject(property.Value, options);
+                    usages = ModelSerializationExtensions.JsonDeserialize<QuotaUsagesObject>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("unit"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    name = QuotaRequestResourceName.DeserializeQuotaRequestResourceName(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<QuotaRequestResourceName>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceType"u8))

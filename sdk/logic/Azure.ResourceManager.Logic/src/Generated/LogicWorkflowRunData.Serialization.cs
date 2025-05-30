@@ -84,17 +84,17 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(Correlation))
             {
                 writer.WritePropertyName("correlation"u8);
-                writer.WriteObjectValue(Correlation, options);
+                ((IJsonModel<Correlation>)Correlation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Workflow))
             {
                 writer.WritePropertyName("workflow"u8);
-                writer.WriteObjectValue(Workflow, options);
+                ((IJsonModel<LogicResourceReference>)Workflow).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Trigger))
             {
                 writer.WritePropertyName("trigger"u8);
-                writer.WriteObjectValue(Trigger, options);
+                ((IJsonModel<LogicWorkflowRunTrigger>)Trigger).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Outputs))
             {
@@ -103,14 +103,14 @@ namespace Azure.ResourceManager.Logic
                 foreach (var item in Outputs)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<LogicWorkflowOutputParameterInfo>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
             if (options.Format != "W" && Optional.IsDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
-                writer.WriteObjectValue(Response, options);
+                ((IJsonModel<LogicWorkflowRunTrigger>)Response).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Logic
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            correlation = Correlation.DeserializeCorrelation(property0.Value, options);
+                            correlation = ModelSerializationExtensions.JsonDeserialize<Correlation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("workflow"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            workflow = LogicResourceReference.DeserializeLogicResourceReference(property0.Value, options);
+                            workflow = ModelSerializationExtensions.JsonDeserialize<LogicResourceReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("trigger"u8))
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            trigger = LogicWorkflowRunTrigger.DeserializeLogicWorkflowRunTrigger(property0.Value, options);
+                            trigger = ModelSerializationExtensions.JsonDeserialize<LogicWorkflowRunTrigger>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("outputs"u8))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            response = LogicWorkflowRunTrigger.DeserializeLogicWorkflowRunTrigger(property0.Value, options);
+                            response = ModelSerializationExtensions.JsonDeserialize<LogicWorkflowRunTrigger>(property0.Value);
                             continue;
                         }
                     }

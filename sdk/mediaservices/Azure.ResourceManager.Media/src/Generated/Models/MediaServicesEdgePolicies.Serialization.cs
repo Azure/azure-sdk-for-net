@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(UsageDataCollectionPolicy))
             {
                 writer.WritePropertyName("usageDataCollectionPolicy"u8);
-                writer.WriteObjectValue(UsageDataCollectionPolicy, options);
+                ((IJsonModel<EdgeUsageDataCollectionPolicy>)UsageDataCollectionPolicy).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    usageDataCollectionPolicy = EdgeUsageDataCollectionPolicy.DeserializeEdgeUsageDataCollectionPolicy(property.Value, options);
+                    usageDataCollectionPolicy = ModelSerializationExtensions.JsonDeserialize<EdgeUsageDataCollectionPolicy>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetworkServiceDesignGroupData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

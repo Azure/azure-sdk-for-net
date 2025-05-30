@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(Value, options);
+                ((IJsonModel<SavingsPlanSummaryCount>)Value).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    value = SavingsPlanSummaryCount.DeserializeSavingsPlanSummaryCount(property.Value, options);
+                    value = ModelSerializationExtensions.JsonDeserialize<SavingsPlanSummaryCount>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

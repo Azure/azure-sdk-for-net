@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WriteStartArray();
                 foreach (var item in Connections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PeeringDirectConnection>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Peering.Models
             if (Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerAsn"u8);
-                JsonSerializer.Serialize(writer, PeerAsn);
+                ((IJsonModel<WritableSubResource>)PeerAsn).Write(writer, options);
             }
             if (Optional.IsDefined(DirectPeeringType))
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    peerAsn = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    peerAsn = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("directPeeringType"u8))

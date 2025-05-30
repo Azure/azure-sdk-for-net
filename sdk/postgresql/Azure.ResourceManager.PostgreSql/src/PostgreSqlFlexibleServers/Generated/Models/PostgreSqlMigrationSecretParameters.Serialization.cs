@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WritePropertyName("adminCredentials"u8);
-            writer.WriteObjectValue(AdminCredentials, options);
+            ((IJsonModel<PostgreSqlMigrationAdminCredentials>)AdminCredentials).Write(writer, options);
             if (Optional.IsDefined(SourceServerUsername))
             {
                 writer.WritePropertyName("sourceServerUsername"u8);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 if (property.NameEquals("adminCredentials"u8))
                 {
-                    adminCredentials = PostgreSqlMigrationAdminCredentials.DeserializePostgreSqlMigrationAdminCredentials(property.Value, options);
+                    adminCredentials = ModelSerializationExtensions.JsonDeserialize<PostgreSqlMigrationAdminCredentials>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sourceServerUsername"u8))

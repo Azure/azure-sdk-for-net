@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(ParsedWhois))
             {
                 writer.WritePropertyName("parsedWhois"u8);
-                writer.WriteObjectValue(ParsedWhois, options);
+                ((IJsonModel<EnrichmentDomainWhoisDetails>)ParsedWhois).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    parsedWhois = EnrichmentDomainWhoisDetails.DeserializeEnrichmentDomainWhoisDetails(property.Value, options);
+                    parsedWhois = ModelSerializationExtensions.JsonDeserialize<EnrichmentDomainWhoisDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

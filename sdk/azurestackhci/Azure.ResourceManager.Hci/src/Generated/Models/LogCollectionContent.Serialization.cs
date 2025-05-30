@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<LogCollectionContentProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    properties = LogCollectionContentProperties.DeserializeLogCollectionContentProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<LogCollectionContentProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

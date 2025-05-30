@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteStartArray();
                     foreach (var item in AppSettings)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<AppServiceNameValuePair>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteStartArray();
                     foreach (var item in Metadata)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<AppServiceNameValuePair>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteStartArray();
                     foreach (var item in ConnectionStrings)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<ConnStringInfo>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.AppService
                 if (MachineKey != null)
                 {
                     writer.WritePropertyName("machineKey"u8);
-                    writer.WriteObjectValue(MachineKey, options);
+                    ((IJsonModel<SiteMachineKey>)MachineKey).Write(writer, options);
                 }
                 else
                 {
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteStartArray();
                     foreach (var item in HandlerMappings)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<HttpRequestHandlerMapping>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteStartArray();
                     foreach (var item in VirtualApplications)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<VirtualApplication>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.AppService
                 if (Experiments != null)
                 {
                     writer.WritePropertyName("experiments"u8);
-                    writer.WriteObjectValue(Experiments, options);
+                    ((IJsonModel<RoutingRuleExperiments>)Experiments).Write(writer, options);
                 }
                 else
                 {
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.AppService
                 if (Limits != null)
                 {
                     writer.WritePropertyName("limits"u8);
-                    writer.WriteObjectValue(Limits, options);
+                    ((IJsonModel<SiteLimits>)Limits).Write(writer, options);
                 }
                 else
                 {
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.AppService
                 if (AutoHealRules != null)
                 {
                     writer.WritePropertyName("autoHealRules"u8);
-                    writer.WriteObjectValue(AutoHealRules, options);
+                    ((IJsonModel<AutoHealRules>)AutoHealRules).Write(writer, options);
                 }
                 else
                 {
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.AppService
                 if (Cors != null)
                 {
                     writer.WritePropertyName("cors"u8);
-                    writer.WriteObjectValue(Cors, options);
+                    ((IJsonModel<AppServiceCorsSettings>)Cors).Write(writer, options);
                 }
                 else
                 {
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.AppService
                 if (Push != null)
                 {
                     writer.WritePropertyName("push"u8);
-                    writer.WriteObjectValue(Push, options);
+                    ((IJsonModel<WebAppPushSettings>)Push).Write(writer, options);
                 }
                 else
                 {
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.AppService
                 if (ApiDefinition != null)
                 {
                     writer.WritePropertyName("apiDefinition"u8);
-                    writer.WriteObjectValue(ApiDefinition, options);
+                    ((IJsonModel<AppServiceApiDefinitionInfo>)ApiDefinition).Write(writer, options);
                 }
                 else
                 {
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.AppService
                 if (ApiManagementConfig != null)
                 {
                     writer.WritePropertyName("apiManagementConfig"u8);
-                    writer.WriteObjectValue(ApiManagementConfig, options);
+                    ((IJsonModel<ApiManagementConfig>)ApiManagementConfig).Write(writer, options);
                 }
                 else
                 {
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteStartArray();
                     foreach (var item in IPSecurityRestrictions)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<AppServiceIPSecurityRestriction>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -749,7 +749,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteStartArray();
                     foreach (var item in ScmIPSecurityRestrictions)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<AppServiceIPSecurityRestriction>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -947,7 +947,7 @@ namespace Azure.ResourceManager.AppService
                     foreach (var item in AzureStorageAccounts)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value, options);
+                        ((IJsonModel<AppServiceStorageAccessInfo>)item.Value).Write(writer, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -1099,7 +1099,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -1358,7 +1358,7 @@ namespace Azure.ResourceManager.AppService
                                 machineKey = null;
                                 continue;
                             }
-                            machineKey = SiteMachineKey.DeserializeSiteMachineKey(property0.Value, options);
+                            machineKey = ModelSerializationExtensions.JsonDeserialize<SiteMachineKey>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("handlerMappings"u8))
@@ -1508,7 +1508,7 @@ namespace Azure.ResourceManager.AppService
                                 experiments = null;
                                 continue;
                             }
-                            experiments = RoutingRuleExperiments.DeserializeRoutingRuleExperiments(property0.Value, options);
+                            experiments = ModelSerializationExtensions.JsonDeserialize<RoutingRuleExperiments>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("limits"u8))
@@ -1518,7 +1518,7 @@ namespace Azure.ResourceManager.AppService
                                 limits = null;
                                 continue;
                             }
-                            limits = SiteLimits.DeserializeSiteLimits(property0.Value, options);
+                            limits = ModelSerializationExtensions.JsonDeserialize<SiteLimits>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("autoHealEnabled"u8))
@@ -1538,7 +1538,7 @@ namespace Azure.ResourceManager.AppService
                                 autoHealRules = null;
                                 continue;
                             }
-                            autoHealRules = AutoHealRules.DeserializeAutoHealRules(property0.Value, options);
+                            autoHealRules = ModelSerializationExtensions.JsonDeserialize<AutoHealRules>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tracingOptions"u8))
@@ -1588,7 +1588,7 @@ namespace Azure.ResourceManager.AppService
                                 cors = null;
                                 continue;
                             }
-                            cors = AppServiceCorsSettings.DeserializeAppServiceCorsSettings(property0.Value, options);
+                            cors = ModelSerializationExtensions.JsonDeserialize<AppServiceCorsSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("push"u8))
@@ -1598,7 +1598,7 @@ namespace Azure.ResourceManager.AppService
                                 push = null;
                                 continue;
                             }
-                            push = WebAppPushSettings.DeserializeWebAppPushSettings(property0.Value, options);
+                            push = ModelSerializationExtensions.JsonDeserialize<WebAppPushSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("apiDefinition"u8))
@@ -1608,7 +1608,7 @@ namespace Azure.ResourceManager.AppService
                                 apiDefinition = null;
                                 continue;
                             }
-                            apiDefinition = AppServiceApiDefinitionInfo.DeserializeAppServiceApiDefinitionInfo(property0.Value, options);
+                            apiDefinition = ModelSerializationExtensions.JsonDeserialize<AppServiceApiDefinitionInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("apiManagementConfig"u8))
@@ -1618,7 +1618,7 @@ namespace Azure.ResourceManager.AppService
                                 apiManagementConfig = null;
                                 continue;
                             }
-                            apiManagementConfig = ApiManagementConfig.DeserializeApiManagementConfig(property0.Value, options);
+                            apiManagementConfig = ModelSerializationExtensions.JsonDeserialize<ApiManagementConfig>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("autoSwapSlotName"u8))

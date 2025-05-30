@@ -38,7 +38,7 @@ namespace Azure.AI.Language.Text
             if (Optional.IsDefined(ActionContent))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(ActionContent, options);
+                ((IJsonModel<ExtractiveSummarizationActionContent>)ActionContent).Write(writer, options);
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    parameters = ExtractiveSummarizationActionContent.DeserializeExtractiveSummarizationActionContent(property.Value, options);
+                    parameters = ModelSerializationExtensions.JsonDeserialize<ExtractiveSummarizationActionContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("taskName"u8))

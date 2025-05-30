@@ -39,42 +39,42 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(AzureActiveDirectory))
             {
                 writer.WritePropertyName("azureActiveDirectory"u8);
-                writer.WriteObjectValue(AzureActiveDirectory, options);
+                ((IJsonModel<AppServiceAadProvider>)AzureActiveDirectory).Write(writer, options);
             }
             if (Optional.IsDefined(Facebook))
             {
                 writer.WritePropertyName("facebook"u8);
-                writer.WriteObjectValue(Facebook, options);
+                ((IJsonModel<AppServiceFacebookProvider>)Facebook).Write(writer, options);
             }
             if (Optional.IsDefined(GitHub))
             {
                 writer.WritePropertyName("gitHub"u8);
-                writer.WriteObjectValue(GitHub, options);
+                ((IJsonModel<AppServiceGitHubProvider>)GitHub).Write(writer, options);
             }
             if (Optional.IsDefined(Google))
             {
                 writer.WritePropertyName("google"u8);
-                writer.WriteObjectValue(Google, options);
+                ((IJsonModel<AppServiceGoogleProvider>)Google).Write(writer, options);
             }
             if (Optional.IsDefined(LegacyMicrosoftAccount))
             {
                 writer.WritePropertyName("legacyMicrosoftAccount"u8);
-                writer.WriteObjectValue(LegacyMicrosoftAccount, options);
+                ((IJsonModel<LegacyMicrosoftAccount>)LegacyMicrosoftAccount).Write(writer, options);
             }
             if (Optional.IsDefined(Twitter))
             {
                 writer.WritePropertyName("twitter"u8);
-                writer.WriteObjectValue(Twitter, options);
+                ((IJsonModel<AppServiceTwitterProvider>)Twitter).Write(writer, options);
             }
             if (Optional.IsDefined(Apple))
             {
                 writer.WritePropertyName("apple"u8);
-                writer.WriteObjectValue(Apple, options);
+                ((IJsonModel<AppServiceAppleProvider>)Apple).Write(writer, options);
             }
             if (Optional.IsDefined(AzureStaticWebApps))
             {
                 writer.WritePropertyName("azureStaticWebApps"u8);
-                writer.WriteObjectValue(AzureStaticWebApps, options);
+                ((IJsonModel<AppServiceStaticWebAppsProvider>)AzureStaticWebApps).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(CustomOpenIdConnectProviders))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService.Models
                 foreach (var item in CustomOpenIdConnectProviders)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<CustomOpenIdConnectProvider>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    azureActiveDirectory = AppServiceAadProvider.DeserializeAppServiceAadProvider(property.Value, options);
+                    azureActiveDirectory = ModelSerializationExtensions.JsonDeserialize<AppServiceAadProvider>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("facebook"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    facebook = AppServiceFacebookProvider.DeserializeAppServiceFacebookProvider(property.Value, options);
+                    facebook = ModelSerializationExtensions.JsonDeserialize<AppServiceFacebookProvider>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("gitHub"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    gitHub = AppServiceGitHubProvider.DeserializeAppServiceGitHubProvider(property.Value, options);
+                    gitHub = ModelSerializationExtensions.JsonDeserialize<AppServiceGitHubProvider>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("google"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    google = AppServiceGoogleProvider.DeserializeAppServiceGoogleProvider(property.Value, options);
+                    google = ModelSerializationExtensions.JsonDeserialize<AppServiceGoogleProvider>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("legacyMicrosoftAccount"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    legacyMicrosoftAccount = LegacyMicrosoftAccount.DeserializeLegacyMicrosoftAccount(property.Value, options);
+                    legacyMicrosoftAccount = ModelSerializationExtensions.JsonDeserialize<LegacyMicrosoftAccount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("twitter"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    twitter = AppServiceTwitterProvider.DeserializeAppServiceTwitterProvider(property.Value, options);
+                    twitter = ModelSerializationExtensions.JsonDeserialize<AppServiceTwitterProvider>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("apple"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    apple = AppServiceAppleProvider.DeserializeAppServiceAppleProvider(property.Value, options);
+                    apple = ModelSerializationExtensions.JsonDeserialize<AppServiceAppleProvider>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azureStaticWebApps"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    azureStaticWebApps = AppServiceStaticWebAppsProvider.DeserializeAppServiceStaticWebAppsProvider(property.Value, options);
+                    azureStaticWebApps = ModelSerializationExtensions.JsonDeserialize<AppServiceStaticWebAppsProvider>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("customOpenIdConnectProviders"u8))

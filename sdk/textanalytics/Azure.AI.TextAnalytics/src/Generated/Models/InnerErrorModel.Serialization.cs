@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Models
             if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(Innererror);
+                JsonSerializer.Serialize(writer, Innererror);
             }
             writer.WriteEndObject();
         }
@@ -92,7 +92,7 @@ namespace Azure.AI.TextAnalytics.Models
                     {
                         continue;
                     }
-                    innererror = DeserializeInnerErrorModel(property.Value);
+                    innererror = ModelSerializationExtensions.JsonDeserialize<InnerErrorModel>(property.Value);
                     continue;
                 }
             }

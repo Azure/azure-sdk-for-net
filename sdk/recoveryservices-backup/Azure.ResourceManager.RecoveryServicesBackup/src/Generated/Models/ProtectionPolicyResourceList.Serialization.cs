@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BackupProtectionPolicyData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

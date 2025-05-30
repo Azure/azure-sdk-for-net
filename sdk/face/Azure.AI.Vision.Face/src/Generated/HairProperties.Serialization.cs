@@ -42,7 +42,7 @@ namespace Azure.AI.Vision.Face
             writer.WriteStartArray();
             foreach (var item in HairColor)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<HairColor>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

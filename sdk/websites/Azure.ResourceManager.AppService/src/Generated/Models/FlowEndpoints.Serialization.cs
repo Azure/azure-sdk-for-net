@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in OutgoingIPAddresses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WebAppIPAddress>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in AccessEndpointIPAddresses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WebAppIPAddress>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

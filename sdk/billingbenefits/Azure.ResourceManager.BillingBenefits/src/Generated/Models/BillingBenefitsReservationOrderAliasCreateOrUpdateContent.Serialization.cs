@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<BillingBenefitsSku>)Sku).Write(writer, options);
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties, options);
+                ((IJsonModel<BillingBenefitsAppliedScopeProperties>)AppliedScopeProperties).Write(writer, options);
             }
             if (Optional.IsDefined(Quantity))
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (Optional.IsDefined(ReservedResourceProperties))
             {
                 writer.WritePropertyName("reservedResourceProperties"u8);
-                writer.WriteObjectValue(ReservedResourceProperties, options);
+                ((IJsonModel<ReservationOrderAliasRequestPropertiesReservedResourceProperties>)ReservedResourceProperties).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = BillingBenefitsSku.DeserializeBillingBenefitsSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<BillingBenefitsSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                             {
                                 continue;
                             }
-                            appliedScopeProperties = BillingBenefitsAppliedScopeProperties.DeserializeBillingBenefitsAppliedScopeProperties(property0.Value, options);
+                            appliedScopeProperties = ModelSerializationExtensions.JsonDeserialize<BillingBenefitsAppliedScopeProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("quantity"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                             {
                                 continue;
                             }
-                            reservedResourceProperties = ReservationOrderAliasRequestPropertiesReservedResourceProperties.DeserializeReservationOrderAliasRequestPropertiesReservedResourceProperties(property0.Value, options);
+                            reservedResourceProperties = ModelSerializationExtensions.JsonDeserialize<ReservationOrderAliasRequestPropertiesReservedResourceProperties>(property0.Value);
                             continue;
                         }
                     }

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(PrometheusEndpoint))
             {
                 writer.WritePropertyName("prometheusEndpoint"u8);
-                writer.WriteObjectValue(PrometheusEndpoint, options);
+                ((IJsonModel<CassandraDataCenterSeedNode>)PrometheusEndpoint).Write(writer, options);
             }
             if (Optional.IsDefined(IsRepairEnabled))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in ClientCertificates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CassandraCertificate>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in ExternalGossipCertificates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CassandraCertificate>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in GossipCertificates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CassandraCertificate>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in ExternalSeedNodes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CassandraDataCenterSeedNode>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in SeedNodes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CassandraDataCenterSeedNode>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(ProvisionError))
             {
                 writer.WritePropertyName("provisionError"u8);
-                writer.WriteObjectValue(ProvisionError, options);
+                ((IJsonModel<CassandraError>)ProvisionError).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Extensions))
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in BackupSchedules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CassandraClusterBackupSchedule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    prometheusEndpoint = CassandraDataCenterSeedNode.DeserializeCassandraDataCenterSeedNode(property.Value, options);
+                    prometheusEndpoint = ModelSerializationExtensions.JsonDeserialize<CassandraDataCenterSeedNode>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("repairEnabled"u8))
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    provisionError = CassandraError.DeserializeCassandraError(property.Value, options);
+                    provisionError = ModelSerializationExtensions.JsonDeserialize<CassandraError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extensions"u8))

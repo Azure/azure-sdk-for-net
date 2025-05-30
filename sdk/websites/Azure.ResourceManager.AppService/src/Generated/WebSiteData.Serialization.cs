@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                JsonSerializer.Serialize(writer, ExtendedLocation);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in HostNameSslStates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HostNameSslState>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -140,27 +140,27 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(DnsConfiguration))
             {
                 writer.WritePropertyName("dnsConfiguration"u8);
-                writer.WriteObjectValue(DnsConfiguration, options);
+                ((IJsonModel<SiteDnsConfig>)DnsConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(OutboundVnetRouting))
             {
                 writer.WritePropertyName("outboundVnetRouting"u8);
-                writer.WriteObjectValue(OutboundVnetRouting, options);
+                ((IJsonModel<OutboundVnetRouting>)OutboundVnetRouting).Write(writer, options);
             }
             if (Optional.IsDefined(SiteConfig))
             {
                 writer.WritePropertyName("siteConfig"u8);
-                writer.WriteObjectValue(SiteConfig, options);
+                ((IJsonModel<SiteConfigProperties>)SiteConfig).Write(writer, options);
             }
             if (Optional.IsDefined(FunctionAppConfig))
             {
                 writer.WritePropertyName("functionAppConfig"u8);
-                writer.WriteObjectValue(FunctionAppConfig, options);
+                ((IJsonModel<FunctionAppConfig>)FunctionAppConfig).Write(writer, options);
             }
             if (Optional.IsDefined(DaprConfig))
             {
                 writer.WritePropertyName("daprConfig"u8);
-                writer.WriteObjectValue(DaprConfig, options);
+                ((IJsonModel<AppDaprConfig>)DaprConfig).Write(writer, options);
             }
             if (Optional.IsDefined(WorkloadProfileName))
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(ResourceConfig))
             {
                 writer.WritePropertyName("resourceConfig"u8);
-                writer.WriteObjectValue(ResourceConfig, options);
+                ((IJsonModel<FunctionAppResourceConfig>)ResourceConfig).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(TrafficManagerHostNames))
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.AppService
                 if (HostingEnvironmentProfile != null)
                 {
                     writer.WritePropertyName("hostingEnvironmentProfile"u8);
-                    writer.WriteObjectValue(HostingEnvironmentProfile, options);
+                    ((IJsonModel<HostingEnvironmentProfile>)HostingEnvironmentProfile).Write(writer, options);
                 }
                 else
                 {
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.AppService
                 if (CloningInfo != null)
                 {
                     writer.WritePropertyName("cloningInfo"u8);
-                    writer.WriteObjectValue(CloningInfo, options);
+                    ((IJsonModel<CloningInfo>)CloningInfo).Write(writer, options);
                 }
                 else
                 {
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.AppService
                 if (SlotSwapStatus != null)
                 {
                     writer.WritePropertyName("slotSwapStatus"u8);
-                    writer.WriteObjectValue(SlotSwapStatus, options);
+                    ((IJsonModel<SlotSwapStatus>)SlotSwapStatus).Write(writer, options);
                 }
                 else
                 {
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"u8))
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<ExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            dnsConfiguration = SiteDnsConfig.DeserializeSiteDnsConfig(property0.Value, options);
+                            dnsConfiguration = ModelSerializationExtensions.JsonDeserialize<SiteDnsConfig>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("outboundVnetRouting"u8))
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            outboundVnetRouting = OutboundVnetRouting.DeserializeOutboundVnetRouting(property0.Value, options);
+                            outboundVnetRouting = ModelSerializationExtensions.JsonDeserialize<OutboundVnetRouting>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("siteConfig"u8))
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            siteConfig = SiteConfigProperties.DeserializeSiteConfigProperties(property0.Value, options);
+                            siteConfig = ModelSerializationExtensions.JsonDeserialize<SiteConfigProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("functionAppConfig"u8))
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            functionAppConfig = FunctionAppConfig.DeserializeFunctionAppConfig(property0.Value, options);
+                            functionAppConfig = ModelSerializationExtensions.JsonDeserialize<FunctionAppConfig>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("daprConfig"u8))
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            daprConfig = AppDaprConfig.DeserializeAppDaprConfig(property0.Value, options);
+                            daprConfig = ModelSerializationExtensions.JsonDeserialize<AppDaprConfig>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("workloadProfileName"u8))
@@ -753,7 +753,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            resourceConfig = FunctionAppResourceConfig.DeserializeFunctionAppResourceConfig(property0.Value, options);
+                            resourceConfig = ModelSerializationExtensions.JsonDeserialize<FunctionAppResourceConfig>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("trafficManagerHostNames"u8))
@@ -792,7 +792,7 @@ namespace Azure.ResourceManager.AppService
                                 hostingEnvironmentProfile = null;
                                 continue;
                             }
-                            hostingEnvironmentProfile = HostingEnvironmentProfile.DeserializeHostingEnvironmentProfile(property0.Value, options);
+                            hostingEnvironmentProfile = ModelSerializationExtensions.JsonDeserialize<HostingEnvironmentProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clientAffinityEnabled"u8))
@@ -941,7 +941,7 @@ namespace Azure.ResourceManager.AppService
                                 cloningInfo = null;
                                 continue;
                             }
-                            cloningInfo = CloningInfo.DeserializeCloningInfo(property0.Value, options);
+                            cloningInfo = ModelSerializationExtensions.JsonDeserialize<CloningInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resourceGroup"u8))
@@ -970,7 +970,7 @@ namespace Azure.ResourceManager.AppService
                                 slotSwapStatus = null;
                                 continue;
                             }
-                            slotSwapStatus = SlotSwapStatus.DeserializeSlotSwapStatus(property0.Value, options);
+                            slotSwapStatus = ModelSerializationExtensions.JsonDeserialize<SlotSwapStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("httpsOnly"u8))

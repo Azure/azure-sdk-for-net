@@ -40,7 +40,7 @@ namespace Azure.Communication.JobRouter
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue<FunctionRouterRuleCredential>(Credential, options);
+                ((IJsonModel<FunctionRouterRuleCredential>)Credential).Write(writer, options);
             }
         }
 
@@ -82,7 +82,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    credential = FunctionRouterRuleCredential.DeserializeFunctionRouterRuleCredential(property.Value, options);
+                    credential = ModelSerializationExtensions.JsonDeserialize<FunctionRouterRuleCredential>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

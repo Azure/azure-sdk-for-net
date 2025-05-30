@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (MappingFunction != null)
                 {
                     writer.WritePropertyName("mappingFunction"u8);
-                    writer.WriteObjectValue(MappingFunction);
+                    JsonSerializer.Serialize(writer, MappingFunction);
                 }
                 else
                 {
@@ -65,7 +65,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         mappingFunction = null;
                         continue;
                     }
-                    mappingFunction = FieldMappingFunction.DeserializeFieldMappingFunction(property.Value);
+                    mappingFunction = ModelSerializationExtensions.JsonDeserialize<FieldMappingFunction>(property.Value);
                     continue;
                 }
             }

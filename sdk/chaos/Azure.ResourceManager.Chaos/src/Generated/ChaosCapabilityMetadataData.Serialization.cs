@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Chaos
             if (options.Format != "W" && Optional.IsDefined(RuntimeProperties))
             {
                 writer.WritePropertyName("runtimeProperties"u8);
-                writer.WriteObjectValue(RuntimeProperties, options);
+                ((IJsonModel<ChaosCapabilityMetadataRuntimeProperties>)RuntimeProperties).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Chaos
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Chaos
                             {
                                 continue;
                             }
-                            runtimeProperties = ChaosCapabilityMetadataRuntimeProperties.DeserializeChaosCapabilityMetadataRuntimeProperties(property0.Value, options);
+                            runtimeProperties = ModelSerializationExtensions.JsonDeserialize<ChaosCapabilityMetadataRuntimeProperties>(property0.Value);
                             continue;
                         }
                     }

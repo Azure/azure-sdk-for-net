@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
-                writer.WriteObjectValue(KeyEncryptionKey, options);
+                ((IJsonModel<StorageCacheEncryptionKeyVaultKeyReference>)KeyEncryptionKey).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    keyEncryptionKey = StorageCacheEncryptionKeyVaultKeyReference.DeserializeStorageCacheEncryptionKeyVaultKeyReference(property.Value, options);
+                    keyEncryptionKey = ModelSerializationExtensions.JsonDeserialize<StorageCacheEncryptionKeyVaultKeyReference>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

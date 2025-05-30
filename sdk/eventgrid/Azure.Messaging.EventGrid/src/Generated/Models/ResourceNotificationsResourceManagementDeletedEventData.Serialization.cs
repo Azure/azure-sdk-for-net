@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    resourceInfo = ResourceNotificationsResourceDeletedDetails.DeserializeResourceNotificationsResourceDeletedDetails(property.Value);
+                    resourceInfo = ModelSerializationExtensions.JsonDeserialize<ResourceNotificationsResourceDeletedDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("operationalInfo"u8))
@@ -39,7 +39,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    operationalInfo = ResourceNotificationsOperationalDetails.DeserializeResourceNotificationsOperationalDetails(property.Value);
+                    operationalInfo = ModelSerializationExtensions.JsonDeserialize<ResourceNotificationsOperationalDetails>(property.Value);
                     continue;
                 }
             }

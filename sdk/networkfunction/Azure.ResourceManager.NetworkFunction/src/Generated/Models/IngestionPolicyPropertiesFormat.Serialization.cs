@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 writer.WriteStartArray();
                 foreach (var item in IngestionSources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IngestionSourcesPropertiesFormat>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

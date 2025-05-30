@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("packageStoreLinkedService"u8);
-            writer.WriteObjectValue(PackageStoreLinkedService, options);
+            ((IJsonModel<EntityReference>)PackageStoreLinkedService).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("packageStoreLinkedService"u8))
                 {
-                    packageStoreLinkedService = EntityReference.DeserializeEntityReference(property.Value, options);
+                    packageStoreLinkedService = ModelSerializationExtensions.JsonDeserialize<EntityReference>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

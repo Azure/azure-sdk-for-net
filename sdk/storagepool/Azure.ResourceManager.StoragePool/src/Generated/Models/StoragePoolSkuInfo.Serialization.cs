@@ -50,14 +50,14 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StoragePoolSkuCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(LocationInfo))
             {
                 writer.WritePropertyName("locationInfo"u8);
-                writer.WriteObjectValue(LocationInfo, options);
+                ((IJsonModel<StoragePoolSkuLocationInfo>)LocationInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteStartArray();
                 foreach (var item in Restrictions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StoragePoolSkuRestrictions>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     {
                         continue;
                     }
-                    locationInfo = StoragePoolSkuLocationInfo.DeserializeStoragePoolSkuLocationInfo(property.Value, options);
+                    locationInfo = ModelSerializationExtensions.JsonDeserialize<StoragePoolSkuLocationInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

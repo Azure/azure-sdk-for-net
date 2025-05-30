@@ -38,7 +38,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     {
                         continue;
                     }
-                    innererror = DeserializeInnerError(property.Value);
+                    innererror = ModelSerializationExtensions.JsonDeserialize<InnerError>(property.Value);
                     continue;
                 }
             }

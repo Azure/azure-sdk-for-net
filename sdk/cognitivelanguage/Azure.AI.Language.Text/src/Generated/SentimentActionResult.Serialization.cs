@@ -40,29 +40,29 @@ namespace Azure.AI.Language.Text
             writer.WriteStartArray();
             foreach (var item in Warnings)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DocumentWarning>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics, options);
+                ((IJsonModel<DocumentStatistics>)Statistics).Write(writer, options);
             }
             writer.WritePropertyName("sentiment"u8);
             writer.WriteStringValue(Sentiment.ToSerialString());
             writer.WritePropertyName("confidenceScores"u8);
-            writer.WriteObjectValue(ConfidenceScores, options);
+            ((IJsonModel<SentimentConfidenceScores>)ConfidenceScores).Write(writer, options);
             writer.WritePropertyName("sentences"u8);
             writer.WriteStartArray();
             foreach (var item in Sentences)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<SentenceSentiment>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(DetectedLanguage))
             {
                 writer.WritePropertyName("detectedLanguage"u8);
-                writer.WriteObjectValue(DetectedLanguage, options);
+                ((IJsonModel<DetectedLanguage>)DetectedLanguage).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value, options);
+                    statistics = ModelSerializationExtensions.JsonDeserialize<DocumentStatistics>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sentiment"u8))
@@ -143,7 +143,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("confidenceScores"u8))
                 {
-                    confidenceScores = SentimentConfidenceScores.DeserializeSentimentConfidenceScores(property.Value, options);
+                    confidenceScores = ModelSerializationExtensions.JsonDeserialize<SentimentConfidenceScores>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sentences"u8))
@@ -162,7 +162,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    detectedLanguage = DetectedLanguage.DeserializeDetectedLanguage(property.Value, options);
+                    detectedLanguage = ModelSerializationExtensions.JsonDeserialize<DetectedLanguage>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

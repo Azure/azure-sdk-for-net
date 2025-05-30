@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedSkus)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SapSupportedSku>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

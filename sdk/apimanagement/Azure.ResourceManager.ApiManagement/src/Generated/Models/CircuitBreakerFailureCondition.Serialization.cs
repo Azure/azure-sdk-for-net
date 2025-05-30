@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in StatusCodeRanges)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FailureStatusCodeRange>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

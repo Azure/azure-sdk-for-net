@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in L2Networks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<L2NetworkAttachmentConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in L3Networks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<L3NetworkAttachmentConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in TrunkedNetworks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TrunkedNetworkAttachmentConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

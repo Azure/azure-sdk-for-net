@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(SessionOptions))
             {
                 writer.WritePropertyName("sessionOptions"u8);
-                writer.WriteObjectValue(SessionOptions);
+                JsonSerializer.Serialize(writer, SessionOptions);
             }
             if (Optional.IsDefined(HonorSessionTimeToLive))
             {
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    JsonSerializer.Serialize(writer, item.Value);
                 }
                 writer.WriteEndObject();
             }

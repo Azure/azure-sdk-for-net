@@ -40,14 +40,14 @@ namespace Azure.AI.Vision.ImageAnalysis
             writer.WriteStartArray();
             foreach (var item in BoundingPolygon)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ImagePoint>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("words"u8);
             writer.WriteStartArray();
             foreach (var item in Words)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DetectedTextWord>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

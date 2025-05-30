@@ -47,19 +47,19 @@ namespace Azure.ResourceManager.ElasticSan
             if (Optional.IsDefined(CreationData))
             {
                 writer.WritePropertyName("creationData"u8);
-                writer.WriteObjectValue(CreationData, options);
+                ((IJsonModel<ElasticSanVolumeDataSourceInfo>)CreationData).Write(writer, options);
             }
             writer.WritePropertyName("sizeGiB"u8);
             writer.WriteNumberValue(SizeGiB);
             if (options.Format != "W" && Optional.IsDefined(StorageTarget))
             {
                 writer.WritePropertyName("storageTarget"u8);
-                writer.WriteObjectValue(StorageTarget, options);
+                ((IJsonModel<IscsiTargetInfo>)StorageTarget).Write(writer, options);
             }
             if (Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
-                writer.WriteObjectValue(ManagedBy, options);
+                ((IJsonModel<ManagedByInfo>)ManagedBy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ElasticSan
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ElasticSan
                             {
                                 continue;
                             }
-                            creationData = ElasticSanVolumeDataSourceInfo.DeserializeElasticSanVolumeDataSourceInfo(property0.Value, options);
+                            creationData = ModelSerializationExtensions.JsonDeserialize<ElasticSanVolumeDataSourceInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sizeGiB"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ElasticSan
                             {
                                 continue;
                             }
-                            storageTarget = IscsiTargetInfo.DeserializeIscsiTargetInfo(property0.Value, options);
+                            storageTarget = ModelSerializationExtensions.JsonDeserialize<IscsiTargetInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("managedBy"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ElasticSan
                             {
                                 continue;
                             }
-                            managedBy = ManagedByInfo.DeserializeManagedByInfo(property0.Value, options);
+                            managedBy = ModelSerializationExtensions.JsonDeserialize<ManagedByInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

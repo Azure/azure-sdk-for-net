@@ -62,17 +62,17 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(NetworkSecurityGroup))
             {
                 writer.WritePropertyName("networkSecurityGroup"u8);
-                writer.WriteObjectValue(NetworkSecurityGroup, options);
+                ((IJsonModel<NetworkSecurityGroupData>)NetworkSecurityGroup).Write(writer, options);
             }
             if (Optional.IsDefined(RouteTable))
             {
                 writer.WritePropertyName("routeTable"u8);
-                writer.WriteObjectValue(RouteTable, options);
+                ((IJsonModel<RouteTableData>)RouteTable).Write(writer, options);
             }
             if (Optional.IsDefined(NatGateway))
             {
                 writer.WritePropertyName("natGateway"u8);
-                JsonSerializer.Serialize(writer, NatGateway);
+                ((IJsonModel<WritableSubResource>)NatGateway).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ServiceEndpoints))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ServiceEndpoints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ServiceEndpointProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ServiceEndpointPolicies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ServiceEndpointPolicyData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpoints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PrivateEndpointData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetworkIPConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurationProfiles)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetworkIPConfigurationProfile>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPAllocations)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ResourceNavigationLinks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceNavigationLink>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ServiceAssociationLinks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ServiceAssociationLink>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Delegations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ServiceDelegation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ApplicationGatewayIPConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayIPConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IpamPoolPrefixAllocations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IpamPoolPrefixAllocation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            networkSecurityGroup = NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(property0.Value, options);
+                            networkSecurityGroup = ModelSerializationExtensions.JsonDeserialize<NetworkSecurityGroupData>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("routeTable"u8))
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            routeTable = RouteTableData.DeserializeRouteTableData(property0.Value, options);
+                            routeTable = ModelSerializationExtensions.JsonDeserialize<RouteTableData>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("natGateway"u8))
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            natGateway = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            natGateway = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("serviceEndpoints"u8))
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             ipAllocations = array;
                             continue;

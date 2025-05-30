@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("sshPublicKey"u8);
-            writer.WriteObjectValue(SshPublicKey, options);
+            ((IJsonModel<NetworkCloudSshPublicKey>)SshPublicKey).Write(writer, options);
             if (Optional.IsDefined(UserPrincipalName))
             {
                 writer.WritePropertyName("userPrincipalName"u8);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (property.NameEquals("sshPublicKey"u8))
                 {
-                    sshPublicKey = NetworkCloudSshPublicKey.DeserializeNetworkCloudSshPublicKey(property.Value, options);
+                    sshPublicKey = ModelSerializationExtensions.JsonDeserialize<NetworkCloudSshPublicKey>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userPrincipalName"u8))

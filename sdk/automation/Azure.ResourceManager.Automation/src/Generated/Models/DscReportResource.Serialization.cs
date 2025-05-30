@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DscReportResourceNavigation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.KeyVault
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<SecretProperties>)Properties).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = SecretProperties.DeserializeSecretProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<SecretProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

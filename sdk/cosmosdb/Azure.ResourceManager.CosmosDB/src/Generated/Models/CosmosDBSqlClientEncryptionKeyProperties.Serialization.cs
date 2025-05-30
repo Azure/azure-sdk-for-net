@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    keyWrapMetadata = CosmosDBKeyWrapMetadata.DeserializeCosmosDBKeyWrapMetadata(property.Value, options);
+                    keyWrapMetadata = ModelSerializationExtensions.JsonDeserialize<CosmosDBKeyWrapMetadata>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AzureTrafficCollectorData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

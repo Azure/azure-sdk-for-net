@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(PartnerTopicInfo))
             {
                 writer.WritePropertyName("partnerTopicInfo"u8);
-                writer.WriteObjectValue(PartnerTopicInfo, options);
+                ((IJsonModel<PartnerTopicInfo>)PartnerTopicInfo).Write(writer, options);
             }
             if (Optional.IsDefined(MessageForActivation))
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.EventGrid
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            partnerTopicInfo = PartnerTopicInfo.DeserializePartnerTopicInfo(property0.Value, options);
+                            partnerTopicInfo = ModelSerializationExtensions.JsonDeserialize<PartnerTopicInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("messageForActivation"u8))

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WriteStartArray();
                 foreach (var item in Configurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SourceConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

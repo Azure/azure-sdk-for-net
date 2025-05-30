@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WriteStartArray();
                 foreach (var item in Profiles)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NginxScaleProfile>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in BillingMeterDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EdgeOrderProductBillingMeterDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(AdministratorConfiguration))
             {
                 writer.WritePropertyName("administratorConfiguration"u8);
-                writer.WriteObjectValue(AdministratorConfiguration, options);
+                ((IJsonModel<AdministratorConfiguration>)AdministratorConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(AgentOptions))
             {
                 writer.WritePropertyName("agentOptions"u8);
-                writer.WriteObjectValue(AgentOptions, options);
+                ((IJsonModel<NetworkCloudAgentConfiguration>)AgentOptions).Write(writer, options);
             }
             if (Optional.IsDefined(AttachedNetworkConfiguration))
             {
                 writer.WritePropertyName("attachedNetworkConfiguration"u8);
-                writer.WriteObjectValue(AttachedNetworkConfiguration, options);
+                ((IJsonModel<AttachedNetworkConfiguration>)AttachedNetworkConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AvailabilityZones))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in Labels)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<KubernetesLabel>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -81,14 +81,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in Taints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<KubernetesLabel>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(UpgradeSettings))
             {
                 writer.WritePropertyName("upgradeSettings"u8);
-                writer.WriteObjectValue(UpgradeSettings, options);
+                ((IJsonModel<AgentPoolUpgradeSettings>)UpgradeSettings).Write(writer, options);
             }
             writer.WritePropertyName("vmSkuName"u8);
             writer.WriteStringValue(VmSkuName);
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    administratorConfiguration = AdministratorConfiguration.DeserializeAdministratorConfiguration(property.Value, options);
+                    administratorConfiguration = ModelSerializationExtensions.JsonDeserialize<AdministratorConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("agentOptions"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    agentOptions = NetworkCloudAgentConfiguration.DeserializeNetworkCloudAgentConfiguration(property.Value, options);
+                    agentOptions = ModelSerializationExtensions.JsonDeserialize<NetworkCloudAgentConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("attachedNetworkConfiguration"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    attachedNetworkConfiguration = AttachedNetworkConfiguration.DeserializeAttachedNetworkConfiguration(property.Value, options);
+                    attachedNetworkConfiguration = ModelSerializationExtensions.JsonDeserialize<AttachedNetworkConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("availabilityZones"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    upgradeSettings = AgentPoolUpgradeSettings.DeserializeAgentPoolUpgradeSettings(property.Value, options);
+                    upgradeSettings = ModelSerializationExtensions.JsonDeserialize<AgentPoolUpgradeSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vmSkuName"u8))

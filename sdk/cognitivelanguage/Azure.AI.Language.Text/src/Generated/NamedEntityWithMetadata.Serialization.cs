@@ -60,14 +60,14 @@ namespace Azure.AI.Language.Text
                 writer.WriteStartArray();
                 foreach (var item in Tags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EntityTag>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata, options);
+                ((IJsonModel<BaseMetadata>)Metadata).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -174,7 +174,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    metadata = BaseMetadata.DeserializeBaseMetadata(property.Value, options);
+                    metadata = ModelSerializationExtensions.JsonDeserialize<BaseMetadata>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

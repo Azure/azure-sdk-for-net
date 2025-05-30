@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WriteStartArray();
                 foreach (var item in Galleries)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WorkbookTemplateGallery>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                     writer.WriteStartArray();
                     foreach (var item0 in item.Value)
                     {
-                        writer.WriteObjectValue(item0, options);
+                        ((IJsonModel<WorkbookTemplateLocalizedGallery>)item0).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

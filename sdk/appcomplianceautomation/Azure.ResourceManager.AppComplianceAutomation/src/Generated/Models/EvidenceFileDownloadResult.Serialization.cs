@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             if (options.Format != "W" && Optional.IsDefined(EvidenceFile))
             {
                 writer.WritePropertyName("evidenceFile"u8);
-                writer.WriteObjectValue(EvidenceFile, options);
+                ((IJsonModel<EvidenceFileUrlInfo>)EvidenceFile).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    evidenceFile = EvidenceFileUrlInfo.DeserializeEvidenceFileUrlInfo(property.Value, options);
+                    evidenceFile = ModelSerializationExtensions.JsonDeserialize<EvidenceFileUrlInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

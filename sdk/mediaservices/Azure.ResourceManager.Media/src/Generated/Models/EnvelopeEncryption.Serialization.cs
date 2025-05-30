@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(EnabledProtocols))
             {
                 writer.WritePropertyName("enabledProtocols"u8);
-                writer.WriteObjectValue(EnabledProtocols, options);
+                ((IJsonModel<MediaEnabledProtocols>)EnabledProtocols).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ClearTracks))
             {
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in ClearTracks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MediaTrackSelection>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ContentKeys))
             {
                 writer.WritePropertyName("contentKeys"u8);
-                writer.WriteObjectValue(ContentKeys, options);
+                ((IJsonModel<StreamingPolicyContentKeys>)ContentKeys).Write(writer, options);
             }
             if (Optional.IsDefined(CustomKeyAcquisitionUriTemplate))
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    enabledProtocols = MediaEnabledProtocols.DeserializeMediaEnabledProtocols(property.Value, options);
+                    enabledProtocols = ModelSerializationExtensions.JsonDeserialize<MediaEnabledProtocols>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("clearTracks"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    contentKeys = StreamingPolicyContentKeys.DeserializeStreamingPolicyContentKeys(property.Value, options);
+                    contentKeys = ModelSerializationExtensions.JsonDeserialize<StreamingPolicyContentKeys>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("customKeyAcquisitionUrlTemplate"u8))

@@ -42,17 +42,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (options.Format != "W" && Optional.IsDefined(PolicyDetails))
             {
                 writer.WritePropertyName("policyDetails"u8);
-                writer.WriteObjectValue(PolicyDetails, options);
+                ((IJsonModel<PolicyDetails>)PolicyDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue(CreatedBy, options);
+                ((IJsonModel<TrackedResourceModificationDetails>)CreatedBy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
-                writer.WriteObjectValue(LastModifiedBy, options);
+                ((IJsonModel<TrackedResourceModificationDetails>)LastModifiedBy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastUpdateOn))
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    policyDetails = PolicyDetails.DeserializePolicyDetails(property.Value, options);
+                    policyDetails = ModelSerializationExtensions.JsonDeserialize<PolicyDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("createdBy"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    createdBy = TrackedResourceModificationDetails.DeserializeTrackedResourceModificationDetails(property.Value, options);
+                    createdBy = ModelSerializationExtensions.JsonDeserialize<TrackedResourceModificationDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lastModifiedBy"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    lastModifiedBy = TrackedResourceModificationDetails.DeserializeTrackedResourceModificationDetails(property.Value, options);
+                    lastModifiedBy = ModelSerializationExtensions.JsonDeserialize<TrackedResourceModificationDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lastUpdateUtc"u8))

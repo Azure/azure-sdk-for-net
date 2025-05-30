@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(ThroughputPolicy))
             {
                 writer.WritePropertyName("throughputPolicy"u8);
-                writer.WriteObjectValue(ThroughputPolicy, options);
+                ((IJsonModel<ThroughputPolicyResourceInfo>)ThroughputPolicy).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    throughputPolicy = ThroughputPolicyResourceInfo.DeserializeThroughputPolicyResourceInfo(property.Value, options);
+                    throughputPolicy = ModelSerializationExtensions.JsonDeserialize<ThroughputPolicyResourceInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

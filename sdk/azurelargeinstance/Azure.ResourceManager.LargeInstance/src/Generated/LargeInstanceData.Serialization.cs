@@ -55,22 +55,22 @@ namespace Azure.ResourceManager.LargeInstance
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile, options);
+                ((IJsonModel<LargeInstanceHardwareProfile>)HardwareProfile).Write(writer, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile, options);
+                ((IJsonModel<LargeInstanceStorageProfile>)StorageProfile).Write(writer, options);
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile, options);
+                ((IJsonModel<LargeInstanceOSProfile>)OSProfile).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile, options);
+                ((IJsonModel<LargeInstanceNetworkProfile>)NetworkProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AzureLargeInstanceId))
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.LargeInstance
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.LargeInstance
                             {
                                 continue;
                             }
-                            hardwareProfile = LargeInstanceHardwareProfile.DeserializeLargeInstanceHardwareProfile(property0.Value, options);
+                            hardwareProfile = ModelSerializationExtensions.JsonDeserialize<LargeInstanceHardwareProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.LargeInstance
                             {
                                 continue;
                             }
-                            storageProfile = LargeInstanceStorageProfile.DeserializeLargeInstanceStorageProfile(property0.Value, options);
+                            storageProfile = ModelSerializationExtensions.JsonDeserialize<LargeInstanceStorageProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("osProfile"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.LargeInstance
                             {
                                 continue;
                             }
-                            osProfile = LargeInstanceOSProfile.DeserializeLargeInstanceOSProfile(property0.Value, options);
+                            osProfile = ModelSerializationExtensions.JsonDeserialize<LargeInstanceOSProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.LargeInstance
                             {
                                 continue;
                             }
-                            networkProfile = LargeInstanceNetworkProfile.DeserializeLargeInstanceNetworkProfile(property0.Value, options);
+                            networkProfile = ModelSerializationExtensions.JsonDeserialize<LargeInstanceNetworkProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("azureLargeInstanceId"u8))

@@ -45,7 +45,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 writer.WriteStartArray();
                 foreach (var item in Synonyms)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConversationAuthoringExportedEntityListSynonym>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

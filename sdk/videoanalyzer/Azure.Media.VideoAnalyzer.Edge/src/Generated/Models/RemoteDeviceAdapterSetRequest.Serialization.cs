@@ -16,7 +16,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("remoteDeviceAdapter"u8);
-            writer.WriteObjectValue(RemoteDeviceAdapter);
+            JsonSerializer.Serialize(writer, RemoteDeviceAdapter);
             writer.WritePropertyName("methodName"u8);
             writer.WriteStringValue(MethodName);
             if (Optional.IsDefined(ApiVersion))
@@ -40,7 +40,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 if (property.NameEquals("remoteDeviceAdapter"u8))
                 {
-                    remoteDeviceAdapter = RemoteDeviceAdapter.DeserializeRemoteDeviceAdapter(property.Value);
+                    remoteDeviceAdapter = ModelSerializationExtensions.JsonDeserialize<RemoteDeviceAdapter>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("methodName"u8))

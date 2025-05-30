@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in NicDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HciEdgeDeviceNicDetail>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

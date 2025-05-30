@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(ProviderAuthentication))
             {
                 writer.WritePropertyName("providerAuthentication"u8);
-                writer.WriteObjectValue(ProviderAuthentication, options);
+                ((IJsonModel<ResourceProviderAuthentication>)ProviderAuthentication).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ProviderAuthorizations))
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ProviderAuthorizations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceProviderAuthorization>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -77,17 +77,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(FeaturesRule))
             {
                 writer.WritePropertyName("featuresRule"u8);
-                writer.WriteObjectValue(FeaturesRule, options);
+                ((IJsonModel<FeaturesRule>)FeaturesRule).Write(writer, options);
             }
             if (Optional.IsDefined(RequestHeaderOptions))
             {
                 writer.WritePropertyName("requestHeaderOptions"u8);
-                writer.WriteObjectValue(RequestHeaderOptions, options);
+                ((IJsonModel<RequestHeaderOptions>)RequestHeaderOptions).Write(writer, options);
             }
             if (Optional.IsDefined(Management))
             {
                 writer.WritePropertyName("management"u8);
-                writer.WriteObjectValue(Management, options);
+                ((IJsonModel<ResourceProviderManagement>)Management).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Capabilities))
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceProviderCapabilities>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(TemplateDeploymentOptions))
             {
                 writer.WritePropertyName("templateDeploymentOptions"u8);
-                writer.WriteObjectValue(TemplateDeploymentOptions, options);
+                ((IJsonModel<TemplateDeploymentOptions>)TemplateDeploymentOptions).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    providerAuthentication = ResourceProviderAuthentication.DeserializeResourceProviderAuthentication(property.Value, options);
+                    providerAuthentication = ModelSerializationExtensions.JsonDeserialize<ResourceProviderAuthentication>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("providerAuthorizations"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    featuresRule = FeaturesRule.DeserializeFeaturesRule(property.Value, options);
+                    featuresRule = ModelSerializationExtensions.JsonDeserialize<FeaturesRule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("requestHeaderOptions"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    requestHeaderOptions = RequestHeaderOptions.DeserializeRequestHeaderOptions(property.Value, options);
+                    requestHeaderOptions = ModelSerializationExtensions.JsonDeserialize<RequestHeaderOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("management"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    management = ResourceProviderManagement.DeserializeResourceProviderManagement(property.Value, options);
+                    management = ModelSerializationExtensions.JsonDeserialize<ResourceProviderManagement>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("capabilities"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    templateDeploymentOptions = TemplateDeploymentOptions.DeserializeTemplateDeploymentOptions(property.Value, options);
+                    templateDeploymentOptions = ModelSerializationExtensions.JsonDeserialize<TemplateDeploymentOptions>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Bounds))
             {
                 writer.WritePropertyName("bounds"u8);
-                writer.WriteObjectValue(Bounds, options);
+                ((IJsonModel<VirtualNetworkGatewayAutoScaleBounds>)Bounds).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    bounds = VirtualNetworkGatewayAutoScaleBounds.DeserializeVirtualNetworkGatewayAutoScaleBounds(property.Value, options);
+                    bounds = ModelSerializationExtensions.JsonDeserialize<VirtualNetworkGatewayAutoScaleBounds>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             if (Optional.IsDefined(Tls))
             {
                 writer.WritePropertyName("tls"u8);
-                writer.WriteObjectValue(Tls, options);
+                ((IJsonModel<ListenerPortTlsCertMethod>)Tls).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    tls = ListenerPortTlsCertMethod.DeserializeListenerPortTlsCertMethod(property.Value, options);
+                    tls = ModelSerializationExtensions.JsonDeserialize<ListenerPortTlsCertMethod>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -39,7 +39,7 @@ namespace Azure.AI.Language.Conversations.Models
             writer.WriteStartArray();
             foreach (var item in ConversationItems)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<TranscriptConversationItem>)item).Write(writer, options);
             }
             writer.WriteEndArray();
         }

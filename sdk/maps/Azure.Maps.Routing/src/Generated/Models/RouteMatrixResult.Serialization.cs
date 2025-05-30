@@ -61,7 +61,7 @@ namespace Azure.Maps.Routing.Models
                     {
                         continue;
                     }
-                    summary = RouteMatrixSummary.DeserializeRouteMatrixSummary(property.Value);
+                    summary = ModelSerializationExtensions.JsonDeserialize<RouteMatrixSummary>(property.Value);
                     continue;
                 }
             }

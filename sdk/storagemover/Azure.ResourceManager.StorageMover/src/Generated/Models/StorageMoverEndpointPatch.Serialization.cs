@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<EndpointBaseUpdateProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     {
                         continue;
                     }
-                    properties = EndpointBaseUpdateProperties.DeserializeEndpointBaseUpdateProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<EndpointBaseUpdateProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

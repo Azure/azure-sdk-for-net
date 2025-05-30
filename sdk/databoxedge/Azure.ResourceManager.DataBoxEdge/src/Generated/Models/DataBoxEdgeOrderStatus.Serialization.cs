@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W" && Optional.IsDefined(TrackingInformation))
             {
                 writer.WritePropertyName("trackingInformation"u8);
-                writer.WriteObjectValue(TrackingInformation, options);
+                ((IJsonModel<DataBoxEdgeTrackingInfo>)TrackingInformation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalOrderDetails))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    trackingInformation = DataBoxEdgeTrackingInfo.DeserializeDataBoxEdgeTrackingInfo(property.Value, options);
+                    trackingInformation = ModelSerializationExtensions.JsonDeserialize<DataBoxEdgeTrackingInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("additionalOrderDetails"u8))

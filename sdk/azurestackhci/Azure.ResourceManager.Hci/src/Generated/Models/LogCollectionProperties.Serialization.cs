@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in LogCollectionSessionDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LogCollectionSession>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

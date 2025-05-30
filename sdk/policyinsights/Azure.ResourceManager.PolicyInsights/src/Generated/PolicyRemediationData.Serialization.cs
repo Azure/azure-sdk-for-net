@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.PolicyInsights
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filters"u8);
-                writer.WriteObjectValue(Filter, options);
+                ((IJsonModel<RemediationFilters>)Filter).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DeploymentStatus))
             {
                 writer.WritePropertyName("deploymentStatus"u8);
-                writer.WriteObjectValue(DeploymentStatus, options);
+                ((IJsonModel<RemediationDeploymentSummary>)DeploymentStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(StatusMessage))
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.PolicyInsights
             if (Optional.IsDefined(FailureThreshold))
             {
                 writer.WritePropertyName("failureThreshold"u8);
-                writer.WriteObjectValue(FailureThreshold, options);
+                ((IJsonModel<RemediationPropertiesFailureThreshold>)FailureThreshold).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.PolicyInsights
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.PolicyInsights
                             {
                                 continue;
                             }
-                            filters = RemediationFilters.DeserializeRemediationFilters(property0.Value, options);
+                            filters = ModelSerializationExtensions.JsonDeserialize<RemediationFilters>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("deploymentStatus"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.PolicyInsights
                             {
                                 continue;
                             }
-                            deploymentStatus = RemediationDeploymentSummary.DeserializeRemediationDeploymentSummary(property0.Value, options);
+                            deploymentStatus = ModelSerializationExtensions.JsonDeserialize<RemediationDeploymentSummary>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("statusMessage"u8))
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.PolicyInsights
                             {
                                 continue;
                             }
-                            failureThreshold = RemediationPropertiesFailureThreshold.DeserializeRemediationPropertiesFailureThreshold(property0.Value, options);
+                            failureThreshold = ModelSerializationExtensions.JsonDeserialize<RemediationPropertiesFailureThreshold>(property0.Value);
                             continue;
                         }
                     }

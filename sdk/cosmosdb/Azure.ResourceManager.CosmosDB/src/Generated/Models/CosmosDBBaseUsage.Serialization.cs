@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
+                ((IJsonModel<CosmosDBMetricName>)Name).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(QuotaPeriod))
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    name = CosmosDBMetricName.DeserializeCosmosDBMetricName(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<CosmosDBMetricName>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("quotaPeriod"u8))

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in AlertDynamicProperties)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SecurityInsightsAlertPropertyMapping>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

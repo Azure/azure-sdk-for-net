@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination, options);
+                ((IJsonModel<NeighborGroupDestination>)Destination).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(NetworkTapIds))
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            destination = NeighborGroupDestination.DeserializeNeighborGroupDestination(property0.Value, options);
+                            destination = ModelSerializationExtensions.JsonDeserialize<NeighborGroupDestination>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkTapIds"u8))

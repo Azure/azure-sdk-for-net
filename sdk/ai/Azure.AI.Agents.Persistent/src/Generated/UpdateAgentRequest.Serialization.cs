@@ -81,14 +81,14 @@ namespace Azure.AI.Agents.Persistent
                 writer.WriteStartArray();
                 foreach (var item in Tools)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ToolDefinition>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ToolResources))
             {
                 writer.WritePropertyName("tool_resources"u8);
-                writer.WriteObjectValue(ToolResources, options);
+                ((IJsonModel<ToolResources>)ToolResources).Write(writer, options);
             }
             if (Optional.IsDefined(Temperature))
             {
@@ -257,7 +257,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    toolResources = ToolResources.DeserializeToolResources(property.Value, options);
+                    toolResources = ModelSerializationExtensions.JsonDeserialize<ToolResources>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("temperature"u8))

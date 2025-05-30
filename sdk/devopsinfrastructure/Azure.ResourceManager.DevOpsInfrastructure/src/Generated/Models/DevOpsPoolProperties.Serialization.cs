@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             writer.WritePropertyName("maximumConcurrency"u8);
             writer.WriteNumberValue(MaximumConcurrency);
             writer.WritePropertyName("organizationProfile"u8);
-            writer.WriteObjectValue(OrganizationProfile, options);
+            ((IJsonModel<DevOpsOrganizationProfile>)OrganizationProfile).Write(writer, options);
             writer.WritePropertyName("agentProfile"u8);
-            writer.WriteObjectValue(AgentProfile, options);
+            ((IJsonModel<DevOpsPoolAgentProfile>)AgentProfile).Write(writer, options);
             writer.WritePropertyName("fabricProfile"u8);
-            writer.WriteObjectValue(FabricProfile, options);
+            ((IJsonModel<DevOpsFabricProfile>)FabricProfile).Write(writer, options);
             writer.WritePropertyName("devCenterProjectResourceId"u8);
             writer.WriteStringValue(DevCenterProjectResourceId);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -112,17 +112,17 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 }
                 if (property.NameEquals("organizationProfile"u8))
                 {
-                    organizationProfile = DevOpsOrganizationProfile.DeserializeDevOpsOrganizationProfile(property.Value, options);
+                    organizationProfile = ModelSerializationExtensions.JsonDeserialize<DevOpsOrganizationProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("agentProfile"u8))
                 {
-                    agentProfile = DevOpsPoolAgentProfile.DeserializeDevOpsPoolAgentProfile(property.Value, options);
+                    agentProfile = ModelSerializationExtensions.JsonDeserialize<DevOpsPoolAgentProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("fabricProfile"u8))
                 {
-                    fabricProfile = DevOpsFabricProfile.DeserializeDevOpsFabricProfile(property.Value, options);
+                    fabricProfile = ModelSerializationExtensions.JsonDeserialize<DevOpsFabricProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("devCenterProjectResourceId"u8))

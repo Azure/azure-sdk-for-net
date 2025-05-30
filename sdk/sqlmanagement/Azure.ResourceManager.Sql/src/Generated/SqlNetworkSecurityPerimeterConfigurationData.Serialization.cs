@@ -49,17 +49,17 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(NetworkSecurityPerimeter))
             {
                 writer.WritePropertyName("networkSecurityPerimeter"u8);
-                writer.WriteObjectValue(NetworkSecurityPerimeter, options);
+                ((IJsonModel<SqlNetworkSecurityPerimeterConfigPerimeter>)NetworkSecurityPerimeter).Write(writer, options);
             }
             if (Optional.IsDefined(ResourceAssociation))
             {
                 writer.WritePropertyName("resourceAssociation"u8);
-                writer.WriteObjectValue(ResourceAssociation, options);
+                ((IJsonModel<SqlNetworkSecurityPerimeterConfigAssociation>)ResourceAssociation).Write(writer, options);
             }
             if (Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
-                writer.WriteObjectValue(Profile, options);
+                ((IJsonModel<SqlNetworkSecurityPerimeterConfigProfile>)Profile).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ProvisioningIssues))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in ProvisioningIssues)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SqlNetworkSecurityPerimeterProvisioningIssue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            networkSecurityPerimeter = SqlNetworkSecurityPerimeterConfigPerimeter.DeserializeSqlNetworkSecurityPerimeterConfigPerimeter(property0.Value, options);
+                            networkSecurityPerimeter = ModelSerializationExtensions.JsonDeserialize<SqlNetworkSecurityPerimeterConfigPerimeter>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resourceAssociation"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            resourceAssociation = SqlNetworkSecurityPerimeterConfigAssociation.DeserializeSqlNetworkSecurityPerimeterConfigAssociation(property0.Value, options);
+                            resourceAssociation = ModelSerializationExtensions.JsonDeserialize<SqlNetworkSecurityPerimeterConfigAssociation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("profile"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            profile = SqlNetworkSecurityPerimeterConfigProfile.DeserializeSqlNetworkSecurityPerimeterConfigProfile(property0.Value, options);
+                            profile = ModelSerializationExtensions.JsonDeserialize<SqlNetworkSecurityPerimeterConfigProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningIssues"u8))

@@ -40,8 +40,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WriteStringValue(PanETag.Value.ToString());
             }
             writer.WritePropertyName("networkProfile"u8);
-            writer.WriteObjectValue(NetworkProfile, options);
+            ((IJsonModel<FirewallNetworkProfile>)NetworkProfile).Write(writer, options);
             if (Optional.IsDefined(IsPanoramaManaged))
             {
                 writer.WritePropertyName("isPanoramaManaged"u8);
@@ -60,22 +59,22 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(PanoramaConfig))
             {
                 writer.WritePropertyName("panoramaConfig"u8);
-                writer.WriteObjectValue(PanoramaConfig, options);
+                ((IJsonModel<FirewallPanoramaConfiguration>)PanoramaConfig).Write(writer, options);
             }
             if (Optional.IsDefined(AssociatedRulestack))
             {
                 writer.WritePropertyName("associatedRulestack"u8);
-                writer.WriteObjectValue(AssociatedRulestack, options);
+                ((IJsonModel<RulestackDetails>)AssociatedRulestack).Write(writer, options);
             }
             writer.WritePropertyName("dnsSettings"u8);
-            writer.WriteObjectValue(DnsSettings, options);
+            ((IJsonModel<FirewallDnsSettings>)DnsSettings).Write(writer, options);
             if (Optional.IsCollectionDefined(FrontEndSettings))
             {
                 writer.WritePropertyName("frontEndSettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in FrontEndSettings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FirewallFrontendSetting>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,9 +84,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("planData"u8);
-            writer.WriteObjectValue(PlanData, options);
+            ((IJsonModel<FirewallBillingPlanInfo>)PlanData).Write(writer, options);
             writer.WritePropertyName("marketplaceDetails"u8);
-            writer.WriteObjectValue(MarketplaceDetails, options);
+            ((IJsonModel<PanFirewallMarketplaceDetails>)MarketplaceDetails).Write(writer, options);
             writer.WriteEndObject();
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -182,7 +181,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -205,7 +204,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         }
                         if (property0.NameEquals("networkProfile"u8))
                         {
-                            networkProfile = FirewallNetworkProfile.DeserializeFirewallNetworkProfile(property0.Value, options);
+                            networkProfile = ModelSerializationExtensions.JsonDeserialize<FirewallNetworkProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("isPanoramaManaged"u8))
@@ -223,7 +222,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                             {
                                 continue;
                             }
-                            panoramaConfig = FirewallPanoramaConfiguration.DeserializeFirewallPanoramaConfiguration(property0.Value, options);
+                            panoramaConfig = ModelSerializationExtensions.JsonDeserialize<FirewallPanoramaConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("associatedRulestack"u8))
@@ -232,12 +231,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                             {
                                 continue;
                             }
-                            associatedRulestack = RulestackDetails.DeserializeRulestackDetails(property0.Value, options);
+                            associatedRulestack = ModelSerializationExtensions.JsonDeserialize<RulestackDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dnsSettings"u8))
                         {
-                            dnsSettings = FirewallDnsSettings.DeserializeFirewallDnsSettings(property0.Value, options);
+                            dnsSettings = ModelSerializationExtensions.JsonDeserialize<FirewallDnsSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("frontEndSettings"u8))
@@ -265,12 +264,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         }
                         if (property0.NameEquals("planData"u8))
                         {
-                            planData = FirewallBillingPlanInfo.DeserializeFirewallBillingPlanInfo(property0.Value, options);
+                            planData = ModelSerializationExtensions.JsonDeserialize<FirewallBillingPlanInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("marketplaceDetails"u8))
                         {
-                            marketplaceDetails = PanFirewallMarketplaceDetails.DeserializePanFirewallMarketplaceDetails(property0.Value, options);
+                            marketplaceDetails = ModelSerializationExtensions.JsonDeserialize<PanFirewallMarketplaceDetails>(property0.Value);
                             continue;
                         }
                     }

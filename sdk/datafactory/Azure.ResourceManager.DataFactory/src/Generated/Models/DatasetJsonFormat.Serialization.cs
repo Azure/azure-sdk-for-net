@@ -51,17 +51,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(NestingSeparator))
             {
                 writer.WritePropertyName("nestingSeparator"u8);
-                JsonSerializer.Serialize(writer, NestingSeparator);
+                ((IJsonModel<DataFactoryElement<T>>)NestingSeparator).Write(writer, options);
             }
             if (Optional.IsDefined(EncodingName))
             {
                 writer.WritePropertyName("encodingName"u8);
-                JsonSerializer.Serialize(writer, EncodingName);
+                ((IJsonModel<DataFactoryElement<T>>)EncodingName).Write(writer, options);
             }
             if (Optional.IsDefined(JsonNodeReference))
             {
                 writer.WritePropertyName("jsonNodeReference"u8);
-                JsonSerializer.Serialize(writer, JsonNodeReference);
+                ((IJsonModel<DataFactoryElement<T>>)JsonNodeReference).Write(writer, options);
             }
             if (Optional.IsDefined(JsonPathDefinition))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    nestingSeparator = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    nestingSeparator = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("encodingName"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    encodingName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    encodingName = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("jsonNodeReference"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    jsonNodeReference = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    jsonNodeReference = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("jsonPathDefinition"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    serializer = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    serializer = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deserializer"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    deserializer = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    deserializer = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

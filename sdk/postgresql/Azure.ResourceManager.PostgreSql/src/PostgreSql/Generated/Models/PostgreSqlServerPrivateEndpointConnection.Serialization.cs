@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<PostgreSqlServerPrivateEndpointConnectionProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     {
                         continue;
                     }
-                    properties = PostgreSqlServerPrivateEndpointConnectionProperties.DeserializePostgreSqlServerPrivateEndpointConnectionProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<PostgreSqlServerPrivateEndpointConnectionProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

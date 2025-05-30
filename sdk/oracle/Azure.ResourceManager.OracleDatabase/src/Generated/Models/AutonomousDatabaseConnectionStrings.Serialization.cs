@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             if (Optional.IsDefined(AllConnectionStrings))
             {
                 writer.WritePropertyName("allConnectionStrings"u8);
-                writer.WriteObjectValue(AllConnectionStrings, options);
+                ((IJsonModel<AutonomousDatabaseConnectionStringType>)AllConnectionStrings).Write(writer, options);
             }
             if (Optional.IsDefined(Dedicated))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WriteStartArray();
                 foreach (var item in Profiles)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AutonomousDatabaseConnectionStringProfile>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    allConnectionStrings = AutonomousDatabaseConnectionStringType.DeserializeAutonomousDatabaseConnectionStringType(property.Value, options);
+                    allConnectionStrings = ModelSerializationExtensions.JsonDeserialize<AutonomousDatabaseConnectionStringType>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dedicated"u8))

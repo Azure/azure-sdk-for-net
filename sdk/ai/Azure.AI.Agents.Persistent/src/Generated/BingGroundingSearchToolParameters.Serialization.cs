@@ -38,7 +38,7 @@ namespace Azure.AI.Agents.Persistent
             writer.WriteStartArray();
             foreach (var item in SearchConfigurations)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<BingGroundingSearchConfiguration>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

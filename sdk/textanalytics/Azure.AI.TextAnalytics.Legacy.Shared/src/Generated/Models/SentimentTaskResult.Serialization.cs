@@ -26,7 +26,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     {
                         continue;
                     }
-                    results = SentimentResponse.DeserializeSentimentResponse(property.Value);
+                    results = ModelSerializationExtensions.JsonDeserialize<SentimentResponse>(property.Value);
                     continue;
                 }
             }

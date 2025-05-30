@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             writer.WriteStartArray();
             foreach (var item in Organizations)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DevOpsOrganization>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(PermissionProfile))
             {
                 writer.WritePropertyName("permissionProfile"u8);
-                writer.WriteObjectValue(PermissionProfile, options);
+                ((IJsonModel<DevOpsAzurePermissionProfile>)PermissionProfile).Write(writer, options);
             }
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     {
                         continue;
                     }
-                    permissionProfile = DevOpsAzurePermissionProfile.DeserializeDevOpsAzurePermissionProfile(property.Value, options);
+                    permissionProfile = ModelSerializationExtensions.JsonDeserialize<DevOpsAzurePermissionProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

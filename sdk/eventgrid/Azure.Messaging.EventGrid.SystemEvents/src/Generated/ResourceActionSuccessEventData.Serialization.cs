@@ -70,7 +70,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStringValue(Status);
             }
             writer.WritePropertyName("authorization"u8);
-            writer.WriteObjectValue(Authorization, options);
+            ((IJsonModel<ResourceAuthorization>)Authorization).Write(writer, options);
             writer.WritePropertyName("claims"u8);
             writer.WriteStartObject();
             foreach (var item in Claims)
@@ -85,7 +85,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStringValue(CorrelationId);
             }
             writer.WritePropertyName("httpRequest"u8);
-            writer.WriteObjectValue(HttpRequest, options);
+            ((IJsonModel<ResourceHttpRequest>)HttpRequest).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -175,7 +175,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("authorization"u8))
                 {
-                    authorization = ResourceAuthorization.DeserializeResourceAuthorization(property.Value, options);
+                    authorization = ModelSerializationExtensions.JsonDeserialize<ResourceAuthorization>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("claims"u8))
@@ -195,7 +195,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("httpRequest"u8))
                 {
-                    httpRequest = ResourceHttpRequest.DeserializeResourceHttpRequest(property.Value, options);
+                    httpRequest = ModelSerializationExtensions.JsonDeserialize<ResourceHttpRequest>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

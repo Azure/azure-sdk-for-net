@@ -36,7 +36,7 @@ namespace Azure.AI.Vision.Face
             }
 
             writer.WritePropertyName("Parameters"u8);
-            writer.WriteObjectValue(Parameters, options);
+            ((IJsonModel<CreateLivenessWithVerifySessionContent>)Parameters).Write(writer, options);
             writer.WritePropertyName("VerifyImage"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(global::System.BinaryData.FromStream(VerifyImage));
@@ -91,7 +91,7 @@ namespace Azure.AI.Vision.Face
             {
                 if (property.NameEquals("Parameters"u8))
                 {
-                    parameters = CreateLivenessWithVerifySessionContent.DeserializeCreateLivenessWithVerifySessionContent(property.Value, options);
+                    parameters = ModelSerializationExtensions.JsonDeserialize<CreateLivenessWithVerifySessionContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("VerifyImage"u8))

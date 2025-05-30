@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(QueryDefinitions))
             {
                 writer.WritePropertyName("queryDefinitions"u8);
-                writer.WriteObjectValue(QueryDefinitions, options);
+                ((IJsonModel<ActivityEntityQueriesPropertiesQueryDefinitions>)QueryDefinitions).Write(writer, options);
             }
             if (Optional.IsDefined(InputEntityType))
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            queryDefinitions = ActivityEntityQueriesPropertiesQueryDefinitions.DeserializeActivityEntityQueriesPropertiesQueryDefinitions(property0.Value, options);
+                            queryDefinitions = ModelSerializationExtensions.JsonDeserialize<ActivityEntityQueriesPropertiesQueryDefinitions>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("inputEntityType"u8))

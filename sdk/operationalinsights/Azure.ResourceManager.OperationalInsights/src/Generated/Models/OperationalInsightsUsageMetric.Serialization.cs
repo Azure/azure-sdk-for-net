@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
+                ((IJsonModel<OperationalInsightsMetricName>)Name).Write(writer, options);
             }
             if (Optional.IsDefined(Unit))
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    name = OperationalInsightsMetricName.DeserializeOperationalInsightsMetricName(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<OperationalInsightsMetricName>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("unit"u8))

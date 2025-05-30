@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(TlsSettings))
             {
                 writer.WritePropertyName("tlsSettings"u8);
-                writer.WriteObjectValue(TlsSettings, options);
+                ((IJsonModel<FrontDoorCustomDomainHttpsContent>)TlsSettings).Write(writer, options);
             }
             if (Optional.IsDefined(DnsZone))
             {
                 writer.WritePropertyName("azureDnsZone"u8);
-                JsonSerializer.Serialize(writer, DnsZone);
+                ((IJsonModel<WritableSubResource>)DnsZone).Write(writer, options);
             }
             if (Optional.IsDefined(PreValidatedCustomDomainResource))
             {
                 writer.WritePropertyName("preValidatedCustomDomainResourceId"u8);
-                JsonSerializer.Serialize(writer, PreValidatedCustomDomainResource);
+                ((IJsonModel<WritableSubResource>)PreValidatedCustomDomainResource).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             {
                                 continue;
                             }
-                            tlsSettings = FrontDoorCustomDomainHttpsContent.DeserializeFrontDoorCustomDomainHttpsContent(property0.Value, options);
+                            tlsSettings = ModelSerializationExtensions.JsonDeserialize<FrontDoorCustomDomainHttpsContent>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("azureDnsZone"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             {
                                 continue;
                             }
-                            azureDnsZone = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            azureDnsZone = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("preValidatedCustomDomainResourceId"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             {
                                 continue;
                             }
-                            preValidatedCustomDomainResourceId = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            preValidatedCustomDomainResourceId = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                     }

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in SessionInfo)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UESessionInfo5G>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in AllowedNssai)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<Snssai>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

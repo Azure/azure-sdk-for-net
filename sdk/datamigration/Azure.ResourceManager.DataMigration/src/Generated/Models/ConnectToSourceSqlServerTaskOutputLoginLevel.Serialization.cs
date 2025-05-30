@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(MigrationEligibility))
             {
                 writer.WritePropertyName("migrationEligibility"u8);
-                writer.WriteObjectValue(MigrationEligibility, options);
+                ((IJsonModel<MigrationEligibilityInfo>)MigrationEligibility).Write(writer, options);
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    migrationEligibility = MigrationEligibilityInfo.DeserializeMigrationEligibilityInfo(property.Value, options);
+                    migrationEligibility = ModelSerializationExtensions.JsonDeserialize<MigrationEligibilityInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -36,7 +36,7 @@ namespace Azure.AI.OpenAI.Assistants
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("text"u8);
-            writer.WriteObjectValue<InternalMessageTextDetails>(InternalDetails, options);
+            ((IJsonModel<InternalMessageTextDetails>)InternalDetails).Write(writer, options);
         }
 
         MessageTextContent IJsonModel<MessageTextContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("text"u8))
                 {
-                    text = InternalMessageTextDetails.DeserializeInternalMessageTextDetails(property.Value, options);
+                    text = ModelSerializationExtensions.JsonDeserialize<InternalMessageTextDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

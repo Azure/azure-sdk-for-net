@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedDisks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InMageRcmProtectedDiskDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in UnprotectedDisks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InMageRcmUnProtectedDiskDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(MobilityAgentDetails))
             {
                 writer.WritePropertyName("mobilityAgentDetails"u8);
-                writer.WriteObjectValue(MobilityAgentDetails, options);
+                ((IJsonModel<InMageRcmMobilityAgentDetails>)MobilityAgentDetails).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(LastAgentUpgradeErrorDetails))
             {
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in LastAgentUpgradeErrorDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InMageRcmLastAgentUpgradeErrorDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in AgentUpgradeBlockingErrorDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InMageRcmAgentUpgradeBlockingErrorDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -322,14 +322,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InMageRcmNicDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DiscoveredVmDetails))
             {
                 writer.WritePropertyName("discoveredVmDetails"u8);
-                writer.WriteObjectValue(DiscoveredVmDetails, options);
+                ((IJsonModel<InMageRcmDiscoveredProtectedVmDetails>)DiscoveredVmDetails).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(TargetVmTags))
             {
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetVmTags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UserCreatedResourceTag>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in SeedManagedDiskTags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UserCreatedResourceTag>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetManagedDiskTags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UserCreatedResourceTag>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetNicTags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UserCreatedResourceTag>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(TargetVmSecurityProfile))
             {
                 writer.WritePropertyName("targetVmSecurityProfile"u8);
-                writer.WriteObjectValue(TargetVmSecurityProfile, options);
+                ((IJsonModel<RecoveryServicesSiteRecoverySecurityProfileProperties>)TargetVmSecurityProfile).Write(writer, options);
             }
         }
 
@@ -866,7 +866,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    mobilityAgentDetails = InMageRcmMobilityAgentDetails.DeserializeInMageRcmMobilityAgentDetails(property.Value, options);
+                    mobilityAgentDetails = ModelSerializationExtensions.JsonDeserialize<InMageRcmMobilityAgentDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lastAgentUpgradeErrorDetails"u8))
@@ -917,7 +917,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    discoveredVmDetails = InMageRcmDiscoveredProtectedVmDetails.DeserializeInMageRcmDiscoveredProtectedVmDetails(property.Value, options);
+                    discoveredVmDetails = ModelSerializationExtensions.JsonDeserialize<InMageRcmDiscoveredProtectedVmDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetVmTags"u8))
@@ -1006,7 +1006,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    targetVmSecurityProfile = RecoveryServicesSiteRecoverySecurityProfileProperties.DeserializeRecoveryServicesSiteRecoverySecurityProfileProperties(property.Value, options);
+                    targetVmSecurityProfile = ModelSerializationExtensions.JsonDeserialize<RecoveryServicesSiteRecoverySecurityProfileProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))

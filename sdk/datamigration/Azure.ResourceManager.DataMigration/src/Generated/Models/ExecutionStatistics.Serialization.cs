@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 foreach (var item in WaitStats)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<WaitStatistics>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }

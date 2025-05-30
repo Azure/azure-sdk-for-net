@@ -102,7 +102,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in AuditTrail)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AuditTrailItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

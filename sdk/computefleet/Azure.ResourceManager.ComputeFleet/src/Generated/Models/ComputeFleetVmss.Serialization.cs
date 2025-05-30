@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<ComputeFleetApiError>)Error).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    error = ComputeFleetApiError.DeserializeComputeFleetApiError(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<ComputeFleetApiError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

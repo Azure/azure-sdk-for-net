@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
-                writer.WriteObjectValue(NetworkConfiguration, options);
+                ((IJsonModel<NetworkConfiguration>)NetworkConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(DatabaseType))
             {
@@ -48,16 +48,16 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
             writer.WritePropertyName("virtualMachineConfiguration"u8);
-            writer.WriteObjectValue(VirtualMachineConfiguration, options);
+            ((IJsonModel<SapVirtualMachineConfiguration>)VirtualMachineConfiguration).Write(writer, options);
             if (Optional.IsDefined(DBDiskConfiguration))
             {
                 writer.WritePropertyName("dbDiskConfiguration"u8);
-                writer.WriteObjectValue(DBDiskConfiguration, options);
+                ((IJsonModel<DiskConfiguration>)DBDiskConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(CustomResourceNames))
             {
                 writer.WritePropertyName("customResourceNames"u8);
-                writer.WriteObjectValue(CustomResourceNames, options);
+                ((IJsonModel<SingleServerCustomResourceNames>)CustomResourceNames).Write(writer, options);
             }
         }
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     {
                         continue;
                     }
-                    networkConfiguration = NetworkConfiguration.DeserializeNetworkConfiguration(property.Value, options);
+                    networkConfiguration = ModelSerializationExtensions.JsonDeserialize<NetworkConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("databaseType"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 }
                 if (property.NameEquals("virtualMachineConfiguration"u8))
                 {
-                    virtualMachineConfiguration = SapVirtualMachineConfiguration.DeserializeSapVirtualMachineConfiguration(property.Value, options);
+                    virtualMachineConfiguration = ModelSerializationExtensions.JsonDeserialize<SapVirtualMachineConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dbDiskConfiguration"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     {
                         continue;
                     }
-                    dbDiskConfiguration = DiskConfiguration.DeserializeDiskConfiguration(property.Value, options);
+                    dbDiskConfiguration = ModelSerializationExtensions.JsonDeserialize<DiskConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("customResourceNames"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     {
                         continue;
                     }
-                    customResourceNames = SingleServerCustomResourceNames.DeserializeSingleServerCustomResourceNames(property.Value, options);
+                    customResourceNames = ModelSerializationExtensions.JsonDeserialize<SingleServerCustomResourceNames>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("appResourceGroup"u8))

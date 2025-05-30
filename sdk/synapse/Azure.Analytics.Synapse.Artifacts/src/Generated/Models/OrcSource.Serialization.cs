@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(StoreSettings))
             {
                 writer.WritePropertyName("storeSettings"u8);
-                writer.WriteObjectValue(StoreSettings);
+                JsonSerializer.Serialize(writer, StoreSettings);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
@@ -76,7 +76,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    storeSettings = StoreReadSettings.DeserializeStoreReadSettings(property.Value);
+                    storeSettings = ModelSerializationExtensions.JsonDeserialize<StoreReadSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("additionalColumns"u8))

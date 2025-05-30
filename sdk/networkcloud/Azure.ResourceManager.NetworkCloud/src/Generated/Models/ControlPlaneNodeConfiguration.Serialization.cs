@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(AdministratorConfiguration))
             {
                 writer.WritePropertyName("administratorConfiguration"u8);
-                writer.WriteObjectValue(AdministratorConfiguration, options);
+                ((IJsonModel<AdministratorConfiguration>)AdministratorConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AvailabilityZones))
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    administratorConfiguration = AdministratorConfiguration.DeserializeAdministratorConfiguration(property.Value, options);
+                    administratorConfiguration = ModelSerializationExtensions.JsonDeserialize<AdministratorConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("availabilityZones"u8))

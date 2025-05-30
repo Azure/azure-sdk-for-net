@@ -48,7 +48,7 @@ namespace Azure.AI.Translation.Document
                 _error.WriteTo(writer);
             }
             writer.WritePropertyName("summary"u8);
-            writer.WriteObjectValue<TranslationStatusSummary>(Summary, options);
+            ((IJsonModel<TranslationStatusSummary>)Summary).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -123,7 +123,7 @@ namespace Azure.AI.Translation.Document
                 }
                 if (property.NameEquals("summary"u8))
                 {
-                    summary = TranslationStatusSummary.DeserializeTranslationStatusSummary(property.Value, options);
+                    summary = ModelSerializationExtensions.JsonDeserialize<TranslationStatusSummary>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

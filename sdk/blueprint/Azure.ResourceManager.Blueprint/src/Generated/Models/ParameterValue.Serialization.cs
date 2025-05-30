@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             if (Optional.IsDefined(Reference))
             {
                 writer.WritePropertyName("reference"u8);
-                writer.WriteObjectValue(Reference, options);
+                ((IJsonModel<SecretValueReference>)Reference).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     {
                         continue;
                     }
-                    reference = SecretValueReference.DeserializeSecretValueReference(property.Value, options);
+                    reference = ModelSerializationExtensions.JsonDeserialize<SecretValueReference>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

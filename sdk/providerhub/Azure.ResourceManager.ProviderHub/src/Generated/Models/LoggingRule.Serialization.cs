@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(HiddenPropertyPaths))
             {
                 writer.WritePropertyName("hiddenPropertyPaths"u8);
-                writer.WriteObjectValue(HiddenPropertyPaths, options);
+                ((IJsonModel<LoggingHiddenPropertyPaths>)HiddenPropertyPaths).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    hiddenPropertyPaths = LoggingHiddenPropertyPaths.DeserializeLoggingHiddenPropertyPaths(property.Value, options);
+                    hiddenPropertyPaths = ModelSerializationExtensions.JsonDeserialize<LoggingHiddenPropertyPaths>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

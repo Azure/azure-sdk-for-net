@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
-                writer.WriteObjectValue(Model, options);
+                ((IJsonModel<CognitiveServicesAccountDeploymentModel>)Model).Write(writer, options);
             }
             if (Optional.IsDefined(SkuName))
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(EstimatedCapacity))
             {
                 writer.WritePropertyName("estimatedCapacity"u8);
-                writer.WriteObjectValue(EstimatedCapacity, options);
+                ((IJsonModel<CalculateModelCapacityResultEstimatedCapacity>)EstimatedCapacity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    model = CognitiveServicesAccountDeploymentModel.DeserializeCognitiveServicesAccountDeploymentModel(property.Value, options);
+                    model = ModelSerializationExtensions.JsonDeserialize<CognitiveServicesAccountDeploymentModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("skuName"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    estimatedCapacity = CalculateModelCapacityResultEstimatedCapacity.DeserializeCalculateModelCapacityResultEstimatedCapacity(property.Value, options);
+                    estimatedCapacity = ModelSerializationExtensions.JsonDeserialize<CalculateModelCapacityResultEstimatedCapacity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

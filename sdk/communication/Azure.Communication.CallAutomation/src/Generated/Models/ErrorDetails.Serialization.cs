@@ -38,7 +38,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    innerError = DeserializeErrorDetails(property.Value);
+                    innerError = ModelSerializationExtensions.JsonDeserialize<ErrorDetails>(property.Value);
                     continue;
                 }
             }

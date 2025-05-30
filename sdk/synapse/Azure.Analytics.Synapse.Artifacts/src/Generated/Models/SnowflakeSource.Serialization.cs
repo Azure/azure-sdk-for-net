@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteObjectValue<object>(Query);
             }
             writer.WritePropertyName("exportSettings"u8);
-            writer.WriteObjectValue(ExportSettings);
+            JsonSerializer.Serialize(writer, ExportSettings);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(SourceRetryCount))
@@ -78,7 +78,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("exportSettings"u8))
                 {
-                    exportSettings = SnowflakeExportCopyCommand.DeserializeSnowflakeExportCopyCommand(property.Value);
+                    exportSettings = ModelSerializationExtensions.JsonDeserialize<SnowflakeExportCopyCommand>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WriteStartArray();
                 foreach (var item in Months)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MaintenanceMonth>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WriteStartArray();
                 foreach (var item in DaysOfWeek)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<OracleDatabaseDayOfWeek>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

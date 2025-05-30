@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                JsonSerializer.Serialize(writer, ExtendedLocation);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerFrontendIPConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FrontendIPConfigurationData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PrivateLinkServiceIPConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetworkInterfaceData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -95,19 +95,19 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetworkPrivateEndpointConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
-                writer.WriteObjectValue(Visibility, options);
+                ((IJsonModel<PrivateLinkServicePropertiesVisibility>)Visibility).Write(writer, options);
             }
             if (Optional.IsDefined(AutoApproval))
             {
                 writer.WritePropertyName("autoApproval"u8);
-                writer.WriteObjectValue(AutoApproval, options);
+                ((IJsonModel<PrivateLinkServicePropertiesAutoApproval>)AutoApproval).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Fqdns))
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<ExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            visibility = PrivateLinkServicePropertiesVisibility.DeserializePrivateLinkServicePropertiesVisibility(property0.Value, options);
+                            visibility = ModelSerializationExtensions.JsonDeserialize<PrivateLinkServicePropertiesVisibility>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("autoApproval"u8))
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            autoApproval = PrivateLinkServicePropertiesAutoApproval.DeserializePrivateLinkServicePropertiesAutoApproval(property0.Value, options);
+                            autoApproval = ModelSerializationExtensions.JsonDeserialize<PrivateLinkServicePropertiesAutoApproval>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("fqdns"u8))

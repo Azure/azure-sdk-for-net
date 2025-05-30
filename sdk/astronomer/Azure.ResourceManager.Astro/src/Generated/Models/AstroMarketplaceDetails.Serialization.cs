@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Astro.Models
                 writer.WriteStringValue(SubscriptionStatus.Value.ToString());
             }
             writer.WritePropertyName("offerDetails"u8);
-            writer.WriteObjectValue(OfferDetails, options);
+            ((IJsonModel<AstroOfferDetails>)OfferDetails).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Astro.Models
                 }
                 if (property.NameEquals("offerDetails"u8))
                 {
-                    offerDetails = AstroOfferDetails.DeserializeAstroOfferDetails(property.Value, options);
+                    offerDetails = ModelSerializationExtensions.JsonDeserialize<AstroOfferDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

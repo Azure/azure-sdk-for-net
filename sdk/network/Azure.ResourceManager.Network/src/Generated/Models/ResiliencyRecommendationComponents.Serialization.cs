@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Recommendations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<GatewayResiliencyRecommendation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

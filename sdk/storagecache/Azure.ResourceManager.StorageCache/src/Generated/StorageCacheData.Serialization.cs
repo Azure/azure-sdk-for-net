@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.StorageCache
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<StorageCacheSkuInfo>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.StorageCache
             if (options.Format != "W" && Optional.IsDefined(Health))
             {
                 writer.WritePropertyName("health"u8);
-                writer.WriteObjectValue(Health, options);
+                ((IJsonModel<StorageCacheHealth>)Health).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(MountAddresses))
             {
@@ -88,32 +88,32 @@ namespace Azure.ResourceManager.StorageCache
             if (options.Format != "W" && Optional.IsDefined(UpgradeStatus))
             {
                 writer.WritePropertyName("upgradeStatus"u8);
-                writer.WriteObjectValue(UpgradeStatus, options);
+                ((IJsonModel<StorageCacheUpgradeStatus>)UpgradeStatus).Write(writer, options);
             }
             if (Optional.IsDefined(UpgradeSettings))
             {
                 writer.WritePropertyName("upgradeSettings"u8);
-                writer.WriteObjectValue(UpgradeSettings, options);
+                ((IJsonModel<StorageCacheUpgradeSettings>)UpgradeSettings).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkSettings))
             {
                 writer.WritePropertyName("networkSettings"u8);
-                writer.WriteObjectValue(NetworkSettings, options);
+                ((IJsonModel<StorageCacheNetworkSettings>)NetworkSettings).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
-                writer.WriteObjectValue(EncryptionSettings, options);
+                ((IJsonModel<StorageCacheEncryptionSettings>)EncryptionSettings).Write(writer, options);
             }
             if (Optional.IsDefined(SecuritySettings))
             {
                 writer.WritePropertyName("securitySettings"u8);
-                writer.WriteObjectValue(SecuritySettings, options);
+                ((IJsonModel<StorageCacheSecuritySettings>)SecuritySettings).Write(writer, options);
             }
             if (Optional.IsDefined(DirectoryServicesSettings))
             {
                 writer.WritePropertyName("directoryServicesSettings"u8);
-                writer.WriteObjectValue(DirectoryServicesSettings, options);
+                ((IJsonModel<StorageCacheDirectorySettings>)DirectoryServicesSettings).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.StorageCache
                 writer.WriteStartArray();
                 foreach (var item in PrimingJobs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PrimingJob>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.StorageCache
                 writer.WriteStartArray();
                 foreach (var item in SpaceAllocation)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StorageTargetSpaceAllocation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.StorageCache
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.StorageCache
                     {
                         continue;
                     }
-                    sku = StorageCacheSkuInfo.DeserializeStorageCacheSkuInfo(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<StorageCacheSkuInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.StorageCache
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            health = StorageCacheHealth.DeserializeStorageCacheHealth(property0.Value, options);
+                            health = ModelSerializationExtensions.JsonDeserialize<StorageCacheHealth>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("mountAddresses"u8))
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            upgradeStatus = StorageCacheUpgradeStatus.DeserializeStorageCacheUpgradeStatus(property0.Value, options);
+                            upgradeStatus = ModelSerializationExtensions.JsonDeserialize<StorageCacheUpgradeStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("upgradeSettings"u8))
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            upgradeSettings = StorageCacheUpgradeSettings.DeserializeStorageCacheUpgradeSettings(property0.Value, options);
+                            upgradeSettings = ModelSerializationExtensions.JsonDeserialize<StorageCacheUpgradeSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkSettings"u8))
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            networkSettings = StorageCacheNetworkSettings.DeserializeStorageCacheNetworkSettings(property0.Value, options);
+                            networkSettings = ModelSerializationExtensions.JsonDeserialize<StorageCacheNetworkSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptionSettings"u8))
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            encryptionSettings = StorageCacheEncryptionSettings.DeserializeStorageCacheEncryptionSettings(property0.Value, options);
+                            encryptionSettings = ModelSerializationExtensions.JsonDeserialize<StorageCacheEncryptionSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("securitySettings"u8))
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            securitySettings = StorageCacheSecuritySettings.DeserializeStorageCacheSecuritySettings(property0.Value, options);
+                            securitySettings = ModelSerializationExtensions.JsonDeserialize<StorageCacheSecuritySettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("directoryServicesSettings"u8))
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            directoryServicesSettings = StorageCacheDirectorySettings.DeserializeStorageCacheDirectorySettings(property0.Value, options);
+                            directoryServicesSettings = ModelSerializationExtensions.JsonDeserialize<StorageCacheDirectorySettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("zones"u8))

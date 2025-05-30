@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                JsonSerializer.Serialize(writer, ConnectVia);
             }
             if (Optional.IsDefined(Description))
             {
@@ -43,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    JsonSerializer.Serialize(writer, item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -69,7 +69,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(FunctionKey))
             {
                 writer.WritePropertyName("functionKey"u8);
-                writer.WriteObjectValue(FunctionKey);
+                JsonSerializer.Serialize(writer, FunctionKey);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -79,7 +79,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue(Credential);
+                JsonSerializer.Serialize(writer, Credential);
             }
             if (Optional.IsDefined(ResourceId))
             {
@@ -138,7 +138,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
+                    connectVia = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -201,7 +201,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            functionKey = SecretBase.DeserializeSecretBase(property0.Value);
+                            functionKey = ModelSerializationExtensions.JsonDeserialize<SecretBase>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
@@ -219,7 +219,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            credential = CredentialReference.DeserializeCredentialReference(property0.Value);
+                            credential = ModelSerializationExtensions.JsonDeserialize<CredentialReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resourceId"u8))

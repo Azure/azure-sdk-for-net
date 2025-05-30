@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in Static)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StaticRoutingEnrichment>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in Dynamic)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DynamicRoutingEnrichment>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

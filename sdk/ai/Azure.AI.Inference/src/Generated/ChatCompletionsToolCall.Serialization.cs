@@ -39,7 +39,7 @@ namespace Azure.AI.Inference
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("function"u8);
-            writer.WriteObjectValue(Function, options);
+            ((IJsonModel<FunctionCall>)Function).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -96,7 +96,7 @@ namespace Azure.AI.Inference
                 }
                 if (property.NameEquals("function"u8))
                 {
-                    function = FunctionCall.DeserializeFunctionCall(property.Value, options);
+                    function = ModelSerializationExtensions.JsonDeserialize<FunctionCall>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

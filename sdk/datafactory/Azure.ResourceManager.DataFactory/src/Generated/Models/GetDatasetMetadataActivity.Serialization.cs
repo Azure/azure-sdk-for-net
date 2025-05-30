@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("dataset"u8);
-            writer.WriteObjectValue(Dataset, options);
+            ((IJsonModel<DatasetReference>)Dataset).Write(writer, options);
             if (Optional.IsCollectionDefined(FieldList))
             {
                 writer.WritePropertyName("fieldList"u8);
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(StoreSettings))
             {
                 writer.WritePropertyName("storeSettings"u8);
-                writer.WriteObjectValue(StoreSettings, options);
+                ((IJsonModel<StoreReadSettings>)StoreSettings).Write(writer, options);
             }
             if (Optional.IsDefined(FormatSettings))
             {
                 writer.WritePropertyName("formatSettings"u8);
-                writer.WriteObjectValue(FormatSettings, options);
+                ((IJsonModel<FormatReadSettings>)FormatSettings).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
+                    policy = ModelSerializationExtensions.JsonDeserialize<PipelineActivityPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("dataset"u8))
                         {
-                            dataset = DatasetReference.DeserializeDatasetReference(property0.Value, options);
+                            dataset = ModelSerializationExtensions.JsonDeserialize<DatasetReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("fieldList"u8))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            storeSettings = StoreReadSettings.DeserializeStoreReadSettings(property0.Value, options);
+                            storeSettings = ModelSerializationExtensions.JsonDeserialize<StoreReadSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("formatSettings"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            formatSettings = FormatReadSettings.DeserializeFormatReadSettings(property0.Value, options);
+                            formatSettings = ModelSerializationExtensions.JsonDeserialize<FormatReadSettings>(property0.Value);
                             continue;
                         }
                     }

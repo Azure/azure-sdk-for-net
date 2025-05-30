@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Instructions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InstructionStepDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in InnerSteps)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InstructionStep>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

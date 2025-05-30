@@ -36,7 +36,7 @@ namespace Azure.Analytics.Defender.Easm
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("asset"u8);
-            writer.WriteObjectValue(Asset, options);
+            ((IJsonModel<IpAddressAsset>)Asset).Write(writer, options);
         }
 
         IpAddressAssetResource IJsonModel<IpAddressAssetResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -80,7 +80,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 if (property.NameEquals("asset"u8))
                 {
-                    asset = IpAddressAsset.DeserializeIpAddressAsset(property.Value, options);
+                    asset = ModelSerializationExtensions.JsonDeserialize<IpAddressAsset>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

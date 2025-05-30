@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (Optional.IsDefined(PricingCurrencyTotal))
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
-                writer.WriteObjectValue(PricingCurrencyTotal, options);
+                ((IJsonModel<BillingBenefitsPrice>)PricingCurrencyTotal).Write(writer, options);
             }
             if (Optional.IsDefined(BillingCurrencyTotal))
             {
                 writer.WritePropertyName("billingCurrencyTotal"u8);
-                writer.WriteObjectValue(BillingCurrencyTotal, options);
+                ((IJsonModel<BillingBenefitsPrice>)BillingCurrencyTotal).Write(writer, options);
             }
             if (Optional.IsDefined(Status))
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (options.Format != "W" && Optional.IsDefined(ExtendedStatusInfo))
             {
                 writer.WritePropertyName("extendedStatusInfo"u8);
-                writer.WriteObjectValue(ExtendedStatusInfo, options);
+                ((IJsonModel<BillingBenefitsExtendedStatusInfo>)ExtendedStatusInfo).Write(writer, options);
             }
             if (Optional.IsDefined(BillingAccount))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    pricingCurrencyTotal = BillingBenefitsPrice.DeserializeBillingBenefitsPrice(property.Value, options);
+                    pricingCurrencyTotal = ModelSerializationExtensions.JsonDeserialize<BillingBenefitsPrice>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("billingCurrencyTotal"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    billingCurrencyTotal = BillingBenefitsPrice.DeserializeBillingBenefitsPrice(property.Value, options);
+                    billingCurrencyTotal = ModelSerializationExtensions.JsonDeserialize<BillingBenefitsPrice>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    extendedStatusInfo = BillingBenefitsExtendedStatusInfo.DeserializeBillingBenefitsExtendedStatusInfo(property.Value, options);
+                    extendedStatusInfo = ModelSerializationExtensions.JsonDeserialize<BillingBenefitsExtendedStatusInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("billingAccount"u8))

@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Text
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("results"u8);
-            writer.WriteObjectValue(Results, options);
+            ((IJsonModel<AbstractiveSummarizationResult>)Results).Write(writer, options);
         }
 
         AbstractiveSummarizationOperationResult IJsonModel<AbstractiveSummarizationOperationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -70,7 +70,7 @@ namespace Azure.AI.Language.Text
             {
                 if (property.NameEquals("results"u8))
                 {
-                    results = AbstractiveSummarizationResult.DeserializeAbstractiveSummarizationResult(property.Value, options);
+                    results = ModelSerializationExtensions.JsonDeserialize<AbstractiveSummarizationResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lastUpdateDateTime"u8))

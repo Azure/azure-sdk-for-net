@@ -39,32 +39,32 @@ namespace Azure.ResourceManager.IotOperations.Models
             if (Optional.IsDefined(DataExplorerSettings))
             {
                 writer.WritePropertyName("dataExplorerSettings"u8);
-                writer.WriteObjectValue(DataExplorerSettings, options);
+                ((IJsonModel<DataflowEndpointDataExplorer>)DataExplorerSettings).Write(writer, options);
             }
             if (Optional.IsDefined(DataLakeStorageSettings))
             {
                 writer.WritePropertyName("dataLakeStorageSettings"u8);
-                writer.WriteObjectValue(DataLakeStorageSettings, options);
+                ((IJsonModel<DataflowEndpointDataLakeStorage>)DataLakeStorageSettings).Write(writer, options);
             }
             if (Optional.IsDefined(FabricOneLakeSettings))
             {
                 writer.WritePropertyName("fabricOneLakeSettings"u8);
-                writer.WriteObjectValue(FabricOneLakeSettings, options);
+                ((IJsonModel<DataflowEndpointFabricOneLake>)FabricOneLakeSettings).Write(writer, options);
             }
             if (Optional.IsDefined(KafkaSettings))
             {
                 writer.WritePropertyName("kafkaSettings"u8);
-                writer.WriteObjectValue(KafkaSettings, options);
+                ((IJsonModel<DataflowEndpointKafka>)KafkaSettings).Write(writer, options);
             }
             if (Optional.IsDefined(LocalStorageSettings))
             {
                 writer.WritePropertyName("localStorageSettings"u8);
-                writer.WriteObjectValue(LocalStorageSettings, options);
+                ((IJsonModel<DataflowEndpointLocalStorage>)LocalStorageSettings).Write(writer, options);
             }
             if (Optional.IsDefined(MqttSettings))
             {
                 writer.WritePropertyName("mqttSettings"u8);
-                writer.WriteObjectValue(MqttSettings, options);
+                ((IJsonModel<DataflowEndpointMqtt>)MqttSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    dataExplorerSettings = DataflowEndpointDataExplorer.DeserializeDataflowEndpointDataExplorer(property.Value, options);
+                    dataExplorerSettings = ModelSerializationExtensions.JsonDeserialize<DataflowEndpointDataExplorer>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataLakeStorageSettings"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    dataLakeStorageSettings = DataflowEndpointDataLakeStorage.DeserializeDataflowEndpointDataLakeStorage(property.Value, options);
+                    dataLakeStorageSettings = ModelSerializationExtensions.JsonDeserialize<DataflowEndpointDataLakeStorage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("fabricOneLakeSettings"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    fabricOneLakeSettings = DataflowEndpointFabricOneLake.DeserializeDataflowEndpointFabricOneLake(property.Value, options);
+                    fabricOneLakeSettings = ModelSerializationExtensions.JsonDeserialize<DataflowEndpointFabricOneLake>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kafkaSettings"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    kafkaSettings = DataflowEndpointKafka.DeserializeDataflowEndpointKafka(property.Value, options);
+                    kafkaSettings = ModelSerializationExtensions.JsonDeserialize<DataflowEndpointKafka>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("localStorageSettings"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    localStorageSettings = DataflowEndpointLocalStorage.DeserializeDataflowEndpointLocalStorage(property.Value, options);
+                    localStorageSettings = ModelSerializationExtensions.JsonDeserialize<DataflowEndpointLocalStorage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mqttSettings"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    mqttSettings = DataflowEndpointMqtt.DeserializeDataflowEndpointMqtt(property.Value, options);
+                    mqttSettings = ModelSerializationExtensions.JsonDeserialize<DataflowEndpointMqtt>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

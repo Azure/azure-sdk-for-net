@@ -42,7 +42,7 @@ namespace Azure.Developer.LoadTesting
                 foreach (var item in Configurations)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<FunctionFlexConsumptionResourceConfiguration>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }

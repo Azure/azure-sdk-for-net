@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                JsonSerializer.Serialize(writer, ExtendedLocation);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -52,17 +52,17 @@ namespace Azure.ResourceManager.Network
             if (options.Format != "W" && Optional.IsDefined(VirtualMachine))
             {
                 writer.WritePropertyName("virtualMachine"u8);
-                JsonSerializer.Serialize(writer, VirtualMachine);
+                ((IJsonModel<WritableSubResource>)VirtualMachine).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkSecurityGroup))
             {
                 writer.WritePropertyName("networkSecurityGroup"u8);
-                writer.WriteObjectValue(NetworkSecurityGroup, options);
+                ((IJsonModel<NetworkSecurityGroupData>)NetworkSecurityGroup).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                writer.WriteObjectValue(PrivateEndpoint, options);
+                ((IJsonModel<PrivateEndpointData>)PrivateEndpoint).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(IPConfigurations))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetworkInterfaceIPConfigurationData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,14 +80,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in TapConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetworkInterfaceTapConfigurationData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
-                writer.WriteObjectValue(DnsSettings, options);
+                ((IJsonModel<NetworkInterfaceDnsSettings>)DnsSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MacAddress))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network
             if (options.Format != "W" && Optional.IsDefined(DscpConfiguration))
             {
                 writer.WritePropertyName("dscpConfiguration"u8);
-                JsonSerializer.Serialize(writer, DscpConfiguration);
+                ((IJsonModel<WritableSubResource>)DscpConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(PrivateLinkService))
             {
                 writer.WritePropertyName("privateLinkService"u8);
-                writer.WriteObjectValue(PrivateLinkService, options);
+                ((IJsonModel<PrivateLinkServiceData>)PrivateLinkService).Write(writer, options);
             }
             if (Optional.IsDefined(MigrationPhase))
             {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<ExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            virtualMachine = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            virtualMachine = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkSecurityGroup"u8))
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            networkSecurityGroup = NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(property0.Value, options);
+                            networkSecurityGroup = ModelSerializationExtensions.JsonDeserialize<NetworkSecurityGroupData>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpoint"u8))
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            privateEndpoint = PrivateEndpointData.DeserializePrivateEndpointData(property0.Value, options);
+                            privateEndpoint = ModelSerializationExtensions.JsonDeserialize<PrivateEndpointData>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ipConfigurations"u8))
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            dnsSettings = NetworkInterfaceDnsSettings.DeserializeNetworkInterfaceDnsSettings(property0.Value, options);
+                            dnsSettings = ModelSerializationExtensions.JsonDeserialize<NetworkInterfaceDnsSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("macAddress"u8))
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            dscpConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            dscpConfiguration = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resourceGuid"u8))
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            privateLinkService = PrivateLinkServiceData.DeserializePrivateLinkServiceData(property0.Value, options);
+                            privateLinkService = ModelSerializationExtensions.JsonDeserialize<PrivateLinkServiceData>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("migrationPhase"u8))

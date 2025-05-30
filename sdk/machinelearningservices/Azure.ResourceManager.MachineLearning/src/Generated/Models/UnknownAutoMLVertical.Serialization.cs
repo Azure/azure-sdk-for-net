@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("trainingData"u8))
                 {
-                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
+                    trainingData = ModelSerializationExtensions.JsonDeserialize<MachineLearningTableJobInput>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetColumnName"u8))

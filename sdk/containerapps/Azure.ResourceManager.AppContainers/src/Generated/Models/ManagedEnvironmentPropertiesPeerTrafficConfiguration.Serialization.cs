@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption>)Encryption).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    encryption = ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption.DeserializeManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption(property.Value, options);
+                    encryption = ModelSerializationExtensions.JsonDeserialize<ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

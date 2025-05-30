@@ -52,7 +52,7 @@ namespace Azure.Developer.LoadTesting
             if (Optional.IsDefined(OptionalLoadTestConfiguration))
             {
                 writer.WritePropertyName("optionalLoadTestConfig"u8);
-                writer.WriteObjectValue(OptionalLoadTestConfiguration, options);
+                ((IJsonModel<OptionalLoadTestConfiguration>)OptionalLoadTestConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(RegionalLoadTestConfiguration))
             {
@@ -60,7 +60,7 @@ namespace Azure.Developer.LoadTesting
                 writer.WriteStartArray();
                 foreach (var item in RegionalLoadTestConfiguration)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RegionalConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -143,7 +143,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    optionalLoadTestConfig = OptionalLoadTestConfiguration.DeserializeOptionalLoadTestConfiguration(property.Value, options);
+                    optionalLoadTestConfig = ModelSerializationExtensions.JsonDeserialize<OptionalLoadTestConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("regionalLoadTestConfig"u8))

@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<SapVirtualInstanceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<UpdateSapVirtualInstanceProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     {
                         continue;
                     }
-                    identity = SapVirtualInstanceIdentity.DeserializeSapVirtualInstanceIdentity(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<SapVirtualInstanceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     {
                         continue;
                     }
-                    properties = UpdateSapVirtualInstanceProperties.DeserializeUpdateSapVirtualInstanceProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<UpdateSapVirtualInstanceProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

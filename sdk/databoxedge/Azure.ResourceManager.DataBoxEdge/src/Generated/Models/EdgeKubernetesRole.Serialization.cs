@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(KubernetesClusterInfo))
             {
                 writer.WritePropertyName("kubernetesClusterInfo"u8);
-                writer.WriteObjectValue(KubernetesClusterInfo, options);
+                ((IJsonModel<EdgeKubernetesClusterInfo>)KubernetesClusterInfo).Write(writer, options);
             }
             if (Optional.IsDefined(KubernetesRoleResources))
             {
                 writer.WritePropertyName("kubernetesRoleResources"u8);
-                writer.WriteObjectValue(KubernetesRoleResources, options);
+                ((IJsonModel<EdgeKubernetesRoleResources>)KubernetesRoleResources).Write(writer, options);
             }
             if (Optional.IsDefined(RoleStatus))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            kubernetesClusterInfo = EdgeKubernetesClusterInfo.DeserializeEdgeKubernetesClusterInfo(property0.Value, options);
+                            kubernetesClusterInfo = ModelSerializationExtensions.JsonDeserialize<EdgeKubernetesClusterInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("kubernetesRoleResources"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            kubernetesRoleResources = EdgeKubernetesRoleResources.DeserializeEdgeKubernetesRoleResources(property0.Value, options);
+                            kubernetesRoleResources = ModelSerializationExtensions.JsonDeserialize<EdgeKubernetesRoleResources>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("roleStatus"u8))

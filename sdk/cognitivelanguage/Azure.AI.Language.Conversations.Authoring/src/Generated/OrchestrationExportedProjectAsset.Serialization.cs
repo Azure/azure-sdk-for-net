@@ -41,7 +41,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 writer.WriteStartArray();
                 foreach (var item in Intents)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<OrchestrationExportedIntent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -51,7 +51,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 writer.WriteStartArray();
                 foreach (var item in Utterances)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<OrchestrationExportedUtterance>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

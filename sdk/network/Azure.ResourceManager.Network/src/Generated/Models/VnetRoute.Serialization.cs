@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(StaticRoutesConfig))
             {
                 writer.WritePropertyName("staticRoutesConfig"u8);
-                writer.WriteObjectValue(StaticRoutesConfig, options);
+                ((IJsonModel<StaticRoutesConfig>)StaticRoutesConfig).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(StaticRoutes))
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in StaticRoutes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StaticRoute>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in BgpConnections)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    staticRoutesConfig = StaticRoutesConfig.DeserializeStaticRoutesConfig(property.Value, options);
+                    staticRoutesConfig = ModelSerializationExtensions.JsonDeserialize<StaticRoutesConfig>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("staticRoutes"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                        array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                     }
                     bgpConnections = array;
                     continue;

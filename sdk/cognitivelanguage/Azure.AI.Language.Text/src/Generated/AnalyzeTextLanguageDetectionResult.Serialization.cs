@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Text
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("results"u8);
-            writer.WriteObjectValue(Results, options);
+            ((IJsonModel<LanguageDetectionResult>)Results).Write(writer, options);
         }
 
         AnalyzeTextLanguageDetectionResult IJsonModel<AnalyzeTextLanguageDetectionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.AI.Language.Text
             {
                 if (property.NameEquals("results"u8))
                 {
-                    results = LanguageDetectionResult.DeserializeLanguageDetectionResult(property.Value, options);
+                    results = ModelSerializationExtensions.JsonDeserialize<LanguageDetectionResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

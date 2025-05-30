@@ -37,7 +37,7 @@ namespace Azure.AI.Language.Text.Authoring
             writer.WritePropertyName("projectKind"u8);
             writer.WriteStringValue(ProjectKind.ToString());
             writer.WritePropertyName("evaluationOptions"u8);
-            writer.WriteObjectValue(EvaluationOptions, options);
+            ((IJsonModel<TextAuthoringEvaluationDetails>)EvaluationOptions).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

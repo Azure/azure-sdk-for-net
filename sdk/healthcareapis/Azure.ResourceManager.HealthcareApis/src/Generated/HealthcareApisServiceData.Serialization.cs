@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HealthcareApis
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<HealthcareApisServiceProperties>)Properties).Write(writer, options);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToSerialString());
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HealthcareApis
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
         }
 
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     {
                         continue;
                     }
-                    properties = HealthcareApisServiceProperties.DeserializeHealthcareApisServiceProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<HealthcareApisServiceProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

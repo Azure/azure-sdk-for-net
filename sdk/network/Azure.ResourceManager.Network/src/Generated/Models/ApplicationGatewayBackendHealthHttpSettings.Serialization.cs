@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(BackendHttpSettings))
             {
                 writer.WritePropertyName("backendHttpSettings"u8);
-                writer.WriteObjectValue(BackendHttpSettings, options);
+                ((IJsonModel<ApplicationGatewayBackendHttpSettings>)BackendHttpSettings).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Servers))
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Servers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayBackendHealthServer>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    backendHttpSettings = ApplicationGatewayBackendHttpSettings.DeserializeApplicationGatewayBackendHttpSettings(property.Value, options);
+                    backendHttpSettings = ModelSerializationExtensions.JsonDeserialize<ApplicationGatewayBackendHttpSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("servers"u8))

@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(AzureFile))
             {
                 writer.WritePropertyName("azureFile"u8);
-                writer.WriteObjectValue(AzureFile, options);
+                ((IJsonModel<ContainerAppAzureFileProperties>)AzureFile).Write(writer, options);
             }
             if (Optional.IsDefined(NfsAzureFile))
             {
                 writer.WritePropertyName("nfsAzureFile"u8);
-                writer.WriteObjectValue(NfsAzureFile, options);
+                ((IJsonModel<ContainerAppNfsAzureFileProperties>)NfsAzureFile).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    azureFile = ContainerAppAzureFileProperties.DeserializeContainerAppAzureFileProperties(property.Value, options);
+                    azureFile = ModelSerializationExtensions.JsonDeserialize<ContainerAppAzureFileProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nfsAzureFile"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    nfsAzureFile = ContainerAppNfsAzureFileProperties.DeserializeContainerAppNfsAzureFileProperties(property.Value, options);
+                    nfsAzureFile = ModelSerializationExtensions.JsonDeserialize<ContainerAppNfsAzureFileProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

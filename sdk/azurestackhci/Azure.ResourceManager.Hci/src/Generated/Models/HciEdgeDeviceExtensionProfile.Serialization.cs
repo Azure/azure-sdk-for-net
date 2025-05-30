@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HciEdgeDeviceArcExtension>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

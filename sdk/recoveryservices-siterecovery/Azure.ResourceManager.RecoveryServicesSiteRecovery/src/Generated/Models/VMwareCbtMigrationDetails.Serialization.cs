@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(TargetVmSecurityProfile))
             {
                 writer.WritePropertyName("targetVmSecurityProfile"u8);
-                writer.WriteObjectValue(TargetVmSecurityProfile, options);
+                ((IJsonModel<VMwareCbtSecurityProfileProperties>)TargetVmSecurityProfile).Write(writer, options);
             }
             if (Optional.IsDefined(TargetBootDiagnosticsStorageAccountId))
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedDisks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VMwareCbtProtectedDiskDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VMwareCbtNicDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -307,12 +307,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (options.Format != "W" && Optional.IsDefined(ApplianceMonitoringDetails))
             {
                 writer.WritePropertyName("applianceMonitoringDetails"u8);
-                writer.WriteObjectValue(ApplianceMonitoringDetails, options);
+                ((IJsonModel<ApplianceMonitoringDetails>)ApplianceMonitoringDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(GatewayOperationDetails))
             {
                 writer.WritePropertyName("gatewayOperationDetails"u8);
-                writer.WriteObjectValue(GatewayOperationDetails, options);
+                ((IJsonModel<GatewayOperationDetails>)GatewayOperationDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OperationName))
             {
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    targetVmSecurityProfile = VMwareCbtSecurityProfileProperties.DeserializeVMwareCbtSecurityProfileProperties(property.Value, options);
+                    targetVmSecurityProfile = ModelSerializationExtensions.JsonDeserialize<VMwareCbtSecurityProfileProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetBootDiagnosticsStorageAccountId"u8))
@@ -798,7 +798,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    applianceMonitoringDetails = ApplianceMonitoringDetails.DeserializeApplianceMonitoringDetails(property.Value, options);
+                    applianceMonitoringDetails = ModelSerializationExtensions.JsonDeserialize<ApplianceMonitoringDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("gatewayOperationDetails"u8))
@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    gatewayOperationDetails = GatewayOperationDetails.DeserializeGatewayOperationDetails(property.Value, options);
+                    gatewayOperationDetails = ModelSerializationExtensions.JsonDeserialize<GatewayOperationDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("operationName"u8))

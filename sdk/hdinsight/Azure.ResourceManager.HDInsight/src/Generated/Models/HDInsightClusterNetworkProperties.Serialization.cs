@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(PublicIPTag))
             {
                 writer.WritePropertyName("publicIpTag"u8);
-                writer.WriteObjectValue(PublicIPTag, options);
+                ((IJsonModel<HDInsightClusterIPTag>)PublicIPTag).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    publicIPTag = HDInsightClusterIPTag.DeserializeHDInsightClusterIPTag(property.Value, options);
+                    publicIPTag = ModelSerializationExtensions.JsonDeserialize<HDInsightClusterIPTag>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

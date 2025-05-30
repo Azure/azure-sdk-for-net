@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in MonthlyOccurrences)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RecurrenceScheduleOccurrence>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

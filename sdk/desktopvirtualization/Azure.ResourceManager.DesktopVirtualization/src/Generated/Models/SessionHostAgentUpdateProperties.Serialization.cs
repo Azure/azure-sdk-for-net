@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     writer.WriteStartArray();
                     foreach (var item in MaintenanceWindows)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<SessionHostMaintenanceWindowProperties>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }

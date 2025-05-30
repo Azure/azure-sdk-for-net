@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WriteStartArray();
                 foreach (var item in MonitorWorkspaceIntegrations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MonitorWorkspaceIntegration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

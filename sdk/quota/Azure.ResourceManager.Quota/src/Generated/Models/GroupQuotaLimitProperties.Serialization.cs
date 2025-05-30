@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    allocatedToSubscriptions = AllocatedQuotaToSubscriptionList.DeserializeAllocatedQuotaToSubscriptionList(property.Value, options);
+                    allocatedToSubscriptions = ModelSerializationExtensions.JsonDeserialize<AllocatedQuotaToSubscriptionList>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

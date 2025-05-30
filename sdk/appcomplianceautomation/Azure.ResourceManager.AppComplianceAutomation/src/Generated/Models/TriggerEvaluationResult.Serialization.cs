@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<TriggerEvaluationProperty>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    properties = TriggerEvaluationProperty.DeserializeTriggerEvaluationProperty(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<TriggerEvaluationProperty>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

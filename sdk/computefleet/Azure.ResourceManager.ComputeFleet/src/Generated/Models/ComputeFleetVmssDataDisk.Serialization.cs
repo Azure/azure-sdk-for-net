@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
-                writer.WriteObjectValue(ManagedDisk, options);
+                ((IJsonModel<ComputeFleetVmssManagedDisk>)ManagedDisk).Write(writer, options);
             }
             if (Optional.IsDefined(DiskIopsReadWrite))
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    managedDisk = ComputeFleetVmssManagedDisk.DeserializeComputeFleetVmssManagedDisk(property.Value, options);
+                    managedDisk = ModelSerializationExtensions.JsonDeserialize<ComputeFleetVmssManagedDisk>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("diskIOPSReadWrite"u8))

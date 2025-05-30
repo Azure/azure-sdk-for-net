@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<CustomDomainIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(CertificateUri))
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    identity = CustomDomainIdentity.DeserializeCustomDomainIdentity(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<CustomDomainIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("certificateUrl"u8))

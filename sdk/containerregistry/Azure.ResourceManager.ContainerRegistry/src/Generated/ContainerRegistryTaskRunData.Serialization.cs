@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Location))
             {
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(RunRequest))
             {
                 writer.WritePropertyName("runRequest"u8);
-                writer.WriteObjectValue(RunRequest, options);
+                ((IJsonModel<ContainerRegistryRunContent>)RunRequest).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RunResult))
             {
                 writer.WritePropertyName("runResult"u8);
-                writer.WriteObjectValue(RunResult, options);
+                ((IJsonModel<ContainerRegistryRunData>)RunResult).Write(writer, options);
             }
             if (Optional.IsDefined(ForceUpdateTag))
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            runRequest = ContainerRegistryRunContent.DeserializeContainerRegistryRunContent(property0.Value, options);
+                            runRequest = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryRunContent>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("runResult"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            runResult = ContainerRegistryRunData.DeserializeContainerRegistryRunData(property0.Value, options);
+                            runResult = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryRunData>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("forceUpdateTag"u8))

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WritePropertyName("destination"u8);
             writer.WriteStringValue(Destination);
             writer.WritePropertyName("definition"u8);
-            writer.WriteObjectValue(Definition, options);
+            ((IJsonModel<BlobInventoryPolicyDefinition>)Definition).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("definition"u8))
                 {
-                    definition = BlobInventoryPolicyDefinition.DeserializeBlobInventoryPolicyDefinition(property.Value, options);
+                    definition = ModelSerializationExtensions.JsonDeserialize<BlobInventoryPolicyDefinition>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

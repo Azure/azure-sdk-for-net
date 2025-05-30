@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation, options);
+                ((IJsonModel<GalleryExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             if (Optional.IsDefined(ExtendedLocationReplicaCount))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<EncryptionImages>)Encryption).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    extendedLocation = GalleryExtendedLocation.DeserializeGalleryExtendedLocation(property.Value, options);
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<GalleryExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extendedLocationReplicaCount"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryption = EncryptionImages.DeserializeEncryptionImages(property.Value, options);
+                    encryption = ModelSerializationExtensions.JsonDeserialize<EncryptionImages>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Pfx))
             {
                 writer.WritePropertyName("pfx"u8);
-                writer.WriteObjectValue(Pfx);
+                JsonSerializer.Serialize(writer, Pfx);
             }
             if (Optional.IsDefined(Username))
             {
@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password);
+                JsonSerializer.Serialize(writer, Password);
             }
             if (Optional.IsDefined(Resource))
             {
@@ -48,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue(Credential);
+                JsonSerializer.Serialize(writer, Credential);
             }
             writer.WriteEndObject();
         }
@@ -79,7 +79,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    pfx = SecretBase.DeserializeSecretBase(property.Value);
+                    pfx = ModelSerializationExtensions.JsonDeserialize<SecretBase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("username"u8))
@@ -97,7 +97,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    password = SecretBase.DeserializeSecretBase(property.Value);
+                    password = ModelSerializationExtensions.JsonDeserialize<SecretBase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resource"u8))
@@ -124,7 +124,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    credential = CredentialReference.DeserializeCredentialReference(property.Value);
+                    credential = ModelSerializationExtensions.JsonDeserialize<CredentialReference>(property.Value);
                     continue;
                 }
             }

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in GlobalPlacementRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetAppVolumePlacementRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

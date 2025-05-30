@@ -44,17 +44,17 @@ namespace Azure.ResourceManager.IotOperations.Models
             if (Optional.IsDefined(SourceSettings))
             {
                 writer.WritePropertyName("sourceSettings"u8);
-                writer.WriteObjectValue(SourceSettings, options);
+                ((IJsonModel<DataflowSourceOperationSettings>)SourceSettings).Write(writer, options);
             }
             if (Optional.IsDefined(BuiltInTransformationSettings))
             {
                 writer.WritePropertyName("builtInTransformationSettings"u8);
-                writer.WriteObjectValue(BuiltInTransformationSettings, options);
+                ((IJsonModel<DataflowBuiltInTransformationSettings>)BuiltInTransformationSettings).Write(writer, options);
             }
             if (Optional.IsDefined(DestinationSettings))
             {
                 writer.WritePropertyName("destinationSettings"u8);
-                writer.WriteObjectValue(DestinationSettings, options);
+                ((IJsonModel<DataflowDestinationOperationSettings>)DestinationSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    sourceSettings = DataflowSourceOperationSettings.DeserializeDataflowSourceOperationSettings(property.Value, options);
+                    sourceSettings = ModelSerializationExtensions.JsonDeserialize<DataflowSourceOperationSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("builtInTransformationSettings"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    builtInTransformationSettings = DataflowBuiltInTransformationSettings.DeserializeDataflowBuiltInTransformationSettings(property.Value, options);
+                    builtInTransformationSettings = ModelSerializationExtensions.JsonDeserialize<DataflowBuiltInTransformationSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("destinationSettings"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    destinationSettings = DataflowDestinationOperationSettings.DeserializeDataflowDestinationOperationSettings(property.Value, options);
+                    destinationSettings = ModelSerializationExtensions.JsonDeserialize<DataflowDestinationOperationSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

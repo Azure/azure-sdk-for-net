@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WritePropertyName("logPath"u8);
-            JsonSerializer.Serialize(writer, LogPath);
+            ((IJsonModel<DataFactoryElement<T>>)LogPath).Write(writer, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LocationType.ToString());
             writer.WritePropertyName("typeProperties"u8);
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AccessCredential))
             {
                 writer.WritePropertyName("accessCredential"u8);
-                writer.WriteObjectValue(AccessCredential, options);
+                ((IJsonModel<SsisAccessCredential>)AccessCredential).Write(writer, options);
             }
             if (Optional.IsDefined(LogRefreshInterval))
             {
                 writer.WritePropertyName("logRefreshInterval"u8);
-                JsonSerializer.Serialize(writer, LogRefreshInterval);
+                ((IJsonModel<DataFactoryElement<T>>)LogRefreshInterval).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("logPath"u8))
                 {
-                    logPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    logPath = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value, options);
+                            accessCredential = ModelSerializationExtensions.JsonDeserialize<SsisAccessCredential>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("logRefreshInterval"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            logRefreshInterval = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            logRefreshInterval = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                     }

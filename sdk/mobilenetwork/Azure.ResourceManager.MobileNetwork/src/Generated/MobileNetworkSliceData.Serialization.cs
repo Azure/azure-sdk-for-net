@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("snssai"u8);
-            writer.WriteObjectValue(Snssai, options);
+            ((IJsonModel<Snssai>)Snssai).Write(writer, options);
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         }
                         if (property0.NameEquals("snssai"u8))
                         {
-                            snssai = Snssai.DeserializeSnssai(property0.Value, options);
+                            snssai = ModelSerializationExtensions.JsonDeserialize<Snssai>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("description"u8))

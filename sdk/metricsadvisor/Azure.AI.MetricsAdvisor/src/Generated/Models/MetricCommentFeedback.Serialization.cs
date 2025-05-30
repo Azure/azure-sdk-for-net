@@ -42,13 +42,13 @@ namespace Azure.AI.MetricsAdvisor
                 }
             }
             writer.WritePropertyName("value"u8);
-            writer.WriteObjectValue<CommentFeedbackValue>(ValueInternal);
+            JsonSerializer.Serialize(writer, ValueInternal);
             writer.WritePropertyName("feedbackType"u8);
             writer.WriteStringValue(FeedbackKind.ToString());
             writer.WritePropertyName("metricId"u8);
             writer.WriteStringValue(MetricId);
             writer.WritePropertyName("dimensionFilter"u8);
-            writer.WriteObjectValue<FeedbackFilter>(DimensionFilter);
+            JsonSerializer.Serialize(writer, DimensionFilter);
             writer.WriteEndObject();
         }
 
@@ -91,7 +91,7 @@ namespace Azure.AI.MetricsAdvisor
                 }
                 if (property.NameEquals("value"u8))
                 {
-                    value = CommentFeedbackValue.DeserializeCommentFeedbackValue(property.Value);
+                    value = ModelSerializationExtensions.JsonDeserialize<CommentFeedbackValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("feedbackType"u8))
@@ -125,7 +125,7 @@ namespace Azure.AI.MetricsAdvisor
                 }
                 if (property.NameEquals("dimensionFilter"u8))
                 {
-                    dimensionFilter = FeedbackFilter.DeserializeFeedbackFilter(property.Value);
+                    dimensionFilter = ModelSerializationExtensions.JsonDeserialize<FeedbackFilter>(property.Value);
                     continue;
                 }
             }

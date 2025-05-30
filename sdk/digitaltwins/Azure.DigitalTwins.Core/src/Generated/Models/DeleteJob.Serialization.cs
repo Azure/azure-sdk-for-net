@@ -73,7 +73,7 @@ namespace Azure.DigitalTwins.Core.Models
                     {
                         continue;
                     }
-                    error = ErrorInformation.DeserializeErrorInformation(property.Value);
+                    error = ModelSerializationExtensions.JsonDeserialize<ErrorInformation>(property.Value);
                     continue;
                 }
             }

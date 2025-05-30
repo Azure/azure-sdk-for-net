@@ -40,19 +40,19 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ProviderAuthorizations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceProviderAuthorization>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ProviderAuthentication))
             {
                 writer.WritePropertyName("providerAuthentication"u8);
-                writer.WriteObjectValue(ProviderAuthentication, options);
+                ((IJsonModel<ResourceProviderAuthentication>)ProviderAuthentication).Write(writer, options);
             }
             if (Optional.IsDefined(ThirdPartyProviderAuthorization))
             {
                 writer.WritePropertyName("thirdPartyProviderAuthorization"u8);
-                writer.WriteObjectValue(ThirdPartyProviderAuthorization, options);
+                ((IJsonModel<ThirdPartyProviderAuthorization>)ThirdPartyProviderAuthorization).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    providerAuthentication = ResourceProviderAuthentication.DeserializeResourceProviderAuthentication(property.Value, options);
+                    providerAuthentication = ModelSerializationExtensions.JsonDeserialize<ResourceProviderAuthentication>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("thirdPartyProviderAuthorization"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    thirdPartyProviderAuthorization = ThirdPartyProviderAuthorization.DeserializeThirdPartyProviderAuthorization(property.Value, options);
+                    thirdPartyProviderAuthorization = ModelSerializationExtensions.JsonDeserialize<ThirdPartyProviderAuthorization>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -60,7 +60,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("deliveryStatusDetails"u8))
                 {
-                    deliveryStatusDetails = AcsEmailDeliveryReportStatusDetails.DeserializeAcsEmailDeliveryReportStatusDetails(property.Value);
+                    deliveryStatusDetails = ModelSerializationExtensions.JsonDeserialize<AcsEmailDeliveryReportStatusDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deliveryAttemptTimestamp"u8))

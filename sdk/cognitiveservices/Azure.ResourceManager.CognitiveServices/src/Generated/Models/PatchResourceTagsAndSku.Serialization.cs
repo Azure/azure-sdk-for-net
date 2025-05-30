@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<CognitiveServicesSku>)Sku).Write(writer, options);
             }
         }
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    sku = CognitiveServicesSku.DeserializeCognitiveServicesSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<CognitiveServicesSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

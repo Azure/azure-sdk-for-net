@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(ControlPlaneEndpoint))
             {
                 writer.WritePropertyName("controlPlaneEndpoint"u8);
-                writer.WriteObjectValue(ControlPlaneEndpoint, options);
+                ((IJsonModel<ControlPlaneProfileControlPlaneEndpoint>)ControlPlaneEndpoint).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    controlPlaneEndpoint = ControlPlaneProfileControlPlaneEndpoint.DeserializeControlPlaneProfileControlPlaneEndpoint(property.Value, options);
+                    controlPlaneEndpoint = ModelSerializationExtensions.JsonDeserialize<ControlPlaneProfileControlPlaneEndpoint>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

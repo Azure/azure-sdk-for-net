@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("editedByCommunicationIdentifier"u8))
                 {
-                    editedByCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    editedByCommunicationIdentifier = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("editTime"u8))

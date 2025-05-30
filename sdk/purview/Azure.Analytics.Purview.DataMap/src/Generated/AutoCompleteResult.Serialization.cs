@@ -40,7 +40,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AutoCompleteResultValue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

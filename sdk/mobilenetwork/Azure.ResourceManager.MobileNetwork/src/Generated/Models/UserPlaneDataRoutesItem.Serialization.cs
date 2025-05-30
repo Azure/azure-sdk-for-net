@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(AttachedDataNetwork))
             {
                 writer.WritePropertyName("attachedDataNetwork"u8);
-                JsonSerializer.Serialize(writer, AttachedDataNetwork);
+                ((IJsonModel<WritableSubResource>)AttachedDataNetwork).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Routes))
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Routes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MobileNetworkIPv4Route>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    attachedDataNetwork = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    attachedDataNetwork = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("routes"u8))

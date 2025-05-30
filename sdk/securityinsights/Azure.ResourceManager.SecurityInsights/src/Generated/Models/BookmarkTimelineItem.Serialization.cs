@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue(CreatedBy, options);
+                ((IJsonModel<SecurityInsightsUserInfo>)CreatedBy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Labels))
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    createdBy = SecurityInsightsUserInfo.DeserializeSecurityInsightsUserInfo(property.Value, options);
+                    createdBy = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsUserInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("labels"u8))

@@ -52,17 +52,17 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(BillingCurrencyTotalPaidAmount))
             {
                 writer.WritePropertyName("billingCurrencyTotalPaidAmount"u8);
-                writer.WriteObjectValue(BillingCurrencyTotalPaidAmount, options);
+                ((IJsonModel<PurchasePrice>)BillingCurrencyTotalPaidAmount).Write(writer, options);
             }
             if (Optional.IsDefined(BillingCurrencyProratedAmount))
             {
                 writer.WritePropertyName("billingCurrencyProratedAmount"u8);
-                writer.WriteObjectValue(BillingCurrencyProratedAmount, options);
+                ((IJsonModel<PurchasePrice>)BillingCurrencyProratedAmount).Write(writer, options);
             }
             if (Optional.IsDefined(BillingCurrencyRemainingCommitmentAmount))
             {
                 writer.WritePropertyName("billingCurrencyRemainingCommitmentAmount"u8);
-                writer.WriteObjectValue(BillingCurrencyRemainingCommitmentAmount, options);
+                ((IJsonModel<PurchasePrice>)BillingCurrencyRemainingCommitmentAmount).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingCurrencyTotalPaidAmount = PurchasePrice.DeserializePurchasePrice(property.Value, options);
+                    billingCurrencyTotalPaidAmount = ModelSerializationExtensions.JsonDeserialize<PurchasePrice>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("billingCurrencyProratedAmount"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingCurrencyProratedAmount = PurchasePrice.DeserializePurchasePrice(property.Value, options);
+                    billingCurrencyProratedAmount = ModelSerializationExtensions.JsonDeserialize<PurchasePrice>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("billingCurrencyRemainingCommitmentAmount"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingCurrencyRemainingCommitmentAmount = PurchasePrice.DeserializePurchasePrice(property.Value, options);
+                    billingCurrencyRemainingCommitmentAmount = ModelSerializationExtensions.JsonDeserialize<PurchasePrice>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

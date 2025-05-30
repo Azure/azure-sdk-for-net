@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in TransportAvailabilityDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TransportAvailabilityDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

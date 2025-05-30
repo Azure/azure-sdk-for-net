@@ -42,13 +42,12 @@ namespace Azure.ResourceManager.OperationalInsights
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<OperationalInsightsClusterSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.OperationalInsights
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties, options);
+                ((IJsonModel<OperationalInsightsKeyVaultProperties>)KeyVaultProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
@@ -98,19 +97,19 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WriteStartArray();
                 foreach (var item in AssociatedWorkspaces)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<OperationalInsightsClusterAssociatedWorkspace>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(CapacityReservationProperties))
             {
                 writer.WritePropertyName("capacityReservationProperties"u8);
-                writer.WriteObjectValue(CapacityReservationProperties, options);
+                ((IJsonModel<OperationalInsightsCapacityReservationProperties>)CapacityReservationProperties).Write(writer, options);
             }
             if (Optional.IsDefined(Replication))
             {
                 writer.WritePropertyName("replication"u8);
-                writer.WriteObjectValue(Replication, options);
+                ((IJsonModel<OperationalInsightsClusterReplicationProperties>)Replication).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -165,7 +164,7 @@ namespace Azure.ResourceManager.OperationalInsights
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -174,7 +173,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     {
                         continue;
                     }
-                    sku = OperationalInsightsClusterSku.DeserializeOperationalInsightsClusterSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<OperationalInsightsClusterSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -217,7 +216,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -280,7 +279,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            keyVaultProperties = OperationalInsightsKeyVaultProperties.DeserializeOperationalInsightsKeyVaultProperties(property0.Value, options);
+                            keyVaultProperties = ModelSerializationExtensions.JsonDeserialize<OperationalInsightsKeyVaultProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("lastModifiedDate"u8))
@@ -321,7 +320,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            capacityReservationProperties = OperationalInsightsCapacityReservationProperties.DeserializeOperationalInsightsCapacityReservationProperties(property0.Value, options);
+                            capacityReservationProperties = ModelSerializationExtensions.JsonDeserialize<OperationalInsightsCapacityReservationProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("replication"u8))
@@ -330,7 +329,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            replication = OperationalInsightsClusterReplicationProperties.DeserializeOperationalInsightsClusterReplicationProperties(property0.Value, options);
+                            replication = ModelSerializationExtensions.JsonDeserialize<OperationalInsightsClusterReplicationProperties>(property0.Value);
                             continue;
                         }
                     }

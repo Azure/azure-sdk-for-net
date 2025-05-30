@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             writer.WriteStartObject();
             writer.WritePropertyName("hookParameter"u8);
-            writer.WriteObjectValue<EmailHookParameter>(HookParameter);
+            JsonSerializer.Serialize(writer, HookParameter);
             writer.WritePropertyName("hookType"u8);
             writer.WriteStringValue(HookKind.ToString());
             writer.WritePropertyName("hookName"u8);
@@ -63,7 +63,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             {
                 if (property.NameEquals("hookParameter"u8))
                 {
-                    hookParameter = EmailHookParameter.DeserializeEmailHookParameter(property.Value);
+                    hookParameter = ModelSerializationExtensions.JsonDeserialize<EmailHookParameter>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("hookType"u8))

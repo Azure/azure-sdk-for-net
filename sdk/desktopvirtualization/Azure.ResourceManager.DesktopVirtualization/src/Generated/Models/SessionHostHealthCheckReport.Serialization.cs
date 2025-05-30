@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (options.Format != "W" && Optional.IsDefined(AdditionalFailureDetails))
             {
                 writer.WritePropertyName("additionalFailureDetails"u8);
-                writer.WriteObjectValue(AdditionalFailureDetails, options);
+                ((IJsonModel<SessionHostHealthCheckFailureDetails>)AdditionalFailureDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    additionalFailureDetails = SessionHostHealthCheckFailureDetails.DeserializeSessionHostHealthCheckFailureDetails(property.Value, options);
+                    additionalFailureDetails = ModelSerializationExtensions.JsonDeserialize<SessionHostHealthCheckFailureDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

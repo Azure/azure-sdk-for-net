@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LiveEventEndpoint>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Media.Models
                 if (AccessControl != null)
                 {
                     writer.WritePropertyName("accessControl"u8);
-                    writer.WriteObjectValue(AccessControl, options);
+                    ((IJsonModel<LiveEventPreviewAccessControl>)AccessControl).Write(writer, options);
                 }
                 else
                 {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Media.Models
                         accessControl = null;
                         continue;
                     }
-                    accessControl = LiveEventPreviewAccessControl.DeserializeLiveEventPreviewAccessControl(property.Value, options);
+                    accessControl = ModelSerializationExtensions.JsonDeserialize<LiveEventPreviewAccessControl>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("previewLocator"u8))

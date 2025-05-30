@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<IpamPoolProperties>)Properties).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = IpamPoolProperties.DeserializeIpamPoolProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<IpamPoolProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

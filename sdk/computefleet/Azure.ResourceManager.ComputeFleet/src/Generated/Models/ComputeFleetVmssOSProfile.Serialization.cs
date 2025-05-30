@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(WindowsConfiguration))
             {
                 writer.WritePropertyName("windowsConfiguration"u8);
-                writer.WriteObjectValue(WindowsConfiguration, options);
+                ((IJsonModel<ComputeFleetWindowsConfiguration>)WindowsConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(LinuxConfiguration))
             {
                 writer.WritePropertyName("linuxConfiguration"u8);
-                writer.WriteObjectValue(LinuxConfiguration, options);
+                ((IJsonModel<ComputeFleetLinuxConfiguration>)LinuxConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Secrets))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ComputeFleetVaultSecretGroup>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    windowsConfiguration = ComputeFleetWindowsConfiguration.DeserializeComputeFleetWindowsConfiguration(property.Value, options);
+                    windowsConfiguration = ModelSerializationExtensions.JsonDeserialize<ComputeFleetWindowsConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("linuxConfiguration"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    linuxConfiguration = ComputeFleetLinuxConfiguration.DeserializeComputeFleetLinuxConfiguration(property.Value, options);
+                    linuxConfiguration = ModelSerializationExtensions.JsonDeserialize<ComputeFleetLinuxConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("secrets"u8))

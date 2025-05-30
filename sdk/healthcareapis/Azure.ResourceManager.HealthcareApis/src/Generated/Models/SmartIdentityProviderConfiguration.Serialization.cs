@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WriteStartArray();
                 foreach (var item in Applications)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SmartIdentityProviderApplication>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

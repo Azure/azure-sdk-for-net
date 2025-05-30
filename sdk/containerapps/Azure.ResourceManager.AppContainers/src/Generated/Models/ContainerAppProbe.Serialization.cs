@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(HttpGet))
             {
                 writer.WritePropertyName("httpGet"u8);
-                writer.WriteObjectValue(HttpGet, options);
+                ((IJsonModel<ContainerAppHttpRequestInfo>)HttpGet).Write(writer, options);
             }
             if (Optional.IsDefined(InitialDelaySeconds))
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(TcpSocket))
             {
                 writer.WritePropertyName("tcpSocket"u8);
-                writer.WriteObjectValue(TcpSocket, options);
+                ((IJsonModel<ContainerAppTcpSocketRequestInfo>)TcpSocket).Write(writer, options);
             }
             if (Optional.IsDefined(TerminationGracePeriodSeconds))
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    httpGet = ContainerAppHttpRequestInfo.DeserializeContainerAppHttpRequestInfo(property.Value, options);
+                    httpGet = ModelSerializationExtensions.JsonDeserialize<ContainerAppHttpRequestInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("initialDelaySeconds"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    tcpSocket = ContainerAppTcpSocketRequestInfo.DeserializeContainerAppTcpSocketRequestInfo(property.Value, options);
+                    tcpSocket = ModelSerializationExtensions.JsonDeserialize<ContainerAppTcpSocketRequestInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("terminationGracePeriodSeconds"u8))

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Build))
             {
                 writer.WritePropertyName("build"u8);
-                writer.WriteObjectValue(Build, options);
+                ((IJsonModel<MachineLearningBuildContext>)Build).Write(writer, options);
             }
             if (Optional.IsDefined(OSType))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(InferenceConfig))
             {
                 writer.WritePropertyName("inferenceConfig"u8);
-                writer.WriteObjectValue(InferenceConfig, options);
+                ((IJsonModel<MachineLearningInferenceContainerProperties>)InferenceConfig).Write(writer, options);
             }
             if (Optional.IsDefined(AutoRebuild))
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    build = MachineLearningBuildContext.DeserializeMachineLearningBuildContext(property.Value, options);
+                    build = ModelSerializationExtensions.JsonDeserialize<MachineLearningBuildContext>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("osType"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    inferenceConfig = MachineLearningInferenceContainerProperties.DeserializeMachineLearningInferenceContainerProperties(property.Value, options);
+                    inferenceConfig = ModelSerializationExtensions.JsonDeserialize<MachineLearningInferenceContainerProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("autoRebuild"u8))

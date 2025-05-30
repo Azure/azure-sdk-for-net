@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 foreach (var item in ExtensionTargets)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<ExtensionTargetProperties>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }

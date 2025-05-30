@@ -107,12 +107,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(IrDetails))
             {
                 writer.WritePropertyName("irDetails"u8);
-                writer.WriteObjectValue(IrDetails, options);
+                ((IJsonModel<InMageRcmSyncDetails>)IrDetails).Write(writer, options);
             }
             if (Optional.IsDefined(ResyncDetails))
             {
                 writer.WritePropertyName("resyncDetails"u8);
-                writer.WriteObjectValue(ResyncDetails, options);
+                ((IJsonModel<InMageRcmSyncDetails>)ResyncDetails).Write(writer, options);
             }
             if (Optional.IsDefined(CustomTargetDiskName))
             {
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    irDetails = InMageRcmSyncDetails.DeserializeInMageRcmSyncDetails(property.Value, options);
+                    irDetails = ModelSerializationExtensions.JsonDeserialize<InMageRcmSyncDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resyncDetails"u8))
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    resyncDetails = InMageRcmSyncDetails.DeserializeInMageRcmSyncDetails(property.Value, options);
+                    resyncDetails = ModelSerializationExtensions.JsonDeserialize<InMageRcmSyncDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("customTargetDiskName"u8))

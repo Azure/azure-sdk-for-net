@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<DiskSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(EncryptionSettingsGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection"u8);
-                writer.WriteObjectValue(EncryptionSettingsGroup, options);
+                ((IJsonModel<EncryptionSettingsGroup>)EncryptionSettingsGroup).Write(writer, options);
             }
             if (Optional.IsDefined(DiskIopsReadWrite))
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<DiskEncryption>)Encryption).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkAccessPolicy))
             {
@@ -120,17 +120,17 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
-                writer.WriteObjectValue(PurchasePlan, options);
+                ((IJsonModel<DiskPurchasePlan>)PurchasePlan).Write(writer, options);
             }
             if (Optional.IsDefined(SupportedCapabilities))
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
-                writer.WriteObjectValue(SupportedCapabilities, options);
+                ((IJsonModel<SupportedCapabilities>)SupportedCapabilities).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PropertyUpdatesInProgress))
             {
                 writer.WritePropertyName("propertyUpdatesInProgress"u8);
-                writer.WriteObjectValue(PropertyUpdatesInProgress, options);
+                ((IJsonModel<PropertyUpdatesInProgress>)PropertyUpdatesInProgress).Write(writer, options);
             }
             if (Optional.IsDefined(SupportsHibernation))
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    sku = DiskSku.DeserializeDiskSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<DiskSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            encryptionSettingsGroup = EncryptionSettingsGroup.DeserializeEncryptionSettingsGroup(property0.Value, options);
+                            encryptionSettingsGroup = ModelSerializationExtensions.JsonDeserialize<EncryptionSettingsGroup>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("diskIOPSReadWrite"u8))
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            encryption = DiskEncryption.DeserializeDiskEncryption(property0.Value, options);
+                            encryption = ModelSerializationExtensions.JsonDeserialize<DiskEncryption>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkAccessPolicy"u8))
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            purchasePlan = DiskPurchasePlan.DeserializeDiskPurchasePlan(property0.Value, options);
+                            purchasePlan = ModelSerializationExtensions.JsonDeserialize<DiskPurchasePlan>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("supportedCapabilities"u8))
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            supportedCapabilities = SupportedCapabilities.DeserializeSupportedCapabilities(property0.Value, options);
+                            supportedCapabilities = ModelSerializationExtensions.JsonDeserialize<SupportedCapabilities>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("propertyUpdatesInProgress"u8))
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            propertyUpdatesInProgress = PropertyUpdatesInProgress.DeserializePropertyUpdatesInProgress(property0.Value, options);
+                            propertyUpdatesInProgress = ModelSerializationExtensions.JsonDeserialize<PropertyUpdatesInProgress>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("supportsHibernation"u8))

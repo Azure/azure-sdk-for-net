@@ -41,12 +41,12 @@ namespace Azure.AI.Language.Text.Authoring
             if (Optional.IsDefined(EvaluationOptions))
             {
                 writer.WritePropertyName("evaluationOptions"u8);
-                writer.WriteObjectValue(EvaluationOptions, options);
+                ((IJsonModel<TextAuthoringEvaluationDetails>)EvaluationOptions).Write(writer, options);
             }
             if (Optional.IsDefined(DataGenerationSettings))
             {
                 writer.WritePropertyName("dataGenerationSettings"u8);
-                writer.WriteObjectValue(DataGenerationSettings, options);
+                ((IJsonModel<DataGenerationSetting>)DataGenerationSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.AI.Language.Text.Authoring
                     {
                         continue;
                     }
-                    evaluationOptions = TextAuthoringEvaluationDetails.DeserializeTextAuthoringEvaluationDetails(property.Value, options);
+                    evaluationOptions = ModelSerializationExtensions.JsonDeserialize<TextAuthoringEvaluationDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataGenerationSettings"u8))
@@ -118,7 +118,7 @@ namespace Azure.AI.Language.Text.Authoring
                     {
                         continue;
                     }
-                    dataGenerationSettings = DataGenerationSetting.DeserializeDataGenerationSetting(property.Value, options);
+                    dataGenerationSettings = ModelSerializationExtensions.JsonDeserialize<DataGenerationSetting>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

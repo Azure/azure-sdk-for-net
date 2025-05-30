@@ -46,7 +46,7 @@ namespace Azure.Security.Attestation
                     {
                         continue;
                     }
-                    xMsPolicySigner = JsonWebKey.DeserializeJsonWebKey(property.Value);
+                    xMsPolicySigner = ModelSerializationExtensions.JsonDeserialize<JsonWebKey>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("x-ms-policy"u8))

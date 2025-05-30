@@ -40,7 +40,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BatchTaskAddResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

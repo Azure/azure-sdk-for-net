@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in AccessRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AccessRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

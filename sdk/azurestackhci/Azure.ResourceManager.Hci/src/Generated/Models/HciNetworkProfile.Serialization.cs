@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in NicDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HciNicDetail>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,14 +52,14 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in SwitchDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HciEdgeDeviceSwitchDetail>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(HostNetwork))
             {
                 writer.WritePropertyName("hostNetwork"u8);
-                writer.WriteObjectValue(HostNetwork, options);
+                ((IJsonModel<HciEdgeDeviceHostNetwork>)HostNetwork).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    hostNetwork = HciEdgeDeviceHostNetwork.DeserializeHciEdgeDeviceHostNetwork(property.Value, options);
+                    hostNetwork = ModelSerializationExtensions.JsonDeserialize<HciEdgeDeviceHostNetwork>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

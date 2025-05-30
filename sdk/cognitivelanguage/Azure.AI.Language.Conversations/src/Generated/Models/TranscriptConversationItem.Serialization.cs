@@ -67,14 +67,14 @@ namespace Azure.AI.Language.Conversations.Models
                 writer.WriteStartArray();
                 foreach (var item in WordLevelTimings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WordLevelTiming>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ConversationItemLevelTiming))
             {
                 writer.WritePropertyName("conversationItemLevelTiming"u8);
-                writer.WriteObjectValue(ConversationItemLevelTiming, options);
+                ((IJsonModel<ConversationItemLevelTiming>)ConversationItemLevelTiming).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -201,7 +201,7 @@ namespace Azure.AI.Language.Conversations.Models
                     {
                         continue;
                     }
-                    conversationItemLevelTiming = ConversationItemLevelTiming.DeserializeConversationItemLevelTiming(property.Value, options);
+                    conversationItemLevelTiming = ModelSerializationExtensions.JsonDeserialize<ConversationItemLevelTiming>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

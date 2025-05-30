@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
-                writer.WriteObjectValue(Interval, options);
+                ((IJsonModel<DateTimeInterval>)Interval).Write(writer, options);
             }
             if (Optional.IsDefined(Top))
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     {
                         continue;
                     }
-                    interval = DateTimeInterval.DeserializeDateTimeInterval(property.Value, options);
+                    interval = ModelSerializationExtensions.JsonDeserialize<DateTimeInterval>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("$top"u8))

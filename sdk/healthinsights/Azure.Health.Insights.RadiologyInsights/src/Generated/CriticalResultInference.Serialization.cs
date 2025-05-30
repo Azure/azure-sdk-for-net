@@ -36,7 +36,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("result"u8);
-            writer.WriteObjectValue(Result, options);
+            ((IJsonModel<CriticalResult>)Result).Write(writer, options);
         }
 
         CriticalResultInference IJsonModel<CriticalResultInference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -68,7 +68,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 if (property.NameEquals("result"u8))
                 {
-                    result = CriticalResult.DeserializeCriticalResult(property.Value, options);
+                    result = ModelSerializationExtensions.JsonDeserialize<CriticalResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
             if (options.Format != "W" && Optional.IsDefined(VirtualMachineSize))
             {
                 writer.WritePropertyName("virtualMachineSize"u8);
-                writer.WriteObjectValue(VirtualMachineSize, options);
+                ((IJsonModel<AssessmentVmSkuDto>)VirtualMachineSize).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(DataDiskSizes))
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDiskSizes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AssessmentManagedDiskSkuDto>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 writer.WriteStartArray();
                 foreach (var item in LogDiskSizes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AssessmentManagedDiskSkuDto>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                     {
                         continue;
                     }
-                    virtualMachineSize = AssessmentVmSkuDto.DeserializeAssessmentVmSkuDto(property.Value, options);
+                    virtualMachineSize = ModelSerializationExtensions.JsonDeserialize<AssessmentVmSkuDto>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataDiskSizes"u8))

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<ArmApplicationSku>)Sku).Write(writer, options);
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    sku = ArmApplicationSku.DeserializeArmApplicationSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<ArmApplicationSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<AppComplianceReportEvidenceProperties>)Properties).Write(writer, options);
         }
 
         AppComplianceReportEvidenceData IJsonModel<AppComplianceReportEvidenceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = AppComplianceReportEvidenceProperties.DeserializeAppComplianceReportEvidenceProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<AppComplianceReportEvidenceProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BatchSkuCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

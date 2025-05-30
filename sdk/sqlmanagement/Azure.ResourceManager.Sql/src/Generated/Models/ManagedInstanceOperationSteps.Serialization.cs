@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in StepsList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UpsertManagedServerOperationStep>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -35,23 +35,23 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
 
             writer.WritePropertyName("modality"u8);
-            writer.WriteObjectValue(Modality, options);
+            ((IJsonModel<FhirR4CodeableConcept>)Modality).Write(writer, options);
             writer.WritePropertyName("anatomy"u8);
-            writer.WriteObjectValue(Anatomy, options);
+            ((IJsonModel<FhirR4CodeableConcept>)Anatomy).Write(writer, options);
             if (Optional.IsDefined(Laterality))
             {
                 writer.WritePropertyName("laterality"u8);
-                writer.WriteObjectValue(Laterality, options);
+                ((IJsonModel<FhirR4CodeableConcept>)Laterality).Write(writer, options);
             }
             if (Optional.IsDefined(Contrast))
             {
                 writer.WritePropertyName("contrast"u8);
-                writer.WriteObjectValue(Contrast, options);
+                ((IJsonModel<RadiologyCodeWithTypes>)Contrast).Write(writer, options);
             }
             if (Optional.IsDefined(View))
             {
                 writer.WritePropertyName("view"u8);
-                writer.WriteObjectValue(View, options);
+                ((IJsonModel<RadiologyCodeWithTypes>)View).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -101,12 +101,12 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 if (property.NameEquals("modality"u8))
                 {
-                    modality = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
+                    modality = ModelSerializationExtensions.JsonDeserialize<FhirR4CodeableConcept>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("anatomy"u8))
                 {
-                    anatomy = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
+                    anatomy = ModelSerializationExtensions.JsonDeserialize<FhirR4CodeableConcept>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("laterality"u8))
@@ -115,7 +115,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    laterality = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
+                    laterality = ModelSerializationExtensions.JsonDeserialize<FhirR4CodeableConcept>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("contrast"u8))
@@ -124,7 +124,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    contrast = RadiologyCodeWithTypes.DeserializeRadiologyCodeWithTypes(property.Value, options);
+                    contrast = ModelSerializationExtensions.JsonDeserialize<RadiologyCodeWithTypes>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("view"u8))
@@ -133,7 +133,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    view = RadiologyCodeWithTypes.DeserializeRadiologyCodeWithTypes(property.Value, options);
+                    view = ModelSerializationExtensions.JsonDeserialize<RadiologyCodeWithTypes>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

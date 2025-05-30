@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation
             }
             writer.WriteEndArray();
             writer.WritePropertyName("targetParticipant"u8);
-            writer.WriteObjectValue(TargetParticipant);
+            JsonSerializer.Serialize(writer, TargetParticipant);
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);

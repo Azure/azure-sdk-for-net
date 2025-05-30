@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourcesResponseEndpointsItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomDomains)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourcesResponseCustomDomainsItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

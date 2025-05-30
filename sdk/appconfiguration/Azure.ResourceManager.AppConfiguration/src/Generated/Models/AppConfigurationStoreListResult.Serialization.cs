@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AppConfigurationStoreData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

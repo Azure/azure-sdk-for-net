@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DnsResolverPolicyVirtualNetworkLinkData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

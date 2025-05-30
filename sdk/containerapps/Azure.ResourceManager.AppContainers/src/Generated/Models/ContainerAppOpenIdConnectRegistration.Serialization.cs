@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(ClientCredential))
             {
                 writer.WritePropertyName("clientCredential"u8);
-                writer.WriteObjectValue(ClientCredential, options);
+                ((IJsonModel<ContainerAppOpenIdConnectClientCredential>)ClientCredential).Write(writer, options);
             }
             if (Optional.IsDefined(OpenIdConnectConfiguration))
             {
                 writer.WritePropertyName("openIdConnectConfiguration"u8);
-                writer.WriteObjectValue(OpenIdConnectConfiguration, options);
+                ((IJsonModel<ContainerAppOpenIdConnectConfig>)OpenIdConnectConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    clientCredential = ContainerAppOpenIdConnectClientCredential.DeserializeContainerAppOpenIdConnectClientCredential(property.Value, options);
+                    clientCredential = ModelSerializationExtensions.JsonDeserialize<ContainerAppOpenIdConnectClientCredential>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("openIdConnectConfiguration"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    openIdConnectConfiguration = ContainerAppOpenIdConnectConfig.DeserializeContainerAppOpenIdConnectConfig(property.Value, options);
+                    openIdConnectConfiguration = ModelSerializationExtensions.JsonDeserialize<ContainerAppOpenIdConnectConfig>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

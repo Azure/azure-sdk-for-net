@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
-                writer.WriteObjectValue(Key, options);
+                ((IJsonModel<SynapseWorkspaceKeyDetails>)Key).Write(writer, options);
             }
             if (Optional.IsDefined(KekIdentity))
             {
                 writer.WritePropertyName("kekIdentity"u8);
-                writer.WriteObjectValue(KekIdentity, options);
+                ((IJsonModel<KekIdentityProperties>)KekIdentity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    key = SynapseWorkspaceKeyDetails.DeserializeSynapseWorkspaceKeyDetails(property.Value, options);
+                    key = ModelSerializationExtensions.JsonDeserialize<SynapseWorkspaceKeyDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kekIdentity"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    kekIdentity = KekIdentityProperties.DeserializeKekIdentityProperties(property.Value, options);
+                    kekIdentity = ModelSerializationExtensions.JsonDeserialize<KekIdentityProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

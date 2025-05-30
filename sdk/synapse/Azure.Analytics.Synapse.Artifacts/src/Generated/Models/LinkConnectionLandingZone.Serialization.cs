@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
-                writer.WriteObjectValue(LinkedService);
+                JsonSerializer.Serialize(writer, LinkedService);
             }
             if (Optional.IsDefined(FileSystem))
             {
@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
-                writer.WriteObjectValue(SasToken);
+                JsonSerializer.Serialize(writer, SasToken);
             }
             writer.WriteEndObject();
         }
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    linkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    linkedService = ModelSerializationExtensions.JsonDeserialize<LinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("fileSystem"u8))
@@ -78,7 +78,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    sasToken = SecureString.DeserializeSecureString(property.Value);
+                    sasToken = ModelSerializationExtensions.JsonDeserialize<SecureString>(property.Value);
                     continue;
                 }
             }

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Billing
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<ReservationSkuProperty>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Billing
             if (Optional.IsDefined(ExtendedStatusInfo))
             {
                 writer.WritePropertyName("extendedStatusInfo"u8);
-                writer.WriteObjectValue(ExtendedStatusInfo, options);
+                ((IJsonModel<ReservationExtendedStatusInfo>)ExtendedStatusInfo).Write(writer, options);
             }
             if (Optional.IsDefined(BillingPlan))
             {
@@ -169,22 +169,22 @@ namespace Azure.ResourceManager.Billing
             if (Optional.IsDefined(SplitProperties))
             {
                 writer.WritePropertyName("splitProperties"u8);
-                writer.WriteObjectValue(SplitProperties, options);
+                ((IJsonModel<ReservationSplitProperties>)SplitProperties).Write(writer, options);
             }
             if (Optional.IsDefined(MergeProperties))
             {
                 writer.WritePropertyName("mergeProperties"u8);
-                writer.WriteObjectValue(MergeProperties, options);
+                ((IJsonModel<ReservationMergeProperties>)MergeProperties).Write(writer, options);
             }
             if (Optional.IsDefined(SwapProperties))
             {
                 writer.WritePropertyName("swapProperties"u8);
-                writer.WriteObjectValue(SwapProperties, options);
+                ((IJsonModel<ReservationSwapProperties>)SwapProperties).Write(writer, options);
             }
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties, options);
+                ((IJsonModel<ReservationAppliedScopeProperties>)AppliedScopeProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(BillingScopeId))
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Billing
             if (Optional.IsDefined(RenewProperties))
             {
                 writer.WritePropertyName("renewProperties"u8);
-                writer.WriteObjectValue(RenewProperties, options);
+                ((IJsonModel<ReservationRenewProperties>)RenewProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Term))
             {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Billing
                 writer.WriteStartArray();
                 foreach (var item in Aggregates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ReservationUtilizationAggregates>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         continue;
                     }
-                    sku = ReservationSkuProperty.DeserializeReservationSkuProperty(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<ReservationSkuProperty>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            extendedStatusInfo = ReservationExtendedStatusInfo.DeserializeReservationExtendedStatusInfo(property0.Value, options);
+                            extendedStatusInfo = ModelSerializationExtensions.JsonDeserialize<ReservationExtendedStatusInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("billingPlan"u8))
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            splitProperties = ReservationSplitProperties.DeserializeReservationSplitProperties(property0.Value, options);
+                            splitProperties = ModelSerializationExtensions.JsonDeserialize<ReservationSplitProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("mergeProperties"u8))
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            mergeProperties = ReservationMergeProperties.DeserializeReservationMergeProperties(property0.Value, options);
+                            mergeProperties = ModelSerializationExtensions.JsonDeserialize<ReservationMergeProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("swapProperties"u8))
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            swapProperties = ReservationSwapProperties.DeserializeReservationSwapProperties(property0.Value, options);
+                            swapProperties = ModelSerializationExtensions.JsonDeserialize<ReservationSwapProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("appliedScopeProperties"u8))
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            appliedScopeProperties = ReservationAppliedScopeProperties.DeserializeReservationAppliedScopeProperties(property0.Value, options);
+                            appliedScopeProperties = ModelSerializationExtensions.JsonDeserialize<ReservationAppliedScopeProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("billingScopeId"u8))
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            renewProperties = ReservationRenewProperties.DeserializeReservationRenewProperties(property0.Value, options);
+                            renewProperties = ModelSerializationExtensions.JsonDeserialize<ReservationRenewProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("term"u8))

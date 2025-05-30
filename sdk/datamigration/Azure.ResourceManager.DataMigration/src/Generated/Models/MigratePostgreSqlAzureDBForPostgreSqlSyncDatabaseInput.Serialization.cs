@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in SelectedTables)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -40,7 +40,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in EntityType)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SearchFacetItemValue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in AssetType)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SearchFacetItemValue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Classification)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SearchFacetItemValue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Term)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SearchFacetItemValue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in ContactId)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SearchFacetItemValue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,7 +90,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in ContactType)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SearchFacetItemValue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +100,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Label)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SearchFacetItemValue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +110,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in GlossaryType)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SearchFacetItemValue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -120,7 +120,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in TermStatus)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SearchFacetItemValue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -130,7 +130,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in TermTemplate)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SearchFacetItemValue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

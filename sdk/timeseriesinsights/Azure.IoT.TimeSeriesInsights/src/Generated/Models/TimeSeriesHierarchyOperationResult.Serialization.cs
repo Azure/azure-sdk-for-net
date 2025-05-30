@@ -27,7 +27,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     {
                         continue;
                     }
-                    hierarchy = TimeSeriesHierarchy.DeserializeTimeSeriesHierarchy(property.Value);
+                    hierarchy = ModelSerializationExtensions.JsonDeserialize<TimeSeriesHierarchy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -36,7 +36,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     {
                         continue;
                     }
-                    error = TimeSeriesOperationError.DeserializeTimeSeriesOperationError(property.Value);
+                    error = ModelSerializationExtensions.JsonDeserialize<TimeSeriesOperationError>(property.Value);
                     continue;
                 }
             }

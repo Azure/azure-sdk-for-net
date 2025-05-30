@@ -46,18 +46,18 @@ namespace Azure.AI.Projects
             foreach (var item in Evaluators)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                ((IJsonModel<EvaluatorConfiguration>)item.Value).Write(writer, options);
             }
             writer.WriteEndObject();
             if (Optional.IsDefined(SamplingConfiguration))
             {
                 writer.WritePropertyName("samplingConfiguration"u8);
-                writer.WriteObjectValue(SamplingConfiguration, options);
+                ((IJsonModel<AgentEvaluationSamplingConfiguration>)SamplingConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(RedactionConfiguration))
             {
                 writer.WritePropertyName("redactionConfiguration"u8);
-                writer.WriteObjectValue(RedactionConfiguration, options);
+                ((IJsonModel<AgentEvaluationRedactionConfiguration>)RedactionConfiguration).Write(writer, options);
             }
             writer.WritePropertyName("appInsightsConnectionString"u8);
             writer.WriteStringValue(AppInsightsConnectionString);
@@ -134,7 +134,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    samplingConfiguration = AgentEvaluationSamplingConfiguration.DeserializeAgentEvaluationSamplingConfiguration(property.Value, options);
+                    samplingConfiguration = ModelSerializationExtensions.JsonDeserialize<AgentEvaluationSamplingConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("redactionConfiguration"u8))
@@ -143,7 +143,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    redactionConfiguration = AgentEvaluationRedactionConfiguration.DeserializeAgentEvaluationRedactionConfiguration(property.Value, options);
+                    redactionConfiguration = ModelSerializationExtensions.JsonDeserialize<AgentEvaluationRedactionConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("appInsightsConnectionString"u8))

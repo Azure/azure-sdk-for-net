@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(ExplicitAnalogTelevisionOutputRestriction))
             {
                 writer.WritePropertyName("explicitAnalogTelevisionOutputRestriction"u8);
-                writer.WriteObjectValue(ExplicitAnalogTelevisionOutputRestriction, options);
+                ((IJsonModel<ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction>)ExplicitAnalogTelevisionOutputRestriction).Write(writer, options);
             }
             writer.WritePropertyName("digitalVideoOnlyContentRestriction"u8);
             writer.WriteBooleanValue(HasDigitalVideoOnlyContentRestriction);
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    explicitAnalogTelevisionOutputRestriction = ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction.DeserializeContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction(property.Value, options);
+                    explicitAnalogTelevisionOutputRestriction = ModelSerializationExtensions.JsonDeserialize<ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("digitalVideoOnlyContentRestriction"u8))

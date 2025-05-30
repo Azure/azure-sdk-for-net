@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConfigServerSettingsErrorRecord>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

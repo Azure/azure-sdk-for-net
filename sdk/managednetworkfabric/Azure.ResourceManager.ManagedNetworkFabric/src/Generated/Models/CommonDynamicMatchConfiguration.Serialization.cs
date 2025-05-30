@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPGroups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MatchConfigurationIPGroupProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in VlanGroups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VlanGroupProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in PortGroups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PortGroupProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CopyCommandSettings))
             {
                 writer.WritePropertyName("copyCommandSettings"u8);
-                writer.WriteObjectValue(CopyCommandSettings);
+                JsonSerializer.Serialize(writer, CopyCommandSettings);
             }
             if (Optional.IsDefined(TableOption))
             {
@@ -124,7 +124,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    copyCommandSettings = DWCopyCommandSettings.DeserializeDWCopyCommandSettings(property.Value);
+                    copyCommandSettings = ModelSerializationExtensions.JsonDeserialize<DWCopyCommandSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tableOption"u8))

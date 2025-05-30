@@ -40,7 +40,7 @@ namespace Azure.AI.Agents.Persistent
             writer.WriteStartArray();
             foreach (var item in Outputs)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<RunStepCodeInterpreterToolCallOutput>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -40,25 +40,25 @@ namespace Azure.AI.Language.Text
             writer.WriteStartArray();
             foreach (var item in Warnings)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DocumentWarning>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics, options);
+                ((IJsonModel<DocumentStatistics>)Statistics).Write(writer, options);
             }
             writer.WritePropertyName("entities"u8);
             writer.WriteStartArray();
             foreach (var item in Entities)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<LinkedEntity>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(DetectedLanguage))
             {
                 writer.WritePropertyName("detectedLanguage"u8);
-                writer.WriteObjectValue(DetectedLanguage, options);
+                ((IJsonModel<DetectedLanguage>)DetectedLanguage).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value, options);
+                    statistics = ModelSerializationExtensions.JsonDeserialize<DocumentStatistics>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("entities"u8))
@@ -146,7 +146,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    detectedLanguage = DetectedLanguage.DeserializeDetectedLanguage(property.Value, options);
+                    detectedLanguage = ModelSerializationExtensions.JsonDeserialize<DetectedLanguage>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

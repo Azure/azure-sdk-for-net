@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(InfrastructureVpnConfiguration))
             {
                 writer.WritePropertyName("infrastructureVpnConfiguration"u8);
-                writer.WriteObjectValue(InfrastructureVpnConfiguration, options);
+                ((IJsonModel<VpnConfigurationPatchableProperties>)InfrastructureVpnConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(WorkloadVpnConfiguration))
             {
                 writer.WritePropertyName("workloadVpnConfiguration"u8);
-                writer.WriteObjectValue(WorkloadVpnConfiguration, options);
+                ((IJsonModel<VpnConfigurationPatchableProperties>)WorkloadVpnConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    infrastructureVpnConfiguration = VpnConfigurationPatchableProperties.DeserializeVpnConfigurationPatchableProperties(property.Value, options);
+                    infrastructureVpnConfiguration = ModelSerializationExtensions.JsonDeserialize<VpnConfigurationPatchableProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("workloadVpnConfiguration"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    workloadVpnConfiguration = VpnConfigurationPatchableProperties.DeserializeVpnConfigurationPatchableProperties(property.Value, options);
+                    workloadVpnConfiguration = ModelSerializationExtensions.JsonDeserialize<VpnConfigurationPatchableProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

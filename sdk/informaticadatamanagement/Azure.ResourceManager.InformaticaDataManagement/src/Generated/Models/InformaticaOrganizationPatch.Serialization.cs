@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<InformaticaOrganizationPropertiesUpdate>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     {
                         continue;
                     }
-                    properties = InformaticaOrganizationPropertiesUpdate.DeserializeInformaticaOrganizationPropertiesUpdate(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<InformaticaOrganizationPropertiesUpdate>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -41,102 +41,102 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
-                JsonSerializer.Serialize(writer, Server);
+                ((IJsonModel<DataFactoryElement<T>>)Server).Write(writer, options);
             }
             if (Optional.IsDefined(Database))
             {
                 writer.WritePropertyName("database"u8);
-                JsonSerializer.Serialize(writer, Database);
+                ((IJsonModel<DataFactoryElement<T>>)Database).Write(writer, options);
             }
             if (Optional.IsDefined(Encrypt))
             {
                 writer.WritePropertyName("encrypt"u8);
-                JsonSerializer.Serialize(writer, Encrypt);
+                ((IJsonModel<DataFactoryElement<T>>)Encrypt).Write(writer, options);
             }
             if (Optional.IsDefined(TrustServerCertificate))
             {
                 writer.WritePropertyName("trustServerCertificate"u8);
-                JsonSerializer.Serialize(writer, TrustServerCertificate);
+                ((IJsonModel<DataFactoryElement<T>>)TrustServerCertificate).Write(writer, options);
             }
             if (Optional.IsDefined(HostNameInCertificate))
             {
                 writer.WritePropertyName("hostNameInCertificate"u8);
-                JsonSerializer.Serialize(writer, HostNameInCertificate);
+                ((IJsonModel<DataFactoryElement<T>>)HostNameInCertificate).Write(writer, options);
             }
             if (Optional.IsDefined(ApplicationIntent))
             {
                 writer.WritePropertyName("applicationIntent"u8);
-                JsonSerializer.Serialize(writer, ApplicationIntent);
+                ((IJsonModel<DataFactoryElement<T>>)ApplicationIntent).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectTimeout))
             {
                 writer.WritePropertyName("connectTimeout"u8);
-                JsonSerializer.Serialize(writer, ConnectTimeout);
+                ((IJsonModel<DataFactoryElement<T>>)ConnectTimeout).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectRetryCount))
             {
                 writer.WritePropertyName("connectRetryCount"u8);
-                JsonSerializer.Serialize(writer, ConnectRetryCount);
+                ((IJsonModel<DataFactoryElement<T>>)ConnectRetryCount).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectRetryInterval))
             {
                 writer.WritePropertyName("connectRetryInterval"u8);
-                JsonSerializer.Serialize(writer, ConnectRetryInterval);
+                ((IJsonModel<DataFactoryElement<T>>)ConnectRetryInterval).Write(writer, options);
             }
             if (Optional.IsDefined(LoadBalanceTimeout))
             {
                 writer.WritePropertyName("loadBalanceTimeout"u8);
-                JsonSerializer.Serialize(writer, LoadBalanceTimeout);
+                ((IJsonModel<DataFactoryElement<T>>)LoadBalanceTimeout).Write(writer, options);
             }
             if (Optional.IsDefined(CommandTimeout))
             {
                 writer.WritePropertyName("commandTimeout"u8);
-                JsonSerializer.Serialize(writer, CommandTimeout);
+                ((IJsonModel<DataFactoryElement<T>>)CommandTimeout).Write(writer, options);
             }
             if (Optional.IsDefined(IntegratedSecurity))
             {
                 writer.WritePropertyName("integratedSecurity"u8);
-                JsonSerializer.Serialize(writer, IntegratedSecurity);
+                ((IJsonModel<DataFactoryElement<T>>)IntegratedSecurity).Write(writer, options);
             }
             if (Optional.IsDefined(FailoverPartner))
             {
                 writer.WritePropertyName("failoverPartner"u8);
-                JsonSerializer.Serialize(writer, FailoverPartner);
+                ((IJsonModel<DataFactoryElement<T>>)FailoverPartner).Write(writer, options);
             }
             if (Optional.IsDefined(MaxPoolSize))
             {
                 writer.WritePropertyName("maxPoolSize"u8);
-                JsonSerializer.Serialize(writer, MaxPoolSize);
+                ((IJsonModel<DataFactoryElement<T>>)MaxPoolSize).Write(writer, options);
             }
             if (Optional.IsDefined(MinPoolSize))
             {
                 writer.WritePropertyName("minPoolSize"u8);
-                JsonSerializer.Serialize(writer, MinPoolSize);
+                ((IJsonModel<DataFactoryElement<T>>)MinPoolSize).Write(writer, options);
             }
             if (Optional.IsDefined(MultipleActiveResultSets))
             {
                 writer.WritePropertyName("multipleActiveResultSets"u8);
-                JsonSerializer.Serialize(writer, MultipleActiveResultSets);
+                ((IJsonModel<DataFactoryElement<T>>)MultipleActiveResultSets).Write(writer, options);
             }
             if (Optional.IsDefined(MultiSubnetFailover))
             {
                 writer.WritePropertyName("multiSubnetFailover"u8);
-                JsonSerializer.Serialize(writer, MultiSubnetFailover);
+                ((IJsonModel<DataFactoryElement<T>>)MultiSubnetFailover).Write(writer, options);
             }
             if (Optional.IsDefined(PacketSize))
             {
                 writer.WritePropertyName("packetSize"u8);
-                JsonSerializer.Serialize(writer, PacketSize);
+                ((IJsonModel<DataFactoryElement<T>>)PacketSize).Write(writer, options);
             }
             if (Optional.IsDefined(Pooling))
             {
                 writer.WritePropertyName("pooling"u8);
-                JsonSerializer.Serialize(writer, Pooling);
+                ((IJsonModel<DataFactoryElement<T>>)Pooling).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-                JsonSerializer.Serialize(writer, ConnectionString);
+                ((IJsonModel<DataFactoryElement<T>>)ConnectionString).Write(writer, options);
             }
             if (Optional.IsDefined(AuthenticationType))
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                JsonSerializer.Serialize(writer, UserName);
+                ((IJsonModel<DataFactoryElement<T>>)UserName).Write(writer, options);
             }
             if (Optional.IsDefined(Password))
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AlwaysEncryptedSettings))
             {
                 writer.WritePropertyName("alwaysEncryptedSettings"u8);
-                writer.WriteObjectValue(AlwaysEncryptedSettings, options);
+                ((IJsonModel<SqlAlwaysEncryptedProperties>)AlwaysEncryptedSettings).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
+                    connectVia = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            server = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            server = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("database"u8))
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            database = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            database = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encrypt"u8))
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            encrypt = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            encrypt = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("trustServerCertificate"u8))
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            trustServerCertificate = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            trustServerCertificate = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hostNameInCertificate"u8))
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            hostNameInCertificate = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            hostNameInCertificate = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("applicationIntent"u8))
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            applicationIntent = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            applicationIntent = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("connectTimeout"u8))
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            connectTimeout = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            connectTimeout = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("connectRetryCount"u8))
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            connectRetryCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            connectRetryCount = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("connectRetryInterval"u8))
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            connectRetryInterval = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            connectRetryInterval = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("loadBalanceTimeout"u8))
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            loadBalanceTimeout = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            loadBalanceTimeout = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("commandTimeout"u8))
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            commandTimeout = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            commandTimeout = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("integratedSecurity"u8))
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            integratedSecurity = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            integratedSecurity = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("failoverPartner"u8))
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            failoverPartner = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            failoverPartner = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("maxPoolSize"u8))
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            maxPoolSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            maxPoolSize = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("minPoolSize"u8))
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            minPoolSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            minPoolSize = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("multipleActiveResultSets"u8))
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            multipleActiveResultSets = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            multipleActiveResultSets = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("multiSubnetFailover"u8))
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            multiSubnetFailover = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            multiSubnetFailover = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("packetSize"u8))
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            packetSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            packetSize = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("pooling"u8))
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            pooling = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            pooling = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("connectionString"u8))
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            connectionString = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            connectionString = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("authenticationType"u8))
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            userName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            userName = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("password"u8))
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            password = ModelSerializationExtensions.JsonDeserialize<DataFactorySecret>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            alwaysEncryptedSettings = SqlAlwaysEncryptedProperties.DeserializeSqlAlwaysEncryptedProperties(property0.Value, options);
+                            alwaysEncryptedSettings = ModelSerializationExtensions.JsonDeserialize<SqlAlwaysEncryptedProperties>(property0.Value);
                             continue;
                         }
                     }

@@ -52,17 +52,17 @@ namespace Azure.AI.Agents.Persistent
             if (Optional.IsDefined(StoreConfiguration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(StoreConfiguration, options);
+                ((IJsonModel<VectorStoreConfiguration>)StoreConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ExpiresAfter))
             {
                 writer.WritePropertyName("expires_after"u8);
-                writer.WriteObjectValue(ExpiresAfter, options);
+                ((IJsonModel<VectorStoreExpirationPolicy>)ExpiresAfter).Write(writer, options);
             }
             if (Optional.IsDefined(ChunkingStrategy))
             {
                 writer.WritePropertyName("chunking_strategy"u8);
-                writer.WriteObjectValue(ChunkingStrategy, options);
+                ((IJsonModel<VectorStoreChunkingStrategy>)ChunkingStrategy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
@@ -154,7 +154,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    configuration = VectorStoreConfiguration.DeserializeVectorStoreConfiguration(property.Value, options);
+                    configuration = ModelSerializationExtensions.JsonDeserialize<VectorStoreConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("expires_after"u8))
@@ -163,7 +163,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    expiresAfter = VectorStoreExpirationPolicy.DeserializeVectorStoreExpirationPolicy(property.Value, options);
+                    expiresAfter = ModelSerializationExtensions.JsonDeserialize<VectorStoreExpirationPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("chunking_strategy"u8))
@@ -172,7 +172,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    chunkingStrategy = VectorStoreChunkingStrategy.DeserializeVectorStoreChunkingStrategy(property.Value, options);
+                    chunkingStrategy = ModelSerializationExtensions.JsonDeserialize<VectorStoreChunkingStrategy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))

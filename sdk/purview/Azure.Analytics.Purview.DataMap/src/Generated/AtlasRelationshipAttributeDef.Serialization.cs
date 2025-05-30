@@ -45,7 +45,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Constraints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasConstraintDef>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in AccessRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SqlNetworkSecurityPerimeterConfigAccessRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

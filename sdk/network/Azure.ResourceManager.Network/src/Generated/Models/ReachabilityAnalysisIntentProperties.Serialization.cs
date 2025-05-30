@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WritePropertyName("destinationResourceId"u8);
             writer.WriteStringValue(DestinationResourceId);
             writer.WritePropertyName("ipTraffic"u8);
-            writer.WriteObjectValue(IPTraffic, options);
+            ((IJsonModel<NetworkVerifierIPTraffic>)IPTraffic).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("ipTraffic"u8))
                 {
-                    ipTraffic = NetworkVerifierIPTraffic.DeserializeNetworkVerifierIPTraffic(property.Value, options);
+                    ipTraffic = ModelSerializationExtensions.JsonDeserialize<NetworkVerifierIPTraffic>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

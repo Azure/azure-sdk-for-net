@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.Quantum.Models
             if (Optional.IsDefined(Aad))
             {
                 writer.WritePropertyName("aad"u8);
-                writer.WriteObjectValue(Aad, options);
+                ((IJsonModel<ProviderAadInfo>)Aad).Write(writer, options);
             }
             if (Optional.IsDefined(ManagedApplication))
             {
                 writer.WritePropertyName("managedApplication"u8);
-                writer.WriteObjectValue(ManagedApplication, options);
+                ((IJsonModel<ProviderApplicationInfo>)ManagedApplication).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Targets))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 writer.WriteStartArray();
                 foreach (var item in Targets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ProviderTargetDescription>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 writer.WriteStartArray();
                 foreach (var item in Skus)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ProviderSkuDescription>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 writer.WriteStartArray();
                 foreach (var item in QuotaDimensions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<QuantumQuotaDimension>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 writer.WriteStartArray();
                 foreach (var item in PricingDimensions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ProviderPricingDimension>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     {
                         continue;
                     }
-                    aad = ProviderAadInfo.DeserializeProviderAadInfo(property.Value, options);
+                    aad = ModelSerializationExtensions.JsonDeserialize<ProviderAadInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("managedApplication"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     {
                         continue;
                     }
-                    managedApplication = ProviderApplicationInfo.DeserializeProviderApplicationInfo(property.Value, options);
+                    managedApplication = ModelSerializationExtensions.JsonDeserialize<ProviderApplicationInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targets"u8))

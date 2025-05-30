@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<IotFirmwareDefenseSkuUpdate>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         continue;
                     }
-                    sku = IotFirmwareDefenseSkuUpdate.DeserializeIotFirmwareDefenseSkuUpdate(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<IotFirmwareDefenseSkuUpdate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

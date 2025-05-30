@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(SmbCsiDriver))
             {
                 writer.WritePropertyName("smbCsiDriver"u8);
-                writer.WriteObjectValue(SmbCsiDriver, options);
+                ((IJsonModel<StorageProfileSmbCSIDriver>)SmbCsiDriver).Write(writer, options);
             }
             if (Optional.IsDefined(NfsCsiDriver))
             {
                 writer.WritePropertyName("nfsCsiDriver"u8);
-                writer.WriteObjectValue(NfsCsiDriver, options);
+                ((IJsonModel<StorageProfileNfsCSIDriver>)NfsCsiDriver).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    smbCsiDriver = StorageProfileSmbCSIDriver.DeserializeStorageProfileSmbCSIDriver(property.Value, options);
+                    smbCsiDriver = ModelSerializationExtensions.JsonDeserialize<StorageProfileSmbCSIDriver>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nfsCsiDriver"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    nfsCsiDriver = StorageProfileNfsCSIDriver.DeserializeStorageProfileNfsCSIDriver(property.Value, options);
+                    nfsCsiDriver = ModelSerializationExtensions.JsonDeserialize<StorageProfileNfsCSIDriver>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

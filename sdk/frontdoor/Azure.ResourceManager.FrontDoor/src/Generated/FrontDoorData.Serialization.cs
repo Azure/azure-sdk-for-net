@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in RoutingRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RoutingRuleData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancingSettings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FrontDoorLoadBalancingSettingsData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in HealthProbeSettings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FrontDoorHealthProbeSettingsData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in BackendPools)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FrontDoorBackendPool>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,14 +90,14 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in FrontendEndpoints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FrontendEndpointData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(BackendPoolsSettings))
             {
                 writer.WritePropertyName("backendPoolsSettings"u8);
-                writer.WriteObjectValue(BackendPoolsSettings, options);
+                ((IJsonModel<BackendPoolsSettings>)BackendPoolsSettings).Write(writer, options);
             }
             if (Optional.IsDefined(EnabledState))
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in RulesEngines)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FrontDoorRulesEngineData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.FrontDoor
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.FrontDoor
                             {
                                 continue;
                             }
-                            backendPoolsSettings = BackendPoolsSettings.DeserializeBackendPoolsSettings(property0.Value, options);
+                            backendPoolsSettings = ModelSerializationExtensions.JsonDeserialize<BackendPoolsSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enabledState"u8))

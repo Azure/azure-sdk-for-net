@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Storage
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<StorageTaskAssignmentProperties>)Properties).Write(writer, options);
         }
 
         StorageTaskAssignmentData IJsonModel<StorageTaskAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Storage
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = StorageTaskAssignmentProperties.DeserializeStorageTaskAssignmentProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<StorageTaskAssignmentProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(Storage))
             {
                 writer.WritePropertyName("storage"u8);
-                writer.WriteObjectValue(Storage, options);
+                ((IJsonModel<EdgeKubernetesRoleStorage>)Storage).Write(writer, options);
             }
             writer.WritePropertyName("compute"u8);
-            writer.WriteObjectValue(Compute, options);
+            ((IJsonModel<EdgeKubernetesRoleCompute>)Compute).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(Network))
             {
                 writer.WritePropertyName("network"u8);
-                writer.WriteObjectValue(Network, options);
+                ((IJsonModel<EdgeKubernetesRoleNetwork>)Network).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    storage = EdgeKubernetesRoleStorage.DeserializeEdgeKubernetesRoleStorage(property.Value, options);
+                    storage = ModelSerializationExtensions.JsonDeserialize<EdgeKubernetesRoleStorage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("compute"u8))
                 {
-                    compute = EdgeKubernetesRoleCompute.DeserializeEdgeKubernetesRoleCompute(property.Value, options);
+                    compute = ModelSerializationExtensions.JsonDeserialize<EdgeKubernetesRoleCompute>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("network"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    network = EdgeKubernetesRoleNetwork.DeserializeEdgeKubernetesRoleNetwork(property.Value, options);
+                    network = ModelSerializationExtensions.JsonDeserialize<EdgeKubernetesRoleNetwork>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

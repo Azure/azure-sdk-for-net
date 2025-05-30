@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityInsights
             if (Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
-                writer.WriteObjectValue(Owner, options);
+                ((IJsonModel<SecurityInsightsHuntOwner>)Owner).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            owner = SecurityInsightsHuntOwner.DeserializeSecurityInsightsHuntOwner(property0.Value, options);
+                            owner = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsHuntOwner>(property0.Value);
                             continue;
                         }
                     }

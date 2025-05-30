@@ -35,9 +35,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
 
             writer.WritePropertyName("to"u8);
-            writer.WriteObjectValue(ToCommunicationIdentifier, options);
+            ((IJsonModel<CommunicationIdentifierModel>)ToCommunicationIdentifier).Write(writer, options);
             writer.WritePropertyName("from"u8);
-            writer.WriteObjectValue(FromCommunicationIdentifier, options);
+            ((IJsonModel<CommunicationIdentifierModel>)FromCommunicationIdentifier).Write(writer, options);
             if (Optional.IsDefined(ServerCallId))
             {
                 writer.WritePropertyName("serverCallId"u8);
@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStringValue(CallerDisplayName);
             }
             writer.WritePropertyName("customContext"u8);
-            writer.WriteObjectValue(CustomContext, options);
+            ((IJsonModel<AcsIncomingCallCustomContext>)CustomContext).Write(writer, options);
             if (Optional.IsDefined(IncomingCallContext))
             {
                 writer.WritePropertyName("incomingCallContext"u8);
@@ -58,7 +58,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             if (Optional.IsDefined(OnBehalfOfCallee))
             {
                 writer.WritePropertyName("onBehalfOfCallee"u8);
-                writer.WriteObjectValue(OnBehalfOfCallee, options);
+                ((IJsonModel<CommunicationIdentifierModel>)OnBehalfOfCallee).Write(writer, options);
             }
             if (Optional.IsDefined(CorrelationId))
             {
@@ -116,12 +116,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("to"u8))
                 {
-                    to = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value, options);
+                    to = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("from"u8))
                 {
-                    @from = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value, options);
+                    @from = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("serverCallId"u8))
@@ -136,7 +136,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("customContext"u8))
                 {
-                    customContext = AcsIncomingCallCustomContext.DeserializeAcsIncomingCallCustomContext(property.Value, options);
+                    customContext = ModelSerializationExtensions.JsonDeserialize<AcsIncomingCallCustomContext>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("incomingCallContext"u8))
@@ -150,7 +150,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    onBehalfOfCallee = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value, options);
+                    onBehalfOfCallee = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("correlationId"u8))

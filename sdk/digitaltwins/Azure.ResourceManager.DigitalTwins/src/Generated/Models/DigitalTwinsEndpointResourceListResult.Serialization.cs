@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DigitalTwinsEndpointResourceData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

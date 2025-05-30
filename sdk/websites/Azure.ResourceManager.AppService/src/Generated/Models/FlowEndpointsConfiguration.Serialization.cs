@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Workflow))
             {
                 writer.WritePropertyName("workflow"u8);
-                writer.WriteObjectValue(Workflow, options);
+                ((IJsonModel<FlowEndpoints>)Workflow).Write(writer, options);
             }
             if (Optional.IsDefined(Connector))
             {
                 writer.WritePropertyName("connector"u8);
-                writer.WriteObjectValue(Connector, options);
+                ((IJsonModel<FlowEndpoints>)Connector).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    workflow = FlowEndpoints.DeserializeFlowEndpoints(property.Value, options);
+                    workflow = ModelSerializationExtensions.JsonDeserialize<FlowEndpoints>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("connector"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    connector = FlowEndpoints.DeserializeFlowEndpoints(property.Value, options);
+                    connector = ModelSerializationExtensions.JsonDeserialize<FlowEndpoints>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartArray();
             foreach (var item in RecordMap)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<MonitorWorkspaceLogsRecordMap>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(ResourceMap))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceMap)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MonitorWorkspaceLogsResourceMap>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in ScopeMap)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MonitorWorkspaceLogsScopeMap>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<ResourceEncryptionConfiguration>)Encryption).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
                     {
                         continue;
                     }
-                    encryption = ResourceEncryptionConfiguration.DeserializeResourceEncryptionConfiguration(property.Value, options);
+                    encryption = ModelSerializationExtensions.JsonDeserialize<ResourceEncryptionConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

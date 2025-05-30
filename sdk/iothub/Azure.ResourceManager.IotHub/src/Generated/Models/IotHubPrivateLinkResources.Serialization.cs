@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IotHubPrivateEndpointGroupInformationData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

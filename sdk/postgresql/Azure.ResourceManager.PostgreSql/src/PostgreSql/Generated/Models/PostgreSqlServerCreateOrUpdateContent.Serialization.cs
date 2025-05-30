@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.PostgreSql.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<PostgreSqlSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<PostgreSqlServerPropertiesForCreate>)Properties).Write(writer, options);
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             if (Optional.IsCollectionDefined(Tags))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -121,12 +121,12 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     {
                         continue;
                     }
-                    sku = PostgreSqlSku.DeserializePostgreSqlSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<PostgreSqlSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = PostgreSqlServerPropertiesForCreate.DeserializePostgreSqlServerPropertiesForCreate(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<PostgreSqlServerPropertiesForCreate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"u8))

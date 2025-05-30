@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ScVmmVirtualDiskUpdate>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

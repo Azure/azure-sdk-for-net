@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedFlexibleServerEditions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MySqlFlexibleServerEditionCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

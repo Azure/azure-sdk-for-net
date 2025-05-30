@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (options.Format != "W" && Optional.IsDefined(ContinuousBackupInformation))
             {
                 writer.WritePropertyName("continuousBackupInformation"u8);
-                writer.WriteObjectValue(ContinuousBackupInformation, options);
+                ((IJsonModel<ContinuousBackupInformation>)ContinuousBackupInformation).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    continuousBackupInformation = ContinuousBackupInformation.DeserializeContinuousBackupInformation(property.Value, options);
+                    continuousBackupInformation = ModelSerializationExtensions.JsonDeserialize<ContinuousBackupInformation>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

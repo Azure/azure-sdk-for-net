@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
-                writer.WriteObjectValue(ClientSecret, options);
+                ((IJsonModel<FactoryGitHubClientSecret>)ClientSecret).Write(writer, options);
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    clientSecret = FactoryGitHubClientSecret.DeserializeFactoryGitHubClientSecret(property.Value, options);
+                    clientSecret = ModelSerializationExtensions.JsonDeserialize<FactoryGitHubClientSecret>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = CognitiveServicesKeyVaultProperties.DeserializeCognitiveServicesKeyVaultProperties(property.Value, options);
+                    keyVaultProperties = ModelSerializationExtensions.JsonDeserialize<CognitiveServicesKeyVaultProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("keySource"u8))

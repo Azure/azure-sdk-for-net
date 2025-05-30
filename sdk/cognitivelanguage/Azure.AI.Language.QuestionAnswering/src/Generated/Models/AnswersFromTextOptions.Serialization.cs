@@ -21,7 +21,7 @@ namespace Azure.AI.Language.QuestionAnswering
             writer.WriteStartArray();
             foreach (var item in TextDocuments)
             {
-                writer.WriteObjectValue<TextDocument>(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Language))

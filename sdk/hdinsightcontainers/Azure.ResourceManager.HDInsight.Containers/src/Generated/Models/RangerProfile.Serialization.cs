@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WritePropertyName("rangerAdmin"u8);
-            writer.WriteObjectValue(RangerAdmin, options);
+            ((IJsonModel<RangerAdminSpec>)RangerAdmin).Write(writer, options);
             if (Optional.IsDefined(RangerAudit))
             {
                 writer.WritePropertyName("rangerAudit"u8);
-                writer.WriteObjectValue(RangerAudit, options);
+                ((IJsonModel<RangerAuditSpec>)RangerAudit).Write(writer, options);
             }
             writer.WritePropertyName("rangerUsersync"u8);
-            writer.WriteObjectValue(RangerUsersync, options);
+            ((IJsonModel<RangerUsersyncSpec>)RangerUsersync).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 if (property.NameEquals("rangerAdmin"u8))
                 {
-                    rangerAdmin = RangerAdminSpec.DeserializeRangerAdminSpec(property.Value, options);
+                    rangerAdmin = ModelSerializationExtensions.JsonDeserialize<RangerAdminSpec>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rangerAudit"u8))
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    rangerAudit = RangerAuditSpec.DeserializeRangerAuditSpec(property.Value, options);
+                    rangerAudit = ModelSerializationExtensions.JsonDeserialize<RangerAuditSpec>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rangerUsersync"u8))
                 {
-                    rangerUsersync = RangerUsersyncSpec.DeserializeRangerUsersyncSpec(property.Value, options);
+                    rangerUsersync = ModelSerializationExtensions.JsonDeserialize<RangerUsersyncSpec>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

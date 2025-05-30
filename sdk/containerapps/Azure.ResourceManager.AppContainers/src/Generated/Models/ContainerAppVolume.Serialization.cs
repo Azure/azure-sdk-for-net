@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SecretVolumeItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

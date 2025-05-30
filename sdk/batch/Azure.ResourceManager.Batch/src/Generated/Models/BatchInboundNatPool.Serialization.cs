@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkSecurityGroupRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BatchNetworkSecurityGroupRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

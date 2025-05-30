@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    recoveryPointProperties = RecoveryPointProperties.DeserializeRecoveryPointProperties(property.Value, options);
+                    recoveryPointProperties = ModelSerializationExtensions.JsonDeserialize<RecoveryPointProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteObjectValue(Action, options);
+                ((IJsonModel<DnsSecurityRuleAction>)Action).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DnsResolverDomainLists))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 writer.WriteStartArray();
                 foreach (var item in DnsResolverDomainLists)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                             {
                                 continue;
                             }
-                            action = DnsSecurityRuleAction.DeserializeDnsSecurityRuleAction(property0.Value, options);
+                            action = ModelSerializationExtensions.JsonDeserialize<DnsSecurityRuleAction>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dnsResolverDomainLists"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             dnsResolverDomainLists = array;
                             continue;

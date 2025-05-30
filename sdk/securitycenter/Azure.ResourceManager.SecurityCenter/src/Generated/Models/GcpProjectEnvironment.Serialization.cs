@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(OrganizationalData))
             {
                 writer.WritePropertyName("organizationalData"u8);
-                writer.WriteObjectValue(OrganizationalData, options);
+                ((IJsonModel<GcpOrganizationalInfo>)OrganizationalData).Write(writer, options);
             }
             if (Optional.IsDefined(ProjectDetails))
             {
                 writer.WritePropertyName("projectDetails"u8);
-                writer.WriteObjectValue(ProjectDetails, options);
+                ((IJsonModel<GcpProjectDetails>)ProjectDetails).Write(writer, options);
             }
             if (Optional.IsDefined(ScanInterval))
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    organizationalData = GcpOrganizationalInfo.DeserializeGcpOrganizationalInfo(property.Value, options);
+                    organizationalData = ModelSerializationExtensions.JsonDeserialize<GcpOrganizationalInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("projectDetails"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    projectDetails = GcpProjectDetails.DeserializeGcpProjectDetails(property.Value, options);
+                    projectDetails = ModelSerializationExtensions.JsonDeserialize<GcpProjectDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scanInterval"u8))

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (Optional.IsDefined(Display))
             {
                 writer.WritePropertyName("display"u8);
-                writer.WriteObjectValue(Display, options);
+                ((IJsonModel<MoverDisplayInfo>)Display).Write(writer, options);
             }
             if (Optional.IsDefined(Origin))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     {
                         continue;
                     }
-                    display = MoverDisplayInfo.DeserializeMoverDisplayInfo(property.Value, options);
+                    display = ModelSerializationExtensions.JsonDeserialize<MoverDisplayInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("origin"u8))

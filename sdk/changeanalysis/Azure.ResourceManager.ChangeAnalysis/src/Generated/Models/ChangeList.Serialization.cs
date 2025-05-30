@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DetectedChangeData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

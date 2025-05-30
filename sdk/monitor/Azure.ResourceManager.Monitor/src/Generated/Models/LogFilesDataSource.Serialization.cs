@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
-                writer.WriteObjectValue(Settings, options);
+                ((IJsonModel<LogFilesDataSourceSettings>)Settings).Write(writer, options);
             }
             if (Optional.IsDefined(Name))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    settings = LogFilesDataSourceSettings.DeserializeLogFilesDataSourceSettings(property.Value, options);
+                    settings = ModelSerializationExtensions.JsonDeserialize<LogFilesDataSourceSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

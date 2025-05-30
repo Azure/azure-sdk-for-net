@@ -21,12 +21,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(VideoCreationProperties))
             {
                 writer.WritePropertyName("videoCreationProperties"u8);
-                writer.WriteObjectValue(VideoCreationProperties);
+                JsonSerializer.Serialize(writer, VideoCreationProperties);
             }
             if (Optional.IsDefined(VideoPublishingOptions))
             {
                 writer.WritePropertyName("videoPublishingOptions"u8);
-                writer.WriteObjectValue(VideoPublishingOptions);
+                JsonSerializer.Serialize(writer, VideoPublishingOptions);
             }
             writer.WritePropertyName("localMediaCachePath"u8);
             writer.WriteStringValue(LocalMediaCachePath);
@@ -40,7 +40,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -73,7 +73,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     {
                         continue;
                     }
-                    videoCreationProperties = VideoCreationProperties.DeserializeVideoCreationProperties(property.Value);
+                    videoCreationProperties = ModelSerializationExtensions.JsonDeserialize<VideoCreationProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("videoPublishingOptions"u8))
@@ -82,7 +82,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     {
                         continue;
                     }
-                    videoPublishingOptions = VideoPublishingOptions.DeserializeVideoPublishingOptions(property.Value);
+                    videoPublishingOptions = ModelSerializationExtensions.JsonDeserialize<VideoPublishingOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("localMediaCachePath"u8))

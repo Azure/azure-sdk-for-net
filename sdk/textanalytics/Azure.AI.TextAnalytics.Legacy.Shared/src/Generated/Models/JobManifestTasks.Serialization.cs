@@ -21,7 +21,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 writer.WriteStartArray();
                 foreach (var item in EntityRecognitionTasks)
                 {
-                    writer.WriteObjectValue<EntitiesTask>(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 writer.WriteStartArray();
                 foreach (var item in EntityRecognitionPiiTasks)
                 {
-                    writer.WriteObjectValue<PiiTask>(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -41,7 +41,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 writer.WriteStartArray();
                 foreach (var item in KeyPhraseExtractionTasks)
                 {
-                    writer.WriteObjectValue<KeyPhrasesTask>(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -51,7 +51,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 writer.WriteStartArray();
                 foreach (var item in EntityLinkingTasks)
                 {
-                    writer.WriteObjectValue<EntityLinkingTask>(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -61,7 +61,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 writer.WriteStartArray();
                 foreach (var item in SentimentAnalysisTasks)
                 {
-                    writer.WriteObjectValue<SentimentAnalysisTask>(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }

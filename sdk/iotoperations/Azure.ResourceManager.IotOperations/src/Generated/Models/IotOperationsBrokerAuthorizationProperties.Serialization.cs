@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
 
             writer.WritePropertyName("authorizationPolicies"u8);
-            writer.WriteObjectValue(AuthorizationPolicies, options);
+            ((IJsonModel<BrokerAuthorizationConfig>)AuthorizationPolicies).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 if (property.NameEquals("authorizationPolicies"u8))
                 {
-                    authorizationPolicies = BrokerAuthorizationConfig.DeserializeBrokerAuthorizationConfig(property.Value, options);
+                    authorizationPolicies = ModelSerializationExtensions.JsonDeserialize<BrokerAuthorizationConfig>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

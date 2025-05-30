@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(RuleQosPolicy))
             {
                 writer.WritePropertyName("ruleQosPolicy"u8);
-                writer.WriteObjectValue(RuleQosPolicy, options);
+                ((IJsonModel<PccRuleQosPolicy>)RuleQosPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(TrafficControl))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartArray();
             foreach (var item in ServiceDataFlowTemplates)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<MobileNetworkServiceDataFlowTemplate>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    ruleQosPolicy = PccRuleQosPolicy.DeserializePccRuleQosPolicy(property.Value, options);
+                    ruleQosPolicy = ModelSerializationExtensions.JsonDeserialize<PccRuleQosPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("trafficControl"u8))

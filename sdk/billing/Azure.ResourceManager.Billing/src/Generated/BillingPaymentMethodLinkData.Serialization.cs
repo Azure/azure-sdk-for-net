@@ -83,14 +83,14 @@ namespace Azure.ResourceManager.Billing
                 writer.WriteStartArray();
                 foreach (var item in Logos)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PaymentMethodLogo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PaymentMethod))
             {
                 writer.WritePropertyName("paymentMethod"u8);
-                writer.WriteObjectValue(PaymentMethod, options);
+                ((IJsonModel<PaymentMethodProjectionProperties>)PaymentMethod).Write(writer, options);
             }
             if (Optional.IsDefined(PaymentMethodId))
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            paymentMethod = PaymentMethodProjectionProperties.DeserializePaymentMethodProjectionProperties(property0.Value, options);
+                            paymentMethod = ModelSerializationExtensions.JsonDeserialize<PaymentMethodProjectionProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("paymentMethodId"u8))

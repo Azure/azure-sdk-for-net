@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in EndpointDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerServiceEndpointDetail>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

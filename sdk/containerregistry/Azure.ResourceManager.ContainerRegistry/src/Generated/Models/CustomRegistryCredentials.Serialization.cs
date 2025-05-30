@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                writer.WriteObjectValue(UserName, options);
+                ((IJsonModel<ContainerRegistrySecretObject>)UserName).Write(writer, options);
             }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password, options);
+                ((IJsonModel<ContainerRegistrySecretObject>)Password).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    userName = ContainerRegistrySecretObject.DeserializeContainerRegistrySecretObject(property.Value, options);
+                    userName = ModelSerializationExtensions.JsonDeserialize<ContainerRegistrySecretObject>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("password"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    password = ContainerRegistrySecretObject.DeserializeContainerRegistrySecretObject(property.Value, options);
+                    password = ModelSerializationExtensions.JsonDeserialize<ContainerRegistrySecretObject>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))

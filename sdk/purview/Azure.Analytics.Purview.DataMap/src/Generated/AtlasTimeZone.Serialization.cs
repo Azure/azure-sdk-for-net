@@ -57,7 +57,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(Default))
             {
                 writer.WritePropertyName("default"u8);
-                writer.WriteObjectValue(Default, options);
+                ((IJsonModel<AtlasTimeZone>)Default).Write(writer, options);
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -150,7 +150,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    @default = DeserializeAtlasTimeZone(property.Value, options);
+                    @default = ModelSerializationExtensions.JsonDeserialize<AtlasTimeZone>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))

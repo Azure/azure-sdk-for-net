@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WriteStartArray();
                 foreach (var item in FilesNotSyncingErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ServerEndpointFilesNotSyncingError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

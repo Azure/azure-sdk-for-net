@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ServiceFabricManagedServiceData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

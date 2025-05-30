@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source, options);
+            ((IJsonModel<ContainerRegistryImportSource>)Source).Write(writer, options);
             if (Optional.IsCollectionDefined(TargetTags))
             {
                 writer.WritePropertyName("targetTags"u8);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 if (property.NameEquals("source"u8))
                 {
-                    source = ContainerRegistryImportSource.DeserializeContainerRegistryImportSource(property.Value, options);
+                    source = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryImportSource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetTags"u8))

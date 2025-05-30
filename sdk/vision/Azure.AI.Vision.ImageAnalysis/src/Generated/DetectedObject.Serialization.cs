@@ -35,12 +35,12 @@ namespace Azure.AI.Vision.ImageAnalysis
             }
 
             writer.WritePropertyName("boundingBox"u8);
-            writer.WriteObjectValue(BoundingBox, options);
+            ((IJsonModel<ImageBoundingBox>)BoundingBox).Write(writer, options);
             writer.WritePropertyName("tags"u8);
             writer.WriteStartArray();
             foreach (var item in Tags)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DetectedTag>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -88,7 +88,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             {
                 if (property.NameEquals("boundingBox"u8))
                 {
-                    boundingBox = ImageBoundingBox.DeserializeImageBoundingBox(property.Value, options);
+                    boundingBox = ModelSerializationExtensions.JsonDeserialize<ImageBoundingBox>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

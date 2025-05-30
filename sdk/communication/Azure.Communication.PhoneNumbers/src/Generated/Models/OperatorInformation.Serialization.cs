@@ -60,7 +60,7 @@ namespace Azure.Communication.PhoneNumbers
                     {
                         continue;
                     }
-                    operatorDetails = OperatorDetails.DeserializeOperatorDetails(property.Value);
+                    operatorDetails = ModelSerializationExtensions.JsonDeserialize<OperatorDetails>(property.Value);
                     continue;
                 }
             }

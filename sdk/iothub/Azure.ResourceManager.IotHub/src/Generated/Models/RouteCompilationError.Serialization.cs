@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteObjectValue(Location, options);
+                ((IJsonModel<RouteErrorRange>)Location).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    location = RouteErrorRange.DeserializeRouteErrorRange(property.Value, options);
+                    location = ModelSerializationExtensions.JsonDeserialize<RouteErrorRange>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

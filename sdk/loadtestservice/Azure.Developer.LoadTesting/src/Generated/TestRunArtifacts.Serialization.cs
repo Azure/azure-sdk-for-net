@@ -37,12 +37,12 @@ namespace Azure.Developer.LoadTesting
             if (options.Format != "W" && Optional.IsDefined(InputArtifacts))
             {
                 writer.WritePropertyName("inputArtifacts"u8);
-                writer.WriteObjectValue(InputArtifacts, options);
+                ((IJsonModel<TestRunInputArtifacts>)InputArtifacts).Write(writer, options);
             }
             if (Optional.IsDefined(OutputArtifacts))
             {
                 writer.WritePropertyName("outputArtifacts"u8);
-                writer.WriteObjectValue(OutputArtifacts, options);
+                ((IJsonModel<TestRunOutputArtifacts>)OutputArtifacts).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    inputArtifacts = TestRunInputArtifacts.DeserializeTestRunInputArtifacts(property.Value, options);
+                    inputArtifacts = ModelSerializationExtensions.JsonDeserialize<TestRunInputArtifacts>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("outputArtifacts"u8))
@@ -102,7 +102,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    outputArtifacts = TestRunOutputArtifacts.DeserializeTestRunOutputArtifacts(property.Value, options);
+                    outputArtifacts = ModelSerializationExtensions.JsonDeserialize<TestRunOutputArtifacts>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

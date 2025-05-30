@@ -34,12 +34,12 @@ namespace Azure.Communication.ShortCodes.Models
             if (Optional.IsDefined(ContactInformation))
             {
                 writer.WritePropertyName("contactInformation"u8);
-                writer.WriteObjectValue(ContactInformation);
+                JsonSerializer.Serialize(writer, ContactInformation);
             }
             if (Optional.IsDefined(CustomerCareInformation))
             {
                 writer.WritePropertyName("customerCareInformation"u8);
-                writer.WriteObjectValue(CustomerCareInformation);
+                JsonSerializer.Serialize(writer, CustomerCareInformation);
             }
             writer.WriteEndObject();
         }
@@ -82,7 +82,7 @@ namespace Azure.Communication.ShortCodes.Models
                     {
                         continue;
                     }
-                    contactInformation = ContactInformation.DeserializeContactInformation(property.Value);
+                    contactInformation = ModelSerializationExtensions.JsonDeserialize<ContactInformation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("customerCareInformation"u8))
@@ -91,7 +91,7 @@ namespace Azure.Communication.ShortCodes.Models
                     {
                         continue;
                     }
-                    customerCareInformation = CustomerCareInformation.DeserializeCustomerCareInformation(property.Value);
+                    customerCareInformation = ModelSerializationExtensions.JsonDeserialize<CustomerCareInformation>(property.Value);
                     continue;
                 }
             }

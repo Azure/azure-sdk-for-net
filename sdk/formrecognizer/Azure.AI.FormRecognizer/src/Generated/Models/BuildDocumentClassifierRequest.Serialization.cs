@@ -27,7 +27,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             foreach (var item in DocTypes)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                JsonSerializer.Serialize(writer, item.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

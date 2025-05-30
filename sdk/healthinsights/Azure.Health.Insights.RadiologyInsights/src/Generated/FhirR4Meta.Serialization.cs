@@ -65,7 +65,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Security)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FhirR4Coding>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Tag)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FhirR4Coding>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

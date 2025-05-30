@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             writer.WritePropertyName("renewBefore"u8);
             writer.WriteStringValue(RenewBefore);
             writer.WritePropertyName("privateKey"u8);
-            writer.WriteObjectValue(PrivateKey, options);
+            ((IJsonModel<CertManagerPrivateKey>)PrivateKey).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 }
                 if (property.NameEquals("privateKey"u8))
                 {
-                    privateKey = CertManagerPrivateKey.DeserializeCertManagerPrivateKey(property.Value, options);
+                    privateKey = ModelSerializationExtensions.JsonDeserialize<CertManagerPrivateKey>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

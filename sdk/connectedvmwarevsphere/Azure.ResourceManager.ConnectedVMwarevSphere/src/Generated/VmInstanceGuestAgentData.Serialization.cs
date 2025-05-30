@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials, options);
+                ((IJsonModel<VmInstanceGuestCredential>)Credentials).Write(writer, options);
             }
             if (Optional.IsDefined(PrivateLinkScopeResourceId))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             if (Optional.IsDefined(HttpProxyConfig))
             {
                 writer.WritePropertyName("httpProxyConfig"u8);
-                writer.WriteObjectValue(HttpProxyConfig, options);
+                ((IJsonModel<HttpProxyConfiguration>)HttpProxyConfig).Write(writer, options);
             }
             if (Optional.IsDefined(ProvisioningAction))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VMwareResourceStatus>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             {
                                 continue;
                             }
-                            credentials = VmInstanceGuestCredential.DeserializeVmInstanceGuestCredential(property0.Value, options);
+                            credentials = ModelSerializationExtensions.JsonDeserialize<VmInstanceGuestCredential>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkScopeResourceId"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             {
                                 continue;
                             }
-                            httpProxyConfig = HttpProxyConfiguration.DeserializeHttpProxyConfiguration(property0.Value, options);
+                            httpProxyConfig = ModelSerializationExtensions.JsonDeserialize<HttpProxyConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningAction"u8))

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStringValue(SourceSubTypeDisplayName);
             }
             writer.WritePropertyName("severityFilter"u8);
-            writer.WriteObjectValue(SeverityFilter, options);
+            ((IJsonModel<FusionTemplateSubTypeSeverityFilter>)SeverityFilter).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (property.NameEquals("severityFilter"u8))
                 {
-                    severityFilter = FusionTemplateSubTypeSeverityFilter.DeserializeFusionTemplateSubTypeSeverityFilter(property.Value, options);
+                    severityFilter = ModelSerializationExtensions.JsonDeserialize<FusionTemplateSubTypeSeverityFilter>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

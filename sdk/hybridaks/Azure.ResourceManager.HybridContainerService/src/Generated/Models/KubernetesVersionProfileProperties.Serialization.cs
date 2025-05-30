@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<KubernetesVersionProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

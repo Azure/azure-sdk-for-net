@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Layers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<H264Layer>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

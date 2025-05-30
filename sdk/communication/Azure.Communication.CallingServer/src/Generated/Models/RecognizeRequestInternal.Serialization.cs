@@ -20,7 +20,7 @@ namespace Azure.Communication.CallingServer
             if (Optional.IsDefined(PlayPrompt))
             {
                 writer.WritePropertyName("playPrompt"u8);
-                writer.WriteObjectValue(PlayPrompt);
+                JsonSerializer.Serialize(writer, PlayPrompt);
             }
             if (Optional.IsDefined(InterruptCallMediaOperation))
             {
@@ -28,7 +28,7 @@ namespace Azure.Communication.CallingServer
                 writer.WriteBooleanValue(InterruptCallMediaOperation.Value);
             }
             writer.WritePropertyName("recognizeOptions"u8);
-            writer.WriteObjectValue(RecognizeOptions);
+            JsonSerializer.Serialize(writer, RecognizeOptions);
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);

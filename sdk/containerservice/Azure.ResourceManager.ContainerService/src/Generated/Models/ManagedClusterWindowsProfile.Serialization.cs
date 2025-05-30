@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(GmsaProfile))
             {
                 writer.WritePropertyName("gmsaProfile"u8);
-                writer.WriteObjectValue(GmsaProfile, options);
+                ((IJsonModel<WindowsGmsaProfile>)GmsaProfile).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    gmsaProfile = WindowsGmsaProfile.DeserializeWindowsGmsaProfile(property.Value, options);
+                    gmsaProfile = ModelSerializationExtensions.JsonDeserialize<WindowsGmsaProfile>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

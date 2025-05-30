@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter, options);
+                ((IJsonModel<MaintenanceConfigurationAssignmentFilter>)Filter).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                             {
                                 continue;
                             }
-                            filter = MaintenanceConfigurationAssignmentFilter.DeserializeMaintenanceConfigurationAssignmentFilter(property0.Value, options);
+                            filter = ModelSerializationExtensions.JsonDeserialize<MaintenanceConfigurationAssignmentFilter>(property0.Value);
                             continue;
                         }
                     }

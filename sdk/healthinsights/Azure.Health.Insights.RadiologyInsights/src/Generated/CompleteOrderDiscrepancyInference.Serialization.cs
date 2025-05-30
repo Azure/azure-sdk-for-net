@@ -36,14 +36,14 @@ namespace Azure.Health.Insights.RadiologyInsights
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("orderType"u8);
-            writer.WriteObjectValue(OrderType, options);
+            ((IJsonModel<FhirR4CodeableConcept>)OrderType).Write(writer, options);
             if (Optional.IsCollectionDefined(MissingBodyParts))
             {
                 writer.WritePropertyName("missingBodyParts"u8);
                 writer.WriteStartArray();
                 foreach (var item in MissingBodyParts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FhirR4CodeableConcept>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -53,7 +53,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in MissingBodyPartMeasurements)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FhirR4CodeableConcept>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,7 +90,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 if (property.NameEquals("orderType"u8))
                 {
-                    orderType = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
+                    orderType = ModelSerializationExtensions.JsonDeserialize<FhirR4CodeableConcept>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("missingBodyParts"u8))

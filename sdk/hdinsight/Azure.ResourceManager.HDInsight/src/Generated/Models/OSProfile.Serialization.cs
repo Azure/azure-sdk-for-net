@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(LinuxProfile))
             {
                 writer.WritePropertyName("linuxOperatingSystemProfile"u8);
-                writer.WriteObjectValue(LinuxProfile, options);
+                ((IJsonModel<HDInsightLinuxOSProfile>)LinuxProfile).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    linuxOperatingSystemProfile = HDInsightLinuxOSProfile.DeserializeHDInsightLinuxOSProfile(property.Value, options);
+                    linuxOperatingSystemProfile = ModelSerializationExtensions.JsonDeserialize<HDInsightLinuxOSProfile>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

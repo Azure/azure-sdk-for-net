@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration, options);
+                ((IJsonModel<ManagedResourceGroupConfiguration>)ManagedResourceGroupConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(SiteReference))
             {
                 writer.WritePropertyName("siteReference"u8);
-                JsonSerializer.Serialize(writer, SiteReference);
+                ((IJsonModel<WritableSubResource>)SiteReference).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PublisherName))
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(NetworkServiceDesignVersionResourceReference))
             {
                 writer.WritePropertyName("networkServiceDesignVersionResourceReference"u8);
-                writer.WriteObjectValue(NetworkServiceDesignVersionResourceReference, options);
+                ((IJsonModel<DeploymentResourceIdReference>)NetworkServiceDesignVersionResourceReference).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DesiredStateConfigurationGroupValueReferences))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 foreach (var item in DesiredStateConfigurationGroupValueReferences)
                 {
                     writer.WritePropertyName(item.Key);
-                    JsonSerializer.Serialize(writer, item.Value);
+                    ((IJsonModel<WritableSubResource>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 foreach (var item in LastStateConfigurationGroupValueReferences)
                 {
                     writer.WritePropertyName(item.Key);
-                    JsonSerializer.Serialize(writer, item.Value);
+                    ((IJsonModel<WritableSubResource>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    managedResourceGroupConfiguration = ManagedResourceGroupConfiguration.DeserializeManagedResourceGroupConfiguration(property.Value, options);
+                    managedResourceGroupConfiguration = ModelSerializationExtensions.JsonDeserialize<ManagedResourceGroupConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("siteReference"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    siteReference = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    siteReference = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("publisherName"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    networkServiceDesignVersionResourceReference = DeploymentResourceIdReference.DeserializeDeploymentResourceIdReference(property.Value, options);
+                    networkServiceDesignVersionResourceReference = ModelSerializationExtensions.JsonDeserialize<DeploymentResourceIdReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("desiredStateConfigurationGroupValueReferences"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     Dictionary<string, WritableSubResource> dictionary = new Dictionary<string, WritableSubResource>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText()));
+                        dictionary.Add(property0.Name, ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value));
                     }
                     desiredStateConfigurationGroupValueReferences = dictionary;
                     continue;
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     Dictionary<string, WritableSubResource> dictionary = new Dictionary<string, WritableSubResource>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText()));
+                        dictionary.Add(property0.Name, ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value));
                     }
                     lastStateConfigurationGroupValueReferences = dictionary;
                     continue;

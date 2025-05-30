@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<InformaticaOrganizationProperties>)Properties).Write(writer, options);
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                     {
                         continue;
                     }
-                    properties = InformaticaOrganizationProperties.DeserializeInformaticaOrganizationProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<InformaticaOrganizationProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

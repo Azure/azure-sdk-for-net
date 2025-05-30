@@ -45,7 +45,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Extension)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FhirR4Extension>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

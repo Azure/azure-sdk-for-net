@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(PartnerData))
             {
                 writer.WritePropertyName("partnerData"u8);
-                writer.WriteObjectValue(PartnerData, options);
+                ((IJsonModel<SecurityAssessmentMetadataPartner>)PartnerData).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    partnerData = SecurityAssessmentMetadataPartner.DeserializeSecurityAssessmentMetadataPartner(property.Value, options);
+                    partnerData = ModelSerializationExtensions.JsonDeserialize<SecurityAssessmentMetadataPartner>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

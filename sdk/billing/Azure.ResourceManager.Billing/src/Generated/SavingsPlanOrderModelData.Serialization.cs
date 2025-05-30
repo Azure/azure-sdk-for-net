@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Billing
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<BillingSku>)Sku).Write(writer, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Billing
             if (Optional.IsDefined(PlanInformation))
             {
                 writer.WritePropertyName("planInformation"u8);
-                writer.WriteObjectValue(PlanInformation, options);
+                ((IJsonModel<BillingPlanInformation>)PlanInformation).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(SavingsPlans))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Billing
             if (options.Format != "W" && Optional.IsDefined(ExtendedStatusInfo))
             {
                 writer.WritePropertyName("extendedStatusInfo"u8);
-                writer.WriteObjectValue(ExtendedStatusInfo, options);
+                ((IJsonModel<ExtendedStatusInfo>)ExtendedStatusInfo).Write(writer, options);
             }
             if (Optional.IsDefined(ProductCode))
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Billing
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = BillingSku.DeserializeBillingSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<BillingSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            planInformation = BillingPlanInformation.DeserializeBillingPlanInformation(property0.Value, options);
+                            planInformation = ModelSerializationExtensions.JsonDeserialize<BillingPlanInformation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("savingsPlans"u8))
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            extendedStatusInfo = ExtendedStatusInfo.DeserializeExtendedStatusInfo(property0.Value, options);
+                            extendedStatusInfo = ModelSerializationExtensions.JsonDeserialize<ExtendedStatusInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("productCode"u8))

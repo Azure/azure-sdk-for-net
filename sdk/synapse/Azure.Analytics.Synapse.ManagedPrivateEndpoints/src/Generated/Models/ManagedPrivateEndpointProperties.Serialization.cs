@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                JsonSerializer.Serialize(writer, ConnectionState);
             }
             if (Optional.IsCollectionDefined(Fqdns))
             {
@@ -96,7 +96,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                     {
                         continue;
                     }
-                    connectionState = ManagedPrivateEndpointConnectionState.DeserializeManagedPrivateEndpointConnectionState(property.Value);
+                    connectionState = ModelSerializationExtensions.JsonDeserialize<ManagedPrivateEndpointConnectionState>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isReserved"u8))

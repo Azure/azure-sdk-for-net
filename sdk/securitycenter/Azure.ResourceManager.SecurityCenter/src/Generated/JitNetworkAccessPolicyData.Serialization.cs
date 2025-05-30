@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityCenter
             writer.WriteStartArray();
             foreach (var item in VirtualMachines)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<JitNetworkAccessPolicyVirtualMachine>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Requests))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Requests)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<JitNetworkAccessRequestInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

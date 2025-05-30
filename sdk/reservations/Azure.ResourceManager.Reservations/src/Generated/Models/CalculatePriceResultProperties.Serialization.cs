@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(BillingCurrencyTotal))
             {
                 writer.WritePropertyName("billingCurrencyTotal"u8);
-                writer.WriteObjectValue(BillingCurrencyTotal, options);
+                ((IJsonModel<CalculatePriceResultPropertiesBillingCurrencyTotal>)BillingCurrencyTotal).Write(writer, options);
             }
             if (Optional.IsDefined(NetTotal))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(PricingCurrencyTotal))
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
-                writer.WriteObjectValue(PricingCurrencyTotal, options);
+                ((IJsonModel<CalculatePriceResultPropertiesPricingCurrencyTotal>)PricingCurrencyTotal).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(PaymentSchedule))
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in PaymentSchedule)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PaymentDetail>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingCurrencyTotal = CalculatePriceResultPropertiesBillingCurrencyTotal.DeserializeCalculatePriceResultPropertiesBillingCurrencyTotal(property.Value, options);
+                    billingCurrencyTotal = ModelSerializationExtensions.JsonDeserialize<CalculatePriceResultPropertiesBillingCurrencyTotal>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("netTotal"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    pricingCurrencyTotal = CalculatePriceResultPropertiesPricingCurrencyTotal.DeserializeCalculatePriceResultPropertiesPricingCurrencyTotal(property.Value, options);
+                    pricingCurrencyTotal = ModelSerializationExtensions.JsonDeserialize<CalculatePriceResultPropertiesPricingCurrencyTotal>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("paymentSchedule"u8))

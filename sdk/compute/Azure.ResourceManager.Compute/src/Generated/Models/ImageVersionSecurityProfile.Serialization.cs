@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(UefiSettings))
             {
                 writer.WritePropertyName("uefiSettings"u8);
-                writer.WriteObjectValue(UefiSettings, options);
+                ((IJsonModel<GalleryImageVersionUefiSettings>)UefiSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    uefiSettings = GalleryImageVersionUefiSettings.DeserializeGalleryImageVersionUefiSettings(property.Value, options);
+                    uefiSettings = ModelSerializationExtensions.JsonDeserialize<GalleryImageVersionUefiSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

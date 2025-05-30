@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item0 in item.Value)
                 {
-                    writer.WriteObjectValue(item0, options);
+                    ((IJsonModel<FilterableProperty>)item0).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (Optional.IsDefined(CustomerSubscriptionDetails))
             {
                 writer.WritePropertyName("customerSubscriptionDetails"u8);
-                writer.WriteObjectValue(CustomerSubscriptionDetails, options);
+                ((IJsonModel<CustomerSubscriptionDetails>)CustomerSubscriptionDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    customerSubscriptionDetails = CustomerSubscriptionDetails.DeserializeCustomerSubscriptionDetails(property.Value, options);
+                    customerSubscriptionDetails = ModelSerializationExtensions.JsonDeserialize<CustomerSubscriptionDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

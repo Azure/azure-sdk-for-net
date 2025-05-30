@@ -18,7 +18,7 @@ namespace Azure.Communication.CallingServer
             if (Optional.IsDefined(CallerId))
             {
                 writer.WritePropertyName("callerId"u8);
-                writer.WriteObjectValue(CallerId);
+                JsonSerializer.Serialize(writer, CallerId);
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -26,7 +26,7 @@ namespace Azure.Communication.CallingServer
                 writer.WriteStringValue(DisplayName);
             }
             writer.WritePropertyName("identifier"u8);
-            writer.WriteObjectValue(Identifier);
+            JsonSerializer.Serialize(writer, Identifier);
             writer.WriteEndObject();
         }
 
@@ -47,7 +47,7 @@ namespace Azure.Communication.CallingServer
                     {
                         continue;
                     }
-                    callerId = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
+                    callerId = ModelSerializationExtensions.JsonDeserialize<PhoneNumberIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))
@@ -57,7 +57,7 @@ namespace Azure.Communication.CallingServer
                 }
                 if (property.NameEquals("identifier"u8))
                 {
-                    identifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    identifier = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
             }

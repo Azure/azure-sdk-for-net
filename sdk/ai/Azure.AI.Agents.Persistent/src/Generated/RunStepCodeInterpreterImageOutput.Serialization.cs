@@ -36,7 +36,7 @@ namespace Azure.AI.Agents.Persistent
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("image"u8);
-            writer.WriteObjectValue(Image, options);
+            ((IJsonModel<RunStepCodeInterpreterImageReference>)Image).Write(writer, options);
         }
 
         RunStepCodeInterpreterImageOutput IJsonModel<RunStepCodeInterpreterImageOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (property.NameEquals("image"u8))
                 {
-                    image = RunStepCodeInterpreterImageReference.DeserializeRunStepCodeInterpreterImageReference(property.Value, options);
+                    image = ModelSerializationExtensions.JsonDeserialize<RunStepCodeInterpreterImageReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

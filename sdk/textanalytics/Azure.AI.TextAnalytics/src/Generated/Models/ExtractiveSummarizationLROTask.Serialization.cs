@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Models
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters);
+                JsonSerializer.Serialize(writer, Parameters);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -47,7 +47,7 @@ namespace Azure.AI.TextAnalytics.Models
                     {
                         continue;
                     }
-                    parameters = ExtractiveSummarizationTaskParameters.DeserializeExtractiveSummarizationTaskParameters(property.Value);
+                    parameters = ModelSerializationExtensions.JsonDeserialize<ExtractiveSummarizationTaskParameters>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

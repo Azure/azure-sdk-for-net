@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             if (Optional.IsDefined(Config))
             {
                 writer.WritePropertyName("config"u8);
-                writer.WriteObjectValue(Config, options);
+                ((IJsonModel<AgricultureServiceConfig>)Config).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DataConnectorCredentials))
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in DataConnectorCredentials)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataConnectorCredentialMap>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in InstalledSolutions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InstalledSolutionMap>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                     {
                         continue;
                     }
-                    config = AgricultureServiceConfig.DeserializeAgricultureServiceConfig(property.Value, options);
+                    config = ModelSerializationExtensions.JsonDeserialize<AgricultureServiceConfig>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataConnectorCredentials"u8))

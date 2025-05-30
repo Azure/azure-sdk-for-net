@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (Optional.IsDefined(Results))
             {
                 writer.WritePropertyName("results"u8);
-                writer.WriteObjectValue(Results, options);
+                ((IJsonModel<PolicySummaryResults>)Results).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value, options);
+                    results = ModelSerializationExtensions.JsonDeserialize<PolicySummaryResults>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

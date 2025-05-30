@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ColumnName))
             {
                 writer.WritePropertyName("name"u8);
-                JsonSerializer.Serialize(writer, ColumnName);
+                ((IJsonModel<DataFactoryElement<T>>)ColumnName).Write(writer, options);
             }
             if (Optional.IsDefined(ColumnType))
             {
                 writer.WritePropertyName("type"u8);
-                JsonSerializer.Serialize(writer, ColumnType);
+                ((IJsonModel<DataFactoryElement<T>>)ColumnType).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    name = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    name = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    type = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    type = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

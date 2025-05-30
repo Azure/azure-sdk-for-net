@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in ParameterSets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AutomationActivityParameterSet>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in OutputTypes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AutomationActivityOutputType>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

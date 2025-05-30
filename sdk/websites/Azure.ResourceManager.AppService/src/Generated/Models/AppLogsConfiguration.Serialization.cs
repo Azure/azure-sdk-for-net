@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(LogAnalyticsConfiguration))
             {
                 writer.WritePropertyName("logAnalyticsConfiguration"u8);
-                writer.WriteObjectValue(LogAnalyticsConfiguration, options);
+                ((IJsonModel<LogAnalyticsConfiguration>)LogAnalyticsConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    logAnalyticsConfiguration = LogAnalyticsConfiguration.DeserializeLogAnalyticsConfiguration(property.Value, options);
+                    logAnalyticsConfiguration = ModelSerializationExtensions.JsonDeserialize<LogAnalyticsConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

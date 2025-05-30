@@ -22,7 +22,7 @@ namespace Azure.MixedReality.RemoteRendering.Models
             {
                 if (property.NameEquals("error"u8))
                 {
-                    error = RemoteRenderingServiceError.DeserializeRemoteRenderingServiceError(property.Value);
+                    error = ModelSerializationExtensions.JsonDeserialize<RemoteRenderingServiceError>(property.Value);
                     continue;
                 }
             }

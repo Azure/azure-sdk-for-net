@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo, options);
+                ((IJsonModel<MabFileFolderProtectedItemExtendedInfo>)ExtendedInfo).Write(writer, options);
             }
         }
 
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = MabFileFolderProtectedItemExtendedInfo.DeserializeMabFileFolderProtectedItemExtendedInfo(property.Value, options);
+                    extendedInfo = ModelSerializationExtensions.JsonDeserialize<MabFileFolderProtectedItemExtendedInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("protectedItemType"u8))

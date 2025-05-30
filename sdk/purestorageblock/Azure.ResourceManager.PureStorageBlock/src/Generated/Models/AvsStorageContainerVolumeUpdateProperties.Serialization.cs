@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             if (Optional.IsDefined(SoftDeletion))
             {
                 writer.WritePropertyName("softDeletion"u8);
-                writer.WriteObjectValue(SoftDeletion, options);
+                ((IJsonModel<PureStorageSoftDeletionState>)SoftDeletion).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    softDeletion = PureStorageSoftDeletionState.DeserializePureStorageSoftDeletionState(property.Value, options);
+                    softDeletion = ModelSerializationExtensions.JsonDeserialize<PureStorageSoftDeletionState>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -37,7 +37,7 @@ namespace Azure.Analytics.Defender.Easm
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<ErrorDetail>)Error).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    error = ErrorDetail.DeserializeErrorDetail(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<ErrorDetail>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

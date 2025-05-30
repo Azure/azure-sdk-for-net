@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SearchServiceIPRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

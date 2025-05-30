@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PerfMonSample>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

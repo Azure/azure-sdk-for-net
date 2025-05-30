@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             if (options.Format != "W" && Optional.IsDefined(CurrentStatus))
             {
                 writer.WritePropertyName("currentStatus"u8);
-                writer.WriteObjectValue(CurrentStatus, options);
+                ((IJsonModel<PostgreSqlMigrationStatus>)CurrentStatus).Write(writer, options);
             }
             if (Optional.IsDefined(MigrationInstanceResourceId))
             {
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             if (options.Format != "W" && Optional.IsDefined(SourceDbServerMetadata))
             {
                 writer.WritePropertyName("sourceDbServerMetadata"u8);
-                writer.WriteObjectValue(SourceDbServerMetadata, options);
+                ((IJsonModel<PostgreSqlServerMetadata>)SourceDbServerMetadata).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TargetDbServerMetadata))
             {
                 writer.WritePropertyName("targetDbServerMetadata"u8);
-                writer.WriteObjectValue(TargetDbServerMetadata, options);
+                ((IJsonModel<PostgreSqlServerMetadata>)TargetDbServerMetadata).Write(writer, options);
             }
             if (Optional.IsDefined(SourceDbServerResourceId))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             if (Optional.IsDefined(SecretParameters))
             {
                 writer.WritePropertyName("secretParameters"u8);
-                writer.WriteObjectValue(SecretParameters, options);
+                ((IJsonModel<PostgreSqlMigrationSecretParameters>)SecretParameters).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DbsToMigrate))
             {
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            currentStatus = PostgreSqlMigrationStatus.DeserializePostgreSqlMigrationStatus(property0.Value, options);
+                            currentStatus = ModelSerializationExtensions.JsonDeserialize<PostgreSqlMigrationStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("migrationInstanceResourceId"u8))
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            sourceDbServerMetadata = PostgreSqlServerMetadata.DeserializePostgreSqlServerMetadata(property0.Value, options);
+                            sourceDbServerMetadata = ModelSerializationExtensions.JsonDeserialize<PostgreSqlServerMetadata>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("targetDbServerMetadata"u8))
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            targetDbServerMetadata = PostgreSqlServerMetadata.DeserializePostgreSqlServerMetadata(property0.Value, options);
+                            targetDbServerMetadata = ModelSerializationExtensions.JsonDeserialize<PostgreSqlServerMetadata>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sourceDbServerResourceId"u8))
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            secretParameters = PostgreSqlMigrationSecretParameters.DeserializePostgreSqlMigrationSecretParameters(property0.Value, options);
+                            secretParameters = ModelSerializationExtensions.JsonDeserialize<PostgreSqlMigrationSecretParameters>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dbsToMigrate"u8))

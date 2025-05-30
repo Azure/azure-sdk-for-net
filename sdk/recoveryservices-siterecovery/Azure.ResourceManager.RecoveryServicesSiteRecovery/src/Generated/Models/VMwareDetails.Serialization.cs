@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProcessServers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryProcessServer>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in MasterTargetServers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MasterTargetServer>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in RunAsAccounts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryRunAsAccount>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(AgentVersionDetails))
             {
                 writer.WritePropertyName("agentVersionDetails"u8);
-                writer.WriteObjectValue(AgentVersionDetails, options);
+                ((IJsonModel<SiteRecoveryVersionDetails>)AgentVersionDetails).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(SwitchProviderBlockingErrorDetails))
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in SwitchProviderBlockingErrorDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InMageFabricSwitchProviderBlockingErrorDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    agentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value, options);
+                    agentVersionDetails = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryVersionDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("switchProviderBlockingErrorDetails"u8))

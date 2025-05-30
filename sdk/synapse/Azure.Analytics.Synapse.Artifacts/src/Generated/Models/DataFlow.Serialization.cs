@@ -43,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                JsonSerializer.Serialize(writer, Folder);
             }
             writer.WriteEndObject();
         }

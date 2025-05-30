@@ -40,22 +40,22 @@ namespace Azure.ResourceManager.MixedReality
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                JsonSerializer.Serialize(writer, Plan);
+                ((IJsonModel<ManagedServiceIdentity>)Plan).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<MixedRealitySku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
-                writer.WriteObjectValue(Kind, options);
+                ((IJsonModel<MixedRealitySku>)Kind).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MixedReality
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("plan"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MixedReality
                     {
                         continue;
                     }
-                    plan = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    plan = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MixedReality
                     {
                         continue;
                     }
-                    sku = MixedRealitySku.DeserializeMixedRealitySku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<MixedRealitySku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.MixedReality
                     {
                         continue;
                     }
-                    kind = MixedRealitySku.DeserializeMixedRealitySku(property.Value, options);
+                    kind = ModelSerializationExtensions.JsonDeserialize<MixedRealitySku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.MixedReality
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

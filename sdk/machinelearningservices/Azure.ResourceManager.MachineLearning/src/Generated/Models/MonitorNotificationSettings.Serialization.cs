@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (EmailNotificationSettings != null)
                 {
                     writer.WritePropertyName("emailNotificationSettings"u8);
-                    writer.WriteObjectValue(EmailNotificationSettings, options);
+                    ((IJsonModel<MonitorEmailNotificationSettings>)EmailNotificationSettings).Write(writer, options);
                 }
                 else
                 {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         emailNotificationSettings = null;
                         continue;
                     }
-                    emailNotificationSettings = MonitorEmailNotificationSettings.DeserializeMonitorEmailNotificationSettings(property.Value, options);
+                    emailNotificationSettings = ModelSerializationExtensions.JsonDeserialize<MonitorEmailNotificationSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AssignmentReportResourceInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

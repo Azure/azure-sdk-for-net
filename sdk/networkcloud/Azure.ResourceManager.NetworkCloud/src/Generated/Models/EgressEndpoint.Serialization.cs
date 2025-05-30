@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStartArray();
             foreach (var item in Endpoints)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<EndpointDependency>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

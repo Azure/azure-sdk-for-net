@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in AkamaiSignatureHeaderAuthenticationKeyList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AkamaiSignatureHeaderAuthenticationKey>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

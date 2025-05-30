@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Components)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ComponentEventDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<DataTransferJobProperties>)Properties).Write(writer, options);
         }
 
         DataTransferJobGetResultCreateOrUpdateContent IJsonModel<DataTransferJobGetResultCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DataTransferJobProperties.DeserializeDataTransferJobProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<DataTransferJobProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

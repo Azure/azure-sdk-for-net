@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ResourceIdentity>)Identity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    identity = ResourceIdentity.DeserializeResourceIdentity(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ResourceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))

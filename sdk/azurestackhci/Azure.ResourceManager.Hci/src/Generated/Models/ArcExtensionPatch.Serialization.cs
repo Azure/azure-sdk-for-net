@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(ExtensionParameters))
             {
                 writer.WritePropertyName("extensionParameters"u8);
-                writer.WriteObjectValue(ExtensionParameters, options);
+                ((IJsonModel<ArcExtensionPatchContent>)ExtensionParameters).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Hci.Models
                             {
                                 continue;
                             }
-                            extensionParameters = ArcExtensionPatchContent.DeserializeArcExtensionPatchContent(property0.Value, options);
+                            extensionParameters = ModelSerializationExtensions.JsonDeserialize<ArcExtensionPatchContent>(property0.Value);
                             continue;
                         }
                     }

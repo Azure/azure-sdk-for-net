@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Text
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("results"u8);
-            writer.WriteObjectValue(Results, options);
+            ((IJsonModel<EntityLinkingResult>)Results).Write(writer, options);
         }
 
         AnalyzeTextEntityLinkingResult IJsonModel<AnalyzeTextEntityLinkingResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.AI.Language.Text
             {
                 if (property.NameEquals("results"u8))
                 {
-                    results = EntityLinkingResult.DeserializeEntityLinkingResult(property.Value, options);
+                    results = ModelSerializationExtensions.JsonDeserialize<EntityLinkingResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

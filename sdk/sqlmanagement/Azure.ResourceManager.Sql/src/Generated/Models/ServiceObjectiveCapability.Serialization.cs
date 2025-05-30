@@ -52,19 +52,19 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedMaxSizes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MaxSizeRangeCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(PerformanceLevel))
             {
                 writer.WritePropertyName("performanceLevel"u8);
-                writer.WriteObjectValue(PerformanceLevel, options);
+                ((IJsonModel<PerformanceLevelCapability>)PerformanceLevel).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<SqlSku>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedLicenseTypes))
             {
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedLicenseTypes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LicenseTypeCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(IncludedMaxSize))
             {
                 writer.WritePropertyName("includedMaxSize"u8);
-                writer.WriteObjectValue(IncludedMaxSize, options);
+                ((IJsonModel<MaxSizeCapability>)IncludedMaxSize).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsZoneRedundant))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(SupportedAutoPauseDelay))
             {
                 writer.WritePropertyName("supportedAutoPauseDelay"u8);
-                writer.WriteObjectValue(SupportedAutoPauseDelay, options);
+                ((IJsonModel<AutoPauseDelayTimeRange>)SupportedAutoPauseDelay).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedMinCapacities))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedMinCapacities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MinCapacityCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedMaintenanceConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MaintenanceConfigurationCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedZones)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ZonePinningCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedFreeLimitExhaustionBehaviors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FreeLimitExhaustionBehaviorCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    performanceLevel = PerformanceLevelCapability.DeserializePerformanceLevelCapability(property.Value, options);
+                    performanceLevel = ModelSerializationExtensions.JsonDeserialize<PerformanceLevelCapability>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    sku = SqlSku.DeserializeSqlSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<SqlSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("supportedLicenseTypes"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    includedMaxSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
+                    includedMaxSize = ModelSerializationExtensions.JsonDeserialize<MaxSizeCapability>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("zoneRedundant"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    supportedAutoPauseDelay = AutoPauseDelayTimeRange.DeserializeAutoPauseDelayTimeRange(property.Value, options);
+                    supportedAutoPauseDelay = ModelSerializationExtensions.JsonDeserialize<AutoPauseDelayTimeRange>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("supportedMinCapacities"u8))

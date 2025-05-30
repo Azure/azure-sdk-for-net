@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Search.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<NspProvisioningIssueProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    properties = NspProvisioningIssueProperties.DeserializeNspProvisioningIssueProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<NspProvisioningIssueProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

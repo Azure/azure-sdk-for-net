@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
-                writer.WriteObjectValue(OSDisk, options);
+                ((IJsonModel<RestorePointSourceVmOSDisk>)OSDisk).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DataDiskList))
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDiskList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RestorePointSourceVmDataDisk>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osDisk = RestorePointSourceVmOSDisk.DeserializeRestorePointSourceVmOSDisk(property.Value, options);
+                    osDisk = ModelSerializationExtensions.JsonDeserialize<RestorePointSourceVmOSDisk>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataDisks"u8))

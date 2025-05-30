@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WriteStartArray();
             foreach (var item in Targets)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ChaosTargetReference>)item).Write(writer, options);
             }
             writer.WriteEndArray();
         }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    filter = ChaosTargetFilter.DeserializeChaosTargetFilter(property.Value, options);
+                    filter = ModelSerializationExtensions.JsonDeserialize<ChaosTargetFilter>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

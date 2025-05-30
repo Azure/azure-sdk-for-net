@@ -37,32 +37,32 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
-                writer.WriteObjectValue(ContactDetails, options);
+                ((IJsonModel<DataBoxContactDetails>)ContactDetails).Write(writer, options);
             }
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress, options);
+                ((IJsonModel<DataBoxShippingAddress>)ShippingAddress).Write(writer, options);
             }
             if (Optional.IsDefined(ReverseShippingDetails))
             {
                 writer.WritePropertyName("reverseShippingDetails"u8);
-                writer.WriteObjectValue(ReverseShippingDetails, options);
+                ((IJsonModel<ReverseShippingDetails>)ReverseShippingDetails).Write(writer, options);
             }
             if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
-                writer.WriteObjectValue(Preferences, options);
+                ((IJsonModel<DataBoxOrderPreferences>)Preferences).Write(writer, options);
             }
             if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
-                writer.WriteObjectValue(KeyEncryptionKey, options);
+                ((IJsonModel<DataBoxKeyEncryptionKey>)KeyEncryptionKey).Write(writer, options);
             }
             if (Optional.IsDefined(ReturnToCustomerPackageDetails))
             {
                 writer.WritePropertyName("returnToCustomerPackageDetails"u8);
-                writer.WriteObjectValue(ReturnToCustomerPackageDetails, options);
+                ((IJsonModel<PackageCarrierDetails>)ReturnToCustomerPackageDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    contactDetails = DataBoxContactDetails.DeserializeDataBoxContactDetails(property.Value, options);
+                    contactDetails = ModelSerializationExtensions.JsonDeserialize<DataBoxContactDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("shippingAddress"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    shippingAddress = DataBoxShippingAddress.DeserializeDataBoxShippingAddress(property.Value, options);
+                    shippingAddress = ModelSerializationExtensions.JsonDeserialize<DataBoxShippingAddress>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("reverseShippingDetails"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    reverseShippingDetails = ReverseShippingDetails.DeserializeReverseShippingDetails(property.Value, options);
+                    reverseShippingDetails = ModelSerializationExtensions.JsonDeserialize<ReverseShippingDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("preferences"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    preferences = DataBoxOrderPreferences.DeserializeDataBoxOrderPreferences(property.Value, options);
+                    preferences = ModelSerializationExtensions.JsonDeserialize<DataBoxOrderPreferences>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("keyEncryptionKey"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    keyEncryptionKey = DataBoxKeyEncryptionKey.DeserializeDataBoxKeyEncryptionKey(property.Value, options);
+                    keyEncryptionKey = ModelSerializationExtensions.JsonDeserialize<DataBoxKeyEncryptionKey>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("returnToCustomerPackageDetails"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    returnToCustomerPackageDetails = PackageCarrierDetails.DeserializePackageCarrierDetails(property.Value, options);
+                    returnToCustomerPackageDetails = ModelSerializationExtensions.JsonDeserialize<PackageCarrierDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

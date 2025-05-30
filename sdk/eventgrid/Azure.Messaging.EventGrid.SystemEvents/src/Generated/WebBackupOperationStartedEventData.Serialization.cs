@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
 
             writer.WritePropertyName("appEventTypeDetail"u8);
-            writer.WriteObjectValue(AppEventTypeDetail, options);
+            ((IJsonModel<AppEventTypeDetail>)AppEventTypeDetail).Write(writer, options);
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -116,7 +116,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("appEventTypeDetail"u8))
                 {
-                    appEventTypeDetail = AppEventTypeDetail.DeserializeAppEventTypeDetail(property.Value, options);
+                    appEventTypeDetail = ModelSerializationExtensions.JsonDeserialize<AppEventTypeDetail>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

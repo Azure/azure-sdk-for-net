@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(TemporaryDisk))
             {
                 writer.WritePropertyName("temporaryDisk"u8);
-                writer.WriteObjectValue(TemporaryDisk, options);
+                ((IJsonModel<AppTemporaryDisk>)TemporaryDisk).Write(writer, options);
             }
             if (Optional.IsDefined(PersistentDisk))
             {
                 writer.WritePropertyName("persistentDisk"u8);
-                writer.WriteObjectValue(PersistentDisk, options);
+                ((IJsonModel<AppPersistentDisk>)PersistentDisk).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(CustomPersistentDisks))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomPersistentDisks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AppCustomPersistentDisk>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -124,19 +124,19 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in LoadedCertificates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AppLoadedCertificate>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(VnetAddons))
             {
                 writer.WritePropertyName("vnetAddons"u8);
-                writer.WriteObjectValue(VnetAddons, options);
+                ((IJsonModel<AppVnetAddons>)VnetAddons).Write(writer, options);
             }
             if (Optional.IsDefined(IngressSettings))
             {
                 writer.WritePropertyName("ingressSettings"u8);
-                writer.WriteObjectValue(IngressSettings, options);
+                ((IJsonModel<AppIngressSettings>)IngressSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    temporaryDisk = AppTemporaryDisk.DeserializeAppTemporaryDisk(property.Value, options);
+                    temporaryDisk = ModelSerializationExtensions.JsonDeserialize<AppTemporaryDisk>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("persistentDisk"u8))
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    persistentDisk = AppPersistentDisk.DeserializeAppPersistentDisk(property.Value, options);
+                    persistentDisk = ModelSerializationExtensions.JsonDeserialize<AppPersistentDisk>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("customPersistentDisks"u8))
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    vnetAddons = AppVnetAddons.DeserializeAppVnetAddons(property.Value, options);
+                    vnetAddons = ModelSerializationExtensions.JsonDeserialize<AppVnetAddons>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ingressSettings"u8))
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    ingressSettings = AppIngressSettings.DeserializeAppIngressSettings(property.Value, options);
+                    ingressSettings = ModelSerializationExtensions.JsonDeserialize<AppIngressSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

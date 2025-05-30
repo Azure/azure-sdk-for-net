@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties, options);
+                ((IJsonModel<AppliedScopeProperties>)AppliedScopeProperties).Write(writer, options);
             }
             if (Optional.IsDefined(InstanceFlexibility))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(RenewProperties))
             {
                 writer.WritePropertyName("renewProperties"u8);
-                writer.WriteObjectValue(RenewProperties, options);
+                ((IJsonModel<PatchPropertiesRenewProperties>)RenewProperties).Write(writer, options);
             }
             if (Optional.IsDefined(ReviewOn))
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Reservations.Models
                             {
                                 continue;
                             }
-                            appliedScopeProperties = AppliedScopeProperties.DeserializeAppliedScopeProperties(property0.Value, options);
+                            appliedScopeProperties = ModelSerializationExtensions.JsonDeserialize<AppliedScopeProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("instanceFlexibility"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Reservations.Models
                             {
                                 continue;
                             }
-                            renewProperties = PatchPropertiesRenewProperties.DeserializePatchPropertiesRenewProperties(property0.Value, options);
+                            renewProperties = ModelSerializationExtensions.JsonDeserialize<PatchPropertiesRenewProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("reviewDateTime"u8))

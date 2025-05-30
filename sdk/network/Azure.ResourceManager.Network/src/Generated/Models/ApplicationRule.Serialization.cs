@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Protocols)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FirewallPolicyRuleApplicationProtocol>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in HttpHeadersToInsert)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FirewallPolicyHttpHeaderToInsert>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

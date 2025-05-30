@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 if (ResourceProperties != null)
                 {
                     writer.WritePropertyName("resourceProperties"u8);
-                    writer.WriteObjectValue(ResourceProperties, options);
+                    ((IJsonModel<AzureResourceBaseProperties>)ResourceProperties).Write(writer, options);
                 }
                 else
                 {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         resourceProperties = null;
                         continue;
                     }
-                    resourceProperties = AzureResourceBaseProperties.DeserializeAzureResourceBaseProperties(property.Value, options);
+                    resourceProperties = ModelSerializationExtensions.JsonDeserialize<AzureResourceBaseProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

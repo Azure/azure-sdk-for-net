@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             if (options.Format != "W" && Optional.IsDefined(HybridConnectionConfig))
             {
                 writer.WritePropertyName("hybridConnectionConfig"u8);
-                writer.WriteObjectValue(HybridConnectionConfig, options);
+                ((IJsonModel<HybridConnectionConfig>)HybridConnectionConfig).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Kubeconfigs))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 writer.WriteStartArray();
                 foreach (var item in Kubeconfigs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CredentialResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     {
                         continue;
                     }
-                    hybridConnectionConfig = HybridConnectionConfig.DeserializeHybridConnectionConfig(property.Value, options);
+                    hybridConnectionConfig = ModelSerializationExtensions.JsonDeserialize<HybridConnectionConfig>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kubeconfigs"u8))

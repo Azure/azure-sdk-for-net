@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(ContainerSettings))
             {
                 writer.WritePropertyName("containerSettings"u8);
-                writer.WriteObjectValue(ContainerSettings, options);
+                ((IJsonModel<ContainerConfiguration>)ContainerSettings).Write(writer, options);
             }
             if (Optional.IsDefined(StorageAccountSettings))
             {
                 writer.WritePropertyName("storageAccountSettings"u8);
-                writer.WriteObjectValue(StorageAccountSettings, options);
+                ((IJsonModel<ScriptStorageConfiguration>)StorageAccountSettings).Write(writer, options);
             }
             if (Optional.IsDefined(CleanupPreference))
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<ScriptStatus>)Status).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Outputs))
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in EnvironmentVariables)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ScriptEnvironmentVariable>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    identity = ArmDeploymentScriptManagedIdentity.DeserializeArmDeploymentScriptManagedIdentity(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ArmDeploymentScriptManagedIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Resources.Models
                             {
                                 continue;
                             }
-                            containerSettings = ContainerConfiguration.DeserializeContainerConfiguration(property0.Value, options);
+                            containerSettings = ModelSerializationExtensions.JsonDeserialize<ContainerConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("storageAccountSettings"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Resources.Models
                             {
                                 continue;
                             }
-                            storageAccountSettings = ScriptStorageConfiguration.DeserializeScriptStorageConfiguration(property0.Value, options);
+                            storageAccountSettings = ModelSerializationExtensions.JsonDeserialize<ScriptStorageConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cleanupPreference"u8))
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Resources.Models
                             {
                                 continue;
                             }
-                            status = ScriptStatus.DeserializeScriptStatus(property0.Value, options);
+                            status = ModelSerializationExtensions.JsonDeserialize<ScriptStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("outputs"u8))

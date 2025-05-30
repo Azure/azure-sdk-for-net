@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(AutoScale))
             {
                 writer.WritePropertyName("autoScale"u8);
-                writer.WriteObjectValue(AutoScale);
+                JsonSerializer.Serialize(writer, AutoScale);
             }
             if (Optional.IsDefined(CreationDate))
             {
@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(AutoPause))
             {
                 writer.WritePropertyName("autoPause"u8);
-                writer.WriteObjectValue(AutoPause);
+                JsonSerializer.Serialize(writer, AutoPause);
             }
             if (Optional.IsDefined(IsComputeIsolationEnabled))
             {
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(DynamicExecutorAllocation))
             {
                 writer.WritePropertyName("dynamicExecutorAllocation"u8);
-                writer.WriteObjectValue(DynamicExecutorAllocation);
+                JsonSerializer.Serialize(writer, DynamicExecutorAllocation);
             }
             if (Optional.IsDefined(SparkEventsFolder))
             {
@@ -87,7 +87,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LibraryRequirements))
             {
                 writer.WritePropertyName("libraryRequirements"u8);
-                writer.WriteObjectValue(LibraryRequirements);
+                JsonSerializer.Serialize(writer, LibraryRequirements);
             }
             if (Optional.IsCollectionDefined(CustomLibraries))
             {
@@ -95,14 +95,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomLibraries)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SparkConfigProperties))
             {
                 writer.WritePropertyName("sparkConfigProperties"u8);
-                writer.WriteObjectValue(SparkConfigProperties);
+                JsonSerializer.Serialize(writer, SparkConfigProperties);
             }
             if (Optional.IsDefined(SparkVersion))
             {
@@ -213,7 +213,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            autoScale = AutoScaleProperties.DeserializeAutoScaleProperties(property0.Value);
+                            autoScale = ModelSerializationExtensions.JsonDeserialize<AutoScaleProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("creationDate"u8))
@@ -231,7 +231,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            autoPause = AutoPauseProperties.DeserializeAutoPauseProperties(property0.Value);
+                            autoPause = ModelSerializationExtensions.JsonDeserialize<AutoPauseProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("isComputeIsolationEnabled"u8))
@@ -267,7 +267,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            dynamicExecutorAllocation = DynamicExecutorAllocation.DeserializeDynamicExecutorAllocation(property0.Value);
+                            dynamicExecutorAllocation = ModelSerializationExtensions.JsonDeserialize<DynamicExecutorAllocation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sparkEventsFolder"u8))
@@ -290,7 +290,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            libraryRequirements = LibraryRequirements.DeserializeLibraryRequirements(property0.Value);
+                            libraryRequirements = ModelSerializationExtensions.JsonDeserialize<LibraryRequirements>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("customLibraries"u8))
@@ -313,7 +313,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            sparkConfigProperties = LibraryRequirements.DeserializeLibraryRequirements(property0.Value);
+                            sparkConfigProperties = ModelSerializationExtensions.JsonDeserialize<LibraryRequirements>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sparkVersion"u8))

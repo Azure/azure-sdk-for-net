@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
-                JsonSerializer.Serialize(writer, Count);
+                ((IJsonModel<DataFactoryElement<T>>)Count).Write(writer, options);
             }
             if (Optional.IsDefined(IntervalInSeconds))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    count = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    count = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("intervalInSeconds"u8))

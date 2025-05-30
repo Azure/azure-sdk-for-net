@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value, options);
+                    bfdConfiguration = ModelSerializationExtensions.JsonDeserialize<BfdConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("defaultRouteOriginate"u8))

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
-                writer.WriteObjectValue(Capabilities, options);
+                ((IJsonModel<KubernetesVersionCapabilities>)Capabilities).Write(writer, options);
             }
             if (Optional.IsDefined(IsPreview))
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 foreach (var item in PatchVersions)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<KubernetesPatchVersion>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    capabilities = KubernetesVersionCapabilities.DeserializeKubernetesVersionCapabilities(property.Value, options);
+                    capabilities = ModelSerializationExtensions.JsonDeserialize<KubernetesVersionCapabilities>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isPreview"u8))

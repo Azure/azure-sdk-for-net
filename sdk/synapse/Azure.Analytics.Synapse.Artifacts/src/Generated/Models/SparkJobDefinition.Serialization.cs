@@ -25,11 +25,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("targetBigDataPool"u8);
-            writer.WriteObjectValue(TargetBigDataPool);
+            JsonSerializer.Serialize(writer, TargetBigDataPool);
             if (Optional.IsDefined(TargetSparkConfiguration))
             {
                 writer.WritePropertyName("targetSparkConfiguration"u8);
-                writer.WriteObjectValue(TargetSparkConfiguration);
+                JsonSerializer.Serialize(writer, TargetSparkConfiguration);
             }
             if (Optional.IsDefined(RequiredSparkVersion))
             {
@@ -42,13 +42,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(Language);
             }
             writer.WritePropertyName("jobProperties"u8);
-            writer.WriteObjectValue(JobProperties);
+            JsonSerializer.Serialize(writer, JobProperties);
             if (Optional.IsDefined(Folder))
             {
                 if (Folder != null)
                 {
                     writer.WritePropertyName("folder"u8);
-                    writer.WriteObjectValue(Folder);
+                    JsonSerializer.Serialize(writer, Folder);
                 }
                 else
                 {
@@ -87,7 +87,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("targetBigDataPool"u8))
                 {
-                    targetBigDataPool = BigDataPoolReference.DeserializeBigDataPoolReference(property.Value);
+                    targetBigDataPool = ModelSerializationExtensions.JsonDeserialize<BigDataPoolReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetSparkConfiguration"u8))
@@ -96,7 +96,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    targetSparkConfiguration = SparkConfigurationReference.DeserializeSparkConfigurationReference(property.Value);
+                    targetSparkConfiguration = ModelSerializationExtensions.JsonDeserialize<SparkConfigurationReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("requiredSparkVersion"u8))
@@ -111,7 +111,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("jobProperties"u8))
                 {
-                    jobProperties = SparkJobProperties.DeserializeSparkJobProperties(property.Value);
+                    jobProperties = ModelSerializationExtensions.JsonDeserialize<SparkJobProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("folder"u8))
@@ -121,7 +121,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         folder = null;
                         continue;
                     }
-                    folder = SparkJobDefinitionFolder.DeserializeSparkJobDefinitionFolder(property.Value);
+                    folder = ModelSerializationExtensions.JsonDeserialize<SparkJobDefinitionFolder>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());

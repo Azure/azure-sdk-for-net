@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ThreatIntelligenceMetric>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    properties = ThreatIntelligenceMetric.DeserializeThreatIntelligenceMetric(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ThreatIntelligenceMetric>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

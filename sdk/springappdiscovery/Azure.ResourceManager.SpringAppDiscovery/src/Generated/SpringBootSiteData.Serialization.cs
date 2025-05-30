@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.SpringAppDiscovery
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<SpringBootSiteProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation, options);
+                ((IJsonModel<SpringBootSiteModelExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
                     {
                         continue;
                     }
-                    properties = SpringBootSiteProperties.DeserializeSpringBootSiteProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<SpringBootSiteProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
                     {
                         continue;
                     }
-                    extendedLocation = SpringBootSiteModelExtendedLocation.DeserializeSpringBootSiteModelExtendedLocation(property.Value, options);
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<SpringBootSiteModelExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<ApiManagementServiceSkuProperties>)Sku).Write(writer, options);
             if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(VirtualNetworkConfiguration))
             {
                 writer.WritePropertyName("virtualNetworkConfiguration"u8);
-                writer.WriteObjectValue(VirtualNetworkConfiguration, options);
+                ((IJsonModel<VirtualNetworkConfiguration>)VirtualNetworkConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(GatewayRegionalUri))
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = ApiManagementServiceSkuProperties.DeserializeApiManagementServiceSkuProperties(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<ApiManagementServiceSkuProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    virtualNetworkConfiguration = VirtualNetworkConfiguration.DeserializeVirtualNetworkConfiguration(property.Value, options);
+                    virtualNetworkConfiguration = ModelSerializationExtensions.JsonDeserialize<VirtualNetworkConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("gatewayRegionalUrl"u8))

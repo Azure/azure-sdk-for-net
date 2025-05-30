@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WritePropertyName("virtualMachineScaleSetFlexible"u8);
-            JsonSerializer.Serialize(writer, VirtualMachineScaleSetFlexible);
+            ((IJsonModel<WritableSubResource>)VirtualMachineScaleSetFlexible).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("virtualMachineScaleSetFlexible"u8))
                 {
-                    virtualMachineScaleSetFlexible = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    virtualMachineScaleSetFlexible = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (OriginGroupOverride != null)
                 {
                     writer.WritePropertyName("originGroupOverride"u8);
-                    writer.WriteObjectValue(OriginGroupOverride, options);
+                    ((IJsonModel<OriginGroupOverride>)OriginGroupOverride).Write(writer, options);
                 }
                 else
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(CacheConfiguration))
             {
                 writer.WritePropertyName("cacheConfiguration"u8);
-                writer.WriteObjectValue(CacheConfiguration, options);
+                ((IJsonModel<CacheConfiguration>)CacheConfiguration).Write(writer, options);
             }
         }
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         originGroupOverride = null;
                         continue;
                     }
-                    originGroupOverride = OriginGroupOverride.DeserializeOriginGroupOverride(property.Value, options);
+                    originGroupOverride = ModelSerializationExtensions.JsonDeserialize<OriginGroupOverride>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("cacheConfiguration"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    cacheConfiguration = CacheConfiguration.DeserializeCacheConfiguration(property.Value, options);
+                    cacheConfiguration = ModelSerializationExtensions.JsonDeserialize<CacheConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("typeName"u8))

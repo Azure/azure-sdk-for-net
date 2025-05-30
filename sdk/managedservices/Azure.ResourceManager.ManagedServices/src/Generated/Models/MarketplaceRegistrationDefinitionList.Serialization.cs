@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedServicesMarketplaceRegistrationData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

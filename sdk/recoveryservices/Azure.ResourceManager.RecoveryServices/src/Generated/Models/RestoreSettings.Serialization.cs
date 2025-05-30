@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(CrossSubscriptionRestoreSettings))
             {
                 writer.WritePropertyName("crossSubscriptionRestoreSettings"u8);
-                writer.WriteObjectValue(CrossSubscriptionRestoreSettings, options);
+                ((IJsonModel<CrossSubscriptionRestoreSettings>)CrossSubscriptionRestoreSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    crossSubscriptionRestoreSettings = CrossSubscriptionRestoreSettings.DeserializeCrossSubscriptionRestoreSettings(property.Value, options);
+                    crossSubscriptionRestoreSettings = ModelSerializationExtensions.JsonDeserialize<CrossSubscriptionRestoreSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

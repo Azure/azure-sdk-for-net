@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ClusterResizeProperties>)Properties).Write(writer, options);
             }
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    properties = ClusterResizeProperties.DeserializeClusterResizeProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ClusterResizeProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Purview.Models
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
+                ((IJsonModel<PurviewUsageName>)Name).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Unit))
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Purview.Models
                     {
                         continue;
                     }
-                    name = PurviewUsageName.DeserializePurviewUsageName(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<PurviewUsageName>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("unit"u8))

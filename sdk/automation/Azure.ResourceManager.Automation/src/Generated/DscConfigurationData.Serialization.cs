@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.Automation
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<DscConfigurationParameterDefinition>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source, options);
+                ((IJsonModel<AutomationContentSource>)Source).Write(writer, options);
             }
             if (Optional.IsDefined(State))
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            source = AutomationContentSource.DeserializeAutomationContentSource(property0.Value, options);
+                            source = ModelSerializationExtensions.JsonDeserialize<AutomationContentSource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("state"u8))

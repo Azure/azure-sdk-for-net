@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in OutgoingIPAddresses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FlowEndpointIPAddress>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in AccessEndpointIPAddresses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FlowEndpointIPAddress>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

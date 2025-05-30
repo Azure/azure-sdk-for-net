@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WriteStartArray();
                 foreach (var item in ProvisioningStepStatuses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ServerEndpointProvisioningStepStatus>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -42,7 +42,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartArray();
             foreach (var item in Cells)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DocumentTableCell>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(BoundingRegions))
@@ -51,7 +51,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in BoundingRegions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BoundingRegion>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,13 +59,13 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartArray();
             foreach (var item in Spans)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DocumentSpan>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Caption))
             {
                 writer.WritePropertyName("caption"u8);
-                writer.WriteObjectValue(Caption, options);
+                ((IJsonModel<DocumentCaption>)Caption).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Footnotes))
             {
@@ -73,7 +73,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Footnotes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DocumentFootnote>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -175,7 +175,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    caption = DocumentCaption.DeserializeDocumentCaption(property.Value, options);
+                    caption = ModelSerializationExtensions.JsonDeserialize<DocumentCaption>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("footnotes"u8))

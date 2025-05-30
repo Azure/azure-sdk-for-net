@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("certificateSourceParameters"u8);
-            writer.WriteObjectValue(CertificateSourceParameters, options);
+            ((IJsonModel<CdnCertificateSource>)CertificateSourceParameters).Write(writer, options);
         }
 
         CdnManagedHttpsContent IJsonModel<CdnManagedHttpsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("certificateSourceParameters"u8))
                 {
-                    certificateSourceParameters = CdnCertificateSource.DeserializeCdnCertificateSource(property.Value, options);
+                    certificateSourceParameters = ModelSerializationExtensions.JsonDeserialize<CdnCertificateSource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("certificateSource"u8))

@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Pipelines)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("recurrence"u8);
-            writer.WriteObjectValue(Recurrence);
+            JsonSerializer.Serialize(writer, Recurrence);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -145,7 +145,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("recurrence"u8))
                         {
-                            recurrence = ScheduleTriggerRecurrence.DeserializeScheduleTriggerRecurrence(property0.Value);
+                            recurrence = ModelSerializationExtensions.JsonDeserialize<ScheduleTriggerRecurrence>(property0.Value);
                             continue;
                         }
                     }

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ConsumptionResourceProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(Savings))
             {
                 writer.WritePropertyName("savings"u8);
-                writer.WriteObjectValue(Savings, options);
+                ((IJsonModel<ConsumptionSavingsProperties>)Savings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Scope))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
-                writer.WriteObjectValue(Usage, options);
+                ((IJsonModel<ConsumptionUsageProperties>)Usage).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            resource = ConsumptionResourceProperties.DeserializeConsumptionResourceProperties(property0.Value, options);
+                            resource = ModelSerializationExtensions.JsonDeserialize<ConsumptionResourceProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resourceGroup"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            savings = ConsumptionSavingsProperties.DeserializeConsumptionSavingsProperties(property0.Value, options);
+                            savings = ModelSerializationExtensions.JsonDeserialize<ConsumptionSavingsProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("scope"u8))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            usage = ConsumptionUsageProperties.DeserializeConsumptionUsageProperties(property0.Value, options);
+                            usage = ModelSerializationExtensions.JsonDeserialize<ConsumptionUsageProperties>(property0.Value);
                             continue;
                         }
                     }

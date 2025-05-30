@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in Components)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ClusterComponentItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

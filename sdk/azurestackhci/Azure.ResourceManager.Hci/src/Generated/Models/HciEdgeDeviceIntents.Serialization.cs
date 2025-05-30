@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (options.Format != "W" && Optional.IsDefined(VirtualSwitchConfigurationOverrides))
             {
                 writer.WritePropertyName("virtualSwitchConfigurationOverrides"u8);
-                writer.WriteObjectValue(VirtualSwitchConfigurationOverrides, options);
+                ((IJsonModel<HciEdgeDeviceVirtualSwitchConfigurationOverrides>)VirtualSwitchConfigurationOverrides).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OverrideQosPolicy))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (options.Format != "W" && Optional.IsDefined(QosPolicyOverrides))
             {
                 writer.WritePropertyName("qosPolicyOverrides"u8);
-                writer.WriteObjectValue(QosPolicyOverrides, options);
+                ((IJsonModel<DeploymentSettingQosPolicyOverrides>)QosPolicyOverrides).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OverrideAdapterProperty))
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (options.Format != "W" && Optional.IsDefined(AdapterPropertyOverrides))
             {
                 writer.WritePropertyName("adapterPropertyOverrides"u8);
-                writer.WriteObjectValue(AdapterPropertyOverrides, options);
+                ((IJsonModel<HciEdgeDeviceAdapterPropertyOverrides>)AdapterPropertyOverrides).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    virtualSwitchConfigurationOverrides = HciEdgeDeviceVirtualSwitchConfigurationOverrides.DeserializeHciEdgeDeviceVirtualSwitchConfigurationOverrides(property.Value, options);
+                    virtualSwitchConfigurationOverrides = ModelSerializationExtensions.JsonDeserialize<HciEdgeDeviceVirtualSwitchConfigurationOverrides>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("overrideQosPolicy"u8))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    qosPolicyOverrides = DeploymentSettingQosPolicyOverrides.DeserializeDeploymentSettingQosPolicyOverrides(property.Value, options);
+                    qosPolicyOverrides = ModelSerializationExtensions.JsonDeserialize<DeploymentSettingQosPolicyOverrides>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("overrideAdapterProperty"u8))
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    adapterPropertyOverrides = HciEdgeDeviceAdapterPropertyOverrides.DeserializeHciEdgeDeviceAdapterPropertyOverrides(property.Value, options);
+                    adapterPropertyOverrides = ModelSerializationExtensions.JsonDeserialize<HciEdgeDeviceAdapterPropertyOverrides>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

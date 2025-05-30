@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStartArray();
                 foreach (var item in UpdateHistory)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UpdateHistoryEntry>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(PolicySchema))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(PolicySchema, options);
+                ((IJsonModel<BlobInventoryPolicySchema>)PolicySchema).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            policy = BlobInventoryPolicySchema.DeserializeBlobInventoryPolicySchema(property0.Value, options);
+                            policy = ModelSerializationExtensions.JsonDeserialize<BlobInventoryPolicySchema>(property0.Value);
                             continue;
                         }
                     }

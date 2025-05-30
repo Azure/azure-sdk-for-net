@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 writer.WriteStringValue(Kind.Value.ToString());
             }
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<RedisEnterpriseSku>)Sku).Write(writer, options);
             if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<ClusterPropertiesEncryption>)Encryption).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HostName))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RedisEnterprisePrivateEndpointConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = RedisEnterpriseSku.DeserializeRedisEnterpriseSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<RedisEnterpriseSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                             {
                                 continue;
                             }
-                            encryption = ClusterPropertiesEncryption.DeserializeClusterPropertiesEncryption(property0.Value, options);
+                            encryption = ModelSerializationExtensions.JsonDeserialize<ClusterPropertiesEncryption>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hostName"u8))

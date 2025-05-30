@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(InstallOptions))
             {
                 writer.WritePropertyName("installOptions"u8);
-                writer.WriteObjectValue(InstallOptions, options);
+                ((IJsonModel<HelmInstallConfig>)InstallOptions).Write(writer, options);
             }
             if (Optional.IsDefined(UpgradeOptions))
             {
                 writer.WritePropertyName("upgradeOptions"u8);
-                writer.WriteObjectValue(UpgradeOptions, options);
+                ((IJsonModel<HelmUpgradeConfig>)UpgradeOptions).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    installOptions = HelmInstallConfig.DeserializeHelmInstallConfig(property.Value, options);
+                    installOptions = ModelSerializationExtensions.JsonDeserialize<HelmInstallConfig>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("upgradeOptions"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    upgradeOptions = HelmUpgradeConfig.DeserializeHelmUpgradeConfig(property.Value, options);
+                    upgradeOptions = ModelSerializationExtensions.JsonDeserialize<HelmUpgradeConfig>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

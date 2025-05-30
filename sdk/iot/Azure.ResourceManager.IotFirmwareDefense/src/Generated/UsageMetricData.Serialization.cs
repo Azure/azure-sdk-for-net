@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<UsageMetricProperties>)Properties).Write(writer, options);
             }
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                     {
                         continue;
                     }
-                    properties = UsageMetricProperties.DeserializeUsageMetricProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<UsageMetricProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

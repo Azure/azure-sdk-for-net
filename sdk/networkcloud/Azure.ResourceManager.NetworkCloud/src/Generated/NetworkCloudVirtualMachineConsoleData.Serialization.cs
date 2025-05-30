@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation, options);
+            ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("sshPublicKey"u8);
-            writer.WriteObjectValue(SshPublicKey, options);
+            ((IJsonModel<NetworkCloudSshPublicKey>)SshPublicKey).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(VirtualMachineAccessId))
             {
                 writer.WritePropertyName("virtualMachineAccessId"u8);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 if (property.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<ExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.NetworkCloud
                         }
                         if (property0.NameEquals("sshPublicKey"u8))
                         {
-                            sshPublicKey = NetworkCloudSshPublicKey.DeserializeNetworkCloudSshPublicKey(property0.Value, options);
+                            sshPublicKey = ModelSerializationExtensions.JsonDeserialize<NetworkCloudSshPublicKey>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("virtualMachineAccessId"u8))

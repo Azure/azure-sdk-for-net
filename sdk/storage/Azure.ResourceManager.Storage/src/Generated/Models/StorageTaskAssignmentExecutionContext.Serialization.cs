@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
-                writer.WriteObjectValue(Target, options);
+                ((IJsonModel<ExecutionTarget>)Target).Write(writer, options);
             }
             writer.WritePropertyName("trigger"u8);
-            writer.WriteObjectValue(Trigger, options);
+            ((IJsonModel<ExecutionTrigger>)Trigger).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    target = ExecutionTarget.DeserializeExecutionTarget(property.Value, options);
+                    target = ModelSerializationExtensions.JsonDeserialize<ExecutionTarget>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("trigger"u8))
                 {
-                    trigger = ExecutionTrigger.DeserializeExecutionTrigger(property.Value, options);
+                    trigger = ModelSerializationExtensions.JsonDeserialize<ExecutionTrigger>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

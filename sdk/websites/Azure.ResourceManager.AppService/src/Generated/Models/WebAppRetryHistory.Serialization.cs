@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<WebAppErrorResponse>)Error).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    error = WebAppErrorResponse.DeserializeWebAppErrorResponse(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<WebAppErrorResponse>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

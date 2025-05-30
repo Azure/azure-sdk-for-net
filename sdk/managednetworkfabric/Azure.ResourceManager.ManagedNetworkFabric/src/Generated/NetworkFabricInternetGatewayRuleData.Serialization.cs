@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStringValue(Annotation);
             }
             writer.WritePropertyName("ruleProperties"u8);
-            writer.WriteObjectValue(RuleProperties, options);
+            ((IJsonModel<InternetGatewayRules>)RuleProperties).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         }
                         if (property0.NameEquals("ruleProperties"u8))
                         {
-                            ruleProperties = InternetGatewayRules.DeserializeInternetGatewayRules(property0.Value, options);
+                            ruleProperties = ModelSerializationExtensions.JsonDeserialize<InternetGatewayRules>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

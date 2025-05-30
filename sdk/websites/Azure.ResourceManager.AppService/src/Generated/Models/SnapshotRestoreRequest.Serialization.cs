@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(RecoverySource))
             {
                 writer.WritePropertyName("recoverySource"u8);
-                writer.WriteObjectValue(RecoverySource, options);
+                ((IJsonModel<SnapshotRecoverySource>)RecoverySource).Write(writer, options);
             }
             if (Optional.IsDefined(CanOverwrite))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            recoverySource = SnapshotRecoverySource.DeserializeSnapshotRecoverySource(property0.Value, options);
+                            recoverySource = ModelSerializationExtensions.JsonDeserialize<SnapshotRecoverySource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("overwrite"u8))

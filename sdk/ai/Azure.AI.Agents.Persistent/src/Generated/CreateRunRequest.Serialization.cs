@@ -80,7 +80,7 @@ namespace Azure.AI.Agents.Persistent
                     writer.WriteStartArray();
                     foreach (var item in AdditionalMessages)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<ThreadMessageOptions>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -97,7 +97,7 @@ namespace Azure.AI.Agents.Persistent
                     writer.WriteStartArray();
                     foreach (var item in OverrideTools)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<ToolDefinition>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -164,7 +164,7 @@ namespace Azure.AI.Agents.Persistent
                 if (TruncationStrategy != null)
                 {
                     writer.WritePropertyName("truncation_strategy"u8);
-                    writer.WriteObjectValue(TruncationStrategy, options);
+                    ((IJsonModel<Truncation>)TruncationStrategy).Write(writer, options);
                 }
                 else
                 {
@@ -408,7 +408,7 @@ namespace Azure.AI.Agents.Persistent
                         truncationStrategy = null;
                         continue;
                     }
-                    truncationStrategy = Truncation.DeserializeTruncation(property.Value, options);
+                    truncationStrategy = ModelSerializationExtensions.JsonDeserialize<Truncation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tool_choice"u8))

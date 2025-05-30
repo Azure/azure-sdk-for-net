@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 writer.WriteStringValue(ReservationInternalId);
             }
             writer.WritePropertyName("marketplace"u8);
-            writer.WriteObjectValue(Marketplace, options);
+            ((IJsonModel<PureStorageMarketplaceDetails>)Marketplace).Write(writer, options);
             writer.WritePropertyName("user"u8);
-            writer.WriteObjectValue(User, options);
+            ((IJsonModel<PureStorageUserDetails>)User).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 }
                 if (property.NameEquals("marketplace"u8))
                 {
-                    marketplace = PureStorageMarketplaceDetails.DeserializePureStorageMarketplaceDetails(property.Value, options);
+                    marketplace = ModelSerializationExtensions.JsonDeserialize<PureStorageMarketplaceDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("user"u8))
                 {
-                    user = PureStorageUserDetails.DeserializePureStorageUserDetails(property.Value, options);
+                    user = ModelSerializationExtensions.JsonDeserialize<PureStorageUserDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(PartnerAuthCertValidity))
             {
                 writer.WritePropertyName("partnerAuthCertValidity"u8);
-                writer.WriteObjectValue(PartnerAuthCertValidity, options);
+                ((IJsonModel<SqlServerCertificateInfo>)PartnerAuthCertValidity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(InstanceSendReplicationLagSeconds))
             {
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    partnerAuthCertValidity = SqlServerCertificateInfo.DeserializeSqlServerCertificateInfo(property.Value, options);
+                    partnerAuthCertValidity = ModelSerializationExtensions.JsonDeserialize<SqlServerCertificateInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("instanceSendReplicationLagSeconds"u8))

@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (options.Format != "W" && Optional.IsDefined(CallRateLimit))
             {
                 writer.WritePropertyName("callRateLimit"u8);
-                writer.WriteObjectValue(CallRateLimit, options);
+                ((IJsonModel<ServiceAccountCallRateLimit>)CallRateLimit).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value, options);
+                    callRateLimit = ModelSerializationExtensions.JsonDeserialize<ServiceAccountCallRateLimit>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

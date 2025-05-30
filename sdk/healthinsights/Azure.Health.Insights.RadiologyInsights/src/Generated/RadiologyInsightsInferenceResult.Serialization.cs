@@ -38,7 +38,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteStartArray();
             foreach (var item in PatientResults)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<RadiologyInsightsPatientResult>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("modelVersion"u8);

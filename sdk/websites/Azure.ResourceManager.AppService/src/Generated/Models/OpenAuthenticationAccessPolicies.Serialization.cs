@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
                 foreach (var item in OpenAuthenticationPolicyList)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<OpenAuthenticationAccessPolicy>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }

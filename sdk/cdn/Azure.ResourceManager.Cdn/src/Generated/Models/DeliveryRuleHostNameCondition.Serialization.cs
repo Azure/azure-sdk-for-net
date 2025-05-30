@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("parameters"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<HostNameMatchCondition>)Properties).Write(writer, options);
         }
 
         DeliveryRuleHostNameCondition IJsonModel<DeliveryRuleHostNameCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = HostNameMatchCondition.DeserializeHostNameMatchCondition(property.Value, options);
+                    parameters = ModelSerializationExtensions.JsonDeserialize<HostNameMatchCondition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

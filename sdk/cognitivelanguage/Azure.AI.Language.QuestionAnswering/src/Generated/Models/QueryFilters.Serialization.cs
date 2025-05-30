@@ -18,7 +18,7 @@ namespace Azure.AI.Language.QuestionAnswering
             if (Optional.IsDefined(MetadataFilter))
             {
                 writer.WritePropertyName("metadataFilter"u8);
-                writer.WriteObjectValue(MetadataFilter);
+                JsonSerializer.Serialize(writer, MetadataFilter);
             }
             if (Optional.IsCollectionDefined(SourceFilter))
             {

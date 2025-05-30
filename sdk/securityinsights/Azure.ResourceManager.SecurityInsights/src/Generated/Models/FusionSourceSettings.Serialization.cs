@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in SourceSubTypes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FusionSourceSubTypeSetting>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

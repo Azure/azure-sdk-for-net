@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                JsonSerializer.Serialize(writer, ExtendedLocation);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AutoScaleConfiguration))
             {
                 writer.WritePropertyName("autoScaleConfiguration"u8);
-                writer.WriteObjectValue(AutoScaleConfiguration, options);
+                ((IJsonModel<VirtualNetworkGatewayAutoScaleConfiguration>)AutoScaleConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(IPConfigurations))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VirtualNetworkGatewayIPConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(VirtualNetworkGatewayMigrationStatus))
             {
                 writer.WritePropertyName("virtualNetworkGatewayMigrationStatus"u8);
-                writer.WriteObjectValue(VirtualNetworkGatewayMigrationStatus, options);
+                ((IJsonModel<VirtualNetworkGatewayMigrationStatus>)VirtualNetworkGatewayMigrationStatus).Write(writer, options);
             }
             if (Optional.IsDefined(Active))
             {
@@ -118,17 +118,17 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(GatewayDefaultSite))
             {
                 writer.WritePropertyName("gatewayDefaultSite"u8);
-                JsonSerializer.Serialize(writer, GatewayDefaultSite);
+                ((IJsonModel<WritableSubResource>)GatewayDefaultSite).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<VirtualNetworkGatewaySku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(VpnClientConfiguration))
             {
                 writer.WritePropertyName("vpnClientConfiguration"u8);
-                writer.WriteObjectValue(VpnClientConfiguration, options);
+                ((IJsonModel<VpnClientConfiguration>)VpnClientConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(VirtualNetworkGatewayPolicyGroups))
             {
@@ -136,19 +136,19 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkGatewayPolicyGroups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VirtualNetworkGatewayPolicyGroup>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(BgpSettings))
             {
                 writer.WritePropertyName("bgpSettings"u8);
-                writer.WriteObjectValue(BgpSettings, options);
+                ((IJsonModel<BgpSettings>)BgpSettings).Write(writer, options);
             }
             if (Optional.IsDefined(CustomRoutes))
             {
                 writer.WritePropertyName("customRoutes"u8);
-                writer.WriteObjectValue(CustomRoutes, options);
+                ((IJsonModel<VirtualNetworkAddressSpace>)CustomRoutes).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in NatRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VirtualNetworkGatewayNatRuleData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<ExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            autoScaleConfiguration = VirtualNetworkGatewayAutoScaleConfiguration.DeserializeVirtualNetworkGatewayAutoScaleConfiguration(property0.Value, options);
+                            autoScaleConfiguration = ModelSerializationExtensions.JsonDeserialize<VirtualNetworkGatewayAutoScaleConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ipConfigurations"u8))
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            virtualNetworkGatewayMigrationStatus = VirtualNetworkGatewayMigrationStatus.DeserializeVirtualNetworkGatewayMigrationStatus(property0.Value, options);
+                            virtualNetworkGatewayMigrationStatus = ModelSerializationExtensions.JsonDeserialize<VirtualNetworkGatewayMigrationStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("activeActive"u8))
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            gatewayDefaultSite = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            gatewayDefaultSite = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sku"u8))
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            sku = VirtualNetworkGatewaySku.DeserializeVirtualNetworkGatewaySku(property0.Value, options);
+                            sku = ModelSerializationExtensions.JsonDeserialize<VirtualNetworkGatewaySku>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("vpnClientConfiguration"u8))
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            vpnClientConfiguration = VpnClientConfiguration.DeserializeVpnClientConfiguration(property0.Value, options);
+                            vpnClientConfiguration = ModelSerializationExtensions.JsonDeserialize<VpnClientConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("virtualNetworkGatewayPolicyGroups"u8))
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            bgpSettings = BgpSettings.DeserializeBgpSettings(property0.Value, options);
+                            bgpSettings = ModelSerializationExtensions.JsonDeserialize<BgpSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("customRoutes"u8))
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            customRoutes = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property0.Value, options);
+                            customRoutes = ModelSerializationExtensions.JsonDeserialize<VirtualNetworkAddressSpace>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resourceGuid"u8))

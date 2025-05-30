@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
+                ((IJsonModel<MonitorLocalizableString>)Name).Write(writer, options);
             }
             if (Optional.IsDefined(DisplayDescription))
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in MetricAvailabilities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MonitorMetricAvailability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MonitorLocalizableString>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    name = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<MonitorLocalizableString>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("displayDescription"u8))

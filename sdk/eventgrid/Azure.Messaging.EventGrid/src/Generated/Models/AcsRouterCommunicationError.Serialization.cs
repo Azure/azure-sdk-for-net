@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    innererror = DeserializeAcsRouterCommunicationError(property.Value);
+                    innererror = ModelSerializationExtensions.JsonDeserialize<AcsRouterCommunicationError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("details"u8))

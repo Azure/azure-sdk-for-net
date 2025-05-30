@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(ClientCertificateAuthentication))
             {
                 writer.WritePropertyName("clientCertificateAuthentication"u8);
-                writer.WriteObjectValue(ClientCertificateAuthentication, options);
+                ((IJsonModel<ClientCertificateAuthentication>)ClientCertificateAuthentication).Write(writer, options);
             }
             if (Optional.IsDefined(State))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.EventGrid
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            clientCertificateAuthentication = ClientCertificateAuthentication.DeserializeClientCertificateAuthentication(property0.Value, options);
+                            clientCertificateAuthentication = ModelSerializationExtensions.JsonDeserialize<ClientCertificateAuthentication>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("state"u8))

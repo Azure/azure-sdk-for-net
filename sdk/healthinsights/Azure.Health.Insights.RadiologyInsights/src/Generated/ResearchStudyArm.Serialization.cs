@@ -39,7 +39,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteObjectValue(Type, options);
+                ((IJsonModel<FhirR4CodeableConcept>)Type).Write(writer, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -101,7 +101,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    type = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
+                    type = ModelSerializationExtensions.JsonDeserialize<FhirR4CodeableConcept>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))

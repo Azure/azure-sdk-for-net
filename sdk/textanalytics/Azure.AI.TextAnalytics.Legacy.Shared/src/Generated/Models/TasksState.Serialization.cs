@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             {
                 if (property.NameEquals("tasks"u8))
                 {
-                    tasks = TasksStateTasks.DeserializeTasksStateTasks(property.Value);
+                    tasks = ModelSerializationExtensions.JsonDeserialize<TasksStateTasks>(property.Value);
                     continue;
                 }
             }

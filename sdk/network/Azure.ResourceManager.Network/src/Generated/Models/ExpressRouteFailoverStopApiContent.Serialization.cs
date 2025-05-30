@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FailoverConnectionDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

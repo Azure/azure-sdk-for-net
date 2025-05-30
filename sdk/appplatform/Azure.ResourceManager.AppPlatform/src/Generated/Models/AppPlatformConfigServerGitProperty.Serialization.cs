@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Repositories)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConfigServerGitPatternRepository>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

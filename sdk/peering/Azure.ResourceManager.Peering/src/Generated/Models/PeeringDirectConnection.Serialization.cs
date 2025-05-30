@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Peering.Models
             if (Optional.IsDefined(BgpSession))
             {
                 writer.WritePropertyName("bgpSession"u8);
-                writer.WriteObjectValue(BgpSession, options);
+                ((IJsonModel<PeeringBgpSession>)BgpSession).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectionIdentifier))
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    bgpSession = PeeringBgpSession.DeserializePeeringBgpSession(property.Value, options);
+                    bgpSession = ModelSerializationExtensions.JsonDeserialize<PeeringBgpSession>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("connectionIdentifier"u8))

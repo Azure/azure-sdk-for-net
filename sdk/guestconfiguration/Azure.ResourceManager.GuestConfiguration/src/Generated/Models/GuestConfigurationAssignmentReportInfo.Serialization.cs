@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             if (Optional.IsDefined(Assignment))
             {
                 writer.WritePropertyName("assignment"u8);
-                writer.WriteObjectValue(Assignment, options);
+                ((IJsonModel<GuestConfigurationAssignmentInfo>)Assignment).Write(writer, options);
             }
             if (Optional.IsDefined(Vm))
             {
                 writer.WritePropertyName("vm"u8);
-                writer.WriteObjectValue(Vm, options);
+                ((IJsonModel<GuestConfigurationVmInfo>)Vm).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AssignmentReportResourceInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    assignment = GuestConfigurationAssignmentInfo.DeserializeGuestConfigurationAssignmentInfo(property.Value, options);
+                    assignment = ModelSerializationExtensions.JsonDeserialize<GuestConfigurationAssignmentInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vm"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    vm = GuestConfigurationVmInfo.DeserializeGuestConfigurationVmInfo(property.Value, options);
+                    vm = ModelSerializationExtensions.JsonDeserialize<GuestConfigurationVmInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("startTime"u8))

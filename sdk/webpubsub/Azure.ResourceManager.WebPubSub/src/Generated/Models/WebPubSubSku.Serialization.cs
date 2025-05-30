@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<BillingInfoSku>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity, options);
+                ((IJsonModel<WebPubSubSkuCapacity>)Capacity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     {
                         continue;
                     }
-                    sku = BillingInfoSku.DeserializeBillingInfoSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<BillingInfoSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     {
                         continue;
                     }
-                    capacity = WebPubSubSkuCapacity.DeserializeWebPubSubSkuCapacity(property.Value, options);
+                    capacity = ModelSerializationExtensions.JsonDeserialize<WebPubSubSkuCapacity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

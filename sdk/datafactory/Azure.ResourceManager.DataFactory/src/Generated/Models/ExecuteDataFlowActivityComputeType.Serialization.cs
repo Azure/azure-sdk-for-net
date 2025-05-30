@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ComputeType))
             {
                 writer.WritePropertyName("computeType"u8);
-                JsonSerializer.Serialize(writer, ComputeType);
+                ((IJsonModel<DataFactoryElement<T>>)ComputeType).Write(writer, options);
             }
             if (Optional.IsDefined(CoreCount))
             {
                 writer.WritePropertyName("coreCount"u8);
-                JsonSerializer.Serialize(writer, CoreCount);
+                ((IJsonModel<DataFactoryElement<T>>)CoreCount).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    computeType = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    computeType = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("coreCount"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    coreCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    coreCount = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

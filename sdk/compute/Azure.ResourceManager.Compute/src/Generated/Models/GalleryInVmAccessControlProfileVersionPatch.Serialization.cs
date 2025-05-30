@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetLocations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TargetRegion>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(ReplicationStatus))
             {
                 writer.WritePropertyName("replicationStatus"u8);
-                writer.WriteObjectValue(ReplicationStatus, options);
+                ((IJsonModel<ReplicationStatus>)ReplicationStatus).Write(writer, options);
             }
             if (Optional.IsDefined(Mode))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
-                writer.WriteObjectValue(Rules, options);
+                ((IJsonModel<GalleryInVmAccessControlRules>)Rules).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            replicationStatus = ReplicationStatus.DeserializeReplicationStatus(property0.Value, options);
+                            replicationStatus = ModelSerializationExtensions.JsonDeserialize<ReplicationStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("mode"u8))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            rules = GalleryInVmAccessControlRules.DeserializeGalleryInVmAccessControlRules(property0.Value, options);
+                            rules = ModelSerializationExtensions.JsonDeserialize<GalleryInVmAccessControlRules>(property0.Value);
                             continue;
                         }
                     }

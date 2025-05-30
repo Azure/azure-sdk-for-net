@@ -190,7 +190,7 @@ namespace Azure.Search.Documents
                 writer.WriteStartArray();
                 foreach (var item in VectorQueries)
                 {
-                    writer.WriteObjectValue<VectorQuery>(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -202,7 +202,7 @@ namespace Azure.Search.Documents
             if (Optional.IsDefined(HybridSearch))
             {
                 writer.WritePropertyName("hybridSearch"u8);
-                writer.WriteObjectValue(HybridSearch);
+                JsonSerializer.Serialize(writer, HybridSearch);
             }
             writer.WriteEndObject();
         }
@@ -494,7 +494,7 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    hybridSearch = HybridSearch.DeserializeHybridSearch(property.Value);
+                    hybridSearch = ModelSerializationExtensions.JsonDeserialize<HybridSearch>(property.Value);
                     continue;
                 }
             }

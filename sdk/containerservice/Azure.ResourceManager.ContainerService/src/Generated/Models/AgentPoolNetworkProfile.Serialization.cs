@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in NodePublicIPTags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerServiceIPTag>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in AllowedHostPorts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AgentPoolNetworkPortRange>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

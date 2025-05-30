@@ -36,16 +36,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("datasourceInfo"u8);
-            writer.WriteObjectValue(DataSourceInfo, options);
+            ((IJsonModel<DataSourceInfo>)DataSourceInfo).Write(writer, options);
             if (Optional.IsDefined(DataSourceSetInfo))
             {
                 writer.WritePropertyName("datasourceSetInfo"u8);
-                writer.WriteObjectValue(DataSourceSetInfo, options);
+                ((IJsonModel<DataSourceSetInfo>)DataSourceSetInfo).Write(writer, options);
             }
             if (Optional.IsDefined(DataSourceAuthCredentials))
             {
                 writer.WritePropertyName("datasourceAuthCredentials"u8);
-                writer.WriteObjectValue(DataSourceAuthCredentials, options);
+                ((IJsonModel<DataProtectionBackupAuthCredentials>)DataSourceAuthCredentials).Write(writer, options);
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 if (property.NameEquals("datasourceInfo"u8))
                 {
-                    datasourceInfo = DataSourceInfo.DeserializeDataSourceInfo(property.Value, options);
+                    datasourceInfo = ModelSerializationExtensions.JsonDeserialize<DataSourceInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("datasourceSetInfo"u8))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    datasourceSetInfo = DataSourceSetInfo.DeserializeDataSourceSetInfo(property.Value, options);
+                    datasourceSetInfo = ModelSerializationExtensions.JsonDeserialize<DataSourceSetInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("datasourceAuthCredentials"u8))
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    datasourceAuthCredentials = DataProtectionBackupAuthCredentials.DeserializeDataProtectionBackupAuthCredentials(property.Value, options);
+                    datasourceAuthCredentials = ModelSerializationExtensions.JsonDeserialize<DataProtectionBackupAuthCredentials>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))

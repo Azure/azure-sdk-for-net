@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(FileSystem))
             {
                 writer.WritePropertyName("fileSystem"u8);
-                writer.WriteObjectValue(FileSystem, options);
+                ((IJsonModel<FileSystemHttpLogsConfig>)FileSystem).Write(writer, options);
             }
             if (Optional.IsDefined(AzureBlobStorage))
             {
                 writer.WritePropertyName("azureBlobStorage"u8);
-                writer.WriteObjectValue(AzureBlobStorage, options);
+                ((IJsonModel<AppServiceBlobStorageHttpLogsConfig>)AzureBlobStorage).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    fileSystem = FileSystemHttpLogsConfig.DeserializeFileSystemHttpLogsConfig(property.Value, options);
+                    fileSystem = ModelSerializationExtensions.JsonDeserialize<FileSystemHttpLogsConfig>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azureBlobStorage"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    azureBlobStorage = AppServiceBlobStorageHttpLogsConfig.DeserializeAppServiceBlobStorageHttpLogsConfig(property.Value, options);
+                    azureBlobStorage = ModelSerializationExtensions.JsonDeserialize<AppServiceBlobStorageHttpLogsConfig>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

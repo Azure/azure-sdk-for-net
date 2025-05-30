@@ -37,22 +37,22 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(ScheduleAvailabilityRequest))
             {
                 writer.WritePropertyName("scheduleAvailabilityRequest"u8);
-                writer.WriteObjectValue(ScheduleAvailabilityRequest, options);
+                ((IJsonModel<ScheduleAvailabilityContent>)ScheduleAvailabilityRequest).Write(writer, options);
             }
             if (Optional.IsDefined(TransportAvailabilityRequest))
             {
                 writer.WritePropertyName("transportAvailabilityRequest"u8);
-                writer.WriteObjectValue(TransportAvailabilityRequest, options);
+                ((IJsonModel<TransportAvailabilityContent>)TransportAvailabilityRequest).Write(writer, options);
             }
             if (Optional.IsDefined(DataCenterAddressRequest))
             {
                 writer.WritePropertyName("datacenterAddressRequest"u8);
-                writer.WriteObjectValue(DataCenterAddressRequest, options);
+                ((IJsonModel<DataCenterAddressContent>)DataCenterAddressRequest).Write(writer, options);
             }
             if (Optional.IsDefined(DeviceCapabilityRequest))
             {
                 writer.WritePropertyName("deviceCapabilityRequest"u8);
-                writer.WriteObjectValue(DeviceCapabilityRequest, options);
+                ((IJsonModel<DeviceCapabilityContent>)DeviceCapabilityRequest).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    scheduleAvailabilityRequest = ScheduleAvailabilityContent.DeserializeScheduleAvailabilityContent(property.Value, options);
+                    scheduleAvailabilityRequest = ModelSerializationExtensions.JsonDeserialize<ScheduleAvailabilityContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("transportAvailabilityRequest"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    transportAvailabilityRequest = TransportAvailabilityContent.DeserializeTransportAvailabilityContent(property.Value, options);
+                    transportAvailabilityRequest = ModelSerializationExtensions.JsonDeserialize<TransportAvailabilityContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("datacenterAddressRequest"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    dataCenterAddressRequest = DataCenterAddressContent.DeserializeDataCenterAddressContent(property.Value, options);
+                    dataCenterAddressRequest = ModelSerializationExtensions.JsonDeserialize<DataCenterAddressContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deviceCapabilityRequest"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    deviceCapabilityRequest = DeviceCapabilityContent.DeserializeDeviceCapabilityContent(property.Value, options);
+                    deviceCapabilityRequest = ModelSerializationExtensions.JsonDeserialize<DeviceCapabilityContent>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

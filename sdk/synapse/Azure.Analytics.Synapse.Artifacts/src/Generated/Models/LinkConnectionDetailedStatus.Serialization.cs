@@ -104,7 +104,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    refreshStatus = LinkConnectionRefreshStatus.DeserializeLinkConnectionRefreshStatus(property.Value);
+                    refreshStatus = ModelSerializationExtensions.JsonDeserialize<LinkConnectionRefreshStatus>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("landingZoneCredentialExpireTime"u8))

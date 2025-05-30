@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(ComputeProfile))
             {
                 writer.WritePropertyName("computeProfile"u8);
-                writer.WriteObjectValue(ComputeProfile, options);
+                ((IJsonModel<ComputeProfile>)ComputeProfile).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(InstallScriptActions))
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in InstallScriptActions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RuntimeScriptAction>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in UninstallScriptActions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RuntimeScriptAction>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in HttpsEndpoints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HDInsightApplicationHttpsEndpoint>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in SshEndpoints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HDInsightApplicationEndpoint>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HDInsightPrivateLinkConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    computeProfile = ComputeProfile.DeserializeComputeProfile(property.Value, options);
+                    computeProfile = ModelSerializationExtensions.JsonDeserialize<ComputeProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("installScriptActions"u8))
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
+                        array.Add(ModelSerializationExtensions.JsonDeserialize<ResponseError>(item));
                     }
                     errors = array;
                     continue;

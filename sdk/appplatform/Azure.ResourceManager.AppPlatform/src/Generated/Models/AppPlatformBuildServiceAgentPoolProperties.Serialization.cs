@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(PoolSize))
             {
                 writer.WritePropertyName("poolSize"u8);
-                writer.WriteObjectValue(PoolSize, options);
+                ((IJsonModel<BuildServiceAgentPoolSizeProperties>)PoolSize).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    poolSize = BuildServiceAgentPoolSizeProperties.DeserializeBuildServiceAgentPoolSizeProperties(property.Value, options);
+                    poolSize = ModelSerializationExtensions.JsonDeserialize<BuildServiceAgentPoolSizeProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

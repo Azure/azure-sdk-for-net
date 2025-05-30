@@ -41,18 +41,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteBooleanValue(IsActive.Value);
             }
             writer.WritePropertyName("auth"u8);
-            writer.WriteObjectValue(Auth, options);
+            ((IJsonModel<CodelessConnectorPollingAuthProperties>)Auth).Write(writer, options);
             writer.WritePropertyName("request"u8);
-            writer.WriteObjectValue(Request, options);
+            ((IJsonModel<CodelessConnectorPollingRequestProperties>)Request).Write(writer, options);
             if (Optional.IsDefined(Paging))
             {
                 writer.WritePropertyName("paging"u8);
-                writer.WriteObjectValue(Paging, options);
+                ((IJsonModel<CodelessConnectorPollingPagingProperties>)Paging).Write(writer, options);
             }
             if (Optional.IsDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
-                writer.WriteObjectValue(Response, options);
+                ((IJsonModel<CodelessConnectorPollingResponseProperties>)Response).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (property.NameEquals("auth"u8))
                 {
-                    auth = CodelessConnectorPollingAuthProperties.DeserializeCodelessConnectorPollingAuthProperties(property.Value, options);
+                    auth = ModelSerializationExtensions.JsonDeserialize<CodelessConnectorPollingAuthProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("request"u8))
                 {
-                    request = CodelessConnectorPollingRequestProperties.DeserializeCodelessConnectorPollingRequestProperties(property.Value, options);
+                    request = ModelSerializationExtensions.JsonDeserialize<CodelessConnectorPollingRequestProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("paging"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    paging = CodelessConnectorPollingPagingProperties.DeserializeCodelessConnectorPollingPagingProperties(property.Value, options);
+                    paging = ModelSerializationExtensions.JsonDeserialize<CodelessConnectorPollingPagingProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("response"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    response = CodelessConnectorPollingResponseProperties.DeserializeCodelessConnectorPollingResponseProperties(property.Value, options);
+                    response = ModelSerializationExtensions.JsonDeserialize<CodelessConnectorPollingResponseProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

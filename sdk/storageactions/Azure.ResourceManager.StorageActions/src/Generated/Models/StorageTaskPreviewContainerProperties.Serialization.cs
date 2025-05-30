@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.StorageActions.Models
                 writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StorageTaskPreviewKeyValueProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

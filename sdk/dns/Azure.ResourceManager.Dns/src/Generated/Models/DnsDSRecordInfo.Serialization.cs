@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Dns.Models
             if (Optional.IsDefined(Digest))
             {
                 writer.WritePropertyName("digest"u8);
-                writer.WriteObjectValue(Digest, options);
+                ((IJsonModel<DSRecordDigest>)Digest).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Dns.Models
                     {
                         continue;
                     }
-                    digest = DSRecordDigest.DeserializeDSRecordDigest(property.Value, options);
+                    digest = ModelSerializationExtensions.JsonDeserialize<DSRecordDigest>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

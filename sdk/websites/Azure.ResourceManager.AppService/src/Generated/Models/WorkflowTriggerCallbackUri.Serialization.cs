@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Queries))
             {
                 writer.WritePropertyName("queries"u8);
-                writer.WriteObjectValue(Queries, options);
+                ((IJsonModel<WorkflowTriggerListCallbackUriQueries>)Queries).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    queries = WorkflowTriggerListCallbackUriQueries.DeserializeWorkflowTriggerListCallbackUriQueries(property.Value, options);
+                    queries = ModelSerializationExtensions.JsonDeserialize<WorkflowTriggerListCallbackUriQueries>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

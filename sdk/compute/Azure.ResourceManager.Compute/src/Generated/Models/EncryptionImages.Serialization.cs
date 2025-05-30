@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(OSDiskImage))
             {
                 writer.WritePropertyName("osDiskImage"u8);
-                writer.WriteObjectValue(OSDiskImage, options);
+                ((IJsonModel<OSDiskImageEncryption>)OSDiskImage).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DataDiskImages))
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDiskImages)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataDiskImageEncryption>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osDiskImage = OSDiskImageEncryption.DeserializeOSDiskImageEncryption(property.Value, options);
+                    osDiskImage = ModelSerializationExtensions.JsonDeserialize<OSDiskImageEncryption>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataDiskImages"u8))

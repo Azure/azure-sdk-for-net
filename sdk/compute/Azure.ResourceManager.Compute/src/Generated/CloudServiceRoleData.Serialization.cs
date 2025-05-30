@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<CloudServiceRoleSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    sku = CloudServiceRoleSku.DeserializeCloudServiceRoleSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<CloudServiceRoleSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

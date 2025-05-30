@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in SubProtectionPolicy)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SubProtectionPolicy>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

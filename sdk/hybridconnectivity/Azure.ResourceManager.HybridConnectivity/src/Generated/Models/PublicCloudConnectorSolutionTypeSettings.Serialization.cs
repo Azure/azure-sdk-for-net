@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             if (Optional.IsDefined(SolutionSettings))
             {
                 writer.WritePropertyName("solutionSettings"u8);
-                writer.WriteObjectValue(SolutionSettings, options);
+                ((IJsonModel<PublicCloudConnectorSolutionSettings>)SolutionSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     {
                         continue;
                     }
-                    solutionSettings = PublicCloudConnectorSolutionSettings.DeserializePublicCloudConnectorSolutionSettings(property.Value, options);
+                    solutionSettings = ModelSerializationExtensions.JsonDeserialize<PublicCloudConnectorSolutionSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Text.Authoring
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("customHealthcareResult"u8);
-            writer.WriteObjectValue(CustomHealthcareResult, options);
+            ((IJsonModel<DocumentHealthcareEvalResult>)CustomHealthcareResult).Write(writer, options);
         }
 
         CustomHealthcareDocumentEvalResult IJsonModel<CustomHealthcareDocumentEvalResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -69,7 +69,7 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 if (property.NameEquals("customHealthcareResult"u8))
                 {
-                    customHealthcareResult = DocumentHealthcareEvalResult.DeserializeDocumentHealthcareEvalResult(property.Value, options);
+                    customHealthcareResult = ModelSerializationExtensions.JsonDeserialize<DocumentHealthcareEvalResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("projectKind"u8))

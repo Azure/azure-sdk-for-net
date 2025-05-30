@@ -51,7 +51,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    error = AcsMessageChannelEventError.DeserializeAcsMessageChannelEventError(property.Value);
+                    error = ModelSerializationExtensions.JsonDeserialize<AcsMessageChannelEventError>(property.Value);
                     continue;
                 }
             }

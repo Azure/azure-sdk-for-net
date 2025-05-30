@@ -46,7 +46,7 @@ namespace Azure.Developer.LoadTesting
                 foreach (var item in Metrics)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<ResourceMetric>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }

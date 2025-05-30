@@ -39,7 +39,7 @@ namespace Azure.AI.Agents.Persistent
             writer.WritePropertyName("object"u8);
             writer.WriteStringValue(Object.ToString());
             writer.WritePropertyName("delta"u8);
-            writer.WriteObjectValue(Delta, options);
+            ((IJsonModel<RunStepDelta>)Delta).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -96,7 +96,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (property.NameEquals("delta"u8))
                 {
-                    delta = RunStepDelta.DeserializeRunStepDelta(property.Value, options);
+                    delta = ModelSerializationExtensions.JsonDeserialize<RunStepDelta>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

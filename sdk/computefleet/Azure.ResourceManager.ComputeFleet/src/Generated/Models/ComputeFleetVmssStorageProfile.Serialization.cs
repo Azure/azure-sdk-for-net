@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
-                writer.WriteObjectValue(ImageReference, options);
+                ((IJsonModel<ComputeFleetImageReference>)ImageReference).Write(writer, options);
             }
             if (Optional.IsDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
-                writer.WriteObjectValue(OSDisk, options);
+                ((IJsonModel<ComputeFleetVmssOSDisk>)OSDisk).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DataDisks))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDisks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ComputeFleetVmssDataDisk>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    imageReference = ComputeFleetImageReference.DeserializeComputeFleetImageReference(property.Value, options);
+                    imageReference = ModelSerializationExtensions.JsonDeserialize<ComputeFleetImageReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("osDisk"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    osDisk = ComputeFleetVmssOSDisk.DeserializeComputeFleetVmssOSDisk(property.Value, options);
+                    osDisk = ModelSerializationExtensions.JsonDeserialize<ComputeFleetVmssOSDisk>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataDisks"u8))

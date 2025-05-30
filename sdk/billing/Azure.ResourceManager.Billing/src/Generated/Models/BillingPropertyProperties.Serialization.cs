@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in BillingProfileSpendingLimitDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SpendingLimitDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in SubscriptionBillingStatusDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BillingSubscriptionStatusDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(SubscriptionServiceUsageAddress))
             {
                 writer.WritePropertyName("subscriptionServiceUsageAddress"u8);
-                writer.WriteObjectValue(SubscriptionServiceUsageAddress, options);
+                ((IJsonModel<BillingAddressDetails>)SubscriptionServiceUsageAddress).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SubscriptionWorkloadType))
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(EnrollmentDetails))
             {
                 writer.WritePropertyName("enrollmentDetails"u8);
-                writer.WriteObjectValue(EnrollmentDetails, options);
+                ((IJsonModel<SubscriptionEnrollmentDetails>)EnrollmentDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsAccountAdmin))
             {
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    subscriptionServiceUsageAddress = BillingAddressDetails.DeserializeBillingAddressDetails(property.Value, options);
+                    subscriptionServiceUsageAddress = ModelSerializationExtensions.JsonDeserialize<BillingAddressDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("subscriptionWorkloadType"u8))
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    enrollmentDetails = SubscriptionEnrollmentDetails.DeserializeSubscriptionEnrollmentDetails(property.Value, options);
+                    enrollmentDetails = ModelSerializationExtensions.JsonDeserialize<SubscriptionEnrollmentDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isAccountAdmin"u8))

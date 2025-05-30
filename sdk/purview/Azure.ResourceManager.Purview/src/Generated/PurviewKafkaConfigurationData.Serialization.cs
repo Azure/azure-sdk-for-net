@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Purview
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials, options);
+                ((IJsonModel<PurviewCredentials>)Credentials).Write(writer, options);
             }
             if (Optional.IsDefined(EventHubPartitionId))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Purview
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Purview
                             {
                                 continue;
                             }
-                            credentials = PurviewCredentials.DeserializePurviewCredentials(property0.Value, options);
+                            credentials = ModelSerializationExtensions.JsonDeserialize<PurviewCredentials>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("eventHubPartitionId"u8))

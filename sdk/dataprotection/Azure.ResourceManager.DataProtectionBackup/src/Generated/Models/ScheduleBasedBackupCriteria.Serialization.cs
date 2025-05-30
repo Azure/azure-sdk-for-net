@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in DaysOfMonth)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataProtectionBackupDay>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

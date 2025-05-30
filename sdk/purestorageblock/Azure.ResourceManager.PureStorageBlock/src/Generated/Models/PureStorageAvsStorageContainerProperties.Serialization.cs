@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             if (options.Format != "W" && Optional.IsDefined(Space))
             {
                 writer.WritePropertyName("space"u8);
-                writer.WriteObjectValue(Space, options);
+                ((IJsonModel<PureStorageSpaceUsage>)Space).Write(writer, options);
             }
             if (options.Format != "W")
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    space = PureStorageSpaceUsage.DeserializePureStorageSpaceUsage(property.Value, options);
+                    space = ModelSerializationExtensions.JsonDeserialize<PureStorageSpaceUsage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceName"u8))

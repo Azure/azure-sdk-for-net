@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(PolicyParameters))
             {
                 writer.WritePropertyName("policyParameters"u8);
-                writer.WriteObjectValue(PolicyParameters, options);
+                ((IJsonModel<BackupInstancePolicySettings>)PolicyParameters).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    policyParameters = BackupInstancePolicySettings.DeserializeBackupInstancePolicySettings(property.Value, options);
+                    policyParameters = ModelSerializationExtensions.JsonDeserialize<BackupInstancePolicySettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

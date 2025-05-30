@@ -18,17 +18,17 @@ namespace Azure.IoT.TimeSeriesInsights
             if (Optional.IsDefined(GetEvents))
             {
                 writer.WritePropertyName("getEvents"u8);
-                writer.WriteObjectValue(GetEvents);
+                JsonSerializer.Serialize(writer, GetEvents);
             }
             if (Optional.IsDefined(GetSeries))
             {
                 writer.WritePropertyName("getSeries"u8);
-                writer.WriteObjectValue(GetSeries);
+                JsonSerializer.Serialize(writer, GetSeries);
             }
             if (Optional.IsDefined(AggregateSeries))
             {
                 writer.WritePropertyName("aggregateSeries"u8);
-                writer.WriteObjectValue(AggregateSeries);
+                JsonSerializer.Serialize(writer, AggregateSeries);
             }
             writer.WriteEndObject();
         }

@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(SupportedMemoryLimitsMB))
             {
                 writer.WritePropertyName("supportedMemoryLimitsMB"u8);
-                writer.WriteObjectValue(SupportedMemoryLimitsMB, options);
+                ((IJsonModel<MaxLimitRangeCapability>)SupportedMemoryLimitsMB).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IncludedMaxSize))
             {
                 writer.WritePropertyName("includedMaxSize"u8);
-                writer.WriteObjectValue(IncludedMaxSize, options);
+                ((IJsonModel<MaxSizeCapability>)IncludedMaxSize).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedStorageSizes))
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedStorageSizes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MaxSizeRangeCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(SupportedStorageIOps))
             {
                 writer.WritePropertyName("supportedStorageIOps"u8);
-                writer.WriteObjectValue(SupportedStorageIOps, options);
+                ((IJsonModel<MaxLimitRangeCapability>)SupportedStorageIOps).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IopsMinValueOverrideFactorPerSelectedStorageGB))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(SupportedStorageThroughputMBps))
             {
                 writer.WritePropertyName("supportedStorageThroughputMBps"u8);
-                writer.WriteObjectValue(SupportedStorageThroughputMBps, options);
+                ((IJsonModel<MaxLimitRangeCapability>)SupportedStorageThroughputMBps).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ThroughputMBpsMinValueOverrideFactorPerSelectedStorageGB))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedMaintenanceConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedInstanceMaintenanceConfigurationCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    supportedMemoryLimitsMB = MaxLimitRangeCapability.DeserializeMaxLimitRangeCapability(property.Value, options);
+                    supportedMemoryLimitsMB = ModelSerializationExtensions.JsonDeserialize<MaxLimitRangeCapability>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("includedMaxSize"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    includedMaxSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
+                    includedMaxSize = ModelSerializationExtensions.JsonDeserialize<MaxSizeCapability>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("supportedStorageSizes"u8))
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    supportedStorageIOps = MaxLimitRangeCapability.DeserializeMaxLimitRangeCapability(property.Value, options);
+                    supportedStorageIOps = ModelSerializationExtensions.JsonDeserialize<MaxLimitRangeCapability>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("iopsMinValueOverrideFactorPerSelectedStorageGB"u8))
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    supportedStorageThroughputMBps = MaxLimitRangeCapability.DeserializeMaxLimitRangeCapability(property.Value, options);
+                    supportedStorageThroughputMBps = ModelSerializationExtensions.JsonDeserialize<MaxLimitRangeCapability>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("throughputMBpsMinValueOverrideFactorPerSelectedStorageGB"u8))

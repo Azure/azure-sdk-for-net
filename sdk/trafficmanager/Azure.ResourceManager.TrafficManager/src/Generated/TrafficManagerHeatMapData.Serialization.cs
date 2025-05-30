@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.TrafficManager
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TrafficManagerHeatMapEndpoint>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.TrafficManager
                 writer.WriteStartArray();
                 foreach (var item in TrafficFlows)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TrafficManagerHeatMapTrafficFlow>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

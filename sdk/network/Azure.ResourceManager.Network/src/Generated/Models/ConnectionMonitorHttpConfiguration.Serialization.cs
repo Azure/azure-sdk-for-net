@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RequestHeaders)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetworkWatcherHttpHeader>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

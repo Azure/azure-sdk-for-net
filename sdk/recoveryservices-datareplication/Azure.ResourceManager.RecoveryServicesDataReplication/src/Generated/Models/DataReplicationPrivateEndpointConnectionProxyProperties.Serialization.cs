@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (Optional.IsDefined(RemotePrivateEndpoint))
             {
                 writer.WritePropertyName("remotePrivateEndpoint"u8);
-                writer.WriteObjectValue(RemotePrivateEndpoint, options);
+                ((IJsonModel<RemotePrivateEndpoint>)RemotePrivateEndpoint).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    remotePrivateEndpoint = RemotePrivateEndpoint.DeserializeRemotePrivateEndpoint(property.Value, options);
+                    remotePrivateEndpoint = ModelSerializationExtensions.JsonDeserialize<RemotePrivateEndpoint>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

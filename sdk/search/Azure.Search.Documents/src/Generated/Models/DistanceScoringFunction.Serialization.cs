@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("distance"u8);
-            writer.WriteObjectValue(Parameters);
+            JsonSerializer.Serialize(writer, Parameters);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("fieldName"u8);
@@ -46,7 +46,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("distance"u8))
                 {
-                    distance = DistanceScoringParameters.DeserializeDistanceScoringParameters(property.Value);
+                    distance = ModelSerializationExtensions.JsonDeserialize<DistanceScoringParameters>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

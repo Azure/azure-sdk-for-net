@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(DefaultVirtualMachineScaleSet))
             {
                 writer.WritePropertyName("defaultVirtualMachineScaleSet"u8);
-                JsonSerializer.Serialize(writer, DefaultVirtualMachineScaleSet);
+                ((IJsonModel<WritableSubResource>)DefaultVirtualMachineScaleSet).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    defaultVirtualMachineScaleSet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    defaultVirtualMachineScaleSet = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

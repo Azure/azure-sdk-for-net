@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IntegrationRuntimeOutboundNetworkDependenciesEndpoint>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

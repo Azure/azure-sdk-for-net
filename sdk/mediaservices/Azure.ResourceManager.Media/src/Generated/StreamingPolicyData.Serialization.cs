@@ -52,22 +52,22 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(EnvelopeEncryption))
             {
                 writer.WritePropertyName("envelopeEncryption"u8);
-                writer.WriteObjectValue(EnvelopeEncryption, options);
+                ((IJsonModel<EnvelopeEncryption>)EnvelopeEncryption).Write(writer, options);
             }
             if (Optional.IsDefined(CommonEncryptionCenc))
             {
                 writer.WritePropertyName("commonEncryptionCenc"u8);
-                writer.WriteObjectValue(CommonEncryptionCenc, options);
+                ((IJsonModel<CommonEncryptionCenc>)CommonEncryptionCenc).Write(writer, options);
             }
             if (Optional.IsDefined(CommonEncryptionCbcs))
             {
                 writer.WritePropertyName("commonEncryptionCbcs"u8);
-                writer.WriteObjectValue(CommonEncryptionCbcs, options);
+                ((IJsonModel<CommonEncryptionCbcs>)CommonEncryptionCbcs).Write(writer, options);
             }
             if (Optional.IsDefined(NoEncryption))
             {
                 writer.WritePropertyName("noEncryption"u8);
-                writer.WriteObjectValue(NoEncryption, options);
+                ((IJsonModel<NoEncryption>)NoEncryption).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Media
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            envelopeEncryption = EnvelopeEncryption.DeserializeEnvelopeEncryption(property0.Value, options);
+                            envelopeEncryption = ModelSerializationExtensions.JsonDeserialize<EnvelopeEncryption>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("commonEncryptionCenc"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            commonEncryptionCenc = CommonEncryptionCenc.DeserializeCommonEncryptionCenc(property0.Value, options);
+                            commonEncryptionCenc = ModelSerializationExtensions.JsonDeserialize<CommonEncryptionCenc>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("commonEncryptionCbcs"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            commonEncryptionCbcs = CommonEncryptionCbcs.DeserializeCommonEncryptionCbcs(property0.Value, options);
+                            commonEncryptionCbcs = ModelSerializationExtensions.JsonDeserialize<CommonEncryptionCbcs>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("noEncryption"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            noEncryption = NoEncryption.DeserializeNoEncryption(property0.Value, options);
+                            noEncryption = ModelSerializationExtensions.JsonDeserialize<NoEncryption>(property0.Value);
                             continue;
                         }
                     }

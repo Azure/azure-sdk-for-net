@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             if (Optional.IsDefined(AutoScaleProperties))
             {
                 writer.WritePropertyName("autoScaleProperties"u8);
-                writer.WriteObjectValue(AutoScaleProperties, options);
+                ((IJsonModel<AutoScaleProperties>)AutoScaleProperties).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                             {
                                 continue;
                             }
-                            autoScaleProperties = AutoScaleProperties.DeserializeAutoScaleProperties(property0.Value, options);
+                            autoScaleProperties = ModelSerializationExtensions.JsonDeserialize<AutoScaleProperties>(property0.Value);
                             continue;
                         }
                     }

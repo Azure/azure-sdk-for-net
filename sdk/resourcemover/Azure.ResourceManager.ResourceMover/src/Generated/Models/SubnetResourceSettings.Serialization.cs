@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (NetworkSecurityGroup != null)
                 {
                     writer.WritePropertyName("networkSecurityGroup"u8);
-                    writer.WriteObjectValue(NetworkSecurityGroup, options);
+                    ((IJsonModel<NetworkSecurityGroupResourceReferenceInfo>)NetworkSecurityGroup).Write(writer, options);
                 }
                 else
                 {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         networkSecurityGroup = null;
                         continue;
                     }
-                    networkSecurityGroup = NetworkSecurityGroupResourceReferenceInfo.DeserializeNetworkSecurityGroupResourceReferenceInfo(property.Value, options);
+                    networkSecurityGroup = ModelSerializationExtensions.JsonDeserialize<NetworkSecurityGroupResourceReferenceInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

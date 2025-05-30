@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Start))
             {
                 writer.WritePropertyName("start"u8);
-                writer.WriteObjectValue(Start, options);
+                ((IJsonModel<ClipTime>)Start).Write(writer, options);
             }
             if (Optional.IsDefined(End))
             {
                 writer.WritePropertyName("end"u8);
-                writer.WriteObjectValue(End, options);
+                ((IJsonModel<ClipTime>)End).Write(writer, options);
             }
             if (Optional.IsDefined(Label))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in InputDefinitions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MediaJobInputDefinition>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    start = ClipTime.DeserializeClipTime(property.Value, options);
+                    start = ModelSerializationExtensions.JsonDeserialize<ClipTime>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("end"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    end = ClipTime.DeserializeClipTime(property.Value, options);
+                    end = ModelSerializationExtensions.JsonDeserialize<ClipTime>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("label"u8))

@@ -26,10 +26,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CopyActivityLogSettings))
             {
                 writer.WritePropertyName("copyActivityLogSettings"u8);
-                writer.WriteObjectValue(CopyActivityLogSettings);
+                JsonSerializer.Serialize(writer, CopyActivityLogSettings);
             }
             writer.WritePropertyName("logLocationSettings"u8);
-            writer.WriteObjectValue(LogLocationSettings);
+            JsonSerializer.Serialize(writer, LogLocationSettings);
             writer.WriteEndObject();
         }
 
@@ -59,12 +59,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    copyActivityLogSettings = CopyActivityLogSettings.DeserializeCopyActivityLogSettings(property.Value);
+                    copyActivityLogSettings = ModelSerializationExtensions.JsonDeserialize<CopyActivityLogSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("logLocationSettings"u8))
                 {
-                    logLocationSettings = LogLocationSettings.DeserializeLogLocationSettings(property.Value);
+                    logLocationSettings = ModelSerializationExtensions.JsonDeserialize<LogLocationSettings>(property.Value);
                     continue;
                 }
             }

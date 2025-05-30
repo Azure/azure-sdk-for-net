@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in AdvertisedPublicPrefixInfo)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AdvertisedPublicPrefixProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

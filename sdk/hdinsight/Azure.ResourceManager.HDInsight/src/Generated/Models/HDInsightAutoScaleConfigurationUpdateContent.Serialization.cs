@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(AutoScale))
             {
                 writer.WritePropertyName("autoscale"u8);
-                writer.WriteObjectValue(AutoScale, options);
+                ((IJsonModel<HDInsightAutoScaleConfiguration>)AutoScale).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    autoScale = HDInsightAutoScaleConfiguration.DeserializeHDInsightAutoScaleConfiguration(property.Value, options);
+                    autoScale = ModelSerializationExtensions.JsonDeserialize<HDInsightAutoScaleConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(OpenApi))
             {
                 writer.WritePropertyName("openApi"u8);
-                writer.WriteObjectValue(OpenApi, options);
+                ((IJsonModel<GatewayRouteConfigOpenApiProperties>)OpenApi).Write(writer, options);
             }
             if (Optional.IsDefined(Protocol))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Routes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AppPlatformGatewayApiRoute>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    openApi = GatewayRouteConfigOpenApiProperties.DeserializeGatewayRouteConfigOpenApiProperties(property.Value, options);
+                    openApi = ModelSerializationExtensions.JsonDeserialize<GatewayRouteConfigOpenApiProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("protocol"u8))

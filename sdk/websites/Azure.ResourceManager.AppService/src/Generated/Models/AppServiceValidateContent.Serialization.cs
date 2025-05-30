@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(AppServiceEnvironment))
             {
                 writer.WritePropertyName("appServiceEnvironment"u8);
-                writer.WriteObjectValue(AppServiceEnvironment, options);
+                ((IJsonModel<AppServiceEnvironmentProperties>)AppServiceEnvironment).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            appServiceEnvironment = AppServiceEnvironmentProperties.DeserializeAppServiceEnvironmentProperties(property0.Value, options);
+                            appServiceEnvironment = ModelSerializationExtensions.JsonDeserialize<AppServiceEnvironmentProperties>(property0.Value);
                             continue;
                         }
                     }

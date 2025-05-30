@@ -22,12 +22,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
-                writer.WriteObjectValue(LinkedServiceName);
+                JsonSerializer.Serialize(writer, LinkedServiceName);
             }
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                JsonSerializer.Serialize(writer, Policy);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -64,33 +64,33 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("dataflow"u8);
-            writer.WriteObjectValue(Dataflow);
+            JsonSerializer.Serialize(writer, Dataflow);
             if (Optional.IsDefined(Staging))
             {
                 writer.WritePropertyName("staging"u8);
-                writer.WriteObjectValue(Staging);
+                JsonSerializer.Serialize(writer, Staging);
             }
             if (Optional.IsDefined(IntegrationRuntime))
             {
                 writer.WritePropertyName("integrationRuntime"u8);
-                writer.WriteObjectValue(IntegrationRuntime);
+                JsonSerializer.Serialize(writer, IntegrationRuntime);
             }
             if (Optional.IsDefined(ContinuationSettings))
             {
                 writer.WritePropertyName("continuationSettings"u8);
-                writer.WriteObjectValue(ContinuationSettings);
+                JsonSerializer.Serialize(writer, ContinuationSettings);
             }
             if (Optional.IsDefined(Compute))
             {
                 writer.WritePropertyName("compute"u8);
-                writer.WriteObjectValue(Compute);
+                JsonSerializer.Serialize(writer, Compute);
             }
             if (Optional.IsDefined(TraceLevel))
             {
@@ -155,7 +155,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    linkedServiceName = ModelSerializationExtensions.JsonDeserialize<LinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -164,7 +164,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
+                    policy = ModelSerializationExtensions.JsonDeserialize<ActivityPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -239,7 +239,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("dataflow"u8))
                         {
-                            dataflow = DataFlowReference.DeserializeDataFlowReference(property0.Value);
+                            dataflow = ModelSerializationExtensions.JsonDeserialize<DataFlowReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("staging"u8))
@@ -248,7 +248,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            staging = DataFlowStagingInfo.DeserializeDataFlowStagingInfo(property0.Value);
+                            staging = ModelSerializationExtensions.JsonDeserialize<DataFlowStagingInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("integrationRuntime"u8))
@@ -257,7 +257,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            integrationRuntime = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property0.Value);
+                            integrationRuntime = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("continuationSettings"u8))
@@ -266,7 +266,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            continuationSettings = ContinuationSettingsReference.DeserializeContinuationSettingsReference(property0.Value);
+                            continuationSettings = ModelSerializationExtensions.JsonDeserialize<ContinuationSettingsReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("compute"u8))
@@ -275,7 +275,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            compute = ExecuteDataFlowActivityTypePropertiesCompute.DeserializeExecuteDataFlowActivityTypePropertiesCompute(property0.Value);
+                            compute = ModelSerializationExtensions.JsonDeserialize<ExecuteDataFlowActivityTypePropertiesCompute>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("traceLevel"u8))

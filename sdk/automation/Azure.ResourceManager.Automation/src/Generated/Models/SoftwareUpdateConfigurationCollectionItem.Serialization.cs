@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(UpdateConfiguration))
             {
                 writer.WritePropertyName("updateConfiguration"u8);
-                writer.WriteObjectValue(UpdateConfiguration, options);
+                ((IJsonModel<SoftwareUpdateConfigurationSpecificProperties>)UpdateConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(Tasks))
             {
                 writer.WritePropertyName("tasks"u8);
-                writer.WriteObjectValue(Tasks, options);
+                ((IJsonModel<SoftwareUpdateConfigurationTasks>)Tasks).Write(writer, options);
             }
             if (Optional.IsDefined(Frequency))
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            updateConfiguration = SoftwareUpdateConfigurationSpecificProperties.DeserializeSoftwareUpdateConfigurationSpecificProperties(property0.Value, options);
+                            updateConfiguration = ModelSerializationExtensions.JsonDeserialize<SoftwareUpdateConfigurationSpecificProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tasks"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            tasks = SoftwareUpdateConfigurationTasks.DeserializeSoftwareUpdateConfigurationTasks(property0.Value, options);
+                            tasks = ModelSerializationExtensions.JsonDeserialize<SoftwareUpdateConfigurationTasks>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("frequency"u8))

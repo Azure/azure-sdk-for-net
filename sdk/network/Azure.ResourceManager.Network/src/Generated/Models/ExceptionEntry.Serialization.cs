@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in ExceptionManagedRuleSets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExclusionManagedRuleSet>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

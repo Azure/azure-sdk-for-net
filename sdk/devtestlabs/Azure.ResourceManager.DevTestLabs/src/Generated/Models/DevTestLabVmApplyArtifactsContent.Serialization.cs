@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in Artifacts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DevTestLabArtifactInstallInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

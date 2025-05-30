@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Privileges)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<GalleryInVmAccessControlRulesPrivilege>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Roles)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<GalleryInVmAccessControlRulesRole>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Identities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<GalleryInVmAccessControlRulesIdentity>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in RoleAssignments)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<GalleryInVmAccessControlRulesRoleAssignment>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

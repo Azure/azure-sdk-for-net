@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RewriteRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayRewriteRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

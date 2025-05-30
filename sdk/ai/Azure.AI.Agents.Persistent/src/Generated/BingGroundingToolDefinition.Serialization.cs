@@ -36,7 +36,7 @@ namespace Azure.AI.Agents.Persistent
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("bing_grounding"u8);
-            writer.WriteObjectValue(BingGrounding, options);
+            ((IJsonModel<BingGroundingSearchToolParameters>)BingGrounding).Write(writer, options);
         }
 
         BingGroundingToolDefinition IJsonModel<BingGroundingToolDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (property.NameEquals("bing_grounding"u8))
                 {
-                    bingGrounding = BingGroundingSearchToolParameters.DeserializeBingGroundingSearchToolParameters(property.Value, options);
+                    bingGrounding = ModelSerializationExtensions.JsonDeserialize<BingGroundingSearchToolParameters>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(PolicySettings))
             {
                 writer.WritePropertyName("policySettings"u8);
-                writer.WriteObjectValue(PolicySettings, options);
+                ((IJsonModel<PolicySettings>)PolicySettings).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(CustomRules))
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in CustomRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WebApplicationFirewallCustomRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ApplicationGateways)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ManagedRules))
             {
                 writer.WritePropertyName("managedRules"u8);
-                writer.WriteObjectValue(ManagedRules, options);
+                ((IJsonModel<ManagedRulesDefinition>)ManagedRules).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(HttpListeners))
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in HttpListeners)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in PathBasedRules)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ApplicationGatewayForContainers)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            policySettings = PolicySettings.DeserializePolicySettings(property0.Value, options);
+                            policySettings = ModelSerializationExtensions.JsonDeserialize<PolicySettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("customRules"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            managedRules = ManagedRulesDefinition.DeserializeManagedRulesDefinition(property0.Value, options);
+                            managedRules = ModelSerializationExtensions.JsonDeserialize<ManagedRulesDefinition>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("httpListeners"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             httpListeners = array;
                             continue;
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             pathBasedRules = array;
                             continue;
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Network
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<SubResource>(item));
                             }
                             applicationGatewayForContainers = array;
                             continue;

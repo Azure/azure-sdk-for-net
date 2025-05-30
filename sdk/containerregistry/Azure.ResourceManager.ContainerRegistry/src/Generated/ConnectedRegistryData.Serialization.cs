@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (options.Format != "W" && Optional.IsDefined(Activation))
             {
                 writer.WritePropertyName("activation"u8);
-                writer.WriteObjectValue(Activation, options);
+                ((IJsonModel<ConnectedRegistryPropertiesActivation>)Activation).Write(writer, options);
             }
             if (Optional.IsDefined(Parent))
             {
                 writer.WritePropertyName("parent"u8);
-                writer.WriteObjectValue(Parent, options);
+                ((IJsonModel<ConnectedRegistryParent>)Parent).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ClientTokenIds))
             {
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(LoginServer))
             {
                 writer.WritePropertyName("loginServer"u8);
-                writer.WriteObjectValue(LoginServer, options);
+                ((IJsonModel<ConnectedRegistryLoginServer>)LoginServer).Write(writer, options);
             }
             if (Optional.IsDefined(Logging))
             {
                 writer.WritePropertyName("logging"u8);
-                writer.WriteObjectValue(Logging, options);
+                ((IJsonModel<ConnectedRegistryLogging>)Logging).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(StatusDetails))
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 writer.WriteStartArray();
                 foreach (var item in StatusDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConnectedRegistryStatusDetail>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(GarbageCollection))
             {
                 writer.WritePropertyName("garbageCollection"u8);
-                writer.WriteObjectValue(GarbageCollection, options);
+                ((IJsonModel<GarbageCollectionProperties>)GarbageCollection).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            activation = ConnectedRegistryPropertiesActivation.DeserializeConnectedRegistryPropertiesActivation(property0.Value, options);
+                            activation = ModelSerializationExtensions.JsonDeserialize<ConnectedRegistryPropertiesActivation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("parent"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            parent = ConnectedRegistryParent.DeserializeConnectedRegistryParent(property0.Value, options);
+                            parent = ModelSerializationExtensions.JsonDeserialize<ConnectedRegistryParent>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clientTokenIds"u8))
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            loginServer = ConnectedRegistryLoginServer.DeserializeConnectedRegistryLoginServer(property0.Value, options);
+                            loginServer = ModelSerializationExtensions.JsonDeserialize<ConnectedRegistryLoginServer>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("logging"u8))
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            logging = ConnectedRegistryLogging.DeserializeConnectedRegistryLogging(property0.Value, options);
+                            logging = ModelSerializationExtensions.JsonDeserialize<ConnectedRegistryLogging>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("statusDetails"u8))
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            garbageCollection = GarbageCollectionProperties.DeserializeGarbageCollectionProperties(property0.Value, options);
+                            garbageCollection = ModelSerializationExtensions.JsonDeserialize<GarbageCollectionProperties>(property0.Value);
                             continue;
                         }
                     }

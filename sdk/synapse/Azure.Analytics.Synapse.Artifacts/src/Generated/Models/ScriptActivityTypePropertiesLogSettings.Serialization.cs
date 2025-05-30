@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LogLocationSettings))
             {
                 writer.WritePropertyName("logLocationSettings"u8);
-                writer.WriteObjectValue(LogLocationSettings);
+                JsonSerializer.Serialize(writer, LogLocationSettings);
             }
             writer.WriteEndObject();
         }
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    logLocationSettings = LogLocationSettings.DeserializeLogLocationSettings(property.Value);
+                    logLocationSettings = ModelSerializationExtensions.JsonDeserialize<LogLocationSettings>(property.Value);
                     continue;
                 }
             }

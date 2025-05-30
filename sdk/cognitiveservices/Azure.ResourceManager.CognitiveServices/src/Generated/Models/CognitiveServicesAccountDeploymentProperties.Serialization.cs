@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
-                writer.WriteObjectValue(Model, options);
+                ((IJsonModel<CognitiveServicesAccountDeploymentModel>)Model).Write(writer, options);
             }
             if (Optional.IsDefined(ScaleSettings))
             {
                 writer.WritePropertyName("scaleSettings"u8);
-                writer.WriteObjectValue(ScaleSettings, options);
+                ((IJsonModel<CognitiveServicesAccountDeploymentScaleSettings>)ScaleSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (options.Format != "W" && Optional.IsDefined(CallRateLimit))
             {
                 writer.WritePropertyName("callRateLimit"u8);
-                writer.WriteObjectValue(CallRateLimit, options);
+                ((IJsonModel<ServiceAccountCallRateLimit>)CallRateLimit).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(RateLimits))
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in RateLimits)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ServiceAccountThrottlingRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(CapacitySettings))
             {
                 writer.WritePropertyName("capacitySettings"u8);
-                writer.WriteObjectValue(CapacitySettings, options);
+                ((IJsonModel<DeploymentCapacitySettings>)CapacitySettings).Write(writer, options);
             }
             if (Optional.IsDefined(ParentDeploymentName))
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    model = CognitiveServicesAccountDeploymentModel.DeserializeCognitiveServicesAccountDeploymentModel(property.Value, options);
+                    model = ModelSerializationExtensions.JsonDeserialize<CognitiveServicesAccountDeploymentModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scaleSettings"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    scaleSettings = CognitiveServicesAccountDeploymentScaleSettings.DeserializeCognitiveServicesAccountDeploymentScaleSettings(property.Value, options);
+                    scaleSettings = ModelSerializationExtensions.JsonDeserialize<CognitiveServicesAccountDeploymentScaleSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("capabilities"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value, options);
+                    callRateLimit = ModelSerializationExtensions.JsonDeserialize<ServiceAccountCallRateLimit>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rateLimits"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    capacitySettings = DeploymentCapacitySettings.DeserializeDeploymentCapacitySettings(property.Value, options);
+                    capacitySettings = ModelSerializationExtensions.JsonDeserialize<DeploymentCapacitySettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parentDeploymentName"u8))

@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
-                writer.WriteObjectValue(Routes, options);
+                ((IJsonModel<HttpSettingsRoutes>)Routes).Write(writer, options);
             }
             if (Optional.IsDefined(ForwardProxy))
             {
                 writer.WritePropertyName("forwardProxy"u8);
-                writer.WriteObjectValue(ForwardProxy, options);
+                ((IJsonModel<ContainerAppForwardProxy>)ForwardProxy).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    routes = HttpSettingsRoutes.DeserializeHttpSettingsRoutes(property.Value, options);
+                    routes = ModelSerializationExtensions.JsonDeserialize<HttpSettingsRoutes>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("forwardProxy"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    forwardProxy = ContainerAppForwardProxy.DeserializeContainerAppForwardProxy(property.Value, options);
+                    forwardProxy = ModelSerializationExtensions.JsonDeserialize<ContainerAppForwardProxy>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

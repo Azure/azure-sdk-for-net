@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Tables)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SyncFullSchemaTable>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

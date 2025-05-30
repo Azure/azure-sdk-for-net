@@ -38,7 +38,7 @@ namespace Azure.Communication.Messages
             writer.WriteStartArray();
             foreach (var item in Receipts)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<MessageReceipt>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

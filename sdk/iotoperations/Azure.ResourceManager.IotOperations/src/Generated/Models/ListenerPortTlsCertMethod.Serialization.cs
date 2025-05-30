@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.IotOperations.Models
             if (Optional.IsDefined(CertManagerCertificateSpec))
             {
                 writer.WritePropertyName("certManagerCertificateSpec"u8);
-                writer.WriteObjectValue(CertManagerCertificateSpec, options);
+                ((IJsonModel<CertManagerCertificateSpec>)CertManagerCertificateSpec).Write(writer, options);
             }
             if (Optional.IsDefined(Manual))
             {
                 writer.WritePropertyName("manual"u8);
-                writer.WriteObjectValue(Manual, options);
+                ((IJsonModel<X509ManualCertificate>)Manual).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    certManagerCertificateSpec = CertManagerCertificateSpec.DeserializeCertManagerCertificateSpec(property.Value, options);
+                    certManagerCertificateSpec = ModelSerializationExtensions.JsonDeserialize<CertManagerCertificateSpec>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("manual"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    manual = X509ManualCertificate.DeserializeX509ManualCertificate(property.Value, options);
+                    manual = ModelSerializationExtensions.JsonDeserialize<X509ManualCertificate>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

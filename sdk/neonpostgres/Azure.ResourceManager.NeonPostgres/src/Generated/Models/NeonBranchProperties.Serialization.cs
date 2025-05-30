@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 writer.WriteStartArray();
                 foreach (var item in Attributes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<Attributes>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 writer.WriteStartArray();
                 foreach (var item in Roles)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NeonRoleProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 writer.WriteStartArray();
                 foreach (var item in Databases)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NeonDatabaseProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NeonEndpointProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

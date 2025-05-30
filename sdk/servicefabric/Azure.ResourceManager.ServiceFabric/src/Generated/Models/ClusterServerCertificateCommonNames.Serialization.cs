@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in CommonNames)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ClusterServerCertificateCommonName>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             foreach (var item in Databases)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                ((IJsonModel<MongoDBDatabaseSettings>)item.Value).Write(writer, options);
             }
             writer.WriteEndObject();
             if (Optional.IsDefined(Replication))
@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStringValue(Replication.Value.ToString());
             }
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source, options);
+            ((IJsonModel<MongoDBConnectionInfo>)Source).Write(writer, options);
             writer.WritePropertyName("target"u8);
-            writer.WriteObjectValue(Target, options);
+            ((IJsonModel<MongoDBConnectionInfo>)Target).Write(writer, options);
             if (Optional.IsDefined(Throttling))
             {
                 writer.WritePropertyName("throttling"u8);
-                writer.WriteObjectValue(Throttling, options);
+                ((IJsonModel<MongoDBThrottlingSettings>)Throttling).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -138,12 +138,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("source"u8))
                 {
-                    source = MongoDBConnectionInfo.DeserializeMongoDBConnectionInfo(property.Value, options);
+                    source = ModelSerializationExtensions.JsonDeserialize<MongoDBConnectionInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("target"u8))
                 {
-                    target = MongoDBConnectionInfo.DeserializeMongoDBConnectionInfo(property.Value, options);
+                    target = ModelSerializationExtensions.JsonDeserialize<MongoDBConnectionInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("throttling"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    throttling = MongoDBThrottlingSettings.DeserializeMongoDBThrottlingSettings(property.Value, options);
+                    throttling = ModelSerializationExtensions.JsonDeserialize<MongoDBThrottlingSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

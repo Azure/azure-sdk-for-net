@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (options.Format != "W" && Optional.IsDefined(TableLevelSharingProperties))
             {
                 writer.WritePropertyName("tableLevelSharingProperties"u8);
-                writer.WriteObjectValue(TableLevelSharingProperties, options);
+                ((IJsonModel<KustoDatabaseTableLevelSharingProperties>)TableLevelSharingProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DatabaseShareOrigin))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             {
                                 continue;
                             }
-                            tableLevelSharingProperties = KustoDatabaseTableLevelSharingProperties.DeserializeKustoDatabaseTableLevelSharingProperties(property0.Value, options);
+                            tableLevelSharingProperties = ModelSerializationExtensions.JsonDeserialize<KustoDatabaseTableLevelSharingProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("databaseShareOrigin"u8))

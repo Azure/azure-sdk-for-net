@@ -26,7 +26,7 @@ namespace Azure.AI.Language.QuestionAnswering
                     {
                         continue;
                     }
-                    error = Error.DeserializeError(property.Value);
+                    error = ModelSerializationExtensions.JsonDeserialize<Error>(property.Value);
                     continue;
                 }
             }

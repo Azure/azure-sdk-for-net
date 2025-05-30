@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SourceControlOperationWarningBody>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

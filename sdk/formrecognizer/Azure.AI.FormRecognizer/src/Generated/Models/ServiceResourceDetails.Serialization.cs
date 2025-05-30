@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 if (property.NameEquals("customDocumentModels"u8))
                 {
-                    customDocumentModels = CustomDocumentModelsDetails.DeserializeCustomDocumentModelsDetails(property.Value);
+                    customDocumentModels = ModelSerializationExtensions.JsonDeserialize<CustomDocumentModelsDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("customNeuralDocumentModelBuilds"u8))
@@ -32,7 +32,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     {
                         continue;
                     }
-                    customNeuralDocumentModelBuilds = ResourceQuotaDetails.DeserializeResourceQuotaDetails(property.Value);
+                    customNeuralDocumentModelBuilds = ModelSerializationExtensions.JsonDeserialize<ResourceQuotaDetails>(property.Value);
                     continue;
                 }
             }

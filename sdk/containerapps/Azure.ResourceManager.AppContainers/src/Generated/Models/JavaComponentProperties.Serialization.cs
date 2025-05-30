@@ -50,14 +50,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Configurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<JavaComponentConfigurationProperty>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Scale))
             {
                 writer.WritePropertyName("scale"u8);
-                writer.WriteObjectValue(Scale, options);
+                ((IJsonModel<JavaComponentPropertiesScale>)Scale).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ServiceBinds))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceBinds)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<JavaComponentServiceBind>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

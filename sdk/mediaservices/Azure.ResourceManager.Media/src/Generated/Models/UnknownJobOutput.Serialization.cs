@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    error = MediaJobError.DeserializeMediaJobError(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<MediaJobError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("presetOverride"u8))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    presetOverride = MediaTransformPreset.DeserializeMediaTransformPreset(property.Value, options);
+                    presetOverride = ModelSerializationExtensions.JsonDeserialize<MediaTransformPreset>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("state"u8))

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(VmImageRepositoryCredentials))
             {
                 writer.WritePropertyName("vmImageRepositoryCredentials"u8);
-                writer.WriteObjectValue(VmImageRepositoryCredentials, options);
+                ((IJsonModel<ImageRepositoryCredentials>)VmImageRepositoryCredentials).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             {
                                 continue;
                             }
-                            vmImageRepositoryCredentials = ImageRepositoryCredentials.DeserializeImageRepositoryCredentials(property0.Value, options);
+                            vmImageRepositoryCredentials = ModelSerializationExtensions.JsonDeserialize<ImageRepositoryCredentials>(property0.Value);
                             continue;
                         }
                     }

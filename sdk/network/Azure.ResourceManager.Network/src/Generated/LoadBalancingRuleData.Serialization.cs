@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<LoadBalancingRuleProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    properties = LoadBalancingRuleProperties.DeserializeLoadBalancingRuleProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<LoadBalancingRuleProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))

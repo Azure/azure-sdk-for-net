@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.Cdn
             if (Optional.IsDefined(TlsSettings))
             {
                 writer.WritePropertyName("tlsSettings"u8);
-                writer.WriteObjectValue(TlsSettings, options);
+                ((IJsonModel<FrontDoorCustomDomainHttpsContent>)TlsSettings).Write(writer, options);
             }
             if (Optional.IsDefined(DnsZone))
             {
                 writer.WritePropertyName("azureDnsZone"u8);
-                JsonSerializer.Serialize(writer, DnsZone);
+                ((IJsonModel<WritableSubResource>)DnsZone).Write(writer, options);
             }
             if (Optional.IsDefined(PreValidatedCustomDomainResource))
             {
                 writer.WritePropertyName("preValidatedCustomDomainResourceId"u8);
-                JsonSerializer.Serialize(writer, PreValidatedCustomDomainResource);
+                ((IJsonModel<WritableSubResource>)PreValidatedCustomDomainResource).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Cdn
             if (options.Format != "W" && Optional.IsDefined(ValidationProperties))
             {
                 writer.WritePropertyName("validationProperties"u8);
-                writer.WriteObjectValue(ValidationProperties, options);
+                ((IJsonModel<DomainValidationProperties>)ValidationProperties).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Cdn
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            tlsSettings = FrontDoorCustomDomainHttpsContent.DeserializeFrontDoorCustomDomainHttpsContent(property0.Value, options);
+                            tlsSettings = ModelSerializationExtensions.JsonDeserialize<FrontDoorCustomDomainHttpsContent>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("azureDnsZone"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            azureDnsZone = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            azureDnsZone = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("preValidatedCustomDomainResourceId"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            preValidatedCustomDomainResourceId = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            preValidatedCustomDomainResourceId = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            validationProperties = DomainValidationProperties.DeserializeDomainValidationProperties(property0.Value, options);
+                            validationProperties = ModelSerializationExtensions.JsonDeserialize<DomainValidationProperties>(property0.Value);
                             continue;
                         }
                     }

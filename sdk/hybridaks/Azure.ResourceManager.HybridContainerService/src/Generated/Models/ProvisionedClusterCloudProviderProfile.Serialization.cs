@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(InfraNetworkProfile))
             {
                 writer.WritePropertyName("infraNetworkProfile"u8);
-                writer.WriteObjectValue(InfraNetworkProfile, options);
+                ((IJsonModel<ProvisionedClusterInfraNetworkProfile>)InfraNetworkProfile).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    infraNetworkProfile = ProvisionedClusterInfraNetworkProfile.DeserializeProvisionedClusterInfraNetworkProfile(property.Value, options);
+                    infraNetworkProfile = ModelSerializationExtensions.JsonDeserialize<ProvisionedClusterInfraNetworkProfile>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

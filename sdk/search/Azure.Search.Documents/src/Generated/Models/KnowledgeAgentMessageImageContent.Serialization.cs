@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Agents.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("image"u8);
-            writer.WriteObjectValue(Image);
+            JsonSerializer.Serialize(writer, Image);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WriteEndObject();
@@ -35,7 +35,7 @@ namespace Azure.Search.Documents.Agents.Models
             {
                 if (property.NameEquals("image"u8))
                 {
-                    image = KnowledgeAgentMessageImageContentImage.DeserializeKnowledgeAgentMessageImageContentImage(property.Value);
+                    image = ModelSerializationExtensions.JsonDeserialize<KnowledgeAgentMessageImageContentImage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("controlPlaneProfile"u8);
-            writer.WriteObjectValue(ControlPlaneProfile, options);
+            ((IJsonModel<ProvisionedClusterPoolUpgradeProfile>)ControlPlaneProfile).Write(writer, options);
             writer.WriteEndObject();
         }
 
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HybridContainerService
                         }
                         if (property0.NameEquals("controlPlaneProfile"u8))
                         {
-                            controlPlaneProfile = ProvisionedClusterPoolUpgradeProfile.DeserializeProvisionedClusterPoolUpgradeProfile(property0.Value, options);
+                            controlPlaneProfile = ModelSerializationExtensions.JsonDeserialize<ProvisionedClusterPoolUpgradeProfile>(property0.Value);
                             continue;
                         }
                     }

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue(Credential, options);
+                ((IJsonModel<RunAsCredentialAssociationProperty>)Credential).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            credential = RunAsCredentialAssociationProperty.DeserializeRunAsCredentialAssociationProperty(property0.Value, options);
+                            credential = ModelSerializationExtensions.JsonDeserialize<RunAsCredentialAssociationProperty>(property0.Value);
                             continue;
                         }
                     }

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Resources != null)
                 {
                     writer.WritePropertyName("resources"u8);
-                    writer.WriteObjectValue(Resources, options);
+                    ((IJsonModel<SparkResourceConfiguration>)Resources).Write(writer, options);
                 }
                 else
                 {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WritePropertyName("codeId"u8);
             writer.WriteStringValue(CodeId);
             writer.WritePropertyName("entry"u8);
-            writer.WriteObjectValue(Entry, options);
+            ((IJsonModel<SparkJobEntry>)Entry).Write(writer, options);
             if (Optional.IsDefined(EnvironmentId))
             {
                 if (EnvironmentId != null)
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Inputs)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value, options);
+                        ((IJsonModel<MachineLearningJobInput>)item.Value).Write(writer, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Outputs)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value, options);
+                        ((IJsonModel<MachineLearningJobOutput>)item.Value).Write(writer, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (QueueSettings != null)
                 {
                     writer.WritePropertyName("queueSettings"u8);
-                    writer.WriteObjectValue(QueueSettings, options);
+                    ((IJsonModel<JobQueueSettings>)QueueSettings).Write(writer, options);
                 }
                 else
                 {
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         resources = null;
                         continue;
                     }
-                    resources = SparkResourceConfiguration.DeserializeSparkResourceConfiguration(property.Value, options);
+                    resources = ModelSerializationExtensions.JsonDeserialize<SparkResourceConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("args"u8))
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("entry"u8))
                 {
-                    entry = SparkJobEntry.DeserializeSparkJobEntry(property.Value, options);
+                    entry = ModelSerializationExtensions.JsonDeserialize<SparkJobEntry>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("environmentId"u8))
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         queueSettings = null;
                         continue;
                     }
-                    queueSettings = JobQueueSettings.DeserializeJobQueueSettings(property.Value, options);
+                    queueSettings = ModelSerializationExtensions.JsonDeserialize<JobQueueSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("environmentVariables"u8))
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         identity = null;
                         continue;
                     }
-                    identity = MachineLearningIdentityConfiguration.DeserializeMachineLearningIdentityConfiguration(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<MachineLearningIdentityConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("componentId"u8))
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         notificationSetting = null;
                         continue;
                     }
-                    notificationSetting = NotificationSetting.DeserializeNotificationSetting(property.Value, options);
+                    notificationSetting = ModelSerializationExtensions.JsonDeserialize<NotificationSetting>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))

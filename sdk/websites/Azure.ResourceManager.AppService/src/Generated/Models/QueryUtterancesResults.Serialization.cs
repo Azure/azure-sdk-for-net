@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Results)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<QueryUtterancesResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

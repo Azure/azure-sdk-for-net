@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (options.Format != "W" && Optional.IsDefined(ContainerRegistryCredentials))
             {
                 writer.WritePropertyName("containerRegistryCredentials"u8);
-                writer.WriteObjectValue(ContainerRegistryCredentials, options);
+                ((IJsonModel<MachineLearningContainerRegistryCredentials>)ContainerRegistryCredentials).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(NotebookAccessKeys))
             {
                 writer.WritePropertyName("notebookAccessKeys"u8);
-                writer.WriteObjectValue(NotebookAccessKeys, options);
+                ((IJsonModel<MachineLearningWorkspaceGetNotebookKeysResult>)NotebookAccessKeys).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    containerRegistryCredentials = MachineLearningContainerRegistryCredentials.DeserializeMachineLearningContainerRegistryCredentials(property.Value, options);
+                    containerRegistryCredentials = ModelSerializationExtensions.JsonDeserialize<MachineLearningContainerRegistryCredentials>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("notebookAccessKeys"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    notebookAccessKeys = MachineLearningWorkspaceGetNotebookKeysResult.DeserializeMachineLearningWorkspaceGetNotebookKeysResult(property.Value, options);
+                    notebookAccessKeys = ModelSerializationExtensions.JsonDeserialize<MachineLearningWorkspaceGetNotebookKeysResult>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

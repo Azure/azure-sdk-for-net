@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 writer.WriteStartArray();
                 foreach (var item in TypesMetadata)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CustomLocationEnabledResourceTypeMetadata>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

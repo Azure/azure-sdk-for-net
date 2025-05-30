@@ -49,17 +49,17 @@ namespace Azure.ResourceManager.Search
             if (Optional.IsDefined(NetworkSecurityPerimeter))
             {
                 writer.WritePropertyName("networkSecurityPerimeter"u8);
-                writer.WriteObjectValue(NetworkSecurityPerimeter, options);
+                ((IJsonModel<NspConfigPerimeter>)NetworkSecurityPerimeter).Write(writer, options);
             }
             if (Optional.IsDefined(ResourceAssociation))
             {
                 writer.WritePropertyName("resourceAssociation"u8);
-                writer.WriteObjectValue(ResourceAssociation, options);
+                ((IJsonModel<NspConfigAssociation>)ResourceAssociation).Write(writer, options);
             }
             if (Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
-                writer.WriteObjectValue(Profile, options);
+                ((IJsonModel<NspConfigProfile>)Profile).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ProvisioningIssues))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Search
                 writer.WriteStartArray();
                 foreach (var item in ProvisioningIssues)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NspProvisioningIssue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Search
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Search
                             {
                                 continue;
                             }
-                            networkSecurityPerimeter = NspConfigPerimeter.DeserializeNspConfigPerimeter(property0.Value, options);
+                            networkSecurityPerimeter = ModelSerializationExtensions.JsonDeserialize<NspConfigPerimeter>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resourceAssociation"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Search
                             {
                                 continue;
                             }
-                            resourceAssociation = NspConfigAssociation.DeserializeNspConfigAssociation(property0.Value, options);
+                            resourceAssociation = ModelSerializationExtensions.JsonDeserialize<NspConfigAssociation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("profile"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Search
                             {
                                 continue;
                             }
-                            profile = NspConfigProfile.DeserializeNspConfigProfile(property0.Value, options);
+                            profile = ModelSerializationExtensions.JsonDeserialize<NspConfigProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningIssues"u8))

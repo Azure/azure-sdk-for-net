@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<StorageCacheSkuName>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    sku = StorageCacheSkuName.DeserializeStorageCacheSkuName(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<StorageCacheSkuName>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 foreach (var item in ArtifactProfiles)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<ApplianceArtifactProfile>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 writer.WriteStartArray();
                 foreach (var item in Kubeconfigs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplianceCredentialKubeconfig>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 foreach (var item in SshKeys)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<ApplianceSshKey>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }

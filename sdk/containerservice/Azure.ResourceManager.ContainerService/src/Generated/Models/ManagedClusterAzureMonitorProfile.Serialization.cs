@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
-                writer.WriteObjectValue(Metrics, options);
+                ((IJsonModel<ManagedClusterMonitorProfileMetrics>)Metrics).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    metrics = ManagedClusterMonitorProfileMetrics.DeserializeManagedClusterMonitorProfileMetrics(property.Value, options);
+                    metrics = ModelSerializationExtensions.JsonDeserialize<ManagedClusterMonitorProfileMetrics>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

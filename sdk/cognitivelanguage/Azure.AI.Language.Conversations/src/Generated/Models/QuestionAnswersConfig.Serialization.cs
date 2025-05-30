@@ -62,7 +62,7 @@ namespace Azure.AI.Language.Conversations.Models
             if (Optional.IsDefined(AnswerContext))
             {
                 writer.WritePropertyName("context"u8);
-                writer.WriteObjectValue(AnswerContext, options);
+                ((IJsonModel<KnowledgeBaseAnswerContext>)AnswerContext).Write(writer, options);
             }
             if (Optional.IsDefined(RankerKind))
             {
@@ -72,12 +72,12 @@ namespace Azure.AI.Language.Conversations.Models
             if (Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
-                writer.WriteObjectValue(Filters, options);
+                ((IJsonModel<QueryFilters>)Filters).Write(writer, options);
             }
             if (Optional.IsDefined(ShortAnswerOptions))
             {
                 writer.WritePropertyName("answerSpanRequest"u8);
-                writer.WriteObjectValue(ShortAnswerOptions, options);
+                ((IJsonModel<ShortAnswerConfig>)ShortAnswerOptions).Write(writer, options);
             }
             if (Optional.IsDefined(IncludeUnstructuredSources))
             {
@@ -178,7 +178,7 @@ namespace Azure.AI.Language.Conversations.Models
                     {
                         continue;
                     }
-                    context = KnowledgeBaseAnswerContext.DeserializeKnowledgeBaseAnswerContext(property.Value, options);
+                    context = ModelSerializationExtensions.JsonDeserialize<KnowledgeBaseAnswerContext>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rankerType"u8))
@@ -196,7 +196,7 @@ namespace Azure.AI.Language.Conversations.Models
                     {
                         continue;
                     }
-                    filters = QueryFilters.DeserializeQueryFilters(property.Value, options);
+                    filters = ModelSerializationExtensions.JsonDeserialize<QueryFilters>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("answerSpanRequest"u8))
@@ -205,7 +205,7 @@ namespace Azure.AI.Language.Conversations.Models
                     {
                         continue;
                     }
-                    answerSpanRequest = ShortAnswerConfig.DeserializeShortAnswerConfig(property.Value, options);
+                    answerSpanRequest = ModelSerializationExtensions.JsonDeserialize<ShortAnswerConfig>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("includeUnstructuredSources"u8))

@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
-                writer.WriteObjectValue(SasToken);
+                JsonSerializer.Serialize(writer, SasToken);
             }
             writer.WriteEndObject();
         }
@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    sasToken = SecureString.DeserializeSecureString(property.Value);
+                    sasToken = ModelSerializationExtensions.JsonDeserialize<SecureString>(property.Value);
                     continue;
                 }
             }

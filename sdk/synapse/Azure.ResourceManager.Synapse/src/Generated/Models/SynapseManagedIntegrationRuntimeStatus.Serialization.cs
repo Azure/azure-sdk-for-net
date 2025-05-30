@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SynapseManagedIntegrationRuntimeNode>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -58,14 +58,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in OtherErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SynapseManagedIntegrationRuntimeError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(LastOperation))
             {
                 writer.WritePropertyName("lastOperation"u8);
-                writer.WriteObjectValue(LastOperation, options);
+                ((IJsonModel<SynapseManagedIntegrationRuntimeOperationResult>)LastOperation).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             {
                                 continue;
                             }
-                            lastOperation = SynapseManagedIntegrationRuntimeOperationResult.DeserializeSynapseManagedIntegrationRuntimeOperationResult(property0.Value, options);
+                            lastOperation = ModelSerializationExtensions.JsonDeserialize<SynapseManagedIntegrationRuntimeOperationResult>(property0.Value);
                             continue;
                         }
                     }

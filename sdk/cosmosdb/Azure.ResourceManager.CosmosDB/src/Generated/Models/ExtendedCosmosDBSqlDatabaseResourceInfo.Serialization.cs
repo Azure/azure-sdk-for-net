@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    restoreParameters = ResourceRestoreParameters.DeserializeResourceRestoreParameters(property.Value, options);
+                    restoreParameters = ModelSerializationExtensions.JsonDeserialize<ResourceRestoreParameters>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("createMode"u8))

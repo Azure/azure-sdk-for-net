@@ -37,7 +37,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(Classification))
             {
                 writer.WritePropertyName("classification"u8);
-                writer.WriteObjectValue(Classification, options);
+                ((IJsonModel<AtlasClassification>)Classification).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(EntityGuids))
             {
@@ -98,7 +98,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    classification = AtlasClassification.DeserializeAtlasClassification(property.Value, options);
+                    classification = ModelSerializationExtensions.JsonDeserialize<AtlasClassification>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("entityGuids"u8))

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in SystemServices)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<MachineLearningComputeSystemService>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (SslConfiguration != null)
                 {
                     writer.WritePropertyName("sslConfiguration"u8);
-                    writer.WriteObjectValue(SslConfiguration, options);
+                    ((IJsonModel<MachineLearningSslConfiguration>)SslConfiguration).Write(writer, options);
                 }
                 else
                 {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AksNetworkingConfiguration != null)
                 {
                     writer.WritePropertyName("aksNetworkingConfiguration"u8);
-                    writer.WriteObjectValue(AksNetworkingConfiguration, options);
+                    ((IJsonModel<MachineLearningAksNetworkingConfiguration>)AksNetworkingConfiguration).Write(writer, options);
                 }
                 else
                 {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         sslConfiguration = null;
                         continue;
                     }
-                    sslConfiguration = MachineLearningSslConfiguration.DeserializeMachineLearningSslConfiguration(property.Value, options);
+                    sslConfiguration = ModelSerializationExtensions.JsonDeserialize<MachineLearningSslConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("aksNetworkingConfiguration"u8))
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         aksNetworkingConfiguration = null;
                         continue;
                     }
-                    aksNetworkingConfiguration = MachineLearningAksNetworkingConfiguration.DeserializeMachineLearningAksNetworkingConfiguration(property.Value, options);
+                    aksNetworkingConfiguration = ModelSerializationExtensions.JsonDeserialize<MachineLearningAksNetworkingConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("loadBalancerType"u8))

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in RuleSets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SecurityAutomationRuleSet>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -49,11 +49,11 @@ namespace Azure.AI.Agents.Persistent
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             writer.WritePropertyName("step_details"u8);
-            writer.WriteObjectValue(StepDetails, options);
+            ((IJsonModel<RunStepDetails>)StepDetails).Write(writer, options);
             if (LastError != null)
             {
                 writer.WritePropertyName("last_error"u8);
-                writer.WriteObjectValue(LastError, options);
+                ((IJsonModel<RunStepError>)LastError).Write(writer, options);
             }
             else
             {
@@ -102,7 +102,7 @@ namespace Azure.AI.Agents.Persistent
                 if (Usage != null)
                 {
                     writer.WritePropertyName("usage"u8);
-                    writer.WriteObjectValue(Usage, options);
+                    ((IJsonModel<RunStepCompletionUsage>)Usage).Write(writer, options);
                 }
                 else
                 {
@@ -218,7 +218,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (property.NameEquals("step_details"u8))
                 {
-                    stepDetails = RunStepDetails.DeserializeRunStepDetails(property.Value, options);
+                    stepDetails = ModelSerializationExtensions.JsonDeserialize<RunStepDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("last_error"u8))
@@ -228,7 +228,7 @@ namespace Azure.AI.Agents.Persistent
                         lastError = null;
                         continue;
                     }
-                    lastError = RunStepError.DeserializeRunStepError(property.Value, options);
+                    lastError = ModelSerializationExtensions.JsonDeserialize<RunStepError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("created_at"u8))
@@ -263,7 +263,7 @@ namespace Azure.AI.Agents.Persistent
                         usage = null;
                         continue;
                     }
-                    usage = RunStepCompletionUsage.DeserializeRunStepCompletionUsage(property.Value, options);
+                    usage = ModelSerializationExtensions.JsonDeserialize<RunStepCompletionUsage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))

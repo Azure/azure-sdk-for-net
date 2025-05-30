@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WritePropertyName("vmSize"u8);
             writer.WriteStringValue(VmSize);
             writer.WritePropertyName("imageReference"u8);
-            writer.WriteObjectValue(ImageReference, options);
+            ((IJsonModel<SapImageReference>)ImageReference).Write(writer, options);
             writer.WritePropertyName("osProfile"u8);
-            writer.WriteObjectValue(OSProfile, options);
+            ((IJsonModel<SapOSProfile>)OSProfile).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (property.NameEquals("imageReference"u8))
                 {
-                    imageReference = SapImageReference.DeserializeSapImageReference(property.Value, options);
+                    imageReference = ModelSerializationExtensions.JsonDeserialize<SapImageReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("osProfile"u8))
                 {
-                    osProfile = SapOSProfile.DeserializeSapOSProfile(property.Value, options);
+                    osProfile = ModelSerializationExtensions.JsonDeserialize<SapOSProfile>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

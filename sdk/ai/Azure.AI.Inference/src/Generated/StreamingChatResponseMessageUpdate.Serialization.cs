@@ -49,7 +49,7 @@ namespace Azure.AI.Inference
                 writer.WriteStartArray();
                 foreach (var item in ToolCalls)
                 {
-                    writer.WriteObjectValue<StreamingChatResponseToolCallUpdate>(item, options);
+                    ((IJsonModel<StreamingChatResponseToolCallUpdate>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

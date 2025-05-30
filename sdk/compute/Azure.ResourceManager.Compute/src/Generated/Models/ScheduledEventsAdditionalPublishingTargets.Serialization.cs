@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(EventGridAndResourceGraph))
             {
                 writer.WritePropertyName("eventGridAndResourceGraph"u8);
-                writer.WriteObjectValue(EventGridAndResourceGraph, options);
+                ((IJsonModel<EventGridAndResourceGraph>)EventGridAndResourceGraph).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    eventGridAndResourceGraph = EventGridAndResourceGraph.DeserializeEventGridAndResourceGraph(property.Value, options);
+                    eventGridAndResourceGraph = ModelSerializationExtensions.JsonDeserialize<EventGridAndResourceGraph>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

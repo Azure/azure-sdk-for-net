@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Datadog.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<MonitorUpdateProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Datadog.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<ResourceSku>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    properties = MonitorUpdateProperties.DeserializeMonitorUpdateProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<MonitorUpdateProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    sku = ResourceSku.DeserializeResourceSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<ResourceSku>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

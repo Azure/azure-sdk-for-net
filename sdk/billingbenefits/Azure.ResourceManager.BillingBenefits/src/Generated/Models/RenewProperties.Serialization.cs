@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (Optional.IsDefined(PurchaseProperties))
             {
                 writer.WritePropertyName("purchaseProperties"u8);
-                writer.WriteObjectValue(PurchaseProperties, options);
+                ((IJsonModel<BillingBenefitsPurchaseContent>)PurchaseProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    purchaseProperties = BillingBenefitsPurchaseContent.DeserializeBillingBenefitsPurchaseContent(property.Value, options);
+                    purchaseProperties = ModelSerializationExtensions.JsonDeserialize<BillingBenefitsPurchaseContent>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

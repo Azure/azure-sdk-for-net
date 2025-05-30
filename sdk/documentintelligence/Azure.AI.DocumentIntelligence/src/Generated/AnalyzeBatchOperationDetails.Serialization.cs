@@ -53,12 +53,12 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<DocumentIntelligenceError>)Error).Write(writer, options);
             }
             if (Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
-                writer.WriteObjectValue(Result, options);
+                ((IJsonModel<AnalyzeBatchResult>)Result).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -143,7 +143,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    error = DocumentIntelligenceError.DeserializeDocumentIntelligenceError(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<DocumentIntelligenceError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("result"u8))
@@ -152,7 +152,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    result = AnalyzeBatchResult.DeserializeAnalyzeBatchResult(property.Value, options);
+                    result = ModelSerializationExtensions.JsonDeserialize<AnalyzeBatchResult>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

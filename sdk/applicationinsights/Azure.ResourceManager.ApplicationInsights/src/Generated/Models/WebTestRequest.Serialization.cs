@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Headers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WebTestRequestHeaderField>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

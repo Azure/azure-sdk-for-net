@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<ApiManagementAuthorizationError>)Error).Write(writer, options);
             }
             if (Optional.IsDefined(Status))
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            error = ApiManagementAuthorizationError.DeserializeApiManagementAuthorizationError(property0.Value, options);
+                            error = ModelSerializationExtensions.JsonDeserialize<ApiManagementAuthorizationError>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))

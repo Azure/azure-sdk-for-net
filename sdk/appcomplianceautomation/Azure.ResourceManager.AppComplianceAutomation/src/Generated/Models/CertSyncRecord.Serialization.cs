@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in Controls)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ControlSyncRecord>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

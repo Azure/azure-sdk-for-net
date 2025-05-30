@@ -30,7 +30,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
                     {
                         continue;
                     }
-                    results = SentimentResponse.DeserializeSentimentResponse(property.Value);
+                    results = ModelSerializationExtensions.JsonDeserialize<SentimentResponse>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lastUpdateDateTime"u8))

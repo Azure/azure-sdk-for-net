@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Analysis.Models
             writer.WriteStartArray();
             foreach (var item in AnalysisResources)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<AnalysisServerData>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

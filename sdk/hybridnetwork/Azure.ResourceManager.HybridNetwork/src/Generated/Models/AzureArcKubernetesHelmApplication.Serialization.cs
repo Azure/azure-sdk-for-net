@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(ArtifactProfile))
             {
                 writer.WritePropertyName("artifactProfile"u8);
-                writer.WriteObjectValue(ArtifactProfile, options);
+                ((IJsonModel<AzureArcKubernetesArtifactProfile>)ArtifactProfile).Write(writer, options);
             }
             if (Optional.IsDefined(DeployParametersMappingRuleProfile))
             {
                 writer.WritePropertyName("deployParametersMappingRuleProfile"u8);
-                writer.WriteObjectValue(DeployParametersMappingRuleProfile, options);
+                ((IJsonModel<AzureArcKubernetesDeployMappingRuleProfile>)DeployParametersMappingRuleProfile).Write(writer, options);
             }
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    artifactProfile = AzureArcKubernetesArtifactProfile.DeserializeAzureArcKubernetesArtifactProfile(property.Value, options);
+                    artifactProfile = ModelSerializationExtensions.JsonDeserialize<AzureArcKubernetesArtifactProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deployParametersMappingRuleProfile"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    deployParametersMappingRuleProfile = AzureArcKubernetesDeployMappingRuleProfile.DeserializeAzureArcKubernetesDeployMappingRuleProfile(property.Value, options);
+                    deployParametersMappingRuleProfile = ModelSerializationExtensions.JsonDeserialize<AzureArcKubernetesDeployMappingRuleProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("artifactType"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    dependsOnProfile = DependsOnProfile.DeserializeDependsOnProfile(property.Value, options);
+                    dependsOnProfile = ModelSerializationExtensions.JsonDeserialize<DependsOnProfile>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

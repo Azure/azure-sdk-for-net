@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             if (Optional.IsDefined(VnetConfiguration))
             {
                 writer.WritePropertyName("vnetConfiguration"u8);
-                writer.WriteObjectValue(VnetConfiguration, options);
+                ((IJsonModel<FirewallVnetConfiguration>)VnetConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(VwanConfiguration))
             {
                 writer.WritePropertyName("vwanConfiguration"u8);
-                writer.WriteObjectValue(VwanConfiguration, options);
+                ((IJsonModel<FirewallVwanConfiguration>)VwanConfiguration).Write(writer, options);
             }
             writer.WritePropertyName("networkType"u8);
             writer.WriteStringValue(NetworkType.ToString());
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteStartArray();
             foreach (var item in PublicIPs)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<IPAddressInfo>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("enableEgressNat"u8);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WriteStartArray();
                 foreach (var item in EgressNatIP)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IPAddressInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    vnetConfiguration = FirewallVnetConfiguration.DeserializeFirewallVnetConfiguration(property.Value, options);
+                    vnetConfiguration = ModelSerializationExtensions.JsonDeserialize<FirewallVnetConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vwanConfiguration"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    vwanConfiguration = FirewallVwanConfiguration.DeserializeFirewallVwanConfiguration(property.Value, options);
+                    vwanConfiguration = ModelSerializationExtensions.JsonDeserialize<FirewallVwanConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("networkType"u8))

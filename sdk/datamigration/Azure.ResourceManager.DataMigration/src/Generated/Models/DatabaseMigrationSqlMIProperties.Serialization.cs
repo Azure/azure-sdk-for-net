@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(MigrationStatusDetails))
             {
                 writer.WritePropertyName("migrationStatusDetails"u8);
-                writer.WriteObjectValue(MigrationStatusDetails, options);
+                ((IJsonModel<MigrationStatusDetails>)MigrationStatusDetails).Write(writer, options);
             }
             if (Optional.IsDefined(BackupConfiguration))
             {
                 writer.WritePropertyName("backupConfiguration"u8);
-                writer.WriteObjectValue(BackupConfiguration, options);
+                ((IJsonModel<BackupConfiguration>)BackupConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(OfflineConfiguration))
             {
                 writer.WritePropertyName("offlineConfiguration"u8);
-                writer.WriteObjectValue(OfflineConfiguration, options);
+                ((IJsonModel<OfflineConfiguration>)OfflineConfiguration).Write(writer, options);
             }
         }
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    migrationStatusDetails = MigrationStatusDetails.DeserializeMigrationStatusDetails(property.Value, options);
+                    migrationStatusDetails = ModelSerializationExtensions.JsonDeserialize<MigrationStatusDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("backupConfiguration"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    backupConfiguration = BackupConfiguration.DeserializeBackupConfiguration(property.Value, options);
+                    backupConfiguration = ModelSerializationExtensions.JsonDeserialize<BackupConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("offlineConfiguration"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    offlineConfiguration = OfflineConfiguration.DeserializeOfflineConfiguration(property.Value, options);
+                    offlineConfiguration = ModelSerializationExtensions.JsonDeserialize<OfflineConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    sourceSqlConnection = SqlConnectionInformation.DeserializeSqlConnectionInformation(property.Value, options);
+                    sourceSqlConnection = ModelSerializationExtensions.JsonDeserialize<SqlConnectionInformation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sourceDatabaseName"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    migrationFailureError = ErrorInfo.DeserializeErrorInfo(property.Value, options);
+                    migrationFailureError = ModelSerializationExtensions.JsonDeserialize<ErrorInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetDatabaseCollation"u8))

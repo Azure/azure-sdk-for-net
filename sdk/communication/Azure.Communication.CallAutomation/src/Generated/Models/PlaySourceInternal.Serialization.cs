@@ -25,17 +25,17 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(File))
             {
                 writer.WritePropertyName("file"u8);
-                writer.WriteObjectValue(File);
+                JsonSerializer.Serialize(writer, File);
             }
             if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
-                writer.WriteObjectValue(Text);
+                JsonSerializer.Serialize(writer, Text);
             }
             if (Optional.IsDefined(Ssml))
             {
                 writer.WritePropertyName("ssml"u8);
-                writer.WriteObjectValue(Ssml);
+                JsonSerializer.Serialize(writer, Ssml);
             }
             writer.WriteEndObject();
         }

@@ -39,7 +39,7 @@ namespace Azure.Communication.Messages
             writer.WriteStartArray();
             foreach (var item in Contacts)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ConversationContact>)item).Write(writer, options);
             }
             writer.WriteEndArray();
         }

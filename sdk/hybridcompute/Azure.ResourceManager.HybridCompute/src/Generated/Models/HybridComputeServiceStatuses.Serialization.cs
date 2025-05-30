@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(ExtensionService))
             {
                 writer.WritePropertyName("extensionService"u8);
-                writer.WriteObjectValue(ExtensionService, options);
+                ((IJsonModel<HybridComputeServiceStatus>)ExtensionService).Write(writer, options);
             }
             if (Optional.IsDefined(GuestConfigurationService))
             {
                 writer.WritePropertyName("guestConfigurationService"u8);
-                writer.WriteObjectValue(GuestConfigurationService, options);
+                ((IJsonModel<HybridComputeServiceStatus>)GuestConfigurationService).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    extensionService = HybridComputeServiceStatus.DeserializeHybridComputeServiceStatus(property.Value, options);
+                    extensionService = ModelSerializationExtensions.JsonDeserialize<HybridComputeServiceStatus>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("guestConfigurationService"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    guestConfigurationService = HybridComputeServiceStatus.DeserializeHybridComputeServiceStatus(property.Value, options);
+                    guestConfigurationService = ModelSerializationExtensions.JsonDeserialize<HybridComputeServiceStatus>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -36,7 +36,7 @@ namespace Azure.Communication.Messages
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("template"u8);
-            writer.WriteObjectValue(Template, options);
+            ((IJsonModel<MessageTemplate>)Template).Write(writer, options);
         }
 
         TemplateNotificationContent IJsonModel<TemplateNotificationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -69,7 +69,7 @@ namespace Azure.Communication.Messages
             {
                 if (property.NameEquals("template"u8))
                 {
-                    template = MessageTemplate.DeserializeMessageTemplate(property.Value, options);
+                    template = ModelSerializationExtensions.JsonDeserialize<MessageTemplate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("channelRegistrationId"u8))

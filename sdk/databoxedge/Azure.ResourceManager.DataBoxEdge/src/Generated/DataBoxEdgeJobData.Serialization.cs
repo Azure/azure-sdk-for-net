@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<DataBoxEdgeJobErrorDetails>)Error).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (options.Format != "W" && Optional.IsDefined(DownloadProgress))
             {
                 writer.WritePropertyName("downloadProgress"u8);
-                writer.WriteObjectValue(DownloadProgress, options);
+                ((IJsonModel<UpdateDownloadProgress>)DownloadProgress).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(InstallProgress))
             {
                 writer.WritePropertyName("installProgress"u8);
-                writer.WriteObjectValue(InstallProgress, options);
+                ((IJsonModel<UpdateInstallProgress>)InstallProgress).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TotalRefreshErrors))
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     {
                         continue;
                     }
-                    error = DataBoxEdgeJobErrorDetails.DeserializeDataBoxEdgeJobErrorDetails(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<DataBoxEdgeJobErrorDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            downloadProgress = UpdateDownloadProgress.DeserializeUpdateDownloadProgress(property0.Value, options);
+                            downloadProgress = ModelSerializationExtensions.JsonDeserialize<UpdateDownloadProgress>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("installProgress"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            installProgress = UpdateInstallProgress.DeserializeUpdateInstallProgress(property0.Value, options);
+                            installProgress = ModelSerializationExtensions.JsonDeserialize<UpdateInstallProgress>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("totalRefreshErrors"u8))

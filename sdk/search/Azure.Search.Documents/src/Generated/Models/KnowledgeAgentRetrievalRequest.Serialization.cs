@@ -19,7 +19,7 @@ namespace Azure.Search.Documents.Agents.Models
             writer.WriteStartArray();
             foreach (var item in Messages)
             {
-                writer.WriteObjectValue(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(TargetIndexParams))
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Agents.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetIndexParams)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }

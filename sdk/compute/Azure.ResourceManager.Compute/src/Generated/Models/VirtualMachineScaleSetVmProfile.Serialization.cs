@@ -38,32 +38,32 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile, options);
+                ((IJsonModel<VirtualMachineScaleSetOSProfile>)OSProfile).Write(writer, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile, options);
+                ((IJsonModel<VirtualMachineScaleSetStorageProfile>)StorageProfile).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile, options);
+                ((IJsonModel<VirtualMachineScaleSetNetworkProfile>)NetworkProfile).Write(writer, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile, options);
+                ((IJsonModel<SecurityProfile>)SecurityProfile).Write(writer, options);
             }
             if (Optional.IsDefined(DiagnosticsProfile))
             {
                 writer.WritePropertyName("diagnosticsProfile"u8);
-                writer.WriteObjectValue(DiagnosticsProfile, options);
+                ((IJsonModel<DiagnosticsProfile>)DiagnosticsProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ExtensionProfile))
             {
                 writer.WritePropertyName("extensionProfile"u8);
-                writer.WriteObjectValue(ExtensionProfile, options);
+                ((IJsonModel<VirtualMachineScaleSetExtensionProfile>)ExtensionProfile).Write(writer, options);
             }
             if (Optional.IsDefined(LicenseType))
             {
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(BillingProfile))
             {
                 writer.WritePropertyName("billingProfile"u8);
-                writer.WriteObjectValue(BillingProfile, options);
+                ((IJsonModel<BillingProfile>)BillingProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ScheduledEventsProfile))
             {
                 writer.WritePropertyName("scheduledEventsProfile"u8);
-                writer.WriteObjectValue(ScheduledEventsProfile, options);
+                ((IJsonModel<ComputeScheduledEventsProfile>)ScheduledEventsProfile).Write(writer, options);
             }
             if (Optional.IsDefined(UserData))
             {
@@ -98,27 +98,27 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(CapacityReservation))
             {
                 writer.WritePropertyName("capacityReservation"u8);
-                writer.WriteObjectValue(CapacityReservation, options);
+                ((IJsonModel<CapacityReservationProfile>)CapacityReservation).Write(writer, options);
             }
             if (Optional.IsDefined(ApplicationProfile))
             {
                 writer.WritePropertyName("applicationProfile"u8);
-                writer.WriteObjectValue(ApplicationProfile, options);
+                ((IJsonModel<ApplicationProfile>)ApplicationProfile).Write(writer, options);
             }
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile, options);
+                ((IJsonModel<VirtualMachineScaleSetHardwareProfile>)HardwareProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ServiceArtifactReference))
             {
                 writer.WritePropertyName("serviceArtifactReference"u8);
-                JsonSerializer.Serialize(writer, ServiceArtifactReference);
+                ((IJsonModel<WritableSubResource>)ServiceArtifactReference).Write(writer, options);
             }
             if (Optional.IsDefined(SecurityPostureReference))
             {
                 writer.WritePropertyName("securityPostureReference"u8);
-                writer.WriteObjectValue(SecurityPostureReference, options);
+                ((IJsonModel<ComputeSecurityPostureReference>)SecurityPostureReference).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TimeCreated))
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osProfile = VirtualMachineScaleSetOSProfile.DeserializeVirtualMachineScaleSetOSProfile(property.Value, options);
+                    osProfile = ModelSerializationExtensions.JsonDeserialize<VirtualMachineScaleSetOSProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storageProfile"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    storageProfile = VirtualMachineScaleSetStorageProfile.DeserializeVirtualMachineScaleSetStorageProfile(property.Value, options);
+                    storageProfile = ModelSerializationExtensions.JsonDeserialize<VirtualMachineScaleSetStorageProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("networkProfile"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    networkProfile = VirtualMachineScaleSetNetworkProfile.DeserializeVirtualMachineScaleSetNetworkProfile(property.Value, options);
+                    networkProfile = ModelSerializationExtensions.JsonDeserialize<VirtualMachineScaleSetNetworkProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("securityProfile"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    securityProfile = SecurityProfile.DeserializeSecurityProfile(property.Value, options);
+                    securityProfile = ModelSerializationExtensions.JsonDeserialize<SecurityProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("diagnosticsProfile"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    diagnosticsProfile = DiagnosticsProfile.DeserializeDiagnosticsProfile(property.Value, options);
+                    diagnosticsProfile = ModelSerializationExtensions.JsonDeserialize<DiagnosticsProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extensionProfile"u8))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    extensionProfile = VirtualMachineScaleSetExtensionProfile.DeserializeVirtualMachineScaleSetExtensionProfile(property.Value, options);
+                    extensionProfile = ModelSerializationExtensions.JsonDeserialize<VirtualMachineScaleSetExtensionProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("licenseType"u8))
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    billingProfile = BillingProfile.DeserializeBillingProfile(property.Value, options);
+                    billingProfile = ModelSerializationExtensions.JsonDeserialize<BillingProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scheduledEventsProfile"u8))
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    scheduledEventsProfile = ComputeScheduledEventsProfile.DeserializeComputeScheduledEventsProfile(property.Value, options);
+                    scheduledEventsProfile = ModelSerializationExtensions.JsonDeserialize<ComputeScheduledEventsProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userData"u8))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    capacityReservation = CapacityReservationProfile.DeserializeCapacityReservationProfile(property.Value, options);
+                    capacityReservation = ModelSerializationExtensions.JsonDeserialize<CapacityReservationProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("applicationProfile"u8))
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    applicationProfile = ApplicationProfile.DeserializeApplicationProfile(property.Value, options);
+                    applicationProfile = ModelSerializationExtensions.JsonDeserialize<ApplicationProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("hardwareProfile"u8))
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    hardwareProfile = VirtualMachineScaleSetHardwareProfile.DeserializeVirtualMachineScaleSetHardwareProfile(property.Value, options);
+                    hardwareProfile = ModelSerializationExtensions.JsonDeserialize<VirtualMachineScaleSetHardwareProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("serviceArtifactReference"u8))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    serviceArtifactReference = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    serviceArtifactReference = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("securityPostureReference"u8))
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    securityPostureReference = ComputeSecurityPostureReference.DeserializeComputeSecurityPostureReference(property.Value, options);
+                    securityPostureReference = ModelSerializationExtensions.JsonDeserialize<ComputeSecurityPostureReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("timeCreated"u8))

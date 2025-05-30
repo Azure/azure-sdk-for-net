@@ -27,7 +27,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    maximum = WeatherValueYear.DeserializeWeatherValueYear(property.Value);
+                    maximum = ModelSerializationExtensions.JsonDeserialize<WeatherValueYear>(property.Value);
                     continue;
                 }
             }

@@ -62,7 +62,7 @@ namespace Azure.AI.Projects
             if (options.Format != "W")
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials, options);
+                ((IJsonModel<BaseCredentials>)Credentials).Write(writer, options);
             }
             if (options.Format != "W")
             {
@@ -150,7 +150,7 @@ namespace Azure.AI.Projects
                 }
                 if (property.NameEquals("credentials"u8))
                 {
-                    credentials = BaseCredentials.DeserializeBaseCredentials(property.Value, options);
+                    credentials = ModelSerializationExtensions.JsonDeserialize<BaseCredentials>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))

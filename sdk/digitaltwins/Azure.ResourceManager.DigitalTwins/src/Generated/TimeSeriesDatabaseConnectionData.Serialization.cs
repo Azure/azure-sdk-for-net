@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DigitalTwins
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<TimeSeriesDatabaseConnectionProperties>)Properties).Write(writer, options);
             }
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DigitalTwins
                     {
                         continue;
                     }
-                    properties = TimeSeriesDatabaseConnectionProperties.DeserializeTimeSeriesDatabaseConnectionProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<TimeSeriesDatabaseConnectionProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DigitalTwins
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

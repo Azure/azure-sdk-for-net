@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(CatalogAdminPassword))
             {
                 writer.WritePropertyName("catalogAdminPassword"u8);
-                writer.WriteObjectValue(CatalogAdminPassword, options);
+                ((IJsonModel<SynapseSecureString>)CatalogAdminPassword).Write(writer, options);
             }
             if (Optional.IsDefined(CatalogPricingTier))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    catalogAdminPassword = SynapseSecureString.DeserializeSynapseSecureString(property.Value, options);
+                    catalogAdminPassword = ModelSerializationExtensions.JsonDeserialize<SynapseSecureString>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("catalogPricingTier"u8))

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in Summary)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MoverSummaryItemInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

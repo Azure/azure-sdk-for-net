@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CdnOriginGroupData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

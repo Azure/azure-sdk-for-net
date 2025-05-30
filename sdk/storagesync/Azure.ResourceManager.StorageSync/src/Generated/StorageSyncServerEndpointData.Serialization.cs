@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.StorageSync
             if (options.Format != "W" && Optional.IsDefined(SyncStatus))
             {
                 writer.WritePropertyName("syncStatus"u8);
-                writer.WriteObjectValue(SyncStatus, options);
+                ((IJsonModel<ServerEndpointSyncStatus>)SyncStatus).Write(writer, options);
             }
             if (Optional.IsDefined(OfflineDataTransfer))
             {
@@ -112,12 +112,12 @@ namespace Azure.ResourceManager.StorageSync
             if (options.Format != "W" && Optional.IsDefined(CloudTieringStatus))
             {
                 writer.WritePropertyName("cloudTieringStatus"u8);
-                writer.WriteObjectValue(CloudTieringStatus, options);
+                ((IJsonModel<ServerEndpointCloudTieringStatus>)CloudTieringStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RecallStatus))
             {
                 writer.WritePropertyName("recallStatus"u8);
-                writer.WriteObjectValue(RecallStatus, options);
+                ((IJsonModel<ServerEndpointRecallStatus>)RecallStatus).Write(writer, options);
             }
             if (Optional.IsDefined(InitialDownloadPolicy))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.StorageSync
             if (Optional.IsDefined(ServerEndpointProvisioningStatus))
             {
                 writer.WritePropertyName("serverEndpointProvisioningStatus"u8);
-                writer.WriteObjectValue(ServerEndpointProvisioningStatus, options);
+                ((IJsonModel<StorageSyncServerEndpointProvisioningStatus>)ServerEndpointProvisioningStatus).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.StorageSync
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.StorageSync
                             {
                                 continue;
                             }
-                            syncStatus = ServerEndpointSyncStatus.DeserializeServerEndpointSyncStatus(property0.Value, options);
+                            syncStatus = ModelSerializationExtensions.JsonDeserialize<ServerEndpointSyncStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("offlineDataTransfer"u8))
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.StorageSync
                             {
                                 continue;
                             }
-                            cloudTieringStatus = ServerEndpointCloudTieringStatus.DeserializeServerEndpointCloudTieringStatus(property0.Value, options);
+                            cloudTieringStatus = ModelSerializationExtensions.JsonDeserialize<ServerEndpointCloudTieringStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("recallStatus"u8))
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.StorageSync
                             {
                                 continue;
                             }
-                            recallStatus = ServerEndpointRecallStatus.DeserializeServerEndpointRecallStatus(property0.Value, options);
+                            recallStatus = ModelSerializationExtensions.JsonDeserialize<ServerEndpointRecallStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("initialDownloadPolicy"u8))
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.StorageSync
                             {
                                 continue;
                             }
-                            serverEndpointProvisioningStatus = StorageSyncServerEndpointProvisioningStatus.DeserializeStorageSyncServerEndpointProvisioningStatus(property0.Value, options);
+                            serverEndpointProvisioningStatus = ModelSerializationExtensions.JsonDeserialize<StorageSyncServerEndpointProvisioningStatus>(property0.Value);
                             continue;
                         }
                     }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 writer.WriteStringValue(Version);
             }
             writer.WritePropertyName("schemaRegistryRef"u8);
-            writer.WriteObjectValue(SchemaRegistryRef, options);
+            ((IJsonModel<SchemaRegistryRef>)SchemaRegistryRef).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 }
                 if (property.NameEquals("schemaRegistryRef"u8))
                 {
-                    schemaRegistryRef = SchemaRegistryRef.DeserializeSchemaRegistryRef(property.Value, options);
+                    schemaRegistryRef = ModelSerializationExtensions.JsonDeserialize<SchemaRegistryRef>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

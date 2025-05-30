@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("sparkJob"u8);
-            writer.WriteObjectValue(SparkJob, options);
+            ((IJsonModel<SynapseSparkJobReference>)SparkJob).Write(writer, options);
             if (Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("args"u8);
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(File))
             {
                 writer.WritePropertyName("file"u8);
-                JsonSerializer.Serialize(writer, File);
+                ((IJsonModel<DataFactoryElement<T>>)File).Write(writer, options);
             }
             if (Optional.IsDefined(ScanFolder))
             {
                 writer.WritePropertyName("scanFolder"u8);
-                JsonSerializer.Serialize(writer, ScanFolder);
+                ((IJsonModel<DataFactoryElement<T>>)ScanFolder).Write(writer, options);
             }
             if (Optional.IsDefined(ClassName))
             {
                 writer.WritePropertyName("className"u8);
-                JsonSerializer.Serialize(writer, ClassName);
+                ((IJsonModel<DataFactoryElement<T>>)ClassName).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Files))
             {
@@ -146,12 +146,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TargetBigDataPool))
             {
                 writer.WritePropertyName("targetBigDataPool"u8);
-                writer.WriteObjectValue(TargetBigDataPool, options);
+                ((IJsonModel<BigDataPoolParametrizationReference>)TargetBigDataPool).Write(writer, options);
             }
             if (Optional.IsDefined(ExecutorSize))
             {
                 writer.WritePropertyName("executorSize"u8);
-                JsonSerializer.Serialize(writer, ExecutorSize);
+                ((IJsonModel<DataFactoryElement<T>>)ExecutorSize).Write(writer, options);
             }
             if (Optional.IsDefined(Conf))
             {
@@ -168,12 +168,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DriverSize))
             {
                 writer.WritePropertyName("driverSize"u8);
-                JsonSerializer.Serialize(writer, DriverSize);
+                ((IJsonModel<DataFactoryElement<T>>)DriverSize).Write(writer, options);
             }
             if (Optional.IsDefined(NumExecutors))
             {
                 writer.WritePropertyName("numExecutors"u8);
-                JsonSerializer.Serialize(writer, NumExecutors);
+                ((IJsonModel<DataFactoryElement<T>>)NumExecutors).Write(writer, options);
             }
             if (Optional.IsDefined(ConfigurationType))
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TargetSparkConfiguration))
             {
                 writer.WritePropertyName("targetSparkConfiguration"u8);
-                writer.WriteObjectValue(TargetSparkConfiguration, options);
+                ((IJsonModel<SparkConfigurationParametrizationReference>)TargetSparkConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(SparkConfig))
             {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
+                    policy = ModelSerializationExtensions.JsonDeserialize<PipelineActivityPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("sparkJob"u8))
                         {
-                            sparkJob = SynapseSparkJobReference.DeserializeSynapseSparkJobReference(property0.Value, options);
+                            sparkJob = ModelSerializationExtensions.JsonDeserialize<SynapseSparkJobReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("args"u8))
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            file = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            file = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("scanFolder"u8))
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            scanFolder = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            scanFolder = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("className"u8))
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            className = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            className = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("files"u8))
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            targetBigDataPool = BigDataPoolParametrizationReference.DeserializeBigDataPoolParametrizationReference(property0.Value, options);
+                            targetBigDataPool = ModelSerializationExtensions.JsonDeserialize<BigDataPoolParametrizationReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("executorSize"u8))
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            executorSize = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            executorSize = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("conf"u8))
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            driverSize = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            driverSize = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("numExecutors"u8))
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            numExecutors = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            numExecutors = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("configurationType"u8))
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            targetSparkConfiguration = SparkConfigurationParametrizationReference.DeserializeSparkConfigurationParametrizationReference(property0.Value, options);
+                            targetSparkConfiguration = ModelSerializationExtensions.JsonDeserialize<SparkConfigurationParametrizationReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sparkConfig"u8))

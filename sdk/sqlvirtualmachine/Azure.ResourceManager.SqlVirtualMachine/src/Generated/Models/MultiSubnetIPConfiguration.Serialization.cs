@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WritePropertyName("privateIpAddress"u8);
-            writer.WriteObjectValue(PrivateIPAddress, options);
+            ((IJsonModel<AvailabilityGroupListenerPrivateIPAddress>)PrivateIPAddress).Write(writer, options);
             writer.WritePropertyName("sqlVirtualMachineInstance"u8);
             writer.WriteStringValue(SqlVmInstance);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 if (property.NameEquals("privateIpAddress"u8))
                 {
-                    privateIPAddress = AvailabilityGroupListenerPrivateIPAddress.DeserializeAvailabilityGroupListenerPrivateIPAddress(property.Value, options);
+                    privateIPAddress = ModelSerializationExtensions.JsonDeserialize<AvailabilityGroupListenerPrivateIPAddress>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sqlVirtualMachineInstance"u8))

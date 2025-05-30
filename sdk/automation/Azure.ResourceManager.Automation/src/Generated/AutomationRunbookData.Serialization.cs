@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(PublishContentLink))
             {
                 writer.WritePropertyName("publishContentLink"u8);
-                writer.WriteObjectValue(PublishContentLink, options);
+                ((IJsonModel<AutomationContentLink>)PublishContentLink).Write(writer, options);
             }
             if (Optional.IsDefined(State))
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Automation
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<RunbookParameterDefinition>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Draft))
             {
                 writer.WritePropertyName("draft"u8);
-                writer.WriteObjectValue(Draft, options);
+                ((IJsonModel<AutomationRunbookDraft>)Draft).Write(writer, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            publishContentLink = AutomationContentLink.DeserializeAutomationContentLink(property0.Value, options);
+                            publishContentLink = ModelSerializationExtensions.JsonDeserialize<AutomationContentLink>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("state"u8))
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            draft = AutomationRunbookDraft.DeserializeAutomationRunbookDraft(property0.Value, options);
+                            draft = ModelSerializationExtensions.JsonDeserialize<AutomationRunbookDraft>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

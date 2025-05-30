@@ -42,9 +42,9 @@ namespace Azure.AI.Language.Conversations.Authoring
             writer.WritePropertyName("language"u8);
             writer.WriteStringValue(Language);
             writer.WritePropertyName("entitiesResult"u8);
-            writer.WriteObjectValue(EntitiesResult, options);
+            ((IJsonModel<UtteranceEntitiesEvaluationResult>)EntitiesResult).Write(writer, options);
             writer.WritePropertyName("intentsResult"u8);
-            writer.WriteObjectValue(IntentsResult, options);
+            ((IJsonModel<UtteranceIntentsEvaluationResult>)IntentsResult).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -102,12 +102,12 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
                 if (property.NameEquals("entitiesResult"u8))
                 {
-                    entitiesResult = UtteranceEntitiesEvaluationResult.DeserializeUtteranceEntitiesEvaluationResult(property.Value, options);
+                    entitiesResult = ModelSerializationExtensions.JsonDeserialize<UtteranceEntitiesEvaluationResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("intentsResult"u8))
                 {
-                    intentsResult = UtteranceIntentsEvaluationResult.DeserializeUtteranceIntentsEvaluationResult(property.Value, options);
+                    intentsResult = ModelSerializationExtensions.JsonDeserialize<UtteranceIntentsEvaluationResult>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

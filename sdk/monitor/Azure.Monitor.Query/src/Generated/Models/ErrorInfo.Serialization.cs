@@ -55,7 +55,7 @@ namespace Azure.Monitor.Query.Models
                     {
                         continue;
                     }
-                    innererror = DeserializeErrorInfo(property.Value);
+                    innererror = ModelSerializationExtensions.JsonDeserialize<ErrorInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("additionalProperties"u8))

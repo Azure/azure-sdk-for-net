@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<SqlSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(PerDatabaseSettings))
             {
                 writer.WritePropertyName("perDatabaseSettings"u8);
-                writer.WriteObjectValue(PerDatabaseSettings, options);
+                ((IJsonModel<ElasticPoolPerDatabaseSettings>)PerDatabaseSettings).Write(writer, options);
             }
             if (Optional.IsDefined(IsZoneRedundant))
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    sku = SqlSku.DeserializeSqlSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<SqlSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            perDatabaseSettings = ElasticPoolPerDatabaseSettings.DeserializeElasticPoolPerDatabaseSettings(property0.Value, options);
+                            perDatabaseSettings = ModelSerializationExtensions.JsonDeserialize<ElasticPoolPerDatabaseSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("zoneRedundant"u8))

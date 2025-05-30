@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ServiceSpecification))
             {
                 writer.WritePropertyName("serviceSpecification"u8);
-                writer.WriteObjectValue(ServiceSpecification, options);
+                ((IJsonModel<ServiceSpecification>)ServiceSpecification).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    serviceSpecification = ServiceSpecification.DeserializeServiceSpecification(property.Value, options);
+                    serviceSpecification = ModelSerializationExtensions.JsonDeserialize<ServiceSpecification>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

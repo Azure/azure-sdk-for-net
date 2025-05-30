@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             if (Optional.IsDefined(LogRules))
             {
                 writer.WritePropertyName("logRules"u8);
-                writer.WriteObjectValue(LogRules, options);
+                ((IJsonModel<NewRelicObservabilityLogRules>)LogRules).Write(writer, options);
             }
             if (Optional.IsDefined(MetricRules))
             {
                 writer.WritePropertyName("metricRules"u8);
-                writer.WriteObjectValue(MetricRules, options);
+                ((IJsonModel<NewRelicObservabilityMetricRules>)MetricRules).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                             {
                                 continue;
                             }
-                            logRules = NewRelicObservabilityLogRules.DeserializeNewRelicObservabilityLogRules(property0.Value, options);
+                            logRules = ModelSerializationExtensions.JsonDeserialize<NewRelicObservabilityLogRules>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("metricRules"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                             {
                                 continue;
                             }
-                            metricRules = NewRelicObservabilityMetricRules.DeserializeNewRelicObservabilityMetricRules(property0.Value, options);
+                            metricRules = ModelSerializationExtensions.JsonDeserialize<NewRelicObservabilityMetricRules>(property0.Value);
                             continue;
                         }
                     }

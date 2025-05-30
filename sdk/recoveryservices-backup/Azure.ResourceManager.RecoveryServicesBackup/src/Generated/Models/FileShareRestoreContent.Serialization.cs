@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in RestoreFileSpecs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RestoreFileSpecs>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(TargetDetails))
             {
                 writer.WritePropertyName("targetDetails"u8);
-                writer.WriteObjectValue(TargetDetails, options);
+                ((IJsonModel<TargetAfsRestoreInfo>)TargetDetails).Write(writer, options);
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    targetDetails = TargetAfsRestoreInfo.DeserializeTargetAfsRestoreInfo(property.Value, options);
+                    targetDetails = ModelSerializationExtensions.JsonDeserialize<TargetAfsRestoreInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))

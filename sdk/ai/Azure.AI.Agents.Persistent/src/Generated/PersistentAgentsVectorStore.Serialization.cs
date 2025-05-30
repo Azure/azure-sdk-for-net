@@ -45,13 +45,13 @@ namespace Azure.AI.Agents.Persistent
             writer.WritePropertyName("usage_bytes"u8);
             writer.WriteNumberValue(UsageBytes);
             writer.WritePropertyName("file_counts"u8);
-            writer.WriteObjectValue(FileCounts, options);
+            ((IJsonModel<VectorStoreFileCount>)FileCounts).Write(writer, options);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             if (Optional.IsDefined(ExpiresAfter))
             {
                 writer.WritePropertyName("expires_after"u8);
-                writer.WriteObjectValue(ExpiresAfter, options);
+                ((IJsonModel<VectorStoreExpirationPolicy>)ExpiresAfter).Write(writer, options);
             }
             if (Optional.IsDefined(ExpiresAt))
             {
@@ -168,7 +168,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (property.NameEquals("file_counts"u8))
                 {
-                    fileCounts = VectorStoreFileCount.DeserializeVectorStoreFileCount(property.Value, options);
+                    fileCounts = ModelSerializationExtensions.JsonDeserialize<VectorStoreFileCount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -182,7 +182,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    expiresAfter = VectorStoreExpirationPolicy.DeserializeVectorStoreExpirationPolicy(property.Value, options);
+                    expiresAfter = ModelSerializationExtensions.JsonDeserialize<VectorStoreExpirationPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("expires_at"u8))

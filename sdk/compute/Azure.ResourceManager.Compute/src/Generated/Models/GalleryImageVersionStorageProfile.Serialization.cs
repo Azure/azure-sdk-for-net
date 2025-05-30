@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(GallerySource))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue<GalleryArtifactVersionFullSource>(GallerySource, options);
+                ((IJsonModel<GalleryArtifactVersionFullSource>)GallerySource).Write(writer, options);
             }
             if (Optional.IsDefined(OSDiskImage))
             {
                 writer.WritePropertyName("osDiskImage"u8);
-                writer.WriteObjectValue(OSDiskImage, options);
+                ((IJsonModel<GalleryOSDiskImage>)OSDiskImage).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DataDiskImages))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDiskImages)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<GalleryDataDiskImage>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    source = GalleryArtifactVersionFullSource.DeserializeGalleryArtifactVersionFullSource(property.Value, options);
+                    source = ModelSerializationExtensions.JsonDeserialize<GalleryArtifactVersionFullSource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("osDiskImage"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osDiskImage = GalleryOSDiskImage.DeserializeGalleryOSDiskImage(property.Value, options);
+                    osDiskImage = ModelSerializationExtensions.JsonDeserialize<GalleryOSDiskImage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataDiskImages"u8))

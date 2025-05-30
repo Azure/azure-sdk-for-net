@@ -61,7 +61,7 @@ namespace Azure.AI.Language.Text
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AnalyzeTextError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -71,11 +71,11 @@ namespace Azure.AI.Language.Text
                 writer.WriteStringValue(NextLink);
             }
             writer.WritePropertyName("tasks"u8);
-            writer.WriteObjectValue(Actions, options);
+            ((IJsonModel<TextActions>)Actions).Write(writer, options);
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics, options);
+                ((IJsonModel<RequestStatistics>)Statistics).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -183,7 +183,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("tasks"u8))
                 {
-                    tasks = TextActions.DeserializeTextActions(property.Value, options);
+                    tasks = ModelSerializationExtensions.JsonDeserialize<TextActions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("statistics"u8))
@@ -192,7 +192,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    statistics = RequestStatistics.DeserializeRequestStatistics(property.Value, options);
+                    statistics = ModelSerializationExtensions.JsonDeserialize<RequestStatistics>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

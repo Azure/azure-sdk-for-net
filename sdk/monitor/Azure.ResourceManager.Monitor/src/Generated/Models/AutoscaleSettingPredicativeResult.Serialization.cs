@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PredictiveValue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

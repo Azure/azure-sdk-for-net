@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in StopSellNotifications)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StopSellNotifications>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in NewNotifications)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NewPlanNotification>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in ApprovalRequests)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RequestApprovalsDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

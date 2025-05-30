@@ -42,21 +42,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             writer.WritePropertyName("rawId"u8);
             writer.WriteStringValue(RawId);
             writer.WritePropertyName("communicationUser"u8);
-            writer.WriteObjectValue(CommunicationUser, options);
+            ((IJsonModel<CommunicationUserIdentifierModel>)CommunicationUser).Write(writer, options);
             if (Optional.IsDefined(PhoneNumber))
             {
                 writer.WritePropertyName("phoneNumber"u8);
-                writer.WriteObjectValue(PhoneNumber, options);
+                ((IJsonModel<PhoneNumberIdentifierModel>)PhoneNumber).Write(writer, options);
             }
             if (Optional.IsDefined(MicrosoftTeamsUser))
             {
                 writer.WritePropertyName("microsoftTeamsUser"u8);
-                writer.WriteObjectValue(MicrosoftTeamsUser, options);
+                ((IJsonModel<MicrosoftTeamsUserIdentifierModel>)MicrosoftTeamsUser).Write(writer, options);
             }
             if (Optional.IsDefined(MicrosoftTeamsApp))
             {
                 writer.WritePropertyName("microsoftTeamsApp"u8);
-                writer.WriteObjectValue(MicrosoftTeamsApp, options);
+                ((IJsonModel<MicrosoftTeamsAppIdentifierModel>)MicrosoftTeamsApp).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("communicationUser"u8))
                 {
-                    communicationUser = CommunicationUserIdentifierModel.DeserializeCommunicationUserIdentifierModel(property.Value, options);
+                    communicationUser = ModelSerializationExtensions.JsonDeserialize<CommunicationUserIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("phoneNumber"u8))
@@ -130,7 +130,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    phoneNumber = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value, options);
+                    phoneNumber = ModelSerializationExtensions.JsonDeserialize<PhoneNumberIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("microsoftTeamsUser"u8))
@@ -139,7 +139,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    microsoftTeamsUser = MicrosoftTeamsUserIdentifierModel.DeserializeMicrosoftTeamsUserIdentifierModel(property.Value, options);
+                    microsoftTeamsUser = ModelSerializationExtensions.JsonDeserialize<MicrosoftTeamsUserIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("microsoftTeamsApp"u8))
@@ -148,7 +148,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    microsoftTeamsApp = MicrosoftTeamsAppIdentifierModel.DeserializeMicrosoftTeamsAppIdentifierModel(property.Value, options);
+                    microsoftTeamsApp = ModelSerializationExtensions.JsonDeserialize<MicrosoftTeamsAppIdentifierModel>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

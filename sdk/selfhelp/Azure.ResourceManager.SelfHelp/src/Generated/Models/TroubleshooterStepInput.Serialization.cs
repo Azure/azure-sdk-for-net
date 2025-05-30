@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             if (Optional.IsDefined(ResponseValidationProperties))
             {
                 writer.WritePropertyName("responseValidationProperties"u8);
-                writer.WriteObjectValue(ResponseValidationProperties, options);
+                ((IJsonModel<ResponseValidationProperties>)ResponseValidationProperties).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ResponseOptions))
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in ResponseOptions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResponseConfig>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    responseValidationProperties = ResponseValidationProperties.DeserializeResponseValidationProperties(property.Value, options);
+                    responseValidationProperties = ModelSerializationExtensions.JsonDeserialize<ResponseValidationProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("responseOptions"u8))

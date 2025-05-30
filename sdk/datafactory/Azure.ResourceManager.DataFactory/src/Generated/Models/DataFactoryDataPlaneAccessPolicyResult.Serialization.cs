@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy, options);
+                ((IJsonModel<DataFactoryDataPlaneUserAccessPolicy>)Policy).Write(writer, options);
             }
             if (Optional.IsDefined(AccessToken))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = DataFactoryDataPlaneUserAccessPolicy.DeserializeDataFactoryDataPlaneUserAccessPolicy(property.Value, options);
+                    policy = ModelSerializationExtensions.JsonDeserialize<DataFactoryDataPlaneUserAccessPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("accessToken"u8))

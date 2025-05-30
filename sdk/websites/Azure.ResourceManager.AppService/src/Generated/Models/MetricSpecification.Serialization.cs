@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MetricDimension>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Availabilities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MetricAvailability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

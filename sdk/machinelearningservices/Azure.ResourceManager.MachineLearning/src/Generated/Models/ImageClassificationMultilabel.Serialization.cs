@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ModelSettings != null)
                 {
                     writer.WritePropertyName("modelSettings"u8);
-                    writer.WriteObjectValue(ModelSettings, options);
+                    ((IJsonModel<ImageModelSettingsClassification>)ModelSettings).Write(writer, options);
                 }
                 else
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in SearchSpace)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<ImageModelDistributionSettingsClassification>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -72,13 +72,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("limitSettings"u8);
-            writer.WriteObjectValue(LimitSettings, options);
+            ((IJsonModel<ImageLimitSettings>)LimitSettings).Write(writer, options);
             if (Optional.IsDefined(SweepSettings))
             {
                 if (SweepSettings != null)
                 {
                     writer.WritePropertyName("sweepSettings"u8);
-                    writer.WriteObjectValue(SweepSettings, options);
+                    ((IJsonModel<ImageSweepSettings>)SweepSettings).Write(writer, options);
                 }
                 else
                 {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ValidationData != null)
                 {
                     writer.WritePropertyName("validationData"u8);
-                    writer.WriteObjectValue(ValidationData, options);
+                    ((IJsonModel<MachineLearningTableJobInput>)ValidationData).Write(writer, options);
                 }
                 else
                 {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         modelSettings = null;
                         continue;
                     }
-                    modelSettings = ImageModelSettingsClassification.DeserializeImageModelSettingsClassification(property.Value, options);
+                    modelSettings = ModelSerializationExtensions.JsonDeserialize<ImageModelSettingsClassification>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("searchSpace"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("limitSettings"u8))
                 {
-                    limitSettings = ImageLimitSettings.DeserializeImageLimitSettings(property.Value, options);
+                    limitSettings = ModelSerializationExtensions.JsonDeserialize<ImageLimitSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sweepSettings"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         sweepSettings = null;
                         continue;
                     }
-                    sweepSettings = ImageSweepSettings.DeserializeImageSweepSettings(property.Value, options);
+                    sweepSettings = ModelSerializationExtensions.JsonDeserialize<ImageSweepSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("validationData"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         validationData = null;
                         continue;
                     }
-                    validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
+                    validationData = ModelSerializationExtensions.JsonDeserialize<MachineLearningTableJobInput>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("validationDataSize"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("trainingData"u8))
                 {
-                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
+                    trainingData = ModelSerializationExtensions.JsonDeserialize<MachineLearningTableJobInput>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetColumnName"u8))

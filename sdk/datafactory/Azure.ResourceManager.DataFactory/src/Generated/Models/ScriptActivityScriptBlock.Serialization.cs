@@ -36,16 +36,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WritePropertyName("text"u8);
-            JsonSerializer.Serialize(writer, Text);
+            ((IJsonModel<DataFactoryElement<T>>)Text).Write(writer, options);
             writer.WritePropertyName("type"u8);
-            JsonSerializer.Serialize(writer, QueryType);
+            ((IJsonModel<DataFactoryElement<T>>)QueryType).Write(writer, options);
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ScriptActivityParameter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("text"u8))
                 {
-                    text = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    text = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    type = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))

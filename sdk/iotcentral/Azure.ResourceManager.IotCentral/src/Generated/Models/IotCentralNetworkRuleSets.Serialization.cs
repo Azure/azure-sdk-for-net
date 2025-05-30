@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IotCentralNetworkRuleSetIPRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

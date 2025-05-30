@@ -38,7 +38,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             writer.WriteStartArray();
             foreach (var item in Blocks)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DetectedTextBlock>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

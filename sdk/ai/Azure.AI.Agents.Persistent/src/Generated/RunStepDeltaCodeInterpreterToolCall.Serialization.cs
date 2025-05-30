@@ -38,7 +38,7 @@ namespace Azure.AI.Agents.Persistent
             if (Optional.IsDefined(CodeInterpreter))
             {
                 writer.WritePropertyName("code_interpreter"u8);
-                writer.WriteObjectValue(CodeInterpreter, options);
+                ((IJsonModel<RunStepDeltaCodeInterpreterDetailItemObject>)CodeInterpreter).Write(writer, options);
             }
         }
 
@@ -76,7 +76,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    codeInterpreter = RunStepDeltaCodeInterpreterDetailItemObject.DeserializeRunStepDeltaCodeInterpreterDetailItemObject(property.Value, options);
+                    codeInterpreter = ModelSerializationExtensions.JsonDeserialize<RunStepDeltaCodeInterpreterDetailItemObject>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("index"u8))

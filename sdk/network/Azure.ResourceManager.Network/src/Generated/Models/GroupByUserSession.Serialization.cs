@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartArray();
             foreach (var item in GroupByVariables)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<GroupByVariable>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

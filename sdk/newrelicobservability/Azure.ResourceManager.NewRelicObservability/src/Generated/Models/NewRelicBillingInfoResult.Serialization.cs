@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             if (Optional.IsDefined(MarketplaceSaasInfo))
             {
                 writer.WritePropertyName("marketplaceSaasInfo"u8);
-                writer.WriteObjectValue(MarketplaceSaasInfo, options);
+                ((IJsonModel<MarketplaceSaaSInfo>)MarketplaceSaasInfo).Write(writer, options);
             }
             if (Optional.IsDefined(PartnerBillingEntity))
             {
                 writer.WritePropertyName("partnerBillingEntity"u8);
-                writer.WriteObjectValue(PartnerBillingEntity, options);
+                ((IJsonModel<PartnerBillingEntity>)PartnerBillingEntity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    marketplaceSaasInfo = MarketplaceSaaSInfo.DeserializeMarketplaceSaaSInfo(property.Value, options);
+                    marketplaceSaasInfo = ModelSerializationExtensions.JsonDeserialize<MarketplaceSaaSInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("partnerBillingEntity"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    partnerBillingEntity = PartnerBillingEntity.DeserializePartnerBillingEntity(property.Value, options);
+                    partnerBillingEntity = ModelSerializationExtensions.JsonDeserialize<PartnerBillingEntity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

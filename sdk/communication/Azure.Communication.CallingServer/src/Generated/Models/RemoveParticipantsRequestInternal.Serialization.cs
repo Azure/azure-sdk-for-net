@@ -19,7 +19,7 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartArray();
             foreach (var item in ParticipantsToRemove)
             {
-                writer.WriteObjectValue(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(OperationContext))

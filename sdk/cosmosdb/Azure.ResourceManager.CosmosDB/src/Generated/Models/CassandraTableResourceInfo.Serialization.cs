@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-                writer.WriteObjectValue(Schema, options);
+                ((IJsonModel<CassandraSchema>)Schema).Write(writer, options);
             }
             if (Optional.IsDefined(AnalyticalStorageTtl))
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    schema = CassandraSchema.DeserializeCassandraSchema(property.Value, options);
+                    schema = ModelSerializationExtensions.JsonDeserialize<CassandraSchema>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("analyticalStorageTtl"u8))

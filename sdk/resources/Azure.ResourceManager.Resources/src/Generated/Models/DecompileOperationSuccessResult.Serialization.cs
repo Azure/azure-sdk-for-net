@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartArray();
             foreach (var item in Files)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DecompiledFileDefinition>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("entryPoint"u8);

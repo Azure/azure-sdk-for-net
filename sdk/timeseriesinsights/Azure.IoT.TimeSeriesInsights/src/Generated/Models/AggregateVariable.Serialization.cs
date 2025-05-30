@@ -16,13 +16,13 @@ namespace Azure.IoT.TimeSeriesInsights
         {
             writer.WriteStartObject();
             writer.WritePropertyName("aggregation"u8);
-            writer.WriteObjectValue(Aggregation);
+            JsonSerializer.Serialize(writer, Aggregation);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                JsonSerializer.Serialize(writer, Filter);
             }
             writer.WriteEndObject();
         }
@@ -40,7 +40,7 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 if (property.NameEquals("aggregation"u8))
                 {
-                    aggregation = TimeSeriesExpression.DeserializeTimeSeriesExpression(property.Value);
+                    aggregation = ModelSerializationExtensions.JsonDeserialize<TimeSeriesExpression>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -54,7 +54,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     {
                         continue;
                     }
-                    filter = TimeSeriesExpression.DeserializeTimeSeriesExpression(property.Value);
+                    filter = ModelSerializationExtensions.JsonDeserialize<TimeSeriesExpression>(property.Value);
                     continue;
                 }
             }

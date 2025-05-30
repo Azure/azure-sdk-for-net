@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in RuleCollections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FirewallPolicyRuleCollectionInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

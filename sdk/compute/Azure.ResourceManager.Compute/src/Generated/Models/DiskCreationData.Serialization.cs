@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
-                writer.WriteObjectValue(ImageReference, options);
+                ((IJsonModel<ImageDiskReference>)ImageReference).Write(writer, options);
             }
             if (Optional.IsDefined(GalleryImageReference))
             {
                 writer.WritePropertyName("galleryImageReference"u8);
-                writer.WriteObjectValue(GalleryImageReference, options);
+                ((IJsonModel<ImageDiskReference>)GalleryImageReference).Write(writer, options);
             }
             if (Optional.IsDefined(SourceUri))
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    imageReference = ImageDiskReference.DeserializeImageDiskReference(property.Value, options);
+                    imageReference = ModelSerializationExtensions.JsonDeserialize<ImageDiskReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("galleryImageReference"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    galleryImageReference = ImageDiskReference.DeserializeImageDiskReference(property.Value, options);
+                    galleryImageReference = ModelSerializationExtensions.JsonDeserialize<ImageDiskReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sourceUri"u8))

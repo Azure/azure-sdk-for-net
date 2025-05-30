@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(ImageRepository))
             {
                 writer.WritePropertyName("imageRepository"u8);
-                writer.WriteObjectValue(ImageRepository, options);
+                ((IJsonModel<ImageRepositoryCredential>)ImageRepository).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    imageRepository = ImageRepositoryCredential.DeserializeImageRepositoryCredential(property.Value, options);
+                    imageRepository = ModelSerializationExtensions.JsonDeserialize<ImageRepositoryCredential>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

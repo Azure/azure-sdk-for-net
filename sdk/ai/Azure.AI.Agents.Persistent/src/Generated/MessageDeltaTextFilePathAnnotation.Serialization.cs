@@ -38,7 +38,7 @@ namespace Azure.AI.Agents.Persistent
             if (Optional.IsDefined(FilePath))
             {
                 writer.WritePropertyName("file_path"u8);
-                writer.WriteObjectValue(FilePath, options);
+                ((IJsonModel<MessageDeltaTextFilePathAnnotationObject>)FilePath).Write(writer, options);
             }
             if (Optional.IsDefined(StartIndex))
             {
@@ -93,7 +93,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    filePath = MessageDeltaTextFilePathAnnotationObject.DeserializeMessageDeltaTextFilePathAnnotationObject(property.Value, options);
+                    filePath = ModelSerializationExtensions.JsonDeserialize<MessageDeltaTextFilePathAnnotationObject>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("start_index"u8))

@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WritePropertyName("requests"u8);
-            writer.WriteObjectValue(Requests, options);
+            ((IJsonModel<ContainerResourceRequestsContent>)Requests).Write(writer, options);
             if (Optional.IsDefined(Limits))
             {
                 writer.WritePropertyName("limits"u8);
-                writer.WriteObjectValue(Limits, options);
+                ((IJsonModel<ContainerResourceLimits>)Limits).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 if (property.NameEquals("requests"u8))
                 {
-                    requests = ContainerResourceRequestsContent.DeserializeContainerResourceRequestsContent(property.Value, options);
+                    requests = ModelSerializationExtensions.JsonDeserialize<ContainerResourceRequestsContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("limits"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    limits = ContainerResourceLimits.DeserializeContainerResourceLimits(property.Value, options);
+                    limits = ModelSerializationExtensions.JsonDeserialize<ContainerResourceLimits>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

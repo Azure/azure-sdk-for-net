@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Profiles)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AutoscaleProfile>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     writer.WriteStartArray();
                     foreach (var item in Notifications)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<AutoscaleNotification>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 if (PredictiveAutoscalePolicy != null)
                 {
                     writer.WritePropertyName("predictiveAutoscalePolicy"u8);
-                    writer.WriteObjectValue(PredictiveAutoscalePolicy, options);
+                    ((IJsonModel<PredictiveAutoscalePolicy>)PredictiveAutoscalePolicy).Write(writer, options);
                 }
                 else
                 {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Monitor.Models
                                 predictiveAutoscalePolicy = null;
                                 continue;
                             }
-                            predictiveAutoscalePolicy = PredictiveAutoscalePolicy.DeserializePredictiveAutoscalePolicy(property0.Value, options);
+                            predictiveAutoscalePolicy = ModelSerializationExtensions.JsonDeserialize<PredictiveAutoscalePolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("name"u8))

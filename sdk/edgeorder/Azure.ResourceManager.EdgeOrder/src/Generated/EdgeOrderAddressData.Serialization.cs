@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.EdgeOrder
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress, options);
+                ((IJsonModel<EdgeOrderShippingAddress>)ShippingAddress).Write(writer, options);
             }
             writer.WritePropertyName("contactDetails"u8);
-            writer.WriteObjectValue(ContactDetails, options);
+            ((IJsonModel<EdgeOrderAddressContactDetails>)ContactDetails).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(AddressValidationStatus))
             {
                 writer.WritePropertyName("addressValidationStatus"u8);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EdgeOrder
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.EdgeOrder
                             {
                                 continue;
                             }
-                            shippingAddress = EdgeOrderShippingAddress.DeserializeEdgeOrderShippingAddress(property0.Value, options);
+                            shippingAddress = ModelSerializationExtensions.JsonDeserialize<EdgeOrderShippingAddress>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("contactDetails"u8))
                         {
-                            contactDetails = EdgeOrderAddressContactDetails.DeserializeEdgeOrderAddressContactDetails(property0.Value, options);
+                            contactDetails = ModelSerializationExtensions.JsonDeserialize<EdgeOrderAddressContactDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("addressValidationStatus"u8))

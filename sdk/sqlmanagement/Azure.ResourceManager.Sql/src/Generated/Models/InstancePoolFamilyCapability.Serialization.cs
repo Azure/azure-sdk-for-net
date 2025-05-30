@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedLicenseTypes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LicenseTypeCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedVcoresValues)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InstancePoolVcoresCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

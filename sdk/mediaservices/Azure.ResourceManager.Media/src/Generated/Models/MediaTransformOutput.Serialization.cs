@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStringValue(RelativePriority.Value.ToString());
             }
             writer.WritePropertyName("preset"u8);
-            writer.WriteObjectValue(Preset, options);
+            ((IJsonModel<MediaTransformPreset>)Preset).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (property.NameEquals("preset"u8))
                 {
-                    preset = MediaTransformPreset.DeserializeMediaTransformPreset(property.Value, options);
+                    preset = ModelSerializationExtensions.JsonDeserialize<MediaTransformPreset>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

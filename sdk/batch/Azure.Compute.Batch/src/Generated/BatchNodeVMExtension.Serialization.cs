@@ -42,12 +42,12 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(VmExtension))
             {
                 writer.WritePropertyName("vmExtension"u8);
-                writer.WriteObjectValue(VmExtension, options);
+                ((IJsonModel<VMExtension>)VmExtension).Write(writer, options);
             }
             if (Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView, options);
+                ((IJsonModel<VMExtensionInstanceView>)InstanceView).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -104,7 +104,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    vmExtension = VMExtension.DeserializeVMExtension(property.Value, options);
+                    vmExtension = ModelSerializationExtensions.JsonDeserialize<VMExtension>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("instanceView"u8))
@@ -113,7 +113,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    instanceView = VMExtensionInstanceView.DeserializeVMExtensionInstanceView(property.Value, options);
+                    instanceView = ModelSerializationExtensions.JsonDeserialize<VMExtensionInstanceView>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

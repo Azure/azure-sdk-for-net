@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AttachedNetworkConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

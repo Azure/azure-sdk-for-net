@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             if (Optional.IsDefined(Display))
             {
                 writer.WritePropertyName("display"u8);
-                writer.WriteObjectValue(Display, options);
+                ((IJsonModel<ResourceOperationDisplay>)Display).Write(writer, options);
             }
             if (Optional.IsDefined(Origin))
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    display = ResourceOperationDisplay.DeserializeResourceOperationDisplay(property.Value, options);
+                    display = ModelSerializationExtensions.JsonDeserialize<ResourceOperationDisplay>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("origin"u8))

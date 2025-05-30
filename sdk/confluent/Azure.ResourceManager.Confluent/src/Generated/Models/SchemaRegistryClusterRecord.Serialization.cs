@@ -49,17 +49,17 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata, options);
+                ((IJsonModel<SCMetadataEntity>)Metadata).Write(writer, options);
             }
             if (Optional.IsDefined(Spec))
             {
                 writer.WritePropertyName("spec"u8);
-                writer.WriteObjectValue(Spec, options);
+                ((IJsonModel<SchemaRegistryClusterSpecEntity>)Spec).Write(writer, options);
             }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<SchemaRegistryClusterStatusEntity>)Status).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Confluent.Models
                             {
                                 continue;
                             }
-                            metadata = SCMetadataEntity.DeserializeSCMetadataEntity(property0.Value, options);
+                            metadata = ModelSerializationExtensions.JsonDeserialize<SCMetadataEntity>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("spec"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Confluent.Models
                             {
                                 continue;
                             }
-                            spec = SchemaRegistryClusterSpecEntity.DeserializeSchemaRegistryClusterSpecEntity(property0.Value, options);
+                            spec = ModelSerializationExtensions.JsonDeserialize<SchemaRegistryClusterSpecEntity>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Confluent.Models
                             {
                                 continue;
                             }
-                            status = SchemaRegistryClusterStatusEntity.DeserializeSchemaRegistryClusterStatusEntity(property0.Value, options);
+                            status = ModelSerializationExtensions.JsonDeserialize<SchemaRegistryClusterStatusEntity>(property0.Value);
                             continue;
                         }
                     }

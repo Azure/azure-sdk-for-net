@@ -55,14 +55,14 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ComputeFleetApiErrorInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(Innererror, options);
+                ((IJsonModel<ComputeFleetInnerError>)Innererror).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    innererror = ComputeFleetInnerError.DeserializeComputeFleetInnerError(property.Value, options);
+                    innererror = ModelSerializationExtensions.JsonDeserialize<ComputeFleetInnerError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(OrganizationalData))
             {
                 writer.WritePropertyName("organizationalData"u8);
-                writer.WriteObjectValue(OrganizationalData, options);
+                ((IJsonModel<AwsOrganizationalInfo>)OrganizationalData).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Regions))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    organizationalData = AwsOrganizationalInfo.DeserializeAwsOrganizationalInfo(property.Value, options);
+                    organizationalData = ModelSerializationExtensions.JsonDeserialize<AwsOrganizationalInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("regions"u8))

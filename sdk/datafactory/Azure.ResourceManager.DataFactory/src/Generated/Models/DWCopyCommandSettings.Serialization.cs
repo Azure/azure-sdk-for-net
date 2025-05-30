@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DefaultValues)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DWCopyCommandDefaultValue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -57,7 +57,7 @@ namespace Azure.Containers.ContainerRegistry
                     {
                         continue;
                     }
-                    config = OciDescriptor.DeserializeOciDescriptor(property.Value);
+                    config = ModelSerializationExtensions.JsonDeserialize<OciDescriptor>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("layers"u8))
@@ -81,7 +81,7 @@ namespace Azure.Containers.ContainerRegistry
                         annotations = null;
                         continue;
                     }
-                    annotations = OciAnnotations.DeserializeOciAnnotations(property.Value);
+                    annotations = ModelSerializationExtensions.JsonDeserialize<OciAnnotations>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("architecture"u8))

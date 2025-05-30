@@ -38,7 +38,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(LateralityIndication))
             {
                 writer.WritePropertyName("lateralityIndication"u8);
-                writer.WriteObjectValue(LateralityIndication, options);
+                ((IJsonModel<FhirR4CodeableConcept>)LateralityIndication).Write(writer, options);
             }
             writer.WritePropertyName("discrepancyType"u8);
             writer.WriteStringValue(DiscrepancyType.ToString());
@@ -78,7 +78,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    lateralityIndication = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
+                    lateralityIndication = ModelSerializationExtensions.JsonDeserialize<FhirR4CodeableConcept>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("discrepancyType"u8))

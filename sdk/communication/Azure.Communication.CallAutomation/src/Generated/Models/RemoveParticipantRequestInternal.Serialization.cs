@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
         {
             writer.WriteStartObject();
             writer.WritePropertyName("participantToRemove"u8);
-            writer.WriteObjectValue(ParticipantToRemove);
+            JsonSerializer.Serialize(writer, ParticipantToRemove);
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);

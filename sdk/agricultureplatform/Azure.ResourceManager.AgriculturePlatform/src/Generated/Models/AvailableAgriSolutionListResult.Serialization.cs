@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             writer.WriteStartArray();
             foreach (var item in Solutions)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DataManagerForAgricultureSolution>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

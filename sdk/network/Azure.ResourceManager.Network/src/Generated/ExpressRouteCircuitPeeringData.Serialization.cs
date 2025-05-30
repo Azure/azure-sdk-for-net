@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(MicrosoftPeeringConfig))
             {
                 writer.WritePropertyName("microsoftPeeringConfig"u8);
-                writer.WriteObjectValue(MicrosoftPeeringConfig, options);
+                ((IJsonModel<ExpressRouteCircuitPeeringConfig>)MicrosoftPeeringConfig).Write(writer, options);
             }
             if (Optional.IsDefined(Stats))
             {
                 writer.WritePropertyName("stats"u8);
-                writer.WriteObjectValue(Stats, options);
+                ((IJsonModel<ExpressRouteCircuitStats>)Stats).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -122,17 +122,17 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(RouteFilter))
             {
                 writer.WritePropertyName("routeFilter"u8);
-                JsonSerializer.Serialize(writer, RouteFilter);
+                ((IJsonModel<WritableSubResource>)RouteFilter).Write(writer, options);
             }
             if (Optional.IsDefined(IPv6PeeringConfig))
             {
                 writer.WritePropertyName("ipv6PeeringConfig"u8);
-                writer.WriteObjectValue(IPv6PeeringConfig, options);
+                ((IJsonModel<IPv6ExpressRouteCircuitPeeringConfig>)IPv6PeeringConfig).Write(writer, options);
             }
             if (Optional.IsDefined(ExpressRouteConnection))
             {
                 writer.WritePropertyName("expressRouteConnection"u8);
-                JsonSerializer.Serialize(writer, ExpressRouteConnection);
+                ((IJsonModel<SubResource>)ExpressRouteConnection).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Connections))
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Connections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExpressRouteCircuitConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in PeeredConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PeerExpressRouteCircuitConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            microsoftPeeringConfig = ExpressRouteCircuitPeeringConfig.DeserializeExpressRouteCircuitPeeringConfig(property0.Value, options);
+                            microsoftPeeringConfig = ModelSerializationExtensions.JsonDeserialize<ExpressRouteCircuitPeeringConfig>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("stats"u8))
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            stats = ExpressRouteCircuitStats.DeserializeExpressRouteCircuitStats(property0.Value, options);
+                            stats = ModelSerializationExtensions.JsonDeserialize<ExpressRouteCircuitStats>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            routeFilter = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            routeFilter = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ipv6PeeringConfig"u8))
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            ipv6PeeringConfig = IPv6ExpressRouteCircuitPeeringConfig.DeserializeIPv6ExpressRouteCircuitPeeringConfig(property0.Value, options);
+                            ipv6PeeringConfig = ModelSerializationExtensions.JsonDeserialize<IPv6ExpressRouteCircuitPeeringConfig>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("expressRouteConnection"u8))
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            expressRouteConnection = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
+                            expressRouteConnection = ModelSerializationExtensions.JsonDeserialize<SubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("connections"u8))

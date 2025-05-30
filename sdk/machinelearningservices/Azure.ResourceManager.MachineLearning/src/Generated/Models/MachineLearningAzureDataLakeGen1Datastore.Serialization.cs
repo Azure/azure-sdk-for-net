@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("credentials"u8))
                 {
-                    credentials = MachineLearningDatastoreCredentials.DeserializeMachineLearningDatastoreCredentials(property.Value, options);
+                    credentials = ModelSerializationExtensions.JsonDeserialize<MachineLearningDatastoreCredentials>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))

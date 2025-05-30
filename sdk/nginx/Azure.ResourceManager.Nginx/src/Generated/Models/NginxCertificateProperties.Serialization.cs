@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Nginx.Models
             if (Optional.IsDefined(CertificateError))
             {
                 writer.WritePropertyName("certificateError"u8);
-                writer.WriteObjectValue(CertificateError, options);
+                ((IJsonModel<NginxCertificateError>)CertificateError).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    certificateError = NginxCertificateError.DeserializeNginxCertificateError(property.Value, options);
+                    certificateError = ModelSerializationExtensions.JsonDeserialize<NginxCertificateError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

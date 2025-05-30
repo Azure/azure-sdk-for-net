@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService
                 foreach (var item in Containers)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<ContainerInfo>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

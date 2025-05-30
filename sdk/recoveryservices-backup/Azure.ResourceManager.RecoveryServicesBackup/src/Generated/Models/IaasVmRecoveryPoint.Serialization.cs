@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(KeyAndSecret))
             {
                 writer.WritePropertyName("keyAndSecret"u8);
-                writer.WriteObjectValue(KeyAndSecret, options);
+                ((IJsonModel<KeyAndSecretDetails>)KeyAndSecret).Write(writer, options);
             }
             if (Optional.IsDefined(IsInstantIlrSessionActive))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in RecoveryPointTierDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RecoveryPointTierInformationV2>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RecoveryPointDiskConfiguration))
             {
                 writer.WritePropertyName("recoveryPointDiskConfiguration"u8);
-                writer.WriteObjectValue(RecoveryPointDiskConfiguration, options);
+                ((IJsonModel<RecoveryPointDiskConfiguration>)RecoveryPointDiskConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 foreach (var item in RecoveryPointMoveReadinessInfo)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<RecoveryPointMoveReadinessInfo>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RecoveryPointProperties))
             {
                 writer.WritePropertyName("recoveryPointProperties"u8);
-                writer.WriteObjectValue(RecoveryPointProperties, options);
+                ((IJsonModel<RecoveryPointProperties>)RecoveryPointProperties).Write(writer, options);
             }
             if (Optional.IsDefined(IsPrivateAccessEnabledOnAnyDisk))
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                JsonSerializer.Serialize(writer, ExtendedLocation);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
         }
 
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    keyAndSecret = KeyAndSecretDetails.DeserializeKeyAndSecretDetails(property.Value, options);
+                    keyAndSecret = ModelSerializationExtensions.JsonDeserialize<KeyAndSecretDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isInstantIlrSessionActive"u8))
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    recoveryPointDiskConfiguration = RecoveryPointDiskConfiguration.DeserializeRecoveryPointDiskConfiguration(property.Value, options);
+                    recoveryPointDiskConfiguration = ModelSerializationExtensions.JsonDeserialize<RecoveryPointDiskConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    recoveryPointProperties = RecoveryPointProperties.DeserializeRecoveryPointProperties(property.Value, options);
+                    recoveryPointProperties = ModelSerializationExtensions.JsonDeserialize<RecoveryPointProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isPrivateAccessEnabledOnAnyDisk"u8))
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<ExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))

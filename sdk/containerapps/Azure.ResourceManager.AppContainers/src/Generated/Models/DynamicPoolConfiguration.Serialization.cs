@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(LifecycleConfiguration))
             {
                 writer.WritePropertyName("lifecycleConfiguration"u8);
-                writer.WriteObjectValue(LifecycleConfiguration, options);
+                ((IJsonModel<SessionPoolLifecycleConfiguration>)LifecycleConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    lifecycleConfiguration = SessionPoolLifecycleConfiguration.DeserializeSessionPoolLifecycleConfiguration(property.Value, options);
+                    lifecycleConfiguration = ModelSerializationExtensions.JsonDeserialize<SessionPoolLifecycleConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

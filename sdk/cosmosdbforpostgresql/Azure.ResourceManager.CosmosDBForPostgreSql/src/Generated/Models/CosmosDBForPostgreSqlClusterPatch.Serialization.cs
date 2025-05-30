@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
-                writer.WriteObjectValue(MaintenanceWindow, options);
+                ((IJsonModel<CosmosDBForPostgreSqlMaintenanceWindow>)MaintenanceWindow).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                             {
                                 continue;
                             }
-                            maintenanceWindow = CosmosDBForPostgreSqlMaintenanceWindow.DeserializeCosmosDBForPostgreSqlMaintenanceWindow(property0.Value, options);
+                            maintenanceWindow = ModelSerializationExtensions.JsonDeserialize<CosmosDBForPostgreSqlMaintenanceWindow>(property0.Value);
                             continue;
                         }
                     }

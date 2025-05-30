@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Billing.Models
             if (options.Format != "W" && Optional.IsDefined(AmountRequested))
             {
                 writer.WritePropertyName("amountRequested"u8);
-                writer.WriteObjectValue(AmountRequested, options);
+                ((IJsonModel<BillingAmount>)AmountRequested).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AmountRefunded))
             {
                 writer.WritePropertyName("amountRefunded"u8);
-                writer.WriteObjectValue(AmountRefunded, options);
+                ((IJsonModel<BillingAmount>)AmountRefunded).Write(writer, options);
             }
             if (Optional.IsDefined(RefundOperationId))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    amountRequested = BillingAmount.DeserializeBillingAmount(property.Value, options);
+                    amountRequested = ModelSerializationExtensions.JsonDeserialize<BillingAmount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("amountRefunded"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    amountRefunded = BillingAmount.DeserializeBillingAmount(property.Value, options);
+                    amountRefunded = ModelSerializationExtensions.JsonDeserialize<BillingAmount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("refundOperationId"u8))

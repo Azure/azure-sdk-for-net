@@ -58,7 +58,7 @@ namespace Azure.AI.AnomalyDetector
             if (Optional.IsDefined(AlignPolicy))
             {
                 writer.WritePropertyName("alignPolicy"u8);
-                writer.WriteObjectValue(AlignPolicy, options);
+                ((IJsonModel<AlignPolicy>)AlignPolicy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -71,14 +71,14 @@ namespace Azure.AI.AnomalyDetector
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ErrorResponse>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(DiagnosticsInfo))
             {
                 writer.WritePropertyName("diagnosticsInfo"u8);
-                writer.WriteObjectValue(DiagnosticsInfo, options);
+                ((IJsonModel<DiagnosticsInfo>)DiagnosticsInfo).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -175,7 +175,7 @@ namespace Azure.AI.AnomalyDetector
                     {
                         continue;
                     }
-                    alignPolicy = AlignPolicy.DeserializeAlignPolicy(property.Value, options);
+                    alignPolicy = ModelSerializationExtensions.JsonDeserialize<AlignPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -207,7 +207,7 @@ namespace Azure.AI.AnomalyDetector
                     {
                         continue;
                     }
-                    diagnosticsInfo = DiagnosticsInfo.DeserializeDiagnosticsInfo(property.Value, options);
+                    diagnosticsInfo = ModelSerializationExtensions.JsonDeserialize<DiagnosticsInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

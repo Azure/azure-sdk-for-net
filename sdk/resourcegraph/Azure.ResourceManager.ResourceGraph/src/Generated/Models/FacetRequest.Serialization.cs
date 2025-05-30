@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue(Options, options);
+                ((IJsonModel<FacetRequestOptions>)Options).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     {
                         continue;
                     }
-                    options0 = FacetRequestOptions.DeserializeFacetRequestOptions(property.Value, options);
+                    options0 = ModelSerializationExtensions.JsonDeserialize<FacetRequestOptions>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

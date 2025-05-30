@@ -39,19 +39,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(QuoteAllText))
             {
                 writer.WritePropertyName("quoteAllText"u8);
-                JsonSerializer.Serialize(writer, QuoteAllText);
+                ((IJsonModel<DataFactoryElement<T>>)QuoteAllText).Write(writer, options);
             }
             writer.WritePropertyName("fileExtension"u8);
-            JsonSerializer.Serialize(writer, FileExtension);
+            ((IJsonModel<DataFactoryElement<T>>)FileExtension).Write(writer, options);
             if (Optional.IsDefined(MaxRowsPerFile))
             {
                 writer.WritePropertyName("maxRowsPerFile"u8);
-                JsonSerializer.Serialize(writer, MaxRowsPerFile);
+                ((IJsonModel<DataFactoryElement<T>>)MaxRowsPerFile).Write(writer, options);
             }
             if (Optional.IsDefined(FileNamePrefix))
             {
                 writer.WritePropertyName("fileNamePrefix"u8);
-                JsonSerializer.Serialize(writer, FileNamePrefix);
+                ((IJsonModel<DataFactoryElement<T>>)FileNamePrefix).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    quoteAllText = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    quoteAllText = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("fileExtension"u8))
                 {
-                    fileExtension = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    fileExtension = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("maxRowsPerFile"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    maxRowsPerFile = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    maxRowsPerFile = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("fileNamePrefix"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    fileNamePrefix = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    fileNamePrefix = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

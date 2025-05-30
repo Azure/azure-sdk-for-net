@@ -37,7 +37,7 @@ namespace Azure.AI.Language.Text.Authoring
             writer.WritePropertyName("enableDataGeneration"u8);
             writer.WriteBooleanValue(EnableDataGeneration);
             writer.WritePropertyName("dataGenerationConnectionInfo"u8);
-            writer.WriteObjectValue(DataGenerationConnectionInfo, options);
+            ((IJsonModel<DataGenerationConnectionInfo>)DataGenerationConnectionInfo).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,7 +88,7 @@ namespace Azure.AI.Language.Text.Authoring
                 }
                 if (property.NameEquals("dataGenerationConnectionInfo"u8))
                 {
-                    dataGenerationConnectionInfo = DataGenerationConnectionInfo.DeserializeDataGenerationConnectionInfo(property.Value, options);
+                    dataGenerationConnectionInfo = ModelSerializationExtensions.JsonDeserialize<DataGenerationConnectionInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

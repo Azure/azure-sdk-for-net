@@ -45,7 +45,7 @@ namespace Azure.Search.Documents.Models
             if (Optional.IsDefined(Threshold))
             {
                 writer.WritePropertyName("threshold"u8);
-                writer.WriteObjectValue(Threshold);
+                JsonSerializer.Serialize(writer, Threshold);
             }
             if (Optional.IsDefined(FilterOverride))
             {

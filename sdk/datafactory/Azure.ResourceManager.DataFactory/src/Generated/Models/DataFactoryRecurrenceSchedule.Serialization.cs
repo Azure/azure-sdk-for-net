@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in MonthlyOccurrences)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataFactoryRecurrenceScheduleOccurrence>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

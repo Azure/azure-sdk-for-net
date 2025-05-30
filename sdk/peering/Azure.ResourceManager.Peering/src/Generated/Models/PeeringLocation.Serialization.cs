@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Peering.Models
             if (Optional.IsDefined(Direct))
             {
                 writer.WritePropertyName("direct"u8);
-                writer.WriteObjectValue(Direct, options);
+                ((IJsonModel<DirectPeeringLocationProperties>)Direct).Write(writer, options);
             }
             if (Optional.IsDefined(Exchange))
             {
                 writer.WritePropertyName("exchange"u8);
-                writer.WriteObjectValue(Exchange, options);
+                ((IJsonModel<PeeringLocationPropertiesExchange>)Exchange).Write(writer, options);
             }
             if (Optional.IsDefined(PeeringLocationValue))
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Peering.Models
                             {
                                 continue;
                             }
-                            direct = DirectPeeringLocationProperties.DeserializeDirectPeeringLocationProperties(property0.Value, options);
+                            direct = ModelSerializationExtensions.JsonDeserialize<DirectPeeringLocationProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("exchange"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Peering.Models
                             {
                                 continue;
                             }
-                            exchange = PeeringLocationPropertiesExchange.DeserializePeeringLocationPropertiesExchange(property0.Value, options);
+                            exchange = ModelSerializationExtensions.JsonDeserialize<PeeringLocationPropertiesExchange>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("peeringLocation"u8))

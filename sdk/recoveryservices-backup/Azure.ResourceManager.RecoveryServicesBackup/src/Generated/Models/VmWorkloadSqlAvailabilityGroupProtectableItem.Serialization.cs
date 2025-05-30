@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in NodesList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DistributedNodesInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    prebackupvalidation = PreBackupValidation.DeserializePreBackupValidation(property.Value, options);
+                    prebackupvalidation = ModelSerializationExtensions.JsonDeserialize<PreBackupValidation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isProtectable"u8))

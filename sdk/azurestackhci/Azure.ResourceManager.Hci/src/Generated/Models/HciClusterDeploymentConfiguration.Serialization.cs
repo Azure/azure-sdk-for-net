@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WriteStartArray();
             foreach (var item in ScaleUnits)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DeploymentSettingScaleUnits>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

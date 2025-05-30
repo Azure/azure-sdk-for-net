@@ -79,7 +79,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property0.NameEquals("property"u8))
                 {
-                    property = AnomalyProperty.DeserializeAnomalyProperty(property0.Value);
+                    property = ModelSerializationExtensions.JsonDeserialize<AnomalyProperty>(property0.Value);
                     continue;
                 }
             }

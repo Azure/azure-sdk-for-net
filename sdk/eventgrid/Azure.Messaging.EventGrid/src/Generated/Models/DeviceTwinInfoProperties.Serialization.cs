@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    desired = DeviceTwinProperties.DeserializeDeviceTwinProperties(property.Value);
+                    desired = ModelSerializationExtensions.JsonDeserialize<DeviceTwinProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("reported"u8))
@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    reported = DeviceTwinProperties.DeserializeDeviceTwinProperties(property.Value);
+                    reported = ModelSerializationExtensions.JsonDeserialize<DeviceTwinProperties>(property.Value);
                     continue;
                 }
             }

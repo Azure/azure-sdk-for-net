@@ -41,27 +41,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(Layer2Configuration))
             {
                 writer.WritePropertyName("layer2Configuration"u8);
-                writer.WriteObjectValue(Layer2Configuration, options);
+                ((IJsonModel<Layer2Configuration>)Layer2Configuration).Write(writer, options);
             }
             if (Optional.IsDefined(OptionBLayer3Configuration))
             {
                 writer.WritePropertyName("optionBLayer3Configuration"u8);
-                writer.WriteObjectValue(OptionBLayer3Configuration, options);
+                ((IJsonModel<OptionBLayer3Configuration>)OptionBLayer3Configuration).Write(writer, options);
             }
             if (Optional.IsDefined(NpbStaticRouteConfiguration))
             {
                 writer.WritePropertyName("npbStaticRouteConfiguration"u8);
-                writer.WriteObjectValue(NpbStaticRouteConfiguration, options);
+                ((IJsonModel<NpbStaticRouteConfiguration>)NpbStaticRouteConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ImportRoutePolicy))
             {
                 writer.WritePropertyName("importRoutePolicy"u8);
-                writer.WriteObjectValue(ImportRoutePolicy, options);
+                ((IJsonModel<ImportRoutePolicyInformation>)ImportRoutePolicy).Write(writer, options);
             }
             if (Optional.IsDefined(ExportRoutePolicy))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
-                writer.WriteObjectValue(ExportRoutePolicy, options);
+                ((IJsonModel<ExportRoutePolicyInformation>)ExportRoutePolicy).Write(writer, options);
             }
             if (Optional.IsDefined(EgressAclId))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            layer2Configuration = Layer2Configuration.DeserializeLayer2Configuration(property0.Value, options);
+                            layer2Configuration = ModelSerializationExtensions.JsonDeserialize<Layer2Configuration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("optionBLayer3Configuration"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            optionBLayer3Configuration = OptionBLayer3Configuration.DeserializeOptionBLayer3Configuration(property0.Value, options);
+                            optionBLayer3Configuration = ModelSerializationExtensions.JsonDeserialize<OptionBLayer3Configuration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("npbStaticRouteConfiguration"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            npbStaticRouteConfiguration = NpbStaticRouteConfiguration.DeserializeNpbStaticRouteConfiguration(property0.Value, options);
+                            npbStaticRouteConfiguration = ModelSerializationExtensions.JsonDeserialize<NpbStaticRouteConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("importRoutePolicy"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            importRoutePolicy = ImportRoutePolicyInformation.DeserializeImportRoutePolicyInformation(property0.Value, options);
+                            importRoutePolicy = ModelSerializationExtensions.JsonDeserialize<ImportRoutePolicyInformation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("exportRoutePolicy"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            exportRoutePolicy = ExportRoutePolicyInformation.DeserializeExportRoutePolicyInformation(property0.Value, options);
+                            exportRoutePolicy = ModelSerializationExtensions.JsonDeserialize<ExportRoutePolicyInformation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("egressAclId"u8))

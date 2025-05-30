@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in ParameterNameOverride)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UriSigningParamIdentifier>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

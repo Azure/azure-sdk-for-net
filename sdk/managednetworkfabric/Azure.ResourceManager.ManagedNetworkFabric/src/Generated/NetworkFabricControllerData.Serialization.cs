@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in InfrastructureExpressRouteConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExpressRouteConnectionInformation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,24 +60,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in WorkloadExpressRouteConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExpressRouteConnectionInformation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(InfrastructureServices))
             {
                 writer.WritePropertyName("infrastructureServices"u8);
-                writer.WriteObjectValue(InfrastructureServices, options);
+                ((IJsonModel<NetworkFabricControllerServices>)InfrastructureServices).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(WorkloadServices))
             {
                 writer.WritePropertyName("workloadServices"u8);
-                writer.WriteObjectValue(WorkloadServices, options);
+                ((IJsonModel<NetworkFabricControllerServices>)WorkloadServices).Write(writer, options);
             }
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration, options);
+                ((IJsonModel<ManagedResourceGroupConfiguration>)ManagedResourceGroupConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(NetworkFabricIds))
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            infrastructureServices = NetworkFabricControllerServices.DeserializeNetworkFabricControllerServices(property0.Value, options);
+                            infrastructureServices = ModelSerializationExtensions.JsonDeserialize<NetworkFabricControllerServices>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("workloadServices"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            workloadServices = NetworkFabricControllerServices.DeserializeNetworkFabricControllerServices(property0.Value, options);
+                            workloadServices = ModelSerializationExtensions.JsonDeserialize<NetworkFabricControllerServices>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("managedResourceGroupConfiguration"u8))
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            managedResourceGroupConfiguration = ManagedResourceGroupConfiguration.DeserializeManagedResourceGroupConfiguration(property0.Value, options);
+                            managedResourceGroupConfiguration = ModelSerializationExtensions.JsonDeserialize<ManagedResourceGroupConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkFabricIds"u8))

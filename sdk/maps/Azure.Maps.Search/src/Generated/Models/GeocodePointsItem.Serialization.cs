@@ -30,7 +30,7 @@ namespace Azure.Maps.Search.Models
                     {
                         continue;
                     }
-                    geometry = GeoJsonPoint.DeserializeGeoJsonPoint(property.Value);
+                    geometry = ModelSerializationExtensions.JsonDeserialize<GeoJsonPoint>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("calculationMethod"u8))

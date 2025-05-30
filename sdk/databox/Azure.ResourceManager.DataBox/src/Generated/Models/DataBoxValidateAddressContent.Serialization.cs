@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.DataBox.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("shippingAddress"u8);
-            writer.WriteObjectValue(ShippingAddress, options);
+            ((IJsonModel<DataBoxShippingAddress>)ShippingAddress).Write(writer, options);
             writer.WritePropertyName("deviceType"u8);
             writer.WriteStringValue(DeviceType.ToSerialString());
             if (Optional.IsDefined(TransportPreferences))
             {
                 writer.WritePropertyName("transportPreferences"u8);
-                writer.WriteObjectValue(TransportPreferences, options);
+                ((IJsonModel<TransportPreferences>)TransportPreferences).Write(writer, options);
             }
             if (Optional.IsDefined(Model))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 if (property.NameEquals("shippingAddress"u8))
                 {
-                    shippingAddress = DataBoxShippingAddress.DeserializeDataBoxShippingAddress(property.Value, options);
+                    shippingAddress = ModelSerializationExtensions.JsonDeserialize<DataBoxShippingAddress>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deviceType"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    transportPreferences = TransportPreferences.DeserializeTransportPreferences(property.Value, options);
+                    transportPreferences = ModelSerializationExtensions.JsonDeserialize<TransportPreferences>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("model"u8))

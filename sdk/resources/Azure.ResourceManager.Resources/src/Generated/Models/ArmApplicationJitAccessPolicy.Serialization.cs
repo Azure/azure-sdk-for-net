@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in JitApprovers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<JitApprover>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

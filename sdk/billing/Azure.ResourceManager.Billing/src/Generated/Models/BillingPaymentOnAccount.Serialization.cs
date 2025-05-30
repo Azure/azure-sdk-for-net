@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (options.Format != "W" && Optional.IsDefined(Amount))
             {
                 writer.WritePropertyName("amount"u8);
-                writer.WriteObjectValue(Amount, options);
+                ((IJsonModel<CreatedSubscriptionReseller>)Amount).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(BillingProfileId))
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    amount = CreatedSubscriptionReseller.DeserializeCreatedSubscriptionReseller(property.Value, options);
+                    amount = ModelSerializationExtensions.JsonDeserialize<CreatedSubscriptionReseller>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("billingProfileId"u8))

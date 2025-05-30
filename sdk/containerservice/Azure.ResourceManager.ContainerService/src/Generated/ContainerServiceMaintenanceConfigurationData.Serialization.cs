@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WriteStartArray();
                 foreach (var item in TimesInWeek)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerServiceTimeInWeek>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,14 +57,14 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WriteStartArray();
                 foreach (var item in NotAllowedTimes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerServiceTimeSpan>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
-                writer.WriteObjectValue(MaintenanceWindow, options);
+                ((IJsonModel<ContainerServiceMaintenanceWindow>)MaintenanceWindow).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerService
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ContainerService
                             {
                                 continue;
                             }
-                            maintenanceWindow = ContainerServiceMaintenanceWindow.DeserializeContainerServiceMaintenanceWindow(property0.Value, options);
+                            maintenanceWindow = ModelSerializationExtensions.JsonDeserialize<ContainerServiceMaintenanceWindow>(property0.Value);
                             continue;
                         }
                     }

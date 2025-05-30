@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ResilientVmCreationPolicy))
             {
                 writer.WritePropertyName("resilientVMCreationPolicy"u8);
-                writer.WriteObjectValue(ResilientVmCreationPolicy, options);
+                ((IJsonModel<ResilientVmCreationPolicy>)ResilientVmCreationPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(ResilientVmDeletionPolicy))
             {
                 writer.WritePropertyName("resilientVMDeletionPolicy"u8);
-                writer.WriteObjectValue(ResilientVmDeletionPolicy, options);
+                ((IJsonModel<ResilientVmDeletionPolicy>)ResilientVmDeletionPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(AutomaticZoneRebalancingPolicy))
             {
                 writer.WritePropertyName("automaticZoneRebalancingPolicy"u8);
-                writer.WriteObjectValue(AutomaticZoneRebalancingPolicy, options);
+                ((IJsonModel<AutomaticZoneRebalancingPolicy>)AutomaticZoneRebalancingPolicy).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    resilientVmCreationPolicy = ResilientVmCreationPolicy.DeserializeResilientVmCreationPolicy(property.Value, options);
+                    resilientVmCreationPolicy = ModelSerializationExtensions.JsonDeserialize<ResilientVmCreationPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resilientVMDeletionPolicy"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    resilientVmDeletionPolicy = ResilientVmDeletionPolicy.DeserializeResilientVmDeletionPolicy(property.Value, options);
+                    resilientVmDeletionPolicy = ModelSerializationExtensions.JsonDeserialize<ResilientVmDeletionPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("automaticZoneRebalancingPolicy"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    automaticZoneRebalancingPolicy = AutomaticZoneRebalancingPolicy.DeserializeAutomaticZoneRebalancingPolicy(property.Value, options);
+                    automaticZoneRebalancingPolicy = ModelSerializationExtensions.JsonDeserialize<AutomaticZoneRebalancingPolicy>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.Automation
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("updateConfiguration"u8);
-            writer.WriteObjectValue(UpdateConfiguration, options);
+            ((IJsonModel<SoftwareUpdateConfigurationSpecificProperties>)UpdateConfiguration).Write(writer, options);
             writer.WritePropertyName("scheduleInfo"u8);
-            writer.WriteObjectValue(ScheduleInfo, options);
+            ((IJsonModel<SoftwareUpdateConfigurationScheduleProperties>)ScheduleInfo).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<AutomationResponseError>)Error).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Tasks))
             {
                 writer.WritePropertyName("tasks"u8);
-                writer.WriteObjectValue(Tasks, options);
+                ((IJsonModel<SoftwareUpdateConfigurationTasks>)Tasks).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -153,12 +153,12 @@ namespace Azure.ResourceManager.Automation
                     {
                         if (property0.NameEquals("updateConfiguration"u8))
                         {
-                            updateConfiguration = SoftwareUpdateConfigurationSpecificProperties.DeserializeSoftwareUpdateConfigurationSpecificProperties(property0.Value, options);
+                            updateConfiguration = ModelSerializationExtensions.JsonDeserialize<SoftwareUpdateConfigurationSpecificProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("scheduleInfo"u8))
                         {
-                            scheduleInfo = SoftwareUpdateConfigurationScheduleProperties.DeserializeSoftwareUpdateConfigurationScheduleProperties(property0.Value, options);
+                            scheduleInfo = ModelSerializationExtensions.JsonDeserialize<SoftwareUpdateConfigurationScheduleProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            error = AutomationResponseError.DeserializeAutomationResponseError(property0.Value, options);
+                            error = ModelSerializationExtensions.JsonDeserialize<AutomationResponseError>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("creationTime"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            tasks = SoftwareUpdateConfigurationTasks.DeserializeSoftwareUpdateConfigurationTasks(property0.Value, options);
+                            tasks = ModelSerializationExtensions.JsonDeserialize<SoftwareUpdateConfigurationTasks>(property0.Value);
                             continue;
                         }
                     }

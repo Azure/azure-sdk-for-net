@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteStartArray();
                 foreach (var item in Pages)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FacebookPage>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

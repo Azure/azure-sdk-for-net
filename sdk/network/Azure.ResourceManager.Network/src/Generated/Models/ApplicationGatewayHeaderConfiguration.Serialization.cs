@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(HeaderValueMatcher))
             {
                 writer.WritePropertyName("headerValueMatcher"u8);
-                writer.WriteObjectValue(HeaderValueMatcher, options);
+                ((IJsonModel<HeaderValueMatcher>)HeaderValueMatcher).Write(writer, options);
             }
             if (Optional.IsDefined(HeaderValue))
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    headerValueMatcher = HeaderValueMatcher.DeserializeHeaderValueMatcher(property.Value, options);
+                    headerValueMatcher = ModelSerializationExtensions.JsonDeserialize<HeaderValueMatcher>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("headerValue"u8))

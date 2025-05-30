@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 writer.WriteStartArray();
                 foreach (var item in IotHubs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DeviceUpdateIotHubSettings>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             if (Optional.IsDefined(DiagnosticStorageProperties))
             {
                 writer.WritePropertyName("diagnosticStorageProperties"u8);
-                writer.WriteObjectValue(DiagnosticStorageProperties, options);
+                ((IJsonModel<DiagnosticStorageProperties>)DiagnosticStorageProperties).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                             {
                                 continue;
                             }
-                            diagnosticStorageProperties = DiagnosticStorageProperties.DeserializeDiagnosticStorageProperties(property0.Value, options);
+                            diagnosticStorageProperties = ModelSerializationExtensions.JsonDeserialize<DiagnosticStorageProperties>(property0.Value);
                             continue;
                         }
                     }

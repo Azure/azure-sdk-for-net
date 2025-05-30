@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                     {
                         continue;
                     }
-                    targetVault = TargetAuthenticationVaultSecret.DeserializeTargetAuthenticationVaultSecret(property.Value, options);
+                    targetVault = ModelSerializationExtensions.JsonDeserialize<TargetAuthenticationVaultSecret>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("connectionServerName"u8))

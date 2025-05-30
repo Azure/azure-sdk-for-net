@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in LoadDistributionTargets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayLoadDistributionTarget>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

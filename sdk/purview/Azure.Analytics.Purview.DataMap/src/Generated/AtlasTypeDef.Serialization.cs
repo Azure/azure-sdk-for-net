@@ -52,7 +52,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(DateFormatter))
             {
                 writer.WritePropertyName("dateFormatter"u8);
-                writer.WriteObjectValue(DateFormatter, options);
+                ((IJsonModel<AtlasDateFormat>)DateFormatter).Write(writer, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -146,7 +146,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in RelationshipAttributeDefs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasRelationshipAttributeDef>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -161,19 +161,19 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in ElementDefs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasEnumElementDef>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(EndDef1))
             {
                 writer.WritePropertyName("endDef1"u8);
-                writer.WriteObjectValue(EndDef1, options);
+                ((IJsonModel<AtlasRelationshipEndDef>)EndDef1).Write(writer, options);
             }
             if (Optional.IsDefined(EndDef2))
             {
                 writer.WritePropertyName("endDef2"u8);
-                writer.WriteObjectValue(EndDef2, options);
+                ((IJsonModel<AtlasRelationshipEndDef>)EndDef2).Write(writer, options);
             }
             if (Optional.IsDefined(RelationshipCategory))
             {
@@ -191,7 +191,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in AttributeDefs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasAttributeDef>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -290,7 +290,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    dateFormatter = AtlasDateFormat.DeserializeAtlasDateFormat(property.Value, options);
+                    dateFormatter = ModelSerializationExtensions.JsonDeserialize<AtlasDateFormat>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -441,7 +441,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    endDef1 = AtlasRelationshipEndDef.DeserializeAtlasRelationshipEndDef(property.Value, options);
+                    endDef1 = ModelSerializationExtensions.JsonDeserialize<AtlasRelationshipEndDef>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("endDef2"u8))
@@ -450,7 +450,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    endDef2 = AtlasRelationshipEndDef.DeserializeAtlasRelationshipEndDef(property.Value, options);
+                    endDef2 = ModelSerializationExtensions.JsonDeserialize<AtlasRelationshipEndDef>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("relationshipCategory"u8))

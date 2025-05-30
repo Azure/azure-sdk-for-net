@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Dell.Storage.Models
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity, options);
+                ((IJsonModel<DellFileSystemCapacity>)Capacity).Write(writer, options);
             }
             writer.WritePropertyName("marketplace"u8);
-            writer.WriteObjectValue(Marketplace, options);
+            ((IJsonModel<DellFileSystemMarketplaceDetails>)Marketplace).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
             writer.WritePropertyName("delegatedSubnetCidr"u8);
             writer.WriteStringValue(DelegatedSubnetCidr);
             writer.WritePropertyName("user"u8);
-            writer.WriteObjectValue(User, options);
+            ((IJsonModel<DellFileSystemUserDetails>)User).Write(writer, options);
             if (Optional.IsDefined(FileSystemId))
             {
                 writer.WritePropertyName("fileSystemId"u8);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
             writer.WritePropertyName("dellReferenceNumber"u8);
             writer.WriteStringValue(DellReferenceNumber);
             writer.WritePropertyName("encryption"u8);
-            writer.WriteObjectValue(Encryption, options);
+            ((IJsonModel<DellFileSystemEncryptionProperties>)Encryption).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.Dell.Storage.Models
                     {
                         continue;
                     }
-                    capacity = DellFileSystemCapacity.DeserializeDellFileSystemCapacity(property.Value, options);
+                    capacity = ModelSerializationExtensions.JsonDeserialize<DellFileSystemCapacity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("marketplace"u8))
                 {
-                    marketplace = DellFileSystemMarketplaceDetails.DeserializeDellFileSystemMarketplaceDetails(property.Value, options);
+                    marketplace = ModelSerializationExtensions.JsonDeserialize<DellFileSystemMarketplaceDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
                 }
                 if (property.NameEquals("user"u8))
                 {
-                    user = DellFileSystemUserDetails.DeserializeDellFileSystemUserDetails(property.Value, options);
+                    user = ModelSerializationExtensions.JsonDeserialize<DellFileSystemUserDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("fileSystemId"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
                 }
                 if (property.NameEquals("encryption"u8))
                 {
-                    encryption = DellFileSystemEncryptionProperties.DeserializeDellFileSystemEncryptionProperties(property.Value, options);
+                    encryption = ModelSerializationExtensions.JsonDeserialize<DellFileSystemEncryptionProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

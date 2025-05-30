@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryHealthError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(CurrentScenario))
             {
                 writer.WritePropertyName("currentScenario"u8);
-                writer.WriteObjectValue(CurrentScenario, options);
+                ((IJsonModel<CurrentScenarioDetails>)CurrentScenario).Write(writer, options);
             }
             if (Optional.IsDefined(RecoveryContainerId))
             {
@@ -195,19 +195,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ClusterRegisteredNodes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RegisteredClusterNodes>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
-                writer.WriteObjectValue(ProviderSpecificDetails, options);
+                ((IJsonModel<ReplicationClusterProviderSpecificSettings>)ProviderSpecificDetails).Write(writer, options);
             }
             if (Optional.IsDefined(SharedDiskProperties))
             {
                 writer.WritePropertyName("sharedDiskProperties"u8);
-                writer.WriteObjectValue(SharedDiskProperties, options);
+                ((IJsonModel<SharedDiskReplicationItemProperties>)SharedDiskProperties).Write(writer, options);
             }
             if (Optional.IsDefined(PolicyId))
             {
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    currentScenario = CurrentScenarioDetails.DeserializeCurrentScenarioDetails(property.Value, options);
+                    currentScenario = ModelSerializationExtensions.JsonDeserialize<CurrentScenarioDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("recoveryContainerId"u8))
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = ReplicationClusterProviderSpecificSettings.DeserializeReplicationClusterProviderSpecificSettings(property.Value, options);
+                    providerSpecificDetails = ModelSerializationExtensions.JsonDeserialize<ReplicationClusterProviderSpecificSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sharedDiskProperties"u8))
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    sharedDiskProperties = SharedDiskReplicationItemProperties.DeserializeSharedDiskReplicationItemProperties(property.Value, options);
+                    sharedDiskProperties = ModelSerializationExtensions.JsonDeserialize<SharedDiskReplicationItemProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policyId"u8))

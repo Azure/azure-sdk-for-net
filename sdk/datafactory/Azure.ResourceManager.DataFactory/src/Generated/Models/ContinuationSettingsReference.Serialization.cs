@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ContinuationTtlInMinutes))
             {
                 writer.WritePropertyName("continuationTtlInMinutes"u8);
-                JsonSerializer.Serialize(writer, ContinuationTtlInMinutes);
+                ((IJsonModel<DataFactoryElement<T>>)ContinuationTtlInMinutes).Write(writer, options);
             }
             if (Optional.IsDefined(IdleCondition))
             {
                 writer.WritePropertyName("idleCondition"u8);
-                JsonSerializer.Serialize(writer, IdleCondition);
+                ((IJsonModel<DataFactoryElement<T>>)IdleCondition).Write(writer, options);
             }
             if (Optional.IsDefined(CustomizedCheckpointKey))
             {
                 writer.WritePropertyName("customizedCheckpointKey"u8);
-                JsonSerializer.Serialize(writer, CustomizedCheckpointKey);
+                ((IJsonModel<DataFactoryElement<T>>)CustomizedCheckpointKey).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    continuationTtlInMinutes = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    continuationTtlInMinutes = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("idleCondition"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    idleCondition = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    idleCondition = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("customizedCheckpointKey"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    customizedCheckpointKey = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    customizedCheckpointKey = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

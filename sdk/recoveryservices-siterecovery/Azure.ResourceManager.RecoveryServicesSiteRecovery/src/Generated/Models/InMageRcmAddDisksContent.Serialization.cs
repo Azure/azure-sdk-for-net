@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartArray();
             foreach (var item in Disks)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<InMageRcmDiskContent>)item).Write(writer, options);
             }
             writer.WriteEndArray();
         }

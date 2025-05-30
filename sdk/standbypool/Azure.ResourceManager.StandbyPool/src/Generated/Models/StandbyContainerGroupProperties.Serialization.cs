@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.StandbyPool.Models
             }
 
             writer.WritePropertyName("containerGroupProfile"u8);
-            writer.WriteObjectValue(ContainerGroupProfile, options);
+            ((IJsonModel<StandbyContainerGroupProfile>)ContainerGroupProfile).Write(writer, options);
             if (Optional.IsCollectionDefined(SubnetIds))
             {
                 writer.WritePropertyName("subnetIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in SubnetIds)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 if (property.NameEquals("containerGroupProfile"u8))
                 {
-                    containerGroupProfile = StandbyContainerGroupProfile.DeserializeStandbyContainerGroupProfile(property.Value, options);
+                    containerGroupProfile = ModelSerializationExtensions.JsonDeserialize<StandbyContainerGroupProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("subnetIds"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                        array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                     }
                     subnetIds = array;
                     continue;

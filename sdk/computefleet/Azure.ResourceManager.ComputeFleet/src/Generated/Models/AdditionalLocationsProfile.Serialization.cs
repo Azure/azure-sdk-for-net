@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             writer.WriteStartArray();
             foreach (var item in LocationProfiles)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<LocationProfile>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

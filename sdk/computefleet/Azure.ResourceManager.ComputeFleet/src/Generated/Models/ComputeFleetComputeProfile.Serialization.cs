@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
 
             writer.WritePropertyName("baseVirtualMachineProfile"u8);
-            writer.WriteObjectValue(BaseVirtualMachineProfile, options);
+            ((IJsonModel<ComputeFleetVmProfile>)BaseVirtualMachineProfile).Write(writer, options);
             if (Optional.IsDefined(ComputeApiVersion))
             {
                 writer.WritePropertyName("computeApiVersion"u8);
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(AdditionalVirtualMachineCapabilities))
             {
                 writer.WritePropertyName("additionalVirtualMachineCapabilities"u8);
-                writer.WriteObjectValue(AdditionalVirtualMachineCapabilities, options);
+                ((IJsonModel<AdditionalCapabilities>)AdditionalVirtualMachineCapabilities).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 if (property.NameEquals("baseVirtualMachineProfile"u8))
                 {
-                    baseVirtualMachineProfile = ComputeFleetVmProfile.DeserializeComputeFleetVmProfile(property.Value, options);
+                    baseVirtualMachineProfile = ModelSerializationExtensions.JsonDeserialize<ComputeFleetVmProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("computeApiVersion"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    additionalVirtualMachineCapabilities = AdditionalCapabilities.DeserializeAdditionalCapabilities(property.Value, options);
+                    additionalVirtualMachineCapabilities = ModelSerializationExtensions.JsonDeserialize<AdditionalCapabilities>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

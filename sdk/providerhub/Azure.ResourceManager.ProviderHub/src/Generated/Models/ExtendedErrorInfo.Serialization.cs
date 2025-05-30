@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExtendedErrorInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in AdditionalInfo)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TypedErrorInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

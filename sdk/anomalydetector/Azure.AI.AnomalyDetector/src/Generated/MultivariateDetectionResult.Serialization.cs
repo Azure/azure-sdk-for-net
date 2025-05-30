@@ -37,12 +37,12 @@ namespace Azure.AI.AnomalyDetector
             writer.WritePropertyName("resultId"u8);
             writer.WriteStringValue(ResultId);
             writer.WritePropertyName("summary"u8);
-            writer.WriteObjectValue(Summary, options);
+            ((IJsonModel<MultivariateBatchDetectionResultSummary>)Summary).Write(writer, options);
             writer.WritePropertyName("results"u8);
             writer.WriteStartArray();
             foreach (var item in Results)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<AnomalyState>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -96,7 +96,7 @@ namespace Azure.AI.AnomalyDetector
                 }
                 if (property.NameEquals("summary"u8))
                 {
-                    summary = MultivariateBatchDetectionResultSummary.DeserializeMultivariateBatchDetectionResultSummary(property.Value, options);
+                    summary = ModelSerializationExtensions.JsonDeserialize<MultivariateBatchDetectionResultSummary>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("results"u8))

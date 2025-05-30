@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteStartArray();
                 foreach (var item in TemplateParameters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ParameterContract>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
-                writer.WriteObjectValue(Request, options);
+                ((IJsonModel<RequestContract>)Request).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Responses))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteStartArray();
                 foreach (var item in Responses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResponseContract>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            request = RequestContract.DeserializeRequestContract(property0.Value, options);
+                            request = ModelSerializationExtensions.JsonDeserialize<RequestContract>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("responses"u8))

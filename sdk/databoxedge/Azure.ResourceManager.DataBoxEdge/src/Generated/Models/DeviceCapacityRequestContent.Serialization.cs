@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in VmPlacementResults)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VmPlacementRequestResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

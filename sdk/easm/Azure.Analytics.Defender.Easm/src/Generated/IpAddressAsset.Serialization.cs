@@ -46,7 +46,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Asns)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ObservedLong>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Reputations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ReputationDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +66,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in WebComponents)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WebComponent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +76,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in NetRanges)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ObservedString>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -86,7 +86,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Headers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ObservedHeader>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +96,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Attributes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AttributeDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +106,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Cookies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CookieDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -116,7 +116,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in SslCerts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SslCertAsset>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -126,7 +126,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Services)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AssetService>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -136,7 +136,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in IpBlocks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IpBlock>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -146,7 +146,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SourceDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -171,7 +171,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Banners)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BannerDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -181,7 +181,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in ScanMetadata)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ScanMetadata>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -191,7 +191,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in NsRecord)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ObservedBoolean>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -201,7 +201,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in MxRecord)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ObservedBoolean>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -211,7 +211,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Location)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ObservedLocation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -221,7 +221,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Hosts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ObservedString>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -231,7 +231,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Nxdomain)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ObservedBoolean>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -241,7 +241,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in SslServerConfig)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SslServerConfig>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in ReadyReplicas)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AgentPoolUpdateProfile>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

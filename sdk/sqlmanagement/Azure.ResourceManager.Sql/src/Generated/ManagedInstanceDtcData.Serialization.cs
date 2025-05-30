@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(SecuritySettings))
             {
                 writer.WritePropertyName("securitySettings"u8);
-                writer.WriteObjectValue(SecuritySettings, options);
+                ((IJsonModel<ManagedInstanceDtcSecuritySettings>)SecuritySettings).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ExternalDnsSuffixSearchList))
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            securitySettings = ManagedInstanceDtcSecuritySettings.DeserializeManagedInstanceDtcSecuritySettings(property0.Value, options);
+                            securitySettings = ModelSerializationExtensions.JsonDeserialize<ManagedInstanceDtcSecuritySettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("externalDnsSuffixSearchList"u8))

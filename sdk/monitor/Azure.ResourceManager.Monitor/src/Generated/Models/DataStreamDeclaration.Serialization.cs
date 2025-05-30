@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Columns)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataColumnDefinition>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

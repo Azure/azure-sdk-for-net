@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in SeedNodes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CassandraDataCenterSeedNode>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(AuthenticationMethodLdapProperties))
             {
                 writer.WritePropertyName("authenticationMethodLdapProperties"u8);
-                writer.WriteObjectValue(AuthenticationMethodLdapProperties, options);
+                ((IJsonModel<AuthenticationMethodLdapProperties>)AuthenticationMethodLdapProperties).Write(writer, options);
             }
             if (Optional.IsDefined(Deallocated))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(ProvisionError))
             {
                 writer.WritePropertyName("provisionError"u8);
-                writer.WriteObjectValue(ProvisionError, options);
+                ((IJsonModel<CassandraError>)ProvisionError).Write(writer, options);
             }
             if (Optional.IsDefined(PrivateEndpointIPAddress))
             {
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    authenticationMethodLdapProperties = AuthenticationMethodLdapProperties.DeserializeAuthenticationMethodLdapProperties(property.Value, options);
+                    authenticationMethodLdapProperties = ModelSerializationExtensions.JsonDeserialize<AuthenticationMethodLdapProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deallocated"u8))
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    provisionError = CassandraError.DeserializeCassandraError(property.Value, options);
+                    provisionError = ModelSerializationExtensions.JsonDeserialize<CassandraError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("privateEndpointIpAddress"u8))

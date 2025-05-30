@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile, options);
+                ((IJsonModel<AppPlatformServiceNetworkProfile>)NetworkProfile).Write(writer, options);
             }
             if (Optional.IsDefined(VnetAddons))
             {
                 writer.WritePropertyName("vnetAddons"u8);
-                writer.WriteObjectValue(VnetAddons, options);
+                ((IJsonModel<ServiceVnetAddons>)VnetAddons).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Version))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    networkProfile = AppPlatformServiceNetworkProfile.DeserializeAppPlatformServiceNetworkProfile(property.Value, options);
+                    networkProfile = ModelSerializationExtensions.JsonDeserialize<AppPlatformServiceNetworkProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vnetAddons"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    vnetAddons = ServiceVnetAddons.DeserializeServiceVnetAddons(property.Value, options);
+                    vnetAddons = ModelSerializationExtensions.JsonDeserialize<ServiceVnetAddons>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("version"u8))

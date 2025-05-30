@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in CompilationErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RouteCompilationError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

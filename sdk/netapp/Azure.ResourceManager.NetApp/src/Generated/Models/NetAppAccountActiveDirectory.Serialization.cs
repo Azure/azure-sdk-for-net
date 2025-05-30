@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(LdapSearchScope))
             {
                 writer.WritePropertyName("ldapSearchScope"u8);
-                writer.WriteObjectValue(LdapSearchScope, options);
+                ((IJsonModel<NetAppLdapSearchScopeConfiguration>)LdapSearchScope).Write(writer, options);
             }
             if (Optional.IsDefined(PreferredServersForLdapClient))
             {
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    ldapSearchScope = NetAppLdapSearchScopeConfiguration.DeserializeNetAppLdapSearchScopeConfiguration(property.Value, options);
+                    ldapSearchScope = ModelSerializationExtensions.JsonDeserialize<NetAppLdapSearchScopeConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("preferredServersForLdapClient"u8))

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomDomainsForTopicsConfiguration)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CustomDomainConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomDomainsForTopicSpacesConfiguration)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CustomDomainConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

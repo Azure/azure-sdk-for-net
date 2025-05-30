@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WriteStartArray();
                 foreach (var item in PeeringFacilities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExchangePeeringFacility>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityInsights
             if (options.Format != "W" && Optional.IsDefined(Author))
             {
                 writer.WritePropertyName("author"u8);
-                writer.WriteObjectValue(Author, options);
+                ((IJsonModel<SecurityInsightsClientInfo>)Author).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            author = SecurityInsightsClientInfo.DeserializeSecurityInsightsClientInfo(property0.Value, options);
+                            author = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsClientInfo>(property0.Value);
                             continue;
                         }
                     }

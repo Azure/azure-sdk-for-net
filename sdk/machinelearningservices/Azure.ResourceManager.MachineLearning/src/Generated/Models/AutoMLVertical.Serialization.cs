@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
             writer.WritePropertyName("trainingData"u8);
-            writer.WriteObjectValue(TrainingData, options);
+            ((IJsonModel<MachineLearningTableJobInput>)TrainingData).Write(writer, options);
             if (Optional.IsDefined(TargetColumnName))
             {
                 if (TargetColumnName != null)

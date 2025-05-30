@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (options.Format != "W" && Optional.IsDefined(CredentialHealth))
             {
                 writer.WritePropertyName("credentialHealth"u8);
-                writer.WriteObjectValue(CredentialHealth, options);
+                ((IJsonModel<ContainerRegistryCredentialHealth>)CredentialHealth).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    credentialHealth = ContainerRegistryCredentialHealth.DeserializeContainerRegistryCredentialHealth(property.Value, options);
+                    credentialHealth = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryCredentialHealth>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

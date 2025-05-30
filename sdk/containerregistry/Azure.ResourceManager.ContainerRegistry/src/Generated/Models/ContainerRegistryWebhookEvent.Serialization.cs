@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(EventRequestMessage))
             {
                 writer.WritePropertyName("eventRequestMessage"u8);
-                writer.WriteObjectValue(EventRequestMessage, options);
+                ((IJsonModel<ContainerRegistryWebhookEventRequestMessage>)EventRequestMessage).Write(writer, options);
             }
             if (Optional.IsDefined(EventResponseMessage))
             {
                 writer.WritePropertyName("eventResponseMessage"u8);
-                writer.WriteObjectValue(EventResponseMessage, options);
+                ((IJsonModel<ContainerRegistryWebhookEventResponseMessage>)EventResponseMessage).Write(writer, options);
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    eventRequestMessage = ContainerRegistryWebhookEventRequestMessage.DeserializeContainerRegistryWebhookEventRequestMessage(property.Value, options);
+                    eventRequestMessage = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryWebhookEventRequestMessage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eventResponseMessage"u8))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    eventResponseMessage = ContainerRegistryWebhookEventResponseMessage.DeserializeContainerRegistryWebhookEventResponseMessage(property.Value, options);
+                    eventResponseMessage = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryWebhookEventResponseMessage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

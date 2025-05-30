@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(WsdlService))
             {
                 writer.WritePropertyName("wsdlService"u8);
-                writer.WriteObjectValue(WsdlService, options);
+                ((IJsonModel<LogicWsdlService>)WsdlService).Write(writer, options);
             }
             if (Optional.IsDefined(WsdlImportMethod))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(DeploymentParameters))
             {
                 writer.WritePropertyName("deploymentParameters"u8);
-                writer.WriteObjectValue(DeploymentParameters, options);
+                ((IJsonModel<LogicApiDeploymentParameterMetadataSet>)DeploymentParameters).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    wsdlService = LogicWsdlService.DeserializeLogicWsdlService(property.Value, options);
+                    wsdlService = ModelSerializationExtensions.JsonDeserialize<LogicWsdlService>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("wsdlImportMethod"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    deploymentParameters = LogicApiDeploymentParameterMetadataSet.DeserializeLogicApiDeploymentParameterMetadataSet(property.Value, options);
+                    deploymentParameters = ModelSerializationExtensions.JsonDeserialize<LogicApiDeploymentParameterMetadataSet>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

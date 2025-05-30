@@ -58,18 +58,18 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(NetworkSecurityGroup))
             {
                 writer.WritePropertyName("networkSecurityGroup"u8);
-                JsonSerializer.Serialize(writer, NetworkSecurityGroup);
+                ((IJsonModel<WritableSubResource>)NetworkSecurityGroup).Write(writer, options);
             }
             if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
-                writer.WriteObjectValue(DnsSettings, options);
+                ((IJsonModel<ComputeFleetVmssNetworkDnsSettings>)DnsSettings).Write(writer, options);
             }
             writer.WritePropertyName("ipConfigurations"u8);
             writer.WriteStartArray();
             foreach (var item in IPConfigurations)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ComputeFleetVmssIPConfiguration>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(IsIPForwardingEnabled))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    networkSecurityGroup = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    networkSecurityGroup = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dnsSettings"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    dnsSettings = ComputeFleetVmssNetworkDnsSettings.DeserializeComputeFleetVmssNetworkDnsSettings(property.Value, options);
+                    dnsSettings = ModelSerializationExtensions.JsonDeserialize<ComputeFleetVmssNetworkDnsSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ipConfigurations"u8))

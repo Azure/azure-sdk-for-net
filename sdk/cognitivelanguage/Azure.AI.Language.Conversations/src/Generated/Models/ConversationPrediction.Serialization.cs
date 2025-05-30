@@ -39,14 +39,14 @@ namespace Azure.AI.Language.Conversations.Models
             writer.WriteStartArray();
             foreach (var item in Intents)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ConversationIntent>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("entities"u8);
             writer.WriteStartArray();
             foreach (var item in Entities)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ConversationEntity>)item).Write(writer, options);
             }
             writer.WriteEndArray();
         }

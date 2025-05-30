@@ -70,7 +70,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Seeds)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DiscoverySource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,14 +90,14 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Excludes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DiscoverySource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(LatestRun))
             {
                 writer.WritePropertyName("latestRun"u8);
-                writer.WriteObjectValue(LatestRun, options);
+                ((IJsonModel<DiscoveryRunResult>)LatestRun).Write(writer, options);
             }
             if (Optional.IsDefined(CreatedDate))
             {
@@ -244,7 +244,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    latestRun = DiscoveryRunResult.DeserializeDiscoveryRunResult(property.Value, options);
+                    latestRun = ModelSerializationExtensions.JsonDeserialize<DiscoveryRunResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("createdDate"u8))

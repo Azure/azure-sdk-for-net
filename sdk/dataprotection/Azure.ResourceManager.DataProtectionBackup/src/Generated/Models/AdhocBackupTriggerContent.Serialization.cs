@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WritePropertyName("backupRuleOptions"u8);
-            writer.WriteObjectValue(BackupRules, options);
+            ((IJsonModel<AdhocBackupRules>)BackupRules).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 if (property.NameEquals("backupRuleOptions"u8))
                 {
-                    backupRuleOptions = AdhocBackupRules.DeserializeAdhocBackupRules(property.Value, options);
+                    backupRuleOptions = ModelSerializationExtensions.JsonDeserialize<AdhocBackupRules>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

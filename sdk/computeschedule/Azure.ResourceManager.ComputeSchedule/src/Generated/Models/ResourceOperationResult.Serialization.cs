@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             if (Optional.IsDefined(Operation))
             {
                 writer.WritePropertyName("operation"u8);
-                writer.WriteObjectValue(Operation, options);
+                ((IJsonModel<ResourceOperationDetails>)Operation).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    operation = ResourceOperationDetails.DeserializeResourceOperationDetails(property.Value, options);
+                    operation = ModelSerializationExtensions.JsonDeserialize<ResourceOperationDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(SoftwareUpdateConfiguration))
             {
                 writer.WritePropertyName("softwareUpdateConfiguration"u8);
-                writer.WriteObjectValue(SoftwareUpdateConfiguration, options);
+                ((IJsonModel<SoftwareUpdateConfigurationNavigation>)SoftwareUpdateConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Job))
             {
                 writer.WritePropertyName("job"u8);
-                writer.WriteObjectValue(Job, options);
+                ((IJsonModel<JobNavigation>)Job).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<AutomationResponseError>)Error).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            softwareUpdateConfiguration = SoftwareUpdateConfigurationNavigation.DeserializeSoftwareUpdateConfigurationNavigation(property0.Value, options);
+                            softwareUpdateConfiguration = ModelSerializationExtensions.JsonDeserialize<SoftwareUpdateConfigurationNavigation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            job = JobNavigation.DeserializeJobNavigation(property0.Value, options);
+                            job = ModelSerializationExtensions.JsonDeserialize<JobNavigation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("creationTime"u8))
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            error = AutomationResponseError.DeserializeAutomationResponseError(property0.Value, options);
+                            error = ModelSerializationExtensions.JsonDeserialize<AutomationResponseError>(property0.Value);
                             continue;
                         }
                     }

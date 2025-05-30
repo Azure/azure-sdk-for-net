@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in Claims)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<OpenAuthenticationPolicyClaim>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

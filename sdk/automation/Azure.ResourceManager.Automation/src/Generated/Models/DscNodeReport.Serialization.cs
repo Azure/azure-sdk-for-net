@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DscReportError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -119,14 +119,14 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DscReportResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(MetaConfiguration))
             {
                 writer.WritePropertyName("metaConfiguration"u8);
-                writer.WriteObjectValue(MetaConfiguration, options);
+                ((IJsonModel<DscMetaConfiguration>)MetaConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(HostName))
             {
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    metaConfiguration = DscMetaConfiguration.DeserializeDscMetaConfiguration(property.Value, options);
+                    metaConfiguration = ModelSerializationExtensions.JsonDeserialize<DscMetaConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("hostName"u8))

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ReservationDetailData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in RestoreHookReferences)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NamespacedName>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ResourceModifierReference))
             {
                 writer.WritePropertyName("resourceModifierReference"u8);
-                writer.WriteObjectValue(ResourceModifierReference, options);
+                ((IJsonModel<NamespacedName>)ResourceModifierReference).Write(writer, options);
             }
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    resourceModifierReference = NamespacedName.DeserializeNamespacedName(property.Value, options);
+                    resourceModifierReference = ModelSerializationExtensions.JsonDeserialize<NamespacedName>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))

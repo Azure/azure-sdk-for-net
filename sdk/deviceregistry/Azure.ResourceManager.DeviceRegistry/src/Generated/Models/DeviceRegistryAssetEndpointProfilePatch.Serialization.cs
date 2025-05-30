@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<AssetEndpointProfileUpdateProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     {
                         continue;
                     }
-                    properties = AssetEndpointProfileUpdateProperties.DeserializeAssetEndpointProfileUpdateProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<AssetEndpointProfileUpdateProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

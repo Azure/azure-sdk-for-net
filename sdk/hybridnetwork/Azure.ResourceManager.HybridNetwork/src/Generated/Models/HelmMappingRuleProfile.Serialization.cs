@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue(Options, options);
+                ((IJsonModel<HelmMappingRuleProfileConfig>)Options).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    options0 = HelmMappingRuleProfileConfig.DeserializeHelmMappingRuleProfileConfig(property.Value, options);
+                    options0 = ModelSerializationExtensions.JsonDeserialize<HelmMappingRuleProfileConfig>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

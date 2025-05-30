@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ListOfBackupFiles)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SqlBackupFileInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

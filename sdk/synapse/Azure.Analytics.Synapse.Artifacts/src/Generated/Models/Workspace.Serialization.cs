@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(DefaultDataLakeStorage))
             {
                 writer.WritePropertyName("defaultDataLakeStorage"u8);
-                writer.WriteObjectValue(DefaultDataLakeStorage);
+                JsonSerializer.Serialize(writer, DefaultDataLakeStorage);
             }
             if (Optional.IsDefined(SqlAdministratorLoginPassword))
             {
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(VirtualNetworkProfile))
             {
                 writer.WritePropertyName("virtualNetworkProfile"u8);
-                writer.WriteObjectValue(VirtualNetworkProfile);
+                JsonSerializer.Serialize(writer, VirtualNetworkProfile);
             }
             if (Optional.IsCollectionDefined(ConnectivityEndpoints))
             {
@@ -86,29 +86,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                JsonSerializer.Serialize(writer, Encryption);
             }
             if (Optional.IsDefined(ManagedVirtualNetworkSettings))
             {
                 writer.WritePropertyName("managedVirtualNetworkSettings"u8);
-                writer.WriteObjectValue(ManagedVirtualNetworkSettings);
+                JsonSerializer.Serialize(writer, ManagedVirtualNetworkSettings);
             }
             if (Optional.IsDefined(WorkspaceRepositoryConfiguration))
             {
                 writer.WritePropertyName("workspaceRepositoryConfiguration"u8);
-                writer.WriteObjectValue(WorkspaceRepositoryConfiguration);
+                JsonSerializer.Serialize(writer, WorkspaceRepositoryConfiguration);
             }
             if (Optional.IsDefined(PurviewConfiguration))
             {
                 writer.WritePropertyName("purviewConfiguration"u8);
-                writer.WriteObjectValue(PurviewConfiguration);
+                JsonSerializer.Serialize(writer, PurviewConfiguration);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -150,7 +150,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    identity = ManagedIdentity.DeserializeManagedIdentity(property.Value);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -202,7 +202,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            defaultDataLakeStorage = DataLakeStorageAccountDetails.DeserializeDataLakeStorageAccountDetails(property0.Value);
+                            defaultDataLakeStorage = ModelSerializationExtensions.JsonDeserialize<DataLakeStorageAccountDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sqlAdministratorLoginPassword"u8))
@@ -231,7 +231,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            virtualNetworkProfile = VirtualNetworkProfile.DeserializeVirtualNetworkProfile(property0.Value);
+                            virtualNetworkProfile = ModelSerializationExtensions.JsonDeserialize<VirtualNetworkProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("connectivityEndpoints"u8))
@@ -273,7 +273,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            encryption = EncryptionDetails.DeserializeEncryptionDetails(property0.Value);
+                            encryption = ModelSerializationExtensions.JsonDeserialize<EncryptionDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("workspaceUID"u8))
@@ -312,7 +312,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            managedVirtualNetworkSettings = ManagedVirtualNetworkSettings.DeserializeManagedVirtualNetworkSettings(property0.Value);
+                            managedVirtualNetworkSettings = ModelSerializationExtensions.JsonDeserialize<ManagedVirtualNetworkSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("workspaceRepositoryConfiguration"u8))
@@ -321,7 +321,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            workspaceRepositoryConfiguration = WorkspaceRepositoryConfiguration.DeserializeWorkspaceRepositoryConfiguration(property0.Value);
+                            workspaceRepositoryConfiguration = ModelSerializationExtensions.JsonDeserialize<WorkspaceRepositoryConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("purviewConfiguration"u8))
@@ -330,7 +330,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            purviewConfiguration = PurviewConfiguration.DeserializePurviewConfiguration(property0.Value);
+                            purviewConfiguration = ModelSerializationExtensions.JsonDeserialize<PurviewConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("adlaResourceId"u8))

@@ -35,9 +35,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
 
             writer.WritePropertyName("resourceInfo"u8);
-            writer.WriteObjectValue(ResourceDetails, options);
+            ((IJsonModel<ResourceNotificationsResourceUpdatedDetails>)ResourceDetails).Write(writer, options);
             writer.WritePropertyName("operationalInfo"u8);
-            writer.WriteObjectValue(OperationalDetails, options);
+            ((IJsonModel<ResourceNotificationsOperationalDetails>)OperationalDetails).Write(writer, options);
             writer.WritePropertyName("apiVersion"u8);
             writer.WriteStringValue(ApiVersion);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -86,12 +86,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("resourceInfo"u8))
                 {
-                    resourceInfo = ResourceNotificationsResourceUpdatedDetails.DeserializeResourceNotificationsResourceUpdatedDetails(property.Value, options);
+                    resourceInfo = ModelSerializationExtensions.JsonDeserialize<ResourceNotificationsResourceUpdatedDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("operationalInfo"u8))
                 {
-                    operationalInfo = ResourceNotificationsOperationalDetails.DeserializeResourceNotificationsOperationalDetails(property.Value, options);
+                    operationalInfo = ModelSerializationExtensions.JsonDeserialize<ResourceNotificationsOperationalDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("apiVersion"u8))

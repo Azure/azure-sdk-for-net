@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(GitHubActionConfiguration))
             {
                 writer.WritePropertyName("githubActionConfiguration"u8);
-                writer.WriteObjectValue(GitHubActionConfiguration, options);
+                ((IJsonModel<ContainerAppGitHubActionConfiguration>)GitHubActionConfiguration).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            gitHubActionConfiguration = ContainerAppGitHubActionConfiguration.DeserializeContainerAppGitHubActionConfiguration(property0.Value, options);
+                            gitHubActionConfiguration = ModelSerializationExtensions.JsonDeserialize<ContainerAppGitHubActionConfiguration>(property0.Value);
                             continue;
                         }
                     }

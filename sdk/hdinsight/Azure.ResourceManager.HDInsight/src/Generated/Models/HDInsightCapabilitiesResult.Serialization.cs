@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 foreach (var item in Versions)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<HDInsightVersionsCapability>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 foreach (var item in Regions)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<RegionsCapability>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (options.Format != "W" && Optional.IsDefined(Quota))
             {
                 writer.WritePropertyName("quota"u8);
-                writer.WriteObjectValue(Quota, options);
+                ((IJsonModel<QuotaCapability>)Quota).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    quota = QuotaCapability.DeserializeQuotaCapability(property.Value, options);
+                    quota = ModelSerializationExtensions.JsonDeserialize<QuotaCapability>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

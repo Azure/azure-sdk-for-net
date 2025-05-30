@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(FormulaContent))
             {
                 writer.WritePropertyName("formulaContent"u8);
-                writer.WriteObjectValue(FormulaContent, options);
+                ((IJsonModel<DevTestLabVmCreationContent>)FormulaContent).Write(writer, options);
             }
             if (Optional.IsDefined(Vm))
             {
                 writer.WritePropertyName("vm"u8);
-                writer.WriteObjectValue(Vm, options);
+                ((IJsonModel<FormulaPropertiesFromVm>)Vm).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            formulaContent = DevTestLabVmCreationContent.DeserializeDevTestLabVmCreationContent(property0.Value, options);
+                            formulaContent = ModelSerializationExtensions.JsonDeserialize<DevTestLabVmCreationContent>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("vm"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            vm = FormulaPropertiesFromVm.DeserializeFormulaPropertiesFromVm(property0.Value, options);
+                            vm = ModelSerializationExtensions.JsonDeserialize<FormulaPropertiesFromVm>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

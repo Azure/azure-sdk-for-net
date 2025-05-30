@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             if (Optional.IsDefined(PairedKey))
             {
                 writer.WritePropertyName("pairedKey"u8);
-                writer.WriteObjectValue(PairedKey, options);
+                ((IJsonModel<CryptoPairedKey>)PairedKey).Write(writer, options);
             }
             if (Optional.IsDefined(IsShortKeySize))
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                             {
                                 continue;
                             }
-                            pairedKey = CryptoPairedKey.DeserializeCryptoPairedKey(property0.Value, options);
+                            pairedKey = ModelSerializationExtensions.JsonDeserialize<CryptoPairedKey>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("isShortKeySize"u8))

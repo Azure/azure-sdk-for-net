@@ -67,22 +67,22 @@ namespace Azure.ResourceManager.StorageSync.Models
             if (options.Format != "W" && Optional.IsDefined(UploadStatus))
             {
                 writer.WritePropertyName("uploadStatus"u8);
-                writer.WriteObjectValue(UploadStatus, options);
+                ((IJsonModel<ServerEndpointSyncSessionStatus>)UploadStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DownloadStatus))
             {
                 writer.WritePropertyName("downloadStatus"u8);
-                writer.WriteObjectValue(DownloadStatus, options);
+                ((IJsonModel<ServerEndpointSyncSessionStatus>)DownloadStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(UploadActivity))
             {
                 writer.WritePropertyName("uploadActivity"u8);
-                writer.WriteObjectValue(UploadActivity, options);
+                ((IJsonModel<ServerEndpointSyncActivityStatus>)UploadActivity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DownloadActivity))
             {
                 writer.WritePropertyName("downloadActivity"u8);
-                writer.WriteObjectValue(DownloadActivity, options);
+                ((IJsonModel<ServerEndpointSyncActivityStatus>)DownloadActivity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OfflineDataTransferStatus))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             if (options.Format != "W" && Optional.IsDefined(BackgroundDataDownloadActivity))
             {
                 writer.WritePropertyName("backgroundDataDownloadActivity"u8);
-                writer.WriteObjectValue(BackgroundDataDownloadActivity, options);
+                ((IJsonModel<ServerEndpointBackgroundDataDownloadActivity>)BackgroundDataDownloadActivity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    uploadStatus = ServerEndpointSyncSessionStatus.DeserializeServerEndpointSyncSessionStatus(property.Value, options);
+                    uploadStatus = ModelSerializationExtensions.JsonDeserialize<ServerEndpointSyncSessionStatus>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("downloadStatus"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    downloadStatus = ServerEndpointSyncSessionStatus.DeserializeServerEndpointSyncSessionStatus(property.Value, options);
+                    downloadStatus = ModelSerializationExtensions.JsonDeserialize<ServerEndpointSyncSessionStatus>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("uploadActivity"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    uploadActivity = ServerEndpointSyncActivityStatus.DeserializeServerEndpointSyncActivityStatus(property.Value, options);
+                    uploadActivity = ModelSerializationExtensions.JsonDeserialize<ServerEndpointSyncActivityStatus>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("downloadActivity"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    downloadActivity = ServerEndpointSyncActivityStatus.DeserializeServerEndpointSyncActivityStatus(property.Value, options);
+                    downloadActivity = ModelSerializationExtensions.JsonDeserialize<ServerEndpointSyncActivityStatus>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("offlineDataTransferStatus"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    backgroundDataDownloadActivity = ServerEndpointBackgroundDataDownloadActivity.DeserializeServerEndpointBackgroundDataDownloadActivity(property.Value, options);
+                    backgroundDataDownloadActivity = ModelSerializationExtensions.JsonDeserialize<ServerEndpointBackgroundDataDownloadActivity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

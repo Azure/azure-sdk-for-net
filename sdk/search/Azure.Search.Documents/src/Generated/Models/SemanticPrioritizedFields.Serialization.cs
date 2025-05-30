@@ -19,7 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(TitleField))
             {
                 writer.WritePropertyName("titleField"u8);
-                writer.WriteObjectValue(TitleField);
+                JsonSerializer.Serialize(writer, TitleField);
             }
             if (Optional.IsCollectionDefined(ContentFields))
             {
@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in ContentFields)
                 {
-                    writer.WriteObjectValue<SemanticField>(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -37,7 +37,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in KeywordsFields)
                 {
-                    writer.WriteObjectValue<SemanticField>(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -61,7 +61,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    titleField = SemanticField.DeserializeSemanticField(property.Value);
+                    titleField = ModelSerializationExtensions.JsonDeserialize<SemanticField>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("prioritizedContentFields"u8))

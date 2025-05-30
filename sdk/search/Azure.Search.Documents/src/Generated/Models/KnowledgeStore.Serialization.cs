@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Projections)
             {
-                writer.WriteObjectValue(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Identity))
@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity);
+                    JsonSerializer.Serialize(writer, Identity);
                 }
                 else
                 {
@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters);
+                JsonSerializer.Serialize(writer, Parameters);
             }
             writer.WriteEndObject();
         }
@@ -79,7 +79,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         identity = null;
                         continue;
                     }
-                    identity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value);
+                    identity = ModelSerializationExtensions.JsonDeserialize<SearchIndexerDataIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
@@ -88,7 +88,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    parameters = SearchIndexerKnowledgeStoreParameters.DeserializeSearchIndexerKnowledgeStoreParameters(property.Value);
+                    parameters = ModelSerializationExtensions.JsonDeserialize<SearchIndexerKnowledgeStoreParameters>(property.Value);
                     continue;
                 }
             }

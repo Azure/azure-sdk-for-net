@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in Results)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BillingTransferValidationResultProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

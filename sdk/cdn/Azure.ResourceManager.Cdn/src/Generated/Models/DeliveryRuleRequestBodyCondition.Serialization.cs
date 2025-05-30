@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("parameters"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<RequestBodyMatchCondition>)Properties).Write(writer, options);
         }
 
         DeliveryRuleRequestBodyCondition IJsonModel<DeliveryRuleRequestBodyCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = RequestBodyMatchCondition.DeserializeRequestBodyMatchCondition(property.Value, options);
+                    parameters = ModelSerializationExtensions.JsonDeserialize<RequestBodyMatchCondition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

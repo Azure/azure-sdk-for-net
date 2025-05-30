@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(LaunchProperties))
             {
                 writer.WritePropertyName("launchProperties"u8);
-                writer.WriteObjectValue(LaunchProperties, options);
+                ((IJsonModel<BuildpackBindingLaunchProperties>)LaunchProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    launchProperties = BuildpackBindingLaunchProperties.DeserializeBuildpackBindingLaunchProperties(property.Value, options);
+                    launchProperties = ModelSerializationExtensions.JsonDeserialize<BuildpackBindingLaunchProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

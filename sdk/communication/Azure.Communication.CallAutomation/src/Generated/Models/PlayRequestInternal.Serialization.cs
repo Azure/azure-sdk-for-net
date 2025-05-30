@@ -19,7 +19,7 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartArray();
             foreach (var item in PlaySources)
             {
-                writer.WriteObjectValue(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(PlayTo))
@@ -28,14 +28,14 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStartArray();
                 foreach (var item in PlayTo)
                 {
-                    writer.WriteObjectValue<CommunicationIdentifierModel>(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PlayOptions))
             {
                 writer.WritePropertyName("playOptions"u8);
-                writer.WriteObjectValue(PlayOptions);
+                JsonSerializer.Serialize(writer, PlayOptions);
             }
             if (Optional.IsDefined(OperationContext))
             {

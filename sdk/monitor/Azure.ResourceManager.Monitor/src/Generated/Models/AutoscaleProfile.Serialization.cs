@@ -37,23 +37,23 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("capacity"u8);
-            writer.WriteObjectValue(Capacity, options);
+            ((IJsonModel<MonitorScaleCapacity>)Capacity).Write(writer, options);
             writer.WritePropertyName("rules"u8);
             writer.WriteStartArray();
             foreach (var item in Rules)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<AutoscaleRule>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(FixedDate))
             {
                 writer.WritePropertyName("fixedDate"u8);
-                writer.WriteObjectValue(FixedDate, options);
+                ((IJsonModel<MonitorTimeWindow>)FixedDate).Write(writer, options);
             }
             if (Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
-                writer.WriteObjectValue(Recurrence, options);
+                ((IJsonModel<MonitorRecurrence>)Recurrence).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("capacity"u8))
                 {
-                    capacity = MonitorScaleCapacity.DeserializeMonitorScaleCapacity(property.Value, options);
+                    capacity = ModelSerializationExtensions.JsonDeserialize<MonitorScaleCapacity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rules"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    fixedDate = MonitorTimeWindow.DeserializeMonitorTimeWindow(property.Value, options);
+                    fixedDate = ModelSerializationExtensions.JsonDeserialize<MonitorTimeWindow>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("recurrence"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    recurrence = MonitorRecurrence.DeserializeMonitorRecurrence(property.Value, options);
+                    recurrence = ModelSerializationExtensions.JsonDeserialize<MonitorRecurrence>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

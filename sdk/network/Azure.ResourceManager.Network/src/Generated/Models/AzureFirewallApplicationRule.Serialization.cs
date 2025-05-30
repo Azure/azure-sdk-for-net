@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Protocols)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AzureFirewallApplicationRuleProtocol>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

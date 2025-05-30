@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ComputeFleetVmssPublicIPAddressConfigurationProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<ComputeFleetPublicIPAddressSku>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    properties = ComputeFleetVmssPublicIPAddressConfigurationProperties.DeserializeComputeFleetVmssPublicIPAddressConfigurationProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ComputeFleetVmssPublicIPAddressConfigurationProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    sku = ComputeFleetPublicIPAddressSku.DeserializeComputeFleetPublicIPAddressSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<ComputeFleetPublicIPAddressSku>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             if (Optional.IsDefined(ResourcePredictions))
             {
                 writer.WritePropertyName("resourcePredictions"u8);
-                writer.WriteObjectValue(ResourcePredictions, options);
+                ((IJsonModel<ResourcePredictions>)ResourcePredictions).Write(writer, options);
             }
             if (Optional.IsDefined(ResourcePredictionsProfile))
             {
                 writer.WritePropertyName("resourcePredictionsProfile"u8);
-                writer.WriteObjectValue(ResourcePredictionsProfile, options);
+                ((IJsonModel<ResourcePredictionsProfile>)ResourcePredictionsProfile).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

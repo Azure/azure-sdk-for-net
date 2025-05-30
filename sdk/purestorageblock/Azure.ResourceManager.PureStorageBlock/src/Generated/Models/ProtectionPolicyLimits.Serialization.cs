@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
 
             writer.WritePropertyName("frequency"u8);
-            writer.WriteObjectValue(Frequency, options);
+            ((IJsonModel<PropertyValueRangeLimits>)Frequency).Write(writer, options);
             writer.WritePropertyName("retention"u8);
-            writer.WriteObjectValue(Retention, options);
+            ((IJsonModel<PropertyValueRangeLimits>)Retention).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             {
                 if (property.NameEquals("frequency"u8))
                 {
-                    frequency = PropertyValueRangeLimits.DeserializePropertyValueRangeLimits(property.Value, options);
+                    frequency = ModelSerializationExtensions.JsonDeserialize<PropertyValueRangeLimits>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("retention"u8))
                 {
-                    retention = PropertyValueRangeLimits.DeserializePropertyValueRangeLimits(property.Value, options);
+                    retention = ModelSerializationExtensions.JsonDeserialize<PropertyValueRangeLimits>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

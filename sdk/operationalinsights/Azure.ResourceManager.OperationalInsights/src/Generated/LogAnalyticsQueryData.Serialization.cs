@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.OperationalInsights
             if (Optional.IsDefined(Related))
             {
                 writer.WritePropertyName("related"u8);
-                writer.WriteObjectValue(Related, options);
+                ((IJsonModel<LogAnalyticsQueryRelatedMetadata>)Related).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            related = LogAnalyticsQueryRelatedMetadata.DeserializeLogAnalyticsQueryRelatedMetadata(property0.Value, options);
+                            related = ModelSerializationExtensions.JsonDeserialize<LogAnalyticsQueryRelatedMetadata>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tags"u8))

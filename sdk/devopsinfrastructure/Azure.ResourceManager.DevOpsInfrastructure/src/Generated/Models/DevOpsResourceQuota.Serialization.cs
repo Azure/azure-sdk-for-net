@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
+                ((IJsonModel<DevOpsResourceQuotaName>)Name).Write(writer, options);
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     {
                         continue;
                     }
-                    name = DevOpsResourceQuotaName.DeserializeDevOpsResourceQuotaName(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<DevOpsResourceQuotaName>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

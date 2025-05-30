@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StorageActions.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StorageTaskData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

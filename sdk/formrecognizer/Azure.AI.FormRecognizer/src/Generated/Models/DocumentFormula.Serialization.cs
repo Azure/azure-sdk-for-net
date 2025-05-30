@@ -51,7 +51,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
                 if (property.NameEquals("span"u8))
                 {
-                    span = DocumentSpan.DeserializeDocumentSpan(property.Value);
+                    span = ModelSerializationExtensions.JsonDeserialize<DocumentSpan>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("confidence"u8))

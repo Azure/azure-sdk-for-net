@@ -36,7 +36,7 @@ namespace Azure.Analytics.OnlineExperimentation
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("event"u8);
-            writer.WriteObjectValue(Event, options);
+            ((IJsonModel<ObservedEvent>)Event).Write(writer, options);
             writer.WritePropertyName("rateCondition"u8);
             writer.WriteStringValue(RateCondition);
         }
@@ -70,7 +70,7 @@ namespace Azure.Analytics.OnlineExperimentation
             {
                 if (property.NameEquals("event"u8))
                 {
-                    @event = ObservedEvent.DeserializeObservedEvent(property.Value, options);
+                    @event = ModelSerializationExtensions.JsonDeserialize<ObservedEvent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rateCondition"u8))

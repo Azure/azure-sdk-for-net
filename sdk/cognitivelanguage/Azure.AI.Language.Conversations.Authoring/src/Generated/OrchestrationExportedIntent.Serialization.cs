@@ -37,7 +37,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             if (Optional.IsDefined(Orchestration))
             {
                 writer.WritePropertyName("orchestration"u8);
-                writer.WriteObjectValue(Orchestration, options);
+                ((IJsonModel<ExportedOrchestrationDetails>)Orchestration).Write(writer, options);
             }
             writer.WritePropertyName("category"u8);
             writer.WriteStringValue(Category);
@@ -90,7 +90,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                     {
                         continue;
                     }
-                    orchestration = ExportedOrchestrationDetails.DeserializeExportedOrchestrationDetails(property.Value, options);
+                    orchestration = ModelSerializationExtensions.JsonDeserialize<ExportedOrchestrationDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("category"u8))

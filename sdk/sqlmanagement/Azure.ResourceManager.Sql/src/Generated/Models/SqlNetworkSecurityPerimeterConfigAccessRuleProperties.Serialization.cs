@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkSecurityPerimeters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SqlNetworkSecurityPerimeterConfigRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

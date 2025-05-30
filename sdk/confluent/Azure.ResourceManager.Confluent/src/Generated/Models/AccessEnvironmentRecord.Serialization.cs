@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata, options);
+                ((IJsonModel<MetadataEntity>)Metadata).Write(writer, options);
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     {
                         continue;
                     }
-                    metadata = MetadataEntity.DeserializeMetadataEntity(property.Value, options);
+                    metadata = ModelSerializationExtensions.JsonDeserialize<MetadataEntity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("display_name"u8))

@@ -36,7 +36,7 @@ namespace Azure.AI.Inference
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("audio_url"u8);
-            writer.WriteObjectValue(AudioUrl, options);
+            ((IJsonModel<ChatMessageInputAudioUrl>)AudioUrl).Write(writer, options);
         }
 
         ChatMessageAudioUrlContentItem IJsonModel<ChatMessageAudioUrlContentItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.AI.Inference
             {
                 if (property.NameEquals("audio_url"u8))
                 {
-                    audioUrl = ChatMessageInputAudioUrl.DeserializeChatMessageInputAudioUrl(property.Value, options);
+                    audioUrl = ModelSerializationExtensions.JsonDeserialize<ChatMessageInputAudioUrl>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

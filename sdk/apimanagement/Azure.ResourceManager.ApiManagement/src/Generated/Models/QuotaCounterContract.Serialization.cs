@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(Value, options);
+                ((IJsonModel<QuotaCounterValueContractProperties>)Value).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    value = QuotaCounterValueContractProperties.DeserializeQuotaCounterValueContractProperties(property.Value, options);
+                    value = ModelSerializationExtensions.JsonDeserialize<QuotaCounterValueContractProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

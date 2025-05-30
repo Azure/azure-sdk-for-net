@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WritePropertyName("connectionInfo"u8);
-            writer.WriteObjectValue(ConnectionInfo, options);
+            ((IJsonModel<OracleConnectionInfo>)ConnectionInfo).Write(writer, options);
             writer.WritePropertyName("selectedSchemas"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedSchemas)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("connectionInfo"u8))
                 {
-                    connectionInfo = OracleConnectionInfo.DeserializeOracleConnectionInfo(property.Value, options);
+                    connectionInfo = ModelSerializationExtensions.JsonDeserialize<OracleConnectionInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("selectedSchemas"u8))

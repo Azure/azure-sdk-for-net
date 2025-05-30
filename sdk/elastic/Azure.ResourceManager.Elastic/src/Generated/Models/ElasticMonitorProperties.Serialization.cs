@@ -47,17 +47,17 @@ namespace Azure.ResourceManager.Elastic.Models
             if (Optional.IsDefined(ElasticProperties))
             {
                 writer.WritePropertyName("elasticProperties"u8);
-                writer.WriteObjectValue(ElasticProperties, options);
+                ((IJsonModel<ElasticCloudProperties>)ElasticProperties).Write(writer, options);
             }
             if (Optional.IsDefined(UserInfo))
             {
                 writer.WritePropertyName("userInfo"u8);
-                writer.WriteObjectValue(UserInfo, options);
+                ((IJsonModel<ElasticUserInfo>)UserInfo).Write(writer, options);
             }
             if (Optional.IsDefined(PlanDetails))
             {
                 writer.WritePropertyName("planDetails"u8);
-                writer.WriteObjectValue(PlanDetails, options);
+                ((IJsonModel<ElasticPlanDetails>)PlanDetails).Write(writer, options);
             }
             if (Optional.IsDefined(Version))
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    elasticProperties = ElasticCloudProperties.DeserializeElasticCloudProperties(property.Value, options);
+                    elasticProperties = ModelSerializationExtensions.JsonDeserialize<ElasticCloudProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userInfo"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    userInfo = ElasticUserInfo.DeserializeElasticUserInfo(property.Value, options);
+                    userInfo = ModelSerializationExtensions.JsonDeserialize<ElasticUserInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("planDetails"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    planDetails = ElasticPlanDetails.DeserializeElasticPlanDetails(property.Value, options);
+                    planDetails = ModelSerializationExtensions.JsonDeserialize<ElasticPlanDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("version"u8))

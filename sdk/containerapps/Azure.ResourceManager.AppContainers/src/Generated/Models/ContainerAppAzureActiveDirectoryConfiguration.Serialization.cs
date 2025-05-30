@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
-                writer.WriteObjectValue(Registration, options);
+                ((IJsonModel<ContainerAppAzureActiveDirectoryRegistrationConfiguration>)Registration).Write(writer, options);
             }
             if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
-                writer.WriteObjectValue(Login, options);
+                ((IJsonModel<ContainerAppAzureActiveDirectoryLoginConfiguration>)Login).Write(writer, options);
             }
             if (Optional.IsDefined(Validation))
             {
                 writer.WritePropertyName("validation"u8);
-                writer.WriteObjectValue(Validation, options);
+                ((IJsonModel<ContainerAppAzureActiveDirectoryValidationConfiguration>)Validation).Write(writer, options);
             }
             if (Optional.IsDefined(IsAutoProvisioned))
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    registration = ContainerAppAzureActiveDirectoryRegistrationConfiguration.DeserializeContainerAppAzureActiveDirectoryRegistrationConfiguration(property.Value, options);
+                    registration = ModelSerializationExtensions.JsonDeserialize<ContainerAppAzureActiveDirectoryRegistrationConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("login"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    login = ContainerAppAzureActiveDirectoryLoginConfiguration.DeserializeContainerAppAzureActiveDirectoryLoginConfiguration(property.Value, options);
+                    login = ModelSerializationExtensions.JsonDeserialize<ContainerAppAzureActiveDirectoryLoginConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("validation"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    validation = ContainerAppAzureActiveDirectoryValidationConfiguration.DeserializeContainerAppAzureActiveDirectoryValidationConfiguration(property.Value, options);
+                    validation = ModelSerializationExtensions.JsonDeserialize<ContainerAppAzureActiveDirectoryValidationConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isAutoProvisioned"u8))

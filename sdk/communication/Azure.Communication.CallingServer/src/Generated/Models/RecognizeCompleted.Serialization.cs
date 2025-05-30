@@ -39,7 +39,7 @@ namespace Azure.Communication.CallingServer
                     {
                         continue;
                     }
-                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
+                    resultInformation = ModelSerializationExtensions.JsonDeserialize<ResultInformation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("recognitionType"u8))
@@ -57,7 +57,7 @@ namespace Azure.Communication.CallingServer
                     {
                         continue;
                     }
-                    collectTonesResult = CollectTonesResult.DeserializeCollectTonesResult(property.Value);
+                    collectTonesResult = ModelSerializationExtensions.JsonDeserialize<CollectTonesResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("version"u8))

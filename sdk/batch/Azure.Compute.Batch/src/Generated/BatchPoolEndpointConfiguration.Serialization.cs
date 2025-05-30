@@ -38,7 +38,7 @@ namespace Azure.Compute.Batch
             writer.WriteStartArray();
             foreach (var item in InboundNatPools)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<InboundNatPool>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

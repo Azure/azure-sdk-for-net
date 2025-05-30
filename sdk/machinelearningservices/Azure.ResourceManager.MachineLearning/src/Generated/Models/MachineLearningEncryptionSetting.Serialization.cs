@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<MachineLearningCmkIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("keyVaultProperties"u8);
-            writer.WriteObjectValue(KeyVaultProperties, options);
+            ((IJsonModel<MachineLearningEncryptionKeyVaultProperties>)KeyVaultProperties).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    identity = MachineLearningCmkIdentity.DeserializeMachineLearningCmkIdentity(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<MachineLearningCmkIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("keyVaultProperties"u8))
                 {
-                    keyVaultProperties = MachineLearningEncryptionKeyVaultProperties.DeserializeMachineLearningEncryptionKeyVaultProperties(property.Value, options);
+                    keyVaultProperties = ModelSerializationExtensions.JsonDeserialize<MachineLearningEncryptionKeyVaultProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

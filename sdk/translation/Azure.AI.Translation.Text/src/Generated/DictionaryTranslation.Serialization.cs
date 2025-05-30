@@ -48,7 +48,7 @@ namespace Azure.AI.Translation.Text
             writer.WriteStartArray();
             foreach (var item in BackTranslations)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<BackTranslation>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
         {
             writer.WriteStartObject();
             writer.WritePropertyName("targetParticipant"u8);
-            writer.WriteObjectValue(TargetParticipant);
+            JsonSerializer.Serialize(writer, TargetParticipant);
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
@@ -25,7 +25,7 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(Transferee))
             {
                 writer.WritePropertyName("transferee"u8);
-                writer.WriteObjectValue(Transferee);
+                JsonSerializer.Serialize(writer, Transferee);
             }
             if (Optional.IsDefined(OperationCallbackUri))
             {
@@ -35,12 +35,12 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(CustomCallingContext))
             {
                 writer.WritePropertyName("customCallingContext"u8);
-                writer.WriteObjectValue(CustomCallingContext);
+                JsonSerializer.Serialize(writer, CustomCallingContext);
             }
             if (Optional.IsDefined(SourceCallerIdNumber))
             {
                 writer.WritePropertyName("sourceCallerIdNumber"u8);
-                writer.WriteObjectValue(SourceCallerIdNumber);
+                JsonSerializer.Serialize(writer, SourceCallerIdNumber);
             }
             writer.WriteEndObject();
         }

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
-                    writer.WriteObjectValue<LiveTraceCategory>(item, options);
+                    ((IJsonModel<LiveTraceCategory>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.Storage
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<StorageSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Cors))
             {
                 writer.WritePropertyName("cors"u8);
-                writer.WriteObjectValue(Cors, options);
+                ((IJsonModel<StorageCorsRules>)Cors).Write(writer, options);
             }
             if (Optional.IsDefined(DefaultServiceVersion))
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(DeleteRetentionPolicy))
             {
                 writer.WritePropertyName("deleteRetentionPolicy"u8);
-                writer.WriteObjectValue(DeleteRetentionPolicy, options);
+                ((IJsonModel<DeleteRetentionPolicy>)DeleteRetentionPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(IsVersioningEnabled))
             {
@@ -73,22 +73,22 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(ChangeFeed))
             {
                 writer.WritePropertyName("changeFeed"u8);
-                writer.WriteObjectValue(ChangeFeed, options);
+                ((IJsonModel<BlobServiceChangeFeed>)ChangeFeed).Write(writer, options);
             }
             if (Optional.IsDefined(RestorePolicy))
             {
                 writer.WritePropertyName("restorePolicy"u8);
-                writer.WriteObjectValue(RestorePolicy, options);
+                ((IJsonModel<RestorePolicy>)RestorePolicy).Write(writer, options);
             }
             if (Optional.IsDefined(ContainerDeleteRetentionPolicy))
             {
                 writer.WritePropertyName("containerDeleteRetentionPolicy"u8);
-                writer.WriteObjectValue(ContainerDeleteRetentionPolicy, options);
+                ((IJsonModel<DeleteRetentionPolicy>)ContainerDeleteRetentionPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(LastAccessTimeTrackingPolicy))
             {
                 writer.WritePropertyName("lastAccessTimeTrackingPolicy"u8);
-                writer.WriteObjectValue(LastAccessTimeTrackingPolicy, options);
+                ((IJsonModel<LastAccessTimeTrackingPolicy>)LastAccessTimeTrackingPolicy).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         continue;
                     }
-                    sku = StorageSku.DeserializeStorageSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<StorageSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            cors = StorageCorsRules.DeserializeStorageCorsRules(property0.Value, options);
+                            cors = ModelSerializationExtensions.JsonDeserialize<StorageCorsRules>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("defaultServiceVersion"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            deleteRetentionPolicy = DeleteRetentionPolicy.DeserializeDeleteRetentionPolicy(property0.Value, options);
+                            deleteRetentionPolicy = ModelSerializationExtensions.JsonDeserialize<DeleteRetentionPolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("isVersioningEnabled"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            changeFeed = BlobServiceChangeFeed.DeserializeBlobServiceChangeFeed(property0.Value, options);
+                            changeFeed = ModelSerializationExtensions.JsonDeserialize<BlobServiceChangeFeed>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("restorePolicy"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            restorePolicy = RestorePolicy.DeserializeRestorePolicy(property0.Value, options);
+                            restorePolicy = ModelSerializationExtensions.JsonDeserialize<RestorePolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("containerDeleteRetentionPolicy"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            containerDeleteRetentionPolicy = DeleteRetentionPolicy.DeserializeDeleteRetentionPolicy(property0.Value, options);
+                            containerDeleteRetentionPolicy = ModelSerializationExtensions.JsonDeserialize<DeleteRetentionPolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("lastAccessTimeTrackingPolicy"u8))
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            lastAccessTimeTrackingPolicy = LastAccessTimeTrackingPolicy.DeserializeLastAccessTimeTrackingPolicy(property0.Value, options);
+                            lastAccessTimeTrackingPolicy = ModelSerializationExtensions.JsonDeserialize<LastAccessTimeTrackingPolicy>(property0.Value);
                             continue;
                         }
                     }

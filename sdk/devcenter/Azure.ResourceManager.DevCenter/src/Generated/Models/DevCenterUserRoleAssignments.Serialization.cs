@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 foreach (var item in Roles)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<DevCenterEnvironmentRole>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }

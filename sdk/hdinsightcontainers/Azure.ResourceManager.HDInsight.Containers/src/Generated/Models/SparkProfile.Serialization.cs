@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(MetastoreSpec))
             {
                 writer.WritePropertyName("metastoreSpec"u8);
-                writer.WriteObjectValue(MetastoreSpec, options);
+                ((IJsonModel<SparkMetastoreSpec>)MetastoreSpec).Write(writer, options);
             }
             if (Optional.IsDefined(UserPluginsSpec))
             {
                 writer.WritePropertyName("userPluginsSpec"u8);
-                writer.WriteObjectValue(UserPluginsSpec, options);
+                ((IJsonModel<SparkUserPluginListResult>)UserPluginsSpec).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    metastoreSpec = SparkMetastoreSpec.DeserializeSparkMetastoreSpec(property.Value, options);
+                    metastoreSpec = ModelSerializationExtensions.JsonDeserialize<SparkMetastoreSpec>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userPluginsSpec"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    userPluginsSpec = SparkUserPluginListResult.DeserializeSparkUserPluginListResult(property.Value, options);
+                    userPluginsSpec = ModelSerializationExtensions.JsonDeserialize<SparkUserPluginListResult>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

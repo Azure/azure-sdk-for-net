@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ExportSettings))
             {
                 writer.WritePropertyName("exportSettings"u8);
-                writer.WriteObjectValue(ExportSettings);
+                JsonSerializer.Serialize(writer, ExportSettings);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -85,7 +85,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    exportSettings = AzureDatabricksDeltaLakeExportCommand.DeserializeAzureDatabricksDeltaLakeExportCommand(property.Value);
+                    exportSettings = ModelSerializationExtensions.JsonDeserialize<AzureDatabricksDeltaLakeExportCommand>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             writer.WritePropertyName("scalingMechanism"u8);
-            writer.WriteObjectValue(ScalingMechanism, options);
+            ((IJsonModel<ManagedServiceScalingMechanism>)ScalingMechanism).Write(writer, options);
             writer.WritePropertyName("scalingTrigger"u8);
-            writer.WriteObjectValue(ScalingTrigger, options);
+            ((IJsonModel<ManagedServiceScalingTrigger>)ScalingTrigger).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 if (property.NameEquals("scalingMechanism"u8))
                 {
-                    scalingMechanism = ManagedServiceScalingMechanism.DeserializeManagedServiceScalingMechanism(property.Value, options);
+                    scalingMechanism = ModelSerializationExtensions.JsonDeserialize<ManagedServiceScalingMechanism>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scalingTrigger"u8))
                 {
-                    scalingTrigger = ManagedServiceScalingTrigger.DeserializeManagedServiceScalingTrigger(property.Value, options);
+                    scalingTrigger = ModelSerializationExtensions.JsonDeserialize<ManagedServiceScalingTrigger>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

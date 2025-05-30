@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.CosmosDB
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                writer.WriteObjectValue(PrivateEndpoint, options);
+                ((IJsonModel<PrivateEndpointProperty>)PrivateEndpoint).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState, options);
+                ((IJsonModel<CosmosDBPrivateLinkServiceConnectionStateProperty>)ConnectionState).Write(writer, options);
             }
             if (Optional.IsDefined(GroupId))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CosmosDB
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            privateEndpoint = PrivateEndpointProperty.DeserializePrivateEndpointProperty(property0.Value, options);
+                            privateEndpoint = ModelSerializationExtensions.JsonDeserialize<PrivateEndpointProperty>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = CosmosDBPrivateLinkServiceConnectionStateProperty.DeserializeCosmosDBPrivateLinkServiceConnectionStateProperty(property0.Value, options);
+                            privateLinkServiceConnectionState = ModelSerializationExtensions.JsonDeserialize<CosmosDBPrivateLinkServiceConnectionStateProperty>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("groupId"u8))

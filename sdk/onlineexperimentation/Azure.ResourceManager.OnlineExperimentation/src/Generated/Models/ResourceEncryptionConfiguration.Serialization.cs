@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             if (Optional.IsDefined(CustomerManagedKeyEncryption))
             {
                 writer.WritePropertyName("customerManagedKeyEncryption"u8);
-                writer.WriteObjectValue(CustomerManagedKeyEncryption, options);
+                ((IJsonModel<CustomerManagedKeyEncryption>)CustomerManagedKeyEncryption).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
                     {
                         continue;
                     }
-                    customerManagedKeyEncryption = CustomerManagedKeyEncryption.DeserializeCustomerManagedKeyEncryption(property.Value, options);
+                    customerManagedKeyEncryption = ModelSerializationExtensions.JsonDeserialize<CustomerManagedKeyEncryption>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -37,12 +37,12 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Finding))
             {
                 writer.WritePropertyName("finding"u8);
-                writer.WriteObjectValue(Finding, options);
+                ((IJsonModel<FhirR4Observation>)Finding).Write(writer, options);
             }
             if (Optional.IsDefined(CriticalFinding))
             {
                 writer.WritePropertyName("criticalFinding"u8);
-                writer.WriteObjectValue(CriticalFinding, options);
+                ((IJsonModel<CriticalResult>)CriticalFinding).Write(writer, options);
             }
             writer.WritePropertyName("recommendationFindingStatus"u8);
             writer.WriteStringValue(RecommendationFindingStatus.ToString());
@@ -52,7 +52,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Extension)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FhirR4Extension>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -107,7 +107,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    finding = FhirR4Observation.DeserializeFhirR4Observation(property.Value, options);
+                    finding = ModelSerializationExtensions.JsonDeserialize<FhirR4Observation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("criticalFinding"u8))
@@ -116,7 +116,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    criticalFinding = CriticalResult.DeserializeCriticalResult(property.Value, options);
+                    criticalFinding = ModelSerializationExtensions.JsonDeserialize<CriticalResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("recommendationFindingStatus"u8))

@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    queryRewrites = QueryRewritesDebugInfo.DeserializeQueryRewritesDebugInfo(property.Value);
+                    queryRewrites = ModelSerializationExtensions.JsonDeserialize<QueryRewritesDebugInfo>(property.Value);
                     continue;
                 }
             }

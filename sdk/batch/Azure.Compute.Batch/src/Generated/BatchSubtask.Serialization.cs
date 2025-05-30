@@ -42,7 +42,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(NodeInfo))
             {
                 writer.WritePropertyName("nodeInfo"u8);
-                writer.WriteObjectValue(NodeInfo, options);
+                ((IJsonModel<BatchNodeInfo>)NodeInfo).Write(writer, options);
             }
             if (Optional.IsDefined(StartTime))
             {
@@ -62,12 +62,12 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(ContainerInfo))
             {
                 writer.WritePropertyName("containerInfo"u8);
-                writer.WriteObjectValue(ContainerInfo, options);
+                ((IJsonModel<BatchTaskContainerExecutionInfo>)ContainerInfo).Write(writer, options);
             }
             if (Optional.IsDefined(FailureInfo))
             {
                 writer.WritePropertyName("failureInfo"u8);
-                writer.WriteObjectValue(FailureInfo, options);
+                ((IJsonModel<BatchTaskFailureInfo>)FailureInfo).Write(writer, options);
             }
             if (Optional.IsDefined(State))
             {
@@ -162,7 +162,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    nodeInfo = BatchNodeInfo.DeserializeBatchNodeInfo(property.Value, options);
+                    nodeInfo = ModelSerializationExtensions.JsonDeserialize<BatchNodeInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("startTime"u8))
@@ -198,7 +198,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    containerInfo = BatchTaskContainerExecutionInfo.DeserializeBatchTaskContainerExecutionInfo(property.Value, options);
+                    containerInfo = ModelSerializationExtensions.JsonDeserialize<BatchTaskContainerExecutionInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("failureInfo"u8))
@@ -207,7 +207,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    failureInfo = BatchTaskFailureInfo.DeserializeBatchTaskFailureInfo(property.Value, options);
+                    failureInfo = ModelSerializationExtensions.JsonDeserialize<BatchTaskFailureInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("state"u8))

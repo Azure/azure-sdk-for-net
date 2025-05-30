@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<AppServiceSkuDescription>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    sku = AppServiceSkuDescription.DeserializeAppServiceSkuDescription(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<AppServiceSkuDescription>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

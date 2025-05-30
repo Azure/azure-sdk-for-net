@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Text.Authoring
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("customEntityRecognitionResult"u8);
-            writer.WriteObjectValue(CustomEntityRecognitionResult, options);
+            ((IJsonModel<DocumentEntityRecognitionEvalResult>)CustomEntityRecognitionResult).Write(writer, options);
         }
 
         CustomEntityRecognitionDocumentEvalResult IJsonModel<CustomEntityRecognitionDocumentEvalResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -69,7 +69,7 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 if (property.NameEquals("customEntityRecognitionResult"u8))
                 {
-                    customEntityRecognitionResult = DocumentEntityRecognitionEvalResult.DeserializeDocumentEntityRecognitionEvalResult(property.Value, options);
+                    customEntityRecognitionResult = ModelSerializationExtensions.JsonDeserialize<DocumentEntityRecognitionEvalResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("projectKind"u8))

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedEditions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<JobAgentEditionCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

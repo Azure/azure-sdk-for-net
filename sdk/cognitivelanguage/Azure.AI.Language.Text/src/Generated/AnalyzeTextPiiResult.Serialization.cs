@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Text
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("results"u8);
-            writer.WriteObjectValue(Results, options);
+            ((IJsonModel<PiiResult>)Results).Write(writer, options);
         }
 
         AnalyzeTextPiiResult IJsonModel<AnalyzeTextPiiResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.AI.Language.Text
             {
                 if (property.NameEquals("results"u8))
                 {
-                    results = PiiResult.DeserializePiiResult(property.Value, options);
+                    results = ModelSerializationExtensions.JsonDeserialize<PiiResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

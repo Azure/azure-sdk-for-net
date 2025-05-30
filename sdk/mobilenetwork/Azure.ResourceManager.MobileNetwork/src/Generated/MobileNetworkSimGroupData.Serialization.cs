@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MobileNetwork
             if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(UserAssignedIdentity, options);
+                ((IJsonModel<MobileNetworkManagedServiceIdentity>)UserAssignedIdentity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.MobileNetwork
             if (Optional.IsDefined(EncryptionKey))
             {
                 writer.WritePropertyName("encryptionKey"u8);
-                writer.WriteObjectValue(EncryptionKey, options);
+                ((IJsonModel<KeyVaultKey>)EncryptionKey).Write(writer, options);
             }
             if (Optional.IsDefined(MobileNetwork))
             {
                 writer.WritePropertyName("mobileNetwork"u8);
-                JsonSerializer.Serialize(writer, MobileNetwork);
+                ((IJsonModel<WritableSubResource>)MobileNetwork).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     {
                         continue;
                     }
-                    identity = MobileNetworkManagedServiceIdentity.DeserializeMobileNetworkManagedServiceIdentity(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<MobileNetworkManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            encryptionKey = KeyVaultKey.DeserializeKeyVaultKey(property0.Value, options);
+                            encryptionKey = ModelSerializationExtensions.JsonDeserialize<KeyVaultKey>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("mobileNetwork"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            mobileNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            mobileNetwork = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                     }

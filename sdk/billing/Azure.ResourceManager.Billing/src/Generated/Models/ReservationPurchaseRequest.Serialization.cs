@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<BillingSkuName>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Location))
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties, options);
+                ((IJsonModel<ReservationAppliedScopeProperties>)AppliedScopeProperties).Write(writer, options);
             }
             if (Optional.IsDefined(IsRenewed))
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    sku = BillingSkuName.DeserializeBillingSkuName(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<BillingSkuName>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Billing.Models
                             {
                                 continue;
                             }
-                            appliedScopeProperties = ReservationAppliedScopeProperties.DeserializeReservationAppliedScopeProperties(property0.Value, options);
+                            appliedScopeProperties = ModelSerializationExtensions.JsonDeserialize<ReservationAppliedScopeProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("renew"u8))

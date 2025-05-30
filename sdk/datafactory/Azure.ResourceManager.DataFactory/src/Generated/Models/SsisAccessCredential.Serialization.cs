@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WritePropertyName("domain"u8);
-            JsonSerializer.Serialize(writer, Domain);
+            ((IJsonModel<DataFactoryElement<T>>)Domain).Write(writer, options);
             writer.WritePropertyName("userName"u8);
-            JsonSerializer.Serialize(writer, UserName);
+            ((IJsonModel<DataFactoryElement<T>>)UserName).Write(writer, options);
             writer.WritePropertyName("password"u8);
             JsonSerializer.Serialize(writer, Password);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -87,17 +87,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("domain"u8))
                 {
-                    domain = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    domain = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userName"u8))
                 {
-                    userName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    userName = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("password"u8))
                 {
-                    password = JsonSerializer.Deserialize<DataFactorySecret>(property.Value.GetRawText());
+                    password = ModelSerializationExtensions.JsonDeserialize<DataFactorySecret>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

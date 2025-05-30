@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(InquiryInfo))
             {
                 writer.WritePropertyName("inquiryInfo"u8);
-                writer.WriteObjectValue(InquiryInfo, options);
+                ((IJsonModel<WorkloadContainerInquiryInfo>)InquiryInfo).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(NodesList))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in NodesList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DistributedNodesInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    inquiryInfo = WorkloadContainerInquiryInfo.DeserializeWorkloadContainerInquiryInfo(property.Value, options);
+                    inquiryInfo = ModelSerializationExtensions.JsonDeserialize<WorkloadContainerInquiryInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nodesList"u8))

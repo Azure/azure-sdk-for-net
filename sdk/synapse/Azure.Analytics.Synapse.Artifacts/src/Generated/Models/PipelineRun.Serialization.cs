@@ -81,7 +81,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    invokedBy = PipelineRunInvokedBy.DeserializePipelineRunInvokedBy(property.Value);
+                    invokedBy = ModelSerializationExtensions.JsonDeserialize<PipelineRunInvokedBy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lastUpdated"u8))

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WorkflowTriggerHistoryData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

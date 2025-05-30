@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedPerDatabaseMinPerformanceLevels)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ElasticPoolPerDatabaseMinPerformanceLevelCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

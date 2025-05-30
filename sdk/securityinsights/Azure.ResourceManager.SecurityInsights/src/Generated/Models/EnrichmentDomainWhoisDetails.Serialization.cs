@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(Registrar))
             {
                 writer.WritePropertyName("registrar"u8);
-                writer.WriteObjectValue(Registrar, options);
+                ((IJsonModel<EnrichmentDomainWhoisRegistrarDetails>)Registrar).Write(writer, options);
             }
             if (Optional.IsDefined(Contacts))
             {
                 writer.WritePropertyName("contacts"u8);
-                writer.WriteObjectValue(Contacts, options);
+                ((IJsonModel<EnrichmentDomainWhoisContacts>)Contacts).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(NameServers))
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    registrar = EnrichmentDomainWhoisRegistrarDetails.DeserializeEnrichmentDomainWhoisRegistrarDetails(property.Value, options);
+                    registrar = ModelSerializationExtensions.JsonDeserialize<EnrichmentDomainWhoisRegistrarDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("contacts"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    contacts = EnrichmentDomainWhoisContacts.DeserializeEnrichmentDomainWhoisContacts(property.Value, options);
+                    contacts = ModelSerializationExtensions.JsonDeserialize<EnrichmentDomainWhoisContacts>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nameServers"u8))

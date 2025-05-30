@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(JwtClaimChecks))
             {
                 writer.WritePropertyName("jwtClaimChecks"u8);
-                writer.WriteObjectValue(JwtClaimChecks, options);
+                ((IJsonModel<ContainerAppJwtClaimChecks>)JwtClaimChecks).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AllowedAudiences))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(DefaultAuthorizationPolicy))
             {
                 writer.WritePropertyName("defaultAuthorizationPolicy"u8);
-                writer.WriteObjectValue(DefaultAuthorizationPolicy, options);
+                ((IJsonModel<ContainerAppDefaultAuthorizationPolicy>)DefaultAuthorizationPolicy).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    jwtClaimChecks = ContainerAppJwtClaimChecks.DeserializeContainerAppJwtClaimChecks(property.Value, options);
+                    jwtClaimChecks = ModelSerializationExtensions.JsonDeserialize<ContainerAppJwtClaimChecks>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("allowedAudiences"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    defaultAuthorizationPolicy = ContainerAppDefaultAuthorizationPolicy.DeserializeContainerAppDefaultAuthorizationPolicy(property.Value, options);
+                    defaultAuthorizationPolicy = ModelSerializationExtensions.JsonDeserialize<ContainerAppDefaultAuthorizationPolicy>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(SimPolicy))
             {
                 writer.WritePropertyName("simPolicy"u8);
-                JsonSerializer.Serialize(writer, SimPolicy);
+                ((IJsonModel<WritableSubResource>)SimPolicy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(StaticIPConfiguration))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in StaticIPConfiguration)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SimStaticIPProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                             {
                                 continue;
                             }
-                            simPolicy = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            simPolicy = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("staticIpConfiguration"u8))

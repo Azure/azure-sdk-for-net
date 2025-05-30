@@ -41,7 +41,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in ProcedureCodes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FhirR4CodeableConcept>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -49,11 +49,11 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteStartArray();
             foreach (var item in ImagingProcedures)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ImagingProcedure>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("orderedProcedure"u8);
-            writer.WriteObjectValue(OrderedProcedure, options);
+            ((IJsonModel<OrderedProcedure>)OrderedProcedure).Write(writer, options);
         }
 
         RadiologyProcedureInference IJsonModel<RadiologyProcedureInference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 if (property.NameEquals("orderedProcedure"u8))
                 {
-                    orderedProcedure = OrderedProcedure.DeserializeOrderedProcedure(property.Value, options);
+                    orderedProcedure = ModelSerializationExtensions.JsonDeserialize<OrderedProcedure>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

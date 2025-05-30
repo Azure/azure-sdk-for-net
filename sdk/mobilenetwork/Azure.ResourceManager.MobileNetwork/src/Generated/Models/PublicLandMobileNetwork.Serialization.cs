@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(HomeNetworkPublicKeys))
             {
                 writer.WritePropertyName("homeNetworkPublicKeys"u8);
-                writer.WriteObjectValue(HomeNetworkPublicKeys, options);
+                ((IJsonModel<PublicLandMobileNetworkHomeNetworkPublicKeys>)HomeNetworkPublicKeys).Write(writer, options);
             }
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    homeNetworkPublicKeys = PublicLandMobileNetworkHomeNetworkPublicKeys.DeserializePublicLandMobileNetworkHomeNetworkPublicKeys(property.Value, options);
+                    homeNetworkPublicKeys = ModelSerializationExtensions.JsonDeserialize<PublicLandMobileNetworkHomeNetworkPublicKeys>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mcc"u8))

@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(EstimatedVmPrices))
             {
                 writer.WritePropertyName("estimatedVMPrices"u8);
-                writer.WriteObjectValue(EstimatedVmPrices, options);
+                ((IJsonModel<MachineLearningEstimatedVmPrices>)EstimatedVmPrices).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(SupportedComputeTypes))
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    estimatedVmPrices = MachineLearningEstimatedVmPrices.DeserializeMachineLearningEstimatedVmPrices(property.Value, options);
+                    estimatedVmPrices = ModelSerializationExtensions.JsonDeserialize<MachineLearningEstimatedVmPrices>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("supportedComputeTypes"u8))

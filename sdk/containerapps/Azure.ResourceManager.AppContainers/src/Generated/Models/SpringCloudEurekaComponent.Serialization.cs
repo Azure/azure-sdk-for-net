@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Ingress))
             {
                 writer.WritePropertyName("ingress"u8);
-                writer.WriteObjectValue(Ingress, options);
+                ((IJsonModel<JavaComponentIngress>)Ingress).Write(writer, options);
             }
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    ingress = JavaComponentIngress.DeserializeJavaComponentIngress(property.Value, options);
+                    ingress = ModelSerializationExtensions.JsonDeserialize<JavaComponentIngress>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("componentType"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    scale = JavaComponentPropertiesScale.DeserializeJavaComponentPropertiesScale(property.Value, options);
+                    scale = ModelSerializationExtensions.JsonDeserialize<JavaComponentPropertiesScale>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("serviceBinds"u8))

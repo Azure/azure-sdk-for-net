@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication, options);
+                ((IJsonModel<DeviceRegistryAuthentication>)Authentication).Write(writer, options);
             }
             if (Optional.IsDefined(AdditionalConfiguration))
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     {
                         continue;
                     }
-                    authentication = DeviceRegistryAuthentication.DeserializeDeviceRegistryAuthentication(property.Value, options);
+                    authentication = ModelSerializationExtensions.JsonDeserialize<DeviceRegistryAuthentication>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("additionalConfiguration"u8))

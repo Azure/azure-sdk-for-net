@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConnectedClusterData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             writer.WriteStartArray();
             foreach (var item in Versions)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<PgVersion>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

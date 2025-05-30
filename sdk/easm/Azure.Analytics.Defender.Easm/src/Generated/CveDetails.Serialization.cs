@@ -52,7 +52,7 @@ namespace Azure.Analytics.Defender.Easm
             if (Optional.IsDefined(Cvss3Summary))
             {
                 writer.WritePropertyName("cvss3Summary"u8);
-                writer.WriteObjectValue(Cvss3Summary, options);
+                ((IJsonModel<Cvss3Summary>)Cvss3Summary).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -124,7 +124,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    cvss3Summary = Cvss3Summary.DeserializeCvss3Summary(property.Value, options);
+                    cvss3Summary = ModelSerializationExtensions.JsonDeserialize<Cvss3Summary>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

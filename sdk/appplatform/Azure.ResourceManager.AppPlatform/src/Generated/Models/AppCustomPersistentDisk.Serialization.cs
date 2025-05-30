@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(CustomPersistentDiskProperties))
             {
                 writer.WritePropertyName("customPersistentDiskProperties"u8);
-                writer.WriteObjectValue(CustomPersistentDiskProperties, options);
+                ((IJsonModel<AppCustomPersistentDiskProperties>)CustomPersistentDiskProperties).Write(writer, options);
             }
             writer.WritePropertyName("storageId"u8);
             writer.WriteStringValue(StorageId);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    customPersistentDiskProperties = AppCustomPersistentDiskProperties.DeserializeAppCustomPersistentDiskProperties(property.Value, options);
+                    customPersistentDiskProperties = ModelSerializationExtensions.JsonDeserialize<AppCustomPersistentDiskProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storageId"u8))

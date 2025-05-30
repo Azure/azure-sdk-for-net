@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.BotService.Models
             if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata, options);
+                ((IJsonModel<ServiceProviderParameterMetadata>)Metadata).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    metadata = ServiceProviderParameterMetadata.DeserializeServiceProviderParameterMetadata(property.Value, options);
+                    metadata = ModelSerializationExtensions.JsonDeserialize<ServiceProviderParameterMetadata>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

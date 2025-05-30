@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in CategoryConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CategoryConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(BranchConfiguration))
             {
                 writer.WritePropertyName("branchConfiguration"u8);
-                writer.WriteObjectValue(BranchConfiguration, options);
+                ((IJsonModel<TargetBranchConfiguration>)BranchConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(InheritFromParentState))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    branchConfiguration = TargetBranchConfiguration.DeserializeTargetBranchConfiguration(property.Value, options);
+                    branchConfiguration = ModelSerializationExtensions.JsonDeserialize<TargetBranchConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("inheritFromParentState"u8))

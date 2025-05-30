@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.EventHubs
             if (Optional.IsDefined(CaptureDescription))
             {
                 writer.WritePropertyName("captureDescription"u8);
-                writer.WriteObjectValue(CaptureDescription, options);
+                ((IJsonModel<CaptureDescription>)CaptureDescription).Write(writer, options);
             }
             if (Optional.IsDefined(RetentionDescription))
             {
                 writer.WritePropertyName("retentionDescription"u8);
-                writer.WriteObjectValue(RetentionDescription, options);
+                ((IJsonModel<RetentionDescription>)RetentionDescription).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.EventHubs
                             {
                                 continue;
                             }
-                            captureDescription = CaptureDescription.DeserializeCaptureDescription(property0.Value, options);
+                            captureDescription = ModelSerializationExtensions.JsonDeserialize<CaptureDescription>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("retentionDescription"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.EventHubs
                             {
                                 continue;
                             }
-                            retentionDescription = RetentionDescription.DeserializeRetentionDescription(property0.Value, options);
+                            retentionDescription = ModelSerializationExtensions.JsonDeserialize<RetentionDescription>(property0.Value);
                             continue;
                         }
                     }

@@ -39,7 +39,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    queueDetails = AcsRouterQueueDetails.DeserializeAcsRouterQueueDetails(property.Value);
+                    queueDetails = ModelSerializationExtensions.JsonDeserialize<AcsRouterQueueDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("classificationPolicyId"u8))

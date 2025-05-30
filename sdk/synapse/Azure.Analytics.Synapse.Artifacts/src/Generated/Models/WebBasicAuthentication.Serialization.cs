@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("username"u8);
             writer.WriteObjectValue<object>(Username);
             writer.WritePropertyName("password"u8);
-            writer.WriteObjectValue(Password);
+            JsonSerializer.Serialize(writer, Password);
             writer.WritePropertyName("url"u8);
             writer.WriteObjectValue<object>(Url);
             writer.WritePropertyName("authenticationType"u8);
@@ -48,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("password"u8))
                 {
-                    password = SecretBase.DeserializeSecretBase(property.Value);
+                    password = ModelSerializationExtensions.JsonDeserialize<SecretBase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("url"u8))

@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(DataIntegrityValidationResult))
             {
                 writer.WritePropertyName("dataIntegrityValidationResult"u8);
-                writer.WriteObjectValue(DataIntegrityValidationResult, options);
+                ((IJsonModel<DataIntegrityValidationResult>)DataIntegrityValidationResult).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SchemaValidationResult))
             {
                 writer.WritePropertyName("schemaValidationResult"u8);
-                writer.WriteObjectValue(SchemaValidationResult, options);
+                ((IJsonModel<SchemaComparisonValidationResult>)SchemaValidationResult).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(QueryAnalysisValidationResult))
             {
                 writer.WritePropertyName("queryAnalysisValidationResult"u8);
-                writer.WriteObjectValue(QueryAnalysisValidationResult, options);
+                ((IJsonModel<QueryAnalysisValidationResult>)QueryAnalysisValidationResult).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    dataIntegrityValidationResult = DataIntegrityValidationResult.DeserializeDataIntegrityValidationResult(property.Value, options);
+                    dataIntegrityValidationResult = ModelSerializationExtensions.JsonDeserialize<DataIntegrityValidationResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("schemaValidationResult"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    schemaValidationResult = SchemaComparisonValidationResult.DeserializeSchemaComparisonValidationResult(property.Value, options);
+                    schemaValidationResult = ModelSerializationExtensions.JsonDeserialize<SchemaComparisonValidationResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("queryAnalysisValidationResult"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    queryAnalysisValidationResult = QueryAnalysisValidationResult.DeserializeQueryAnalysisValidationResult(property.Value, options);
+                    queryAnalysisValidationResult = ModelSerializationExtensions.JsonDeserialize<QueryAnalysisValidationResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))

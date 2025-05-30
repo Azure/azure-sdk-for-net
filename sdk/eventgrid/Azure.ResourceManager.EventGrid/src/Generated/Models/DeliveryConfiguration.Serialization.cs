@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(Queue))
             {
                 writer.WritePropertyName("queue"u8);
-                writer.WriteObjectValue(Queue, options);
+                ((IJsonModel<QueueInfo>)Queue).Write(writer, options);
             }
             if (Optional.IsDefined(Push))
             {
                 writer.WritePropertyName("push"u8);
-                writer.WriteObjectValue(Push, options);
+                ((IJsonModel<PushInfo>)Push).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    queue = QueueInfo.DeserializeQueueInfo(property.Value, options);
+                    queue = ModelSerializationExtensions.JsonDeserialize<QueueInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("push"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    push = PushInfo.DeserializePushInfo(property.Value, options);
+                    push = ModelSerializationExtensions.JsonDeserialize<PushInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

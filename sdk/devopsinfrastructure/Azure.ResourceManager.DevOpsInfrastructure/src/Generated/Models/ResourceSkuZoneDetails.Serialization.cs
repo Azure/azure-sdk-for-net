@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             writer.WriteStartArray();
             foreach (var item in Capabilities)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ResourceSkuCapabilities>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

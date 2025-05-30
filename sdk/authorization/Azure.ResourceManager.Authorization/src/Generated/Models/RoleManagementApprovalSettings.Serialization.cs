@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WriteStartArray();
                 foreach (var item in ApprovalStages)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RoleManagementApprovalStage>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

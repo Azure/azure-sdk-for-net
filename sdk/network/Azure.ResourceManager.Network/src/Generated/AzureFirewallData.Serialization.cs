@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ApplicationRuleCollections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AzureFirewallApplicationRuleCollectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in NatRuleCollections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AzureFirewallNatRuleCollectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in NetworkRuleCollections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AzureFirewallNetworkRuleCollectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,14 +90,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AzureFirewallIPConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ManagementIPConfiguration))
             {
                 writer.WritePropertyName("managementIpConfiguration"u8);
-                writer.WriteObjectValue(ManagementIPConfiguration, options);
+                ((IJsonModel<AzureFirewallIPConfiguration>)ManagementIPConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -112,17 +112,17 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(VirtualHub))
             {
                 writer.WritePropertyName("virtualHub"u8);
-                JsonSerializer.Serialize(writer, VirtualHub);
+                ((IJsonModel<WritableSubResource>)VirtualHub).Write(writer, options);
             }
             if (Optional.IsDefined(FirewallPolicy))
             {
                 writer.WritePropertyName("firewallPolicy"u8);
-                JsonSerializer.Serialize(writer, FirewallPolicy);
+                ((IJsonModel<WritableSubResource>)FirewallPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(HubIPAddresses))
             {
                 writer.WritePropertyName("hubIPAddresses"u8);
-                writer.WriteObjectValue(HubIPAddresses, options);
+                ((IJsonModel<HubIPAddresses>)HubIPAddresses).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(IPGroups))
             {
@@ -130,14 +130,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPGroups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AzureFirewallIPGroups>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<AzureFirewallSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AdditionalProperties))
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(AutoscaleConfiguration))
             {
                 writer.WritePropertyName("autoscaleConfiguration"u8);
-                writer.WriteObjectValue(AutoscaleConfiguration, options);
+                ((IJsonModel<AzureFirewallAutoscaleConfiguration>)AutoscaleConfiguration).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            managementIPConfiguration = AzureFirewallIPConfiguration.DeserializeAzureFirewallIPConfiguration(property0.Value, options);
+                            managementIPConfiguration = ModelSerializationExtensions.JsonDeserialize<AzureFirewallIPConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            virtualHub = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            virtualHub = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("firewallPolicy"u8))
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            firewallPolicy = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            firewallPolicy = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hubIPAddresses"u8))
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            hubIPAddresses = HubIPAddresses.DeserializeHubIPAddresses(property0.Value, options);
+                            hubIPAddresses = ModelSerializationExtensions.JsonDeserialize<HubIPAddresses>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ipGroups"u8))
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            sku = AzureFirewallSku.DeserializeAzureFirewallSku(property0.Value, options);
+                            sku = ModelSerializationExtensions.JsonDeserialize<AzureFirewallSku>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("additionalProperties"u8))
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            autoscaleConfiguration = AzureFirewallAutoscaleConfiguration.DeserializeAzureFirewallAutoscaleConfiguration(property0.Value, options);
+                            autoscaleConfiguration = ModelSerializationExtensions.JsonDeserialize<AzureFirewallAutoscaleConfiguration>(property0.Value);
                             continue;
                         }
                     }

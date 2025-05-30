@@ -27,27 +27,27 @@ namespace Azure.AI.MetricsAdvisor.Models
             if (Optional.IsDefined(DimensionAnomalyScope))
             {
                 writer.WritePropertyName("dimensionAnomalyScope"u8);
-                writer.WriteObjectValue<DimensionKey>(DimensionAnomalyScope);
+                JsonSerializer.Serialize(writer, DimensionAnomalyScope);
             }
             if (Optional.IsDefined(TopNAnomalyScope))
             {
                 writer.WritePropertyName("topNAnomalyScope"u8);
-                writer.WriteObjectValue<TopNGroupScope>(TopNAnomalyScope);
+                JsonSerializer.Serialize(writer, TopNAnomalyScope);
             }
             if (Optional.IsDefined(SeverityFilter))
             {
                 writer.WritePropertyName("severityFilter"u8);
-                writer.WriteObjectValue<SeverityCondition>(SeverityFilter);
+                JsonSerializer.Serialize(writer, SeverityFilter);
             }
             if (Optional.IsDefined(AlertSnoozeCondition))
             {
                 writer.WritePropertyName("snoozeFilter"u8);
-                writer.WriteObjectValue<MetricAnomalyAlertSnoozeCondition>(AlertSnoozeCondition);
+                JsonSerializer.Serialize(writer, AlertSnoozeCondition);
             }
             if (Optional.IsDefined(ValueFilter))
             {
                 writer.WritePropertyName("valueFilter"u8);
-                writer.WriteObjectValue<MetricBoundaryCondition>(ValueFilter);
+                JsonSerializer.Serialize(writer, ValueFilter);
             }
             writer.WriteEndObject();
         }
@@ -93,7 +93,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     {
                         continue;
                     }
-                    dimensionAnomalyScope = DimensionKey.DeserializeDimensionKey(property.Value);
+                    dimensionAnomalyScope = ModelSerializationExtensions.JsonDeserialize<DimensionKey>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("topNAnomalyScope"u8))
@@ -102,7 +102,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     {
                         continue;
                     }
-                    topNAnomalyScope = TopNGroupScope.DeserializeTopNGroupScope(property.Value);
+                    topNAnomalyScope = ModelSerializationExtensions.JsonDeserialize<TopNGroupScope>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("severityFilter"u8))
@@ -111,7 +111,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     {
                         continue;
                     }
-                    severityFilter = SeverityCondition.DeserializeSeverityCondition(property.Value);
+                    severityFilter = ModelSerializationExtensions.JsonDeserialize<SeverityCondition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("snoozeFilter"u8))
@@ -120,7 +120,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     {
                         continue;
                     }
-                    snoozeFilter = MetricAnomalyAlertSnoozeCondition.DeserializeMetricAnomalyAlertSnoozeCondition(property.Value);
+                    snoozeFilter = ModelSerializationExtensions.JsonDeserialize<MetricAnomalyAlertSnoozeCondition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("valueFilter"u8))
@@ -129,7 +129,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     {
                         continue;
                     }
-                    valueFilter = MetricBoundaryCondition.DeserializeMetricBoundaryCondition(property.Value);
+                    valueFilter = ModelSerializationExtensions.JsonDeserialize<MetricBoundaryCondition>(property.Value);
                     continue;
                 }
             }

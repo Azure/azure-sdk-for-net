@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(NetworkController))
             {
                 writer.WritePropertyName("networkController"u8);
-                writer.WriteObjectValue(NetworkController, options);
+                ((IJsonModel<DeploymentSettingNetworkController>)NetworkController).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    networkController = DeploymentSettingNetworkController.DeserializeDeploymentSettingNetworkController(property.Value, options);
+                    networkController = ModelSerializationExtensions.JsonDeserialize<DeploymentSettingNetworkController>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

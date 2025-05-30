@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
-                writer.WriteObjectValue(Condition, options);
+                ((IJsonModel<ThreatIntelligenceQueryConditionProperties>)Condition).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            condition = ThreatIntelligenceQueryConditionProperties.DeserializeThreatIntelligenceQueryConditionProperties(property0.Value, options);
+                            condition = ModelSerializationExtensions.JsonDeserialize<ThreatIntelligenceQueryConditionProperties>(property0.Value);
                             continue;
                         }
                     }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(BreakOutCategories))
             {
                 writer.WritePropertyName("breakOutCategories"u8);
-                writer.WriteObjectValue(BreakOutCategories, options);
+                ((IJsonModel<BreakOutCategoryPolicies>)BreakOutCategories).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    breakOutCategories = BreakOutCategoryPolicies.DeserializeBreakOutCategoryPolicies(property.Value, options);
+                    breakOutCategories = ModelSerializationExtensions.JsonDeserialize<BreakOutCategoryPolicies>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

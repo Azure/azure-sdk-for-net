@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (CodeConfiguration != null)
                 {
                     writer.WritePropertyName("codeConfiguration"u8);
-                    writer.WriteObjectValue(CodeConfiguration, options);
+                    ((IJsonModel<MachineLearningCodeConfiguration>)CodeConfiguration).Write(writer, options);
                 }
                 else
                 {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         codeConfiguration = null;
                         continue;
                     }
-                    codeConfiguration = MachineLearningCodeConfiguration.DeserializeMachineLearningCodeConfiguration(property.Value, options);
+                    codeConfiguration = ModelSerializationExtensions.JsonDeserialize<MachineLearningCodeConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("environmentId"u8))

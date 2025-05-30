@@ -64,7 +64,7 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
+                JsonSerializer.Serialize(writer, Authentication);
             }
             writer.WriteEndObject();
         }
@@ -154,7 +154,7 @@ namespace Azure.IoT.Hub.Service.Models
                     {
                         continue;
                     }
-                    authentication = AuthenticationMechanism.DeserializeAuthenticationMechanism(property.Value);
+                    authentication = ModelSerializationExtensions.JsonDeserialize<AuthenticationMechanism>(property.Value);
                     continue;
                 }
             }

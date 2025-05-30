@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WritePropertyName("machineName"u8);
             writer.WriteStringValue(MachineName);
             writer.WritePropertyName("authenticationIdentity"u8);
-            writer.WriteObjectValue(AuthenticationIdentity, options);
+            ((IJsonModel<DataReplicationIdentity>)AuthenticationIdentity).Write(writer, options);
             writer.WritePropertyName("resourceAccessIdentity"u8);
-            writer.WriteObjectValue(ResourceAccessIdentity, options);
+            ((IJsonModel<DataReplicationIdentity>)ResourceAccessIdentity).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(IsResponsive))
             {
                 writer.WritePropertyName("isResponsive"u8);
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataReplicationHealthErrorInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("customProperties"u8);
-            writer.WriteObjectValue(CustomProperties, options);
+            ((IJsonModel<DataReplicationFabricAgentCustomProperties>)CustomProperties).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -148,12 +148,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("authenticationIdentity"u8))
                 {
-                    authenticationIdentity = DataReplicationIdentity.DeserializeDataReplicationIdentity(property.Value, options);
+                    authenticationIdentity = ModelSerializationExtensions.JsonDeserialize<DataReplicationIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceAccessIdentity"u8))
                 {
-                    resourceAccessIdentity = DataReplicationIdentity.DeserializeDataReplicationIdentity(property.Value, options);
+                    resourceAccessIdentity = ModelSerializationExtensions.JsonDeserialize<DataReplicationIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isResponsive"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = DataReplicationFabricAgentCustomProperties.DeserializeDataReplicationFabricAgentCustomProperties(property.Value, options);
+                    customProperties = ModelSerializationExtensions.JsonDeserialize<DataReplicationFabricAgentCustomProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Conversations.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("result"u8);
-            writer.WriteObjectValue(Result, options);
+            ((IJsonModel<AnalyzeConversationResult>)Result).Write(writer, options);
         }
 
         ConversationActionResult IJsonModel<ConversationActionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.AI.Language.Conversations.Models
             {
                 if (property.NameEquals("result"u8))
                 {
-                    result = AnalyzeConversationResult.DeserializeAnalyzeConversationResult(property.Value, options);
+                    result = ModelSerializationExtensions.JsonDeserialize<AnalyzeConversationResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

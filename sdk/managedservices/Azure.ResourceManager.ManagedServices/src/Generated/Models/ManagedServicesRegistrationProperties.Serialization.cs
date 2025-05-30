@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             writer.WriteStartArray();
             foreach (var item in Authorizations)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ManagedServicesAuthorization>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(EligibleAuthorizations))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 writer.WriteStartArray();
                 foreach (var item in EligibleAuthorizations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedServicesEligibleAuthorization>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

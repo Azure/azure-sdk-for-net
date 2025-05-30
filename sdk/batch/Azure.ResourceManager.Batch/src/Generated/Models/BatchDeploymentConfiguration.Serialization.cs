@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(VmConfiguration))
             {
                 writer.WritePropertyName("virtualMachineConfiguration"u8);
-                writer.WriteObjectValue(VmConfiguration, options);
+                ((IJsonModel<BatchVmConfiguration>)VmConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    virtualMachineConfiguration = BatchVmConfiguration.DeserializeBatchVmConfiguration(property.Value, options);
+                    virtualMachineConfiguration = ModelSerializationExtensions.JsonDeserialize<BatchVmConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

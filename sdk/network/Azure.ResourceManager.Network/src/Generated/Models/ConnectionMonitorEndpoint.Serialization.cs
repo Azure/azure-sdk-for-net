@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter, options);
+                ((IJsonModel<ConnectionMonitorEndpointFilter>)Filter).Write(writer, options);
             }
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteObjectValue(Scope, options);
+                ((IJsonModel<ConnectionMonitorEndpointScope>)Scope).Write(writer, options);
             }
             if (Optional.IsDefined(CoverageLevel))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(LocationDetails))
             {
                 writer.WritePropertyName("locationDetails"u8);
-                writer.WriteObjectValue(LocationDetails, options);
+                ((IJsonModel<ConnectionMonitorEndpointLocationDetails>)LocationDetails).Write(writer, options);
             }
             if (Optional.IsDefined(SubscriptionId))
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    filter = ConnectionMonitorEndpointFilter.DeserializeConnectionMonitorEndpointFilter(property.Value, options);
+                    filter = ModelSerializationExtensions.JsonDeserialize<ConnectionMonitorEndpointFilter>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scope"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    scope = ConnectionMonitorEndpointScope.DeserializeConnectionMonitorEndpointScope(property.Value, options);
+                    scope = ModelSerializationExtensions.JsonDeserialize<ConnectionMonitorEndpointScope>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("coverageLevel"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    locationDetails = ConnectionMonitorEndpointLocationDetails.DeserializeConnectionMonitorEndpointLocationDetails(property.Value, options);
+                    locationDetails = ModelSerializationExtensions.JsonDeserialize<ConnectionMonitorEndpointLocationDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("subscriptionId"u8))

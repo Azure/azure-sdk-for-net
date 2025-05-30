@@ -36,7 +36,7 @@ namespace Azure.Analytics.OnlineExperimentation
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("value"u8);
-            writer.WriteObjectValue(Value, options);
+            ((IJsonModel<AggregatedValue>)Value).Write(writer, options);
             writer.WritePropertyName("percentile"u8);
             writer.WriteNumberValue(Percentile);
         }
@@ -70,7 +70,7 @@ namespace Azure.Analytics.OnlineExperimentation
             {
                 if (property.NameEquals("value"u8))
                 {
-                    value = AggregatedValue.DeserializeAggregatedValue(property.Value, options);
+                    value = ModelSerializationExtensions.JsonDeserialize<AggregatedValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("percentile"u8))

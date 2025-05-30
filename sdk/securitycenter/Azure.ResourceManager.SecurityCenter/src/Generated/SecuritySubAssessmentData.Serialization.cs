@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<SubAssessmentStatus>)Status).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Remediation))
             {
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(ResourceDetails))
             {
                 writer.WritePropertyName("resourceDetails"u8);
-                writer.WriteObjectValue(ResourceDetails, options);
+                ((IJsonModel<SecurityCenterResourceDetails>)ResourceDetails).Write(writer, options);
             }
             if (Optional.IsDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
-                writer.WriteObjectValue(AdditionalData, options);
+                ((IJsonModel<SecuritySubAssessmentAdditionalInfo>)AdditionalData).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            status = SubAssessmentStatus.DeserializeSubAssessmentStatus(property0.Value, options);
+                            status = ModelSerializationExtensions.JsonDeserialize<SubAssessmentStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("remediation"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            resourceDetails = SecurityCenterResourceDetails.DeserializeSecurityCenterResourceDetails(property0.Value, options);
+                            resourceDetails = ModelSerializationExtensions.JsonDeserialize<SecurityCenterResourceDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("additionalData"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            additionalData = SecuritySubAssessmentAdditionalInfo.DeserializeSecuritySubAssessmentAdditionalInfo(property0.Value, options);
+                            additionalData = ModelSerializationExtensions.JsonDeserialize<SecuritySubAssessmentAdditionalInfo>(property0.Value);
                             continue;
                         }
                     }

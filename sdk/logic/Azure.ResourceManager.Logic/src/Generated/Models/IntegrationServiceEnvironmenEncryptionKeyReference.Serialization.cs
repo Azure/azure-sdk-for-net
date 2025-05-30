@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(KeyVault))
             {
                 writer.WritePropertyName("keyVault"u8);
-                writer.WriteObjectValue(KeyVault, options);
+                ((IJsonModel<LogicResourceReference>)KeyVault).Write(writer, options);
             }
             if (Optional.IsDefined(KeyName))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    keyVault = LogicResourceReference.DeserializeLogicResourceReference(property.Value, options);
+                    keyVault = ModelSerializationExtensions.JsonDeserialize<LogicResourceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("keyName"u8))

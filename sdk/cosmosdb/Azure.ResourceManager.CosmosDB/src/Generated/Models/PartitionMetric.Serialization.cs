@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    name = CosmosDBMetricName.DeserializeCosmosDBMetricName(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<CosmosDBMetricName>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metricValues"u8))

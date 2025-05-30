@@ -51,7 +51,7 @@ namespace Azure.AI.Agents.Persistent
                 if (ExpiresAfter != null)
                 {
                     writer.WritePropertyName("expires_after"u8);
-                    writer.WriteObjectValue(ExpiresAfter, options);
+                    ((IJsonModel<VectorStoreExpirationPolicy>)ExpiresAfter).Write(writer, options);
                 }
                 else
                 {
@@ -137,7 +137,7 @@ namespace Azure.AI.Agents.Persistent
                         expiresAfter = null;
                         continue;
                     }
-                    expiresAfter = VectorStoreExpirationPolicy.DeserializeVectorStoreExpirationPolicy(property.Value, options);
+                    expiresAfter = ModelSerializationExtensions.JsonDeserialize<VectorStoreExpirationPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))

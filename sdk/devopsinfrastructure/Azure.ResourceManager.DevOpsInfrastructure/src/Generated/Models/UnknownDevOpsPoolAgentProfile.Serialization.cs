@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     {
                         continue;
                     }
-                    resourcePredictions = ResourcePredictions.DeserializeResourcePredictions(property.Value, options);
+                    resourcePredictions = ModelSerializationExtensions.JsonDeserialize<ResourcePredictions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourcePredictionsProfile"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     {
                         continue;
                     }
-                    resourcePredictionsProfile = ResourcePredictionsProfile.DeserializeResourcePredictionsProfile(property.Value, options);
+                    resourcePredictionsProfile = ModelSerializationExtensions.JsonDeserialize<ResourcePredictionsProfile>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

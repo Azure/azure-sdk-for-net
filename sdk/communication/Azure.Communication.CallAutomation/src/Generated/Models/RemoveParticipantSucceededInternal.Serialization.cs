@@ -51,7 +51,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
+                    resultInformation = ModelSerializationExtensions.JsonDeserialize<ResultInformation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("participant"u8))
@@ -60,7 +60,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    participant = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    participant = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
             }

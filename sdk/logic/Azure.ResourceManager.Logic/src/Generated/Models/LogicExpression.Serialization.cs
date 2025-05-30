@@ -57,14 +57,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in Subexpressions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LogicExpression>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<LogicExpressionErrorInfo>)Error).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    error = LogicExpressionErrorInfo.DeserializeLogicExpressionErrorInfo(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<LogicExpressionErrorInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

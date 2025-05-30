@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
             writer.WritePropertyName("executionContext"u8);
-            writer.WriteObjectValue(ExecutionContext, options);
+            ((IJsonModel<StorageTaskAssignmentExecutionContext>)ExecutionContext).Write(writer, options);
             writer.WritePropertyName("report"u8);
-            writer.WriteObjectValue(Report, options);
+            ((IJsonModel<StorageTaskAssignmentReport>)Report).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(StorageTaskAssignmentProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(RunStatus))
             {
                 writer.WritePropertyName("runStatus"u8);
-                writer.WriteObjectValue(RunStatus, options);
+                ((IJsonModel<StorageTaskReportProperties>)RunStatus).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -120,12 +120,12 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("executionContext"u8))
                 {
-                    executionContext = StorageTaskAssignmentExecutionContext.DeserializeStorageTaskAssignmentExecutionContext(property.Value, options);
+                    executionContext = ModelSerializationExtensions.JsonDeserialize<StorageTaskAssignmentExecutionContext>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("report"u8))
                 {
-                    report = StorageTaskAssignmentReport.DeserializeStorageTaskAssignmentReport(property.Value, options);
+                    report = ModelSerializationExtensions.JsonDeserialize<StorageTaskAssignmentReport>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    runStatus = StorageTaskReportProperties.DeserializeStorageTaskReportProperties(property.Value, options);
+                    runStatus = ModelSerializationExtensions.JsonDeserialize<StorageTaskReportProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HealthcareApis
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<HealthcareApisWorkspaceProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(ETag))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     {
                         continue;
                     }
-                    properties = HealthcareApisWorkspaceProperties.DeserializeHealthcareApisWorkspaceProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<HealthcareApisWorkspaceProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EventHubs
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<EventHubsClusterSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         continue;
                     }
-                    sku = EventHubsClusterSku.DeserializeEventHubsClusterSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<EventHubsClusterSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

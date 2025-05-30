@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Nginx.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Nginx.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<NginxResourceSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Location))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Nginx.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<NginxDeploymentUpdateProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    sku = NginxResourceSku.DeserializeNginxResourceSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<NginxResourceSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    properties = NginxDeploymentUpdateProperties.DeserializeNginxDeploymentUpdateProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<NginxDeploymentUpdateProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

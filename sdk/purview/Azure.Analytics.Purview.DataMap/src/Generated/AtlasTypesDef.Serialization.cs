@@ -40,7 +40,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in BusinessMetadataDefs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasBusinessMetadataDef>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in ClassificationDefs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasClassificationDef>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in EntityDefs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasEntityDef>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in EnumDefs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasEnumDef>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in RelationshipDefs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasRelationshipDef>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,7 +90,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in StructDefs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasStructDef>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +100,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in TermTemplateDefs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TermTemplateDef>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

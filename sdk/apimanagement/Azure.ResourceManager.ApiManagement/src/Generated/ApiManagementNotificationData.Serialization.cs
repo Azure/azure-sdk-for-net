@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Recipients))
             {
                 writer.WritePropertyName("recipients"u8);
-                writer.WriteObjectValue(Recipients, options);
+                ((IJsonModel<RecipientsContractProperties>)Recipients).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            recipients = RecipientsContractProperties.DeserializeRecipientsContractProperties(property0.Value, options);
+                            recipients = ModelSerializationExtensions.JsonDeserialize<RecipientsContractProperties>(property0.Value);
                             continue;
                         }
                     }

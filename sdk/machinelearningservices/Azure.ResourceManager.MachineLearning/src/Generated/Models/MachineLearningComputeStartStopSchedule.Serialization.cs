@@ -70,17 +70,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(RecurrenceSchedule))
             {
                 writer.WritePropertyName("recurrence"u8);
-                writer.WriteObjectValue(RecurrenceSchedule, options);
+                ((IJsonModel<ComputeStartStopRecurrenceSchedule>)RecurrenceSchedule).Write(writer, options);
             }
             if (Optional.IsDefined(CronSchedule))
             {
                 writer.WritePropertyName("cron"u8);
-                writer.WriteObjectValue(CronSchedule, options);
+                ((IJsonModel<ComputeStartStopCronSchedule>)CronSchedule).Write(writer, options);
             }
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule, options);
+                ((IJsonModel<MachineLearningScheduleBase>)Schedule).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    recurrence = ComputeStartStopRecurrenceSchedule.DeserializeComputeStartStopRecurrenceSchedule(property.Value, options);
+                    recurrence = ModelSerializationExtensions.JsonDeserialize<ComputeStartStopRecurrenceSchedule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("cron"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    cron = ComputeStartStopCronSchedule.DeserializeComputeStartStopCronSchedule(property.Value, options);
+                    cron = ModelSerializationExtensions.JsonDeserialize<ComputeStartStopCronSchedule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("schedule"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    schedule = MachineLearningScheduleBase.DeserializeMachineLearningScheduleBase(property.Value, options);
+                    schedule = ModelSerializationExtensions.JsonDeserialize<MachineLearningScheduleBase>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStartArray();
             foreach (var item in Commands)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<BareMetalMachineCommandSpecification>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("limitTimeSeconds"u8);

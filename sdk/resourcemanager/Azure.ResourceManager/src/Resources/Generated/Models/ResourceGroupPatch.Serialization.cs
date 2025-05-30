@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ResourceGroupProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(ManagedBy))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    properties = ResourceGroupProperties.DeserializeResourceGroupProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ResourceGroupProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("managedBy"u8))

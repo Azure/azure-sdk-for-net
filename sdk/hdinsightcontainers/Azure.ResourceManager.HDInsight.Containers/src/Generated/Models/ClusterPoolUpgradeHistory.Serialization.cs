@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<ClusterPoolUpgradeHistoryProperties>)Properties).Write(writer, options);
         }
 
         ClusterPoolUpgradeHistory IJsonModel<ClusterPoolUpgradeHistory>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = ClusterPoolUpgradeHistoryProperties.DeserializeClusterPoolUpgradeHistoryProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ClusterPoolUpgradeHistoryProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

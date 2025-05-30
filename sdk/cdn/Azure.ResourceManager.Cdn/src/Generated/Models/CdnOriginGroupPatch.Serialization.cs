@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (HealthProbeSettings != null)
                 {
                     writer.WritePropertyName("healthProbeSettings"u8);
-                    writer.WriteObjectValue(HealthProbeSettings, options);
+                    ((IJsonModel<HealthProbeSettings>)HealthProbeSettings).Write(writer, options);
                 }
                 else
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Origins)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (ResponseBasedOriginErrorDetectionSettings != null)
                 {
                     writer.WritePropertyName("responseBasedOriginErrorDetectionSettings"u8);
-                    writer.WriteObjectValue(ResponseBasedOriginErrorDetectionSettings, options);
+                    ((IJsonModel<ResponseBasedOriginErrorDetectionSettings>)ResponseBasedOriginErrorDetectionSettings).Write(writer, options);
                 }
                 else
                 {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Cdn.Models
                                 healthProbeSettings = null;
                                 continue;
                             }
-                            healthProbeSettings = HealthProbeSettings.DeserializeHealthProbeSettings(property0.Value, options);
+                            healthProbeSettings = ModelSerializationExtensions.JsonDeserialize<HealthProbeSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("origins"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             origins = array;
                             continue;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Cdn.Models
                                 responseBasedOriginErrorDetectionSettings = null;
                                 continue;
                             }
-                            responseBasedOriginErrorDetectionSettings = ResponseBasedOriginErrorDetectionSettings.DeserializeResponseBasedOriginErrorDetectionSettings(property0.Value, options);
+                            responseBasedOriginErrorDetectionSettings = ModelSerializationExtensions.JsonDeserialize<ResponseBasedOriginErrorDetectionSettings>(property0.Value);
                             continue;
                         }
                     }

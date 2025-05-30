@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (options.Format != "W" && Optional.IsDefined(TriggeredBuildResult))
             {
                 writer.WritePropertyName("triggeredBuildResult"u8);
-                JsonSerializer.Serialize(writer, TriggeredBuildResult);
+                ((IJsonModel<SubResource>)TriggeredBuildResult).Write(writer, options);
             }
             if (Optional.IsDefined(ResourceRequests))
             {
                 writer.WritePropertyName("resourceRequests"u8);
-                writer.WriteObjectValue(ResourceRequests, options);
+                ((IJsonModel<AppPlatformBuildResourceRequirements>)ResourceRequests).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    triggeredBuildResult = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
+                    triggeredBuildResult = ModelSerializationExtensions.JsonDeserialize<SubResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceRequests"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    resourceRequests = AppPlatformBuildResourceRequirements.DeserializeAppPlatformBuildResourceRequirements(property.Value, options);
+                    resourceRequests = ModelSerializationExtensions.JsonDeserialize<AppPlatformBuildResourceRequirements>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

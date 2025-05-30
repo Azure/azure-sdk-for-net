@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(ProtectedSettingsFromKeyVault))
             {
                 writer.WritePropertyName("protectedSettingsFromKeyVault"u8);
-                writer.WriteObjectValue(ProtectedSettingsFromKeyVault, options);
+                ((IJsonModel<ComputeFleetKeyVaultSecretReference>)ProtectedSettingsFromKeyVault).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    protectedSettingsFromKeyVault = ComputeFleetKeyVaultSecretReference.DeserializeComputeFleetKeyVaultSecretReference(property.Value, options);
+                    protectedSettingsFromKeyVault = ModelSerializationExtensions.JsonDeserialize<ComputeFleetKeyVaultSecretReference>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<GatewayResourceSkuResult>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))

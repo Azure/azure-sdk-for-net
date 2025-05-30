@@ -72,17 +72,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("pfx"u8))
                 {
-                    pfx = JsonSerializer.Deserialize<DataFactorySecret>(property.Value.GetRawText());
+                    pfx = ModelSerializationExtensions.JsonDeserialize<DataFactorySecret>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("password"u8))
                 {
-                    password = JsonSerializer.Deserialize<DataFactorySecret>(property.Value.GetRawText());
+                    password = ModelSerializationExtensions.JsonDeserialize<DataFactorySecret>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("url"u8))
                 {
-                    url = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    url = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("authenticationType"u8))

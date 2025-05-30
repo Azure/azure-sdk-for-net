@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WritePropertyName("deleteAfter"u8);
-            writer.WriteObjectValue(DeleteAfter, options);
+            ((IJsonModel<DataProtectionBackupDeleteSetting>)DeleteAfter).Write(writer, options);
             writer.WritePropertyName("sourceDataStore"u8);
-            writer.WriteObjectValue(SourceDataStore, options);
+            ((IJsonModel<DataStoreInfoBase>)SourceDataStore).Write(writer, options);
             if (Optional.IsCollectionDefined(TargetDataStoreCopySettings))
             {
                 writer.WritePropertyName("targetDataStoreCopySettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in TargetDataStoreCopySettings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TargetCopySetting>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 if (property.NameEquals("deleteAfter"u8))
                 {
-                    deleteAfter = DataProtectionBackupDeleteSetting.DeserializeDataProtectionBackupDeleteSetting(property.Value, options);
+                    deleteAfter = ModelSerializationExtensions.JsonDeserialize<DataProtectionBackupDeleteSetting>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sourceDataStore"u8))
                 {
-                    sourceDataStore = DataStoreInfoBase.DeserializeDataStoreInfoBase(property.Value, options);
+                    sourceDataStore = ModelSerializationExtensions.JsonDeserialize<DataStoreInfoBase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetDataStoreCopySettings"u8))

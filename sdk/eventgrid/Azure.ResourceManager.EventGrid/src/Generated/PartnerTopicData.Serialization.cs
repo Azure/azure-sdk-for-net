@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(EventTypeInfo))
             {
                 writer.WritePropertyName("eventTypeInfo"u8);
-                writer.WriteObjectValue(EventTypeInfo, options);
+                ((IJsonModel<PartnerTopicEventTypeInfo>)EventTypeInfo).Write(writer, options);
             }
             if (Optional.IsDefined(ExpireOnIfNotActivated))
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.EventGrid
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.EventGrid
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            eventTypeInfo = PartnerTopicEventTypeInfo.DeserializePartnerTopicEventTypeInfo(property0.Value, options);
+                            eventTypeInfo = ModelSerializationExtensions.JsonDeserialize<PartnerTopicEventTypeInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("expirationTimeIfNotActivatedUtc"u8))

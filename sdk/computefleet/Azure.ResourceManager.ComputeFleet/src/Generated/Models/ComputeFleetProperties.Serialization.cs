@@ -42,32 +42,32 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(SpotPriorityProfile))
             {
                 writer.WritePropertyName("spotPriorityProfile"u8);
-                writer.WriteObjectValue(SpotPriorityProfile, options);
+                ((IJsonModel<SpotPriorityProfile>)SpotPriorityProfile).Write(writer, options);
             }
             if (Optional.IsDefined(RegularPriorityProfile))
             {
                 writer.WritePropertyName("regularPriorityProfile"u8);
-                writer.WriteObjectValue(RegularPriorityProfile, options);
+                ((IJsonModel<RegularPriorityProfile>)RegularPriorityProfile).Write(writer, options);
             }
             writer.WritePropertyName("vmSizesProfile"u8);
             writer.WriteStartArray();
             foreach (var item in VmSizesProfile)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ComputeFleetVmSizeProfile>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(VmAttributes))
             {
                 writer.WritePropertyName("vmAttributes"u8);
-                writer.WriteObjectValue(VmAttributes, options);
+                ((IJsonModel<ComputeFleetVmAttributes>)VmAttributes).Write(writer, options);
             }
             if (Optional.IsDefined(AdditionalLocationsProfile))
             {
                 writer.WritePropertyName("additionalLocationsProfile"u8);
-                writer.WriteObjectValue(AdditionalLocationsProfile, options);
+                ((IJsonModel<AdditionalLocationsProfile>)AdditionalLocationsProfile).Write(writer, options);
             }
             writer.WritePropertyName("computeProfile"u8);
-            writer.WriteObjectValue(ComputeProfile, options);
+            ((IJsonModel<ComputeFleetComputeProfile>)ComputeProfile).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("timeCreated"u8);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    spotPriorityProfile = SpotPriorityProfile.DeserializeSpotPriorityProfile(property.Value, options);
+                    spotPriorityProfile = ModelSerializationExtensions.JsonDeserialize<SpotPriorityProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("regularPriorityProfile"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    regularPriorityProfile = RegularPriorityProfile.DeserializeRegularPriorityProfile(property.Value, options);
+                    regularPriorityProfile = ModelSerializationExtensions.JsonDeserialize<RegularPriorityProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vmSizesProfile"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    vmAttributes = ComputeFleetVmAttributes.DeserializeComputeFleetVmAttributes(property.Value, options);
+                    vmAttributes = ModelSerializationExtensions.JsonDeserialize<ComputeFleetVmAttributes>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("additionalLocationsProfile"u8))
@@ -180,12 +180,12 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    additionalLocationsProfile = AdditionalLocationsProfile.DeserializeAdditionalLocationsProfile(property.Value, options);
+                    additionalLocationsProfile = ModelSerializationExtensions.JsonDeserialize<AdditionalLocationsProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("computeProfile"u8))
                 {
-                    computeProfile = ComputeFleetComputeProfile.DeserializeComputeFleetComputeProfile(property.Value, options);
+                    computeProfile = ModelSerializationExtensions.JsonDeserialize<ComputeFleetComputeProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("timeCreated"u8))

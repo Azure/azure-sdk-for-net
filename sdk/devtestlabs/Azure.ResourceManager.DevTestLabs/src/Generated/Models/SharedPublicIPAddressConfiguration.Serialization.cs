@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in InboundNatRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DevTestLabInboundNatRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

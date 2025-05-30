@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(VhdImageMappingRuleProfile))
             {
                 writer.WritePropertyName("vhdImageMappingRuleProfile"u8);
-                writer.WriteObjectValue(VhdImageMappingRuleProfile, options);
+                ((IJsonModel<VhdImageMappingRuleProfile>)VhdImageMappingRuleProfile).Write(writer, options);
             }
         }
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    vhdImageMappingRuleProfile = VhdImageMappingRuleProfile.DeserializeVhdImageMappingRuleProfile(property.Value, options);
+                    vhdImageMappingRuleProfile = ModelSerializationExtensions.JsonDeserialize<VhdImageMappingRuleProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("applicationEnablement"u8))

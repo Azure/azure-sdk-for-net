@@ -49,20 +49,20 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
-                writer.WriteObjectValue(Filters, options);
+                ((IJsonModel<FilteringOperations>)Filters).Write(writer, options);
             }
             writer.WritePropertyName("codecs"u8);
             writer.WriteStartArray();
             foreach (var item in Codecs)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<MediaCodecBase>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("formats"u8);
             writer.WriteStartArray();
             foreach (var item in Formats)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<MediaFormatBase>)item).Write(writer, options);
             }
             writer.WriteEndArray();
         }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    filters = FilteringOperations.DeserializeFilteringOperations(property.Value, options);
+                    filters = ModelSerializationExtensions.JsonDeserialize<FilteringOperations>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("codecs"u8))

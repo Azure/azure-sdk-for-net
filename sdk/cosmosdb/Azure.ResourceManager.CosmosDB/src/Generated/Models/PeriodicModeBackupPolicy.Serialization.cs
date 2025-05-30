@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(PeriodicModeProperties))
             {
                 writer.WritePropertyName("periodicModeProperties"u8);
-                writer.WriteObjectValue(PeriodicModeProperties, options);
+                ((IJsonModel<PeriodicModeProperties>)PeriodicModeProperties).Write(writer, options);
             }
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    periodicModeProperties = PeriodicModeProperties.DeserializePeriodicModeProperties(property.Value, options);
+                    periodicModeProperties = ModelSerializationExtensions.JsonDeserialize<PeriodicModeProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    migrationState = BackupPolicyMigrationState.DeserializeBackupPolicyMigrationState(property.Value, options);
+                    migrationState = ModelSerializationExtensions.JsonDeserialize<BackupPolicyMigrationState>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

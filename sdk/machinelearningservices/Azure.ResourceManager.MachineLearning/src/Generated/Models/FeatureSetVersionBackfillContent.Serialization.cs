@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (FeatureWindow != null)
                 {
                     writer.WritePropertyName("featureWindow"u8);
-                    writer.WriteObjectValue(FeatureWindow, options);
+                    ((IJsonModel<FeatureWindow>)FeatureWindow).Write(writer, options);
                 }
                 else
                 {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue(Resource, options);
+                ((IJsonModel<MaterializationComputeResource>)Resource).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(SparkConfiguration))
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         featureWindow = null;
                         continue;
                     }
-                    featureWindow = FeatureWindow.DeserializeFeatureWindow(property.Value, options);
+                    featureWindow = ModelSerializationExtensions.JsonDeserialize<FeatureWindow>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataAvailabilityStatus"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    resource = MaterializationComputeResource.DeserializeMaterializationComputeResource(property.Value, options);
+                    resource = ModelSerializationExtensions.JsonDeserialize<MaterializationComputeResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sparkConfiguration"u8))

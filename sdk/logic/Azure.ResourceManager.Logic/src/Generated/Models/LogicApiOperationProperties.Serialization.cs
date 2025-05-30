@@ -67,17 +67,17 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
-                writer.WriteObjectValue(Annotation, options);
+                ((IJsonModel<LogicApiOperationAnnotation>)Annotation).Write(writer, options);
             }
             if (Optional.IsDefined(Api))
             {
                 writer.WritePropertyName("api"u8);
-                writer.WriteObjectValue(Api, options);
+                ((IJsonModel<LogicApiReference>)Api).Write(writer, options);
             }
             if (Optional.IsDefined(InputsDefinition))
             {
                 writer.WritePropertyName("inputsDefinition"u8);
-                writer.WriteObjectValue(InputsDefinition, options);
+                ((IJsonModel<SwaggerSchema>)InputsDefinition).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ResponsesDefinition))
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Logic.Models
                 foreach (var item in ResponsesDefinition)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<SwaggerSchema>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    annotation = LogicApiOperationAnnotation.DeserializeLogicApiOperationAnnotation(property.Value, options);
+                    annotation = ModelSerializationExtensions.JsonDeserialize<LogicApiOperationAnnotation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("api"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    api = LogicApiReference.DeserializeLogicApiReference(property.Value, options);
+                    api = ModelSerializationExtensions.JsonDeserialize<LogicApiReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("inputsDefinition"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    inputsDefinition = SwaggerSchema.DeserializeSwaggerSchema(property.Value, options);
+                    inputsDefinition = ModelSerializationExtensions.JsonDeserialize<SwaggerSchema>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("responsesDefinition"u8))

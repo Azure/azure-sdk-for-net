@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             if (Optional.IsDefined(AccountInfo))
             {
                 writer.WritePropertyName("accountInfo"u8);
-                writer.WriteObjectValue(AccountInfo, options);
+                ((IJsonModel<NewRelicObservabilityAccountInfo>)AccountInfo).Write(writer, options);
             }
             if (Optional.IsDefined(OrganizationInfo))
             {
                 writer.WritePropertyName("organizationInfo"u8);
-                writer.WriteObjectValue(OrganizationInfo, options);
+                ((IJsonModel<NewRelicObservabilityOrganizationInfo>)OrganizationInfo).Write(writer, options);
             }
             if (Optional.IsDefined(SingleSignOnProperties))
             {
                 writer.WritePropertyName("singleSignOnProperties"u8);
-                writer.WriteObjectValue(SingleSignOnProperties, options);
+                ((IJsonModel<NewRelicSingleSignOnProperties>)SingleSignOnProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    accountInfo = NewRelicObservabilityAccountInfo.DeserializeNewRelicObservabilityAccountInfo(property.Value, options);
+                    accountInfo = ModelSerializationExtensions.JsonDeserialize<NewRelicObservabilityAccountInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("organizationInfo"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    organizationInfo = NewRelicObservabilityOrganizationInfo.DeserializeNewRelicObservabilityOrganizationInfo(property.Value, options);
+                    organizationInfo = ModelSerializationExtensions.JsonDeserialize<NewRelicObservabilityOrganizationInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("singleSignOnProperties"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    singleSignOnProperties = NewRelicSingleSignOnProperties.DeserializeNewRelicSingleSignOnProperties(property.Value, options);
+                    singleSignOnProperties = ModelSerializationExtensions.JsonDeserialize<NewRelicSingleSignOnProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

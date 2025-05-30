@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in PerformanceCounters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PerfCounterDataSource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in WindowsEventLogs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WindowsEventLogDataSource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Syslog)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SyslogDataSource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExtensionDataSource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in LogFiles)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LogFilesDataSource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in IisLogs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IisLogsDataSource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in WindowsFirewallLogs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WindowsFirewallLogsDataSource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in PrometheusForwarder)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PrometheusForwarderDataSource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -120,14 +120,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in PlatformTelemetry)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PlatformTelemetryDataSource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DataImports))
             {
                 writer.WritePropertyName("dataImports"u8);
-                writer.WriteObjectValue(DataImports, options);
+                ((IJsonModel<DataSourcesSpecDataImports>)DataImports).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    dataImports = DataSourcesSpecDataImports.DeserializeDataSourcesSpecDataImports(property.Value, options);
+                    dataImports = ModelSerializationExtensions.JsonDeserialize<DataSourcesSpecDataImports>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

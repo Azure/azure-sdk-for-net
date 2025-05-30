@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Latencies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AzureReachabilityReportLatencyInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

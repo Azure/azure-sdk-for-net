@@ -38,7 +38,7 @@ namespace Azure.AI.Language.Conversations.Models
             writer.WriteStartArray();
             foreach (var item in Conversations)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ConversationInput>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -35,9 +35,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
 
             writer.WritePropertyName("resourceInfo"u8);
-            writer.WriteObjectValue(ResourceDetails, options);
+            ((IJsonModel<ResourceNotificationsResourceDeletedDetails>)ResourceDetails).Write(writer, options);
             writer.WritePropertyName("operationalInfo"u8);
-            writer.WriteObjectValue(OperationalDetails, options);
+            ((IJsonModel<ResourceNotificationsOperationalDetails>)OperationalDetails).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,12 +83,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("resourceInfo"u8))
                 {
-                    resourceInfo = ResourceNotificationsResourceDeletedDetails.DeserializeResourceNotificationsResourceDeletedDetails(property.Value, options);
+                    resourceInfo = ModelSerializationExtensions.JsonDeserialize<ResourceNotificationsResourceDeletedDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("operationalInfo"u8))
                 {
-                    operationalInfo = ResourceNotificationsOperationalDetails.DeserializeResourceNotificationsOperationalDetails(property.Value, options);
+                    operationalInfo = ModelSerializationExtensions.JsonDeserialize<ResourceNotificationsOperationalDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

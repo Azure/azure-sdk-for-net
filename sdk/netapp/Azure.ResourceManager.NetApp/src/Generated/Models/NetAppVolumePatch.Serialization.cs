@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(ExportPolicy))
             {
                 writer.WritePropertyName("exportPolicy"u8);
-                writer.WriteObjectValue(ExportPolicy, options);
+                ((IJsonModel<VolumePatchPropertiesExportPolicy>)ExportPolicy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ProtocolTypes))
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(DataProtection))
             {
                 writer.WritePropertyName("dataProtection"u8);
-                writer.WriteObjectValue(DataProtection, options);
+                ((IJsonModel<NetAppVolumePatchDataProtection>)DataProtection).Write(writer, options);
             }
             if (Optional.IsDefined(IsDefaultQuotaEnabled))
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.NetApp.Models
                             {
                                 continue;
                             }
-                            exportPolicy = VolumePatchPropertiesExportPolicy.DeserializeVolumePatchPropertiesExportPolicy(property0.Value, options);
+                            exportPolicy = ModelSerializationExtensions.JsonDeserialize<VolumePatchPropertiesExportPolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("protocolTypes"u8))
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.NetApp.Models
                             {
                                 continue;
                             }
-                            dataProtection = NetAppVolumePatchDataProtection.DeserializeNetAppVolumePatchDataProtection(property0.Value, options);
+                            dataProtection = ModelSerializationExtensions.JsonDeserialize<NetAppVolumePatchDataProtection>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("isDefaultQuotaEnabled"u8))

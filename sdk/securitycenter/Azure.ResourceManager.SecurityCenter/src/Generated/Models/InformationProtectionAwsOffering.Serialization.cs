@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(InformationProtection))
             {
                 writer.WritePropertyName("informationProtection"u8);
-                writer.WriteObjectValue(InformationProtection, options);
+                ((IJsonModel<AwsInformationProtection>)InformationProtection).Write(writer, options);
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    informationProtection = AwsInformationProtection.DeserializeAwsInformationProtection(property.Value, options);
+                    informationProtection = ModelSerializationExtensions.JsonDeserialize<AwsInformationProtection>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("offeringType"u8))

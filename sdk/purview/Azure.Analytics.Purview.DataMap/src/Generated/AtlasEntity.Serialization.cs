@@ -96,7 +96,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Classifications)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasClassification>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -157,7 +157,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Meanings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasTermAssignmentHeader>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -229,7 +229,7 @@ namespace Azure.Analytics.Purview.DataMap
                     writer.WriteStartArray();
                     foreach (var item0 in item.Value)
                     {
-                        writer.WriteObjectValue(item0, options);
+                        ((IJsonModel<ContactInfo>)item0).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }

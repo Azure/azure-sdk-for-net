@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Regions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CognitiveServicesRegionSetting>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
             writer.WritePropertyName("value"u8);
-            writer.WriteObjectValue(Value, options);
+            ((IJsonModel<DataConnectorCredentials>)Value).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                 }
                 if (property.NameEquals("value"u8))
                 {
-                    value = DataConnectorCredentials.DeserializeDataConnectorCredentials(property.Value, options);
+                    value = ModelSerializationExtensions.JsonDeserialize<DataConnectorCredentials>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

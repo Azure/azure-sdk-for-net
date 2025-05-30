@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartArray();
             foreach (var item in ScalingRules)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ScalingRule>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

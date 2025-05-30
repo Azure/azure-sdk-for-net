@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.LabServices
             if (options.Format != "W" && Optional.IsDefined(ConnectionProfile))
             {
                 writer.WritePropertyName("connectionProfile"u8);
-                writer.WriteObjectValue(ConnectionProfile, options);
+                ((IJsonModel<LabVirtualMachineConnectionProfile>)ConnectionProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ClaimedByUserId))
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.LabServices
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.LabServices
                             {
                                 continue;
                             }
-                            connectionProfile = LabVirtualMachineConnectionProfile.DeserializeLabVirtualMachineConnectionProfile(property0.Value, options);
+                            connectionProfile = ModelSerializationExtensions.JsonDeserialize<LabVirtualMachineConnectionProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("claimedByUserId"u8))

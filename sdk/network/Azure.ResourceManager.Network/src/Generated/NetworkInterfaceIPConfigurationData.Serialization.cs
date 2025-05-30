@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(GatewayLoadBalancer))
             {
                 writer.WritePropertyName("gatewayLoadBalancer"u8);
-                JsonSerializer.Serialize(writer, GatewayLoadBalancer);
+                ((IJsonModel<WritableSubResource>)GatewayLoadBalancer).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(VirtualNetworkTaps))
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkTaps)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VirtualNetworkTapData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ApplicationGatewayBackendAddressPools)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayBackendAddressPool>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerBackendAddressPools)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BackendAddressPoolData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerInboundNatRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InboundNatRuleData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                writer.WriteObjectValue(Subnet, options);
+                ((IJsonModel<SubnetData>)Subnet).Write(writer, options);
             }
             if (Optional.IsDefined(Primary))
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIPAddress"u8);
-                writer.WriteObjectValue(PublicIPAddress, options);
+                ((IJsonModel<PublicIPAddressData>)PublicIPAddress).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ApplicationSecurityGroups))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ApplicationSecurityGroups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationSecurityGroupData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network
             if (options.Format != "W" && Optional.IsDefined(PrivateLinkConnectionProperties))
             {
                 writer.WritePropertyName("privateLinkConnectionProperties"u8);
-                writer.WriteObjectValue(PrivateLinkConnectionProperties, options);
+                ((IJsonModel<NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties>)PrivateLinkConnectionProperties).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            gatewayLoadBalancer = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            gatewayLoadBalancer = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("virtualNetworkTaps"u8))
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            subnet = SubnetData.DeserializeSubnetData(property0.Value, options);
+                            subnet = ModelSerializationExtensions.JsonDeserialize<SubnetData>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("primary"u8))
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            publicIPAddress = PublicIPAddressData.DeserializePublicIPAddressData(property0.Value, options);
+                            publicIPAddress = ModelSerializationExtensions.JsonDeserialize<PublicIPAddressData>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("applicationSecurityGroups"u8))
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            privateLinkConnectionProperties = NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties.DeserializeNetworkInterfaceIPConfigurationPrivateLinkConnectionProperties(property0.Value, options);
+                            privateLinkConnectionProperties = ModelSerializationExtensions.JsonDeserialize<NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties>(property0.Value);
                             continue;
                         }
                     }

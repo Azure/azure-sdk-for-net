@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.Orbital
             if (options.Format != "W" && Optional.IsDefined(AntennaConfiguration))
             {
                 writer.WritePropertyName("antennaConfiguration"u8);
-                writer.WriteObjectValue(AntennaConfiguration, options);
+                ((IJsonModel<OrbitalContactAntennaConfiguration>)AntennaConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ContactProfile))
             {
                 writer.WritePropertyName("contactProfile"u8);
-                JsonSerializer.Serialize(writer, ContactProfile);
+                ((IJsonModel<WritableSubResource>)ContactProfile).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Orbital
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Orbital
                             {
                                 continue;
                             }
-                            antennaConfiguration = OrbitalContactAntennaConfiguration.DeserializeOrbitalContactAntennaConfiguration(property0.Value, options);
+                            antennaConfiguration = ModelSerializationExtensions.JsonDeserialize<OrbitalContactAntennaConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("contactProfile"u8))
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Orbital
                             {
                                 continue;
                             }
-                            contactProfile = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            contactProfile = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                     }

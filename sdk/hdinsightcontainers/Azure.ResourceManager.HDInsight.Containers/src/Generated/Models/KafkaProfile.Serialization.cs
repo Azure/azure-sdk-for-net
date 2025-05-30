@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStringValue(RemoteStorageUriString);
             }
             writer.WritePropertyName("diskStorage"u8);
-            writer.WriteObjectValue(DiskStorage, options);
+            ((IJsonModel<DiskStorageProfile>)DiskStorage).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ConnectivityEndpoints))
             {
                 writer.WritePropertyName("connectivityEndpoints"u8);
-                writer.WriteObjectValue(ConnectivityEndpoints, options);
+                ((IJsonModel<KafkaConnectivityEndpoints>)ConnectivityEndpoints).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (property.NameEquals("diskStorage"u8))
                 {
-                    diskStorage = DiskStorageProfile.DeserializeDiskStorageProfile(property.Value, options);
+                    diskStorage = ModelSerializationExtensions.JsonDeserialize<DiskStorageProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("connectivityEndpoints"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    connectivityEndpoints = KafkaConnectivityEndpoints.DeserializeKafkaConnectivityEndpoints(property.Value, options);
+                    connectivityEndpoints = ModelSerializationExtensions.JsonDeserialize<KafkaConnectivityEndpoints>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Redis
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
+                ((IJsonModel<SubResource>)PrivateEndpoint).Write(writer, options);
             }
             if (Optional.IsDefined(RedisPrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(RedisPrivateLinkServiceConnectionState, options);
+                ((IJsonModel<RedisPrivateLinkServiceConnectionState>)RedisPrivateLinkServiceConnectionState).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RedisProvisioningState))
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Redis
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Redis
                             {
                                 continue;
                             }
-                            privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
+                            privateEndpoint = ModelSerializationExtensions.JsonDeserialize<SubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Redis
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = RedisPrivateLinkServiceConnectionState.DeserializeRedisPrivateLinkServiceConnectionState(property0.Value, options);
+                            privateLinkServiceConnectionState = ModelSerializationExtensions.JsonDeserialize<RedisPrivateLinkServiceConnectionState>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

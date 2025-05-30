@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceGuardOperations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceGuardOperationDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

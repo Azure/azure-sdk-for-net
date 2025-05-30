@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(Debug))
             {
                 writer.WritePropertyName("debug"u8);
-                writer.WriteObjectValue(Debug, options);
+                ((IJsonModel<TrinoDebugConfig>)Debug).Write(writer, options);
             }
             if (Optional.IsDefined(IsHighAvailabilityEnabled))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    debug = TrinoDebugConfig.DeserializeTrinoDebugConfig(property.Value, options);
+                    debug = ModelSerializationExtensions.JsonDeserialize<TrinoDebugConfig>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("highAvailabilityEnabled"u8))

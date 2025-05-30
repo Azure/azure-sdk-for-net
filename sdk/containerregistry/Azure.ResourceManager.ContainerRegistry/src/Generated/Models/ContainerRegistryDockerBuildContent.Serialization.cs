@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Arguments)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerRegistryRunArgument>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
             writer.WritePropertyName("platform"u8);
-            writer.WriteObjectValue(Platform, options);
+            ((IJsonModel<ContainerRegistryPlatformProperties>)Platform).Write(writer, options);
             if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
-                writer.WriteObjectValue(AgentConfiguration, options);
+                ((IJsonModel<ContainerRegistryAgentProperties>)AgentConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(SourceLocation))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials, options);
+                ((IJsonModel<ContainerRegistryCredentials>)Credentials).Write(writer, options);
             }
         }
 
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 if (property.NameEquals("platform"u8))
                 {
-                    platform = ContainerRegistryPlatformProperties.DeserializeContainerRegistryPlatformProperties(property.Value, options);
+                    platform = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryPlatformProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("agentConfiguration"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    agentConfiguration = ContainerRegistryAgentProperties.DeserializeContainerRegistryAgentProperties(property.Value, options);
+                    agentConfiguration = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryAgentProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sourceLocation"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    credentials = ContainerRegistryCredentials.DeserializeContainerRegistryCredentials(property.Value, options);
+                    credentials = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryCredentials>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

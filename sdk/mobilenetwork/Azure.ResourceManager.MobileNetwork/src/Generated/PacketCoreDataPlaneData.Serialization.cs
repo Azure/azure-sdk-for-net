@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("userPlaneAccessInterface"u8);
-            writer.WriteObjectValue(UserPlaneAccessInterface, options);
+            ((IJsonModel<MobileNetworkInterfaceProperties>)UserPlaneAccessInterface).Write(writer, options);
             if (Optional.IsCollectionDefined(UserPlaneAccessVirtualIPv4Addresses))
             {
                 writer.WritePropertyName("userPlaneAccessVirtualIpv4Addresses"u8);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         }
                         if (property0.NameEquals("userPlaneAccessInterface"u8))
                         {
-                            userPlaneAccessInterface = MobileNetworkInterfaceProperties.DeserializeMobileNetworkInterfaceProperties(property0.Value, options);
+                            userPlaneAccessInterface = ModelSerializationExtensions.JsonDeserialize<MobileNetworkInterfaceProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("userPlaneAccessVirtualIpv4Addresses"u8))

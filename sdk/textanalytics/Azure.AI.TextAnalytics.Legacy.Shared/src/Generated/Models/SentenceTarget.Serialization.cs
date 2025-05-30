@@ -34,7 +34,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 }
                 if (property.NameEquals("confidenceScores"u8))
                 {
-                    confidenceScores = TargetConfidenceScoreLabel.DeserializeTargetConfidenceScoreLabel(property.Value);
+                    confidenceScores = ModelSerializationExtensions.JsonDeserialize<TargetConfidenceScoreLabel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("offset"u8))

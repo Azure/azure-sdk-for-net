@@ -37,22 +37,22 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(Backup))
             {
                 writer.WritePropertyName("backup"u8);
-                writer.WriteObjectValue(Backup, options);
+                ((IJsonModel<NetAppVolumeBackupConfiguration>)Backup).Write(writer, options);
             }
             if (Optional.IsDefined(Replication))
             {
                 writer.WritePropertyName("replication"u8);
-                writer.WriteObjectValue(Replication, options);
+                ((IJsonModel<NetAppReplicationObject>)Replication).Write(writer, options);
             }
             if (Optional.IsDefined(Snapshot))
             {
                 writer.WritePropertyName("snapshot"u8);
-                writer.WriteObjectValue(Snapshot, options);
+                ((IJsonModel<VolumeSnapshotProperties>)Snapshot).Write(writer, options);
             }
             if (Optional.IsDefined(VolumeRelocation))
             {
                 writer.WritePropertyName("volumeRelocation"u8);
-                writer.WriteObjectValue(VolumeRelocation, options);
+                ((IJsonModel<NetAppVolumeRelocationProperties>)VolumeRelocation).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    backup = NetAppVolumeBackupConfiguration.DeserializeNetAppVolumeBackupConfiguration(property.Value, options);
+                    backup = ModelSerializationExtensions.JsonDeserialize<NetAppVolumeBackupConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("replication"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    replication = NetAppReplicationObject.DeserializeNetAppReplicationObject(property.Value, options);
+                    replication = ModelSerializationExtensions.JsonDeserialize<NetAppReplicationObject>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("snapshot"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    snapshot = VolumeSnapshotProperties.DeserializeVolumeSnapshotProperties(property.Value, options);
+                    snapshot = ModelSerializationExtensions.JsonDeserialize<VolumeSnapshotProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("volumeRelocation"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    volumeRelocation = NetAppVolumeRelocationProperties.DeserializeNetAppVolumeRelocationProperties(property.Value, options);
+                    volumeRelocation = ModelSerializationExtensions.JsonDeserialize<NetAppVolumeRelocationProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

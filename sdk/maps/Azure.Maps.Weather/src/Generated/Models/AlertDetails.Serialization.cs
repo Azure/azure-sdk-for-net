@@ -62,7 +62,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    latestStatus = LatestStatus.DeserializeLatestStatus(property.Value);
+                    latestStatus = ModelSerializationExtensions.JsonDeserialize<LatestStatus>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("alertDetails"u8))

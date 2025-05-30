@@ -22,12 +22,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(StoreSettings))
             {
                 writer.WritePropertyName("storeSettings"u8);
-                writer.WriteObjectValue(StoreSettings);
+                JsonSerializer.Serialize(writer, StoreSettings);
             }
             if (Optional.IsDefined(FormatSettings))
             {
                 writer.WritePropertyName("formatSettings"u8);
-                writer.WriteObjectValue(FormatSettings);
+                JsonSerializer.Serialize(writer, FormatSettings);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -76,7 +76,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    storeSettings = StoreReadSettings.DeserializeStoreReadSettings(property.Value);
+                    storeSettings = ModelSerializationExtensions.JsonDeserialize<StoreReadSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("formatSettings"u8))
@@ -85,7 +85,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    formatSettings = BinaryReadSettings.DeserializeBinaryReadSettings(property.Value);
+                    formatSettings = ModelSerializationExtensions.JsonDeserialize<BinaryReadSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

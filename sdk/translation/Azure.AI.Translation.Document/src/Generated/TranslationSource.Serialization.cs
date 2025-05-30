@@ -39,7 +39,7 @@ namespace Azure.AI.Translation.Document
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue<DocumentFilter>(Filter, options);
+                ((IJsonModel<DocumentFilter>)Filter).Write(writer, options);
             }
             if (Optional.IsDefined(LanguageCode))
             {
@@ -107,7 +107,7 @@ namespace Azure.AI.Translation.Document
                     {
                         continue;
                     }
-                    filter = DocumentFilter.DeserializeDocumentFilter(property.Value, options);
+                    filter = ModelSerializationExtensions.JsonDeserialize<DocumentFilter>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("language"u8))

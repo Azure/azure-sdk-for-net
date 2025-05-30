@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in ManagedRuleSets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WafPolicyManagedRuleSet>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WritePropertyName("limit"u8);
             writer.WriteNumberValue(Limit);
             writer.WritePropertyName("name"u8);
-            writer.WriteObjectValue(Name, options);
+            ((IJsonModel<ContainerAppUsageName>)Name).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (property.NameEquals("name"u8))
                 {
-                    name = ContainerAppUsageName.DeserializeContainerAppUsageName(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<ContainerAppUsageName>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AssignmentData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

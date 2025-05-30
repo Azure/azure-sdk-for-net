@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Search
             if (Optional.IsDefined(SearchSku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(SearchSku, options);
+                ((IJsonModel<SearchSku>)SearchSku).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Search
             if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkRuleSet"u8);
-                writer.WriteObjectValue(NetworkRuleSet, options);
+                ((IJsonModel<SearchServiceNetworkRuleSet>)NetworkRuleSet).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DisabledDataExfiltrationOptions))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Search
             if (Optional.IsDefined(EncryptionWithCmk))
             {
                 writer.WritePropertyName("encryptionWithCmk"u8);
-                writer.WriteObjectValue(EncryptionWithCmk, options);
+                ((IJsonModel<SearchEncryptionWithCmk>)EncryptionWithCmk).Write(writer, options);
             }
             if (Optional.IsDefined(IsLocalAuthDisabled))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Search
             if (Optional.IsDefined(AuthOptions))
             {
                 writer.WritePropertyName("authOptions"u8);
-                writer.WriteObjectValue(AuthOptions, options);
+                ((IJsonModel<SearchAadAuthDataPlaneAuthOptions>)AuthOptions).Write(writer, options);
             }
             if (Optional.IsDefined(SemanticSearch))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Search
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SearchPrivateEndpointConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Search
                 writer.WriteStartArray();
                 foreach (var item in SharedPrivateLinkResources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SharedSearchServicePrivateLinkResourceData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Search
                     {
                         continue;
                     }
-                    sku = SearchSku.DeserializeSearchSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<SearchSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Search
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Search
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Search
                             {
                                 continue;
                             }
-                            networkRuleSet = SearchServiceNetworkRuleSet.DeserializeSearchServiceNetworkRuleSet(property0.Value, options);
+                            networkRuleSet = ModelSerializationExtensions.JsonDeserialize<SearchServiceNetworkRuleSet>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("disabledDataExfiltrationOptions"u8))
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Search
                             {
                                 continue;
                             }
-                            encryptionWithCmk = SearchEncryptionWithCmk.DeserializeSearchEncryptionWithCmk(property0.Value, options);
+                            encryptionWithCmk = ModelSerializationExtensions.JsonDeserialize<SearchEncryptionWithCmk>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("disableLocalAuth"u8))
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Search
                             {
                                 continue;
                             }
-                            authOptions = SearchAadAuthDataPlaneAuthOptions.DeserializeSearchAadAuthDataPlaneAuthOptions(property0.Value, options);
+                            authOptions = ModelSerializationExtensions.JsonDeserialize<SearchAadAuthDataPlaneAuthOptions>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("semanticSearch"u8))

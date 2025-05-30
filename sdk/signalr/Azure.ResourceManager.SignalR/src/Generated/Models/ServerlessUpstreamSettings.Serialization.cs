@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 writer.WriteStartArray();
                 foreach (var item in Templates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SignalRUpstreamTemplate>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

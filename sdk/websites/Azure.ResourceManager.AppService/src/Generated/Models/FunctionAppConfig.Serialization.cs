@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Deployment))
             {
                 writer.WritePropertyName("deployment"u8);
-                writer.WriteObjectValue(Deployment, options);
+                ((IJsonModel<FunctionsDeployment>)Deployment).Write(writer, options);
             }
             if (Optional.IsDefined(Runtime))
             {
                 writer.WritePropertyName("runtime"u8);
-                writer.WriteObjectValue(Runtime, options);
+                ((IJsonModel<FunctionAppRuntime>)Runtime).Write(writer, options);
             }
             if (Optional.IsDefined(ScaleAndConcurrency))
             {
                 writer.WritePropertyName("scaleAndConcurrency"u8);
-                writer.WriteObjectValue(ScaleAndConcurrency, options);
+                ((IJsonModel<FunctionAppScaleAndConcurrency>)ScaleAndConcurrency).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    deployment = FunctionsDeployment.DeserializeFunctionsDeployment(property.Value, options);
+                    deployment = ModelSerializationExtensions.JsonDeserialize<FunctionsDeployment>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("runtime"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    runtime = FunctionAppRuntime.DeserializeFunctionAppRuntime(property.Value, options);
+                    runtime = ModelSerializationExtensions.JsonDeserialize<FunctionAppRuntime>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scaleAndConcurrency"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    scaleAndConcurrency = FunctionAppScaleAndConcurrency.DeserializeFunctionAppScaleAndConcurrency(property.Value, options);
+                    scaleAndConcurrency = ModelSerializationExtensions.JsonDeserialize<FunctionAppScaleAndConcurrency>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

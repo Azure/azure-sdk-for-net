@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(ConfigurationGroupSchemaResourceReference))
             {
                 writer.WritePropertyName("configurationGroupSchemaResourceReference"u8);
-                writer.WriteObjectValue(ConfigurationGroupSchemaResourceReference, options);
+                ((IJsonModel<DeploymentResourceIdReference>)ConfigurationGroupSchemaResourceReference).Write(writer, options);
             }
             writer.WritePropertyName("configurationType"u8);
             writer.WriteStringValue(ConfigurationType.ToString());

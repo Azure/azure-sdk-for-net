@@ -40,7 +40,7 @@ namespace Azure.AI.Language.Conversations.Models
                 writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MetadataRecord>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

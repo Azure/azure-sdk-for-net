@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(ReadWriteEndpoint))
             {
                 writer.WritePropertyName("readWriteEndpoint"u8);
-                writer.WriteObjectValue(ReadWriteEndpoint, options);
+                ((IJsonModel<FailoverGroupReadWriteEndpoint>)ReadWriteEndpoint).Write(writer, options);
             }
             if (Optional.IsDefined(ReadOnlyEndpoint))
             {
                 writer.WritePropertyName("readOnlyEndpoint"u8);
-                writer.WriteObjectValue(ReadOnlyEndpoint, options);
+                ((IJsonModel<FailoverGroupReadOnlyEndpoint>)ReadOnlyEndpoint).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(FailoverDatabases))
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in PartnerServers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PartnerServerInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            readWriteEndpoint = FailoverGroupReadWriteEndpoint.DeserializeFailoverGroupReadWriteEndpoint(property0.Value, options);
+                            readWriteEndpoint = ModelSerializationExtensions.JsonDeserialize<FailoverGroupReadWriteEndpoint>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("readOnlyEndpoint"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            readOnlyEndpoint = FailoverGroupReadOnlyEndpoint.DeserializeFailoverGroupReadOnlyEndpoint(property0.Value, options);
+                            readOnlyEndpoint = ModelSerializationExtensions.JsonDeserialize<FailoverGroupReadOnlyEndpoint>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("databases"u8))

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Arguments)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerRegistryRunArgument>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

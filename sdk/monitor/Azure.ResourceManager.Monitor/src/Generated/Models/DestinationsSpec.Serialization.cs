@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in LogAnalytics)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LogAnalyticsDestination>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,14 +50,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in MonitoringAccounts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MonitoringAccountDestination>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AzureMonitorMetrics))
             {
                 writer.WritePropertyName("azureMonitorMetrics"u8);
-                writer.WriteObjectValue(AzureMonitorMetrics, options);
+                ((IJsonModel<DestinationsSpecAzureMonitorMetrics>)AzureMonitorMetrics).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(EventHubs))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in EventHubs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataCollectionRuleEventHubDestination>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in EventHubsDirect)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataCollectionRuleEventHubDirectDestination>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageBlobsDirect)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataCollectionRuleStorageBlobDestination>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageTablesDirect)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataCollectionRuleStorageTableDestination>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataCollectionRuleStorageBlobDestination>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    azureMonitorMetrics = DestinationsSpecAzureMonitorMetrics.DeserializeDestinationsSpecAzureMonitorMetrics(property.Value, options);
+                    azureMonitorMetrics = ModelSerializationExtensions.JsonDeserialize<DestinationsSpecAzureMonitorMetrics>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eventHubs"u8))

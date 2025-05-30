@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<SqlSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-                writer.WriteObjectValue(Schema, options);
+                ((IJsonModel<SyncGroupSchema>)Schema).Write(writer, options);
             }
             if (Optional.IsDefined(IsConflictLoggingEnabled))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    sku = SqlSku.DeserializeSqlSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<SqlSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            schema = SyncGroupSchema.DeserializeSyncGroupSchema(property0.Value, options);
+                            schema = ModelSerializationExtensions.JsonDeserialize<SyncGroupSchema>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enableConflictLogging"u8))

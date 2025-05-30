@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Peering
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<PeeringSku>)Sku).Write(writer, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Peering
             if (Optional.IsDefined(Direct))
             {
                 writer.WritePropertyName("direct"u8);
-                writer.WriteObjectValue(Direct, options);
+                ((IJsonModel<DirectPeeringProperties>)Direct).Write(writer, options);
             }
             if (Optional.IsDefined(Exchange))
             {
                 writer.WritePropertyName("exchange"u8);
-                writer.WriteObjectValue(Exchange, options);
+                ((IJsonModel<ExchangePeeringProperties>)Exchange).Write(writer, options);
             }
             if (Optional.IsDefined(PeeringLocation))
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Peering
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = PeeringSku.DeserializePeeringSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<PeeringSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Peering
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Peering
                             {
                                 continue;
                             }
-                            direct = DirectPeeringProperties.DeserializeDirectPeeringProperties(property0.Value, options);
+                            direct = ModelSerializationExtensions.JsonDeserialize<DirectPeeringProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("exchange"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Peering
                             {
                                 continue;
                             }
-                            exchange = ExchangePeeringProperties.DeserializeExchangePeeringProperties(property0.Value, options);
+                            exchange = ModelSerializationExtensions.JsonDeserialize<ExchangePeeringProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("peeringLocation"u8))

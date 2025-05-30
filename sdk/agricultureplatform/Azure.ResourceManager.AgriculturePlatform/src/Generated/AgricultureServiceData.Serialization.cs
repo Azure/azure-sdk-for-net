@@ -40,18 +40,17 @@ namespace Azure.ResourceManager.AgriculturePlatform
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<AgricultureServiceProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<AgriculturePlatformSku>)Sku).Write(writer, options);
             }
         }
 
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                     {
                         continue;
                     }
-                    properties = AgricultureServiceProperties.DeserializeAgricultureServiceProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<AgricultureServiceProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -113,7 +112,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                     {
                         continue;
                     }
-                    sku = AgriculturePlatformSku.DeserializeAgriculturePlatformSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<AgriculturePlatformSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -156,7 +155,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

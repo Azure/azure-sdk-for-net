@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
 
             writer.WritePropertyName("iopsLimit"u8);
-            writer.WriteObjectValue(IopsLimit, options);
+            ((IJsonModel<PropertyValueRangeLimits>)IopsLimit).Write(writer, options);
             writer.WritePropertyName("bandwidthLimit"u8);
-            writer.WriteObjectValue(BandwidthLimit, options);
+            ((IJsonModel<PropertyValueRangeLimits>)BandwidthLimit).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             {
                 if (property.NameEquals("iopsLimit"u8))
                 {
-                    iopsLimit = PropertyValueRangeLimits.DeserializePropertyValueRangeLimits(property.Value, options);
+                    iopsLimit = ModelSerializationExtensions.JsonDeserialize<PropertyValueRangeLimits>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("bandwidthLimit"u8))
                 {
-                    bandwidthLimit = PropertyValueRangeLimits.DeserializePropertyValueRangeLimits(property.Value, options);
+                    bandwidthLimit = ModelSerializationExtensions.JsonDeserialize<PropertyValueRangeLimits>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

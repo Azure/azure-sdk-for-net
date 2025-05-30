@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             if (Optional.IsDefined(SensorIntegration))
             {
                 writer.WritePropertyName("sensorIntegration"u8);
-                writer.WriteObjectValue(SensorIntegration, options);
+                ((IJsonModel<SensorIntegration>)SensorIntegration).Write(writer, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     {
                         continue;
                     }
-                    sensorIntegration = SensorIntegration.DeserializeSensorIntegration(property.Value, options);
+                    sensorIntegration = ModelSerializationExtensions.JsonDeserialize<SensorIntegration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("publicNetworkAccess"u8))

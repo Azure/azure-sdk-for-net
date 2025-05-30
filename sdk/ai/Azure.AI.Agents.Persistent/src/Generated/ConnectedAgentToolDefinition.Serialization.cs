@@ -36,7 +36,7 @@ namespace Azure.AI.Agents.Persistent
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("connected_agent"u8);
-            writer.WriteObjectValue(ConnectedAgent, options);
+            ((IJsonModel<ConnectedAgentDetails>)ConnectedAgent).Write(writer, options);
         }
 
         ConnectedAgentToolDefinition IJsonModel<ConnectedAgentToolDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (property.NameEquals("connected_agent"u8))
                 {
-                    connectedAgent = ConnectedAgentDetails.DeserializeConnectedAgentDetails(property.Value, options);
+                    connectedAgent = ModelSerializationExtensions.JsonDeserialize<ConnectedAgentDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

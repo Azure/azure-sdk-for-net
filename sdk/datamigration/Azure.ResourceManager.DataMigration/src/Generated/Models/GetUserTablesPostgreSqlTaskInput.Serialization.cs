@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WritePropertyName("connectionInfo"u8);
-            writer.WriteObjectValue(ConnectionInfo, options);
+            ((IJsonModel<PostgreSqlConnectionInfo>)ConnectionInfo).Write(writer, options);
             writer.WritePropertyName("selectedDatabases"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("connectionInfo"u8))
                 {
-                    connectionInfo = PostgreSqlConnectionInfo.DeserializePostgreSqlConnectionInfo(property.Value, options);
+                    connectionInfo = ModelSerializationExtensions.JsonDeserialize<PostgreSqlConnectionInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("selectedDatabases"u8))

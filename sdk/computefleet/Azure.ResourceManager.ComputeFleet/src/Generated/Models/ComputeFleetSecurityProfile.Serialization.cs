@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(UefiSettings))
             {
                 writer.WritePropertyName("uefiSettings"u8);
-                writer.WriteObjectValue(UefiSettings, options);
+                ((IJsonModel<ComputeFleetUefiSettings>)UefiSettings).Write(writer, options);
             }
             if (Optional.IsDefined(IsEncryptionAtHostEnabled))
             {
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(EncryptionIdentity))
             {
                 writer.WritePropertyName("encryptionIdentity"u8);
-                writer.WriteObjectValue(EncryptionIdentity, options);
+                ((IJsonModel<ComputeFleetEncryptionIdentity>)EncryptionIdentity).Write(writer, options);
             }
             if (Optional.IsDefined(ProxyAgentSettings))
             {
                 writer.WritePropertyName("proxyAgentSettings"u8);
-                writer.WriteObjectValue(ProxyAgentSettings, options);
+                ((IJsonModel<ComputeFleetProxyAgentSettings>)ProxyAgentSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    uefiSettings = ComputeFleetUefiSettings.DeserializeComputeFleetUefiSettings(property.Value, options);
+                    uefiSettings = ModelSerializationExtensions.JsonDeserialize<ComputeFleetUefiSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("encryptionAtHost"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    encryptionIdentity = ComputeFleetEncryptionIdentity.DeserializeComputeFleetEncryptionIdentity(property.Value, options);
+                    encryptionIdentity = ModelSerializationExtensions.JsonDeserialize<ComputeFleetEncryptionIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("proxyAgentSettings"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    proxyAgentSettings = ComputeFleetProxyAgentSettings.DeserializeComputeFleetProxyAgentSettings(property.Value, options);
+                    proxyAgentSettings = ModelSerializationExtensions.JsonDeserialize<ComputeFleetProxyAgentSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

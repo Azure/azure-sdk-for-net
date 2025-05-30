@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    error = ErrorDetail.DeserializeErrorDetail(property.Value);
+                    error = ModelSerializationExtensions.JsonDeserialize<ErrorDetail>(property.Value);
                     continue;
                 }
             }

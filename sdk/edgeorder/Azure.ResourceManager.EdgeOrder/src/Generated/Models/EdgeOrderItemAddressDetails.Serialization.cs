@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WritePropertyName("forwardAddress"u8);
-            writer.WriteObjectValue(ForwardAddress, options);
+            ((IJsonModel<EdgeOrderItemAddressProperties>)ForwardAddress).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ReturnAddress))
             {
                 writer.WritePropertyName("returnAddress"u8);
-                writer.WriteObjectValue(ReturnAddress, options);
+                ((IJsonModel<EdgeOrderItemAddressProperties>)ReturnAddress).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 if (property.NameEquals("forwardAddress"u8))
                 {
-                    forwardAddress = EdgeOrderItemAddressProperties.DeserializeEdgeOrderItemAddressProperties(property.Value, options);
+                    forwardAddress = ModelSerializationExtensions.JsonDeserialize<EdgeOrderItemAddressProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("returnAddress"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    returnAddress = EdgeOrderItemAddressProperties.DeserializeEdgeOrderItemAddressProperties(property.Value, options);
+                    returnAddress = ModelSerializationExtensions.JsonDeserialize<EdgeOrderItemAddressProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

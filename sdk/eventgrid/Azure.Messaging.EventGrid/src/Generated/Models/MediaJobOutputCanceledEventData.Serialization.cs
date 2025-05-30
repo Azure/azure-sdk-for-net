@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    output = MediaJobOutput.DeserializeMediaJobOutput(property.Value);
+                    output = ModelSerializationExtensions.JsonDeserialize<MediaJobOutput>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("jobCorrelationData"u8))

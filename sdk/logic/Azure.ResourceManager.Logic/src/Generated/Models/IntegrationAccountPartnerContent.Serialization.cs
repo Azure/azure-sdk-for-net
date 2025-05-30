@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(B2B))
             {
                 writer.WritePropertyName("b2b"u8);
-                writer.WriteObjectValue(B2B, options);
+                ((IJsonModel<B2BPartnerContent>)B2B).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    b2b = B2BPartnerContent.DeserializeB2BPartnerContent(property.Value, options);
+                    b2b = ModelSerializationExtensions.JsonDeserialize<B2BPartnerContent>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

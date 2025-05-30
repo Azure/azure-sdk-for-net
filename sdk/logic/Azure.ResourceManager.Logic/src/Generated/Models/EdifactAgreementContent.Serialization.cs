@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WritePropertyName("receiveAgreement"u8);
-            writer.WriteObjectValue(ReceiveAgreement, options);
+            ((IJsonModel<EdifactOneWayAgreement>)ReceiveAgreement).Write(writer, options);
             writer.WritePropertyName("sendAgreement"u8);
-            writer.WriteObjectValue(SendAgreement, options);
+            ((IJsonModel<EdifactOneWayAgreement>)SendAgreement).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 if (property.NameEquals("receiveAgreement"u8))
                 {
-                    receiveAgreement = EdifactOneWayAgreement.DeserializeEdifactOneWayAgreement(property.Value, options);
+                    receiveAgreement = ModelSerializationExtensions.JsonDeserialize<EdifactOneWayAgreement>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sendAgreement"u8))
                 {
-                    sendAgreement = EdifactOneWayAgreement.DeserializeEdifactOneWayAgreement(property.Value, options);
+                    sendAgreement = ModelSerializationExtensions.JsonDeserialize<EdifactOneWayAgreement>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

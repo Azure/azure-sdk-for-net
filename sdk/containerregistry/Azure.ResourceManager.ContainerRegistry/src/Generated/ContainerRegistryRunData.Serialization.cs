@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 writer.WriteStartArray();
                 foreach (var item in OutputImages)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerRegistryImageDescriptor>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,27 +99,27 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(ImageUpdateTrigger))
             {
                 writer.WritePropertyName("imageUpdateTrigger"u8);
-                writer.WriteObjectValue(ImageUpdateTrigger, options);
+                ((IJsonModel<ContainerRegistryImageUpdateTrigger>)ImageUpdateTrigger).Write(writer, options);
             }
             if (Optional.IsDefined(SourceTrigger))
             {
                 writer.WritePropertyName("sourceTrigger"u8);
-                writer.WriteObjectValue(SourceTrigger, options);
+                ((IJsonModel<ContainerRegistrySourceTriggerDescriptor>)SourceTrigger).Write(writer, options);
             }
             if (Optional.IsDefined(TimerTrigger))
             {
                 writer.WritePropertyName("timerTrigger"u8);
-                writer.WriteObjectValue(TimerTrigger, options);
+                ((IJsonModel<ContainerRegistryTimerTriggerDescriptor>)TimerTrigger).Write(writer, options);
             }
             if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
-                writer.WriteObjectValue(Platform, options);
+                ((IJsonModel<ContainerRegistryPlatformProperties>)Platform).Write(writer, options);
             }
             if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
-                writer.WriteObjectValue(AgentConfiguration, options);
+                ((IJsonModel<ContainerRegistryAgentProperties>)AgentConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(SourceRegistryAuth))
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (options.Format != "W" && Optional.IsDefined(LogArtifact))
             {
                 writer.WritePropertyName("logArtifact"u8);
-                writer.WriteObjectValue(LogArtifact, options);
+                ((IJsonModel<ContainerRegistryImageDescriptor>)LogArtifact).Write(writer, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            imageUpdateTrigger = ContainerRegistryImageUpdateTrigger.DeserializeContainerRegistryImageUpdateTrigger(property0.Value, options);
+                            imageUpdateTrigger = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryImageUpdateTrigger>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sourceTrigger"u8))
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            sourceTrigger = ContainerRegistrySourceTriggerDescriptor.DeserializeContainerRegistrySourceTriggerDescriptor(property0.Value, options);
+                            sourceTrigger = ModelSerializationExtensions.JsonDeserialize<ContainerRegistrySourceTriggerDescriptor>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("timerTrigger"u8))
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            timerTrigger = ContainerRegistryTimerTriggerDescriptor.DeserializeContainerRegistryTimerTriggerDescriptor(property0.Value, options);
+                            timerTrigger = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryTimerTriggerDescriptor>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("platform"u8))
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            platform = ContainerRegistryPlatformProperties.DeserializeContainerRegistryPlatformProperties(property0.Value, options);
+                            platform = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryPlatformProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("agentConfiguration"u8))
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            agentConfiguration = ContainerRegistryAgentProperties.DeserializeContainerRegistryAgentProperties(property0.Value, options);
+                            agentConfiguration = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryAgentProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sourceRegistryAuth"u8))
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            logArtifact = ContainerRegistryImageDescriptor.DeserializeContainerRegistryImageDescriptor(property0.Value, options);
+                            logArtifact = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryImageDescriptor>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

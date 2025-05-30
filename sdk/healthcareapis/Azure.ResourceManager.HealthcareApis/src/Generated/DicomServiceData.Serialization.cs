@@ -40,8 +40,7 @@ namespace Azure.ResourceManager.HealthcareApis
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(ETag))
             {
@@ -58,12 +57,12 @@ namespace Azure.ResourceManager.HealthcareApis
             if (Optional.IsDefined(AuthenticationConfiguration))
             {
                 writer.WritePropertyName("authenticationConfiguration"u8);
-                writer.WriteObjectValue(AuthenticationConfiguration, options);
+                ((IJsonModel<DicomServiceAuthenticationConfiguration>)AuthenticationConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(CorsConfiguration))
             {
                 writer.WritePropertyName("corsConfiguration"u8);
-                writer.WriteObjectValue(CorsConfiguration, options);
+                ((IJsonModel<DicomServiceCorsConfiguration>)CorsConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ServiceUri))
             {
@@ -76,7 +75,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HealthcareApisPrivateEndpointConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,12 +92,12 @@ namespace Azure.ResourceManager.HealthcareApis
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<Encryption>)Encryption).Write(writer, options);
             }
             if (Optional.IsDefined(StorageConfiguration))
             {
                 writer.WritePropertyName("storageConfiguration"u8);
-                writer.WriteObjectValue(StorageConfiguration, options);
+                ((IJsonModel<HealthcareApisServiceStorageConfiguration>)StorageConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(IsDataPartitionsEnabled))
             {
@@ -157,7 +156,7 @@ namespace Azure.ResourceManager.HealthcareApis
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -209,7 +208,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -236,7 +235,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            authenticationConfiguration = DicomServiceAuthenticationConfiguration.DeserializeDicomServiceAuthenticationConfiguration(property0.Value, options);
+                            authenticationConfiguration = ModelSerializationExtensions.JsonDeserialize<DicomServiceAuthenticationConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("corsConfiguration"u8))
@@ -245,7 +244,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            corsConfiguration = DicomServiceCorsConfiguration.DeserializeDicomServiceCorsConfiguration(property0.Value, options);
+                            corsConfiguration = ModelSerializationExtensions.JsonDeserialize<DicomServiceCorsConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("serviceUrl"u8))
@@ -295,7 +294,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            encryption = Encryption.DeserializeEncryption(property0.Value, options);
+                            encryption = ModelSerializationExtensions.JsonDeserialize<Encryption>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("storageConfiguration"u8))
@@ -304,7 +303,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            storageConfiguration = HealthcareApisServiceStorageConfiguration.DeserializeHealthcareApisServiceStorageConfiguration(property0.Value, options);
+                            storageConfiguration = ModelSerializationExtensions.JsonDeserialize<HealthcareApisServiceStorageConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enableDataPartitions"u8))

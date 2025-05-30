@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedServiceLevelObjectives)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ServiceObjectiveCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(ReadScale))
             {
                 writer.WritePropertyName("readScale"u8);
-                writer.WriteObjectValue(ReadScale, options);
+                ((IJsonModel<ReadScaleCapability>)ReadScale).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedStorageCapabilities))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedStorageCapabilities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StorageCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    readScale = ReadScaleCapability.DeserializeReadScaleCapability(property.Value, options);
+                    readScale = ModelSerializationExtensions.JsonDeserialize<ReadScaleCapability>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("supportedStorageCapabilities"u8))

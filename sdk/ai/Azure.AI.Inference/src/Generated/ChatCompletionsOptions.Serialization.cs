@@ -31,7 +31,7 @@ namespace Azure.AI.Inference
             writer.WriteStartArray();
             foreach (var item in Messages)
             {
-                writer.WriteObjectValue<ChatRequestMessage>(item, options);
+                ((IJsonModel<ChatRequestMessage>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(FrequencyPenalty))
@@ -67,7 +67,7 @@ namespace Azure.AI.Inference
             if (Optional.IsDefined(ResponseFormat))
             {
                 writer.WritePropertyName("response_format"u8);
-                writer.WriteObjectValue(ResponseFormat, options);
+                ((IJsonModel<ChatCompletionsResponseFormat>)ResponseFormat).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(StopSequences))
             {
@@ -85,7 +85,7 @@ namespace Azure.AI.Inference
                 writer.WriteStartArray();
                 foreach (var item in Tools)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ChatCompletionsToolDefinition>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -232,7 +232,7 @@ namespace Azure.AI.Inference
                     {
                         continue;
                     }
-                    responseFormat = ChatCompletionsResponseFormat.DeserializeChatCompletionsResponseFormat(property.Value, options);
+                    responseFormat = ModelSerializationExtensions.JsonDeserialize<ChatCompletionsResponseFormat>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("stop"u8))

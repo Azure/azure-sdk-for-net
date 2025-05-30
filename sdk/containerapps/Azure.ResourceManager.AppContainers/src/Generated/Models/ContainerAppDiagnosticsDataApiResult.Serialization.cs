@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
-                writer.WriteObjectValue(Table, options);
+                ((IJsonModel<ContainerAppDiagnosticDataTableResult>)Table).Write(writer, options);
             }
             if (Optional.IsDefined(RenderingProperties))
             {
                 writer.WritePropertyName("renderingProperties"u8);
-                writer.WriteObjectValue(RenderingProperties, options);
+                ((IJsonModel<ContainerAppDiagnosticRendering>)RenderingProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    table = ContainerAppDiagnosticDataTableResult.DeserializeContainerAppDiagnosticDataTableResult(property.Value, options);
+                    table = ModelSerializationExtensions.JsonDeserialize<ContainerAppDiagnosticDataTableResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("renderingProperties"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    renderingProperties = ContainerAppDiagnosticRendering.DeserializeContainerAppDiagnosticRendering(property.Value, options);
+                    renderingProperties = ModelSerializationExtensions.JsonDeserialize<ContainerAppDiagnosticRendering>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

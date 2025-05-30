@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(ConditionProperties))
             {
                 writer.WritePropertyName("conditionProperties"u8);
-                writer.WriteObjectValue(ConditionProperties, options);
+                ((IJsonModel<AutomationRulePropertyArrayValuesCondition>)ConditionProperties).Write(writer, options);
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    conditionProperties = AutomationRulePropertyArrayValuesCondition.DeserializeAutomationRulePropertyArrayValuesCondition(property.Value, options);
+                    conditionProperties = ModelSerializationExtensions.JsonDeserialize<AutomationRulePropertyArrayValuesCondition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("conditionType"u8))

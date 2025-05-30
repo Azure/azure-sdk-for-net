@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("pipeline"u8);
-            writer.WriteObjectValue(Pipeline, options);
+            ((IJsonModel<TriggerPipelineReference>)Pipeline).Write(writer, options);
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("dependsOn"u8);
             writer.WriteStartArray();
             foreach (var item in DependsOn)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DataFactoryPipelineReference>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("runDimension"u8);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("pipeline"u8))
                 {
-                    pipeline = TriggerPipelineReference.DeserializeTriggerPipelineReference(property.Value, options);
+                    pipeline = ModelSerializationExtensions.JsonDeserialize<TriggerPipelineReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

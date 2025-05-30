@@ -52,7 +52,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
+                    resultInformation = ModelSerializationExtensions.JsonDeserialize<ResultInformation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("transferTarget"u8))
@@ -61,7 +61,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    transferTarget = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    transferTarget = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("transferee"u8))
@@ -70,7 +70,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    transferee = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    transferee = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
             }

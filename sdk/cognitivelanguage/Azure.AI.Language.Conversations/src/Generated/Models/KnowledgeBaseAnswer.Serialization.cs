@@ -78,12 +78,12 @@ namespace Azure.AI.Language.Conversations.Models
             if (Optional.IsDefined(Dialog))
             {
                 writer.WritePropertyName("dialog"u8);
-                writer.WriteObjectValue(Dialog, options);
+                ((IJsonModel<KnowledgeBaseAnswerDialog>)Dialog).Write(writer, options);
             }
             if (Optional.IsDefined(ShortAnswer))
             {
                 writer.WritePropertyName("answerSpan"u8);
-                writer.WriteObjectValue(ShortAnswer, options);
+                ((IJsonModel<AnswerSpan>)ShortAnswer).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -196,7 +196,7 @@ namespace Azure.AI.Language.Conversations.Models
                     {
                         continue;
                     }
-                    dialog = KnowledgeBaseAnswerDialog.DeserializeKnowledgeBaseAnswerDialog(property.Value, options);
+                    dialog = ModelSerializationExtensions.JsonDeserialize<KnowledgeBaseAnswerDialog>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("answerSpan"u8))
@@ -205,7 +205,7 @@ namespace Azure.AI.Language.Conversations.Models
                     {
                         continue;
                     }
-                    answerSpan = AnswerSpan.DeserializeAnswerSpan(property.Value, options);
+                    answerSpan = ModelSerializationExtensions.JsonDeserialize<AnswerSpan>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -92,22 +92,22 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
-                writer.WriteObjectValue(Identifier, options);
+                ((IJsonModel<GalleryImageIdentifier>)Identifier).Write(writer, options);
             }
             if (Optional.IsDefined(Recommended))
             {
                 writer.WritePropertyName("recommended"u8);
-                writer.WriteObjectValue(Recommended, options);
+                ((IJsonModel<RecommendedMachineConfiguration>)Recommended).Write(writer, options);
             }
             if (Optional.IsDefined(Disallowed))
             {
                 writer.WritePropertyName("disallowed"u8);
-                writer.WriteObjectValue(Disallowed, options);
+                ((IJsonModel<Disallowed>)Disallowed).Write(writer, options);
             }
             if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
-                writer.WriteObjectValue(PurchasePlan, options);
+                ((IJsonModel<ImagePurchasePlan>)PurchasePlan).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Features)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<GalleryImageFeature>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            identifier = GalleryImageIdentifier.DeserializeGalleryImageIdentifier(property0.Value, options);
+                            identifier = ModelSerializationExtensions.JsonDeserialize<GalleryImageIdentifier>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("recommended"u8))
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            recommended = RecommendedMachineConfiguration.DeserializeRecommendedMachineConfiguration(property0.Value, options);
+                            recommended = ModelSerializationExtensions.JsonDeserialize<RecommendedMachineConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("disallowed"u8))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            disallowed = Disallowed.DeserializeDisallowed(property0.Value, options);
+                            disallowed = ModelSerializationExtensions.JsonDeserialize<Disallowed>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("purchasePlan"u8))
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            purchasePlan = ImagePurchasePlan.DeserializeImagePurchasePlan(property0.Value, options);
+                            purchasePlan = ModelSerializationExtensions.JsonDeserialize<ImagePurchasePlan>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

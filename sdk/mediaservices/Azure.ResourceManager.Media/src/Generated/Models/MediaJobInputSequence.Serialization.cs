@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MediaJobInputClip>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

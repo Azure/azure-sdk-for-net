@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             if (Optional.IsDefined(Administrator))
             {
                 writer.WritePropertyName("administrator"u8);
-                writer.WriteObjectValue(Administrator, options);
+                ((IJsonModel<MongoClusterAdministratorProperties>)Administrator).Write(writer, options);
             }
             if (Optional.IsDefined(ServerVersion))
             {
@@ -52,27 +52,27 @@ namespace Azure.ResourceManager.MongoCluster.Models
             if (Optional.IsDefined(HighAvailability))
             {
                 writer.WritePropertyName("highAvailability"u8);
-                writer.WriteObjectValue(HighAvailability, options);
+                ((IJsonModel<HighAvailabilityProperties>)HighAvailability).Write(writer, options);
             }
             if (Optional.IsDefined(Storage))
             {
                 writer.WritePropertyName("storage"u8);
-                writer.WriteObjectValue(Storage, options);
+                ((IJsonModel<StorageProperties>)Storage).Write(writer, options);
             }
             if (Optional.IsDefined(Sharding))
             {
                 writer.WritePropertyName("sharding"u8);
-                writer.WriteObjectValue(Sharding, options);
+                ((IJsonModel<ShardingProperties>)Sharding).Write(writer, options);
             }
             if (Optional.IsDefined(Compute))
             {
                 writer.WritePropertyName("compute"u8);
-                writer.WriteObjectValue(Compute, options);
+                ((IJsonModel<ComputeProperties>)Compute).Write(writer, options);
             }
             if (Optional.IsDefined(Backup))
             {
                 writer.WritePropertyName("backup"u8);
-                writer.WriteObjectValue(Backup, options);
+                ((IJsonModel<BackupProperties>)Backup).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(PreviewFeatures))
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     {
                         continue;
                     }
-                    administrator = MongoClusterAdministratorProperties.DeserializeMongoClusterAdministratorProperties(property.Value, options);
+                    administrator = ModelSerializationExtensions.JsonDeserialize<MongoClusterAdministratorProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("serverVersion"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     {
                         continue;
                     }
-                    highAvailability = HighAvailabilityProperties.DeserializeHighAvailabilityProperties(property.Value, options);
+                    highAvailability = ModelSerializationExtensions.JsonDeserialize<HighAvailabilityProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storage"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     {
                         continue;
                     }
-                    storage = StorageProperties.DeserializeStorageProperties(property.Value, options);
+                    storage = ModelSerializationExtensions.JsonDeserialize<StorageProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sharding"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     {
                         continue;
                     }
-                    sharding = ShardingProperties.DeserializeShardingProperties(property.Value, options);
+                    sharding = ModelSerializationExtensions.JsonDeserialize<ShardingProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("compute"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     {
                         continue;
                     }
-                    compute = ComputeProperties.DeserializeComputeProperties(property.Value, options);
+                    compute = ModelSerializationExtensions.JsonDeserialize<ComputeProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("backup"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     {
                         continue;
                     }
-                    backup = BackupProperties.DeserializeBackupProperties(property.Value, options);
+                    backup = ModelSerializationExtensions.JsonDeserialize<BackupProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("previewFeatures"u8))

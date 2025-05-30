@@ -49,7 +49,7 @@ namespace Azure.AI.Translation.Document
                 writer.WriteStartArray();
                 foreach (var item in Glossaries)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TranslationGlossary>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

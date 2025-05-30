@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
-                writer.WriteObjectValue(Body, options);
+                ((IJsonModel<BodyDiagnosticSettings>)Body).Write(writer, options);
             }
             if (Optional.IsDefined(DataMasking))
             {
                 writer.WritePropertyName("dataMasking"u8);
-                writer.WriteObjectValue(DataMasking, options);
+                ((IJsonModel<DataMasking>)DataMasking).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    body = BodyDiagnosticSettings.DeserializeBodyDiagnosticSettings(property.Value, options);
+                    body = ModelSerializationExtensions.JsonDeserialize<BodyDiagnosticSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataMasking"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    dataMasking = DataMasking.DeserializeDataMasking(property.Value, options);
+                    dataMasking = ModelSerializationExtensions.JsonDeserialize<DataMasking>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

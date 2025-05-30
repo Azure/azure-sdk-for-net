@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("monitorDefinition"u8);
-            writer.WriteObjectValue(MonitorDefinition, options);
+            ((IJsonModel<MonitorDefinition>)MonitorDefinition).Write(writer, options);
         }
 
         CreateMonitorAction IJsonModel<CreateMonitorAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("monitorDefinition"u8))
                 {
-                    monitorDefinition = MonitorDefinition.DeserializeMonitorDefinition(property.Value, options);
+                    monitorDefinition = ModelSerializationExtensions.JsonDeserialize<MonitorDefinition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("actionType"u8))

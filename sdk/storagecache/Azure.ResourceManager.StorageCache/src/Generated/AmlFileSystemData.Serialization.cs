@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.StorageCache
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<StorageCacheSkuName>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.StorageCache
             if (options.Format != "W" && Optional.IsDefined(Health))
             {
                 writer.WritePropertyName("health"u8);
-                writer.WriteObjectValue(Health, options);
+                ((IJsonModel<AmlFileSystemHealth>)Health).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.StorageCache
             if (options.Format != "W" && Optional.IsDefined(ClientInfo))
             {
                 writer.WritePropertyName("clientInfo"u8);
-                writer.WriteObjectValue(ClientInfo, options);
+                ((IJsonModel<AmlFileSystemClientInfo>)ClientInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ThroughputProvisionedMBps))
             {
@@ -92,22 +92,22 @@ namespace Azure.ResourceManager.StorageCache
             if (Optional.IsDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
-                writer.WriteObjectValue(EncryptionSettings, options);
+                ((IJsonModel<AmlFileSystemEncryptionSettings>)EncryptionSettings).Write(writer, options);
             }
             if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
-                writer.WriteObjectValue(MaintenanceWindow, options);
+                ((IJsonModel<AmlFileSystemPropertiesMaintenanceWindow>)MaintenanceWindow).Write(writer, options);
             }
             if (Optional.IsDefined(Hsm))
             {
                 writer.WritePropertyName("hsm"u8);
-                writer.WriteObjectValue(Hsm, options);
+                ((IJsonModel<AmlFileSystemPropertiesHsm>)Hsm).Write(writer, options);
             }
             if (Optional.IsDefined(RootSquashSettings))
             {
                 writer.WritePropertyName("rootSquashSettings"u8);
-                writer.WriteObjectValue(RootSquashSettings, options);
+                ((IJsonModel<AmlFileSystemRootSquashSettings>)RootSquashSettings).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.StorageCache
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.StorageCache
                     {
                         continue;
                     }
-                    sku = StorageCacheSkuName.DeserializeStorageCacheSkuName(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<StorageCacheSkuName>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.StorageCache
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            health = AmlFileSystemHealth.DeserializeAmlFileSystemHealth(property0.Value, options);
+                            health = ModelSerializationExtensions.JsonDeserialize<AmlFileSystemHealth>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            clientInfo = AmlFileSystemClientInfo.DeserializeAmlFileSystemClientInfo(property0.Value, options);
+                            clientInfo = ModelSerializationExtensions.JsonDeserialize<AmlFileSystemClientInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("throughputProvisionedMBps"u8))
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            encryptionSettings = AmlFileSystemEncryptionSettings.DeserializeAmlFileSystemEncryptionSettings(property0.Value, options);
+                            encryptionSettings = ModelSerializationExtensions.JsonDeserialize<AmlFileSystemEncryptionSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("maintenanceWindow"u8))
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            maintenanceWindow = AmlFileSystemPropertiesMaintenanceWindow.DeserializeAmlFileSystemPropertiesMaintenanceWindow(property0.Value, options);
+                            maintenanceWindow = ModelSerializationExtensions.JsonDeserialize<AmlFileSystemPropertiesMaintenanceWindow>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hsm"u8))
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            hsm = AmlFileSystemPropertiesHsm.DeserializeAmlFileSystemPropertiesHsm(property0.Value, options);
+                            hsm = ModelSerializationExtensions.JsonDeserialize<AmlFileSystemPropertiesHsm>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("rootSquashSettings"u8))
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            rootSquashSettings = AmlFileSystemRootSquashSettings.DeserializeAmlFileSystemRootSquashSettings(property0.Value, options);
+                            rootSquashSettings = ModelSerializationExtensions.JsonDeserialize<AmlFileSystemRootSquashSettings>(property0.Value);
                             continue;
                         }
                     }

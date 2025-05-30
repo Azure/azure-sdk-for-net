@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.WebPubSub
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<BillingInfoSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.WebPubSub
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WebPubSubPrivateEndpointConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -97,14 +97,14 @@ namespace Azure.ResourceManager.WebPubSub
                 writer.WriteStartArray();
                 foreach (var item in SharedPrivateLinkResources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WebPubSubSharedPrivateLinkData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Tls))
             {
                 writer.WritePropertyName("tls"u8);
-                writer.WriteObjectValue(Tls, options);
+                ((IJsonModel<WebPubSubTlsSettings>)Tls).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HostNamePrefix))
             {
@@ -114,17 +114,17 @@ namespace Azure.ResourceManager.WebPubSub
             if (Optional.IsDefined(LiveTraceConfiguration))
             {
                 writer.WritePropertyName("liveTraceConfiguration"u8);
-                writer.WriteObjectValue(LiveTraceConfiguration, options);
+                ((IJsonModel<LiveTraceConfiguration>)LiveTraceConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ResourceLogConfiguration))
             {
                 writer.WritePropertyName("resourceLogConfiguration"u8);
-                writer.WriteObjectValue(ResourceLogConfiguration, options);
+                ((IJsonModel<ResourceLogConfiguration>)ResourceLogConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkACLs"u8);
-                writer.WriteObjectValue(NetworkAcls, options);
+                ((IJsonModel<WebPubSubNetworkAcls>)NetworkAcls).Write(writer, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.WebPubSub
                     {
                         continue;
                     }
-                    sku = BillingInfoSku.DeserializeBillingInfoSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<BillingInfoSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.WebPubSub
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.WebPubSub
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.WebPubSub
                             {
                                 continue;
                             }
-                            tls = WebPubSubTlsSettings.DeserializeWebPubSubTlsSettings(property0.Value, options);
+                            tls = ModelSerializationExtensions.JsonDeserialize<WebPubSubTlsSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hostNamePrefix"u8))
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.WebPubSub
                             {
                                 continue;
                             }
-                            liveTraceConfiguration = LiveTraceConfiguration.DeserializeLiveTraceConfiguration(property0.Value, options);
+                            liveTraceConfiguration = ModelSerializationExtensions.JsonDeserialize<LiveTraceConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resourceLogConfiguration"u8))
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.WebPubSub
                             {
                                 continue;
                             }
-                            resourceLogConfiguration = ResourceLogConfiguration.DeserializeResourceLogConfiguration(property0.Value, options);
+                            resourceLogConfiguration = ModelSerializationExtensions.JsonDeserialize<ResourceLogConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkACLs"u8))
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.WebPubSub
                             {
                                 continue;
                             }
-                            networkAcls = WebPubSubNetworkAcls.DeserializeWebPubSubNetworkAcls(property0.Value, options);
+                            networkAcls = ModelSerializationExtensions.JsonDeserialize<WebPubSubNetworkAcls>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))

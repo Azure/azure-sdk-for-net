@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
-                writer.WriteObjectValue(ContactDetails, options);
+                ((IJsonModel<ContactInfo>)ContactDetails).Write(writer, options);
             }
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress, options);
+                ((IJsonModel<DataBoxShippingAddress>)ShippingAddress).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsUpdated))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    contactDetails = ContactInfo.DeserializeContactInfo(property.Value, options);
+                    contactDetails = ModelSerializationExtensions.JsonDeserialize<ContactInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("shippingAddress"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    shippingAddress = DataBoxShippingAddress.DeserializeDataBoxShippingAddress(property.Value, options);
+                    shippingAddress = ModelSerializationExtensions.JsonDeserialize<DataBoxShippingAddress>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isUpdated"u8))

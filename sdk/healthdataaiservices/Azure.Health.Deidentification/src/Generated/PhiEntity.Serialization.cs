@@ -37,9 +37,9 @@ namespace Azure.Health.Deidentification
             writer.WritePropertyName("category"u8);
             writer.WriteStringValue(Category.ToString());
             writer.WritePropertyName("offset"u8);
-            writer.WriteObjectValue(Offset, options);
+            ((IJsonModel<StringIndex>)Offset).Write(writer, options);
             writer.WritePropertyName("length"u8);
-            writer.WriteObjectValue(Length, options);
+            ((IJsonModel<StringIndex>)Length).Write(writer, options);
             if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
@@ -103,12 +103,12 @@ namespace Azure.Health.Deidentification
                 }
                 if (property.NameEquals("offset"u8))
                 {
-                    offset = StringIndex.DeserializeStringIndex(property.Value, options);
+                    offset = ModelSerializationExtensions.JsonDeserialize<StringIndex>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("length"u8))
                 {
-                    length = StringIndex.DeserializeStringIndex(property.Value, options);
+                    length = ModelSerializationExtensions.JsonDeserialize<StringIndex>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("text"u8))

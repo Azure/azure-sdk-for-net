@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.MySql.Models;
 
 namespace Azure.ResourceManager.MySql
@@ -38,12 +39,12 @@ namespace Azure.ResourceManager.MySql
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<MySqlSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.MySql
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile, options);
+                ((IJsonModel<MySqlStorageProfile>)StorageProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ReplicationRole))
             {
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.MySql
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MySqlServerPrivateEndpointConnection>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

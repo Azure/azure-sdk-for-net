@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CodeConfiguration))
             {
                 writer.WritePropertyName("codeConfiguration"u8);
-                writer.WriteObjectValue(CodeConfiguration, options);
+                ((IJsonModel<GitHubActionCodeConfiguration>)CodeConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ContainerConfiguration))
             {
                 writer.WritePropertyName("containerConfiguration"u8);
-                writer.WriteObjectValue(ContainerConfiguration, options);
+                ((IJsonModel<GitHubActionContainerConfiguration>)ContainerConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(IsLinux))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    codeConfiguration = GitHubActionCodeConfiguration.DeserializeGitHubActionCodeConfiguration(property.Value, options);
+                    codeConfiguration = ModelSerializationExtensions.JsonDeserialize<GitHubActionCodeConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("containerConfiguration"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    containerConfiguration = GitHubActionContainerConfiguration.DeserializeGitHubActionContainerConfiguration(property.Value, options);
+                    containerConfiguration = ModelSerializationExtensions.JsonDeserialize<GitHubActionContainerConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isLinux"u8))

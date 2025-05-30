@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             writer.WriteStartArray();
             foreach (var item in References)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ServerlessRuntimeDependency>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

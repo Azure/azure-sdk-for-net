@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConfidentialLedgerData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

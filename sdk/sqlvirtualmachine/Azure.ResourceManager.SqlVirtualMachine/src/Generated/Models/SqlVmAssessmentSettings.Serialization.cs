@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule, options);
+                ((IJsonModel<SqlVmAssessmentSchedule>)Schedule).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    schedule = SqlVmAssessmentSchedule.DeserializeSqlVmAssessmentSchedule(property.Value, options);
+                    schedule = ModelSerializationExtensions.JsonDeserialize<SqlVmAssessmentSchedule>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(JwtClaimChecks))
             {
                 writer.WritePropertyName("jwtClaimChecks"u8);
-                writer.WriteObjectValue(JwtClaimChecks, options);
+                ((IJsonModel<JwtClaimChecks>)JwtClaimChecks).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AllowedAudiences))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(DefaultAuthorizationPolicy))
             {
                 writer.WritePropertyName("defaultAuthorizationPolicy"u8);
-                writer.WriteObjectValue(DefaultAuthorizationPolicy, options);
+                ((IJsonModel<DefaultAuthorizationPolicy>)DefaultAuthorizationPolicy).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    jwtClaimChecks = JwtClaimChecks.DeserializeJwtClaimChecks(property.Value, options);
+                    jwtClaimChecks = ModelSerializationExtensions.JsonDeserialize<JwtClaimChecks>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("allowedAudiences"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    defaultAuthorizationPolicy = DefaultAuthorizationPolicy.DeserializeDefaultAuthorizationPolicy(property.Value, options);
+                    defaultAuthorizationPolicy = ModelSerializationExtensions.JsonDeserialize<DefaultAuthorizationPolicy>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

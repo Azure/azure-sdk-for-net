@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in Features)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BackupSupportedFeature>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

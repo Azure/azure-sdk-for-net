@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(WorkspaceSettings))
             {
                 writer.WritePropertyName("workspaceSettings"u8);
-                writer.WriteObjectValue(WorkspaceSettings, options);
+                ((IJsonModel<ConnectionMonitorWorkspaceSettings>)WorkspaceSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    workspaceSettings = ConnectionMonitorWorkspaceSettings.DeserializeConnectionMonitorWorkspaceSettings(property.Value, options);
+                    workspaceSettings = ModelSerializationExtensions.JsonDeserialize<ConnectionMonitorWorkspaceSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    result = RunNotebookResult.DeserializeRunNotebookResult(property.Value);
+                    result = ModelSerializationExtensions.JsonDeserialize<RunNotebookResult>(property.Value);
                     continue;
                 }
             }

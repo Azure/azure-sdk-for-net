@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<DataReplicationPrivateEndpointConnectionProxyProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(ETag))
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                     {
                         continue;
                     }
-                    properties = DataReplicationPrivateEndpointConnectionProxyProperties.DeserializeDataReplicationPrivateEndpointConnectionProxyProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<DataReplicationPrivateEndpointConnectionProxyProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

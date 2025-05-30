@@ -49,13 +49,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<MachineLearningSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ServiceManagedResourcesSettings))
             {
                 writer.WritePropertyName("serviceManagedResourcesSettings"u8);
-                writer.WriteObjectValue(ServiceManagedResourcesSettings, options);
+                ((IJsonModel<ServiceManagedResourcesSettings>)ServiceManagedResourcesSettings).Write(writer, options);
             }
             if (Optional.IsDefined(PrimaryUserAssignedIdentity))
             {
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ServerlessComputeSettings))
             {
                 writer.WritePropertyName("serverlessComputeSettings"u8);
-                writer.WriteObjectValue(ServerlessComputeSettings, options);
+                ((IJsonModel<ServerlessComputeSettings>)ServerlessComputeSettings).Write(writer, options);
             }
             if (Optional.IsDefined(PublicNetworkAccessType))
             {
@@ -107,12 +106,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(FeatureStoreSettings))
             {
                 writer.WritePropertyName("featureStoreSettings"u8);
-                writer.WriteObjectValue(FeatureStoreSettings, options);
+                ((IJsonModel<FeatureStoreSettings>)FeatureStoreSettings).Write(writer, options);
             }
             if (Optional.IsDefined(ManagedNetwork))
             {
                 writer.WritePropertyName("managedNetwork"u8);
-                writer.WriteObjectValue(ManagedNetwork, options);
+                ((IJsonModel<ManagedNetworkSettings>)ManagedNetwork).Write(writer, options);
             }
             if (Optional.IsDefined(EnableDataIsolation))
             {
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<EncryptionUpdateProperties>)Encryption).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -208,7 +207,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<MachineLearningSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -218,7 +217,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -251,7 +250,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             {
                                 continue;
                             }
-                            serviceManagedResourcesSettings = ServiceManagedResourcesSettings.DeserializeServiceManagedResourcesSettings(property0.Value, options);
+                            serviceManagedResourcesSettings = ModelSerializationExtensions.JsonDeserialize<ServiceManagedResourcesSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("primaryUserAssignedIdentity"u8))
@@ -265,7 +264,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             {
                                 continue;
                             }
-                            serverlessComputeSettings = ServerlessComputeSettings.DeserializeServerlessComputeSettings(property0.Value, options);
+                            serverlessComputeSettings = ModelSerializationExtensions.JsonDeserialize<ServerlessComputeSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
@@ -293,7 +292,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             {
                                 continue;
                             }
-                            featureStoreSettings = FeatureStoreSettings.DeserializeFeatureStoreSettings(property0.Value, options);
+                            featureStoreSettings = ModelSerializationExtensions.JsonDeserialize<FeatureStoreSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("managedNetwork"u8))
@@ -302,7 +301,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             {
                                 continue;
                             }
-                            managedNetwork = ManagedNetworkSettings.DeserializeManagedNetworkSettings(property0.Value, options);
+                            managedNetwork = ModelSerializationExtensions.JsonDeserialize<ManagedNetworkSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enableDataIsolation"u8))
@@ -329,7 +328,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             {
                                 continue;
                             }
-                            encryption = EncryptionUpdateProperties.DeserializeEncryptionUpdateProperties(property0.Value, options);
+                            encryption = ModelSerializationExtensions.JsonDeserialize<EncryptionUpdateProperties>(property0.Value);
                             continue;
                         }
                     }

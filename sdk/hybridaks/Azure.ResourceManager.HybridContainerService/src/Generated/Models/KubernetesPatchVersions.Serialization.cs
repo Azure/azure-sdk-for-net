@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in Readiness)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<KubernetesVersionReadiness>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

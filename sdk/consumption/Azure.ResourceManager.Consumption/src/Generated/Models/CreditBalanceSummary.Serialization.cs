@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(EstimatedBalance))
             {
                 writer.WritePropertyName("estimatedBalance"u8);
-                writer.WriteObjectValue(EstimatedBalance, options);
+                ((IJsonModel<ConsumptionAmount>)EstimatedBalance).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CurrentBalance))
             {
                 writer.WritePropertyName("currentBalance"u8);
-                writer.WriteObjectValue(CurrentBalance, options);
+                ((IJsonModel<ConsumptionAmount>)CurrentBalance).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EstimatedBalanceInBillingCurrency))
             {
                 writer.WritePropertyName("estimatedBalanceInBillingCurrency"u8);
-                writer.WriteObjectValue(EstimatedBalanceInBillingCurrency, options);
+                ((IJsonModel<ConsumptionAmountWithExchangeRate>)EstimatedBalanceInBillingCurrency).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    estimatedBalance = ConsumptionAmount.DeserializeConsumptionAmount(property.Value, options);
+                    estimatedBalance = ModelSerializationExtensions.JsonDeserialize<ConsumptionAmount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("currentBalance"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    currentBalance = ConsumptionAmount.DeserializeConsumptionAmount(property.Value, options);
+                    currentBalance = ModelSerializationExtensions.JsonDeserialize<ConsumptionAmount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("estimatedBalanceInBillingCurrency"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    estimatedBalanceInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property.Value, options);
+                    estimatedBalanceInBillingCurrency = ModelSerializationExtensions.JsonDeserialize<ConsumptionAmountWithExchangeRate>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

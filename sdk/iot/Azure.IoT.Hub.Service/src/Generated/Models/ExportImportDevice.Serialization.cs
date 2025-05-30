@@ -48,7 +48,7 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
+                JsonSerializer.Serialize(writer, Authentication);
             }
             if (Optional.IsDefined(TwinETag))
             {
@@ -74,12 +74,12 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                JsonSerializer.Serialize(writer, Properties);
             }
             if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
-                writer.WriteObjectValue(Capabilities);
+                JsonSerializer.Serialize(writer, Capabilities);
             }
             if (Optional.IsDefined(DeviceScope))
             {

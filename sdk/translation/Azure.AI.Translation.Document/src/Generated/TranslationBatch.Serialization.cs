@@ -38,7 +38,7 @@ namespace Azure.AI.Translation.Document
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DocumentTranslationInput>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

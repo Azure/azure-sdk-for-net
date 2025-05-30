@@ -35,7 +35,7 @@ namespace Azure.AI.DocumentIntelligence
             }
 
             writer.WritePropertyName("customDocumentModels"u8);
-            writer.WriteObjectValue(CustomDocumentModels, options);
+            ((IJsonModel<CustomDocumentModelsDetails>)CustomDocumentModels).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,7 +80,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 if (property.NameEquals("customDocumentModels"u8))
                 {
-                    customDocumentModels = CustomDocumentModelsDetails.DeserializeCustomDocumentModelsDetails(property.Value, options);
+                    customDocumentModels = ModelSerializationExtensions.JsonDeserialize<CustomDocumentModelsDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

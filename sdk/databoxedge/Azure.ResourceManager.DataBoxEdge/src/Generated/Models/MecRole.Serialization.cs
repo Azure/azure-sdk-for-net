@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-                writer.WriteObjectValue(ConnectionString, options);
+                ((IJsonModel<AsymmetricEncryptedSecret>)ConnectionString).Write(writer, options);
             }
             if (Optional.IsDefined(ControllerEndpoint))
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            connectionString = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property0.Value, options);
+                            connectionString = ModelSerializationExtensions.JsonDeserialize<AsymmetricEncryptedSecret>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("controllerEndpoint"u8))

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Routes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IotHubMatchedRoute>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 writer.WriteStartArray();
                 foreach (var item in DataPartitionNames)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataPartitionName>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WritePropertyName("clientId"u8);
             writer.WriteStringValue(ClientId);
             writer.WritePropertyName("secrets"u8);
-            writer.WriteObjectValue(Secrets, options);
+            ((IJsonModel<MachineLearningServicePrincipalDatastoreSecrets>)Secrets).Write(writer, options);
         }
 
         MachineLearningServicePrincipalDatastoreCredentials IJsonModel<MachineLearningServicePrincipalDatastoreCredentials>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("secrets"u8))
                 {
-                    secrets = MachineLearningServicePrincipalDatastoreSecrets.DeserializeMachineLearningServicePrincipalDatastoreSecrets(property.Value, options);
+                    secrets = ModelSerializationExtensions.JsonDeserialize<MachineLearningServicePrincipalDatastoreSecrets>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("credentialsType"u8))

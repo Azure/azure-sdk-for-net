@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CachedImages>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

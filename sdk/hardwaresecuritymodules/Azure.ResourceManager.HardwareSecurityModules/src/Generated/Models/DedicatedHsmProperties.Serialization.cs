@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile, options);
+                ((IJsonModel<DedicatedHsmNetworkProfile>)NetworkProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ManagementNetworkProfile))
             {
                 writer.WritePropertyName("managementNetworkProfile"u8);
-                writer.WriteObjectValue(ManagementNetworkProfile, options);
+                ((IJsonModel<DedicatedHsmNetworkProfile>)ManagementNetworkProfile).Write(writer, options);
             }
             if (Optional.IsDefined(StampId))
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     {
                         continue;
                     }
-                    networkProfile = DedicatedHsmNetworkProfile.DeserializeDedicatedHsmNetworkProfile(property.Value, options);
+                    networkProfile = ModelSerializationExtensions.JsonDeserialize<DedicatedHsmNetworkProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("managementNetworkProfile"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     {
                         continue;
                     }
-                    managementNetworkProfile = DedicatedHsmNetworkProfile.DeserializeDedicatedHsmNetworkProfile(property.Value, options);
+                    managementNetworkProfile = ModelSerializationExtensions.JsonDeserialize<DedicatedHsmNetworkProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("stampId"u8))

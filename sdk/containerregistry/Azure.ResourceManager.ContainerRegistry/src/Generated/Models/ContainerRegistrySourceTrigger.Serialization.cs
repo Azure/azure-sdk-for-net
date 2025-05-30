@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WritePropertyName("sourceRepository"u8);
-            writer.WriteObjectValue(SourceRepository, options);
+            ((IJsonModel<SourceCodeRepoProperties>)SourceRepository).Write(writer, options);
             writer.WritePropertyName("sourceTriggerEvents"u8);
             writer.WriteStartArray();
             foreach (var item in SourceTriggerEvents)
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 if (property.NameEquals("sourceRepository"u8))
                 {
-                    sourceRepository = SourceCodeRepoProperties.DeserializeSourceCodeRepoProperties(property.Value, options);
+                    sourceRepository = ModelSerializationExtensions.JsonDeserialize<SourceCodeRepoProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sourceTriggerEvents"u8))

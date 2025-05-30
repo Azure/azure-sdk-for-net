@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(ClusterStorageCapacityInfo))
             {
                 writer.WritePropertyName("clusterStorageCapacityInfo"u8);
-                writer.WriteObjectValue(ClusterStorageCapacityInfo, options);
+                ((IJsonModel<EdgeClusterStorageViewInfo>)ClusterStorageCapacityInfo).Write(writer, options);
             }
             if (Optional.IsDefined(ClusterComputeCapacityInfo))
             {
                 writer.WritePropertyName("clusterComputeCapacityInfo"u8);
-                writer.WriteObjectValue(ClusterComputeCapacityInfo, options);
+                ((IJsonModel<EdgeClusterCapacityViewInfo>)ClusterComputeCapacityInfo).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(NodeCapacityInfos))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 foreach (var item in NodeCapacityInfos)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<HostCapacity>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            clusterStorageCapacityInfo = EdgeClusterStorageViewInfo.DeserializeEdgeClusterStorageViewInfo(property0.Value, options);
+                            clusterStorageCapacityInfo = ModelSerializationExtensions.JsonDeserialize<EdgeClusterStorageViewInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clusterComputeCapacityInfo"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            clusterComputeCapacityInfo = EdgeClusterCapacityViewInfo.DeserializeEdgeClusterCapacityViewInfo(property0.Value, options);
+                            clusterComputeCapacityInfo = ModelSerializationExtensions.JsonDeserialize<EdgeClusterCapacityViewInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("nodeCapacityInfos"u8))

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HybridContainerService
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation, options);
+                ((IJsonModel<HybridContainerServiceExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.HybridContainerService
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<AgentPoolProvisioningStatus>)Status).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         continue;
                     }
-                    extendedLocation = HybridContainerServiceExtendedLocation.DeserializeHybridContainerServiceExtendedLocation(property.Value, options);
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<HybridContainerServiceExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.HybridContainerService
                             {
                                 continue;
                             }
-                            status = AgentPoolProvisioningStatus.DeserializeAgentPoolProvisioningStatus(property0.Value, options);
+                            status = ModelSerializationExtensions.JsonDeserialize<AgentPoolProvisioningStatus>(property0.Value);
                             continue;
                         }
                     }

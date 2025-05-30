@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.FrontDoor
             if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
             {
                 writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
-                JsonSerializer.Serialize(writer, WebApplicationFirewallPolicyLink);
+                ((IJsonModel<WritableSubResource>)WebApplicationFirewallPolicyLink).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.FrontDoor
                 if (CustomHttpsConfiguration != null)
                 {
                     writer.WritePropertyName("customHttpsConfiguration"u8);
-                    writer.WriteObjectValue(CustomHttpsConfiguration, options);
+                    ((IJsonModel<CustomHttpsConfiguration>)CustomHttpsConfiguration).Write(writer, options);
                 }
                 else
                 {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.FrontDoor
                             {
                                 continue;
                             }
-                            webApplicationFirewallPolicyLink = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            webApplicationFirewallPolicyLink = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resourceState"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.FrontDoor
                                 customHttpsConfiguration = null;
                                 continue;
                             }
-                            customHttpsConfiguration = CustomHttpsConfiguration.DeserializeCustomHttpsConfiguration(property0.Value, options);
+                            customHttpsConfiguration = ModelSerializationExtensions.JsonDeserialize<CustomHttpsConfiguration>(property0.Value);
                             continue;
                         }
                     }

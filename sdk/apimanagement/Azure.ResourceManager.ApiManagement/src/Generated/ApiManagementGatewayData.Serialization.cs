@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(LocationData))
             {
                 writer.WritePropertyName("locationData"u8);
-                writer.WriteObjectValue(LocationData, options);
+                ((IJsonModel<ResourceLocationDataContract>)LocationData).Write(writer, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            locationData = ResourceLocationDataContract.DeserializeResourceLocationDataContract(property0.Value, options);
+                            locationData = ModelSerializationExtensions.JsonDeserialize<ResourceLocationDataContract>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("description"u8))

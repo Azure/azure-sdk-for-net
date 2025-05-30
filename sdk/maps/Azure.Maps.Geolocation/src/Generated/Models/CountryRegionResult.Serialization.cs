@@ -29,7 +29,7 @@ namespace Azure.Maps.Geolocation
                     {
                         continue;
                     }
-                    countryRegion = Geolocation.CountryRegion.DeserializeCountryRegion(property.Value);
+                    countryRegion = ModelSerializationExtensions.JsonDeserialize<CountryRegion>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ipAddress"u8))

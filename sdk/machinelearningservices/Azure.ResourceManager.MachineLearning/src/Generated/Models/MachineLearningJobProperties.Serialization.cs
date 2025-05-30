@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Services)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value, options);
+                        ((IJsonModel<MachineLearningJobService>)item.Value).Write(writer, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity, options);
+                    ((IJsonModel<MachineLearningIdentityConfiguration>)Identity).Write(writer, options);
                 }
                 else
                 {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (NotificationSetting != null)
                 {
                     writer.WritePropertyName("notificationSetting"u8);
-                    writer.WriteObjectValue(NotificationSetting, options);
+                    ((IJsonModel<NotificationSetting>)NotificationSetting).Write(writer, options);
                 }
                 else
                 {

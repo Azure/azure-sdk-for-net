@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HybridContainerServiceVmSkuCapabilities>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

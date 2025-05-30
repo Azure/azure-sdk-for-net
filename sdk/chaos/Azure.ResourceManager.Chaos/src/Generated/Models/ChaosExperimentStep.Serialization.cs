@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WriteStartArray();
             foreach (var item in Branches)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ChaosExperimentBranch>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

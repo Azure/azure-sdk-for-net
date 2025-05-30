@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 if (CacheConfiguration != null)
                 {
                     writer.WritePropertyName("cacheConfiguration"u8);
-                    writer.WriteObjectValue(CacheConfiguration, options);
+                    ((IJsonModel<FrontDoorCacheConfiguration>)CacheConfiguration).Write(writer, options);
                 }
                 else
                 {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(BackendPool))
             {
                 writer.WritePropertyName("backendPool"u8);
-                JsonSerializer.Serialize(writer, BackendPool);
+                ((IJsonModel<WritableSubResource>)BackendPool).Write(writer, options);
             }
         }
 
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         cacheConfiguration = null;
                         continue;
                     }
-                    cacheConfiguration = FrontDoorCacheConfiguration.DeserializeFrontDoorCacheConfiguration(property.Value, options);
+                    cacheConfiguration = ModelSerializationExtensions.JsonDeserialize<FrontDoorCacheConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("backendPool"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     {
                         continue;
                     }
-                    backendPool = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    backendPool = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))

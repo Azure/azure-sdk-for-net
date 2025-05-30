@@ -39,11 +39,11 @@ namespace Azure.AI.Language.Conversations.Authoring
             writer.WritePropertyName("stringIndexType"u8);
             writer.WriteStringValue(StringIndexType.ToString());
             writer.WritePropertyName("metadata"u8);
-            writer.WriteObjectValue(Metadata, options);
+            ((IJsonModel<ConversationAuthoringCreateProjectDetails>)Metadata).Write(writer, options);
             if (Optional.IsDefined(Assets))
             {
                 writer.WritePropertyName("assets"u8);
-                writer.WriteObjectValue(Assets, options);
+                ((IJsonModel<ConversationAuthoringExportedProjectAsset>)Assets).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -102,7 +102,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
                 if (property.NameEquals("metadata"u8))
                 {
-                    metadata = ConversationAuthoringCreateProjectDetails.DeserializeConversationAuthoringCreateProjectDetails(property.Value, options);
+                    metadata = ModelSerializationExtensions.JsonDeserialize<ConversationAuthoringCreateProjectDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("assets"u8))
@@ -111,7 +111,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                     {
                         continue;
                     }
-                    assets = ConversationAuthoringExportedProjectAsset.DeserializeConversationAuthoringExportedProjectAsset(property.Value, options);
+                    assets = ModelSerializationExtensions.JsonDeserialize<ConversationAuthoringExportedProjectAsset>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

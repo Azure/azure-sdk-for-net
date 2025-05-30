@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (StackEnsembleSettings != null)
                 {
                     writer.WritePropertyName("stackEnsembleSettings"u8);
-                    writer.WriteObjectValue(StackEnsembleSettings, options);
+                    ((IJsonModel<MachineLearningStackEnsembleSettings>)StackEnsembleSettings).Write(writer, options);
                 }
                 else
                 {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         stackEnsembleSettings = null;
                         continue;
                     }
-                    stackEnsembleSettings = MachineLearningStackEnsembleSettings.DeserializeMachineLearningStackEnsembleSettings(property.Value, options);
+                    stackEnsembleSettings = ModelSerializationExtensions.JsonDeserialize<MachineLearningStackEnsembleSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("enableStackEnsemble"u8))

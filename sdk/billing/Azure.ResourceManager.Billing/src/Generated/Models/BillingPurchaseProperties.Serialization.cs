@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<BillingSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(Commitment))
             {
                 writer.WritePropertyName("commitment"u8);
-                writer.WriteObjectValue(Commitment, options);
+                ((IJsonModel<BillingBenefitCommitment>)Commitment).Write(writer, options);
             }
             if (Optional.IsDefined(IsRenewed))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties, options);
+                ((IJsonModel<BillingAppliedScopeProperties>)AppliedScopeProperties).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    sku = BillingSku.DeserializeBillingSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<BillingSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Billing.Models
                             {
                                 continue;
                             }
-                            commitment = BillingBenefitCommitment.DeserializeBillingBenefitCommitment(property0.Value, options);
+                            commitment = ModelSerializationExtensions.JsonDeserialize<BillingBenefitCommitment>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("renew"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Billing.Models
                             {
                                 continue;
                             }
-                            appliedScopeProperties = BillingAppliedScopeProperties.DeserializeBillingAppliedScopeProperties(property0.Value, options);
+                            appliedScopeProperties = ModelSerializationExtensions.JsonDeserialize<BillingAppliedScopeProperties>(property0.Value);
                             continue;
                         }
                     }

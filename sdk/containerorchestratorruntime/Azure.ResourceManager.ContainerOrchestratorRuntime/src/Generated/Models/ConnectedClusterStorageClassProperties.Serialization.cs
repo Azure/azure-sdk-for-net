@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 writer.WriteNumberValue(Priority.Value);
             }
             writer.WritePropertyName("typeProperties"u8);
-            writer.WriteObjectValue(TypeProperties, options);
+            ((IJsonModel<StorageClassTypeProperties>)TypeProperties).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 }
                 if (property.NameEquals("typeProperties"u8))
                 {
-                    typeProperties = StorageClassTypeProperties.DeserializeStorageClassTypeProperties(property.Value, options);
+                    typeProperties = ModelSerializationExtensions.JsonDeserialize<StorageClassTypeProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (options.Format != "W" && Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
-                writer.WriteObjectValue(Certificate, options);
+                ((IJsonModel<ContainerRegistryTlsCertificateProperties>)Certificate).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    certificate = ContainerRegistryTlsCertificateProperties.DeserializeContainerRegistryTlsCertificateProperties(property.Value, options);
+                    certificate = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryTlsCertificateProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

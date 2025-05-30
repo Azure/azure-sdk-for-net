@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Storage))
             {
                 writer.WritePropertyName("storage"u8);
-                writer.WriteObjectValue(Storage, options);
+                ((IJsonModel<FunctionAppStorage>)Storage).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    storage = FunctionAppStorage.DeserializeFunctionAppStorage(property.Value, options);
+                    storage = ModelSerializationExtensions.JsonDeserialize<FunctionAppStorage>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

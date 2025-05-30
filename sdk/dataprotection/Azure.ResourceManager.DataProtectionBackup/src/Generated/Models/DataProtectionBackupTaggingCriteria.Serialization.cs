@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in Criteria)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataProtectionBackupCriteria>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WritePropertyName("taggingPriority"u8);
             writer.WriteNumberValue(TaggingPriority);
             writer.WritePropertyName("tagInfo"u8);
-            writer.WriteObjectValue(TagInfo, options);
+            ((IJsonModel<DataProtectionBackupRetentionTag>)TagInfo).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (property.NameEquals("tagInfo"u8))
                 {
-                    tagInfo = DataProtectionBackupRetentionTag.DeserializeDataProtectionBackupRetentionTag(property.Value, options);
+                    tagInfo = ModelSerializationExtensions.JsonDeserialize<DataProtectionBackupRetentionTag>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

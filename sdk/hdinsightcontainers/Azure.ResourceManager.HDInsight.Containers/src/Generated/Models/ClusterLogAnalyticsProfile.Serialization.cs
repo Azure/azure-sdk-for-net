@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(ApplicationLogs))
             {
                 writer.WritePropertyName("applicationLogs"u8);
-                writer.WriteObjectValue(ApplicationLogs, options);
+                ((IJsonModel<ClusterLogAnalyticsApplicationLogs>)ApplicationLogs).Write(writer, options);
             }
             if (Optional.IsDefined(IsMetricsEnabled))
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    applicationLogs = ClusterLogAnalyticsApplicationLogs.DeserializeClusterLogAnalyticsApplicationLogs(property.Value, options);
+                    applicationLogs = ModelSerializationExtensions.JsonDeserialize<ClusterLogAnalyticsApplicationLogs>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metricsEnabled"u8))

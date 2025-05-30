@@ -52,17 +52,17 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(WeeklyRecurrence))
             {
                 writer.WritePropertyName("weeklyRecurrence"u8);
-                writer.WriteObjectValue(WeeklyRecurrence, options);
+                ((IJsonModel<DevTestLabWeekDetails>)WeeklyRecurrence).Write(writer, options);
             }
             if (Optional.IsDefined(DailyRecurrence))
             {
                 writer.WritePropertyName("dailyRecurrence"u8);
-                writer.WriteObjectValue(DailyRecurrence, options);
+                ((IJsonModel<DayDetails>)DailyRecurrence).Write(writer, options);
             }
             if (Optional.IsDefined(HourlyRecurrence))
             {
                 writer.WritePropertyName("hourlyRecurrence"u8);
-                writer.WriteObjectValue(HourlyRecurrence, options);
+                ((IJsonModel<HourDetails>)HourlyRecurrence).Write(writer, options);
             }
             if (Optional.IsDefined(TimeZoneId))
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(NotificationSettings))
             {
                 writer.WritePropertyName("notificationSettings"u8);
-                writer.WriteObjectValue(NotificationSettings, options);
+                ((IJsonModel<DevTestLabNotificationSettings>)NotificationSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            weeklyRecurrence = DevTestLabWeekDetails.DeserializeDevTestLabWeekDetails(property0.Value, options);
+                            weeklyRecurrence = ModelSerializationExtensions.JsonDeserialize<DevTestLabWeekDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dailyRecurrence"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            dailyRecurrence = DayDetails.DeserializeDayDetails(property0.Value, options);
+                            dailyRecurrence = ModelSerializationExtensions.JsonDeserialize<DayDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hourlyRecurrence"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            hourlyRecurrence = HourDetails.DeserializeHourDetails(property0.Value, options);
+                            hourlyRecurrence = ModelSerializationExtensions.JsonDeserialize<HourDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("timeZoneId"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            notificationSettings = DevTestLabNotificationSettings.DeserializeDevTestLabNotificationSettings(property0.Value, options);
+                            notificationSettings = ModelSerializationExtensions.JsonDeserialize<DevTestLabNotificationSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("createdDate"u8))

@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(SchedulePolicy))
             {
                 writer.WritePropertyName("schedulePolicy"u8);
-                writer.WriteObjectValue(SchedulePolicy, options);
+                ((IJsonModel<BackupSchedulePolicy>)SchedulePolicy).Write(writer, options);
             }
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue(RetentionPolicy, options);
+                ((IJsonModel<BackupRetentionPolicy>)RetentionPolicy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(TieringPolicy))
             {
@@ -56,14 +56,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 foreach (var item in TieringPolicy)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<BackupTieringPolicy>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(SnapshotBackupAdditionalDetails))
             {
                 writer.WritePropertyName("snapshotBackupAdditionalDetails"u8);
-                writer.WriteObjectValue(SnapshotBackupAdditionalDetails, options);
+                ((IJsonModel<SnapshotBackupAdditionalDetails>)SnapshotBackupAdditionalDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    schedulePolicy = BackupSchedulePolicy.DeserializeBackupSchedulePolicy(property.Value, options);
+                    schedulePolicy = ModelSerializationExtensions.JsonDeserialize<BackupSchedulePolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("retentionPolicy"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    retentionPolicy = BackupRetentionPolicy.DeserializeBackupRetentionPolicy(property.Value, options);
+                    retentionPolicy = ModelSerializationExtensions.JsonDeserialize<BackupRetentionPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tieringPolicy"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    snapshotBackupAdditionalDetails = SnapshotBackupAdditionalDetails.DeserializeSnapshotBackupAdditionalDetails(property.Value, options);
+                    snapshotBackupAdditionalDetails = ModelSerializationExtensions.JsonDeserialize<SnapshotBackupAdditionalDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Workloads
             if (Optional.IsDefined(Grouping))
             {
                 writer.WritePropertyName("grouping"u8);
-                writer.WriteObjectValue(Grouping, options);
+                ((IJsonModel<SapLandscapeMonitorPropertiesGrouping>)Grouping).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(TopMetricsThresholds))
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Workloads
                 writer.WriteStartArray();
                 foreach (var item in TopMetricsThresholds)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SapLandscapeMonitorMetricThresholds>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Workloads
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            grouping = SapLandscapeMonitorPropertiesGrouping.DeserializeSapLandscapeMonitorPropertiesGrouping(property0.Value, options);
+                            grouping = ModelSerializationExtensions.JsonDeserialize<SapLandscapeMonitorPropertiesGrouping>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("topMetricsThresholds"u8))

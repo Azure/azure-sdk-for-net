@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("restrictionInfo"u8);
-            writer.WriteObjectValue(RestrictionInfo, options);
+            ((IJsonModel<ResourceSkuRestrictionInfo>)RestrictionInfo).Write(writer, options);
             if (Optional.IsDefined(ReasonCode))
             {
                 writer.WritePropertyName("reasonCode"u8);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 }
                 if (property.NameEquals("restrictionInfo"u8))
                 {
-                    restrictionInfo = ResourceSkuRestrictionInfo.DeserializeResourceSkuRestrictionInfo(property.Value, options);
+                    restrictionInfo = ModelSerializationExtensions.JsonDeserialize<ResourceSkuRestrictionInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("reasonCode"u8))

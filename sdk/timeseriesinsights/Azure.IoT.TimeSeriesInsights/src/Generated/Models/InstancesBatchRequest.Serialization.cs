@@ -18,7 +18,7 @@ namespace Azure.IoT.TimeSeriesInsights
             if (Optional.IsDefined(Get))
             {
                 writer.WritePropertyName("get"u8);
-                writer.WriteObjectValue(Get);
+                JsonSerializer.Serialize(writer, Get);
             }
             if (Optional.IsCollectionDefined(Put))
             {
@@ -26,7 +26,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 writer.WriteStartArray();
                 foreach (var item in Put)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -36,14 +36,14 @@ namespace Azure.IoT.TimeSeriesInsights
                 writer.WriteStartArray();
                 foreach (var item in Update)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
-                writer.WriteObjectValue(Delete);
+                JsonSerializer.Serialize(writer, Delete);
             }
             writer.WriteEndObject();
         }

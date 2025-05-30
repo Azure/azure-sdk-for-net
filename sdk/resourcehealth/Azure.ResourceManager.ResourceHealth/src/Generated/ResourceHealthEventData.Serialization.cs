@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ResourceHealth
             if (Optional.IsDefined(Article))
             {
                 writer.WritePropertyName("article"u8);
-                writer.WriteObjectValue(Article, options);
+                ((IJsonModel<ResourceHealthEventArticle>)Article).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Links))
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceHealthEventLink>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WriteStartArray();
                 foreach (var item in Impact)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceHealthEventImpact>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(RecommendedActions))
             {
                 writer.WritePropertyName("recommendedActions"u8);
-                writer.WriteObjectValue(RecommendedActions, options);
+                ((IJsonModel<ResourceHealthEventRecommendedActions>)RecommendedActions).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Faqs))
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WriteStartArray();
                 foreach (var item in Faqs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceHealthEventFaq>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ResourceHealth
             if (Optional.IsDefined(AdditionalInformation))
             {
                 writer.WritePropertyName("additionalInformation"u8);
-                writer.WriteObjectValue(AdditionalInformation, options);
+                ((IJsonModel<ResourceHealthEventAdditionalInformation>)AdditionalInformation).Write(writer, options);
             }
             if (Optional.IsDefined(Duration))
             {
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ResourceHealth
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.ResourceHealth
                             {
                                 continue;
                             }
-                            article = ResourceHealthEventArticle.DeserializeResourceHealthEventArticle(property0.Value, options);
+                            article = ModelSerializationExtensions.JsonDeserialize<ResourceHealthEventArticle>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("links"u8))
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.ResourceHealth
                             {
                                 continue;
                             }
-                            recommendedActions = ResourceHealthEventRecommendedActions.DeserializeResourceHealthEventRecommendedActions(property0.Value, options);
+                            recommendedActions = ModelSerializationExtensions.JsonDeserialize<ResourceHealthEventRecommendedActions>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("faqs"u8))
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.ResourceHealth
                             {
                                 continue;
                             }
-                            additionalInformation = ResourceHealthEventAdditionalInformation.DeserializeResourceHealthEventAdditionalInformation(property0.Value, options);
+                            additionalInformation = ModelSerializationExtensions.JsonDeserialize<ResourceHealthEventAdditionalInformation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("duration"u8))

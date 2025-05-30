@@ -22,7 +22,7 @@ namespace Azure.Communication.Chat
             {
                 if (property.NameEquals("error"u8))
                 {
-                    error = ChatError.DeserializeChatError(property.Value);
+                    error = ModelSerializationExtensions.JsonDeserialize<ChatError>(property.Value);
                     continue;
                 }
             }

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<SapDiscoveryServerInstanceData>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))

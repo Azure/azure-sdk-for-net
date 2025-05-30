@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Dns
                 writer.WriteStartArray();
                 foreach (var item in SigningKeys)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DnsSigningKey>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Dns
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<ResourceManager.Models.SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

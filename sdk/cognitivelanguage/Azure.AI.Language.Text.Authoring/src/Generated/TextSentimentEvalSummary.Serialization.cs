@@ -35,7 +35,7 @@ namespace Azure.AI.Language.Text.Authoring
             }
 
             writer.WritePropertyName("spanSentimentsEvaluation"u8);
-            writer.WriteObjectValue(SpanSentimentsEvaluation, options);
+            ((IJsonModel<SpanSentimentEvalSummary>)SpanSentimentsEvaluation).Write(writer, options);
             writer.WritePropertyName("microF1"u8);
             writer.WriteNumberValue(MicroF1);
             writer.WritePropertyName("microPrecision"u8);
@@ -98,7 +98,7 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 if (property.NameEquals("spanSentimentsEvaluation"u8))
                 {
-                    spanSentimentsEvaluation = SpanSentimentEvalSummary.DeserializeSpanSentimentEvalSummary(property.Value, options);
+                    spanSentimentsEvaluation = ModelSerializationExtensions.JsonDeserialize<SpanSentimentEvalSummary>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("microF1"u8))

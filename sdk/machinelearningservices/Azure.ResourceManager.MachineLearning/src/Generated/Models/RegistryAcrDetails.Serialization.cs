@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (SystemCreatedAcrAccount != null)
                 {
                     writer.WritePropertyName("systemCreatedAcrAccount"u8);
-                    writer.WriteObjectValue(SystemCreatedAcrAccount, options);
+                    ((IJsonModel<SystemCreatedAcrAccount>)SystemCreatedAcrAccount).Write(writer, options);
                 }
                 else
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (UserCreatedAcrAccount != null)
                 {
                     writer.WritePropertyName("userCreatedAcrAccount"u8);
-                    writer.WriteObjectValue(UserCreatedAcrAccount, options);
+                    ((IJsonModel<UserCreatedAcrAccount>)UserCreatedAcrAccount).Write(writer, options);
                 }
                 else
                 {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         systemCreatedAcrAccount = null;
                         continue;
                     }
-                    systemCreatedAcrAccount = SystemCreatedAcrAccount.DeserializeSystemCreatedAcrAccount(property.Value, options);
+                    systemCreatedAcrAccount = ModelSerializationExtensions.JsonDeserialize<SystemCreatedAcrAccount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userCreatedAcrAccount"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         userCreatedAcrAccount = null;
                         continue;
                     }
-                    userCreatedAcrAccount = UserCreatedAcrAccount.DeserializeUserCreatedAcrAccount(property.Value, options);
+                    userCreatedAcrAccount = ModelSerializationExtensions.JsonDeserialize<UserCreatedAcrAccount>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

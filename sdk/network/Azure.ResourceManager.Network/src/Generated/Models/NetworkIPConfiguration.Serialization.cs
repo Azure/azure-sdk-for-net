@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                writer.WriteObjectValue(Subnet, options);
+                ((IJsonModel<SubnetData>)Subnet).Write(writer, options);
             }
             if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIPAddress"u8);
-                writer.WriteObjectValue(PublicIPAddress, options);
+                ((IJsonModel<PublicIPAddressData>)PublicIPAddress).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            subnet = SubnetData.DeserializeSubnetData(property0.Value, options);
+                            subnet = ModelSerializationExtensions.JsonDeserialize<SubnetData>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicIPAddress"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            publicIPAddress = PublicIPAddressData.DeserializePublicIPAddressData(property0.Value, options);
+                            publicIPAddress = ModelSerializationExtensions.JsonDeserialize<PublicIPAddressData>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in EnabledAzurePlans)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BillingAzurePlan>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

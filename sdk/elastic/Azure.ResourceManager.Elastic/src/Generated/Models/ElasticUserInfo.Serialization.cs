@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Elastic.Models
             if (Optional.IsDefined(CompanyInfo))
             {
                 writer.WritePropertyName("companyInfo"u8);
-                writer.WriteObjectValue(CompanyInfo, options);
+                ((IJsonModel<ElasticCompanyInfo>)CompanyInfo).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    companyInfo = ElasticCompanyInfo.DeserializeElasticCompanyInfo(property.Value, options);
+                    companyInfo = ModelSerializationExtensions.JsonDeserialize<ElasticCompanyInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

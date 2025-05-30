@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.IotCentral
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<IotCentralAppSkuInfo>)Sku).Write(writer, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.IotCentral
             if (Optional.IsDefined(NetworkRuleSets))
             {
                 writer.WritePropertyName("networkRuleSets"u8);
-                writer.WriteObjectValue(NetworkRuleSets, options);
+                ((IJsonModel<IotCentralNetworkRuleSets>)NetworkRuleSets).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.IotCentral
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IotCentralPrivateEndpointConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.IotCentral
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = IotCentralAppSkuInfo.DeserializeIotCentralAppSkuInfo(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<IotCentralAppSkuInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.IotCentral
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.IotCentral
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.IotCentral
                             {
                                 continue;
                             }
-                            networkRuleSets = IotCentralNetworkRuleSets.DeserializeIotCentralNetworkRuleSets(property0.Value, options);
+                            networkRuleSets = ModelSerializationExtensions.JsonDeserialize<IotCentralNetworkRuleSets>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))

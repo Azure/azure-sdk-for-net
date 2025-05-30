@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Representations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RepresentationContract>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Headers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ParameterContract>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

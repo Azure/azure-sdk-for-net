@@ -37,13 +37,13 @@ namespace Azure.AI.Agents.Persistent
             if (Optional.IsDefined(RankingOptions))
             {
                 writer.WritePropertyName("ranking_options"u8);
-                writer.WriteObjectValue(RankingOptions, options);
+                ((IJsonModel<FileSearchRankingOptions>)RankingOptions).Write(writer, options);
             }
             writer.WritePropertyName("results"u8);
             writer.WriteStartArray();
             foreach (var item in Results)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<RunStepFileSearchToolCallResult>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -95,7 +95,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    rankingOptions = FileSearchRankingOptions.DeserializeFileSearchRankingOptions(property.Value, options);
+                    rankingOptions = ModelSerializationExtensions.JsonDeserialize<FileSearchRankingOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("results"u8))

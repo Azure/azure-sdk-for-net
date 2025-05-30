@@ -63,7 +63,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    concentration = WeatherValue.DeserializeWeatherValue(property.Value);
+                    concentration = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
             }

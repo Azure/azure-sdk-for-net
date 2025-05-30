@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CustomerInsights
             if (Optional.IsDefined(MappingProperties))
             {
                 writer.WritePropertyName("mappingProperties"u8);
-                writer.WriteObjectValue(MappingProperties, options);
+                ((IJsonModel<ConnectorMappingProperties>)MappingProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(NextRunOn))
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.CustomerInsights
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             {
                                 continue;
                             }
-                            mappingProperties = ConnectorMappingProperties.DeserializeConnectorMappingProperties(property0.Value, options);
+                            mappingProperties = ModelSerializationExtensions.JsonDeserialize<ConnectorMappingProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("nextRunTime"u8))

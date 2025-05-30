@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DeviceRegistryAssetStatusError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Datasets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DeviceRegistryAssetStatusDataset>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DeviceRegistryAssetStatusEvent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

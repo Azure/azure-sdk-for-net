@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue(RetentionPolicy, options);
+                ((IJsonModel<BackupRetentionPolicy>)RetentionPolicy).Write(writer, options);
             }
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    retentionPolicy = BackupRetentionPolicy.DeserializeBackupRetentionPolicy(property.Value, options);
+                    retentionPolicy = ModelSerializationExtensions.JsonDeserialize<BackupRetentionPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("protectedItemsCount"u8))

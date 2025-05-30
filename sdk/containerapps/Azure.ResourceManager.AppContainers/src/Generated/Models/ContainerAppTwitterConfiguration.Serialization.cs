@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
-                writer.WriteObjectValue(Registration, options);
+                ((IJsonModel<ContainerAppTwitterRegistration>)Registration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    registration = ContainerAppTwitterRegistration.DeserializeContainerAppTwitterRegistration(property.Value, options);
+                    registration = ModelSerializationExtensions.JsonDeserialize<ContainerAppTwitterRegistration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

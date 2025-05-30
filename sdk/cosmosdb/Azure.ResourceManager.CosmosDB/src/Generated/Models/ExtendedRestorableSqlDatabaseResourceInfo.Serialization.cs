@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Database))
             {
                 writer.WritePropertyName("database"u8);
-                writer.WriteObjectValue(Database, options);
+                ((IJsonModel<RestorableSqlDatabasePropertiesResourceDatabase>)Database).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    database = RestorableSqlDatabasePropertiesResourceDatabase.DeserializeRestorableSqlDatabasePropertiesResourceDatabase(property.Value, options);
+                    database = ModelSerializationExtensions.JsonDeserialize<RestorableSqlDatabasePropertiesResourceDatabase>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

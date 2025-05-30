@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in RoutingPolicies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RoutingPolicy>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

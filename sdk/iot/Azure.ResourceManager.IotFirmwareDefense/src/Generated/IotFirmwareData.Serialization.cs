@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 writer.WriteStartArray();
                 foreach (var item in StatusMessages)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FirmwareAnalysisStatusMessage>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

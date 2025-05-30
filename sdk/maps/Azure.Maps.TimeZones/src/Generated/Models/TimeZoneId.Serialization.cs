@@ -67,7 +67,7 @@ namespace Azure.Maps.TimeZones
                     {
                         continue;
                     }
-                    names = TimeZoneName.DeserializeTimeZoneName(property.Value);
+                    names = ModelSerializationExtensions.JsonDeserialize<TimeZoneName>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ReferenceTime"u8))
@@ -76,7 +76,7 @@ namespace Azure.Maps.TimeZones
                     {
                         continue;
                     }
-                    referenceTime = ReferenceTime.DeserializeReferenceTime(property.Value);
+                    referenceTime = ModelSerializationExtensions.JsonDeserialize<ReferenceTime>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("RepresentativePoint"u8))
@@ -85,7 +85,7 @@ namespace Azure.Maps.TimeZones
                     {
                         continue;
                     }
-                    representativePoint = TimeZones.RepresentativePoint.DeserializeRepresentativePoint(property.Value);
+                    representativePoint = ModelSerializationExtensions.JsonDeserialize<RepresentativePoint>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("TimeTransitions"u8))

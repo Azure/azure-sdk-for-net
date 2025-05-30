@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageCache
                 writer.WriteStartArray();
                 foreach (var item in Junctions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NamespaceJunction>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,22 +72,22 @@ namespace Azure.ResourceManager.StorageCache
             if (Optional.IsDefined(Nfs3))
             {
                 writer.WritePropertyName("nfs3"u8);
-                writer.WriteObjectValue(Nfs3, options);
+                ((IJsonModel<Nfs3Target>)Nfs3).Write(writer, options);
             }
             if (Optional.IsDefined(Clfs))
             {
                 writer.WritePropertyName("clfs"u8);
-                writer.WriteObjectValue(Clfs, options);
+                ((IJsonModel<ClfsTarget>)Clfs).Write(writer, options);
             }
             if (Optional.IsDefined(Unknown))
             {
                 writer.WritePropertyName("unknown"u8);
-                writer.WriteObjectValue(Unknown, options);
+                ((IJsonModel<UnknownTarget>)Unknown).Write(writer, options);
             }
             if (Optional.IsDefined(BlobNfs))
             {
                 writer.WritePropertyName("blobNfs"u8);
-                writer.WriteObjectValue(BlobNfs, options);
+                ((IJsonModel<BlobNfsTarget>)BlobNfs).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AllocationPercentage))
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.StorageCache
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            nfs3 = Nfs3Target.DeserializeNfs3Target(property0.Value, options);
+                            nfs3 = ModelSerializationExtensions.JsonDeserialize<Nfs3Target>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clfs"u8))
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            clfs = Models.ClfsTarget.DeserializeClfsTarget(property0.Value, options);
+                            clfs = ModelSerializationExtensions.JsonDeserialize<ClfsTarget>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("unknown"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            unknown = UnknownTarget.DeserializeUnknownTarget(property0.Value, options);
+                            unknown = ModelSerializationExtensions.JsonDeserialize<UnknownTarget>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("blobNfs"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            blobNfs = BlobNfsTarget.DeserializeBlobNfsTarget(property0.Value, options);
+                            blobNfs = ModelSerializationExtensions.JsonDeserialize<BlobNfsTarget>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("allocationPercentage"u8))

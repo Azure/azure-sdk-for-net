@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             if (Optional.IsDefined(RemotePrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("remotePrivateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(RemotePrivateLinkServiceConnectionState, options);
+                ((IJsonModel<DeviceUpdatePrivateLinkServiceConnectionState>)RemotePrivateLinkServiceConnectionState).Write(writer, options);
             }
             if (Optional.IsDefined(RemotePrivateEndpointConnection))
             {
                 writer.WritePropertyName("remotePrivateEndpointConnection"u8);
-                JsonSerializer.Serialize(writer, RemotePrivateEndpointConnection);
+                ((IJsonModel<SubResource>)RemotePrivateEndpointConnection).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(GroupConnectivityInformation))
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 writer.WriteStartArray();
                 foreach (var item in GroupConnectivityInformation)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<GroupConnectivityInformation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     {
                         continue;
                     }
-                    remotePrivateLinkServiceConnectionState = DeviceUpdatePrivateLinkServiceConnectionState.DeserializeDeviceUpdatePrivateLinkServiceConnectionState(property.Value, options);
+                    remotePrivateLinkServiceConnectionState = ModelSerializationExtensions.JsonDeserialize<DeviceUpdatePrivateLinkServiceConnectionState>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("remotePrivateEndpointConnection"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     {
                         continue;
                     }
-                    remotePrivateEndpointConnection = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
+                    remotePrivateEndpointConnection = ModelSerializationExtensions.JsonDeserialize<SubResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("groupConnectivityInformation"u8))

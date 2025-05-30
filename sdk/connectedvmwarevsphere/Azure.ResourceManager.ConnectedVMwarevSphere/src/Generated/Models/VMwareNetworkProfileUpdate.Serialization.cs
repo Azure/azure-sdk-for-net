@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VMwareNetworkInterfaceUpdate>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

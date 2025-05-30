@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                writer.WriteObjectValue(Subnet, options);
+                ((IJsonModel<SubnetReferenceInfo>)Subnet).Write(writer, options);
             }
             if (Optional.IsDefined(IsPrimary))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerBackendAddressPools)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LoadBalancerBackendAddressPoolReferenceInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,14 +75,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerNatRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LoadBalancerNatRuleReferenceInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PublicIP))
             {
                 writer.WritePropertyName("publicIp"u8);
-                writer.WriteObjectValue(PublicIP, options);
+                ((IJsonModel<PublicIPReferenceInfo>)PublicIP).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     {
                         continue;
                     }
-                    subnet = SubnetReferenceInfo.DeserializeSubnetReferenceInfo(property.Value, options);
+                    subnet = ModelSerializationExtensions.JsonDeserialize<SubnetReferenceInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("primary"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     {
                         continue;
                     }
-                    publicIP = PublicIPReferenceInfo.DeserializePublicIPReferenceInfo(property.Value, options);
+                    publicIP = ModelSerializationExtensions.JsonDeserialize<PublicIPReferenceInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

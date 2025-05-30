@@ -44,7 +44,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Meta))
             {
                 writer.WritePropertyName("meta"u8);
-                writer.WriteObjectValue(Meta, options);
+                ((IJsonModel<FhirR4Meta>)Meta).Write(writer, options);
             }
             if (Optional.IsDefined(ImplicitRules))
             {
@@ -115,7 +115,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    meta = FhirR4Meta.DeserializeFhirR4Meta(property.Value, options);
+                    meta = ModelSerializationExtensions.JsonDeserialize<FhirR4Meta>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("implicitRules"u8))

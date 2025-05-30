@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<PartialBatchDeployment>)Properties).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    properties = PartialBatchDeployment.DeserializePartialBatchDeployment(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<PartialBatchDeployment>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ElasticSan
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.ElasticSan
             if (Optional.IsDefined(EncryptionProperties))
             {
                 writer.WritePropertyName("encryptionProperties"u8);
-                writer.WriteObjectValue(EncryptionProperties, options);
+                ((IJsonModel<ElasticSanEncryptionProperties>)EncryptionProperties).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkAcls, options);
+                ((IJsonModel<ElasticSanNetworkRuleSet>)NetworkAcls).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ElasticSan
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ElasticSanPrivateEndpointConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ElasticSan
             if (Optional.IsDefined(DeleteRetentionPolicy))
             {
                 writer.WritePropertyName("deleteRetentionPolicy"u8);
-                writer.WriteObjectValue(DeleteRetentionPolicy, options);
+                ((IJsonModel<ElasticSanDeleteRetentionPolicy>)DeleteRetentionPolicy).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ElasticSan
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ElasticSan
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ElasticSan
                             {
                                 continue;
                             }
-                            encryptionProperties = ElasticSanEncryptionProperties.DeserializeElasticSanEncryptionProperties(property0.Value, options);
+                            encryptionProperties = ModelSerializationExtensions.JsonDeserialize<ElasticSanEncryptionProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkAcls"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ElasticSan
                             {
                                 continue;
                             }
-                            networkAcls = ElasticSanNetworkRuleSet.DeserializeElasticSanNetworkRuleSet(property0.Value, options);
+                            networkAcls = ModelSerializationExtensions.JsonDeserialize<ElasticSanNetworkRuleSet>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ElasticSan
                             {
                                 continue;
                             }
-                            deleteRetentionPolicy = ElasticSanDeleteRetentionPolicy.DeserializeElasticSanDeleteRetentionPolicy(property0.Value, options);
+                            deleteRetentionPolicy = ModelSerializationExtensions.JsonDeserialize<ElasticSanDeleteRetentionPolicy>(property0.Value);
                             continue;
                         }
                     }

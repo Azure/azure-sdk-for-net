@@ -17,7 +17,7 @@ namespace Azure.Communication.CallAutomation
         {
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            JsonSerializer.Serialize(writer, Source);
             writer.WritePropertyName("language"u8);
             writer.WriteStringValue(Language);
             writer.WritePropertyName("status"u8);
@@ -29,7 +29,7 @@ namespace Azure.Communication.CallAutomation
                 foreach (var item in IntendedTargets)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    JsonSerializer.Serialize(writer, item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -50,7 +50,7 @@ namespace Azure.Communication.CallAutomation
             {
                 if (property.NameEquals("source"u8))
                 {
-                    source = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    source = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("language"u8))

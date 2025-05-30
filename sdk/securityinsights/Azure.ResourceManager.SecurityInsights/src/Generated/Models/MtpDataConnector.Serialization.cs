@@ -47,19 +47,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(FilteredProviders))
             {
                 writer.WritePropertyName("filteredProviders"u8);
-                writer.WriteObjectValue(FilteredProviders, options);
+                ((IJsonModel<MtpFilteredProviders>)FilteredProviders).Write(writer, options);
             }
             writer.WritePropertyName("dataTypes"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Incidents))
             {
                 writer.WritePropertyName("incidents"u8);
-                writer.WriteObjectValue(Incidents, options);
+                ((IJsonModel<DataConnectorDataTypeCommon>)Incidents).Write(writer, options);
             }
             if (Optional.IsDefined(Alerts))
             {
                 writer.WritePropertyName("alerts"u8);
-                writer.WriteObjectValue(Alerts, options);
+                ((IJsonModel<DataConnectorDataTypeCommon>)Alerts).Write(writer, options);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            filteredProviders = MtpFilteredProviders.DeserializeMtpFilteredProviders(property0.Value, options);
+                            filteredProviders = ModelSerializationExtensions.JsonDeserialize<MtpFilteredProviders>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dataTypes"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                     {
                                         continue;
                                     }
-                                    incidents = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property1.Value, options);
+                                    incidents = ModelSerializationExtensions.JsonDeserialize<DataConnectorDataTypeCommon>(property1.Value);
                                     continue;
                                 }
                                 if (property1.NameEquals("alerts"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                     {
                                         continue;
                                     }
-                                    alerts = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property1.Value, options);
+                                    alerts = ModelSerializationExtensions.JsonDeserialize<DataConnectorDataTypeCommon>(property1.Value);
                                     continue;
                                 }
                             }

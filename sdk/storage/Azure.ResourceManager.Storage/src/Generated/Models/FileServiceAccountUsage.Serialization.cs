@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Storage.Models
             if (options.Format != "W" && Optional.IsDefined(LiveShares))
             {
                 writer.WritePropertyName("liveShares"u8);
-                writer.WriteObjectValue(LiveShares, options);
+                ((IJsonModel<FileServiceAccountUsageElements>)LiveShares).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SoftDeletedShares))
             {
                 writer.WritePropertyName("softDeletedShares"u8);
-                writer.WriteObjectValue(SoftDeletedShares, options);
+                ((IJsonModel<FileServiceAccountUsageElements>)SoftDeletedShares).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    liveShares = FileServiceAccountUsageElements.DeserializeFileServiceAccountUsageElements(property.Value, options);
+                    liveShares = ModelSerializationExtensions.JsonDeserialize<FileServiceAccountUsageElements>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("softDeletedShares"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    softDeletedShares = FileServiceAccountUsageElements.DeserializeFileServiceAccountUsageElements(property.Value, options);
+                    softDeletedShares = ModelSerializationExtensions.JsonDeserialize<FileServiceAccountUsageElements>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             if (Optional.IsDefined(DestinationPortRange))
             {
                 writer.WritePropertyName("destinationPortRange"u8);
-                writer.WriteObjectValue(DestinationPortRange, options);
+                ((IJsonModel<CloudVmClusterPortRange>)DestinationPortRange).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    destinationPortRange = CloudVmClusterPortRange.DeserializeCloudVmClusterPortRange(property.Value, options);
+                    destinationPortRange = ModelSerializationExtensions.JsonDeserialize<CloudVmClusterPortRange>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

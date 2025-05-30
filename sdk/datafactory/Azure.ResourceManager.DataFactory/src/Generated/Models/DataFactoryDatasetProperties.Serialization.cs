@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -44,12 +45,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Structure))
             {
                 writer.WritePropertyName("structure"u8);
-                JsonSerializer.Serialize(writer, Structure);
+                ((IJsonModel<DataFactoryElement<T>>)Structure).Write(writer, options);
             }
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-                JsonSerializer.Serialize(writer, Schema);
+                ((IJsonModel<DataFactoryElement<T>>)Schema).Write(writer, options);
             }
             writer.WritePropertyName("linkedServiceName"u8);
             JsonSerializer.Serialize(writer, LinkedServiceName);
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<EntityParameterSpecification>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder, options);
+                ((IJsonModel<DatasetFolder>)Folder).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

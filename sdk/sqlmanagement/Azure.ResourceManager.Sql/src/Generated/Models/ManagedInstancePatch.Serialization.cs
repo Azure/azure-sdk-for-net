@@ -38,13 +38,12 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<SqlSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -195,7 +194,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedInstancePecProperty>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -232,12 +231,12 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(Administrators))
             {
                 writer.WritePropertyName("administrators"u8);
-                writer.WriteObjectValue(Administrators, options);
+                ((IJsonModel<ManagedInstanceExternalAdministrator>)Administrators).Write(writer, options);
             }
             if (Optional.IsDefined(ServicePrincipal))
             {
                 writer.WritePropertyName("servicePrincipal"u8);
-                writer.WriteObjectValue(ServicePrincipal, options);
+                ((IJsonModel<SqlServicePrincipal>)ServicePrincipal).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(VirtualClusterId))
             {
@@ -361,7 +360,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    sku = SqlSku.DeserializeSqlSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<SqlSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -371,7 +370,7 @@ namespace Azure.ResourceManager.Sql.Models
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -673,7 +672,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            administrators = ManagedInstanceExternalAdministrator.DeserializeManagedInstanceExternalAdministrator(property0.Value, options);
+                            administrators = ModelSerializationExtensions.JsonDeserialize<ManagedInstanceExternalAdministrator>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipal"u8))
@@ -682,7 +681,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            servicePrincipal = SqlServicePrincipal.DeserializeSqlServicePrincipal(property0.Value, options);
+                            servicePrincipal = ModelSerializationExtensions.JsonDeserialize<SqlServicePrincipal>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("virtualClusterId"u8))

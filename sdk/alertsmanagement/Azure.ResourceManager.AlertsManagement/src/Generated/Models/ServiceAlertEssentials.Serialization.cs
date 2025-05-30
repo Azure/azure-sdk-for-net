@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             if (Optional.IsDefined(ActionStatus))
             {
                 writer.WritePropertyName("actionStatus"u8);
-                writer.WriteObjectValue(ActionStatus, options);
+                ((IJsonModel<ServiceAlertActionStatus>)ActionStatus).Write(writer, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     {
                         continue;
                     }
-                    actionStatus = ServiceAlertActionStatus.DeserializeServiceAlertActionStatus(property.Value, options);
+                    actionStatus = ModelSerializationExtensions.JsonDeserialize<ServiceAlertActionStatus>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))

@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                JsonSerializer.Serialize(writer, Identity);
             }
             writer.WriteEndObject();
         }
@@ -68,7 +68,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    identity = WorkspaceIdentity.DeserializeWorkspaceIdentity(property.Value);
+                    identity = ModelSerializationExtensions.JsonDeserialize<WorkspaceIdentity>(property.Value);
                     continue;
                 }
             }

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("ssisMigrationInfo"u8);
-            writer.WriteObjectValue(SsisMigrationInfo, options);
+            ((IJsonModel<SsisMigrationInfo>)SsisMigrationInfo).Write(writer, options);
         }
 
         MigrateSsisTaskInput IJsonModel<MigrateSsisTaskInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -68,17 +68,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("ssisMigrationInfo"u8))
                 {
-                    ssisMigrationInfo = SsisMigrationInfo.DeserializeSsisMigrationInfo(property.Value, options);
+                    ssisMigrationInfo = ModelSerializationExtensions.JsonDeserialize<SsisMigrationInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
+                    sourceConnectionInfo = ModelSerializationExtensions.JsonDeserialize<SqlConnectionInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
+                    targetConnectionInfo = ModelSerializationExtensions.JsonDeserialize<SqlConnectionInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

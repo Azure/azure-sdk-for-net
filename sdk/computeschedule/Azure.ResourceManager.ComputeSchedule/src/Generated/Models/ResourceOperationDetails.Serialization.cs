@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             if (Optional.IsDefined(ResourceOperationError))
             {
                 writer.WritePropertyName("resourceOperationError"u8);
-                writer.WriteObjectValue(ResourceOperationError, options);
+                ((IJsonModel<ResourceOperationError>)ResourceOperationError).Write(writer, options);
             }
             if (Optional.IsDefined(CompletedOn))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             if (Optional.IsDefined(RetryPolicy))
             {
                 writer.WritePropertyName("retryPolicy"u8);
-                writer.WriteObjectValue(RetryPolicy, options);
+                ((IJsonModel<UserRequestRetryPolicy>)RetryPolicy).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    resourceOperationError = ResourceOperationError.DeserializeResourceOperationError(property.Value, options);
+                    resourceOperationError = ModelSerializationExtensions.JsonDeserialize<ResourceOperationError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("completedAt"u8))
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    retryPolicy = UserRequestRetryPolicy.DeserializeUserRequestRetryPolicy(property.Value, options);
+                    retryPolicy = ModelSerializationExtensions.JsonDeserialize<UserRequestRetryPolicy>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

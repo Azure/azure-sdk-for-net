@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Authorization
             if (Optional.IsDefined(ExpandedProperties))
             {
                 writer.WritePropertyName("expandedProperties"u8);
-                writer.WriteObjectValue(ExpandedProperties, options);
+                ((IJsonModel<RoleManagementExpandedProperties>)ExpandedProperties).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Authorization
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Authorization
                             {
                                 continue;
                             }
-                            expandedProperties = RoleManagementExpandedProperties.DeserializeRoleManagementExpandedProperties(property0.Value, options);
+                            expandedProperties = ModelSerializationExtensions.JsonDeserialize<RoleManagementExpandedProperties>(property0.Value);
                             continue;
                         }
                     }

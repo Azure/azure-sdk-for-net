@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CognitiveServicesSkuCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (options.Format != "W" && Optional.IsDefined(SkuChangeInfo))
             {
                 writer.WritePropertyName("skuChangeInfo"u8);
-                writer.WriteObjectValue(SkuChangeInfo, options);
+                ((IJsonModel<CognitiveServicesSkuChangeInfo>)SkuChangeInfo).Write(writer, options);
             }
             if (Optional.IsDefined(CustomSubDomainName))
             {
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkAcls, options);
+                ((IJsonModel<CognitiveServicesNetworkRuleSet>)NetworkAcls).Write(writer, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<ServiceAccountEncryptionProperties>)Encryption).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(UserOwnedStorage))
             {
@@ -92,14 +92,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in UserOwnedStorage)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ServiceAccountUserOwnedStorage>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AmlWorkspace))
             {
                 writer.WritePropertyName("amlWorkspace"u8);
-                writer.WriteObjectValue(AmlWorkspace, options);
+                ((IJsonModel<UserOwnedAmlWorkspace>)AmlWorkspace).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CognitiveServicesPrivateEndpointConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(ApiProperties))
             {
                 writer.WritePropertyName("apiProperties"u8);
-                writer.WriteObjectValue(ApiProperties, options);
+                ((IJsonModel<ServiceAccountApiProperties>)ApiProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (options.Format != "W" && Optional.IsDefined(CallRateLimit))
             {
                 writer.WritePropertyName("callRateLimit"u8);
-                writer.WriteObjectValue(CallRateLimit, options);
+                ((IJsonModel<ServiceAccountCallRateLimit>)CallRateLimit).Write(writer, options);
             }
             if (Optional.IsDefined(EnableDynamicThrottling))
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (options.Format != "W" && Optional.IsDefined(QuotaLimit))
             {
                 writer.WritePropertyName("quotaLimit"u8);
-                writer.WriteObjectValue(QuotaLimit, options);
+                ((IJsonModel<ServiceAccountQuotaLimit>)QuotaLimit).Write(writer, options);
             }
             if (Optional.IsDefined(RestrictOutboundNetworkAccess))
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
-                writer.WriteObjectValue(Locations, options);
+                ((IJsonModel<CognitiveServicesMultiRegionSettings>)Locations).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(CommitmentPlanAssociations))
             {
@@ -198,19 +198,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in CommitmentPlanAssociations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CommitmentPlanAssociation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(AbusePenalty))
             {
                 writer.WritePropertyName("abusePenalty"u8);
-                writer.WriteObjectValue(AbusePenalty, options);
+                ((IJsonModel<AbusePenalty>)AbusePenalty).Write(writer, options);
             }
             if (Optional.IsDefined(RaiMonitorConfig))
             {
                 writer.WritePropertyName("raiMonitorConfig"u8);
-                writer.WriteObjectValue(RaiMonitorConfig, options);
+                ((IJsonModel<RaiMonitorConfig>)RaiMonitorConfig).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    skuChangeInfo = CognitiveServicesSkuChangeInfo.DeserializeCognitiveServicesSkuChangeInfo(property.Value, options);
+                    skuChangeInfo = ModelSerializationExtensions.JsonDeserialize<CognitiveServicesSkuChangeInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("customSubDomainName"u8))
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    networkAcls = CognitiveServicesNetworkRuleSet.DeserializeCognitiveServicesNetworkRuleSet(property.Value, options);
+                    networkAcls = ModelSerializationExtensions.JsonDeserialize<CognitiveServicesNetworkRuleSet>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("encryption"u8))
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    encryption = ServiceAccountEncryptionProperties.DeserializeServiceAccountEncryptionProperties(property.Value, options);
+                    encryption = ModelSerializationExtensions.JsonDeserialize<ServiceAccountEncryptionProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userOwnedStorage"u8))
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    amlWorkspace = UserOwnedAmlWorkspace.DeserializeUserOwnedAmlWorkspace(property.Value, options);
+                    amlWorkspace = ModelSerializationExtensions.JsonDeserialize<UserOwnedAmlWorkspace>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("privateEndpointConnections"u8))
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    apiProperties = ServiceAccountApiProperties.DeserializeServiceAccountApiProperties(property.Value, options);
+                    apiProperties = ModelSerializationExtensions.JsonDeserialize<ServiceAccountApiProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dateCreated"u8))
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value, options);
+                    callRateLimit = ModelSerializationExtensions.JsonDeserialize<ServiceAccountCallRateLimit>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dynamicThrottlingEnabled"u8))
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    quotaLimit = ServiceAccountQuotaLimit.DeserializeServiceAccountQuotaLimit(property.Value, options);
+                    quotaLimit = ModelSerializationExtensions.JsonDeserialize<ServiceAccountQuotaLimit>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("restrictOutboundNetworkAccess"u8))
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    locations = CognitiveServicesMultiRegionSettings.DeserializeCognitiveServicesMultiRegionSettings(property.Value, options);
+                    locations = ModelSerializationExtensions.JsonDeserialize<CognitiveServicesMultiRegionSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("commitmentPlanAssociations"u8))
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    abusePenalty = AbusePenalty.DeserializeAbusePenalty(property.Value, options);
+                    abusePenalty = ModelSerializationExtensions.JsonDeserialize<AbusePenalty>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("raiMonitorConfig"u8))
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    raiMonitorConfig = RaiMonitorConfig.DeserializeRaiMonitorConfig(property.Value, options);
+                    raiMonitorConfig = ModelSerializationExtensions.JsonDeserialize<RaiMonitorConfig>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

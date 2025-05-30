@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<AppPlatformErrorInfo>)Error).Write(writer, options);
             }
             if (Optional.IsDefined(IsTraceEnabled))
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(AppInsightsAgentVersions))
             {
                 writer.WritePropertyName("appInsightsAgentVersions"u8);
-                writer.WriteObjectValue(AppInsightsAgentVersions, options);
+                ((IJsonModel<ApplicationInsightsAgentVersions>)AppInsightsAgentVersions).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    error = AppPlatformErrorInfo.DeserializeAppPlatformErrorInfo(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<AppPlatformErrorInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("traceEnabled"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    appInsightsAgentVersions = ApplicationInsightsAgentVersions.DeserializeApplicationInsightsAgentVersions(property.Value, options);
+                    appInsightsAgentVersions = ModelSerializationExtensions.JsonDeserialize<ApplicationInsightsAgentVersions>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

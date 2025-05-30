@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in IncludedDiskList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DiskInformation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in ExcludedDiskList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DiskInformation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

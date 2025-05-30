@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (Optional.IsDefined(DiskController))
             {
                 writer.WritePropertyName("diskController"u8);
-                writer.WriteObjectValue(DiskController, options);
+                ((IJsonModel<DataReplicationDiskControllerInputs>)DiskController).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    diskController = DataReplicationDiskControllerInputs.DeserializeDataReplicationDiskControllerInputs(property.Value, options);
+                    diskController = ModelSerializationExtensions.JsonDeserialize<DataReplicationDiskControllerInputs>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

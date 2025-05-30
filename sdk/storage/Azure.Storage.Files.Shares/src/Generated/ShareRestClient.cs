@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
@@ -788,7 +789,7 @@ namespace Azure.Storage.Files.Shares
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sharePermission);
+            ((IJsonModel<SharePermission>)sharePermission).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }

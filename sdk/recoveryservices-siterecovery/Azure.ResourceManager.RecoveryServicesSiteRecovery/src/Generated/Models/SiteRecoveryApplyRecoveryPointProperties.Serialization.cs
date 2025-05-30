@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStringValue(RecoveryPointId);
             }
             writer.WritePropertyName("providerSpecificDetails"u8);
-            writer.WriteObjectValue(ProviderSpecificDetails, options);
+            ((IJsonModel<SiteRecoveryApplyRecoveryPointProviderSpecificContent>)ProviderSpecificDetails).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("providerSpecificDetails"u8))
                 {
-                    providerSpecificDetails = SiteRecoveryApplyRecoveryPointProviderSpecificContent.DeserializeSiteRecoveryApplyRecoveryPointProviderSpecificContent(property.Value, options);
+                    providerSpecificDetails = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryApplyRecoveryPointProviderSpecificContent>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

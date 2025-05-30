@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Redis.Models
                         }
                         else
                         {
-                            array.Add(JsonSerializer.Deserialize<OperationStatusResult>(item.GetRawText()));
+                            array.Add(ModelSerializationExtensions.JsonDeserialize<OperationStatusResult>(item));
                         }
                     }
                     operations = array;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Redis.Models
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedEditions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedInstanceEditionCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedInstancePoolEditions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InstancePoolEditionCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

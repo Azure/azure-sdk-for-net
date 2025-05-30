@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in SortBy)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ThreatIntelligenceSortingCriteria>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

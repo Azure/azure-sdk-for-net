@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             if (Optional.IsDefined(TagSettings))
             {
                 writer.WritePropertyName("tagSettings"u8);
-                writer.WriteObjectValue(TagSettings, options);
+                ((IJsonModel<VmTagSettings>)TagSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    tagSettings = VmTagSettings.DeserializeVmTagSettings(property.Value, options);
+                    tagSettings = ModelSerializationExtensions.JsonDeserialize<VmTagSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

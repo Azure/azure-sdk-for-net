@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in RampUpRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RampUpRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

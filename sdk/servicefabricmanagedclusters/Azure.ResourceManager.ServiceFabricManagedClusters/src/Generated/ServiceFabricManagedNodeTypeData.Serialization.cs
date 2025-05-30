@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<NodeTypeSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -105,12 +105,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             if (Optional.IsDefined(ApplicationPorts))
             {
                 writer.WritePropertyName("applicationPorts"u8);
-                writer.WriteObjectValue(ApplicationPorts, options);
+                ((IJsonModel<EndpointRangeDescription>)ApplicationPorts).Write(writer, options);
             }
             if (Optional.IsDefined(EphemeralPorts))
             {
                 writer.WritePropertyName("ephemeralPorts"u8);
-                writer.WriteObjectValue(EphemeralPorts, options);
+                ((IJsonModel<EndpointRangeDescription>)EphemeralPorts).Write(writer, options);
             }
             if (Optional.IsDefined(VmSize))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in VmSecrets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NodeTypeVaultSecretGroup>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -153,14 +153,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in VmExtensions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NodeTypeVmssExtension>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(VmManagedIdentity))
             {
                 writer.WritePropertyName("vmManagedIdentity"u8);
-                writer.WriteObjectValue(VmManagedIdentity, options);
+                ((IJsonModel<VmManagedIdentity>)VmManagedIdentity).Write(writer, options);
             }
             if (Optional.IsDefined(IsStateless))
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in FrontendConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NodeTypeFrontendConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in NetworkSecurityRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ServiceFabricManagedNetworkSecurityRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in AdditionalDataDisks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NodeTypeVmssDataDisk>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -323,14 +323,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in NatConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NodeTypeNatConfig>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(VmImagePlan))
             {
                 writer.WritePropertyName("vmImagePlan"u8);
-                writer.WriteObjectValue(VmImagePlan, options);
+                ((IJsonModel<VmImagePlan>)VmImagePlan).Write(writer, options);
             }
             if (Optional.IsDefined(ServiceArtifactReferenceId))
             {
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in AdditionalNetworkInterfaceConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AdditionalNetworkInterfaceConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in VmApplications)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ServiceFabricManagedVmApplication>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     {
                         continue;
                     }
-                    sku = NodeTypeSku.DeserializeNodeTypeSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<NodeTypeSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             {
                                 continue;
                             }
-                            applicationPorts = EndpointRangeDescription.DeserializeEndpointRangeDescription(property0.Value, options);
+                            applicationPorts = ModelSerializationExtensions.JsonDeserialize<EndpointRangeDescription>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ephemeralPorts"u8))
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             {
                                 continue;
                             }
-                            ephemeralPorts = EndpointRangeDescription.DeserializeEndpointRangeDescription(property0.Value, options);
+                            ephemeralPorts = ModelSerializationExtensions.JsonDeserialize<EndpointRangeDescription>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("vmSize"u8))
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             {
                                 continue;
                             }
-                            vmManagedIdentity = VmManagedIdentity.DeserializeVmManagedIdentity(property0.Value, options);
+                            vmManagedIdentity = ModelSerializationExtensions.JsonDeserialize<VmManagedIdentity>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("isStateless"u8))
@@ -926,7 +926,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             {
                                 continue;
                             }
-                            vmImagePlan = VmImagePlan.DeserializeVmImagePlan(property0.Value, options);
+                            vmImagePlan = ModelSerializationExtensions.JsonDeserialize<VmImagePlan>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("serviceArtifactReferenceId"u8))

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in DaysOfTheMonth)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BackupDay>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

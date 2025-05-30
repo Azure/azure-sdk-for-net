@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<BatchProvisioningIssueProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    properties = BatchProvisioningIssueProperties.DeserializeBatchProvisioningIssueProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<BatchProvisioningIssueProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

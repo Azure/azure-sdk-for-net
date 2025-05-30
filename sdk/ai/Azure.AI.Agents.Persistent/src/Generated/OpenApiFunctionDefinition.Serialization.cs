@@ -51,7 +51,7 @@ namespace Azure.AI.Agents.Persistent
             }
 #endif
             writer.WritePropertyName("auth"u8);
-            writer.WriteObjectValue(OpenApiAuthentication, options);
+            ((IJsonModel<OpenApiAuthDetails>)OpenApiAuthentication).Write(writer, options);
             if (Optional.IsCollectionDefined(DefaultParams))
             {
                 writer.WritePropertyName("default_params"u8);
@@ -68,7 +68,7 @@ namespace Azure.AI.Agents.Persistent
                 writer.WriteStartArray();
                 foreach (var item in Functions)
                 {
-                    writer.WriteObjectValue<InternalFunctionDefinition>(item, options);
+                    ((IJsonModel<InternalFunctionDefinition>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -136,7 +136,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (property.NameEquals("auth"u8))
                 {
-                    auth = OpenApiAuthDetails.DeserializeOpenApiAuthDetails(property.Value, options);
+                    auth = ModelSerializationExtensions.JsonDeserialize<OpenApiAuthDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("default_params"u8))

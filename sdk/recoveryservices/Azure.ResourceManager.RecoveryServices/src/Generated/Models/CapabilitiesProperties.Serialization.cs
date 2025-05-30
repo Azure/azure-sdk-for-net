@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WriteStartArray();
                 foreach (var item in DnsZones)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DnsZone>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 if (SecretInfo != null)
                 {
                     writer.WritePropertyName("secretInfo"u8);
-                    writer.WriteObjectValue(SecretInfo, options);
+                    ((IJsonModel<SecretBaseInfo>)SecretInfo).Write(writer, options);
                 }
                 else
                 {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         secretInfo = null;
                         continue;
                     }
-                    secretInfo = SecretBaseInfo.DeserializeSecretBaseInfo(property.Value, options);
+                    secretInfo = ModelSerializationExtensions.JsonDeserialize<SecretBaseInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("authType"u8))

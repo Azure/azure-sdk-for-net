@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Terraform.Models
                     List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
+                        array.Add(ModelSerializationExtensions.JsonDeserialize<ResponseError>(item));
                     }
                     errors = array;
                     continue;

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (ServicePrincipal != null)
                 {
                     writer.WritePropertyName("servicePrincipal"u8);
-                    writer.WriteObjectValue(ServicePrincipal, options);
+                    ((IJsonModel<KubernetesServicePrincipalUpdateContent>)ServicePrincipal).Write(writer, options);
                 }
                 else
                 {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (ManagedIdentity != null)
                 {
                     writer.WritePropertyName("managedIdentity"u8);
-                    writer.WriteObjectValue(ManagedIdentity, options);
+                    ((IJsonModel<KubernetesAzureBlobManagedIdentityUpdateContent>)ManagedIdentity).Write(writer, options);
                 }
                 else
                 {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         servicePrincipal = null;
                         continue;
                     }
-                    servicePrincipal = KubernetesServicePrincipalUpdateContent.DeserializeKubernetesServicePrincipalUpdateContent(property.Value, options);
+                    servicePrincipal = ModelSerializationExtensions.JsonDeserialize<KubernetesServicePrincipalUpdateContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("accountKey"u8))
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         managedIdentity = null;
                         continue;
                     }
-                    managedIdentity = KubernetesAzureBlobManagedIdentityUpdateContent.DeserializeKubernetesAzureBlobManagedIdentityUpdateContent(property.Value, options);
+                    managedIdentity = ModelSerializationExtensions.JsonDeserialize<KubernetesAzureBlobManagedIdentityUpdateContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("localAuthRef"u8))

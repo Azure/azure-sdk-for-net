@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ServiceFabricApplicationTypeVersionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

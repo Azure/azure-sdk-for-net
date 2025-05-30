@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ComponentId != null)
                 {
                     writer.WritePropertyName("componentId"u8);
-                    writer.WriteObjectValue(ComponentId, options);
+                    ((IJsonModel<MachineLearningIdAssetReference>)ComponentId).Write(writer, options);
                 }
                 else
                 {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         componentId = null;
                         continue;
                     }
-                    componentId = MachineLearningIdAssetReference.DeserializeMachineLearningIdAssetReference(property.Value, options);
+                    componentId = ModelSerializationExtensions.JsonDeserialize<MachineLearningIdAssetReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))

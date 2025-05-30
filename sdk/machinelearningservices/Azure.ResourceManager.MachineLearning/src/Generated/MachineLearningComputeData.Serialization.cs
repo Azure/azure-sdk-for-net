@@ -42,15 +42,14 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 if (Sku != null)
                 {
                     writer.WritePropertyName("sku"u8);
-                    writer.WriteObjectValue(Sku, options);
+                    ((IJsonModel<MachineLearningSku>)Sku).Write(writer, options);
                 }
                 else
                 {
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<MachineLearningComputeProperties>)Properties).Write(writer, options);
             }
         }
 
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearning
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearning
                         sku = null;
                         continue;
                     }
-                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<MachineLearningSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning
                     {
                         continue;
                     }
-                    properties = MachineLearningComputeProperties.DeserializeMachineLearningComputeProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<MachineLearningComputeProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -166,7 +165,7 @@ namespace Azure.ResourceManager.MachineLearning
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

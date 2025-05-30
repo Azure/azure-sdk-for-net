@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ErrorDetail))
             {
                 writer.WritePropertyName("errorDetail"u8);
-                writer.WriteObjectValue(ErrorDetail, options);
+                ((IJsonModel<BackupErrorDetail>)ErrorDetail).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(InquiryDetails))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in InquiryDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WorkloadInquiryDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    errorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value, options);
+                    errorDetail = ModelSerializationExtensions.JsonDeserialize<BackupErrorDetail>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("inquiryDetails"u8))

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Elastic.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ElasticOpenAIIntegrationStatusProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    properties = ElasticOpenAIIntegrationStatusProperties.DeserializeElasticOpenAIIntegrationStatusProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ElasticOpenAIIntegrationStatusProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in ZoneDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AppPlatformSkuZoneDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

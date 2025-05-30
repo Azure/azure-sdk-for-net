@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MySql.Models
                     {
                         continue;
                     }
-                    storageProfile = MySqlStorageProfile.DeserializeMySqlStorageProfile(property.Value, options);
+                    storageProfile = ModelSerializationExtensions.JsonDeserialize<MySqlStorageProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("createMode"u8))

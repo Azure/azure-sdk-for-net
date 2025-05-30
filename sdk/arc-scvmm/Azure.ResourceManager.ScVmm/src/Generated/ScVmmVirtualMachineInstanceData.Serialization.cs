@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ScVmm
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("extendedLocation"u8);
-            JsonSerializer.Serialize(writer, ExtendedLocation);
+            ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AvailabilitySets))
@@ -48,34 +48,34 @@ namespace Azure.ResourceManager.ScVmm
                 writer.WriteStartArray();
                 foreach (var item in AvailabilitySets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ScVmmAvailabilitySetItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile, options);
+                ((IJsonModel<OSProfileForVmInstance>)OSProfile).Write(writer, options);
             }
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile, options);
+                ((IJsonModel<ScVmmHardwareProfile>)HardwareProfile).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile, options);
+                ((IJsonModel<ScVmmNetworkProfile>)NetworkProfile).Write(writer, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile, options);
+                ((IJsonModel<ScVmmStorageProfile>)StorageProfile).Write(writer, options);
             }
             if (Optional.IsDefined(InfrastructureProfile))
             {
                 writer.WritePropertyName("infrastructureProfile"u8);
-                writer.WriteObjectValue(InfrastructureProfile, options);
+                ((IJsonModel<ScVmmInfrastructureProfile>)InfrastructureProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PowerState))
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ScVmm
             {
                 if (property.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<ExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ScVmm
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ScVmm
                             {
                                 continue;
                             }
-                            osProfile = OSProfileForVmInstance.DeserializeOSProfileForVmInstance(property0.Value, options);
+                            osProfile = ModelSerializationExtensions.JsonDeserialize<OSProfileForVmInstance>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hardwareProfile"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ScVmm
                             {
                                 continue;
                             }
-                            hardwareProfile = ScVmmHardwareProfile.DeserializeScVmmHardwareProfile(property0.Value, options);
+                            hardwareProfile = ModelSerializationExtensions.JsonDeserialize<ScVmmHardwareProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ScVmm
                             {
                                 continue;
                             }
-                            networkProfile = ScVmmNetworkProfile.DeserializeScVmmNetworkProfile(property0.Value, options);
+                            networkProfile = ModelSerializationExtensions.JsonDeserialize<ScVmmNetworkProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ScVmm
                             {
                                 continue;
                             }
-                            storageProfile = ScVmmStorageProfile.DeserializeScVmmStorageProfile(property0.Value, options);
+                            storageProfile = ModelSerializationExtensions.JsonDeserialize<ScVmmStorageProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("infrastructureProfile"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ScVmm
                             {
                                 continue;
                             }
-                            infrastructureProfile = ScVmmInfrastructureProfile.DeserializeScVmmInfrastructureProfile(property0.Value, options);
+                            infrastructureProfile = ModelSerializationExtensions.JsonDeserialize<ScVmmInfrastructureProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("powerState"u8))

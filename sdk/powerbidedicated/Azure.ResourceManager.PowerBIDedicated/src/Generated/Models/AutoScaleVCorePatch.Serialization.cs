@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<AutoScaleVCoreSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     {
                         continue;
                     }
-                    sku = AutoScaleVCoreSku.DeserializeAutoScaleVCoreSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<AutoScaleVCoreSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

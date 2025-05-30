@@ -135,19 +135,19 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WriteStartArray();
                 foreach (var item in Artifacts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DevTestLabArtifactInstallInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(ArtifactDeploymentStatus))
             {
                 writer.WritePropertyName("artifactDeploymentStatus"u8);
-                writer.WriteObjectValue(ArtifactDeploymentStatus, options);
+                ((IJsonModel<DevTestLabArtifactDeploymentStatus>)ArtifactDeploymentStatus).Write(writer, options);
             }
             if (Optional.IsDefined(GalleryImageReference))
             {
                 writer.WritePropertyName("galleryImageReference"u8);
-                writer.WriteObjectValue(GalleryImageReference, options);
+                ((IJsonModel<DevTestLabGalleryImageReference>)GalleryImageReference).Write(writer, options);
             }
             if (Optional.IsDefined(PlanId))
             {
@@ -157,17 +157,17 @@ namespace Azure.ResourceManager.DevTestLabs
             if (options.Format != "W" && Optional.IsDefined(ComputeVm))
             {
                 writer.WritePropertyName("computeVm"u8);
-                writer.WriteObjectValue(ComputeVm, options);
+                ((IJsonModel<ComputeVmProperties>)ComputeVm).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkInterface))
             {
                 writer.WritePropertyName("networkInterface"u8);
-                writer.WriteObjectValue(NetworkInterface, options);
+                ((IJsonModel<DevTestLabNetworkInterface>)NetworkInterface).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ApplicableSchedule))
             {
                 writer.WritePropertyName("applicableSchedule"u8);
-                writer.WriteObjectValue(ApplicableSchedule, options);
+                ((IJsonModel<DevTestLabApplicableSchedule>)ApplicableSchedule).Write(writer, options);
             }
             if (Optional.IsDefined(ExpireOn))
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WriteStartArray();
                 foreach (var item in DataDiskParameters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DevTestLabDataDiskProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WriteStartArray();
                 foreach (var item in ScheduleParameters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DevTestLabScheduleCreationParameter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            artifactDeploymentStatus = DevTestLabArtifactDeploymentStatus.DeserializeDevTestLabArtifactDeploymentStatus(property0.Value, options);
+                            artifactDeploymentStatus = ModelSerializationExtensions.JsonDeserialize<DevTestLabArtifactDeploymentStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("galleryImageReference"u8))
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            galleryImageReference = DevTestLabGalleryImageReference.DeserializeDevTestLabGalleryImageReference(property0.Value, options);
+                            galleryImageReference = ModelSerializationExtensions.JsonDeserialize<DevTestLabGalleryImageReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("planId"u8))
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            computeVm = ComputeVmProperties.DeserializeComputeVmProperties(property0.Value, options);
+                            computeVm = ModelSerializationExtensions.JsonDeserialize<ComputeVmProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkInterface"u8))
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            networkInterface = DevTestLabNetworkInterface.DeserializeDevTestLabNetworkInterface(property0.Value, options);
+                            networkInterface = ModelSerializationExtensions.JsonDeserialize<DevTestLabNetworkInterface>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("applicableSchedule"u8))
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            applicableSchedule = DevTestLabApplicableSchedule.DeserializeDevTestLabApplicableSchedule(property0.Value, options);
+                            applicableSchedule = ModelSerializationExtensions.JsonDeserialize<DevTestLabApplicableSchedule>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("expirationDate"u8))

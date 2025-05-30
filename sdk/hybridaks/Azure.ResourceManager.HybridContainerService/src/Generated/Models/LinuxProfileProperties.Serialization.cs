@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(Ssh))
             {
                 writer.WritePropertyName("ssh"u8);
-                writer.WriteObjectValue(Ssh, options);
+                ((IJsonModel<LinuxSshConfiguration>)Ssh).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    ssh = LinuxSshConfiguration.DeserializeLinuxSshConfiguration(property.Value, options);
+                    ssh = ModelSerializationExtensions.JsonDeserialize<LinuxSshConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

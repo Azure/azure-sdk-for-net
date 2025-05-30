@@ -42,27 +42,27 @@ namespace Azure.ResourceManager.LabServices
             if (Optional.IsDefined(AutoShutdownProfile))
             {
                 writer.WritePropertyName("autoShutdownProfile"u8);
-                writer.WriteObjectValue(AutoShutdownProfile, options);
+                ((IJsonModel<LabAutoShutdownProfile>)AutoShutdownProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectionProfile))
             {
                 writer.WritePropertyName("connectionProfile"u8);
-                writer.WriteObjectValue(ConnectionProfile, options);
+                ((IJsonModel<LabConnectionProfile>)ConnectionProfile).Write(writer, options);
             }
             if (Optional.IsDefined(VirtualMachineProfile))
             {
                 writer.WritePropertyName("virtualMachineProfile"u8);
-                writer.WriteObjectValue(VirtualMachineProfile, options);
+                ((IJsonModel<LabVirtualMachineProfile>)VirtualMachineProfile).Write(writer, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile, options);
+                ((IJsonModel<LabSecurityProfile>)SecurityProfile).Write(writer, options);
             }
             if (Optional.IsDefined(RosterProfile))
             {
                 writer.WritePropertyName("rosterProfile"u8);
-                writer.WriteObjectValue(RosterProfile, options);
+                ((IJsonModel<LabRosterProfile>)RosterProfile).Write(writer, options);
             }
             if (Optional.IsDefined(LabPlanId))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.LabServices
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile, options);
+                ((IJsonModel<LabNetworkProfile>)NetworkProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(State))
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.LabServices
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.LabServices
                             {
                                 continue;
                             }
-                            autoShutdownProfile = LabAutoShutdownProfile.DeserializeLabAutoShutdownProfile(property0.Value, options);
+                            autoShutdownProfile = ModelSerializationExtensions.JsonDeserialize<LabAutoShutdownProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("connectionProfile"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.LabServices
                             {
                                 continue;
                             }
-                            connectionProfile = LabConnectionProfile.DeserializeLabConnectionProfile(property0.Value, options);
+                            connectionProfile = ModelSerializationExtensions.JsonDeserialize<LabConnectionProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("virtualMachineProfile"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.LabServices
                             {
                                 continue;
                             }
-                            virtualMachineProfile = LabVirtualMachineProfile.DeserializeLabVirtualMachineProfile(property0.Value, options);
+                            virtualMachineProfile = ModelSerializationExtensions.JsonDeserialize<LabVirtualMachineProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("securityProfile"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.LabServices
                             {
                                 continue;
                             }
-                            securityProfile = LabSecurityProfile.DeserializeLabSecurityProfile(property0.Value, options);
+                            securityProfile = ModelSerializationExtensions.JsonDeserialize<LabSecurityProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("rosterProfile"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.LabServices
                             {
                                 continue;
                             }
-                            rosterProfile = LabRosterProfile.DeserializeLabRosterProfile(property0.Value, options);
+                            rosterProfile = ModelSerializationExtensions.JsonDeserialize<LabRosterProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("labPlanId"u8))
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.LabServices
                             {
                                 continue;
                             }
-                            networkProfile = LabNetworkProfile.DeserializeLabNetworkProfile(property0.Value, options);
+                            networkProfile = ModelSerializationExtensions.JsonDeserialize<LabNetworkProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("state"u8))

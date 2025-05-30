@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Items))
             {
                 writer.WritePropertyName("items"u8);
-                writer.WriteObjectValue(Items, options);
+                ((IJsonModel<SwaggerSchema>)Items).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Properties))
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Logic.Models
                 foreach (var item in Properties)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<SwaggerSchema>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in AllOf)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SwaggerSchema>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -120,12 +120,12 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Xml))
             {
                 writer.WritePropertyName("xml"u8);
-                writer.WriteObjectValue(Xml, options);
+                ((IJsonModel<SwaggerXml>)Xml).Write(writer, options);
             }
             if (Optional.IsDefined(ExternalDocs))
             {
                 writer.WritePropertyName("externalDocs"u8);
-                writer.WriteObjectValue(ExternalDocs, options);
+                ((IJsonModel<SwaggerExternalDocumentation>)ExternalDocs).Write(writer, options);
             }
             if (Optional.IsDefined(Example))
             {
@@ -147,22 +147,22 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(DynamicSchemaOld))
             {
                 writer.WritePropertyName("dynamicSchemaOld"u8);
-                writer.WriteObjectValue(DynamicSchemaOld, options);
+                ((IJsonModel<SwaggerCustomDynamicSchema>)DynamicSchemaOld).Write(writer, options);
             }
             if (Optional.IsDefined(DynamicSchemaNew))
             {
                 writer.WritePropertyName("dynamicSchemaNew"u8);
-                writer.WriteObjectValue(DynamicSchemaNew, options);
+                ((IJsonModel<SwaggerCustomDynamicProperties>)DynamicSchemaNew).Write(writer, options);
             }
             if (Optional.IsDefined(DynamicListNew))
             {
                 writer.WritePropertyName("dynamicListNew"u8);
-                writer.WriteObjectValue(DynamicListNew, options);
+                ((IJsonModel<SwaggerCustomDynamicList>)DynamicListNew).Write(writer, options);
             }
             if (Optional.IsDefined(DynamicTree))
             {
                 writer.WritePropertyName("dynamicTree"u8);
-                writer.WriteObjectValue(DynamicTree, options);
+                ((IJsonModel<SwaggerCustomDynamicTree>)DynamicTree).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    items = DeserializeSwaggerSchema(property.Value, options);
+                    items = ModelSerializationExtensions.JsonDeserialize<SwaggerSchema>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    xml = SwaggerXml.DeserializeSwaggerXml(property.Value, options);
+                    xml = ModelSerializationExtensions.JsonDeserialize<SwaggerXml>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("externalDocs"u8))
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    externalDocs = SwaggerExternalDocumentation.DeserializeSwaggerExternalDocumentation(property.Value, options);
+                    externalDocs = ModelSerializationExtensions.JsonDeserialize<SwaggerExternalDocumentation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("example"u8))
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    dynamicSchemaOld = SwaggerCustomDynamicSchema.DeserializeSwaggerCustomDynamicSchema(property.Value, options);
+                    dynamicSchemaOld = ModelSerializationExtensions.JsonDeserialize<SwaggerCustomDynamicSchema>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dynamicSchemaNew"u8))
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    dynamicSchemaNew = SwaggerCustomDynamicProperties.DeserializeSwaggerCustomDynamicProperties(property.Value, options);
+                    dynamicSchemaNew = ModelSerializationExtensions.JsonDeserialize<SwaggerCustomDynamicProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dynamicListNew"u8))
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    dynamicListNew = SwaggerCustomDynamicList.DeserializeSwaggerCustomDynamicList(property.Value, options);
+                    dynamicListNew = ModelSerializationExtensions.JsonDeserialize<SwaggerCustomDynamicList>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dynamicTree"u8))
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    dynamicTree = SwaggerCustomDynamicTree.DeserializeSwaggerCustomDynamicTree(property.Value, options);
+                    dynamicTree = ModelSerializationExtensions.JsonDeserialize<SwaggerCustomDynamicTree>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

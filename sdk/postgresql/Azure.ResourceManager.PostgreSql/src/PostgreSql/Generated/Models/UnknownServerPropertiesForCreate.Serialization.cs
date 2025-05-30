@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     {
                         continue;
                     }
-                    storageProfile = PostgreSqlStorageProfile.DeserializePostgreSqlStorageProfile(property.Value, options);
+                    storageProfile = ModelSerializationExtensions.JsonDeserialize<PostgreSqlStorageProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("createMode"u8))

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<StorageClassPropertiesUpdate>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                     {
                         continue;
                     }
-                    properties = StorageClassPropertiesUpdate.DeserializeStorageClassPropertiesUpdate(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<StorageClassPropertiesUpdate>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

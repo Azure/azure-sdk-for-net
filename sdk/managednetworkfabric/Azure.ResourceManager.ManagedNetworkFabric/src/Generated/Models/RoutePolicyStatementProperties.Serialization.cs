@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             writer.WritePropertyName("sequenceNumber"u8);
             writer.WriteNumberValue(SequenceNumber);
             writer.WritePropertyName("condition"u8);
-            writer.WriteObjectValue(Condition, options);
+            ((IJsonModel<StatementConditionProperties>)Condition).Write(writer, options);
             writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue(Action, options);
+            ((IJsonModel<StatementActionProperties>)Action).Write(writer, options);
         }
 
         RoutePolicyStatementProperties IJsonModel<RoutePolicyStatementProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (property.NameEquals("condition"u8))
                 {
-                    condition = StatementConditionProperties.DeserializeStatementConditionProperties(property.Value, options);
+                    condition = ModelSerializationExtensions.JsonDeserialize<StatementConditionProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("action"u8))
                 {
-                    action = StatementActionProperties.DeserializeStatementActionProperties(property.Value, options);
+                    action = ModelSerializationExtensions.JsonDeserialize<StatementActionProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("annotation"u8))

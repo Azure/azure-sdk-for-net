@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    lastOperationError = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    lastOperationError = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

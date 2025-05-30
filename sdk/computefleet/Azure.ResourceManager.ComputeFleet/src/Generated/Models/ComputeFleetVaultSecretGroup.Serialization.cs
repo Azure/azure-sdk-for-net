@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(SourceVault))
             {
                 writer.WritePropertyName("sourceVault"u8);
-                JsonSerializer.Serialize(writer, SourceVault);
+                ((IJsonModel<WritableSubResource>)SourceVault).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(VaultCertificates))
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WriteStartArray();
                 foreach (var item in VaultCertificates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ComputeFleetVaultCertificate>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    sourceVault = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    sourceVault = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vaultCertificates"u8))

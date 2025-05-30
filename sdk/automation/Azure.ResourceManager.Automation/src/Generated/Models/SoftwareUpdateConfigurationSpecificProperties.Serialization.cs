@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Windows))
             {
                 writer.WritePropertyName("windows"u8);
-                writer.WriteObjectValue(Windows, options);
+                ((IJsonModel<WindowsUpdateConfigurationProperties>)Windows).Write(writer, options);
             }
             if (Optional.IsDefined(Linux))
             {
                 writer.WritePropertyName("linux"u8);
-                writer.WriteObjectValue(Linux, options);
+                ((IJsonModel<LinuxUpdateConfigurationProperties>)Linux).Write(writer, options);
             }
             if (Optional.IsDefined(Duration))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Targets))
             {
                 writer.WritePropertyName("targets"u8);
-                writer.WriteObjectValue(Targets, options);
+                ((IJsonModel<SoftwareUpdateConfigurationTargetProperties>)Targets).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    windows = WindowsUpdateConfigurationProperties.DeserializeWindowsUpdateConfigurationProperties(property.Value, options);
+                    windows = ModelSerializationExtensions.JsonDeserialize<WindowsUpdateConfigurationProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("linux"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    linux = LinuxUpdateConfigurationProperties.DeserializeLinuxUpdateConfigurationProperties(property.Value, options);
+                    linux = ModelSerializationExtensions.JsonDeserialize<LinuxUpdateConfigurationProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("duration"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    targets = SoftwareUpdateConfigurationTargetProperties.DeserializeSoftwareUpdateConfigurationTargetProperties(property.Value, options);
+                    targets = ModelSerializationExtensions.JsonDeserialize<SoftwareUpdateConfigurationTargetProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

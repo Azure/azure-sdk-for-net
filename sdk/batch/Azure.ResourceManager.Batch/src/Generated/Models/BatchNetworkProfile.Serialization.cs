@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(AccountAccess))
             {
                 writer.WritePropertyName("accountAccess"u8);
-                writer.WriteObjectValue(AccountAccess, options);
+                ((IJsonModel<BatchEndpointAccessProfile>)AccountAccess).Write(writer, options);
             }
             if (Optional.IsDefined(NodeManagementAccess))
             {
                 writer.WritePropertyName("nodeManagementAccess"u8);
-                writer.WriteObjectValue(NodeManagementAccess, options);
+                ((IJsonModel<BatchEndpointAccessProfile>)NodeManagementAccess).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    accountAccess = BatchEndpointAccessProfile.DeserializeBatchEndpointAccessProfile(property.Value, options);
+                    accountAccess = ModelSerializationExtensions.JsonDeserialize<BatchEndpointAccessProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nodeManagementAccess"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    nodeManagementAccess = BatchEndpointAccessProfile.DeserializeBatchEndpointAccessProfile(property.Value, options);
+                    nodeManagementAccess = ModelSerializationExtensions.JsonDeserialize<BatchEndpointAccessProfile>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity);
+                    JsonSerializer.Serialize(writer, Identity);
                 }
                 else
                 {
@@ -58,7 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         identity = null;
                         continue;
                     }
-                    identity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value);
+                    identity = ModelSerializationExtensions.JsonDeserialize<SearchIndexerDataIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("subdomainUrl"u8))

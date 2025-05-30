@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Dns.Models
                 writer.WriteStartArray();
                 foreach (var item in DelegationSignerInfo)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DelegationSignerInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

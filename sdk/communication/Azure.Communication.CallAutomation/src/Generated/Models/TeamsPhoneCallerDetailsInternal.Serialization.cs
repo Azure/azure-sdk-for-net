@@ -17,7 +17,7 @@ namespace Azure.Communication.CallAutomation
         {
             writer.WriteStartObject();
             writer.WritePropertyName("caller"u8);
-            writer.WriteObjectValue(Caller);
+            JsonSerializer.Serialize(writer, Caller);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("phoneNumber"u8);
@@ -68,7 +68,7 @@ namespace Azure.Communication.CallAutomation
             {
                 if (property.NameEquals("caller"u8))
                 {
-                    caller = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    caller = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

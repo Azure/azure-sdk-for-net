@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(GitHubClientSecret))
             {
                 writer.WritePropertyName("gitHubClientSecret"u8);
-                writer.WriteObjectValue(GitHubClientSecret, options);
+                ((IJsonModel<FactoryGitHubClientSecret>)GitHubClientSecret).Write(writer, options);
             }
             writer.WritePropertyName("gitHubAccessTokenBaseUrl"u8);
             writer.WriteStringValue(GitHubAccessTokenBaseUri.AbsoluteUri);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    gitHubClientSecret = FactoryGitHubClientSecret.DeserializeFactoryGitHubClientSecret(property.Value, options);
+                    gitHubClientSecret = ModelSerializationExtensions.JsonDeserialize<FactoryGitHubClientSecret>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("gitHubAccessTokenBaseUrl"u8))

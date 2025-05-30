@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue<DataPartitionName>(Name, options);
+                ((IJsonModel<DataPartitionName>)Name).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                     {
                         continue;
                     }
-                    name = Models.DataPartitionName.DeserializeDataPartitionName(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<DataPartitionName>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

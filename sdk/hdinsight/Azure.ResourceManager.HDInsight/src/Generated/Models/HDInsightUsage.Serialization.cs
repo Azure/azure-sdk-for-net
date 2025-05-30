@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
+                ((IJsonModel<HDInsightLocalizedName>)Name).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    name = HDInsightLocalizedName.DeserializeHDInsightLocalizedName(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<HDInsightLocalizedName>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -22,7 +22,7 @@ namespace Azure.Communication.Identity.Models
             {
                 if (property.NameEquals("error"u8))
                 {
-                    error = CommunicationError.DeserializeCommunicationError(property.Value);
+                    error = ModelSerializationExtensions.JsonDeserialize<CommunicationError>(property.Value);
                     continue;
                 }
             }

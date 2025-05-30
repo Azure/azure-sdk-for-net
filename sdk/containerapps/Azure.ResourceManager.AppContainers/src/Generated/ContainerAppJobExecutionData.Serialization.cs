@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
-                writer.WriteObjectValue(Template, options);
+                ((IJsonModel<ContainerAppJobExecutionTemplate>)Template).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            template = ContainerAppJobExecutionTemplate.DeserializeContainerAppJobExecutionTemplate(property0.Value, options);
+                            template = ModelSerializationExtensions.JsonDeserialize<ContainerAppJobExecutionTemplate>(property0.Value);
                             continue;
                         }
                     }

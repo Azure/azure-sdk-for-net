@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                JsonSerializer.Serialize(writer, Properties);
             }
             writer.WriteEndObject();
         }
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                     {
                         continue;
                     }
-                    properties = ManagedPrivateEndpointProperties.DeserializeManagedPrivateEndpointProperties(property.Value);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ManagedPrivateEndpointProperties>(property.Value);
                     continue;
                 }
             }

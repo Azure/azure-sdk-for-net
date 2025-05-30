@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RuleCollectionAppliesToGroups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetworkManagerSecurityGroupItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RuleGroups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetworkConfigurationGroup>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

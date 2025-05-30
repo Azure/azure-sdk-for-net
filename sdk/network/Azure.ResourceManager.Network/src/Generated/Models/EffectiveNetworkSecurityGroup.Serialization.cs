@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(NetworkSecurityGroup))
             {
                 writer.WritePropertyName("networkSecurityGroup"u8);
-                JsonSerializer.Serialize(writer, NetworkSecurityGroup);
+                ((IJsonModel<WritableSubResource>)NetworkSecurityGroup).Write(writer, options);
             }
             if (Optional.IsDefined(Association))
             {
                 writer.WritePropertyName("association"u8);
-                writer.WriteObjectValue(Association, options);
+                ((IJsonModel<EffectiveNetworkSecurityGroupAssociation>)Association).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(EffectiveSecurityRules))
             {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in EffectiveSecurityRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EffectiveNetworkSecurityRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    networkSecurityGroup = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    networkSecurityGroup = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("association"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    association = EffectiveNetworkSecurityGroupAssociation.DeserializeEffectiveNetworkSecurityGroupAssociation(property.Value, options);
+                    association = ModelSerializationExtensions.JsonDeserialize<EffectiveNetworkSecurityGroupAssociation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("effectiveSecurityRules"u8))

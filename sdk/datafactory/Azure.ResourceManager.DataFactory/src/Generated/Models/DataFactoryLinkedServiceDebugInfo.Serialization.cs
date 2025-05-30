@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<DataFactoryLinkedServiceProperties>)Properties).Write(writer, options);
         }
 
         DataFactoryLinkedServiceDebugInfo IJsonModel<DataFactoryLinkedServiceDebugInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DataFactoryLinkedServiceProperties.DeserializeDataFactoryLinkedServiceProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

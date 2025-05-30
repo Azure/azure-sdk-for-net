@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("cluster"u8);
-            writer.WriteObjectValue(Cluster, options);
+            ((IJsonModel<AzStackHciClusterProperties>)Cluster).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(FabricResourceId))
             {
                 writer.WritePropertyName("fabricResourceId"u8);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("cluster"u8))
                 {
-                    cluster = AzStackHciClusterProperties.DeserializeAzStackHciClusterProperties(property.Value, options);
+                    cluster = ModelSerializationExtensions.JsonDeserialize<AzStackHciClusterProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("fabricResourceId"u8))

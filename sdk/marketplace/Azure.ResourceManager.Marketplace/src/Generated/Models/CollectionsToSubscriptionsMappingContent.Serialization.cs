@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<CollectionsToSubscriptionsMappingProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     {
                         continue;
                     }
-                    properties = CollectionsToSubscriptionsMappingProperties.DeserializeCollectionsToSubscriptionsMappingProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<CollectionsToSubscriptionsMappingProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -37,13 +37,13 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<CapacitySku>)Sku).Write(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Administration))
             {
                 writer.WritePropertyName("administration"u8);
-                writer.WriteObjectValue(Administration, options);
+                ((IJsonModel<DedicatedCapacityAdministrators>)Administration).Write(writer, options);
             }
             if (Optional.IsDefined(Mode))
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = CapacitySku.DeserializeCapacitySku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<CapacitySku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                     {
                         continue;
                     }
-                    systemData = SystemData.DeserializeSystemData(property.Value, options);
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                             {
                                 continue;
                             }
-                            administration = DedicatedCapacityAdministrators.DeserializeDedicatedCapacityAdministrators(property0.Value, options);
+                            administration = ModelSerializationExtensions.JsonDeserialize<DedicatedCapacityAdministrators>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("mode"u8))

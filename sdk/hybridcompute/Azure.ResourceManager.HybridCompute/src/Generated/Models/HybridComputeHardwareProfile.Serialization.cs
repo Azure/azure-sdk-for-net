@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in Processors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HybridComputeProcessor>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

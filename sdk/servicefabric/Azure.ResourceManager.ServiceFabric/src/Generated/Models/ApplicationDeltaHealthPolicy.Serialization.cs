@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(DefaultServiceTypeDeltaHealthPolicy))
             {
                 writer.WritePropertyName("defaultServiceTypeDeltaHealthPolicy"u8);
-                writer.WriteObjectValue(DefaultServiceTypeDeltaHealthPolicy, options);
+                ((IJsonModel<ServiceTypeDeltaHealthPolicy>)DefaultServiceTypeDeltaHealthPolicy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ServiceTypeDeltaHealthPolicies))
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 foreach (var item in ServiceTypeDeltaHealthPolicies)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<ServiceTypeDeltaHealthPolicy>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    defaultServiceTypeDeltaHealthPolicy = ServiceTypeDeltaHealthPolicy.DeserializeServiceTypeDeltaHealthPolicy(property.Value, options);
+                    defaultServiceTypeDeltaHealthPolicy = ModelSerializationExtensions.JsonDeserialize<ServiceTypeDeltaHealthPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("serviceTypeDeltaHealthPolicies"u8))

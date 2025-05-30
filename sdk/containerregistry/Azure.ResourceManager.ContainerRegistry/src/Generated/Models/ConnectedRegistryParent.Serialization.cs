@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("syncProperties"u8);
-            writer.WriteObjectValue(SyncProperties, options);
+            ((IJsonModel<ConnectedRegistrySyncProperties>)SyncProperties).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 if (property.NameEquals("syncProperties"u8))
                 {
-                    syncProperties = ConnectedRegistrySyncProperties.DeserializeConnectedRegistrySyncProperties(property.Value, options);
+                    syncProperties = ModelSerializationExtensions.JsonDeserialize<ConnectedRegistrySyncProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

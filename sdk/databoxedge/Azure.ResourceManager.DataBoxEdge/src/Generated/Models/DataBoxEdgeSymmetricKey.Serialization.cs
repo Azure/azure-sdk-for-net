@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-                writer.WriteObjectValue(ConnectionString, options);
+                ((IJsonModel<AsymmetricEncryptedSecret>)ConnectionString).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    connectionString = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property.Value, options);
+                    connectionString = ModelSerializationExtensions.JsonDeserialize<AsymmetricEncryptedSecret>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

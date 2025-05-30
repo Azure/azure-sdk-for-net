@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(Size);
             }
             writer.WritePropertyName("referenceTrigger"u8);
-            writer.WriteObjectValue(ReferenceTrigger);
+            JsonSerializer.Serialize(writer, ReferenceTrigger);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WriteEndObject();
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("referenceTrigger"u8))
                 {
-                    referenceTrigger = TriggerReference.DeserializeTriggerReference(property.Value);
+                    referenceTrigger = ModelSerializationExtensions.JsonDeserialize<TriggerReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

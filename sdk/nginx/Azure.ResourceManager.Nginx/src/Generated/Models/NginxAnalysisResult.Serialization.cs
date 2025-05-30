@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Nginx.Models
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
-                writer.WriteObjectValue(Data, options);
+                ((IJsonModel<NginxAnalysisResultDetails>)Data).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    data = NginxAnalysisResultDetails.DeserializeNginxAnalysisResultDetails(property.Value, options);
+                    data = ModelSerializationExtensions.JsonDeserialize<NginxAnalysisResultDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

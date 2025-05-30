@@ -36,7 +36,7 @@ namespace Azure.AI.Inference
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("image_url"u8);
-            writer.WriteObjectValue<ChatMessageImageUrl>(ImageUrl, options);
+            ((IJsonModel<ChatMessageImageUrl>)ImageUrl).Write(writer, options);
         }
 
         ChatMessageImageContentItem IJsonModel<ChatMessageImageContentItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.AI.Inference
             {
                 if (property.NameEquals("image_url"u8))
                 {
-                    imageUrl = ChatMessageImageUrl.DeserializeChatMessageImageUrl(property.Value, options);
+                    imageUrl = ModelSerializationExtensions.JsonDeserialize<ChatMessageImageUrl>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

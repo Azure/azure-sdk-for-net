@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<ErrorResponseBody>)Error).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ActionLog))
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in ActionLog)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<OperationResultLogItemContract>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            error = ErrorResponseBody.DeserializeErrorResponseBody(property0.Value, options);
+                            error = ModelSerializationExtensions.JsonDeserialize<ErrorResponseBody>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("actionLog"u8))

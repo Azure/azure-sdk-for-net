@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartArray();
             foreach (var item in ConnectivityStatus)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ConnectivityStatusContract>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

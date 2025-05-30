@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Dataset))
             {
                 writer.WritePropertyName("dataset"u8);
-                writer.WriteObjectValue(Dataset, options);
+                ((IJsonModel<DatasetReference>)Dataset).Write(writer, options);
             }
             if (Optional.IsDefined(LinkedService))
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Flowlet))
             {
                 writer.WritePropertyName("flowlet"u8);
-                writer.WriteObjectValue(Flowlet, options);
+                ((IJsonModel<DataFlowReference>)Flowlet).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    dataset = DatasetReference.DeserializeDatasetReference(property.Value, options);
+                    dataset = ModelSerializationExtensions.JsonDeserialize<DatasetReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("linkedService"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedService = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedService = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("flowlet"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    flowlet = DataFlowReference.DeserializeDataFlowReference(property.Value, options);
+                    flowlet = ModelSerializationExtensions.JsonDeserialize<DataFlowReference>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<ApiManagementGatewaySkuPropertiesForPatch>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Frontend))
             {
                 writer.WritePropertyName("frontend"u8);
-                writer.WriteObjectValue(Frontend, options);
+                ((IJsonModel<FrontendConfiguration>)Frontend).Write(writer, options);
             }
             if (Optional.IsDefined(Backend))
             {
                 writer.WritePropertyName("backend"u8);
-                writer.WriteObjectValue(Backend, options);
+                ((IJsonModel<BackendConfiguration>)Backend).Write(writer, options);
             }
             if (Optional.IsDefined(ConfigurationApi))
             {
                 writer.WritePropertyName("configurationApi"u8);
-                writer.WriteObjectValue(ConfigurationApi, options);
+                ((IJsonModel<GatewayConfigurationApi>)ConfigurationApi).Write(writer, options);
             }
             if (Optional.IsDefined(VirtualNetworkType))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    sku = ApiManagementGatewaySkuPropertiesForPatch.DeserializeApiManagementGatewaySkuPropertiesForPatch(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<ApiManagementGatewaySkuPropertiesForPatch>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            frontend = FrontendConfiguration.DeserializeFrontendConfiguration(property0.Value, options);
+                            frontend = ModelSerializationExtensions.JsonDeserialize<FrontendConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("backend"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            backend = BackendConfiguration.DeserializeBackendConfiguration(property0.Value, options);
+                            backend = ModelSerializationExtensions.JsonDeserialize<BackendConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("configurationApi"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            configurationApi = GatewayConfigurationApi.DeserializeGatewayConfigurationApi(property0.Value, options);
+                            configurationApi = ModelSerializationExtensions.JsonDeserialize<GatewayConfigurationApi>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("virtualNetworkType"u8))

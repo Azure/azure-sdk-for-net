@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    livyInfo = SparkBatchJobState.DeserializeSparkBatchJobState(property.Value);
+                    livyInfo = ModelSerializationExtensions.JsonDeserialize<SparkBatchJobState>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -104,7 +104,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    schedulerInfo = SparkScheduler.DeserializeSparkScheduler(property.Value);
+                    schedulerInfo = ModelSerializationExtensions.JsonDeserialize<SparkScheduler>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("pluginInfo"u8))
@@ -113,7 +113,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    pluginInfo = SparkServicePlugin.DeserializeSparkServicePlugin(property.Value);
+                    pluginInfo = ModelSerializationExtensions.JsonDeserialize<SparkServicePlugin>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("errorInfo"u8))

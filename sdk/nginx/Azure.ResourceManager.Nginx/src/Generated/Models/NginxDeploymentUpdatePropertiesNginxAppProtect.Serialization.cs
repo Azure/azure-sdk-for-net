@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Nginx.Models
             if (Optional.IsDefined(WebApplicationFirewallSettings))
             {
                 writer.WritePropertyName("webApplicationFirewallSettings"u8);
-                writer.WriteObjectValue(WebApplicationFirewallSettings, options);
+                ((IJsonModel<WebApplicationFirewallSettings>)WebApplicationFirewallSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    webApplicationFirewallSettings = WebApplicationFirewallSettings.DeserializeWebApplicationFirewallSettings(property.Value, options);
+                    webApplicationFirewallSettings = ModelSerializationExtensions.JsonDeserialize<WebApplicationFirewallSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

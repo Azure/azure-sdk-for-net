@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in Benefits)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SavingsPlanUpdateRequestProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

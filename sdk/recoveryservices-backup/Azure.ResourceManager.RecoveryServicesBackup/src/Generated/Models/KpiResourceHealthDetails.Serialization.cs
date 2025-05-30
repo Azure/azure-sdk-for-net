@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceHealthDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceHealthDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

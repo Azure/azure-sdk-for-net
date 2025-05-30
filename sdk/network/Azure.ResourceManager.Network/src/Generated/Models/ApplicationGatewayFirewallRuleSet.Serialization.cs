@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RuleGroups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayFirewallRuleGroup>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

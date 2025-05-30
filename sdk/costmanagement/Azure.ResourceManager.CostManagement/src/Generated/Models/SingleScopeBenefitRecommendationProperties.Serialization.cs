@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    usage = RecommendationUsageDetails.DeserializeRecommendationUsageDetails(property.Value, options);
+                    usage = ModelSerializationExtensions.JsonDeserialize<RecommendationUsageDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("armSkuName"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    recommendationDetails = AllSavingsBenefitDetails.DeserializeAllSavingsBenefitDetails(property.Value, options);
+                    recommendationDetails = ModelSerializationExtensions.JsonDeserialize<AllSavingsBenefitDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("allRecommendationDetails"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    allRecommendationDetails = AllSavingsList.DeserializeAllSavingsList(property.Value, options);
+                    allRecommendationDetails = ModelSerializationExtensions.JsonDeserialize<AllSavingsList>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scope"u8))

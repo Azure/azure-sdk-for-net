@@ -19,11 +19,11 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartArray();
             foreach (var item in PlaySources)
             {
-                writer.WriteObjectValue(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("playTo"u8);
-            writer.WriteObjectValue(PlayTo);
+            JsonSerializer.Serialize(writer, PlayTo);
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);

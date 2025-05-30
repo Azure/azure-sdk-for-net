@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration, options);
+                ((IJsonModel<ContainerAppJobConfiguration>)Configuration).Write(writer, options);
             }
             if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
-                writer.WriteObjectValue(Template, options);
+                ((IJsonModel<ContainerAppJobTemplate>)Template).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(OutboundIPAddresses))
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    configuration = ContainerAppJobConfiguration.DeserializeContainerAppJobConfiguration(property.Value, options);
+                    configuration = ModelSerializationExtensions.JsonDeserialize<ContainerAppJobConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("template"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    template = ContainerAppJobTemplate.DeserializeContainerAppJobTemplate(property.Value, options);
+                    template = ModelSerializationExtensions.JsonDeserialize<ContainerAppJobTemplate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("outboundIpAddresses"u8))

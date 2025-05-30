@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NotificationHubs
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<NotificationHubSku>)Sku).Write(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(NamespaceName))
@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.NotificationHubs
             if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkAcls, options);
+                ((IJsonModel<NotificationHubNetworkAcls>)NetworkAcls).Write(writer, options);
             }
             if (Optional.IsDefined(PnsCredentials))
             {
                 writer.WritePropertyName("pnsCredentials"u8);
-                writer.WriteObjectValue(PnsCredentials, options);
+                ((IJsonModel<PnsCredentials>)PnsCredentials).Write(writer, options);
             }
             if (Optional.IsDefined(ServiceBusEndpoint))
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NotificationHubPrivateEndpointConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = NotificationHubSku.DeserializeNotificationHubSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<NotificationHubSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.NotificationHubs
                             {
                                 continue;
                             }
-                            networkAcls = NotificationHubNetworkAcls.DeserializeNotificationHubNetworkAcls(property0.Value, options);
+                            networkAcls = ModelSerializationExtensions.JsonDeserialize<NotificationHubNetworkAcls>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("pnsCredentials"u8))
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.NotificationHubs
                             {
                                 continue;
                             }
-                            pnsCredentials = PnsCredentials.DeserializePnsCredentials(property0.Value, options);
+                            pnsCredentials = ModelSerializationExtensions.JsonDeserialize<PnsCredentials>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("serviceBusEndpoint"u8))

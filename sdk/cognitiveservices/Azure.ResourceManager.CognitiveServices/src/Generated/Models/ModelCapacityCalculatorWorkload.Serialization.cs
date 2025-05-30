@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(RequestParameters))
             {
                 writer.WritePropertyName("requestParameters"u8);
-                writer.WriteObjectValue(RequestParameters, options);
+                ((IJsonModel<ModelCapacityCalculatorWorkloadRequestParam>)RequestParameters).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    requestParameters = ModelCapacityCalculatorWorkloadRequestParam.DeserializeModelCapacityCalculatorWorkloadRequestParam(property.Value, options);
+                    requestParameters = ModelSerializationExtensions.JsonDeserialize<ModelCapacityCalculatorWorkloadRequestParam>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

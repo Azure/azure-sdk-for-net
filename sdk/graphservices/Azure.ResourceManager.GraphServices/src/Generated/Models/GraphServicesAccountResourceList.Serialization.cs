@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.GraphServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<GraphServicesAccountResourceData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

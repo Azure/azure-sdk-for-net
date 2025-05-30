@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(EncryptedSecret))
             {
                 writer.WritePropertyName("encryptedSecret"u8);
-                writer.WriteObjectValue(EncryptedSecret, options);
+                ((IJsonModel<AsymmetricEncryptedSecret>)EncryptedSecret).Write(writer, options);
             }
             if (Optional.IsDefined(KeyVaultId))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    encryptedSecret = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property.Value, options);
+                    encryptedSecret = ModelSerializationExtensions.JsonDeserialize<AsymmetricEncryptedSecret>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("keyVaultId"u8))

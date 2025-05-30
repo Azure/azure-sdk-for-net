@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CosmosDBForPostgreSqlClusterData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

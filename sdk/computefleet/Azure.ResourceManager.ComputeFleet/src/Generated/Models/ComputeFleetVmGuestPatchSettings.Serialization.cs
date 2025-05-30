@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(AutomaticByPlatformSettings))
             {
                 writer.WritePropertyName("automaticByPlatformSettings"u8);
-                writer.WriteObjectValue(AutomaticByPlatformSettings, options);
+                ((IJsonModel<ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings>)AutomaticByPlatformSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    automaticByPlatformSettings = ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings.DeserializeComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings(property.Value, options);
+                    automaticByPlatformSettings = ModelSerializationExtensions.JsonDeserialize<ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

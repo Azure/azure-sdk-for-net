@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(GrantTypes))
             {
                 writer.WritePropertyName("grantTypes"u8);
-                writer.WriteObjectValue(GrantTypes, options);
+                ((IJsonModel<AuthorizationProviderOAuth2GrantTypes>)GrantTypes).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    grantTypes = AuthorizationProviderOAuth2GrantTypes.DeserializeAuthorizationProviderOAuth2GrantTypes(property.Value, options);
+                    grantTypes = ModelSerializationExtensions.JsonDeserialize<AuthorizationProviderOAuth2GrantTypes>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -39,7 +39,7 @@ namespace Azure.AI.Language.Text
             writer.WritePropertyName("sentiment"u8);
             writer.WriteStringValue(Sentiment.ToSerialString());
             writer.WritePropertyName("confidenceScores"u8);
-            writer.WriteObjectValue(ConfidenceScores, options);
+            ((IJsonModel<SentimentConfidenceScores>)ConfidenceScores).Write(writer, options);
             writer.WritePropertyName("offset"u8);
             writer.WriteNumberValue(Offset);
             writer.WritePropertyName("length"u8);
@@ -50,7 +50,7 @@ namespace Azure.AI.Language.Text
                 writer.WriteStartArray();
                 foreach (var item in Targets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SentenceTarget>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +60,7 @@ namespace Azure.AI.Language.Text
                 writer.WriteStartArray();
                 foreach (var item in Assessments)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SentenceAssessment>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -124,7 +124,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("confidenceScores"u8))
                 {
-                    confidenceScores = SentimentConfidenceScores.DeserializeSentimentConfidenceScores(property.Value, options);
+                    confidenceScores = ModelSerializationExtensions.JsonDeserialize<SentimentConfidenceScores>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("offset"u8))

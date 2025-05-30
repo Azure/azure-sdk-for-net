@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Grafana.Models
             if (Optional.IsDefined(Term))
             {
                 writer.WritePropertyName("term"u8);
-                writer.WriteObjectValue(Term, options);
+                ((IJsonModel<SubscriptionTerm>)Term).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    term = SubscriptionTerm.DeserializeSubscriptionTerm(property.Value, options);
+                    term = ModelSerializationExtensions.JsonDeserialize<SubscriptionTerm>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

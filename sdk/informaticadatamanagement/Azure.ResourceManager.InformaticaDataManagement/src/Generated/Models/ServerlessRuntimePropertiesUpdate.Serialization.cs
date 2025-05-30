@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             if (Optional.IsDefined(ServerlessRuntimeNetworkProfile))
             {
                 writer.WritePropertyName("serverlessRuntimeNetworkProfile"u8);
-                writer.WriteObjectValue(ServerlessRuntimeNetworkProfile, options);
+                ((IJsonModel<ServerlessRuntimeNetworkProfileUpdate>)ServerlessRuntimeNetworkProfile).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AdvancedCustomProperties))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in AdvancedCustomProperties)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AdvancedCustomProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             if (Optional.IsDefined(ServerlessRuntimeConfig))
             {
                 writer.WritePropertyName("serverlessRuntimeConfig"u8);
-                writer.WriteObjectValue(ServerlessRuntimeConfig, options);
+                ((IJsonModel<ServerlessRuntimeConfigPropertiesUpdate>)ServerlessRuntimeConfig).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ServerlessRuntimeTags))
             {
@@ -95,14 +95,14 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in ServerlessRuntimeTags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ServerlessRuntimeTag>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ServerlessRuntimeUserContextProperties))
             {
                 writer.WritePropertyName("serverlessRuntimeUserContextProperties"u8);
-                writer.WriteObjectValue(ServerlessRuntimeUserContextProperties, options);
+                ((IJsonModel<ServerlessRuntimeUserContextPropertiesUpdate>)ServerlessRuntimeUserContextProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     {
                         continue;
                     }
-                    serverlessRuntimeNetworkProfile = ServerlessRuntimeNetworkProfileUpdate.DeserializeServerlessRuntimeNetworkProfileUpdate(property.Value, options);
+                    serverlessRuntimeNetworkProfile = ModelSerializationExtensions.JsonDeserialize<ServerlessRuntimeNetworkProfileUpdate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("advancedCustomProperties"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     {
                         continue;
                     }
-                    serverlessRuntimeConfig = ServerlessRuntimeConfigPropertiesUpdate.DeserializeServerlessRuntimeConfigPropertiesUpdate(property.Value, options);
+                    serverlessRuntimeConfig = ModelSerializationExtensions.JsonDeserialize<ServerlessRuntimeConfigPropertiesUpdate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("serverlessRuntimeTags"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     {
                         continue;
                     }
-                    serverlessRuntimeUserContextProperties = ServerlessRuntimeUserContextPropertiesUpdate.DeserializeServerlessRuntimeUserContextPropertiesUpdate(property.Value, options);
+                    serverlessRuntimeUserContextProperties = ModelSerializationExtensions.JsonDeserialize<ServerlessRuntimeUserContextPropertiesUpdate>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

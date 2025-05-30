@@ -67,14 +67,14 @@ namespace Azure.ResourceManager.Storage
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ObjectReplicationPolicyRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
-                writer.WriteObjectValue(Metrics, options);
+                ((IJsonModel<ObjectReplicationPolicyPropertiesMetrics>)Metrics).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            metrics = ObjectReplicationPolicyPropertiesMetrics.DeserializeObjectReplicationPolicyPropertiesMetrics(property0.Value, options);
+                            metrics = ModelSerializationExtensions.JsonDeserialize<ObjectReplicationPolicyPropertiesMetrics>(property0.Value);
                             continue;
                         }
                     }

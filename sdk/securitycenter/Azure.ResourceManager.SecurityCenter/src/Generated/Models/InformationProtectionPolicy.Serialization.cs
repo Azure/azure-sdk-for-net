@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 foreach (var item in Labels)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<SensitivityLabel>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 foreach (var item in InformationTypes)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<SecurityInformationTypeInfo>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

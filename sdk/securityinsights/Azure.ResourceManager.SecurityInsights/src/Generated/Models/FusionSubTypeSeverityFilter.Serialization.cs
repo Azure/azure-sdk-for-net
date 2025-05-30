@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Filters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FusionSubTypeSeverityFiltersItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

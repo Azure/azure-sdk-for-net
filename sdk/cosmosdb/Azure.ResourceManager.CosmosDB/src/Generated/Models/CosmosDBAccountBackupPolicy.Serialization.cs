@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(MigrationState))
             {
                 writer.WritePropertyName("migrationState"u8);
-                writer.WriteObjectValue(MigrationState, options);
+                ((IJsonModel<BackupPolicyMigrationState>)MigrationState).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

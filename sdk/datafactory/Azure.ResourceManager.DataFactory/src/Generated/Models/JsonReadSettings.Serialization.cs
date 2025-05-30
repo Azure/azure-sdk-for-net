@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CompressionProperties))
             {
                 writer.WritePropertyName("compressionProperties"u8);
-                writer.WriteObjectValue(CompressionProperties, options);
+                ((IJsonModel<CompressionReadSettings>)CompressionProperties).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    compressionProperties = CompressionReadSettings.DeserializeCompressionReadSettings(property.Value, options);
+                    compressionProperties = ModelSerializationExtensions.JsonDeserialize<CompressionReadSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

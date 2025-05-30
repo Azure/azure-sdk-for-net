@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<DataFactoryPrivateLinkResourceProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    properties = DataFactoryPrivateLinkResourceProperties.DeserializeDataFactoryPrivateLinkResourceProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<DataFactoryPrivateLinkResourceProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

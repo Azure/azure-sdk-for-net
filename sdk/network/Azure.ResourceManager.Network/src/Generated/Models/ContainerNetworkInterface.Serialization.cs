@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(ContainerNetworkInterfaceConfiguration))
             {
                 writer.WritePropertyName("containerNetworkInterfaceConfiguration"u8);
-                writer.WriteObjectValue(ContainerNetworkInterfaceConfiguration, options);
+                ((IJsonModel<ContainerNetworkInterfaceConfiguration>)ContainerNetworkInterfaceConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(Container))
             {
                 writer.WritePropertyName("container"u8);
-                JsonSerializer.Serialize(writer, Container);
+                ((IJsonModel<WritableSubResource>)Container).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(IPConfigurations))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerNetworkInterfaceIPConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            containerNetworkInterfaceConfiguration = ContainerNetworkInterfaceConfiguration.DeserializeContainerNetworkInterfaceConfiguration(property0.Value, options);
+                            containerNetworkInterfaceConfiguration = ModelSerializationExtensions.JsonDeserialize<ContainerNetworkInterfaceConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("container"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            container = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            container = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ipConfigurations"u8))

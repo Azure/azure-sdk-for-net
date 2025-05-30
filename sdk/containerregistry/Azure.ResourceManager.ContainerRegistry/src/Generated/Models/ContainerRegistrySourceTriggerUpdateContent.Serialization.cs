@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(SourceRepository))
             {
                 writer.WritePropertyName("sourceRepository"u8);
-                writer.WriteObjectValue(SourceRepository, options);
+                ((IJsonModel<SourceCodeRepoUpdateContent>)SourceRepository).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(SourceTriggerEvents))
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    sourceRepository = SourceCodeRepoUpdateContent.DeserializeSourceCodeRepoUpdateContent(property.Value, options);
+                    sourceRepository = ModelSerializationExtensions.JsonDeserialize<SourceCodeRepoUpdateContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sourceTriggerEvents"u8))

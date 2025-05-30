@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in PostMigrationSteps)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedRunCommandScriptContent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             if (Optional.IsDefined(ApplicationHealthPolicy))
             {
                 writer.WritePropertyName("applicationHealthPolicy"u8);
-                writer.WriteObjectValue(ApplicationHealthPolicy, options);
+                ((IJsonModel<ApplicationHealthPolicy>)ApplicationHealthPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(ForceRestart))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             if (Optional.IsDefined(RollingUpgradeMonitoringPolicy))
             {
                 writer.WritePropertyName("rollingUpgradeMonitoringPolicy"u8);
-                writer.WriteObjectValue(RollingUpgradeMonitoringPolicy, options);
+                ((IJsonModel<RollingUpgradeMonitoringPolicy>)RollingUpgradeMonitoringPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(InstanceCloseDelayDurationInSeconds))
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    applicationHealthPolicy = ApplicationHealthPolicy.DeserializeApplicationHealthPolicy(property.Value, options);
+                    applicationHealthPolicy = ModelSerializationExtensions.JsonDeserialize<ApplicationHealthPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("forceRestart"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    rollingUpgradeMonitoringPolicy = RollingUpgradeMonitoringPolicy.DeserializeRollingUpgradeMonitoringPolicy(property.Value, options);
+                    rollingUpgradeMonitoringPolicy = ModelSerializationExtensions.JsonDeserialize<RollingUpgradeMonitoringPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("instanceCloseDelayDuration"u8))

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BotConnectionSettingParameter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

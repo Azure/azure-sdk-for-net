@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<MongoClusterUpdateProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     {
                         continue;
                     }
-                    properties = MongoClusterUpdateProperties.DeserializeMongoClusterUpdateProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<MongoClusterUpdateProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

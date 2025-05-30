@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Criteria)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SecurityInsightsMetadataDependencies>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

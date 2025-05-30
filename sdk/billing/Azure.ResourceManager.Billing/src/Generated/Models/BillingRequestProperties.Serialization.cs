@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(ReviewedBy))
             {
                 writer.WritePropertyName("reviewedBy"u8);
-                writer.WriteObjectValue(ReviewedBy, options);
+                ((IJsonModel<BillingPrincipal>)ReviewedBy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReviewalOn))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue(CreatedBy, options);
+                ((IJsonModel<BillingPrincipal>)CreatedBy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in Recipients)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BillingPrincipal>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(LastUpdatedBy))
             {
                 writer.WritePropertyName("lastUpdatedBy"u8);
-                writer.WriteObjectValue(LastUpdatedBy, options);
+                ((IJsonModel<BillingPrincipal>)LastUpdatedBy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    reviewedBy = BillingPrincipal.DeserializeBillingPrincipal(property.Value, options);
+                    reviewedBy = ModelSerializationExtensions.JsonDeserialize<BillingPrincipal>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("reviewalDate"u8))
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    createdBy = BillingPrincipal.DeserializeBillingPrincipal(property.Value, options);
+                    createdBy = ModelSerializationExtensions.JsonDeserialize<BillingPrincipal>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("creationDate"u8))
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    lastUpdatedBy = BillingPrincipal.DeserializeBillingPrincipal(property.Value, options);
+                    lastUpdatedBy = ModelSerializationExtensions.JsonDeserialize<BillingPrincipal>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lastUpdatedDate"u8))

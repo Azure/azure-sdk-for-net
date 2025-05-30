@@ -28,12 +28,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ServicePrincipalKey))
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
-                writer.WriteObjectValue(ServicePrincipalKey);
+                JsonSerializer.Serialize(writer, ServicePrincipalKey);
             }
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue(Credential);
+                JsonSerializer.Serialize(writer, Credential);
             }
             writer.WriteEndObject();
         }
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    servicePrincipalKey = SecretBase.DeserializeSecretBase(property.Value);
+                    servicePrincipalKey = ModelSerializationExtensions.JsonDeserialize<SecretBase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("credential"u8))
@@ -79,7 +79,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    credential = CredentialReference.DeserializeCredentialReference(property.Value);
+                    credential = ModelSerializationExtensions.JsonDeserialize<CredentialReference>(property.Value);
                     continue;
                 }
             }

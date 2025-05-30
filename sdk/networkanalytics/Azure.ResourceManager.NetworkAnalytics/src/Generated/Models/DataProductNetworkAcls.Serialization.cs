@@ -38,14 +38,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in VirtualNetworkRule)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<NetworkAnalyticsVirtualNetworkRule>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("ipRules"u8);
             writer.WriteStartArray();
             foreach (var item in IPRules)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<NetworkAnalyticsIPRules>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("allowedQueryIpRangeList"u8);

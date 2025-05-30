@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osProfile = OSProfileProvisioningData.DeserializeOSProfileProvisioningData(property.Value, options);
+                    osProfile = ModelSerializationExtensions.JsonDeserialize<OSProfileProvisioningData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

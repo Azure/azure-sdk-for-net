@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue(Input, options);
+                ((IJsonModel<BenefitUtilizationSummariesContent>)Input).Write(writer, options);
             }
             if (Optional.IsDefined(Status))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<AsyncOperationStatusProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    input = BenefitUtilizationSummariesContent.DeserializeBenefitUtilizationSummariesContent(property.Value, options);
+                    input = ModelSerializationExtensions.JsonDeserialize<BenefitUtilizationSummariesContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    properties = AsyncOperationStatusProperties.DeserializeAsyncOperationStatusProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<AsyncOperationStatusProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

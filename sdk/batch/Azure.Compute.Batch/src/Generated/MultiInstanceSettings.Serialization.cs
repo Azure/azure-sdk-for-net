@@ -47,7 +47,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in CommonResourceFiles)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceFile>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

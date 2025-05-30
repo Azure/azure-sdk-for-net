@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             if (Optional.IsDefined(ApiServerAccessProfile))
             {
                 writer.WritePropertyName("apiServerAccessProfile"u8);
-                writer.WriteObjectValue(ApiServerAccessProfile, options);
+                ((IJsonModel<ContainerServiceFleetAPIServerAccessProfile>)ApiServerAccessProfile).Write(writer, options);
             }
             if (Optional.IsDefined(AgentProfile))
             {
                 writer.WritePropertyName("agentProfile"u8);
-                writer.WriteObjectValue(AgentProfile, options);
+                ((IJsonModel<ContainerServiceFleetAgentProfile>)AgentProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Fqdn))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    apiServerAccessProfile = ContainerServiceFleetAPIServerAccessProfile.DeserializeContainerServiceFleetAPIServerAccessProfile(property.Value, options);
+                    apiServerAccessProfile = ModelSerializationExtensions.JsonDeserialize<ContainerServiceFleetAPIServerAccessProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("agentProfile"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    agentProfile = ContainerServiceFleetAgentProfile.DeserializeContainerServiceFleetAgentProfile(property.Value, options);
+                    agentProfile = ModelSerializationExtensions.JsonDeserialize<ContainerServiceFleetAgentProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("fqdn"u8))

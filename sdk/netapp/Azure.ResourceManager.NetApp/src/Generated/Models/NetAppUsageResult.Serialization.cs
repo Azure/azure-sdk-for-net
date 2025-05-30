@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
+                ((IJsonModel<NetAppUsageName>)Name).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    name = NetAppUsageName.DeserializeNetAppUsageName(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<NetAppUsageName>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

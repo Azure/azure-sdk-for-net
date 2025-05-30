@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<GrafanaPrivateEndpointConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -97,17 +97,17 @@ namespace Azure.ResourceManager.Grafana.Models
             if (Optional.IsDefined(GrafanaIntegrations))
             {
                 writer.WritePropertyName("grafanaIntegrations"u8);
-                writer.WriteObjectValue(GrafanaIntegrations, options);
+                ((IJsonModel<GrafanaIntegrations>)GrafanaIntegrations).Write(writer, options);
             }
             if (Optional.IsDefined(EnterpriseConfigurations))
             {
                 writer.WritePropertyName("enterpriseConfigurations"u8);
-                writer.WriteObjectValue(EnterpriseConfigurations, options);
+                ((IJsonModel<EnterpriseConfigurations>)EnterpriseConfigurations).Write(writer, options);
             }
             if (Optional.IsDefined(GrafanaConfigurations))
             {
                 writer.WritePropertyName("grafanaConfigurations"u8);
-                writer.WriteObjectValue(GrafanaConfigurations, options);
+                ((IJsonModel<GrafanaConfigurations>)GrafanaConfigurations).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(GrafanaPlugins))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 foreach (var item in GrafanaPlugins)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<GrafanaPlugin>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    grafanaIntegrations = GrafanaIntegrations.DeserializeGrafanaIntegrations(property.Value, options);
+                    grafanaIntegrations = ModelSerializationExtensions.JsonDeserialize<GrafanaIntegrations>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("enterpriseConfigurations"u8))
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    enterpriseConfigurations = EnterpriseConfigurations.DeserializeEnterpriseConfigurations(property.Value, options);
+                    enterpriseConfigurations = ModelSerializationExtensions.JsonDeserialize<EnterpriseConfigurations>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("grafanaConfigurations"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    grafanaConfigurations = GrafanaConfigurations.DeserializeGrafanaConfigurations(property.Value, options);
+                    grafanaConfigurations = ModelSerializationExtensions.JsonDeserialize<GrafanaConfigurations>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("grafanaPlugins"u8))

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DatasetReference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,16 +52,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DatasetReference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source, options);
+            ((IJsonModel<CopyActivitySource>)Source).Write(writer, options);
             writer.WritePropertyName("sink"u8);
-            writer.WriteObjectValue(Sink, options);
+            ((IJsonModel<CopySink>)Sink).Write(writer, options);
             if (Optional.IsDefined(Translator))
             {
                 writer.WritePropertyName("translator"u8);
@@ -77,42 +77,42 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EnableStaging))
             {
                 writer.WritePropertyName("enableStaging"u8);
-                JsonSerializer.Serialize(writer, EnableStaging);
+                ((IJsonModel<DataFactoryElement<T>>)EnableStaging).Write(writer, options);
             }
             if (Optional.IsDefined(StagingSettings))
             {
                 writer.WritePropertyName("stagingSettings"u8);
-                writer.WriteObjectValue(StagingSettings, options);
+                ((IJsonModel<StagingSettings>)StagingSettings).Write(writer, options);
             }
             if (Optional.IsDefined(ParallelCopies))
             {
                 writer.WritePropertyName("parallelCopies"u8);
-                JsonSerializer.Serialize(writer, ParallelCopies);
+                ((IJsonModel<DataFactoryElement<T>>)ParallelCopies).Write(writer, options);
             }
             if (Optional.IsDefined(DataIntegrationUnits))
             {
                 writer.WritePropertyName("dataIntegrationUnits"u8);
-                JsonSerializer.Serialize(writer, DataIntegrationUnits);
+                ((IJsonModel<DataFactoryElement<T>>)DataIntegrationUnits).Write(writer, options);
             }
             if (Optional.IsDefined(EnableSkipIncompatibleRow))
             {
                 writer.WritePropertyName("enableSkipIncompatibleRow"u8);
-                JsonSerializer.Serialize(writer, EnableSkipIncompatibleRow);
+                ((IJsonModel<DataFactoryElement<T>>)EnableSkipIncompatibleRow).Write(writer, options);
             }
             if (Optional.IsDefined(RedirectIncompatibleRowSettings))
             {
                 writer.WritePropertyName("redirectIncompatibleRowSettings"u8);
-                writer.WriteObjectValue(RedirectIncompatibleRowSettings, options);
+                ((IJsonModel<RedirectIncompatibleRowSettings>)RedirectIncompatibleRowSettings).Write(writer, options);
             }
             if (Optional.IsDefined(LogStorageSettings))
             {
                 writer.WritePropertyName("logStorageSettings"u8);
-                writer.WriteObjectValue(LogStorageSettings, options);
+                ((IJsonModel<LogStorageSettings>)LogStorageSettings).Write(writer, options);
             }
             if (Optional.IsDefined(LogSettings))
             {
                 writer.WritePropertyName("logSettings"u8);
-                writer.WriteObjectValue(LogSettings, options);
+                ((IJsonModel<DataFactoryLogSettings>)LogSettings).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(PreserveRules))
             {
@@ -161,12 +161,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ValidateDataConsistency))
             {
                 writer.WritePropertyName("validateDataConsistency"u8);
-                JsonSerializer.Serialize(writer, ValidateDataConsistency);
+                ((IJsonModel<DataFactoryElement<T>>)ValidateDataConsistency).Write(writer, options);
             }
             if (Optional.IsDefined(SkipErrorFile))
             {
                 writer.WritePropertyName("skipErrorFile"u8);
-                writer.WriteObjectValue(SkipErrorFile, options);
+                ((IJsonModel<SkipErrorFile>)SkipErrorFile).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
+                    policy = ModelSerializationExtensions.JsonDeserialize<PipelineActivityPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -351,12 +351,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("source"u8))
                         {
-                            source = CopyActivitySource.DeserializeCopyActivitySource(property0.Value, options);
+                            source = ModelSerializationExtensions.JsonDeserialize<CopyActivitySource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sink"u8))
                         {
-                            sink = CopySink.DeserializeCopySink(property0.Value, options);
+                            sink = ModelSerializationExtensions.JsonDeserialize<CopySink>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("translator"u8))
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            enableStaging = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            enableStaging = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("stagingSettings"u8))
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            stagingSettings = StagingSettings.DeserializeStagingSettings(property0.Value, options);
+                            stagingSettings = ModelSerializationExtensions.JsonDeserialize<StagingSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("parallelCopies"u8))
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            parallelCopies = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            parallelCopies = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dataIntegrationUnits"u8))
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            dataIntegrationUnits = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            dataIntegrationUnits = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enableSkipIncompatibleRow"u8))
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            enableSkipIncompatibleRow = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            enableSkipIncompatibleRow = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("redirectIncompatibleRowSettings"u8))
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            redirectIncompatibleRowSettings = RedirectIncompatibleRowSettings.DeserializeRedirectIncompatibleRowSettings(property0.Value, options);
+                            redirectIncompatibleRowSettings = ModelSerializationExtensions.JsonDeserialize<RedirectIncompatibleRowSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("logStorageSettings"u8))
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            logStorageSettings = LogStorageSettings.DeserializeLogStorageSettings(property0.Value, options);
+                            logStorageSettings = ModelSerializationExtensions.JsonDeserialize<LogStorageSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("logSettings"u8))
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            logSettings = DataFactoryLogSettings.DeserializeDataFactoryLogSettings(property0.Value, options);
+                            logSettings = ModelSerializationExtensions.JsonDeserialize<DataFactoryLogSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("preserveRules"u8))
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            validateDataConsistency = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            validateDataConsistency = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("skipErrorFile"u8))
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            skipErrorFile = SkipErrorFile.DeserializeSkipErrorFile(property0.Value, options);
+                            skipErrorFile = ModelSerializationExtensions.JsonDeserialize<SkipErrorFile>(property0.Value);
                             continue;
                         }
                     }

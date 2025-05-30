@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in CoreSummaries)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<OperationalInsightsSearchCoreSummary>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Sort)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SearchSort>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-                writer.WriteObjectValue(Schema, options);
+                ((IJsonModel<SearchMetadataSchema>)Schema).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    schema = SearchMetadataSchema.DeserializeSearchMetadataSchema(property.Value, options);
+                    schema = ModelSerializationExtensions.JsonDeserialize<SearchMetadataSchema>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

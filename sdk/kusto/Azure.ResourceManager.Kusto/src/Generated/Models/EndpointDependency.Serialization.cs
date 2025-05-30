@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStartArray();
                 foreach (var item in EndpointDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EndpointDetail>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in RequiredDataConnectors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AlertRuleTemplateDataSource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -132,19 +132,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in EntityMappings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SecurityInsightsAlertRuleEntityMapping>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AlertDetailsOverride))
             {
                 writer.WritePropertyName("alertDetailsOverride"u8);
-                writer.WriteObjectValue(AlertDetailsOverride, options);
+                ((IJsonModel<SecurityInsightsAlertDetailsOverride>)AlertDetailsOverride).Write(writer, options);
             }
             if (Optional.IsDefined(EventGroupingSettings))
             {
                 writer.WritePropertyName("eventGroupingSettings"u8);
-                writer.WriteObjectValue(EventGroupingSettings, options);
+                ((IJsonModel<EventGroupingSettings>)EventGroupingSettings).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(SentinelEntitiesMappings))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in SentinelEntitiesMappings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SentinelEntityMapping>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            alertDetailsOverride = SecurityInsightsAlertDetailsOverride.DeserializeSecurityInsightsAlertDetailsOverride(property0.Value, options);
+                            alertDetailsOverride = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsAlertDetailsOverride>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("eventGroupingSettings"u8))
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            eventGroupingSettings = EventGroupingSettings.DeserializeEventGroupingSettings(property0.Value, options);
+                            eventGroupingSettings = ModelSerializationExtensions.JsonDeserialize<EventGroupingSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sentinelEntitiesMappings"u8))

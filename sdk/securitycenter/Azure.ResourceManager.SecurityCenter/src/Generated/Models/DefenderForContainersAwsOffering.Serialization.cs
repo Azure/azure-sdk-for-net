@@ -38,32 +38,32 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(KubernetesService))
             {
                 writer.WritePropertyName("kubernetesService"u8);
-                writer.WriteObjectValue(KubernetesService, options);
+                ((IJsonModel<DefenderForContainersAwsOfferingKubernetesService>)KubernetesService).Write(writer, options);
             }
             if (Optional.IsDefined(KubernetesScubaReader))
             {
                 writer.WritePropertyName("kubernetesScubaReader"u8);
-                writer.WriteObjectValue(KubernetesScubaReader, options);
+                ((IJsonModel<DefenderForContainersAwsOfferingKubernetesScubaReader>)KubernetesScubaReader).Write(writer, options);
             }
             if (Optional.IsDefined(CloudWatchToKinesis))
             {
                 writer.WritePropertyName("cloudWatchToKinesis"u8);
-                writer.WriteObjectValue(CloudWatchToKinesis, options);
+                ((IJsonModel<DefenderForContainersAwsOfferingCloudWatchToKinesis>)CloudWatchToKinesis).Write(writer, options);
             }
             if (Optional.IsDefined(KinesisToS3))
             {
                 writer.WritePropertyName("kinesisToS3"u8);
-                writer.WriteObjectValue(KinesisToS3, options);
+                ((IJsonModel<DefenderForContainersAwsOfferingKinesisToS3>)KinesisToS3).Write(writer, options);
             }
             if (Optional.IsDefined(ContainerVulnerabilityAssessment))
             {
                 writer.WritePropertyName("containerVulnerabilityAssessment"u8);
-                writer.WriteObjectValue(ContainerVulnerabilityAssessment, options);
+                ((IJsonModel<DefenderForContainersAwsOfferingContainerVulnerabilityAssessment>)ContainerVulnerabilityAssessment).Write(writer, options);
             }
             if (Optional.IsDefined(ContainerVulnerabilityAssessmentTask))
             {
                 writer.WritePropertyName("containerVulnerabilityAssessmentTask"u8);
-                writer.WriteObjectValue(ContainerVulnerabilityAssessmentTask, options);
+                ((IJsonModel<DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask>)ContainerVulnerabilityAssessmentTask).Write(writer, options);
             }
             if (Optional.IsDefined(IsContainerVulnerabilityAssessmentEnabled))
             {
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(MdcContainersImageAssessment))
             {
                 writer.WritePropertyName("mdcContainersImageAssessment"u8);
-                writer.WriteObjectValue(MdcContainersImageAssessment, options);
+                ((IJsonModel<DefenderForContainersAwsOfferingMdcContainersImageAssessment>)MdcContainersImageAssessment).Write(writer, options);
             }
             if (Optional.IsDefined(MdcContainersAgentlessDiscoveryK8S))
             {
                 writer.WritePropertyName("mdcContainersAgentlessDiscoveryK8s"u8);
-                writer.WriteObjectValue(MdcContainersAgentlessDiscoveryK8S, options);
+                ((IJsonModel<DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S>)MdcContainersAgentlessDiscoveryK8S).Write(writer, options);
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    kubernetesService = DefenderForContainersAwsOfferingKubernetesService.DeserializeDefenderForContainersAwsOfferingKubernetesService(property.Value, options);
+                    kubernetesService = ModelSerializationExtensions.JsonDeserialize<DefenderForContainersAwsOfferingKubernetesService>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kubernetesScubaReader"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    kubernetesScubaReader = DefenderForContainersAwsOfferingKubernetesScubaReader.DeserializeDefenderForContainersAwsOfferingKubernetesScubaReader(property.Value, options);
+                    kubernetesScubaReader = ModelSerializationExtensions.JsonDeserialize<DefenderForContainersAwsOfferingKubernetesScubaReader>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("cloudWatchToKinesis"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    cloudWatchToKinesis = DefenderForContainersAwsOfferingCloudWatchToKinesis.DeserializeDefenderForContainersAwsOfferingCloudWatchToKinesis(property.Value, options);
+                    cloudWatchToKinesis = ModelSerializationExtensions.JsonDeserialize<DefenderForContainersAwsOfferingCloudWatchToKinesis>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kinesisToS3"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    kinesisToS3 = DefenderForContainersAwsOfferingKinesisToS3.DeserializeDefenderForContainersAwsOfferingKinesisToS3(property.Value, options);
+                    kinesisToS3 = ModelSerializationExtensions.JsonDeserialize<DefenderForContainersAwsOfferingKinesisToS3>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("containerVulnerabilityAssessment"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    containerVulnerabilityAssessment = DefenderForContainersAwsOfferingContainerVulnerabilityAssessment.DeserializeDefenderForContainersAwsOfferingContainerVulnerabilityAssessment(property.Value, options);
+                    containerVulnerabilityAssessment = ModelSerializationExtensions.JsonDeserialize<DefenderForContainersAwsOfferingContainerVulnerabilityAssessment>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("containerVulnerabilityAssessmentTask"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    containerVulnerabilityAssessmentTask = DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask.DeserializeDefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask(property.Value, options);
+                    containerVulnerabilityAssessmentTask = ModelSerializationExtensions.JsonDeserialize<DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("enableContainerVulnerabilityAssessment"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    mdcContainersImageAssessment = DefenderForContainersAwsOfferingMdcContainersImageAssessment.DeserializeDefenderForContainersAwsOfferingMdcContainersImageAssessment(property.Value, options);
+                    mdcContainersImageAssessment = ModelSerializationExtensions.JsonDeserialize<DefenderForContainersAwsOfferingMdcContainersImageAssessment>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mdcContainersAgentlessDiscoveryK8s"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    mdcContainersAgentlessDiscoveryK8S = DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S.DeserializeDefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S(property.Value, options);
+                    mdcContainersAgentlessDiscoveryK8S = ModelSerializationExtensions.JsonDeserialize<DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("offeringType"u8))

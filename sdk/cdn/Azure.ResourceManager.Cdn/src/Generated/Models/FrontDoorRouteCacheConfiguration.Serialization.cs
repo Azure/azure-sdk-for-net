@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(CompressionSettings))
             {
                 writer.WritePropertyName("compressionSettings"u8);
-                writer.WriteObjectValue(CompressionSettings, options);
+                ((IJsonModel<RouteCacheCompressionSettings>)CompressionSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    compressionSettings = RouteCacheCompressionSettings.DeserializeRouteCacheCompressionSettings(property.Value, options);
+                    compressionSettings = ModelSerializationExtensions.JsonDeserialize<RouteCacheCompressionSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -35,7 +35,7 @@ namespace Azure.AI.Language.Conversations.Models
             }
 
             writer.WritePropertyName("conversationItem"u8);
-            writer.WriteObjectValue(ConversationItem, options);
+            ((IJsonModel<TextConversationItem>)ConversationItem).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,7 +80,7 @@ namespace Azure.AI.Language.Conversations.Models
             {
                 if (property.NameEquals("conversationItem"u8))
                 {
-                    conversationItem = TextConversationItem.DeserializeTextConversationItem(property.Value, options);
+                    conversationItem = ModelSerializationExtensions.JsonDeserialize<TextConversationItem>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

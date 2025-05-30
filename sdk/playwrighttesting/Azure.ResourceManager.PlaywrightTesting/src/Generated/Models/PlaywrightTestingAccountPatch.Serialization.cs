@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<AccountUpdateProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                     {
                         continue;
                     }
-                    properties = AccountUpdateProperties.DeserializeAccountUpdateProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<AccountUpdateProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

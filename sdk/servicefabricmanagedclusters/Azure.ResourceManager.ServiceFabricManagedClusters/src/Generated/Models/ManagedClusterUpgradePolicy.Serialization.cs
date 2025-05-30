@@ -42,17 +42,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             if (Optional.IsDefined(HealthPolicy))
             {
                 writer.WritePropertyName("healthPolicy"u8);
-                writer.WriteObjectValue(HealthPolicy, options);
+                ((IJsonModel<ManagedClusterHealthPolicy>)HealthPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(DeltaHealthPolicy))
             {
                 writer.WritePropertyName("deltaHealthPolicy"u8);
-                writer.WriteObjectValue(DeltaHealthPolicy, options);
+                ((IJsonModel<ManagedClusterUpgradeDeltaHealthPolicy>)DeltaHealthPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(MonitoringPolicy))
             {
                 writer.WritePropertyName("monitoringPolicy"u8);
-                writer.WriteObjectValue(MonitoringPolicy, options);
+                ((IJsonModel<ManagedClusterMonitoringPolicy>)MonitoringPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(UpgradeReplicaSetCheckTimeout))
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    healthPolicy = ManagedClusterHealthPolicy.DeserializeManagedClusterHealthPolicy(property.Value, options);
+                    healthPolicy = ModelSerializationExtensions.JsonDeserialize<ManagedClusterHealthPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deltaHealthPolicy"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    deltaHealthPolicy = ManagedClusterUpgradeDeltaHealthPolicy.DeserializeManagedClusterUpgradeDeltaHealthPolicy(property.Value, options);
+                    deltaHealthPolicy = ModelSerializationExtensions.JsonDeserialize<ManagedClusterUpgradeDeltaHealthPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("monitoringPolicy"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    monitoringPolicy = ManagedClusterMonitoringPolicy.DeserializeManagedClusterMonitoringPolicy(property.Value, options);
+                    monitoringPolicy = ModelSerializationExtensions.JsonDeserialize<ManagedClusterMonitoringPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("upgradeReplicaSetCheckTimeout"u8))

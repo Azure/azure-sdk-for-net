@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStringValue(DisplayName);
             }
             writer.WritePropertyName("participantCommunicationIdentifier"u8);
-            writer.WriteObjectValue(ParticipantCommunicationIdentifier, options);
+            ((IJsonModel<CommunicationIdentifierModel>)ParticipantCommunicationIdentifier).Write(writer, options);
             if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
@@ -103,7 +103,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("participantCommunicationIdentifier"u8))
                 {
-                    participantCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value, options);
+                    participantCommunicationIdentifier = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))

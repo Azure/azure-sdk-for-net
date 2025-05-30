@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<ContainerRegistrySku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -66,17 +66,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkRuleSet"u8);
-                writer.WriteObjectValue(NetworkRuleSet, options);
+                ((IJsonModel<ContainerRegistryNetworkRuleSet>)NetworkRuleSet).Write(writer, options);
             }
             if (Optional.IsDefined(Policies))
             {
                 writer.WritePropertyName("policies"u8);
-                writer.WriteObjectValue(Policies, options);
+                ((IJsonModel<ContainerRegistryPolicies>)Policies).Write(writer, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<ContainerRegistryEncryption>)Encryption).Write(writer, options);
             }
             if (Optional.IsDefined(IsDataEndpointEnabled))
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    sku = ContainerRegistrySku.DeserializeContainerRegistrySku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<ContainerRegistrySku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            networkRuleSet = ContainerRegistryNetworkRuleSet.DeserializeContainerRegistryNetworkRuleSet(property0.Value, options);
+                            networkRuleSet = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryNetworkRuleSet>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("policies"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            policies = ContainerRegistryPolicies.DeserializeContainerRegistryPolicies(property0.Value, options);
+                            policies = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryPolicies>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            encryption = ContainerRegistryEncryption.DeserializeContainerRegistryEncryption(property0.Value, options);
+                            encryption = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryEncryption>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dataEndpointEnabled"u8))

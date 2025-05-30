@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Addresses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AzureFirewallPublicIPAddress>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

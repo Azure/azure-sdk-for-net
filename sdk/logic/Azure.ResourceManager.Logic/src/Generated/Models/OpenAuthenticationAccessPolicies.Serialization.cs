@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Logic.Models
                 foreach (var item in AccessPolicies)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<OpenAuthenticationAccessPolicy>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }

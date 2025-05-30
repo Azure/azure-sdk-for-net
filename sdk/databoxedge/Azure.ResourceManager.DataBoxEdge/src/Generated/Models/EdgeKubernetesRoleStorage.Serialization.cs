@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageClasses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EdgeKubernetesRoleStorageClassInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataBoxEdgeMountPointMap>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

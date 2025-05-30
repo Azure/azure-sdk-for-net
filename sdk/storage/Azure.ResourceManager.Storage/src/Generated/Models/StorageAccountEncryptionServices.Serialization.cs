@@ -38,22 +38,22 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(Blob))
             {
                 writer.WritePropertyName("blob"u8);
-                writer.WriteObjectValue(Blob, options);
+                ((IJsonModel<StorageEncryptionService>)Blob).Write(writer, options);
             }
             if (Optional.IsDefined(File))
             {
                 writer.WritePropertyName("file"u8);
-                writer.WriteObjectValue(File, options);
+                ((IJsonModel<StorageEncryptionService>)File).Write(writer, options);
             }
             if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
-                writer.WriteObjectValue(Table, options);
+                ((IJsonModel<StorageEncryptionService>)Table).Write(writer, options);
             }
             if (Optional.IsDefined(Queue))
             {
                 writer.WritePropertyName("queue"u8);
-                writer.WriteObjectValue(Queue, options);
+                ((IJsonModel<StorageEncryptionService>)Queue).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    blob = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value, options);
+                    blob = ModelSerializationExtensions.JsonDeserialize<StorageEncryptionService>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("file"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    file = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value, options);
+                    file = ModelSerializationExtensions.JsonDeserialize<StorageEncryptionService>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("table"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    table = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value, options);
+                    table = ModelSerializationExtensions.JsonDeserialize<StorageEncryptionService>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("queue"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    queue = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value, options);
+                    queue = ModelSerializationExtensions.JsonDeserialize<StorageEncryptionService>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

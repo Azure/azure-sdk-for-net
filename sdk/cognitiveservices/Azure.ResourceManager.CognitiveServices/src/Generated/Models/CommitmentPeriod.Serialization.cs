@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (options.Format != "W" && Optional.IsDefined(Quota))
             {
                 writer.WritePropertyName("quota"u8);
-                writer.WriteObjectValue(Quota, options);
+                ((IJsonModel<CommitmentQuota>)Quota).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    quota = CommitmentQuota.DeserializeCommitmentQuota(property.Value, options);
+                    quota = ModelSerializationExtensions.JsonDeserialize<CommitmentQuota>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("startDate"u8))

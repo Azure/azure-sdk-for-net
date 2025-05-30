@@ -95,7 +95,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (AuthIdentity != null)
                 {
                     writer.WritePropertyName("authIdentity"u8);
-                    writer.WriteObjectValue(AuthIdentity);
+                    JsonSerializer.Serialize(writer, AuthIdentity);
                 }
                 else
                 {
@@ -123,14 +123,14 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue<InputFieldMappingEntry>(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("outputs"u8);
             writer.WriteStartArray();
             foreach (var item in Outputs)
             {
-                writer.WriteObjectValue<OutputFieldMappingEntry>(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -237,7 +237,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         authIdentity = null;
                         continue;
                     }
-                    authIdentity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value);
+                    authIdentity = ModelSerializationExtensions.JsonDeserialize<SearchIndexerDataIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))

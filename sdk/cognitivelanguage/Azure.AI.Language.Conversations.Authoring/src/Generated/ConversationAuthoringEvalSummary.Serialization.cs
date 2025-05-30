@@ -35,13 +35,13 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
 
             writer.WritePropertyName("entitiesEvaluation"u8);
-            writer.WriteObjectValue(EntitiesEvaluation, options);
+            ((IJsonModel<EntitiesEvaluationSummary>)EntitiesEvaluation).Write(writer, options);
             writer.WritePropertyName("intentsEvaluation"u8);
-            writer.WriteObjectValue(IntentsEvaluation, options);
+            ((IJsonModel<IntentsEvaluationSummary>)IntentsEvaluation).Write(writer, options);
             if (Optional.IsDefined(EvaluationOptions))
             {
                 writer.WritePropertyName("evaluationOptions"u8);
-                writer.WriteObjectValue(EvaluationOptions, options);
+                ((IJsonModel<ConversationAuthoringEvaluationDetails>)EvaluationOptions).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -89,12 +89,12 @@ namespace Azure.AI.Language.Conversations.Authoring
             {
                 if (property.NameEquals("entitiesEvaluation"u8))
                 {
-                    entitiesEvaluation = EntitiesEvaluationSummary.DeserializeEntitiesEvaluationSummary(property.Value, options);
+                    entitiesEvaluation = ModelSerializationExtensions.JsonDeserialize<EntitiesEvaluationSummary>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("intentsEvaluation"u8))
                 {
-                    intentsEvaluation = IntentsEvaluationSummary.DeserializeIntentsEvaluationSummary(property.Value, options);
+                    intentsEvaluation = ModelSerializationExtensions.JsonDeserialize<IntentsEvaluationSummary>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("evaluationOptions"u8))
@@ -103,7 +103,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                     {
                         continue;
                     }
-                    evaluationOptions = ConversationAuthoringEvaluationDetails.DeserializeConversationAuthoringEvaluationDetails(property.Value, options);
+                    evaluationOptions = ModelSerializationExtensions.JsonDeserialize<ConversationAuthoringEvaluationDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

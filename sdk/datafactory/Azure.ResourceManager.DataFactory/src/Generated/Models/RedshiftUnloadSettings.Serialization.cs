@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("s3LinkedServiceName"u8);
             JsonSerializer.Serialize(writer, S3LinkedServiceName);
             writer.WritePropertyName("bucketName"u8);
-            JsonSerializer.Serialize(writer, BucketName);
+            ((IJsonModel<DataFactoryElement<T>>)BucketName).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("s3LinkedServiceName"u8))
                 {
-                    s3LinkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    s3LinkedServiceName = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("bucketName"u8))
                 {
-                    bucketName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    bucketName = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

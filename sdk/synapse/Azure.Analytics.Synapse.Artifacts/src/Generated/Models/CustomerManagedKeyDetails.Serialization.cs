@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
-                writer.WriteObjectValue(Key);
+                JsonSerializer.Serialize(writer, Key);
             }
             writer.WriteEndObject();
         }
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    key = WorkspaceKeyDetails.DeserializeWorkspaceKeyDetails(property.Value);
+                    key = ModelSerializationExtensions.JsonDeserialize<WorkspaceKeyDetails>(property.Value);
                     continue;
                 }
             }

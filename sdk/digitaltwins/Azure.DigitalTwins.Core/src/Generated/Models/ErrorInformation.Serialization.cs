@@ -19,7 +19,7 @@ namespace Azure.DigitalTwins.Core
             if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(Innererror);
+                JsonSerializer.Serialize(writer, Innererror);
             }
             writer.WriteEndObject();
         }
@@ -66,7 +66,7 @@ namespace Azure.DigitalTwins.Core
                     {
                         continue;
                     }
-                    innererror = InnerError.DeserializeInnerError(property.Value);
+                    innererror = ModelSerializationExtensions.JsonDeserialize<InnerError>(property.Value);
                     continue;
                 }
             }

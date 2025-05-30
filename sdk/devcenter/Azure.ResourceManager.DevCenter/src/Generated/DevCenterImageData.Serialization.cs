@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DevCenter
             if (options.Format != "W" && Optional.IsDefined(RecommendedMachineConfiguration))
             {
                 writer.WritePropertyName("recommendedMachineConfiguration"u8);
-                writer.WriteObjectValue(RecommendedMachineConfiguration, options);
+                ((IJsonModel<RecommendedMachineConfiguration>)RecommendedMachineConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DevCenter
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            recommendedMachineConfiguration = RecommendedMachineConfiguration.DeserializeRecommendedMachineConfiguration(property0.Value, options);
+                            recommendedMachineConfiguration = ModelSerializationExtensions.JsonDeserialize<RecommendedMachineConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

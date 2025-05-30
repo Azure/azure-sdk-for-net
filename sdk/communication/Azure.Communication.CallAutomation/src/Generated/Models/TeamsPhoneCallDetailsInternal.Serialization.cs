@@ -18,12 +18,12 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(TeamsPhoneCallerDetails))
             {
                 writer.WritePropertyName("teamsPhoneCallerDetails"u8);
-                writer.WriteObjectValue(TeamsPhoneCallerDetails);
+                JsonSerializer.Serialize(writer, TeamsPhoneCallerDetails);
             }
             if (Optional.IsDefined(TeamsPhoneSourceDetails))
             {
                 writer.WritePropertyName("teamsPhoneSourceDetails"u8);
-                writer.WriteObjectValue(TeamsPhoneSourceDetails);
+                JsonSerializer.Serialize(writer, TeamsPhoneSourceDetails);
             }
             if (Optional.IsDefined(SessionId))
             {
@@ -86,7 +86,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    teamsPhoneCallerDetails = TeamsPhoneCallerDetailsInternal.DeserializeTeamsPhoneCallerDetailsInternal(property.Value);
+                    teamsPhoneCallerDetails = ModelSerializationExtensions.JsonDeserialize<TeamsPhoneCallerDetailsInternal>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("teamsPhoneSourceDetails"u8))
@@ -95,7 +95,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    teamsPhoneSourceDetails = TeamsPhoneSourceDetailsInternal.DeserializeTeamsPhoneSourceDetailsInternal(property.Value);
+                    teamsPhoneSourceDetails = ModelSerializationExtensions.JsonDeserialize<TeamsPhoneSourceDetailsInternal>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sessionId"u8))

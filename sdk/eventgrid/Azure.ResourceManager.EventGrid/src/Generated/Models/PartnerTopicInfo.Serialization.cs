@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(EventTypeInfo))
             {
                 writer.WritePropertyName("eventTypeInfo"u8);
-                writer.WriteObjectValue(EventTypeInfo, options);
+                ((IJsonModel<PartnerTopicEventTypeInfo>)EventTypeInfo).Write(writer, options);
             }
             if (Optional.IsDefined(Source))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    eventTypeInfo = PartnerTopicEventTypeInfo.DeserializePartnerTopicEventTypeInfo(property.Value, options);
+                    eventTypeInfo = ModelSerializationExtensions.JsonDeserialize<PartnerTopicEventTypeInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("source"u8))

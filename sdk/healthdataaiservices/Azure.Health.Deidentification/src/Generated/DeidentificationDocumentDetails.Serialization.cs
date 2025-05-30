@@ -40,11 +40,11 @@ namespace Azure.Health.Deidentification
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("input"u8);
-            writer.WriteObjectValue(InputLocation, options);
+            ((IJsonModel<DeidentificationDocumentLocation>)InputLocation).Write(writer, options);
             if (Optional.IsDefined(OutputLocation))
             {
                 writer.WritePropertyName("output"u8);
-                writer.WriteObjectValue(OutputLocation, options);
+                ((IJsonModel<DeidentificationDocumentLocation>)OutputLocation).Write(writer, options);
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
@@ -106,7 +106,7 @@ namespace Azure.Health.Deidentification
                 }
                 if (property.NameEquals("input"u8))
                 {
-                    input = DeidentificationDocumentLocation.DeserializeDeidentificationDocumentLocation(property.Value, options);
+                    input = ModelSerializationExtensions.JsonDeserialize<DeidentificationDocumentLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("output"u8))
@@ -115,7 +115,7 @@ namespace Azure.Health.Deidentification
                     {
                         continue;
                     }
-                    output = DeidentificationDocumentLocation.DeserializeDeidentificationDocumentLocation(property.Value, options);
+                    output = ModelSerializationExtensions.JsonDeserialize<DeidentificationDocumentLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -129,7 +129,7 @@ namespace Azure.Health.Deidentification
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

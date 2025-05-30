@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
-                writer.WriteObjectValue(PlanData, options);
+                ((IJsonModel<DynatraceBillingPlanInfo>)PlanData).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     {
                         continue;
                     }
-                    planData = DynatraceBillingPlanInfo.DeserializeDynatraceBillingPlanInfo(property.Value, options);
+                    planData = ModelSerializationExtensions.JsonDeserialize<DynatraceBillingPlanInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

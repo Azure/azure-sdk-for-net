@@ -36,7 +36,7 @@ namespace Azure.AI.Agents.Persistent
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("file_search"u8);
-            writer.WriteObjectValue(FileSearch, options);
+            ((IJsonModel<RunStepFileSearchToolCallResults>)FileSearch).Write(writer, options);
         }
 
         RunStepFileSearchToolCall IJsonModel<RunStepFileSearchToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -68,7 +68,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (property.NameEquals("file_search"u8))
                 {
-                    fileSearch = RunStepFileSearchToolCallResults.DeserializeRunStepFileSearchToolCallResults(property.Value, options);
+                    fileSearch = ModelSerializationExtensions.JsonDeserialize<RunStepFileSearchToolCallResults>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

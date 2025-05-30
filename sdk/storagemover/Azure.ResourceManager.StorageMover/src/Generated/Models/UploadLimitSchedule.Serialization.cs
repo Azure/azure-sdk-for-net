@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 writer.WriteStartArray();
                 foreach (var item in WeeklyRecurrences)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UploadLimitWeeklyRecurrence>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

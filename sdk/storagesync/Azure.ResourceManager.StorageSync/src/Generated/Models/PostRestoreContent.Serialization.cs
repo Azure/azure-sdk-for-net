@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WriteStartArray();
                 foreach (var item in RestoreFileSpec)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RestoreFileSpec>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

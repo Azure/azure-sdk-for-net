@@ -29,7 +29,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    summary = DailyForecastSummary.DeserializeDailyForecastSummary(property.Value);
+                    summary = ModelSerializationExtensions.JsonDeserialize<DailyForecastSummary>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("forecasts"u8))

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("userPlaneDataInterface"u8);
-            writer.WriteObjectValue(UserPlaneDataInterface, options);
+            ((IJsonModel<MobileNetworkInterfaceProperties>)UserPlaneDataInterface).Write(writer, options);
             writer.WritePropertyName("dnsAddresses"u8);
             writer.WriteStartArray();
             foreach (var item in DnsAddresses)
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MobileNetwork
             if (Optional.IsDefined(NaptConfiguration))
             {
                 writer.WritePropertyName("naptConfiguration"u8);
-                writer.WriteObjectValue(NaptConfiguration, options);
+                ((IJsonModel<NaptConfiguration>)NaptConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(UserEquipmentAddressPoolPrefix))
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         }
                         if (property0.NameEquals("userPlaneDataInterface"u8))
                         {
-                            userPlaneDataInterface = MobileNetworkInterfaceProperties.DeserializeMobileNetworkInterfaceProperties(property0.Value, options);
+                            userPlaneDataInterface = ModelSerializationExtensions.JsonDeserialize<MobileNetworkInterfaceProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dnsAddresses"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            naptConfiguration = NaptConfiguration.DeserializeNaptConfiguration(property0.Value, options);
+                            naptConfiguration = ModelSerializationExtensions.JsonDeserialize<NaptConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("userEquipmentAddressPoolPrefix"u8))

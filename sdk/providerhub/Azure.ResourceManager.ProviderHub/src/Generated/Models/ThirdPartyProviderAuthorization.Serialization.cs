@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Authorizations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LightHouseAuthorization>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

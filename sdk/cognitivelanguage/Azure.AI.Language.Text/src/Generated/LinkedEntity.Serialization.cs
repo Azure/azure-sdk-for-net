@@ -40,7 +40,7 @@ namespace Azure.AI.Language.Text
             writer.WriteStartArray();
             foreach (var item in Matches)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<EntityLinkingMatch>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("language"u8);

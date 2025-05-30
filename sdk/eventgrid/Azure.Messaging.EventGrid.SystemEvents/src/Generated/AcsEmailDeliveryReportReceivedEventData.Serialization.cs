@@ -51,7 +51,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStringValue(Status.Value.ToString());
             }
             writer.WritePropertyName("deliveryStatusDetails"u8);
-            writer.WriteObjectValue(DeliveryStatusDetails, options);
+            ((IJsonModel<AcsEmailDeliveryReportStatusDetails>)DeliveryStatusDetails).Write(writer, options);
             if (Optional.IsDefined(DeliveryAttemptTimestamp))
             {
                 writer.WritePropertyName("deliveryAttemptTimestamp"u8);
@@ -136,7 +136,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("deliveryStatusDetails"u8))
                 {
-                    deliveryStatusDetails = AcsEmailDeliveryReportStatusDetails.DeserializeAcsEmailDeliveryReportStatusDetails(property.Value, options);
+                    deliveryStatusDetails = ModelSerializationExtensions.JsonDeserialize<AcsEmailDeliveryReportStatusDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deliveryAttemptTimestamp"u8))

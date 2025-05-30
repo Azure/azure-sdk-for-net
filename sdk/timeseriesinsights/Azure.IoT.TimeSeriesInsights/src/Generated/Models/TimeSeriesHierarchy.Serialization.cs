@@ -23,7 +23,7 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            JsonSerializer.Serialize(writer, Source);
             writer.WriteEndObject();
         }
 
@@ -50,7 +50,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 }
                 if (property.NameEquals("source"u8))
                 {
-                    source = TimeSeriesHierarchySource.DeserializeTimeSeriesHierarchySource(property.Value);
+                    source = ModelSerializationExtensions.JsonDeserialize<TimeSeriesHierarchySource>(property.Value);
                     continue;
                 }
             }

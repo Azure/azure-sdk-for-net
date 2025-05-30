@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HybridComputeDisk>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Quota))
             {
                 writer.WritePropertyName("quota"u8);
-                writer.WriteObjectValue(Quota, options);
+                ((IJsonModel<CommitmentQuota>)Quota).Write(writer, options);
             }
             if (Optional.IsDefined(Cost))
             {
                 writer.WritePropertyName("cost"u8);
-                writer.WriteObjectValue(Cost, options);
+                ((IJsonModel<CommitmentCost>)Cost).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    quota = CommitmentQuota.DeserializeCommitmentQuota(property.Value, options);
+                    quota = ModelSerializationExtensions.JsonDeserialize<CommitmentQuota>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("cost"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    cost = CommitmentCost.DeserializeCommitmentCost(property.Value, options);
+                    cost = ModelSerializationExtensions.JsonDeserialize<CommitmentCost>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue(Resource, options);
+                ((IJsonModel<ApiKeyResourceEntity>)Resource).Write(writer, options);
             }
             if (Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
-                writer.WriteObjectValue(Owner, options);
+                ((IJsonModel<ApiKeyOwnerEntity>)Owner).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     {
                         continue;
                     }
-                    resource = ApiKeyResourceEntity.DeserializeApiKeyResourceEntity(property.Value, options);
+                    resource = ModelSerializationExtensions.JsonDeserialize<ApiKeyResourceEntity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("owner"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     {
                         continue;
                     }
-                    owner = ApiKeyOwnerEntity.DeserializeApiKeyOwnerEntity(property.Value, options);
+                    owner = ModelSerializationExtensions.JsonDeserialize<ApiKeyOwnerEntity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

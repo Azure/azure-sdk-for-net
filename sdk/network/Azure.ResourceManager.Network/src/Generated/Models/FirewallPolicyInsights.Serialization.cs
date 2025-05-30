@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(LogAnalyticsResources))
             {
                 writer.WritePropertyName("logAnalyticsResources"u8);
-                writer.WriteObjectValue(LogAnalyticsResources, options);
+                ((IJsonModel<FirewallPolicyLogAnalyticsResources>)LogAnalyticsResources).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    logAnalyticsResources = FirewallPolicyLogAnalyticsResources.DeserializeFirewallPolicyLogAnalyticsResources(property.Value, options);
+                    logAnalyticsResources = ModelSerializationExtensions.JsonDeserialize<FirewallPolicyLogAnalyticsResources>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

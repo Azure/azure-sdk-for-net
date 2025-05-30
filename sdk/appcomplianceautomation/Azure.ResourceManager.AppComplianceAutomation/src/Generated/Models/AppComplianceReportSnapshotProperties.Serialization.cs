@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             if (options.Format != "W" && Optional.IsDefined(ReportProperties))
             {
                 writer.WritePropertyName("reportProperties"u8);
-                writer.WriteObjectValue(ReportProperties, options);
+                ((IJsonModel<AppComplianceReportProperties>)ReportProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReportSystemData))
             {
                 writer.WritePropertyName("reportSystemData"u8);
-                JsonSerializer.Serialize(writer, ReportSystemData);
+                ((IJsonModel<SystemData>)ReportSystemData).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ComplianceResults))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in ComplianceResults)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AppComplianceResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    reportProperties = AppComplianceReportProperties.DeserializeAppComplianceReportProperties(property.Value, options);
+                    reportProperties = ModelSerializationExtensions.JsonDeserialize<AppComplianceReportProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("reportSystemData"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    reportSystemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    reportSystemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("complianceResults"u8))

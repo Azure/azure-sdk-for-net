@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(PublisherInfo))
             {
                 writer.WritePropertyName("publisherInfo"u8);
-                writer.WriteObjectValue(PublisherInfo, options);
+                ((IJsonModel<SecurityCenterPublisherInfo>)PublisherInfo).Write(writer, options);
             }
             if (Optional.IsDefined(IsCommon))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Usernames)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UserRecommendation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    publisherInfo = SecurityCenterPublisherInfo.DeserializeSecurityCenterPublisherInfo(property.Value, options);
+                    publisherInfo = ModelSerializationExtensions.JsonDeserialize<SecurityCenterPublisherInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("common"u8))

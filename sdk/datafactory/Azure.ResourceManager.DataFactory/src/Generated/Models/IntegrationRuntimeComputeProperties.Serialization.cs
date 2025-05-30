@@ -57,22 +57,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DataFlowProperties))
             {
                 writer.WritePropertyName("dataFlowProperties"u8);
-                writer.WriteObjectValue(DataFlowProperties, options);
+                ((IJsonModel<IntegrationRuntimeDataFlowProperties>)DataFlowProperties).Write(writer, options);
             }
             if (Optional.IsDefined(VnetProperties))
             {
                 writer.WritePropertyName("vNetProperties"u8);
-                writer.WriteObjectValue(VnetProperties, options);
+                ((IJsonModel<IntegrationRuntimeVnetProperties>)VnetProperties).Write(writer, options);
             }
             if (Optional.IsDefined(CopyComputeScaleProperties))
             {
                 writer.WritePropertyName("copyComputeScaleProperties"u8);
-                writer.WriteObjectValue(CopyComputeScaleProperties, options);
+                ((IJsonModel<CopyComputeScaleProperties>)CopyComputeScaleProperties).Write(writer, options);
             }
             if (Optional.IsDefined(PipelineExternalComputeScaleProperties))
             {
                 writer.WritePropertyName("pipelineExternalComputeScaleProperties"u8);
-                writer.WriteObjectValue(PipelineExternalComputeScaleProperties, options);
+                ((IJsonModel<PipelineExternalComputeScaleProperties>)PipelineExternalComputeScaleProperties).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    dataFlowProperties = IntegrationRuntimeDataFlowProperties.DeserializeIntegrationRuntimeDataFlowProperties(property.Value, options);
+                    dataFlowProperties = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeDataFlowProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vNetProperties"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    vnetProperties = IntegrationRuntimeVnetProperties.DeserializeIntegrationRuntimeVnetProperties(property.Value, options);
+                    vnetProperties = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeVnetProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("copyComputeScaleProperties"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    copyComputeScaleProperties = CopyComputeScaleProperties.DeserializeCopyComputeScaleProperties(property.Value, options);
+                    copyComputeScaleProperties = ModelSerializationExtensions.JsonDeserialize<CopyComputeScaleProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("pipelineExternalComputeScaleProperties"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    pipelineExternalComputeScaleProperties = PipelineExternalComputeScaleProperties.DeserializePipelineExternalComputeScaleProperties(property.Value, options);
+                    pipelineExternalComputeScaleProperties = ModelSerializationExtensions.JsonDeserialize<PipelineExternalComputeScaleProperties>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

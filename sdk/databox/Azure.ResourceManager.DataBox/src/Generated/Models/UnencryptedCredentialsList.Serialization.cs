@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UnencryptedCredentials>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

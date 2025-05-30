@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            JsonSerializer.Serialize(writer, Properties);
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DataFlow.DeserializeDataFlow(property.Value);
+                    properties = ModelSerializationExtensions.JsonDeserialize<DataFlow>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

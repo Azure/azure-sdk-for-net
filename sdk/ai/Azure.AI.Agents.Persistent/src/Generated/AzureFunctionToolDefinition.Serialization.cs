@@ -36,7 +36,7 @@ namespace Azure.AI.Agents.Persistent
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("azure_function"u8);
-            writer.WriteObjectValue<InternalAzureFunctionDefinition>(InternalAzureFunction, options);
+            ((IJsonModel<InternalAzureFunctionDefinition>)InternalAzureFunction).Write(writer, options);
         }
 
         AzureFunctionToolDefinition IJsonModel<AzureFunctionToolDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (property.NameEquals("azure_function"u8))
                 {
-                    azureFunction = InternalAzureFunctionDefinition.DeserializeInternalAzureFunctionDefinition(property.Value, options);
+                    azureFunction = ModelSerializationExtensions.JsonDeserialize<InternalAzureFunctionDefinition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

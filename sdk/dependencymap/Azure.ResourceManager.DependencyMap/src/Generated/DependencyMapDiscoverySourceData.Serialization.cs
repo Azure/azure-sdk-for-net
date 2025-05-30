@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DependencyMap
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<DependencyMapDiscoverySourceProperties>)Properties).Write(writer, options);
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DependencyMap
                     {
                         continue;
                     }
-                    properties = DependencyMapDiscoverySourceProperties.DeserializeDependencyMapDiscoverySourceProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<DependencyMapDiscoverySourceProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DependencyMap
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

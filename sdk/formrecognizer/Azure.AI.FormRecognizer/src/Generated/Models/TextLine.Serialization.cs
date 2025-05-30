@@ -55,7 +55,7 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    appearance = TextAppearance.DeserializeTextAppearance(property.Value);
+                    appearance = ModelSerializationExtensions.JsonDeserialize<TextAppearance>(property.Value);
                     continue;
                 }
             }

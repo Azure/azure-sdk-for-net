@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             if (Optional.IsDefined(DataVolumeCap))
             {
                 writer.WritePropertyName("DataVolumeCap"u8);
-                writer.WriteObjectValue(DataVolumeCap, options);
+                ((IJsonModel<ApplicationInsightsComponentDataVolumeCap>)DataVolumeCap).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(CurrentBillingFeatures))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    dataVolumeCap = ApplicationInsightsComponentDataVolumeCap.DeserializeApplicationInsightsComponentDataVolumeCap(property.Value, options);
+                    dataVolumeCap = ModelSerializationExtensions.JsonDeserialize<ApplicationInsightsComponentDataVolumeCap>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("CurrentBillingFeatures"u8))

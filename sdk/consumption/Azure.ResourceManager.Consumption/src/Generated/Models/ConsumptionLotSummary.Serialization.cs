@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(OriginalAmount))
             {
                 writer.WritePropertyName("originalAmount"u8);
-                writer.WriteObjectValue(OriginalAmount, options);
+                ((IJsonModel<ConsumptionAmount>)OriginalAmount).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ClosedBalance))
             {
                 writer.WritePropertyName("closedBalance"u8);
-                writer.WriteObjectValue(ClosedBalance, options);
+                ((IJsonModel<ConsumptionAmount>)ClosedBalance).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Source))
             {
@@ -96,17 +96,17 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(OriginalAmountInBillingCurrency))
             {
                 writer.WritePropertyName("originalAmountInBillingCurrency"u8);
-                writer.WriteObjectValue(OriginalAmountInBillingCurrency, options);
+                ((IJsonModel<ConsumptionAmountWithExchangeRate>)OriginalAmountInBillingCurrency).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ClosedBalanceInBillingCurrency))
             {
                 writer.WritePropertyName("closedBalanceInBillingCurrency"u8);
-                writer.WriteObjectValue(ClosedBalanceInBillingCurrency, options);
+                ((IJsonModel<ConsumptionAmountWithExchangeRate>)ClosedBalanceInBillingCurrency).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Reseller))
             {
                 writer.WritePropertyName("reseller"u8);
-                writer.WriteObjectValue(Reseller, options);
+                ((IJsonModel<ConsumptionReseller>)Reseller).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            originalAmount = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
+                            originalAmount = ModelSerializationExtensions.JsonDeserialize<ConsumptionAmount>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("closedBalance"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            closedBalance = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
+                            closedBalance = ModelSerializationExtensions.JsonDeserialize<ConsumptionAmount>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("source"u8))
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            originalAmountInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value, options);
+                            originalAmountInBillingCurrency = ModelSerializationExtensions.JsonDeserialize<ConsumptionAmountWithExchangeRate>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("closedBalanceInBillingCurrency"u8))
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            closedBalanceInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value, options);
+                            closedBalanceInBillingCurrency = ModelSerializationExtensions.JsonDeserialize<ConsumptionAmountWithExchangeRate>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("reseller"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            reseller = ConsumptionReseller.DeserializeConsumptionReseller(property0.Value, options);
+                            reseller = ModelSerializationExtensions.JsonDeserialize<ConsumptionReseller>(property0.Value);
                             continue;
                         }
                     }

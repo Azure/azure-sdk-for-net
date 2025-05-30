@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SourceConnectionReference))
             {
                 writer.WritePropertyName("sourceConnectionReference"u8);
-                writer.WriteObjectValue(SourceConnectionReference, options);
+                ((IJsonModel<MapperConnectionReference>)SourceConnectionReference).Write(writer, options);
             }
             if (Optional.IsDefined(AttributeMappingInfo))
             {
                 writer.WritePropertyName("attributeMappingInfo"u8);
-                writer.WriteObjectValue(AttributeMappingInfo, options);
+                ((IJsonModel<MapperAttributeMappings>)AttributeMappingInfo).Write(writer, options);
             }
             if (Optional.IsDefined(SourceDenormalizeInfo))
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sourceConnectionReference = MapperConnectionReference.DeserializeMapperConnectionReference(property.Value, options);
+                    sourceConnectionReference = ModelSerializationExtensions.JsonDeserialize<MapperConnectionReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("attributeMappingInfo"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    attributeMappingInfo = MapperAttributeMappings.DeserializeMapperAttributeMappings(property.Value, options);
+                    attributeMappingInfo = ModelSerializationExtensions.JsonDeserialize<MapperAttributeMappings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sourceDenormalizeInfo"u8))

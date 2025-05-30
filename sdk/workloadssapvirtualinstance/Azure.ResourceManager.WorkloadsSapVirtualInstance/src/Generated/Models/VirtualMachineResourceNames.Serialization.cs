@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetworkInterfaceResourceNames>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

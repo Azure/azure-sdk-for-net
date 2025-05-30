@@ -88,7 +88,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    text = FhirR4Narrative.DeserializeFhirR4Narrative(property.Value, options);
+                    text = ModelSerializationExtensions.JsonDeserialize<FhirR4Narrative>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("contained"u8))
@@ -149,7 +149,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    meta = FhirR4Meta.DeserializeFhirR4Meta(property.Value, options);
+                    meta = ModelSerializationExtensions.JsonDeserialize<FhirR4Meta>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("implicitRules"u8))

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    JsonSerializer.Serialize(writer, item);
+                ((IJsonModel<DataFactoryElement<T>>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Operands)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataFactoryExpressionV2>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         else
                         {
-                            array.Add(JsonSerializer.Deserialize<DataFactoryElement<string>>(item.GetRawText()));
+                            array.Add(ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(item));
                         }
                     }
                     operators = array;

@@ -38,7 +38,7 @@ namespace Azure.AI.Language.Conversations.Models
             if (Optional.IsDefined(CallingOptions))
             {
                 writer.WritePropertyName("callingOptions"u8);
-                writer.WriteObjectValue(CallingOptions, options);
+                ((IJsonModel<ConversationCallingConfig>)CallingOptions).Write(writer, options);
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.AI.Language.Conversations.Models
                     {
                         continue;
                     }
-                    callingOptions = ConversationCallingConfig.DeserializeConversationCallingConfig(property.Value, options);
+                    callingOptions = ModelSerializationExtensions.JsonDeserialize<ConversationCallingConfig>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetProjectKind"u8))

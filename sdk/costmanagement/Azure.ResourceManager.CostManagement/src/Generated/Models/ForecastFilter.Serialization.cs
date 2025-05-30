@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in And)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ForecastFilter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,19 +50,19 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Or)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ForecastFilter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
-                writer.WriteObjectValue(Dimensions, options);
+                ((IJsonModel<ForecastComparisonExpression>)Dimensions).Write(writer, options);
             }
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
-                writer.WriteObjectValue(Tags, options);
+                ((IJsonModel<ForecastComparisonExpression>)Tags).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    dimensions = ForecastComparisonExpression.DeserializeForecastComparisonExpression(property.Value, options);
+                    dimensions = ModelSerializationExtensions.JsonDeserialize<ForecastComparisonExpression>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    tags = ForecastComparisonExpression.DeserializeForecastComparisonExpression(property.Value, options);
+                    tags = ModelSerializationExtensions.JsonDeserialize<ForecastComparisonExpression>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

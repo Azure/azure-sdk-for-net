@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in SessionInfo)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UESessionInfo4G>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

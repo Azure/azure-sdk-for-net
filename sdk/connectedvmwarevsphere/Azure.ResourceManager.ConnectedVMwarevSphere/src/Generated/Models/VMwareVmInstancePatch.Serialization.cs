@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile, options);
+                ((IJsonModel<VmInstanceHardwareProfile>)HardwareProfile).Write(writer, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile, options);
+                ((IJsonModel<StorageProfileUpdate>)StorageProfile).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile, options);
+                ((IJsonModel<VMwareNetworkProfileUpdate>)NetworkProfile).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                             {
                                 continue;
                             }
-                            hardwareProfile = VmInstanceHardwareProfile.DeserializeVmInstanceHardwareProfile(property0.Value, options);
+                            hardwareProfile = ModelSerializationExtensions.JsonDeserialize<VmInstanceHardwareProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                             {
                                 continue;
                             }
-                            storageProfile = StorageProfileUpdate.DeserializeStorageProfileUpdate(property0.Value, options);
+                            storageProfile = ModelSerializationExtensions.JsonDeserialize<StorageProfileUpdate>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                             {
                                 continue;
                             }
-                            networkProfile = VMwareNetworkProfileUpdate.DeserializeVMwareNetworkProfileUpdate(property0.Value, options);
+                            networkProfile = ModelSerializationExtensions.JsonDeserialize<VMwareNetworkProfileUpdate>(property0.Value);
                             continue;
                         }
                     }

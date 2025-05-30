@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(InstalledDriver))
             {
                 writer.WritePropertyName("installedDriver"u8);
-                writer.WriteObjectValue(InstalledDriver, options);
+                ((IJsonModel<OracleOciDriverInfo>)InstalledDriver).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ValidationErrors))
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ReportableException>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    installedDriver = OracleOciDriverInfo.DeserializeOracleOciDriverInfo(property.Value, options);
+                    installedDriver = ModelSerializationExtensions.JsonDeserialize<OracleOciDriverInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("validationErrors"u8))

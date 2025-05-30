@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<JobRunData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

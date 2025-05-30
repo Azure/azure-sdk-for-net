@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Media.Models
             if (PrimaryVerificationKey != null)
             {
                 writer.WritePropertyName("primaryVerificationKey"u8);
-                writer.WriteObjectValue(PrimaryVerificationKey, options);
+                ((IJsonModel<ContentKeyPolicyRestrictionTokenKey>)PrimaryVerificationKey).Write(writer, options);
             }
             else
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in AlternateVerificationKeys)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContentKeyPolicyRestrictionTokenKey>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in RequiredClaims)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContentKeyPolicyTokenClaim>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Media.Models
                         primaryVerificationKey = null;
                         continue;
                     }
-                    primaryVerificationKey = ContentKeyPolicyRestrictionTokenKey.DeserializeContentKeyPolicyRestrictionTokenKey(property.Value, options);
+                    primaryVerificationKey = ModelSerializationExtensions.JsonDeserialize<ContentKeyPolicyRestrictionTokenKey>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("alternateVerificationKeys"u8))

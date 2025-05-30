@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AutoStorage))
             {
                 writer.WritePropertyName("autoStorage"u8);
-                writer.WriteObjectValue(AutoStorage, options);
+                ((IJsonModel<BatchAccountAutoStorageBaseConfiguration>)AutoStorage).Write(writer, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<BatchAccountEncryptionConfiguration>)Encryption).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AllowedAuthenticationModes))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile, options);
+                ((IJsonModel<BatchNetworkProfile>)NetworkProfile).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Batch.Models
                             {
                                 continue;
                             }
-                            autoStorage = BatchAccountAutoStorageBaseConfiguration.DeserializeBatchAccountAutoStorageBaseConfiguration(property0.Value, options);
+                            autoStorage = ModelSerializationExtensions.JsonDeserialize<BatchAccountAutoStorageBaseConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Batch.Models
                             {
                                 continue;
                             }
-                            encryption = BatchAccountEncryptionConfiguration.DeserializeBatchAccountEncryptionConfiguration(property0.Value, options);
+                            encryption = ModelSerializationExtensions.JsonDeserialize<BatchAccountEncryptionConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("allowedAuthenticationModes"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Batch.Models
                             {
                                 continue;
                             }
-                            networkProfile = BatchNetworkProfile.DeserializeBatchNetworkProfile(property0.Value, options);
+                            networkProfile = ModelSerializationExtensions.JsonDeserialize<BatchNetworkProfile>(property0.Value);
                             continue;
                         }
                     }

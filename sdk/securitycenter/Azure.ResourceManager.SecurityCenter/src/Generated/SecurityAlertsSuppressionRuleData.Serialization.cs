@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(SuppressionAlertsScope))
             {
                 writer.WritePropertyName("suppressionAlertsScope"u8);
-                writer.WriteObjectValue(SuppressionAlertsScope, options);
+                ((IJsonModel<SuppressionAlertsScope>)SuppressionAlertsScope).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            suppressionAlertsScope = SuppressionAlertsScope.DeserializeSuppressionAlertsScope(property0.Value, options);
+                            suppressionAlertsScope = ModelSerializationExtensions.JsonDeserialize<SuppressionAlertsScope>(property0.Value);
                             continue;
                         }
                     }

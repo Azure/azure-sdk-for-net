@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             if (Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
-                writer.WriteObjectValue(Result, options);
+                ((IJsonModel<AssignmentDeploymentJobResult>)Result).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(History))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 writer.WriteStartArray();
                 foreach (var item in History)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AssignmentDeploymentJobResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     {
                         continue;
                     }
-                    result = AssignmentDeploymentJobResult.DeserializeAssignmentDeploymentJobResult(property.Value, options);
+                    result = ModelSerializationExtensions.JsonDeserialize<AssignmentDeploymentJobResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("history"u8))

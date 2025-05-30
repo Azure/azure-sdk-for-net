@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in DataProductVersions)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DataProductVersion>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

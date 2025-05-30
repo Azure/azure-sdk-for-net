@@ -26,7 +26,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (property.NameEquals("rootCause"u8))
                 {
-                    rootCause = DimensionKey.DeserializeDimensionKey(property.Value);
+                    rootCause = ModelSerializationExtensions.JsonDeserialize<DimensionKey>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("path"u8))

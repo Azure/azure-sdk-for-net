@@ -37,12 +37,12 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
-                writer.WriteObjectValue(Summary, options);
+                ((IJsonModel<FhirR4CodeableConcept>)Summary).Write(writer, options);
             }
             if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteObjectValue(Type, options);
+                ((IJsonModel<FhirR4CodeableConcept>)Type).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    summary = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
+                    summary = ModelSerializationExtensions.JsonDeserialize<FhirR4CodeableConcept>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -102,7 +102,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    type = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
+                    type = ModelSerializationExtensions.JsonDeserialize<FhirR4CodeableConcept>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

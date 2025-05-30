@@ -60,13 +60,13 @@ namespace Azure.ResourceManager.Confluent
                 writer.WriteStringValue(SsoUri.AbsoluteUri);
             }
             writer.WritePropertyName("offerDetail"u8);
-            writer.WriteObjectValue(OfferDetail, options);
+            ((IJsonModel<ConfluentOfferDetail>)OfferDetail).Write(writer, options);
             writer.WritePropertyName("userDetail"u8);
-            writer.WriteObjectValue(UserDetail, options);
+            ((IJsonModel<ConfluentUserDetail>)UserDetail).Write(writer, options);
             if (Optional.IsDefined(LinkOrganization))
             {
                 writer.WritePropertyName("linkOrganization"u8);
-                writer.WriteObjectValue(LinkOrganization, options);
+                ((IJsonModel<LinkOrganization>)LinkOrganization).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Confluent
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -198,12 +198,12 @@ namespace Azure.ResourceManager.Confluent
                         }
                         if (property0.NameEquals("offerDetail"u8))
                         {
-                            offerDetail = ConfluentOfferDetail.DeserializeConfluentOfferDetail(property0.Value, options);
+                            offerDetail = ModelSerializationExtensions.JsonDeserialize<ConfluentOfferDetail>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("userDetail"u8))
                         {
-                            userDetail = ConfluentUserDetail.DeserializeConfluentUserDetail(property0.Value, options);
+                            userDetail = ModelSerializationExtensions.JsonDeserialize<ConfluentUserDetail>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("linkOrganization"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Confluent
                             {
                                 continue;
                             }
-                            linkOrganization = LinkOrganization.DeserializeLinkOrganization(property0.Value, options);
+                            linkOrganization = ModelSerializationExtensions.JsonDeserialize<LinkOrganization>(property0.Value);
                             continue;
                         }
                     }

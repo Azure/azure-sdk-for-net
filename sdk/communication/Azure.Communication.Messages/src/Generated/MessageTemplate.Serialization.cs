@@ -44,14 +44,14 @@ namespace Azure.Communication.Messages
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MessageTemplateValue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Bindings))
             {
                 writer.WritePropertyName("bindings"u8);
-                writer.WriteObjectValue(Bindings, options);
+                ((IJsonModel<MessageTemplateBindings>)Bindings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -128,7 +128,7 @@ namespace Azure.Communication.Messages
                     {
                         continue;
                     }
-                    bindings = MessageTemplateBindings.DeserializeMessageTemplateBindings(property.Value, options);
+                    bindings = ModelSerializationExtensions.JsonDeserialize<MessageTemplateBindings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

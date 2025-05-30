@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(BillingRefundAmount))
             {
                 writer.WritePropertyName("billingRefundAmount"u8);
-                writer.WriteObjectValue(BillingRefundAmount, options);
+                ((IJsonModel<PurchasePrice>)BillingRefundAmount).Write(writer, options);
             }
             if (Optional.IsDefined(BillingInformation))
             {
                 writer.WritePropertyName("billingInformation"u8);
-                writer.WriteObjectValue(BillingInformation, options);
+                ((IJsonModel<BillingInformation>)BillingInformation).Write(writer, options);
             }
             if (Optional.IsDefined(Status))
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingRefundAmount = PurchasePrice.DeserializePurchasePrice(property.Value, options);
+                    billingRefundAmount = ModelSerializationExtensions.JsonDeserialize<PurchasePrice>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("billingInformation"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingInformation = BillingInformation.DeserializeBillingInformation(property.Value, options);
+                    billingInformation = ModelSerializationExtensions.JsonDeserialize<BillingInformation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))

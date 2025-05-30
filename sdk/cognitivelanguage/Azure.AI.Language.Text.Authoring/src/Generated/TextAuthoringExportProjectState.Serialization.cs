@@ -162,7 +162,7 @@ namespace Azure.AI.Language.Text.Authoring
                     List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
+                        array.Add(ModelSerializationExtensions.JsonDeserialize<ResponseError>(item));
                     }
                     warnings = array;
                     continue;
@@ -176,7 +176,7 @@ namespace Azure.AI.Language.Text.Authoring
                     List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
+                        array.Add(ModelSerializationExtensions.JsonDeserialize<ResponseError>(item));
                     }
                     errors = array;
                     continue;

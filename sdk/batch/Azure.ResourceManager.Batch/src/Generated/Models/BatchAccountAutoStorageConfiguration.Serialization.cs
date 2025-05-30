@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    nodeIdentityReference = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(property.Value, options);
+                    nodeIdentityReference = ModelSerializationExtensions.JsonDeserialize<ComputeNodeIdentityReference>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -42,12 +42,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(DataFlowProperties))
             {
                 writer.WritePropertyName("dataFlowProperties"u8);
-                writer.WriteObjectValue(DataFlowProperties);
+                JsonSerializer.Serialize(writer, DataFlowProperties);
             }
             if (Optional.IsDefined(VNetProperties))
             {
                 writer.WritePropertyName("vNetProperties"u8);
-                writer.WriteObjectValue(VNetProperties);
+                JsonSerializer.Serialize(writer, VNetProperties);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -107,7 +107,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    dataFlowProperties = IntegrationRuntimeDataFlowProperties.DeserializeIntegrationRuntimeDataFlowProperties(property.Value);
+                    dataFlowProperties = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeDataFlowProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vNetProperties"u8))
@@ -116,7 +116,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    vNetProperties = IntegrationRuntimeVNetProperties.DeserializeIntegrationRuntimeVNetProperties(property.Value);
+                    vNetProperties = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeVNetProperties>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());

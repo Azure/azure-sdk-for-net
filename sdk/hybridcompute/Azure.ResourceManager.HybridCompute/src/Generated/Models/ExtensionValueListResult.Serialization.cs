@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HybridComputeExtensionValueData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

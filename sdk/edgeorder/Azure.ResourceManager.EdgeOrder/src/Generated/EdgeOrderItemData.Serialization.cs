@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.EdgeOrder
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("orderItemDetails"u8);
-            writer.WriteObjectValue(OrderItemDetails, options);
+            ((IJsonModel<EdgeOrderItemDetails>)OrderItemDetails).Write(writer, options);
             writer.WritePropertyName("addressDetails"u8);
-            writer.WriteObjectValue(AddressDetails, options);
+            ((IJsonModel<EdgeOrderItemAddressDetails>)AddressDetails).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EdgeOrder
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -141,12 +141,12 @@ namespace Azure.ResourceManager.EdgeOrder
                     {
                         if (property0.NameEquals("orderItemDetails"u8))
                         {
-                            orderItemDetails = EdgeOrderItemDetails.DeserializeEdgeOrderItemDetails(property0.Value, options);
+                            orderItemDetails = ModelSerializationExtensions.JsonDeserialize<EdgeOrderItemDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("addressDetails"u8))
                         {
-                            addressDetails = EdgeOrderItemAddressDetails.DeserializeEdgeOrderItemAddressDetails(property0.Value, options);
+                            addressDetails = ModelSerializationExtensions.JsonDeserialize<EdgeOrderItemAddressDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("startTime"u8))

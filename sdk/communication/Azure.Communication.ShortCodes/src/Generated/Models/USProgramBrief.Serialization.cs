@@ -35,7 +35,7 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WriteStartArray();
                 foreach (var item in ReviewNotes)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -45,7 +45,7 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WriteStartArray();
                 foreach (var item in Costs)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -62,22 +62,22 @@ namespace Azure.Communication.ShortCodes.Models
             if (Optional.IsDefined(ProgramDetails))
             {
                 writer.WritePropertyName("programDetails"u8);
-                writer.WriteObjectValue(ProgramDetails);
+                JsonSerializer.Serialize(writer, ProgramDetails);
             }
             if (Optional.IsDefined(CompanyInformation))
             {
                 writer.WritePropertyName("companyInformation"u8);
-                writer.WriteObjectValue(CompanyInformation);
+                JsonSerializer.Serialize(writer, CompanyInformation);
             }
             if (Optional.IsDefined(MessageDetails))
             {
                 writer.WritePropertyName("messageDetails"u8);
-                writer.WriteObjectValue(MessageDetails);
+                JsonSerializer.Serialize(writer, MessageDetails);
             }
             if (Optional.IsDefined(TrafficDetails))
             {
                 writer.WritePropertyName("trafficDetails"u8);
-                writer.WriteObjectValue(TrafficDetails);
+                JsonSerializer.Serialize(writer, TrafficDetails);
             }
             writer.WriteEndObject();
         }
@@ -172,7 +172,7 @@ namespace Azure.Communication.ShortCodes.Models
                     {
                         continue;
                     }
-                    programDetails = ProgramDetails.DeserializeProgramDetails(property.Value);
+                    programDetails = ModelSerializationExtensions.JsonDeserialize<ProgramDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("companyInformation"u8))
@@ -181,7 +181,7 @@ namespace Azure.Communication.ShortCodes.Models
                     {
                         continue;
                     }
-                    companyInformation = CompanyInformation.DeserializeCompanyInformation(property.Value);
+                    companyInformation = ModelSerializationExtensions.JsonDeserialize<CompanyInformation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("messageDetails"u8))
@@ -190,7 +190,7 @@ namespace Azure.Communication.ShortCodes.Models
                     {
                         continue;
                     }
-                    messageDetails = MessageDetails.DeserializeMessageDetails(property.Value);
+                    messageDetails = ModelSerializationExtensions.JsonDeserialize<MessageDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("trafficDetails"u8))
@@ -199,7 +199,7 @@ namespace Azure.Communication.ShortCodes.Models
                     {
                         continue;
                     }
-                    trafficDetails = TrafficDetails.DeserializeTrafficDetails(property.Value);
+                    trafficDetails = ModelSerializationExtensions.JsonDeserialize<TrafficDetails>(property.Value);
                     continue;
                 }
             }

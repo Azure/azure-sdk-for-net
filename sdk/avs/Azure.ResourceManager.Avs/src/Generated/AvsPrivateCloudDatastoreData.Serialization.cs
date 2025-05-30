@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.Avs
             if (Optional.IsDefined(NetAppVolume))
             {
                 writer.WritePropertyName("netAppVolume"u8);
-                JsonSerializer.Serialize(writer, NetAppVolume);
+                ((IJsonModel<WritableSubResource>)NetAppVolume).Write(writer, options);
             }
             if (Optional.IsDefined(DiskPoolVolume))
             {
                 writer.WritePropertyName("diskPoolVolume"u8);
-                writer.WriteObjectValue(DiskPoolVolume, options);
+                ((IJsonModel<DiskPoolVolume>)DiskPoolVolume).Write(writer, options);
             }
             if (Optional.IsDefined(ElasticSanVolume))
             {
                 writer.WritePropertyName("elasticSanVolume"u8);
-                writer.WriteObjectValue(ElasticSanVolume, options);
+                ((IJsonModel<ElasticSanVolume>)ElasticSanVolume).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Avs
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Avs
                             {
                                 continue;
                             }
-                            netAppVolume = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            netAppVolume = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("diskPoolVolume"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Avs
                             {
                                 continue;
                             }
-                            diskPoolVolume = DiskPoolVolume.DeserializeDiskPoolVolume(property0.Value, options);
+                            diskPoolVolume = ModelSerializationExtensions.JsonDeserialize<DiskPoolVolume>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("elasticSanVolume"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Avs
                             {
                                 continue;
                             }
-                            elasticSanVolume = ElasticSanVolume.DeserializeElasticSanVolume(property0.Value, options);
+                            elasticSanVolume = ModelSerializationExtensions.JsonDeserialize<ElasticSanVolume>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))

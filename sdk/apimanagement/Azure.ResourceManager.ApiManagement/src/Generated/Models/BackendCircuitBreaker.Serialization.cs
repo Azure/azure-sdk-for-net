@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CircuitBreakerRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -40,12 +40,12 @@ namespace Azure.AI.Language.Text
                 writer.WriteStringValue(DisplayName);
             }
             writer.WritePropertyName("analysisInput"u8);
-            writer.WriteObjectValue(TextInput, options);
+            ((IJsonModel<MultiLanguageTextInput>)TextInput).Write(writer, options);
             writer.WritePropertyName("tasks"u8);
             writer.WriteStartArray();
             foreach (var item in Actions)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<AnalyzeTextOperationAction>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(DefaultLanguage))
@@ -105,7 +105,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("analysisInput"u8))
                 {
-                    analysisInput = MultiLanguageTextInput.DeserializeMultiLanguageTextInput(property.Value, options);
+                    analysisInput = ModelSerializationExtensions.JsonDeserialize<MultiLanguageTextInput>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tasks"u8))

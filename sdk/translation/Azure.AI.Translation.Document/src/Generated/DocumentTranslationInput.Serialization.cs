@@ -35,12 +35,12 @@ namespace Azure.AI.Translation.Document
             }
 
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source, options);
+            ((IJsonModel<TranslationSource>)Source).Write(writer, options);
             writer.WritePropertyName("targets"u8);
             writer.WriteStartArray();
             foreach (var item in Targets)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<TranslationTarget>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(StorageUriKind))
@@ -94,7 +94,7 @@ namespace Azure.AI.Translation.Document
             {
                 if (property.NameEquals("source"u8))
                 {
-                    source = TranslationSource.DeserializeTranslationSource(property.Value, options);
+                    source = ModelSerializationExtensions.JsonDeserialize<TranslationSource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targets"u8))

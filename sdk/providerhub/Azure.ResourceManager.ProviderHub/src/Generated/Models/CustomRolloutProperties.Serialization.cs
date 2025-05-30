@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("specification"u8);
-            writer.WriteObjectValue(Specification, options);
+            ((IJsonModel<CustomRolloutSpecification>)Specification).Write(writer, options);
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<CustomRolloutStatus>)Status).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 if (property.NameEquals("specification"u8))
                 {
-                    specification = CustomRolloutSpecification.DeserializeCustomRolloutSpecification(property.Value, options);
+                    specification = ModelSerializationExtensions.JsonDeserialize<CustomRolloutSpecification>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    status = CustomRolloutStatus.DeserializeCustomRolloutStatus(property.Value, options);
+                    status = ModelSerializationExtensions.JsonDeserialize<CustomRolloutStatus>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

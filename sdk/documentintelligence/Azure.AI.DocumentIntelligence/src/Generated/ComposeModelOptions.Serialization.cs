@@ -53,7 +53,7 @@ namespace Azure.AI.DocumentIntelligence
             foreach (var item in DocumentTypes)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                ((IJsonModel<DocumentTypeDetails>)item.Value).Write(writer, options);
             }
             writer.WriteEndObject();
             if (Optional.IsCollectionDefined(Tags))

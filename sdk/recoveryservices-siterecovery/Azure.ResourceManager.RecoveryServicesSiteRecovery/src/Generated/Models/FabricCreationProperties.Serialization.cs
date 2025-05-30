@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(CustomDetails))
             {
                 writer.WritePropertyName("customDetails"u8);
-                writer.WriteObjectValue(CustomDetails, options);
+                ((IJsonModel<FabricSpecificCreationContent>)CustomDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    customDetails = FabricSpecificCreationContent.DeserializeFabricSpecificCreationContent(property.Value, options);
+                    customDetails = ModelSerializationExtensions.JsonDeserialize<FabricSpecificCreationContent>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

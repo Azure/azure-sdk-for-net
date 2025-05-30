@@ -74,7 +74,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    color = ColorValue.DeserializeColorValue(property.Value);
+                    color = ModelSerializationExtensions.JsonDeserialize<ColorValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("simplifiedColor"u8))
@@ -83,7 +83,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    simplifiedColor = ColorValue.DeserializeColorValue(property.Value);
+                    simplifiedColor = ModelSerializationExtensions.JsonDeserialize<ColorValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("precipitationType"u8))

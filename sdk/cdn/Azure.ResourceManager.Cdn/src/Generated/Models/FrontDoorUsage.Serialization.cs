@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WritePropertyName("limit"u8);
             writer.WriteNumberValue(Limit);
             writer.WritePropertyName("name"u8);
-            writer.WriteObjectValue(Name, options);
+            ((IJsonModel<FrontDoorUsageResourceName>)Name).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("name"u8))
                 {
-                    name = FrontDoorUsageResourceName.DeserializeFrontDoorUsageResourceName(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<FrontDoorUsageResourceName>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

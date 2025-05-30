@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
-                writer.WriteObjectValue(Condition, options);
+                ((IJsonModel<AlertRuleCondition>)Condition).Write(writer, options);
             }
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteObjectValue(Action, options);
+                ((IJsonModel<AlertRuleAction>)Action).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Actions))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AlertRuleAction>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Monitor.Models
                             {
                                 continue;
                             }
-                            condition = AlertRuleCondition.DeserializeAlertRuleCondition(property0.Value, options);
+                            condition = ModelSerializationExtensions.JsonDeserialize<AlertRuleCondition>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("action"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Monitor.Models
                             {
                                 continue;
                             }
-                            action = AlertRuleAction.DeserializeAlertRuleAction(property0.Value, options);
+                            action = ModelSerializationExtensions.JsonDeserialize<AlertRuleAction>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("actions"u8))

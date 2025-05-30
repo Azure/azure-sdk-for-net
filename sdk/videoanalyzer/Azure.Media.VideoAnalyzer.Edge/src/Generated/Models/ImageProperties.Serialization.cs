@@ -18,12 +18,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(Scale))
             {
                 writer.WritePropertyName("scale"u8);
-                writer.WriteObjectValue(Scale);
+                JsonSerializer.Serialize(writer, Scale);
             }
             if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
-                writer.WriteObjectValue(Format);
+                JsonSerializer.Serialize(writer, Format);
             }
             writer.WriteEndObject();
         }
@@ -44,7 +44,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     {
                         continue;
                     }
-                    scale = ImageScale.DeserializeImageScale(property.Value);
+                    scale = ModelSerializationExtensions.JsonDeserialize<ImageScale>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("format"u8))
@@ -53,7 +53,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     {
                         continue;
                     }
-                    format = ImageFormatProperties.DeserializeImageFormatProperties(property.Value);
+                    format = ModelSerializationExtensions.JsonDeserialize<ImageFormatProperties>(property.Value);
                     continue;
                 }
             }

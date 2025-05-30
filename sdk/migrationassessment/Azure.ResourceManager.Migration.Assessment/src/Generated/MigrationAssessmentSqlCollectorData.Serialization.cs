@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Migration.Assessment
             if (Optional.IsDefined(AgentProperties))
             {
                 writer.WritePropertyName("agentProperties"u8);
-                writer.WriteObjectValue(AgentProperties, options);
+                ((IJsonModel<CollectorAgentPropertiesBase>)AgentProperties).Write(writer, options);
             }
             if (Optional.IsDefined(DiscoverySiteId))
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                             {
                                 continue;
                             }
-                            agentProperties = CollectorAgentPropertiesBase.DeserializeCollectorAgentPropertiesBase(property0.Value, options);
+                            agentProperties = ModelSerializationExtensions.JsonDeserialize<CollectorAgentPropertiesBase>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("discoverySiteId"u8))

@@ -33,7 +33,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
                     {
                         continue;
                     }
-                    innererror = DeserializeInnerError(property.Value);
+                    innererror = ModelSerializationExtensions.JsonDeserialize<InnerError>(property.Value);
                     continue;
                 }
             }

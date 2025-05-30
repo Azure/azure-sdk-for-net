@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (Optional.IsDefined(AzureContainerInfo))
             {
                 writer.WritePropertyName("azureContainerInfo"u8);
-                writer.WriteObjectValue(AzureContainerInfo, options);
+                ((IJsonModel<DataBoxEdgeStorageContainerInfo>)AzureContainerInfo).Write(writer, options);
             }
             writer.WritePropertyName("accessProtocol"u8);
             writer.WriteStringValue(AccessProtocol.ToString());
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in UserAccessRights)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UserAccessRight>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -71,14 +71,14 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in ClientAccessRights)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ClientAccessRight>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(RefreshDetails))
             {
                 writer.WritePropertyName("refreshDetails"u8);
-                writer.WriteObjectValue(RefreshDetails, options);
+                ((IJsonModel<DataBoxEdgeRefreshDetails>)RefreshDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ShareMappings))
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in ShareMappings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataBoxEdgeMountPointMap>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            azureContainerInfo = DataBoxEdgeStorageContainerInfo.DeserializeDataBoxEdgeStorageContainerInfo(property0.Value, options);
+                            azureContainerInfo = ModelSerializationExtensions.JsonDeserialize<DataBoxEdgeStorageContainerInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("accessProtocol"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            refreshDetails = DataBoxEdgeRefreshDetails.DeserializeDataBoxEdgeRefreshDetails(property0.Value, options);
+                            refreshDetails = ModelSerializationExtensions.JsonDeserialize<DataBoxEdgeRefreshDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("shareMappings"u8))

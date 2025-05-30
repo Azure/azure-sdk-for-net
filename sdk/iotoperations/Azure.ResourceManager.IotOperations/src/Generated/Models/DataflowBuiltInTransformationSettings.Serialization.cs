@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 writer.WriteStartArray();
                 foreach (var item in Datasets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataflowBuiltInTransformationDataset>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 writer.WriteStartArray();
                 foreach (var item in Filter)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataflowBuiltInTransformationFilter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 writer.WriteStartArray();
                 foreach (var item in Map)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataflowBuiltInTransformationMap>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

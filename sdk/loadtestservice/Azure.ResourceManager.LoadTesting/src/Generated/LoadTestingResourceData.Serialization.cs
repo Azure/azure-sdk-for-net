@@ -40,8 +40,7 @@ namespace Azure.ResourceManager.LoadTesting
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.LoadTesting
                 if (Encryption != null)
                 {
                     writer.WritePropertyName("encryption"u8);
-                    writer.WriteObjectValue(Encryption, options);
+                    ((IJsonModel<LoadTestingCmkEncryptionProperties>)Encryption).Write(writer, options);
                 }
                 else
                 {
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.LoadTesting
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -160,7 +159,7 @@ namespace Azure.ResourceManager.LoadTesting
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -198,7 +197,7 @@ namespace Azure.ResourceManager.LoadTesting
                                 encryption = null;
                                 continue;
                             }
-                            encryption = LoadTestingCmkEncryptionProperties.DeserializeLoadTestingCmkEncryptionProperties(property0.Value, options);
+                            encryption = ModelSerializationExtensions.JsonDeserialize<LoadTestingCmkEncryptionProperties>(property0.Value);
                             continue;
                         }
                     }

@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Offerings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SecurityCenterCloudOffering>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(EnvironmentData))
             {
                 writer.WritePropertyName("environmentData"u8);
-                writer.WriteObjectValue(EnvironmentData, options);
+                ((IJsonModel<SecurityConnectorEnvironment>)EnvironmentData).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            environmentData = SecurityConnectorEnvironment.DeserializeSecurityConnectorEnvironment(property0.Value, options);
+                            environmentData = ModelSerializationExtensions.JsonDeserialize<SecurityConnectorEnvironment>(property0.Value);
                             continue;
                         }
                     }

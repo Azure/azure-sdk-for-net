@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(ProviderHubMetadata))
             {
                 writer.WritePropertyName("providerHubMetadata"u8);
-                writer.WriteObjectValue(ProviderHubMetadata, options);
+                ((IJsonModel<ProviderHubMetadata>)ProviderHubMetadata).Write(writer, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(SubscriptionLifecycleNotificationSpecifications))
             {
                 writer.WritePropertyName("subscriptionLifecycleNotificationSpecifications"u8);
-                writer.WriteObjectValue(SubscriptionLifecycleNotificationSpecifications, options);
+                ((IJsonModel<SubscriptionLifecycleNotificationSpecifications>)SubscriptionLifecycleNotificationSpecifications).Write(writer, options);
             }
         }
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    providerHubMetadata = ProviderHubMetadata.DeserializeProviderHubMetadata(property.Value, options);
+                    providerHubMetadata = ModelSerializationExtensions.JsonDeserialize<ProviderHubMetadata>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    subscriptionLifecycleNotificationSpecifications = SubscriptionLifecycleNotificationSpecifications.DeserializeSubscriptionLifecycleNotificationSpecifications(property.Value, options);
+                    subscriptionLifecycleNotificationSpecifications = ModelSerializationExtensions.JsonDeserialize<SubscriptionLifecycleNotificationSpecifications>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("providerAuthentication"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    providerAuthentication = ResourceProviderAuthentication.DeserializeResourceProviderAuthentication(property.Value, options);
+                    providerAuthentication = ModelSerializationExtensions.JsonDeserialize<ResourceProviderAuthentication>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("providerAuthorizations"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    featuresRule = FeaturesRule.DeserializeFeaturesRule(property.Value, options);
+                    featuresRule = ModelSerializationExtensions.JsonDeserialize<FeaturesRule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("requestHeaderOptions"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    requestHeaderOptions = RequestHeaderOptions.DeserializeRequestHeaderOptions(property.Value, options);
+                    requestHeaderOptions = ModelSerializationExtensions.JsonDeserialize<RequestHeaderOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("management"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    management = ResourceProviderManagement.DeserializeResourceProviderManagement(property.Value, options);
+                    management = ModelSerializationExtensions.JsonDeserialize<ResourceProviderManagement>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("capabilities"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    templateDeploymentOptions = TemplateDeploymentOptions.DeserializeTemplateDeploymentOptions(property.Value, options);
+                    templateDeploymentOptions = ModelSerializationExtensions.JsonDeserialize<TemplateDeploymentOptions>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

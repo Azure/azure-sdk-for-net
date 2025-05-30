@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(BulkCreationParameters))
             {
                 writer.WritePropertyName("bulkCreationParameters"u8);
-                writer.WriteObjectValue(BulkCreationParameters, options);
+                ((IJsonModel<BulkCreationParameters>)BulkCreationParameters).Write(writer, options);
             }
             if (Optional.IsDefined(Notes))
             {
@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in Artifacts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DevTestLabArtifactInstallInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(GalleryImageReference))
             {
                 writer.WritePropertyName("galleryImageReference"u8);
-                writer.WriteObjectValue(GalleryImageReference, options);
+                ((IJsonModel<DevTestLabGalleryImageReference>)GalleryImageReference).Write(writer, options);
             }
             if (Optional.IsDefined(PlanId))
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(NetworkInterface))
             {
                 writer.WritePropertyName("networkInterface"u8);
-                writer.WriteObjectValue(NetworkInterface, options);
+                ((IJsonModel<DevTestLabNetworkInterface>)NetworkInterface).Write(writer, options);
             }
             if (Optional.IsDefined(ExpireOn))
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDiskParameters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DevTestLabDataDiskProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in ScheduleParameters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DevTestLabScheduleCreationParameter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             {
                                 continue;
                             }
-                            bulkCreationParameters = BulkCreationParameters.DeserializeBulkCreationParameters(property0.Value, options);
+                            bulkCreationParameters = ModelSerializationExtensions.JsonDeserialize<BulkCreationParameters>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("notes"u8))
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             {
                                 continue;
                             }
-                            galleryImageReference = DevTestLabGalleryImageReference.DeserializeDevTestLabGalleryImageReference(property0.Value, options);
+                            galleryImageReference = ModelSerializationExtensions.JsonDeserialize<DevTestLabGalleryImageReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("planId"u8))
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             {
                                 continue;
                             }
-                            networkInterface = DevTestLabNetworkInterface.DeserializeDevTestLabNetworkInterface(property0.Value, options);
+                            networkInterface = ModelSerializationExtensions.JsonDeserialize<DevTestLabNetworkInterface>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("expirationDate"u8))

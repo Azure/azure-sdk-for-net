@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Responses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TroubleshooterResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

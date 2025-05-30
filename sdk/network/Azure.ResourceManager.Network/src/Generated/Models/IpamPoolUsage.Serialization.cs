@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in ChildPools)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IpamResourceBasics>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

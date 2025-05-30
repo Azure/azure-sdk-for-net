@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (options.Format != "W" && Optional.IsDefined(CustomDomainVerificationFailureInfo))
             {
                 writer.WritePropertyName("customDomainVerificationFailureInfo"u8);
-                writer.WriteObjectValue(CustomDomainVerificationFailureInfo, options);
+                ((IJsonModel<ContainerAppCustomDomainVerificationFailureInfo>)CustomDomainVerificationFailureInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HasConflictOnManagedEnvironment))
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    customDomainVerificationFailureInfo = ContainerAppCustomDomainVerificationFailureInfo.DeserializeContainerAppCustomDomainVerificationFailureInfo(property.Value, options);
+                    customDomainVerificationFailureInfo = ModelSerializationExtensions.JsonDeserialize<ContainerAppCustomDomainVerificationFailureInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("hasConflictOnManagedEnvironment"u8))

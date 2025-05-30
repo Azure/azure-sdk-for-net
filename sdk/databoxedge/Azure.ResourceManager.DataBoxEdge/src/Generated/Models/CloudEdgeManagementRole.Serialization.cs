@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W" && Optional.IsDefined(EdgeProfile))
             {
                 writer.WritePropertyName("edgeProfile"u8);
-                writer.WriteObjectValue(EdgeProfile, options);
+                ((IJsonModel<EdgeProfile>)EdgeProfile).Write(writer, options);
             }
             if (Optional.IsDefined(RoleStatus))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            edgeProfile = EdgeProfile.DeserializeEdgeProfile(property0.Value, options);
+                            edgeProfile = ModelSerializationExtensions.JsonDeserialize<EdgeProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("roleStatus"u8))

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(Storage))
             {
                 writer.WritePropertyName("storage"u8);
-                writer.WriteObjectValue(Storage, options);
+                ((IJsonModel<TrinoTelemetryConfig>)Storage).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    storage = TrinoTelemetryConfig.DeserializeTrinoTelemetryConfig(property.Value, options);
+                    storage = ModelSerializationExtensions.JsonDeserialize<TrinoTelemetryConfig>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

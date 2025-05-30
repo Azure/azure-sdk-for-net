@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Resources.Models
                 if (StatusMessage != null)
                 {
                     writer.WritePropertyName("statusMessage"u8);
-                    writer.WriteObjectValue(StatusMessage, options);
+                    ((IJsonModel<StatusMessage>)StatusMessage).Write(writer, options);
                 }
                 else
                 {
@@ -80,17 +80,17 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(TargetResource))
             {
                 writer.WritePropertyName("targetResource"u8);
-                writer.WriteObjectValue(TargetResource, options);
+                ((IJsonModel<TargetResource>)TargetResource).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
-                writer.WriteObjectValue(Request, options);
+                ((IJsonModel<HttpMessage>)Request).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
-                writer.WriteObjectValue(Response, options);
+                ((IJsonModel<HttpMessage>)Response).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Resources.Models
                         statusMessage = null;
                         continue;
                     }
-                    statusMessage = StatusMessage.DeserializeStatusMessage(property.Value, options);
+                    statusMessage = ModelSerializationExtensions.JsonDeserialize<StatusMessage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetResource"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    targetResource = TargetResource.DeserializeTargetResource(property.Value, options);
+                    targetResource = ModelSerializationExtensions.JsonDeserialize<TargetResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("request"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    request = HttpMessage.DeserializeHttpMessage(property.Value, options);
+                    request = ModelSerializationExtensions.JsonDeserialize<HttpMessage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("response"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    response = HttpMessage.DeserializeHttpMessage(property.Value, options);
+                    response = ModelSerializationExtensions.JsonDeserialize<HttpMessage>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

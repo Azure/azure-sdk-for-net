@@ -40,27 +40,27 @@ namespace Azure.ResourceManager.LabServices.Models
             if (Optional.IsDefined(AutoShutdownProfile))
             {
                 writer.WritePropertyName("autoShutdownProfile"u8);
-                writer.WriteObjectValue(AutoShutdownProfile, options);
+                ((IJsonModel<LabAutoShutdownProfile>)AutoShutdownProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectionProfile))
             {
                 writer.WritePropertyName("connectionProfile"u8);
-                writer.WriteObjectValue(ConnectionProfile, options);
+                ((IJsonModel<LabConnectionProfile>)ConnectionProfile).Write(writer, options);
             }
             if (Optional.IsDefined(VirtualMachineProfile))
             {
                 writer.WritePropertyName("virtualMachineProfile"u8);
-                writer.WriteObjectValue(VirtualMachineProfile, options);
+                ((IJsonModel<LabVirtualMachineProfile>)VirtualMachineProfile).Write(writer, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile, options);
+                ((IJsonModel<LabSecurityProfile>)SecurityProfile).Write(writer, options);
             }
             if (Optional.IsDefined(RosterProfile))
             {
                 writer.WritePropertyName("rosterProfile"u8);
-                writer.WriteObjectValue(RosterProfile, options);
+                ((IJsonModel<LabRosterProfile>)RosterProfile).Write(writer, options);
             }
             if (Optional.IsDefined(LabPlanId))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            autoShutdownProfile = LabAutoShutdownProfile.DeserializeLabAutoShutdownProfile(property0.Value, options);
+                            autoShutdownProfile = ModelSerializationExtensions.JsonDeserialize<LabAutoShutdownProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("connectionProfile"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            connectionProfile = LabConnectionProfile.DeserializeLabConnectionProfile(property0.Value, options);
+                            connectionProfile = ModelSerializationExtensions.JsonDeserialize<LabConnectionProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("virtualMachineProfile"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            virtualMachineProfile = LabVirtualMachineProfile.DeserializeLabVirtualMachineProfile(property0.Value, options);
+                            virtualMachineProfile = ModelSerializationExtensions.JsonDeserialize<LabVirtualMachineProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("securityProfile"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            securityProfile = LabSecurityProfile.DeserializeLabSecurityProfile(property0.Value, options);
+                            securityProfile = ModelSerializationExtensions.JsonDeserialize<LabSecurityProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("rosterProfile"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            rosterProfile = LabRosterProfile.DeserializeLabRosterProfile(property0.Value, options);
+                            rosterProfile = ModelSerializationExtensions.JsonDeserialize<LabRosterProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("labPlanId"u8))

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             if (Optional.IsDefined(KeyEncryptionKeyIdentity))
             {
                 writer.WritePropertyName("keyEncryptionKeyIdentity"u8);
-                writer.WriteObjectValue(KeyEncryptionKeyIdentity, options);
+                ((IJsonModel<RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity>)KeyEncryptionKeyIdentity).Write(writer, options);
             }
             if (Optional.IsDefined(KeyEncryptionKeyUri))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    keyEncryptionKeyIdentity = RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity.DeserializeRedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity(property.Value, options);
+                    keyEncryptionKeyIdentity = ModelSerializationExtensions.JsonDeserialize<RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("keyEncryptionKeyUrl"u8))

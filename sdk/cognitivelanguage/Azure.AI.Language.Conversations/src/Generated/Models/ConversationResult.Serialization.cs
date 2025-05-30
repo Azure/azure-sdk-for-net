@@ -44,7 +44,7 @@ namespace Azure.AI.Language.Conversations.Models
             if (Optional.IsDefined(Prediction))
             {
                 writer.WritePropertyName("prediction"u8);
-                writer.WriteObjectValue(Prediction, options);
+                ((IJsonModel<ConversationPrediction>)Prediction).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -106,7 +106,7 @@ namespace Azure.AI.Language.Conversations.Models
                     {
                         continue;
                     }
-                    prediction = ConversationPrediction.DeserializeConversationPrediction(property.Value, options);
+                    prediction = ModelSerializationExtensions.JsonDeserialize<ConversationPrediction>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

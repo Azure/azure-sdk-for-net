@@ -37,7 +37,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    hazards = WeatherHazards.DeserializeWeatherHazards(property.Value);
+                    hazards = ModelSerializationExtensions.JsonDeserialize<WeatherHazards>(property.Value);
                     continue;
                 }
             }

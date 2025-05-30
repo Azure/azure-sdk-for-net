@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (options.Format != "W" && Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics, options);
+                ((IJsonModel<DatabaseStatistics>)Statistics).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsFollowed))
             {
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.Kusto.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties, options);
+                ((IJsonModel<KustoKeyVaultProperties>)KeyVaultProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SuspensionDetails))
             {
                 writer.WritePropertyName("suspensionDetails"u8);
-                writer.WriteObjectValue(SuspensionDetails, options);
+                ((IJsonModel<SuspensionDetails>)SuspensionDetails).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             {
                                 continue;
                             }
-                            statistics = DatabaseStatistics.DeserializeDatabaseStatistics(property0.Value, options);
+                            statistics = ModelSerializationExtensions.JsonDeserialize<DatabaseStatistics>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("isFollowed"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             {
                                 continue;
                             }
-                            keyVaultProperties = KustoKeyVaultProperties.DeserializeKustoKeyVaultProperties(property0.Value, options);
+                            keyVaultProperties = ModelSerializationExtensions.JsonDeserialize<KustoKeyVaultProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("suspensionDetails"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             {
                                 continue;
                             }
-                            suspensionDetails = SuspensionDetails.DeserializeSuspensionDetails(property0.Value, options);
+                            suspensionDetails = ModelSerializationExtensions.JsonDeserialize<SuspensionDetails>(property0.Value);
                             continue;
                         }
                     }

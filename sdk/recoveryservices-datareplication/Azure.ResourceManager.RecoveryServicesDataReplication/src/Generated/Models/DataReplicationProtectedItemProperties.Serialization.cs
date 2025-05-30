@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (options.Format != "W" && Optional.IsDefined(CurrentJob))
             {
                 writer.WritePropertyName("currentJob"u8);
-                writer.WriteObjectValue(CurrentJob, options);
+                ((IJsonModel<ProtectedItemJobProperties>)CurrentJob).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AllowedJobs))
             {
@@ -151,17 +151,17 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (options.Format != "W" && Optional.IsDefined(LastFailedEnableProtectionJob))
             {
                 writer.WritePropertyName("lastFailedEnableProtectionJob"u8);
-                writer.WriteObjectValue(LastFailedEnableProtectionJob, options);
+                ((IJsonModel<ProtectedItemJobProperties>)LastFailedEnableProtectionJob).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastFailedPlannedFailoverJob))
             {
                 writer.WritePropertyName("lastFailedPlannedFailoverJob"u8);
-                writer.WriteObjectValue(LastFailedPlannedFailoverJob, options);
+                ((IJsonModel<ProtectedItemJobProperties>)LastFailedPlannedFailoverJob).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastTestFailoverJob))
             {
                 writer.WritePropertyName("lastTestFailoverJob"u8);
-                writer.WriteObjectValue(LastTestFailoverJob, options);
+                ((IJsonModel<ProtectedItemJobProperties>)LastTestFailoverJob).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReplicationHealth))
             {
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataReplicationHealthErrorInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("customProperties"u8);
-            writer.WriteObjectValue(CustomProperties, options);
+            ((IJsonModel<DataReplicationProtectedItemCustomProperties>)CustomProperties).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    currentJob = ProtectedItemJobProperties.DeserializeProtectedItemJobProperties(property.Value, options);
+                    currentJob = ModelSerializationExtensions.JsonDeserialize<ProtectedItemJobProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("allowedJobs"u8))
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    lastFailedEnableProtectionJob = ProtectedItemJobProperties.DeserializeProtectedItemJobProperties(property.Value, options);
+                    lastFailedEnableProtectionJob = ModelSerializationExtensions.JsonDeserialize<ProtectedItemJobProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lastFailedPlannedFailoverJob"u8))
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    lastFailedPlannedFailoverJob = ProtectedItemJobProperties.DeserializeProtectedItemJobProperties(property.Value, options);
+                    lastFailedPlannedFailoverJob = ModelSerializationExtensions.JsonDeserialize<ProtectedItemJobProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lastTestFailoverJob"u8))
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    lastTestFailoverJob = ProtectedItemJobProperties.DeserializeProtectedItemJobProperties(property.Value, options);
+                    lastTestFailoverJob = ModelSerializationExtensions.JsonDeserialize<ProtectedItemJobProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("replicationHealth"u8))
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = DataReplicationProtectedItemCustomProperties.DeserializeDataReplicationProtectedItemCustomProperties(property.Value, options);
+                    customProperties = ModelSerializationExtensions.JsonDeserialize<DataReplicationProtectedItemCustomProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

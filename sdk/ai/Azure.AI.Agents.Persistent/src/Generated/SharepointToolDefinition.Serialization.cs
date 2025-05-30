@@ -36,7 +36,7 @@ namespace Azure.AI.Agents.Persistent
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sharepoint_grounding"u8);
-            writer.WriteObjectValue(SharepointGrounding, options);
+            ((IJsonModel<SharepointGroundingToolParameters>)SharepointGrounding).Write(writer, options);
         }
 
         SharepointToolDefinition IJsonModel<SharepointToolDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (property.NameEquals("sharepoint_grounding"u8))
                 {
-                    sharepointGrounding = SharepointGroundingToolParameters.DeserializeSharepointGroundingToolParameters(property.Value, options);
+                    sharepointGrounding = ModelSerializationExtensions.JsonDeserialize<SharepointGroundingToolParameters>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

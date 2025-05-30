@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<IntegrationServiceEnvironmentSkuDefinitionSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity, options);
+                ((IJsonModel<IntegrationServiceEnvironmentSkuCapacity>)Capacity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    sku = IntegrationServiceEnvironmentSkuDefinitionSku.DeserializeIntegrationServiceEnvironmentSkuDefinitionSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<IntegrationServiceEnvironmentSkuDefinitionSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    capacity = IntegrationServiceEnvironmentSkuCapacity.DeserializeIntegrationServiceEnvironmentSkuCapacity(property.Value, options);
+                    capacity = ModelSerializationExtensions.JsonDeserialize<IntegrationServiceEnvironmentSkuCapacity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

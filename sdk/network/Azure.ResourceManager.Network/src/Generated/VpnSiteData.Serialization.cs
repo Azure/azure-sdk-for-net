@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(VirtualWan))
             {
                 writer.WritePropertyName("virtualWan"u8);
-                JsonSerializer.Serialize(writer, VirtualWan);
+                ((IJsonModel<WritableSubResource>)VirtualWan).Write(writer, options);
             }
             if (Optional.IsDefined(DeviceProperties))
             {
                 writer.WritePropertyName("deviceProperties"u8);
-                writer.WriteObjectValue(DeviceProperties, options);
+                ((IJsonModel<DeviceProperties>)DeviceProperties).Write(writer, options);
             }
             if (Optional.IsDefined(IPAddress))
             {
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(AddressSpace))
             {
                 writer.WritePropertyName("addressSpace"u8);
-                writer.WriteObjectValue(AddressSpace, options);
+                ((IJsonModel<VirtualNetworkAddressSpace>)AddressSpace).Write(writer, options);
             }
             if (Optional.IsDefined(BgpProperties))
             {
                 writer.WritePropertyName("bgpProperties"u8);
-                writer.WriteObjectValue(BgpProperties, options);
+                ((IJsonModel<BgpSettings>)BgpProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -90,14 +90,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VpnSiteLinks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VpnSiteLinkData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(O365Policy))
             {
                 writer.WritePropertyName("o365Policy"u8);
-                writer.WriteObjectValue(O365Policy, options);
+                ((IJsonModel<O365PolicyProperties>)O365Policy).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            virtualWan = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            virtualWan = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("deviceProperties"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            deviceProperties = DeviceProperties.DeserializeDeviceProperties(property0.Value, options);
+                            deviceProperties = ModelSerializationExtensions.JsonDeserialize<DeviceProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ipAddress"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            addressSpace = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property0.Value, options);
+                            addressSpace = ModelSerializationExtensions.JsonDeserialize<VirtualNetworkAddressSpace>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("bgpProperties"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            bgpProperties = BgpSettings.DeserializeBgpSettings(property0.Value, options);
+                            bgpProperties = ModelSerializationExtensions.JsonDeserialize<BgpSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            o365Policy = O365PolicyProperties.DeserializeO365PolicyProperties(property0.Value, options);
+                            o365Policy = ModelSerializationExtensions.JsonDeserialize<O365PolicyProperties>(property0.Value);
                             continue;
                         }
                     }

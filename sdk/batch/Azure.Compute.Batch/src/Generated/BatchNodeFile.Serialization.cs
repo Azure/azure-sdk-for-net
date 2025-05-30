@@ -52,7 +52,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<FileProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -124,7 +124,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    properties = FileProperties.DeserializeFileProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<FileProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

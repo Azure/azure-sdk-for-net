@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
@@ -80,7 +81,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(monitoringDataPoint);
+                ((IJsonModel<MonitoringDataPoint>)monitoringDataPoint).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
                 request.Content = content;
             }
             return message;
@@ -195,7 +196,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 content.JsonWriter.WriteStartArray();
                 foreach (var item in monitoringDataPoints)
                 {
-                    content.JsonWriter.WriteObjectValue(item);
+                    ((IJsonModel<MonitoringDataPoint>)item).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
                 }
                 content.JsonWriter.WriteEndArray();
                 request.Content = content;

@@ -60,7 +60,7 @@ namespace Azure.MixedReality.RemoteRendering
                     {
                         continue;
                     }
-                    innerError = DeserializeRemoteRenderingServiceError(property.Value);
+                    innerError = ModelSerializationExtensions.JsonDeserialize<RemoteRenderingServiceError>(property.Value);
                     continue;
                 }
             }

@@ -16,9 +16,9 @@ namespace Azure.MixedReality.RemoteRendering
         {
             writer.WriteStartObject();
             writer.WritePropertyName("inputLocation"u8);
-            writer.WriteObjectValue<AssetConversionInputOptions>(InputOptions);
+            JsonSerializer.Serialize(writer, InputOptions);
             writer.WritePropertyName("outputLocation"u8);
-            writer.WriteObjectValue<AssetConversionOutputOptions>(OutputOptions);
+            JsonSerializer.Serialize(writer, OutputOptions);
             writer.WriteEndObject();
         }
 
@@ -34,12 +34,12 @@ namespace Azure.MixedReality.RemoteRendering
             {
                 if (property.NameEquals("inputLocation"u8))
                 {
-                    inputLocation = AssetConversionInputOptions.DeserializeAssetConversionInputOptions(property.Value);
+                    inputLocation = ModelSerializationExtensions.JsonDeserialize<AssetConversionInputOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("outputLocation"u8))
                 {
-                    outputLocation = AssetConversionOutputOptions.DeserializeAssetConversionOutputOptions(property.Value);
+                    outputLocation = ModelSerializationExtensions.JsonDeserialize<AssetConversionOutputOptions>(property.Value);
                     continue;
                 }
             }

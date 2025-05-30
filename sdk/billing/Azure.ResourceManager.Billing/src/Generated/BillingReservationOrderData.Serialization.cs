@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Billing
             if (Optional.IsDefined(PlanInformation))
             {
                 writer.WritePropertyName("planInformation"u8);
-                writer.WriteObjectValue(PlanInformation, options);
+                ((IJsonModel<ReservationOrderBillingPlanInformation>)PlanInformation).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Reservations))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Billing
                 writer.WriteStartArray();
                 foreach (var item in Reservations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BillingReservationData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Billing
             if (Optional.IsDefined(ExtendedStatusInfo))
             {
                 writer.WritePropertyName("extendedStatusInfo"u8);
-                writer.WriteObjectValue(ExtendedStatusInfo, options);
+                ((IJsonModel<ReservationExtendedStatusInfo>)ExtendedStatusInfo).Write(writer, options);
             }
             if (Optional.IsDefined(ProductCode))
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            planInformation = ReservationOrderBillingPlanInformation.DeserializeReservationOrderBillingPlanInformation(property0.Value, options);
+                            planInformation = ModelSerializationExtensions.JsonDeserialize<ReservationOrderBillingPlanInformation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("reservations"u8))
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            extendedStatusInfo = ReservationExtendedStatusInfo.DeserializeReservationExtendedStatusInfo(property0.Value, options);
+                            extendedStatusInfo = ModelSerializationExtensions.JsonDeserialize<ReservationExtendedStatusInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("productCode"u8))

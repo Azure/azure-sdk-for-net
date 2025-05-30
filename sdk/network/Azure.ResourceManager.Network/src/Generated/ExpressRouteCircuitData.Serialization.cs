@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<ExpressRouteCircuitSku>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Authorizations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExpressRouteCircuitAuthorizationData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Peerings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExpressRouteCircuitPeeringData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ServiceProviderProperties))
             {
                 writer.WritePropertyName("serviceProviderProperties"u8);
-                writer.WriteObjectValue(ServiceProviderProperties, options);
+                ((IJsonModel<ExpressRouteCircuitServiceProviderProperties>)ServiceProviderProperties).Write(writer, options);
             }
             if (Optional.IsDefined(ExpressRoutePort))
             {
                 writer.WritePropertyName("expressRoutePort"u8);
-                JsonSerializer.Serialize(writer, ExpressRoutePort);
+                ((IJsonModel<WritableSubResource>)ExpressRoutePort).Write(writer, options);
             }
             if (Optional.IsDefined(BandwidthInGbps))
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    sku = ExpressRouteCircuitSku.DeserializeExpressRouteCircuitSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<ExpressRouteCircuitSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            serviceProviderProperties = ExpressRouteCircuitServiceProviderProperties.DeserializeExpressRouteCircuitServiceProviderProperties(property0.Value, options);
+                            serviceProviderProperties = ModelSerializationExtensions.JsonDeserialize<ExpressRouteCircuitServiceProviderProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("expressRoutePort"u8))
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            expressRoutePort = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            expressRoutePort = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("bandwidthInGbps"u8))

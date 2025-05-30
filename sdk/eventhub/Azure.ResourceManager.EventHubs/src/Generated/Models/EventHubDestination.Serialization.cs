@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<EventHubsCaptureIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     {
                         continue;
                     }
-                    identity = EventHubsCaptureIdentity.DeserializeEventHubsCaptureIdentity(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<EventHubsCaptureIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

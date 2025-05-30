@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
+                ((IJsonModel<VaultUsageNameInfo>)Name).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    name = VaultUsageNameInfo.DeserializeVaultUsageNameInfo(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<VaultUsageNameInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EntityData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

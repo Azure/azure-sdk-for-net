@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Exclusions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MonitorPrivateLinkAccessModeSettingsExclusion>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -45,29 +45,29 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WriteStartArray();
                 foreach (var item in AccessPolicies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HealthcareApisServiceAccessPolicyEntry>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(CosmosDbConfiguration))
             {
                 writer.WritePropertyName("cosmosDbConfiguration"u8);
-                writer.WriteObjectValue(CosmosDbConfiguration, options);
+                ((IJsonModel<HealthcareApisServiceCosmosDbConfiguration>)CosmosDbConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(AuthenticationConfiguration))
             {
                 writer.WritePropertyName("authenticationConfiguration"u8);
-                writer.WriteObjectValue(AuthenticationConfiguration, options);
+                ((IJsonModel<HealthcareApisServiceAuthenticationConfiguration>)AuthenticationConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(CorsConfiguration))
             {
                 writer.WritePropertyName("corsConfiguration"u8);
-                writer.WriteObjectValue(CorsConfiguration, options);
+                ((IJsonModel<HealthcareApisServiceCorsConfiguration>)CorsConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ExportConfiguration))
             {
                 writer.WritePropertyName("exportConfiguration"u8);
-                writer.WriteObjectValue(ExportConfiguration, options);
+                ((IJsonModel<ServiceExportConfigurationInfo>)ExportConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HealthcareApisPrivateEndpointConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             if (Optional.IsDefined(AcrConfiguration))
             {
                 writer.WritePropertyName("acrConfiguration"u8);
-                writer.WriteObjectValue(AcrConfiguration, options);
+                ((IJsonModel<HealthcareApisServiceAcrConfiguration>)AcrConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ImportConfiguration))
             {
                 writer.WritePropertyName("importConfiguration"u8);
-                writer.WriteObjectValue(ImportConfiguration, options);
+                ((IJsonModel<HealthcareApisServiceImportConfiguration>)ImportConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     {
                         continue;
                     }
-                    cosmosDbConfiguration = HealthcareApisServiceCosmosDbConfiguration.DeserializeHealthcareApisServiceCosmosDbConfiguration(property.Value, options);
+                    cosmosDbConfiguration = ModelSerializationExtensions.JsonDeserialize<HealthcareApisServiceCosmosDbConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("authenticationConfiguration"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     {
                         continue;
                     }
-                    authenticationConfiguration = HealthcareApisServiceAuthenticationConfiguration.DeserializeHealthcareApisServiceAuthenticationConfiguration(property.Value, options);
+                    authenticationConfiguration = ModelSerializationExtensions.JsonDeserialize<HealthcareApisServiceAuthenticationConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("corsConfiguration"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     {
                         continue;
                     }
-                    corsConfiguration = HealthcareApisServiceCorsConfiguration.DeserializeHealthcareApisServiceCorsConfiguration(property.Value, options);
+                    corsConfiguration = ModelSerializationExtensions.JsonDeserialize<HealthcareApisServiceCorsConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("exportConfiguration"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     {
                         continue;
                     }
-                    exportConfiguration = ServiceExportConfigurationInfo.DeserializeServiceExportConfigurationInfo(property.Value, options);
+                    exportConfiguration = ModelSerializationExtensions.JsonDeserialize<ServiceExportConfigurationInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("privateEndpointConnections"u8))
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     {
                         continue;
                     }
-                    acrConfiguration = HealthcareApisServiceAcrConfiguration.DeserializeHealthcareApisServiceAcrConfiguration(property.Value, options);
+                    acrConfiguration = ModelSerializationExtensions.JsonDeserialize<HealthcareApisServiceAcrConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("importConfiguration"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     {
                         continue;
                     }
-                    importConfiguration = HealthcareApisServiceImportConfiguration.DeserializeHealthcareApisServiceImportConfiguration(property.Value, options);
+                    importConfiguration = ModelSerializationExtensions.JsonDeserialize<HealthcareApisServiceImportConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

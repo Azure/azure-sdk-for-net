@@ -37,7 +37,7 @@ namespace Azure.AI.Language.Conversations.Models
             if (Optional.IsDefined(MetadataFilter))
             {
                 writer.WritePropertyName("metadataFilter"u8);
-                writer.WriteObjectValue(MetadataFilter, options);
+                ((IJsonModel<MetadataFilter>)MetadataFilter).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(SourceFilter))
             {
@@ -104,7 +104,7 @@ namespace Azure.AI.Language.Conversations.Models
                     {
                         continue;
                     }
-                    metadataFilter = MetadataFilter.DeserializeMetadataFilter(property.Value, options);
+                    metadataFilter = ModelSerializationExtensions.JsonDeserialize<MetadataFilter>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sourceFilter"u8))

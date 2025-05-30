@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<ContainerRegistryResourceStatus>)Status).Write(writer, options);
             }
             if (Optional.IsDefined(IsRegionEndpointEnabled))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            status = ContainerRegistryResourceStatus.DeserializeContainerRegistryResourceStatus(property0.Value, options);
+                            status = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryResourceStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("regionEndpointEnabled"u8))

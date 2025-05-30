@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(PartnerTopicDetails))
             {
                 writer.WritePropertyName("partnerTopicDetails"u8);
-                writer.WriteObjectValue(PartnerTopicDetails, options);
+                ((IJsonModel<PartnerDetails>)PartnerTopicDetails).Write(writer, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.EventGrid
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            partnerTopicDetails = PartnerDetails.DeserializePartnerDetails(property0.Value, options);
+                            partnerTopicDetails = ModelSerializationExtensions.JsonDeserialize<PartnerDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

@@ -49,7 +49,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (RescoringOptions != null)
                 {
                     writer.WritePropertyName("rescoringOptions"u8);
-                    writer.WriteObjectValue(RescoringOptions);
+                    JsonSerializer.Serialize(writer, RescoringOptions);
                 }
                 else
                 {

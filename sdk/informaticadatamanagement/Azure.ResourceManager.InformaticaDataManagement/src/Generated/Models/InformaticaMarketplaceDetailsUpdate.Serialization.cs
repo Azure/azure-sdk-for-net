@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             if (Optional.IsDefined(OfferDetails))
             {
                 writer.WritePropertyName("offerDetails"u8);
-                writer.WriteObjectValue(OfferDetails, options);
+                ((IJsonModel<InformaticaOfferDetailsUpdate>)OfferDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     {
                         continue;
                     }
-                    offerDetails = InformaticaOfferDetailsUpdate.DeserializeInformaticaOfferDetailsUpdate(property.Value, options);
+                    offerDetails = ModelSerializationExtensions.JsonDeserialize<InformaticaOfferDetailsUpdate>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

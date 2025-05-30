@@ -41,13 +41,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartArray();
             foreach (var item in MetricThresholds)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<PredictionDriftMetricThresholdBase>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("productionData"u8);
-            writer.WriteObjectValue(ProductionData, options);
+            ((IJsonModel<MonitoringInputDataBase>)ProductionData).Write(writer, options);
             writer.WritePropertyName("referenceData"u8);
-            writer.WriteObjectValue(ReferenceData, options);
+            ((IJsonModel<MonitoringInputDataBase>)ReferenceData).Write(writer, options);
             if (Optional.IsCollectionDefined(FeatureDataTypeOverride))
             {
                 if (FeatureDataTypeOverride != null)
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("productionData"u8))
                 {
-                    productionData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
+                    productionData = ModelSerializationExtensions.JsonDeserialize<MonitoringInputDataBase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("referenceData"u8))
                 {
-                    referenceData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
+                    referenceData = ModelSerializationExtensions.JsonDeserialize<MonitoringInputDataBase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("featureDataTypeOverride"u8))

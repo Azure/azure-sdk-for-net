@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.BillingBenefits
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<BillingBenefitsSku>)Sku).Write(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.BillingBenefits
             if (Optional.IsDefined(PlanInformation))
             {
                 writer.WritePropertyName("planInformation"u8);
-                writer.WriteObjectValue(PlanInformation, options);
+                ((IJsonModel<BillingPlanInformation>)PlanInformation).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(SavingsPlans))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.BillingBenefits
             if (options.Format != "W" && Optional.IsDefined(ExtendedStatusInfo))
             {
                 writer.WritePropertyName("extendedStatusInfo"u8);
-                writer.WriteObjectValue(ExtendedStatusInfo, options);
+                ((IJsonModel<BillingBenefitsExtendedStatusInfo>)ExtendedStatusInfo).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = BillingBenefitsSku.DeserializeBillingBenefitsSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<BillingBenefitsSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.BillingBenefits
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.BillingBenefits
                             {
                                 continue;
                             }
-                            planInformation = BillingPlanInformation.DeserializeBillingPlanInformation(property0.Value, options);
+                            planInformation = ModelSerializationExtensions.JsonDeserialize<BillingPlanInformation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("savingsPlans"u8))
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.BillingBenefits
                             {
                                 continue;
                             }
-                            extendedStatusInfo = BillingBenefitsExtendedStatusInfo.DeserializeBillingBenefitsExtendedStatusInfo(property0.Value, options);
+                            extendedStatusInfo = ModelSerializationExtensions.JsonDeserialize<BillingBenefitsExtendedStatusInfo>(property0.Value);
                             continue;
                         }
                     }

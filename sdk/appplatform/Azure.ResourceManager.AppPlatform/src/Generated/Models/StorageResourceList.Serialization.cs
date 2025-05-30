@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AppPlatformStorageData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

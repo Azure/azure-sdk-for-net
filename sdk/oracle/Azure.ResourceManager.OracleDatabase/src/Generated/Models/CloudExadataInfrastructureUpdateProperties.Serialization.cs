@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
-                writer.WriteObjectValue(MaintenanceWindow, options);
+                ((IJsonModel<OracleDatabaseMaintenanceWindow>)MaintenanceWindow).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(CustomerContacts))
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomerContacts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<OracleCustomerContact>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    maintenanceWindow = OracleDatabaseMaintenanceWindow.DeserializeOracleDatabaseMaintenanceWindow(property.Value, options);
+                    maintenanceWindow = ModelSerializationExtensions.JsonDeserialize<OracleDatabaseMaintenanceWindow>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("customerContacts"u8))

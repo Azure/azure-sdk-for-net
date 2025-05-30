@@ -38,22 +38,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(DiskCsiDriver))
             {
                 writer.WritePropertyName("diskCSIDriver"u8);
-                writer.WriteObjectValue(DiskCsiDriver, options);
+                ((IJsonModel<ManagedClusterStorageProfileDiskCsiDriver>)DiskCsiDriver).Write(writer, options);
             }
             if (Optional.IsDefined(FileCsiDriver))
             {
                 writer.WritePropertyName("fileCSIDriver"u8);
-                writer.WriteObjectValue(FileCsiDriver, options);
+                ((IJsonModel<ManagedClusterStorageProfileFileCsiDriver>)FileCsiDriver).Write(writer, options);
             }
             if (Optional.IsDefined(SnapshotController))
             {
                 writer.WritePropertyName("snapshotController"u8);
-                writer.WriteObjectValue(SnapshotController, options);
+                ((IJsonModel<ManagedClusterStorageProfileSnapshotController>)SnapshotController).Write(writer, options);
             }
             if (Optional.IsDefined(BlobCsiDriver))
             {
                 writer.WritePropertyName("blobCSIDriver"u8);
-                writer.WriteObjectValue(BlobCsiDriver, options);
+                ((IJsonModel<ManagedClusterStorageProfileBlobCsiDriver>)BlobCsiDriver).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    diskCsiDriver = ManagedClusterStorageProfileDiskCsiDriver.DeserializeManagedClusterStorageProfileDiskCsiDriver(property.Value, options);
+                    diskCsiDriver = ModelSerializationExtensions.JsonDeserialize<ManagedClusterStorageProfileDiskCsiDriver>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("fileCSIDriver"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    fileCsiDriver = ManagedClusterStorageProfileFileCsiDriver.DeserializeManagedClusterStorageProfileFileCsiDriver(property.Value, options);
+                    fileCsiDriver = ModelSerializationExtensions.JsonDeserialize<ManagedClusterStorageProfileFileCsiDriver>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("snapshotController"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    snapshotController = ManagedClusterStorageProfileSnapshotController.DeserializeManagedClusterStorageProfileSnapshotController(property.Value, options);
+                    snapshotController = ModelSerializationExtensions.JsonDeserialize<ManagedClusterStorageProfileSnapshotController>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("blobCSIDriver"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    blobCsiDriver = ManagedClusterStorageProfileBlobCsiDriver.DeserializeManagedClusterStorageProfileBlobCsiDriver(property.Value, options);
+                    blobCsiDriver = ModelSerializationExtensions.JsonDeserialize<ManagedClusterStorageProfileBlobCsiDriver>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

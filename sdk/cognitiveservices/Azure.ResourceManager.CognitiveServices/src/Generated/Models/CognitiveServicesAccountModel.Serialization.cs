@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(BaseModel))
             {
                 writer.WritePropertyName("baseModel"u8);
-                writer.WriteObjectValue(BaseModel, options);
+                ((IJsonModel<CognitiveServicesAccountDeploymentModel>)BaseModel).Write(writer, options);
             }
             if (Optional.IsDefined(IsDefaultVersion))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Skus)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CognitiveServicesModelSku>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Deprecation))
             {
                 writer.WritePropertyName("deprecation"u8);
-                writer.WriteObjectValue(Deprecation, options);
+                ((IJsonModel<ServiceAccountModelDeprecationInfo>)Deprecation).Write(writer, options);
             }
             if (Optional.IsDefined(LifecycleStatus))
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
+                ((IJsonModel<SystemData>)SystemData).Write(writer, options);
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    baseModel = DeserializeCognitiveServicesAccountDeploymentModel(property.Value, options);
+                    baseModel = ModelSerializationExtensions.JsonDeserialize<CognitiveServicesAccountDeploymentModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isDefaultVersion"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    deprecation = ServiceAccountModelDeprecationInfo.DeserializeServiceAccountModelDeprecationInfo(property.Value, options);
+                    deprecation = ModelSerializationExtensions.JsonDeserialize<ServiceAccountModelDeprecationInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lifecycleStatus"u8))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("publisher"u8))
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value, options);
+                    callRateLimit = ModelSerializationExtensions.JsonDeserialize<ServiceAccountCallRateLimit>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

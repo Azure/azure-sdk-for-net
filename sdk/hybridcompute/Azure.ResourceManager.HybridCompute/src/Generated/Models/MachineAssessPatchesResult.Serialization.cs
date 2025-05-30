@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(AvailablePatchCountByClassification))
             {
                 writer.WritePropertyName("availablePatchCountByClassification"u8);
-                writer.WriteObjectValue(AvailablePatchCountByClassification, options);
+                ((IJsonModel<AvailablePatchCountByClassification>)AvailablePatchCountByClassification).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    availablePatchCountByClassification = AvailablePatchCountByClassification.DeserializeAvailablePatchCountByClassification(property.Value, options);
+                    availablePatchCountByClassification = ModelSerializationExtensions.JsonDeserialize<AvailablePatchCountByClassification>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("startDateTime"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    errorDetails = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    errorDetails = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -38,7 +38,7 @@ namespace Azure.AI.Inference
             writer.WriteStartArray();
             foreach (var item in Input)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ImageEmbeddingInput>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Dimensions))

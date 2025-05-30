@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WritePropertyName("alertSensitivity"u8);
             writer.WriteStringValue(AlertSensitivity.ToString());
             writer.WritePropertyName("failingPeriods"u8);
-            writer.WriteObjectValue(FailingPeriods, options);
+            ((IJsonModel<DynamicThresholdFailingPeriods>)FailingPeriods).Write(writer, options);
             if (Optional.IsDefined(IgnoreDataBefore))
             {
                 writer.WritePropertyName("ignoreDataBefore"u8);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("failingPeriods"u8))
                 {
-                    failingPeriods = DynamicThresholdFailingPeriods.DeserializeDynamicThresholdFailingPeriods(property.Value, options);
+                    failingPeriods = ModelSerializationExtensions.JsonDeserialize<DynamicThresholdFailingPeriods>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ignoreDataBefore"u8))

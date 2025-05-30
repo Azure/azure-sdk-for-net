@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (Optional.IsDefined(ManualResolution))
             {
                 writer.WritePropertyName("manualResolution"u8);
-                writer.WriteObjectValue(ManualResolution, options);
+                ((IJsonModel<ManualResolutionProperties>)ManualResolution).Write(writer, options);
             }
             if (Optional.IsDefined(AutomaticResolution))
             {
                 writer.WritePropertyName("automaticResolution"u8);
-                writer.WriteObjectValue(AutomaticResolution, options);
+                ((IJsonModel<AutomaticResolutionProperties>)AutomaticResolution).Write(writer, options);
             }
             if (Optional.IsDefined(IsDependencyOptional))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     {
                         continue;
                     }
-                    manualResolution = ManualResolutionProperties.DeserializeManualResolutionProperties(property.Value, options);
+                    manualResolution = ModelSerializationExtensions.JsonDeserialize<ManualResolutionProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("automaticResolution"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     {
                         continue;
                     }
-                    automaticResolution = AutomaticResolutionProperties.DeserializeAutomaticResolutionProperties(property.Value, options);
+                    automaticResolution = ModelSerializationExtensions.JsonDeserialize<AutomaticResolutionProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isOptional"u8))

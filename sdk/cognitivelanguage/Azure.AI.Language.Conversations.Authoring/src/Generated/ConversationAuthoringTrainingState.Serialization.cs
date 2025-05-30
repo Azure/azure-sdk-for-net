@@ -71,7 +71,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("result"u8);
-            writer.WriteObjectValue(Result, options);
+            ((IJsonModel<ConversationAuthoringTrainingJobResult>)Result).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -159,7 +159,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                     List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
+                        array.Add(ModelSerializationExtensions.JsonDeserialize<ResponseError>(item));
                     }
                     warnings = array;
                     continue;
@@ -173,14 +173,14 @@ namespace Azure.AI.Language.Conversations.Authoring
                     List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
+                        array.Add(ModelSerializationExtensions.JsonDeserialize<ResponseError>(item));
                     }
                     errors = array;
                     continue;
                 }
                 if (property.NameEquals("result"u8))
                 {
-                    result = ConversationAuthoringTrainingJobResult.DeserializeConversationAuthoringTrainingJobResult(property.Value, options);
+                    result = ModelSerializationExtensions.JsonDeserialize<ConversationAuthoringTrainingJobResult>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

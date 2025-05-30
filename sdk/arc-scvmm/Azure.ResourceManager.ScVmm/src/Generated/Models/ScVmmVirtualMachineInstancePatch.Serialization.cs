@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.ScVmm.Models
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile, options);
+                ((IJsonModel<ScVmmHardwareProfileUpdate>)HardwareProfile).Write(writer, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile, options);
+                ((IJsonModel<ScVmmStorageProfileUpdate>)StorageProfile).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile, options);
+                ((IJsonModel<ScVmmNetworkProfileUpdate>)NetworkProfile).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AvailabilitySets))
             {
@@ -57,14 +57,14 @@ namespace Azure.ResourceManager.ScVmm.Models
                 writer.WriteStartArray();
                 foreach (var item in AvailabilitySets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ScVmmAvailabilitySetItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(InfrastructureProfile))
             {
                 writer.WritePropertyName("infrastructureProfile"u8);
-                writer.WriteObjectValue(InfrastructureProfile, options);
+                ((IJsonModel<ScVmmInfrastructureProfileUpdate>)InfrastructureProfile).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                             {
                                 continue;
                             }
-                            hardwareProfile = ScVmmHardwareProfileUpdate.DeserializeScVmmHardwareProfileUpdate(property0.Value, options);
+                            hardwareProfile = ModelSerializationExtensions.JsonDeserialize<ScVmmHardwareProfileUpdate>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                             {
                                 continue;
                             }
-                            storageProfile = ScVmmStorageProfileUpdate.DeserializeScVmmStorageProfileUpdate(property0.Value, options);
+                            storageProfile = ModelSerializationExtensions.JsonDeserialize<ScVmmStorageProfileUpdate>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                             {
                                 continue;
                             }
-                            networkProfile = ScVmmNetworkProfileUpdate.DeserializeScVmmNetworkProfileUpdate(property0.Value, options);
+                            networkProfile = ModelSerializationExtensions.JsonDeserialize<ScVmmNetworkProfileUpdate>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("availabilitySets"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                             {
                                 continue;
                             }
-                            infrastructureProfile = ScVmmInfrastructureProfileUpdate.DeserializeScVmmInfrastructureProfileUpdate(property0.Value, options);
+                            infrastructureProfile = ModelSerializationExtensions.JsonDeserialize<ScVmmInfrastructureProfileUpdate>(property0.Value);
                             continue;
                         }
                     }

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("connectionType"u8);
-            writer.WriteObjectValue(ConnectionType, options);
+            ((IJsonModel<ConnectionTypeAssociationProperty>)ConnectionType).Write(writer, options);
             if (Optional.IsCollectionDefined(FieldDefinitionValues))
             {
                 writer.WritePropertyName("fieldDefinitionValues"u8);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Automation.Models
                         }
                         if (property0.NameEquals("connectionType"u8))
                         {
-                            connectionType = ConnectionTypeAssociationProperty.DeserializeConnectionTypeAssociationProperty(property0.Value, options);
+                            connectionType = ModelSerializationExtensions.JsonDeserialize<ConnectionTypeAssociationProperty>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("fieldDefinitionValues"u8))

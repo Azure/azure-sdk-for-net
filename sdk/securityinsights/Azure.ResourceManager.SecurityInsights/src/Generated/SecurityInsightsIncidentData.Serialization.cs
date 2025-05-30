@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityInsights
             if (Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
-                writer.WriteObjectValue(Owner, options);
+                ((IJsonModel<SecurityInsightsIncidentOwnerInfo>)Owner).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Labels))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WriteStartArray();
                 foreach (var item in Labels)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SecurityInsightsIncidentLabel>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SecurityInsights
             if (options.Format != "W" && Optional.IsDefined(AdditionalInfo))
             {
                 writer.WritePropertyName("additionalData"u8);
-                writer.WriteObjectValue(AdditionalInfo, options);
+                ((IJsonModel<SecurityInsightsIncidentAdditionalInfo>)AdditionalInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(RelatedAnalyticRuleIds))
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.SecurityInsights
             if (Optional.IsDefined(TeamInformation))
             {
                 writer.WritePropertyName("teamInformation"u8);
-                writer.WriteObjectValue(TeamInformation, options);
+                ((IJsonModel<TeamInformation>)TeamInformation).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            owner = SecurityInsightsIncidentOwnerInfo.DeserializeSecurityInsightsIncidentOwnerInfo(property0.Value, options);
+                            owner = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsIncidentOwnerInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("labels"u8))
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            additionalData = SecurityInsightsIncidentAdditionalInfo.DeserializeSecurityInsightsIncidentAdditionalInfo(property0.Value, options);
+                            additionalData = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsIncidentAdditionalInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("relatedAnalyticRuleIds"u8))
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            teamInformation = TeamInformation.DeserializeTeamInformation(property0.Value, options);
+                            teamInformation = ModelSerializationExtensions.JsonDeserialize<TeamInformation>(property0.Value);
                             continue;
                         }
                     }

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<NetworkSecurityPerimeterProvisioningIssueProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    properties = NetworkSecurityPerimeterProvisioningIssueProperties.DeserializeNetworkSecurityPerimeterProvisioningIssueProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<NetworkSecurityPerimeterProvisioningIssueProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

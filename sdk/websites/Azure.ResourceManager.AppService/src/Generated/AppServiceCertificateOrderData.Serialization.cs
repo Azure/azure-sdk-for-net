@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService
                 foreach (var item in Certificates)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<AppServiceCertificateProperties>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService
             if (options.Format != "W" && Optional.IsDefined(SignedCertificate))
             {
                 writer.WritePropertyName("signedCertificate"u8);
-                writer.WriteObjectValue(SignedCertificate, options);
+                ((IJsonModel<AppServiceCertificateDetails>)SignedCertificate).Write(writer, options);
             }
             if (Optional.IsDefined(Csr))
             {
@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.AppService
             if (options.Format != "W" && Optional.IsDefined(Intermediate))
             {
                 writer.WritePropertyName("intermediate"u8);
-                writer.WriteObjectValue(Intermediate, options);
+                ((IJsonModel<AppServiceCertificateDetails>)Intermediate).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Root))
             {
                 writer.WritePropertyName("root"u8);
-                writer.WriteObjectValue(Root, options);
+                ((IJsonModel<AppServiceCertificateDetails>)Root).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SerialNumber))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppService
             if (options.Format != "W" && Optional.IsDefined(Contact))
             {
                 writer.WritePropertyName("contact"u8);
-                writer.WriteObjectValue(Contact, options);
+                ((IJsonModel<CertificateOrderContact>)Contact).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            signedCertificate = AppServiceCertificateDetails.DeserializeAppServiceCertificateDetails(property0.Value, options);
+                            signedCertificate = ModelSerializationExtensions.JsonDeserialize<AppServiceCertificateDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("csr"u8))
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            intermediate = AppServiceCertificateDetails.DeserializeAppServiceCertificateDetails(property0.Value, options);
+                            intermediate = ModelSerializationExtensions.JsonDeserialize<AppServiceCertificateDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("root"u8))
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            root = AppServiceCertificateDetails.DeserializeAppServiceCertificateDetails(property0.Value, options);
+                            root = ModelSerializationExtensions.JsonDeserialize<AppServiceCertificateDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("serialNumber"u8))
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            contact = CertificateOrderContact.DeserializeCertificateOrderContact(property0.Value, options);
+                            contact = ModelSerializationExtensions.JsonDeserialize<CertificateOrderContact>(property0.Value);
                             continue;
                         }
                     }

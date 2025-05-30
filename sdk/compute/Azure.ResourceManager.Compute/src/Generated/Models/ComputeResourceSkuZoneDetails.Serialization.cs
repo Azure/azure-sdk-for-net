@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ComputeResourceSkuCapabilities>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

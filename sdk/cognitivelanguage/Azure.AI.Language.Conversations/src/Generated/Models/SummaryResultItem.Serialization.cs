@@ -44,7 +44,7 @@ namespace Azure.AI.Language.Conversations.Models
                 writer.WriteStartArray();
                 foreach (var item in Contexts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ItemizedSummaryContext>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(LinkProperties))
             {
                 writer.WritePropertyName("linkProperties"u8);
-                writer.WriteObjectValue(LinkProperties, options);
+                ((IJsonModel<VpnLinkProviderProperties>)LinkProperties).Write(writer, options);
             }
             if (Optional.IsDefined(IPAddress))
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(BgpProperties))
             {
                 writer.WritePropertyName("bgpProperties"u8);
-                writer.WriteObjectValue(BgpProperties, options);
+                ((IJsonModel<VpnLinkBgpSettings>)BgpProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            linkProperties = VpnLinkProviderProperties.DeserializeVpnLinkProviderProperties(property0.Value, options);
+                            linkProperties = ModelSerializationExtensions.JsonDeserialize<VpnLinkProviderProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ipAddress"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            bgpProperties = VpnLinkBgpSettings.DeserializeVpnLinkBgpSettings(property0.Value, options);
+                            bgpProperties = ModelSerializationExtensions.JsonDeserialize<VpnLinkBgpSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

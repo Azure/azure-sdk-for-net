@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Kusto
             if (Optional.IsDefined(TableLevelSharingProperties))
             {
                 writer.WritePropertyName("tableLevelSharingProperties"u8);
-                writer.WriteObjectValue(TableLevelSharingProperties, options);
+                ((IJsonModel<KustoDatabaseTableLevelSharingProperties>)TableLevelSharingProperties).Write(writer, options);
             }
             if (Optional.IsDefined(DatabaseNameOverride))
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Kusto
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Kusto
                             {
                                 continue;
                             }
-                            tableLevelSharingProperties = KustoDatabaseTableLevelSharingProperties.DeserializeKustoDatabaseTableLevelSharingProperties(property0.Value, options);
+                            tableLevelSharingProperties = ModelSerializationExtensions.JsonDeserialize<KustoDatabaseTableLevelSharingProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("databaseNameOverride"u8))

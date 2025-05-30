@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             writer.WriteStartArray();
             foreach (var item in IPExtendedCommunityRules)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<IPExtendedCommunityRule>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

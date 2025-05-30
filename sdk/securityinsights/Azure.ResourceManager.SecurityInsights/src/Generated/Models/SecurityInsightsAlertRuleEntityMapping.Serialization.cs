@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in FieldMappings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SecurityInsightsFieldMapping>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(InvitedUserDetails))
             {
                 writer.WritePropertyName("invitedUserDetails"u8);
-                writer.WriteObjectValue(InvitedUserDetails, options);
+                ((IJsonModel<AccessInvitedUserDetails>)InvitedUserDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     {
                         continue;
                     }
-                    invitedUserDetails = AccessInvitedUserDetails.DeserializeAccessInvitedUserDetails(property.Value, options);
+                    invitedUserDetails = ModelSerializationExtensions.JsonDeserialize<AccessInvitedUserDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

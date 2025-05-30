@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             if (Optional.IsDefined(ReplacementMaps))
             {
                 writer.WritePropertyName("replacementMaps"u8);
-                writer.WriteObjectValue(ReplacementMaps, options);
+                ((IJsonModel<ReplacementMapsResult>)ReplacementMaps).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    replacementMaps = ReplacementMapsResult.DeserializeReplacementMapsResult(property.Value, options);
+                    replacementMaps = ModelSerializationExtensions.JsonDeserialize<ReplacementMapsResult>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

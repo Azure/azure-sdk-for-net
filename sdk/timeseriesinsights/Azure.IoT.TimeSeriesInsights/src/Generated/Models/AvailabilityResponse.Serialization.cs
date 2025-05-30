@@ -26,7 +26,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     {
                         continue;
                     }
-                    availability = Availability.DeserializeAvailability(property.Value);
+                    availability = ModelSerializationExtensions.JsonDeserialize<Availability>(property.Value);
                     continue;
                 }
             }

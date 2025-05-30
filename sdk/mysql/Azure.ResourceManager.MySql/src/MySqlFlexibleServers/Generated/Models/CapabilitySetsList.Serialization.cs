@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MySqlFlexibleServersCapabilityData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

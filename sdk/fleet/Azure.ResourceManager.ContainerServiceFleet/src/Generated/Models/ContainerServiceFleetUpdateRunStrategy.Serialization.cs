@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             writer.WriteStartArray();
             foreach (var item in Stages)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ContainerServiceFleetUpdateStage>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

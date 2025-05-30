@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in BusinessIdentities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IntegrationAccountBusinessIdentity>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

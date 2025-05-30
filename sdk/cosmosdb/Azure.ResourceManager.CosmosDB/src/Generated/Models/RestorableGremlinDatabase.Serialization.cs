@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue(Resource, options);
+                ((IJsonModel<ExtendedRestorableGremlinDatabaseResourceInfo>)Resource).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 continue;
                             }
-                            resource = ExtendedRestorableGremlinDatabaseResourceInfo.DeserializeExtendedRestorableGremlinDatabaseResourceInfo(property0.Value, options);
+                            resource = ModelSerializationExtensions.JsonDeserialize<ExtendedRestorableGremlinDatabaseResourceInfo>(property0.Value);
                             continue;
                         }
                     }

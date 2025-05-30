@@ -40,14 +40,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in OutboundNetworkDependencies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IntegrationServiceEnvironmentNetworkDependency>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OutboundNetworkHealth))
             {
                 writer.WritePropertyName("outboundNetworkHealth"u8);
-                writer.WriteObjectValue(OutboundNetworkHealth, options);
+                ((IJsonModel<IntegrationServiceEnvironmentNetworkDependencyHealth>)OutboundNetworkHealth).Write(writer, options);
             }
             writer.WritePropertyName("networkDependencyHealthState"u8);
             writer.WriteStringValue(NetworkDependencyHealthState.ToString());
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    outboundNetworkHealth = IntegrationServiceEnvironmentNetworkDependencyHealth.DeserializeIntegrationServiceEnvironmentNetworkDependencyHealth(property.Value, options);
+                    outboundNetworkHealth = ModelSerializationExtensions.JsonDeserialize<IntegrationServiceEnvironmentNetworkDependencyHealth>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("networkDependencyHealthState"u8))

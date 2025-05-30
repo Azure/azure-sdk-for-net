@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
-                writer.WriteObjectValue(Recurrence, options);
+                ((IJsonModel<MapperPolicyRecurrence>)Recurrence).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    recurrence = MapperPolicyRecurrence.DeserializeMapperPolicyRecurrence(property.Value, options);
+                    recurrence = ModelSerializationExtensions.JsonDeserialize<MapperPolicyRecurrence>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

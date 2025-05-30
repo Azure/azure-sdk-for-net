@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Automation
                 foreach (var item in FieldDefinitions)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<AutomationConnectionFieldDefinition>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

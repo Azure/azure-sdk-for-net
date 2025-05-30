@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Children)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WhatIfPropertyChange>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

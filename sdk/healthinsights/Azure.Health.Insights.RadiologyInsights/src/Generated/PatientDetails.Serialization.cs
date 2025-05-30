@@ -50,7 +50,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in ClinicalInfo)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FhirR4Resource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

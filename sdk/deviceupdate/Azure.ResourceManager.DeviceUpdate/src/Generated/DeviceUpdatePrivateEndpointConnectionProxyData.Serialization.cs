@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             if (Optional.IsDefined(RemotePrivateEndpoint))
             {
                 writer.WritePropertyName("remotePrivateEndpoint"u8);
-                writer.WriteObjectValue(RemotePrivateEndpoint, options);
+                ((IJsonModel<DeviceUpdateRemotePrivateEndpoint>)RemotePrivateEndpoint).Write(writer, options);
             }
             if (Optional.IsDefined(Status))
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                     {
                         continue;
                     }
-                    remotePrivateEndpoint = DeviceUpdateRemotePrivateEndpoint.DeserializeDeviceUpdateRemotePrivateEndpoint(property.Value, options);
+                    remotePrivateEndpoint = ModelSerializationExtensions.JsonDeserialize<DeviceUpdateRemotePrivateEndpoint>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

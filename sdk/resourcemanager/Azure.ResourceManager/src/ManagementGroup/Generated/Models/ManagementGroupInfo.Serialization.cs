@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             if (Optional.IsDefined(Parent))
             {
                 writer.WritePropertyName("parent"u8);
-                writer.WriteObjectValue(Parent, options);
+                ((IJsonModel<ParentManagementGroupInfo>)Parent).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Path))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteStartArray();
                     foreach (var item in Path)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<ManagementGroupPathElement>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteStartArray();
                     foreach (var item in ManagementGroupAncestorChain)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<ManagementGroupPathElement>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     {
                         continue;
                     }
-                    parent = ParentManagementGroupInfo.DeserializeParentManagementGroupInfo(property.Value, options);
+                    parent = ModelSerializationExtensions.JsonDeserialize<ParentManagementGroupInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("path"u8))

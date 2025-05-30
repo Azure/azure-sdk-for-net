@@ -37,7 +37,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    windSpeed = WeatherValue.DeserializeWeatherValue(property.Value);
+                    windSpeed = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("radiusSectorData"u8))
@@ -60,7 +60,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    radiiGeometry = JsonSerializer.Deserialize<GeoObject>(property.Value.GetRawText());
+                    radiiGeometry = ModelSerializationExtensions.JsonDeserialize<GeoObject>(property.Value);
                     continue;
                 }
             }

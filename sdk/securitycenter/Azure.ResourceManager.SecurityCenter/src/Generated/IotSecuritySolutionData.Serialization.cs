@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(UserDefinedResources))
             {
                 writer.WritePropertyName("userDefinedResources"u8);
-                writer.WriteObjectValue(UserDefinedResources, options);
+                ((IJsonModel<UserDefinedResourcesProperties>)UserDefinedResources).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AutoDiscoveredResources))
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in RecommendationsConfiguration)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RecommendationConfigurationProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in AdditionalWorkspaces)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AdditionalWorkspacesProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            userDefinedResources = UserDefinedResourcesProperties.DeserializeUserDefinedResourcesProperties(property0.Value, options);
+                            userDefinedResources = ModelSerializationExtensions.JsonDeserialize<UserDefinedResourcesProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("autoDiscoveredResources"u8))

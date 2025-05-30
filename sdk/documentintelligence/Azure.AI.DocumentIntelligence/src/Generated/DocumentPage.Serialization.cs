@@ -60,7 +60,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartArray();
             foreach (var item in Spans)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DocumentSpan>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Words))
@@ -69,7 +69,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Words)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DocumentWord>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in SelectionMarks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DocumentSelectionMark>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Lines)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DocumentLine>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +99,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Barcodes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DocumentBarcode>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +109,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Formulas)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DocumentFormula>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

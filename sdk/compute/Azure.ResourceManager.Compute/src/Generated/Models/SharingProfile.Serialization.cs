@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Groups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SharingProfileGroup>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(CommunityGalleryInfo))
             {
                 writer.WritePropertyName("communityGalleryInfo"u8);
-                writer.WriteObjectValue(CommunityGalleryInfo, options);
+                ((IJsonModel<CommunityGalleryInfo>)CommunityGalleryInfo).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    communityGalleryInfo = CommunityGalleryInfo.DeserializeCommunityGalleryInfo(property.Value, options);
+                    communityGalleryInfo = ModelSerializationExtensions.JsonDeserialize<CommunityGalleryInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

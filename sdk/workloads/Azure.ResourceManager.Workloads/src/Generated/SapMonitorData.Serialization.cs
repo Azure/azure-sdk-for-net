@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Workloads
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<UserAssignedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Workloads
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration, options);
+                ((IJsonModel<ManagedRGConfiguration>)ManagedResourceGroupConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(LogAnalyticsWorkspaceArmId))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Workloads
                     {
                         continue;
                     }
-                    identity = UserAssignedServiceIdentity.DeserializeUserAssignedServiceIdentity(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<UserAssignedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Workloads
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            errors = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
+                            errors = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("appLocation"u8))
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            managedResourceGroupConfiguration = ManagedRGConfiguration.DeserializeManagedRGConfiguration(property0.Value, options);
+                            managedResourceGroupConfiguration = ModelSerializationExtensions.JsonDeserialize<ManagedRGConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("logAnalyticsWorkspaceArmId"u8))

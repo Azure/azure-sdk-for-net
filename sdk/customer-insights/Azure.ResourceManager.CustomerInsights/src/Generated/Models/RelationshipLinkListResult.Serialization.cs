@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RelationshipLinkResourceFormatData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

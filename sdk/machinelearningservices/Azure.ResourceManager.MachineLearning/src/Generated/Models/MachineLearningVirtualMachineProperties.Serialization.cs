@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AdministratorAccount != null)
                 {
                     writer.WritePropertyName("administratorAccount"u8);
-                    writer.WriteObjectValue(AdministratorAccount, options);
+                    ((IJsonModel<MachineLearningVmSshCredentials>)AdministratorAccount).Write(writer, options);
                 }
                 else
                 {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         administratorAccount = null;
                         continue;
                     }
-                    administratorAccount = MachineLearningVmSshCredentials.DeserializeMachineLearningVmSshCredentials(property.Value, options);
+                    administratorAccount = ModelSerializationExtensions.JsonDeserialize<MachineLearningVmSshCredentials>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isNotebookInstanceCompute"u8))

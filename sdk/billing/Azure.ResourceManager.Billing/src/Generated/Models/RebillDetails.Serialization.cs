@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (options.Format != "W" && Optional.IsDefined(RebillDetailsValue))
             {
                 writer.WritePropertyName("rebillDetails"u8);
-                writer.WriteObjectValue(RebillDetailsValue, options);
+                ((IJsonModel<RebillDetails>)RebillDetailsValue).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    rebillDetails = DeserializeRebillDetails(property.Value, options);
+                    rebillDetails = ModelSerializationExtensions.JsonDeserialize<RebillDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

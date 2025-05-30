@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ConnectionRoutingConfiguration))
             {
                 writer.WritePropertyName("routingConfiguration"u8);
-                writer.WriteObjectValue(ConnectionRoutingConfiguration, options);
+                ((IJsonModel<RoutingConfiguration>)ConnectionRoutingConfiguration).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            routingConfiguration = Models.RoutingConfiguration.DeserializeRoutingConfiguration(property0.Value, options);
+                            routingConfiguration = ModelSerializationExtensions.JsonDeserialize<RoutingConfiguration>(property0.Value);
                             continue;
                         }
                     }

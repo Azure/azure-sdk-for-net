@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStartArray();
             foreach (var item in Parameters)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<SettingsParameterDescription>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

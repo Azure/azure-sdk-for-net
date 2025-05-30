@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<DeploymentStackValidateProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Error))
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    properties = DeploymentStackValidateProperties.DeserializeDeploymentStackValidateProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<DeploymentStackValidateProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

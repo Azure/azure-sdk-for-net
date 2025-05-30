@@ -44,7 +44,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             if (Optional.IsDefined(Specification))
             {
                 writer.WritePropertyName("specification"u8);
-                writer.WriteObjectValue(Specification, options);
+                ((IJsonModel<ApiCenterApiSpecification>)Specification).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -106,7 +106,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    specification = ApiCenterApiSpecification.DeserializeApiCenterApiSpecification(property.Value, options);
+                    specification = ModelSerializationExtensions.JsonDeserialize<ApiCenterApiSpecification>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

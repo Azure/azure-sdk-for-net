@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in ResourceTypes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ProviderResourceType>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

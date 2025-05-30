@@ -47,7 +47,7 @@ namespace Azure.AI.Agents.Persistent
             if (IncompleteDetails != null)
             {
                 writer.WritePropertyName("incomplete_details"u8);
-                writer.WriteObjectValue(IncompleteDetails, options);
+                ((IJsonModel<MessageIncompleteDetails>)IncompleteDetails).Write(writer, options);
             }
             else
             {
@@ -77,7 +77,7 @@ namespace Azure.AI.Agents.Persistent
             writer.WriteStartArray();
             foreach (var item in ContentItems)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<MessageContent>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (AssistantId != null)
@@ -104,7 +104,7 @@ namespace Azure.AI.Agents.Persistent
                 writer.WriteStartArray();
                 foreach (var item in Attachments)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MessageAttachment>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -214,7 +214,7 @@ namespace Azure.AI.Agents.Persistent
                         incompleteDetails = null;
                         continue;
                     }
-                    incompleteDetails = MessageIncompleteDetails.DeserializeMessageIncompleteDetails(property.Value, options);
+                    incompleteDetails = ModelSerializationExtensions.JsonDeserialize<MessageIncompleteDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("completed_at"u8))

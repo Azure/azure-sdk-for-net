@@ -53,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    sessionOptions = RunNotebookSparkSessionOptions.DeserializeRunNotebookSparkSessionOptions(property.Value);
+                    sessionOptions = ModelSerializationExtensions.JsonDeserialize<RunNotebookSparkSessionOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("honorSessionTimeToLive"u8))
@@ -95,7 +95,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    notebookContent = NotebookResource.DeserializeNotebookResource(property.Value);
+                    notebookContent = ModelSerializationExtensions.JsonDeserialize<NotebookResource>(property.Value);
                     continue;
                 }
             }

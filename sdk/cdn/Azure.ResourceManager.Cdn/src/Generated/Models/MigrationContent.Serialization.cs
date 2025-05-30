@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<CdnSku>)Sku).Write(writer, options);
             writer.WritePropertyName("classicResourceReference"u8);
-            JsonSerializer.Serialize(writer, ClassicResourceReference);
+            ((IJsonModel<WritableSubResource>)ClassicResourceReference).Write(writer, options);
             writer.WritePropertyName("profileName"u8);
             writer.WriteStringValue(ProfileName);
             if (Optional.IsCollectionDefined(MigrationWebApplicationFirewallMappings))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in MigrationWebApplicationFirewallMappings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MigrationWebApplicationFirewallMapping>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = CdnSku.DeserializeCdnSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<CdnSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("classicResourceReference"u8))
                 {
-                    classicResourceReference = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    classicResourceReference = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("profileName"u8))

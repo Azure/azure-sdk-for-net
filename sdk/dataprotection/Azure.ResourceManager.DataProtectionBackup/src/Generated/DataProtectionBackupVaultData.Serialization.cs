@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<DataProtectionBackupVaultProperties>)Properties).Write(writer, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(ETag))
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DataProtectionBackupVaultProperties.DeserializeDataProtectionBackupVaultProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<DataProtectionBackupVaultProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eTag"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

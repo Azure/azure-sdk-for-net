@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<PostgreSqlFlexibleServersServerSku>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    sku = PostgreSqlFlexibleServersServerSku.DeserializePostgreSqlFlexibleServersServerSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<PostgreSqlFlexibleServersServerSku>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

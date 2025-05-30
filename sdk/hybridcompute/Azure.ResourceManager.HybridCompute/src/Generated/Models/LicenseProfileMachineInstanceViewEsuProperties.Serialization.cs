@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(AssignedLicense))
             {
                 writer.WritePropertyName("assignedLicense"u8);
-                writer.WriteObjectValue(AssignedLicense, options);
+                ((IJsonModel<HybridComputeLicenseData>)AssignedLicense).Write(writer, options);
             }
             if (Optional.IsDefined(LicenseAssignmentState))
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    assignedLicense = HybridComputeLicenseData.DeserializeHybridComputeLicenseData(property.Value, options);
+                    assignedLicense = ModelSerializationExtensions.JsonDeserialize<HybridComputeLicenseData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("licenseAssignmentState"u8))

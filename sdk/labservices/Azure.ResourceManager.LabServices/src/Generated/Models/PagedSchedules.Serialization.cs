@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LabServicesScheduleData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

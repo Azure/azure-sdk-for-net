@@ -36,7 +36,7 @@ namespace Azure.AI.OpenAI.Assistants
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("file_path"u8);
-            writer.WriteObjectValue<InternalMessageTextFilePathDetails>(InternalDetails, options);
+            ((IJsonModel<InternalMessageTextFilePathDetails>)InternalDetails).Write(writer, options);
         }
 
         MessageTextFilePathAnnotation IJsonModel<MessageTextFilePathAnnotation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -70,7 +70,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("file_path"u8))
                 {
-                    filePath = InternalMessageTextFilePathDetails.DeserializeInternalMessageTextFilePathDetails(property.Value, options);
+                    filePath = ModelSerializationExtensions.JsonDeserialize<InternalMessageTextFilePathDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

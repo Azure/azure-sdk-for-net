@@ -38,13 +38,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteStartArray();
             foreach (var item in ConfigurationFilters)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ConfigurationFilters>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(CustomerSubscriptionDetails))
             {
                 writer.WritePropertyName("customerSubscriptionDetails"u8);
-                writer.WriteObjectValue(CustomerSubscriptionDetails, options);
+                ((IJsonModel<CustomerSubscriptionDetails>)CustomerSubscriptionDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    customerSubscriptionDetails = CustomerSubscriptionDetails.DeserializeCustomerSubscriptionDetails(property.Value, options);
+                    customerSubscriptionDetails = ModelSerializationExtensions.JsonDeserialize<CustomerSubscriptionDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

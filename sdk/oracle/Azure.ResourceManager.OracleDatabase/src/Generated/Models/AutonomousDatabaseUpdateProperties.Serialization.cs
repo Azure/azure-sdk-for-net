@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomerContacts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<OracleCustomerContact>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             if (Optional.IsDefined(ScheduledOperations))
             {
                 writer.WritePropertyName("scheduledOperations"u8);
-                writer.WriteObjectValue(ScheduledOperations, options);
+                ((IJsonModel<ScheduledOperationsTypeUpdate>)ScheduledOperations).Write(writer, options);
             }
             if (Optional.IsDefined(DatabaseEdition))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             if (Optional.IsDefined(LongTermBackupSchedule))
             {
                 writer.WritePropertyName("longTermBackupSchedule"u8);
-                writer.WriteObjectValue(LongTermBackupSchedule, options);
+                ((IJsonModel<LongTermBackUpScheduleDetails>)LongTermBackupSchedule).Write(writer, options);
             }
             if (Optional.IsDefined(LocalAdgAutoFailoverMaxDataLossLimit))
             {
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    scheduledOperations = ScheduledOperationsTypeUpdate.DeserializeScheduledOperationsTypeUpdate(property.Value, options);
+                    scheduledOperations = ModelSerializationExtensions.JsonDeserialize<ScheduledOperationsTypeUpdate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("databaseEdition"u8))
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    longTermBackupSchedule = LongTermBackUpScheduleDetails.DeserializeLongTermBackUpScheduleDetails(property.Value, options);
+                    longTermBackupSchedule = ModelSerializationExtensions.JsonDeserialize<LongTermBackUpScheduleDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("localAdgAutoFailoverMaxDataLossLimit"u8))

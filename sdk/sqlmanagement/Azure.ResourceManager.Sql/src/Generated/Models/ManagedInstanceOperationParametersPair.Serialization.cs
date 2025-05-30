@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(CurrentParameters))
             {
                 writer.WritePropertyName("currentParameters"u8);
-                writer.WriteObjectValue(CurrentParameters, options);
+                ((IJsonModel<UpsertManagedServerOperationParameters>)CurrentParameters).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RequestedParameters))
             {
                 writer.WritePropertyName("requestedParameters"u8);
-                writer.WriteObjectValue(RequestedParameters, options);
+                ((IJsonModel<UpsertManagedServerOperationParameters>)RequestedParameters).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    currentParameters = UpsertManagedServerOperationParameters.DeserializeUpsertManagedServerOperationParameters(property.Value, options);
+                    currentParameters = ModelSerializationExtensions.JsonDeserialize<UpsertManagedServerOperationParameters>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("requestedParameters"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    requestedParameters = UpsertManagedServerOperationParameters.DeserializeUpsertManagedServerOperationParameters(property.Value, options);
+                    requestedParameters = ModelSerializationExtensions.JsonDeserialize<UpsertManagedServerOperationParameters>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

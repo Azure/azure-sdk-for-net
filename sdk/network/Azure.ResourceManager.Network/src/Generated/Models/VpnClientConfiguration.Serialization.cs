@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(VpnClientAddressPool))
             {
                 writer.WritePropertyName("vpnClientAddressPool"u8);
-                writer.WriteObjectValue(VpnClientAddressPool, options);
+                ((IJsonModel<VirtualNetworkAddressSpace>)VpnClientAddressPool).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(VpnClientRootCertificates))
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in VpnClientRootCertificates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VpnClientRootCertificate>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in VpnClientRevokedCertificates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VpnClientRevokedCertificate>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in VpnClientIPsecPolicies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IPsecPolicy>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RadiusServers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RadiusServer>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in VngClientConnectionConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VngClientConnectionConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    vpnClientAddressPool = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property.Value, options);
+                    vpnClientAddressPool = ModelSerializationExtensions.JsonDeserialize<VirtualNetworkAddressSpace>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vpnClientRootCertificates"u8))

@@ -81,12 +81,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(RunSettings))
             {
                 writer.WritePropertyName("runSettings"u8);
-                writer.WriteObjectValue(RunSettings, options);
+                ((IJsonModel<CommonExportProperties>)RunSettings).Write(writer, options);
             }
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<ExportRunErrorDetails>)Error).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             {
                                 continue;
                             }
-                            runSettings = CommonExportProperties.DeserializeCommonExportProperties(property0.Value, options);
+                            runSettings = ModelSerializationExtensions.JsonDeserialize<CommonExportProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("error"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             {
                                 continue;
                             }
-                            error = ExportRunErrorDetails.DeserializeExportRunErrorDetails(property0.Value, options);
+                            error = ModelSerializationExtensions.JsonDeserialize<ExportRunErrorDetails>(property0.Value);
                             continue;
                         }
                     }

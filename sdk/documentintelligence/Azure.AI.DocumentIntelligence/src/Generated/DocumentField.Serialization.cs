@@ -87,7 +87,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in ValueList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DocumentField>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,19 +98,19 @@ namespace Azure.AI.DocumentIntelligence
                 foreach (var item in ValueObject)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<DocumentField>(item.Value, options);
+                    ((IJsonModel<DocumentField>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(ValueCurrency))
             {
                 writer.WritePropertyName("valueCurrency"u8);
-                writer.WriteObjectValue(ValueCurrency, options);
+                ((IJsonModel<CurrencyValue>)ValueCurrency).Write(writer, options);
             }
             if (Optional.IsDefined(ValueAddress))
             {
                 writer.WritePropertyName("valueAddress"u8);
-                writer.WriteObjectValue(ValueAddress, options);
+                ((IJsonModel<AddressValue>)ValueAddress).Write(writer, options);
             }
             if (Optional.IsDefined(ValueBoolean))
             {
@@ -138,7 +138,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in BoundingRegions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BoundingRegion>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -148,7 +148,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Spans)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DocumentSpan>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -326,7 +326,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    valueCurrency = CurrencyValue.DeserializeCurrencyValue(property.Value, options);
+                    valueCurrency = ModelSerializationExtensions.JsonDeserialize<CurrencyValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("valueAddress"u8))
@@ -335,7 +335,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    valueAddress = AddressValue.DeserializeAddressValue(property.Value, options);
+                    valueAddress = ModelSerializationExtensions.JsonDeserialize<AddressValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("valueBoolean"u8))

@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryHealthError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (options.Format != "W" && Optional.IsDefined(CurrentJob))
             {
                 writer.WritePropertyName("currentJob"u8);
-                writer.WriteObjectValue(CurrentJob, options);
+                ((IJsonModel<CurrentJobDetails>)CurrentJob).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(CriticalJobHistory))
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in CriticalJobHistory)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CriticalJobHistoryDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
-                writer.WriteObjectValue(ProviderSpecificDetails, options);
+                ((IJsonModel<MigrationProviderSpecificSettings>)ProviderSpecificDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    currentJob = CurrentJobDetails.DeserializeCurrentJobDetails(property.Value, options);
+                    currentJob = ModelSerializationExtensions.JsonDeserialize<CurrentJobDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("criticalJobHistory"u8))
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = MigrationProviderSpecificSettings.DeserializeMigrationProviderSpecificSettings(property.Value, options);
+                    providerSpecificDetails = ModelSerializationExtensions.JsonDeserialize<MigrationProviderSpecificSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

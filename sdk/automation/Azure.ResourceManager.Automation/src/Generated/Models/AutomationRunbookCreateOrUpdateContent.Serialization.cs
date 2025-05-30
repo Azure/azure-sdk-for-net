@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Draft))
             {
                 writer.WritePropertyName("draft"u8);
-                writer.WriteObjectValue(Draft, options);
+                ((IJsonModel<AutomationRunbookDraft>)Draft).Write(writer, options);
             }
             if (Optional.IsDefined(PublishContentLink))
             {
                 writer.WritePropertyName("publishContentLink"u8);
-                writer.WriteObjectValue(PublishContentLink, options);
+                ((IJsonModel<AutomationContentLink>)PublishContentLink).Write(writer, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            draft = AutomationRunbookDraft.DeserializeAutomationRunbookDraft(property0.Value, options);
+                            draft = ModelSerializationExtensions.JsonDeserialize<AutomationRunbookDraft>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publishContentLink"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            publishContentLink = AutomationContentLink.DeserializeAutomationContentLink(property0.Value, options);
+                            publishContentLink = ModelSerializationExtensions.JsonDeserialize<AutomationContentLink>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("description"u8))

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MediaLiveEventData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

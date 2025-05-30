@@ -36,7 +36,7 @@ namespace Azure.Communication.JobRouter
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("rule"u8);
-            writer.WriteObjectValue(Rule, options);
+            ((IJsonModel<RouterRule>)Rule).Write(writer, options);
         }
 
         RuleEngineQueueSelectorAttachment IJsonModel<RuleEngineQueueSelectorAttachment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.Communication.JobRouter
             {
                 if (property.NameEquals("rule"u8))
                 {
-                    rule = RouterRule.DeserializeRouterRule(property.Value, options);
+                    rule = ModelSerializationExtensions.JsonDeserialize<RouterRule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

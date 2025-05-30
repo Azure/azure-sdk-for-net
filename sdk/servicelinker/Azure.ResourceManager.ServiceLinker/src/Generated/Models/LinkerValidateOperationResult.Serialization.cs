@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteStartArray();
                     foreach (var item in ValidationDetail)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<LinkerValidationResultItemInfo>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }

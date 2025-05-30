@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.BotService
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<BotChannelProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<BotServiceSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.BotService
                     {
                         continue;
                     }
-                    properties = BotChannelProperties.DeserializeBotChannelProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<BotChannelProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.BotService
                     {
                         continue;
                     }
-                    sku = BotServiceSku.DeserializeBotServiceSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<BotServiceSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.BotService
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

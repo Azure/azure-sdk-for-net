@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartArray();
             foreach (var item in Routes)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<PipelineGroupNetworkingRoute>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

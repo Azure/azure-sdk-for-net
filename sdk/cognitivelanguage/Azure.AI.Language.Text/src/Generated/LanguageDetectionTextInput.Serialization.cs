@@ -40,7 +40,7 @@ namespace Azure.AI.Language.Text
                 writer.WriteStartArray();
                 foreach (var item in LanguageInputs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LanguageInput>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

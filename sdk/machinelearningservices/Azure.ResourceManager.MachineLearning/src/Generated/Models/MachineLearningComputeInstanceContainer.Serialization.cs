@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Environment))
             {
                 writer.WritePropertyName("environment"u8);
-                writer.WriteObjectValue(Environment, options);
+                ((IJsonModel<MachineLearningComputeInstanceEnvironmentInfo>)Environment).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Services))
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    environment = MachineLearningComputeInstanceEnvironmentInfo.DeserializeMachineLearningComputeInstanceEnvironmentInfo(property.Value, options);
+                    environment = ModelSerializationExtensions.JsonDeserialize<MachineLearningComputeInstanceEnvironmentInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("services"u8))

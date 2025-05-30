@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 if (BigDataPool != null)
                 {
                     writer.WritePropertyName("bigDataPool"u8);
-                    writer.WriteObjectValue(BigDataPool);
+                    JsonSerializer.Serialize(writer, BigDataPool);
                 }
                 else
                 {
@@ -39,14 +39,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(TargetSparkConfiguration))
             {
                 writer.WritePropertyName("targetSparkConfiguration"u8);
-                writer.WriteObjectValue(TargetSparkConfiguration);
+                JsonSerializer.Serialize(writer, TargetSparkConfiguration);
             }
             if (Optional.IsDefined(SessionProperties))
             {
                 if (SessionProperties != null)
                 {
                     writer.WritePropertyName("sessionProperties"u8);
-                    writer.WriteObjectValue(SessionProperties);
+                    JsonSerializer.Serialize(writer, SessionProperties);
                 }
                 else
                 {
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             writer.WritePropertyName("metadata"u8);
-            writer.WriteObjectValue(Metadata);
+            JsonSerializer.Serialize(writer, Metadata);
             writer.WritePropertyName("nbformat"u8);
             writer.WriteNumberValue(NotebookFormat);
             writer.WritePropertyName("nbformat_minor"u8);
@@ -63,7 +63,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartArray();
             foreach (var item in Cells)
             {
-                writer.WriteObjectValue(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Folder))
@@ -71,7 +71,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 if (Folder != null)
                 {
                     writer.WritePropertyName("folder"u8);
-                    writer.WriteObjectValue(Folder);
+                    JsonSerializer.Serialize(writer, Folder);
                 }
                 else
                 {
@@ -117,7 +117,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         bigDataPool = null;
                         continue;
                     }
-                    bigDataPool = BigDataPoolReference.DeserializeBigDataPoolReference(property.Value);
+                    bigDataPool = ModelSerializationExtensions.JsonDeserialize<BigDataPoolReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetSparkConfiguration"u8))
@@ -126,7 +126,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    targetSparkConfiguration = SparkConfigurationReference.DeserializeSparkConfigurationReference(property.Value);
+                    targetSparkConfiguration = ModelSerializationExtensions.JsonDeserialize<SparkConfigurationReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sessionProperties"u8))
@@ -136,12 +136,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         sessionProperties = null;
                         continue;
                     }
-                    sessionProperties = NotebookSessionProperties.DeserializeNotebookSessionProperties(property.Value);
+                    sessionProperties = ModelSerializationExtensions.JsonDeserialize<NotebookSessionProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))
                 {
-                    metadata = NotebookMetadata.DeserializeNotebookMetadata(property.Value);
+                    metadata = ModelSerializationExtensions.JsonDeserialize<NotebookMetadata>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nbformat"u8))
@@ -171,7 +171,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         folder = null;
                         continue;
                     }
-                    folder = NotebookFolder.DeserializeNotebookFolder(property.Value);
+                    folder = ModelSerializationExtensions.JsonDeserialize<NotebookFolder>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());

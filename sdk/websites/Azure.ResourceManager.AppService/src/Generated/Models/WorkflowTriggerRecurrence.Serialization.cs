@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule, options);
+                ((IJsonModel<WorkflowRecurrenceSchedule>)Schedule).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    schedule = WorkflowRecurrenceSchedule.DeserializeWorkflowRecurrenceSchedule(property.Value, options);
+                    schedule = ModelSerializationExtensions.JsonDeserialize<WorkflowRecurrenceSchedule>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

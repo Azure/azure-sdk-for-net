@@ -38,13 +38,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<OperationalInsightsClusterSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties, options);
+                ((IJsonModel<OperationalInsightsKeyVaultProperties>)KeyVaultProperties).Write(writer, options);
             }
             if (Optional.IsDefined(BillingType))
             {
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    sku = OperationalInsightsClusterSku.DeserializeOperationalInsightsClusterSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<OperationalInsightsClusterSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -164,7 +163,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                             {
                                 continue;
                             }
-                            keyVaultProperties = OperationalInsightsKeyVaultProperties.DeserializeOperationalInsightsKeyVaultProperties(property0.Value, options);
+                            keyVaultProperties = ModelSerializationExtensions.JsonDeserialize<OperationalInsightsKeyVaultProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("billingType"u8))

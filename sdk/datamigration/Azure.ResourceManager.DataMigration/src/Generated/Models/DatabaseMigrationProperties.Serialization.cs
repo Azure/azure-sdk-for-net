@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(SourceSqlConnection))
             {
                 writer.WritePropertyName("sourceSqlConnection"u8);
-                writer.WriteObjectValue(SourceSqlConnection, options);
+                ((IJsonModel<SqlConnectionInformation>)SourceSqlConnection).Write(writer, options);
             }
             if (Optional.IsDefined(SourceDatabaseName))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(MigrationFailureError))
             {
                 writer.WritePropertyName("migrationFailureError"u8);
-                writer.WriteObjectValue(MigrationFailureError, options);
+                ((IJsonModel<ErrorInfo>)MigrationFailureError).Write(writer, options);
             }
             if (Optional.IsDefined(TargetDatabaseCollation))
             {

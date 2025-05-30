@@ -37,7 +37,7 @@ namespace Azure.Developer.DevCenter.Models
             if (Optional.IsDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
-                writer.WriteObjectValue(OSDisk, options);
+                ((IJsonModel<OSDisk>)OSDisk).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    osDisk = OSDisk.DeserializeOSDisk(property.Value, options);
+                    osDisk = ModelSerializationExtensions.JsonDeserialize<OSDisk>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

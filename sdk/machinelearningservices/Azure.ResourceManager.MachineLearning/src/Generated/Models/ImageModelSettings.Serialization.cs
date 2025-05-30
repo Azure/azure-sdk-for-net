@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (CheckpointModel != null)
                 {
                     writer.WritePropertyName("checkpointModel"u8);
-                    writer.WriteObjectValue(CheckpointModel, options);
+                    ((IJsonModel<MachineLearningFlowModelJobInput>)CheckpointModel).Write(writer, options);
                 }
                 else
                 {
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         checkpointModel = null;
                         continue;
                     }
-                    checkpointModel = MachineLearningFlowModelJobInput.DeserializeMachineLearningFlowModelJobInput(property.Value, options);
+                    checkpointModel = ModelSerializationExtensions.JsonDeserialize<MachineLearningFlowModelJobInput>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("distributed"u8))

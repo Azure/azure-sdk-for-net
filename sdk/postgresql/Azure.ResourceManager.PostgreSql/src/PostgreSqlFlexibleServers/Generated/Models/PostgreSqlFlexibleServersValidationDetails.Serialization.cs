@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in ServerLevelValidationDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ValidationSummaryItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in DbLevelValidationDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DbLevelValidationStatus>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

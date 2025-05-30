@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedDisks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InMageAzureV2ProtectedDiskDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in AzureVmDiskDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryVmDiskDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VmNicDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryHealthError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedManagedDisks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InMageAzureV2ManagedDiskDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -421,14 +421,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in SwitchProviderBlockingErrorDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InMageAzureV2SwitchProviderBlockingErrorDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SwitchProviderDetails))
             {
                 writer.WritePropertyName("switchProviderDetails"u8);
-                writer.WriteObjectValue(SwitchProviderDetails, options);
+                ((IJsonModel<InMageAzureV2SwitchProviderDetails>)SwitchProviderDetails).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(SupportedOSVersions))
             {
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in AllAvailableOSUpgradeConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<OSUpgradeSupportedVersions>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -1071,7 +1071,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    switchProviderDetails = InMageAzureV2SwitchProviderDetails.DeserializeInMageAzureV2SwitchProviderDetails(property.Value, options);
+                    switchProviderDetails = ModelSerializationExtensions.JsonDeserialize<InMageAzureV2SwitchProviderDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("supportedOSVersions"u8))

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(RegistryCredentials))
             {
                 writer.WritePropertyName("registryCredentials"u8);
-                writer.WriteObjectValue(RegistryCredentials, options);
+                ((IJsonModel<SessionRegistryCredentials>)RegistryCredentials).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Containers))
             {
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Containers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SessionContainer>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Ingress))
             {
                 writer.WritePropertyName("ingress"u8);
-                writer.WriteObjectValue(Ingress, options);
+                ((IJsonModel<SessionIngress>)Ingress).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    registryCredentials = SessionRegistryCredentials.DeserializeSessionRegistryCredentials(property.Value, options);
+                    registryCredentials = ModelSerializationExtensions.JsonDeserialize<SessionRegistryCredentials>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("containers"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    ingress = SessionIngress.DeserializeSessionIngress(property.Value, options);
+                    ingress = ModelSerializationExtensions.JsonDeserialize<SessionIngress>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

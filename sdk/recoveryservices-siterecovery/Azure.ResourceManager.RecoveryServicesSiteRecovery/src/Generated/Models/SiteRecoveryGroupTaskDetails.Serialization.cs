@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ChildTasks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AsrTask>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

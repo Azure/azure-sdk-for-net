@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(PerformanceLevel))
             {
                 writer.WritePropertyName("performanceLevel"u8);
-                writer.WriteObjectValue(PerformanceLevel, options);
+                ((IJsonModel<PerformanceLevelCapability>)PerformanceLevel).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<SqlSku>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedLicenseTypes))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedLicenseTypes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LicenseTypeCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(IncludedMaxSize))
             {
                 writer.WritePropertyName("includedMaxSize"u8);
-                writer.WriteObjectValue(IncludedMaxSize, options);
+                ((IJsonModel<MaxSizeCapability>)IncludedMaxSize).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedMaxSizes))
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedMaxSizes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MaxSizeRangeCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedPerDatabaseMaxSizes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MaxSizeRangeCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedPerDatabaseMaxPerformanceLevels)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedMaintenanceConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MaintenanceConfigurationCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -117,19 +117,19 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedMinCapacities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MinCapacityCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(SupportedAutoPauseDelay))
             {
                 writer.WritePropertyName("supportedAutoPauseDelay"u8);
-                writer.WriteObjectValue(SupportedAutoPauseDelay, options);
+                ((IJsonModel<AutoPauseDelayTimeRange>)SupportedAutoPauseDelay).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SupportedPerDatabaseAutoPauseDelay))
             {
                 writer.WritePropertyName("supportedPerDatabaseAutoPauseDelay"u8);
-                writer.WriteObjectValue(SupportedPerDatabaseAutoPauseDelay, options);
+                ((IJsonModel<PerDatabaseAutoPauseDelayTimeRange>)SupportedPerDatabaseAutoPauseDelay).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedZones))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedZones)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ZonePinningCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    performanceLevel = PerformanceLevelCapability.DeserializePerformanceLevelCapability(property.Value, options);
+                    performanceLevel = ModelSerializationExtensions.JsonDeserialize<PerformanceLevelCapability>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    sku = SqlSku.DeserializeSqlSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<SqlSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("supportedLicenseTypes"u8))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    includedMaxSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
+                    includedMaxSize = ModelSerializationExtensions.JsonDeserialize<MaxSizeCapability>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("supportedMaxSizes"u8))
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    supportedAutoPauseDelay = AutoPauseDelayTimeRange.DeserializeAutoPauseDelayTimeRange(property.Value, options);
+                    supportedAutoPauseDelay = ModelSerializationExtensions.JsonDeserialize<AutoPauseDelayTimeRange>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("supportedPerDatabaseAutoPauseDelay"u8))
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    supportedPerDatabaseAutoPauseDelay = PerDatabaseAutoPauseDelayTimeRange.DeserializePerDatabaseAutoPauseDelayTimeRange(property.Value, options);
+                    supportedPerDatabaseAutoPauseDelay = ModelSerializationExtensions.JsonDeserialize<PerDatabaseAutoPauseDelayTimeRange>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("supportedZones"u8))

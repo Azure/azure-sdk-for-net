@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<ContainerServiceFleetMemberStatus>)Status).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                             {
                                 continue;
                             }
-                            status = ContainerServiceFleetMemberStatus.DeserializeContainerServiceFleetMemberStatus(property0.Value, options);
+                            status = ModelSerializationExtensions.JsonDeserialize<ContainerServiceFleetMemberStatus>(property0.Value);
                             continue;
                         }
                     }

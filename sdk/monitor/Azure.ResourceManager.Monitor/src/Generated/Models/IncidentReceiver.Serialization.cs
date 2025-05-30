@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("connection"u8);
-            writer.WriteObjectValue(Connection, options);
+            ((IJsonModel<IncidentServiceConnection>)Connection).Write(writer, options);
             writer.WritePropertyName("incidentManagementService"u8);
             writer.WriteStringValue(IncidentManagementService.ToString());
             writer.WritePropertyName("mappings"u8);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("connection"u8))
                 {
-                    connection = IncidentServiceConnection.DeserializeIncidentServiceConnection(property.Value, options);
+                    connection = ModelSerializationExtensions.JsonDeserialize<IncidentServiceConnection>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("incidentManagementService"u8))

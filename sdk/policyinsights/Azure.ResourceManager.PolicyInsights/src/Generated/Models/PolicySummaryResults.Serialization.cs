@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ComplianceDetail>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in PolicyDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ComplianceDetail>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in PolicyGroupDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ComplianceDetail>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.DevCenter.Models
             if (options.Format != "W" && Optional.IsDefined(Memory))
             {
                 writer.WritePropertyName("memory"u8);
-                writer.WriteObjectValue(Memory, options);
+                ((IJsonModel<DevCenterResourceRange>)Memory).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(VCpus))
             {
                 writer.WritePropertyName("vCPUs"u8);
-                writer.WriteObjectValue(VCpus, options);
+                ((IJsonModel<DevCenterResourceRange>)VCpus).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    memory = DevCenterResourceRange.DeserializeDevCenterResourceRange(property.Value, options);
+                    memory = ModelSerializationExtensions.JsonDeserialize<DevCenterResourceRange>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vCPUs"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    vCpus = DevCenterResourceRange.DeserializeDevCenterResourceRange(property.Value, options);
+                    vCpus = ModelSerializationExtensions.JsonDeserialize<DevCenterResourceRange>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -37,12 +37,12 @@ namespace Azure.Developer.LoadTesting
             if (Optional.IsDefined(PassFailCriteria))
             {
                 writer.WritePropertyName("passFailCriteria"u8);
-                writer.WriteObjectValue(PassFailCriteria, options);
+                ((IJsonModel<PassFailCriteria>)PassFailCriteria).Write(writer, options);
             }
             if (Optional.IsDefined(AutoStopCriteria))
             {
                 writer.WritePropertyName("autoStopCriteria"u8);
-                writer.WriteObjectValue(AutoStopCriteria, options);
+                ((IJsonModel<AutoStopCriteria>)AutoStopCriteria).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Secrets))
             {
@@ -51,14 +51,14 @@ namespace Azure.Developer.LoadTesting
                 foreach (var item in Secrets)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<TestSecret>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
-                writer.WriteObjectValue(Certificate, options);
+                ((IJsonModel<TestCertificate>)Certificate).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
@@ -74,7 +74,7 @@ namespace Azure.Developer.LoadTesting
             if (Optional.IsDefined(LoadTestConfiguration))
             {
                 writer.WritePropertyName("loadTestConfiguration"u8);
-                writer.WriteObjectValue(LoadTestConfiguration, options);
+                ((IJsonModel<LoadTestConfiguration>)LoadTestConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(BaselineTestRunId))
             {
@@ -84,7 +84,7 @@ namespace Azure.Developer.LoadTesting
             if (options.Format != "W" && Optional.IsDefined(InputArtifacts))
             {
                 writer.WritePropertyName("inputArtifacts"u8);
-                writer.WriteObjectValue(InputArtifacts, options);
+                ((IJsonModel<TestInputArtifacts>)InputArtifacts).Write(writer, options);
             }
             if (options.Format != "W")
             {
@@ -242,7 +242,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    passFailCriteria = PassFailCriteria.DeserializePassFailCriteria(property.Value, options);
+                    passFailCriteria = ModelSerializationExtensions.JsonDeserialize<PassFailCriteria>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("autoStopCriteria"u8))
@@ -251,7 +251,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    autoStopCriteria = AutoStopCriteria.DeserializeAutoStopCriteria(property.Value, options);
+                    autoStopCriteria = ModelSerializationExtensions.JsonDeserialize<AutoStopCriteria>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("secrets"u8))
@@ -274,7 +274,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    certificate = TestCertificate.DeserializeTestCertificate(property.Value, options);
+                    certificate = ModelSerializationExtensions.JsonDeserialize<TestCertificate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("environmentVariables"u8))
@@ -297,7 +297,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    loadTestConfiguration = LoadTestConfiguration.DeserializeLoadTestConfiguration(property.Value, options);
+                    loadTestConfiguration = ModelSerializationExtensions.JsonDeserialize<LoadTestConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("baselineTestRunId"u8))
@@ -311,7 +311,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    inputArtifacts = TestInputArtifacts.DeserializeTestInputArtifacts(property.Value, options);
+                    inputArtifacts = ModelSerializationExtensions.JsonDeserialize<TestInputArtifacts>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("testId"u8))

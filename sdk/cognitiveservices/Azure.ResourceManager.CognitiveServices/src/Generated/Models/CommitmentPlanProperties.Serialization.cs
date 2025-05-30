@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Current))
             {
                 writer.WritePropertyName("current"u8);
-                writer.WriteObjectValue(Current, options);
+                ((IJsonModel<CommitmentPeriod>)Current).Write(writer, options);
             }
             if (Optional.IsDefined(AutoRenew))
             {
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Next))
             {
                 writer.WritePropertyName("next"u8);
-                writer.WriteObjectValue(Next, options);
+                ((IJsonModel<CommitmentPeriod>)Next).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Last))
             {
                 writer.WritePropertyName("last"u8);
-                writer.WriteObjectValue(Last, options);
+                ((IJsonModel<CommitmentPeriod>)Last).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ProvisioningIssues))
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    current = CommitmentPeriod.DeserializeCommitmentPeriod(property.Value, options);
+                    current = ModelSerializationExtensions.JsonDeserialize<CommitmentPeriod>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("autoRenew"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    next = CommitmentPeriod.DeserializeCommitmentPeriod(property.Value, options);
+                    next = ModelSerializationExtensions.JsonDeserialize<CommitmentPeriod>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("last"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    last = CommitmentPeriod.DeserializeCommitmentPeriod(property.Value, options);
+                    last = ModelSerializationExtensions.JsonDeserialize<CommitmentPeriod>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningIssues"u8))

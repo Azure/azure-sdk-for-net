@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in RestAuthEntraUsers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EntraUserInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

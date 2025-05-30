@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value, options);
+                    target = ModelSerializationExtensions.JsonDeserialize<RoleManagementPolicyRuleTarget>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

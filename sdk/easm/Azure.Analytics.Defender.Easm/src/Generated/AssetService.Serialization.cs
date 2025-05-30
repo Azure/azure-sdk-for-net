@@ -50,7 +50,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in WebComponents)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WebComponent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in SslCerts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SslCertAsset>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Exceptions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ObservedString>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SourceDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +110,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in PortStates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ObservedPortState>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

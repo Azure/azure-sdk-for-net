@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.Hci
             if (Optional.IsDefined(DeploymentConfiguration))
             {
                 writer.WritePropertyName("deploymentConfiguration"u8);
-                writer.WriteObjectValue(DeploymentConfiguration, options);
+                ((IJsonModel<HciClusterDeploymentConfiguration>)DeploymentConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReportedProperties))
             {
                 writer.WritePropertyName("reportedProperties"u8);
-                writer.WriteObjectValue(ReportedProperties, options);
+                ((IJsonModel<EceReportedProperties>)ReportedProperties).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Hci
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            deploymentConfiguration = HciClusterDeploymentConfiguration.DeserializeHciClusterDeploymentConfiguration(property0.Value, options);
+                            deploymentConfiguration = ModelSerializationExtensions.JsonDeserialize<HciClusterDeploymentConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("reportedProperties"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            reportedProperties = EceReportedProperties.DeserializeEceReportedProperties(property0.Value, options);
+                            reportedProperties = ModelSerializationExtensions.JsonDeserialize<EceReportedProperties>(property0.Value);
                             continue;
                         }
                     }

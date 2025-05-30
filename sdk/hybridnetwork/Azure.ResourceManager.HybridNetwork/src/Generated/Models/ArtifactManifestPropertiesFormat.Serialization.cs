@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Artifacts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManifestArtifactFormat>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

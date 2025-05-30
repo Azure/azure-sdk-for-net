@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.Maps.Models
                 writer.WriteStartArray();
                 foreach (var item in LinkedResources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MapsLinkedResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Cors))
             {
                 writer.WritePropertyName("cors"u8);
-                writer.WriteObjectValue(Cors, options);
+                ((IJsonModel<CorsRules>)Cors).Write(writer, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<MapsEncryption>)Encryption).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Maps.Models
                     {
                         continue;
                     }
-                    cors = CorsRules.DeserializeCorsRules(property.Value, options);
+                    cors = ModelSerializationExtensions.JsonDeserialize<CorsRules>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("encryption"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Maps.Models
                     {
                         continue;
                     }
-                    encryption = MapsEncryption.DeserializeMapsEncryption(property.Value, options);
+                    encryption = ModelSerializationExtensions.JsonDeserialize<MapsEncryption>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

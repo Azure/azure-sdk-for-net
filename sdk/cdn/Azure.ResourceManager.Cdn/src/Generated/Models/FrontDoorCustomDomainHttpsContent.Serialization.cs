@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(CustomizedCipherSuiteSet))
             {
                 writer.WritePropertyName("customizedCipherSuiteSet"u8);
-                writer.WriteObjectValue(CustomizedCipherSuiteSet, options);
+                ((IJsonModel<FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet>)CustomizedCipherSuiteSet).Write(writer, options);
             }
             if (Optional.IsDefined(Secret))
             {
                 writer.WritePropertyName("secret"u8);
-                JsonSerializer.Serialize(writer, Secret);
+                ((IJsonModel<WritableSubResource>)Secret).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    customizedCipherSuiteSet = FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet.DeserializeFrontDoorCustomDomainHttpsCustomizedCipherSuiteSet(property.Value, options);
+                    customizedCipherSuiteSet = ModelSerializationExtensions.JsonDeserialize<FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("secret"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    secret = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    secret = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

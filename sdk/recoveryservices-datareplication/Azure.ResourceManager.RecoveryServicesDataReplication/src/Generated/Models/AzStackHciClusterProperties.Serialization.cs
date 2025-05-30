@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStartArray();
             foreach (var item in StorageContainers)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<StorageContainerProperties>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

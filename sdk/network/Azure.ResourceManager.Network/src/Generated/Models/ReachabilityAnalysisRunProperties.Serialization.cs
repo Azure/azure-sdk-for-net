@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(IntentContent))
             {
                 writer.WritePropertyName("intentContent"u8);
-                writer.WriteObjectValue(IntentContent, options);
+                ((IJsonModel<AnalysisRunIntentContent>)IntentContent).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AnalysisResult))
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    intentContent = AnalysisRunIntentContent.DeserializeAnalysisRunIntentContent(property.Value, options);
+                    intentContent = ModelSerializationExtensions.JsonDeserialize<AnalysisRunIntentContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("analysisResult"u8))

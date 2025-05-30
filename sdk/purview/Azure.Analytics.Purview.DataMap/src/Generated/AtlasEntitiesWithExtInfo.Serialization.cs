@@ -41,7 +41,7 @@ namespace Azure.Analytics.Purview.DataMap
                 foreach (var item in ReferredEntities)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<AtlasEntity>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -51,7 +51,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Entities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasEntity>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

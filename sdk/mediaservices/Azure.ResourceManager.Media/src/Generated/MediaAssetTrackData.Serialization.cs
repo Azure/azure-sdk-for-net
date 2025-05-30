@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(Track))
             {
                 writer.WritePropertyName("track"u8);
-                writer.WriteObjectValue(Track, options);
+                ((IJsonModel<MediaAssetTrackBase>)Track).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Media
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            track = MediaAssetTrackBase.DeserializeMediaAssetTrackBase(property0.Value, options);
+                            track = ModelSerializationExtensions.JsonDeserialize<MediaAssetTrackBase>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

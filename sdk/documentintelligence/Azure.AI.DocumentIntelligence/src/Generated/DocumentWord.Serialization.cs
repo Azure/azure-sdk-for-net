@@ -47,7 +47,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("span"u8);
-            writer.WriteObjectValue(Span, options);
+            ((IJsonModel<DocumentSpan>)Span).Write(writer, options);
             writer.WritePropertyName("confidence"u8);
             writer.WriteNumberValue(Confidence);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -116,7 +116,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (property.NameEquals("span"u8))
                 {
-                    span = DocumentSpan.DeserializeDocumentSpan(property.Value, options);
+                    span = ModelSerializationExtensions.JsonDeserialize<DocumentSpan>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("confidence"u8))

@@ -42,8 +42,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(ScaleConfiguration))
             {
                 writer.WritePropertyName("scaleConfiguration"u8);
-                writer.WriteObjectValue(ScaleConfiguration, options);
+                ((IJsonModel<SessionPoolScaleConfiguration>)ScaleConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Secrets))
             {
@@ -78,24 +77,24 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SessionPoolSecret>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DynamicPoolConfiguration))
             {
                 writer.WritePropertyName("dynamicPoolConfiguration"u8);
-                writer.WriteObjectValue(DynamicPoolConfiguration, options);
+                ((IJsonModel<DynamicPoolConfiguration>)DynamicPoolConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(CustomContainerTemplate))
             {
                 writer.WritePropertyName("customContainerTemplate"u8);
-                writer.WriteObjectValue(CustomContainerTemplate, options);
+                ((IJsonModel<CustomContainerTemplate>)CustomContainerTemplate).Write(writer, options);
             }
             if (Optional.IsDefined(SessionNetworkConfiguration))
             {
                 writer.WritePropertyName("sessionNetworkConfiguration"u8);
-                writer.WriteObjectValue(SessionNetworkConfiguration, options);
+                ((IJsonModel<SessionNetworkConfiguration>)SessionNetworkConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PoolManagementEndpoint))
             {
@@ -113,7 +112,7 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WriteStartArray();
                 foreach (var item in ManagedIdentitySettings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SessionPoolManagedIdentitySetting>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -170,7 +169,7 @@ namespace Azure.ResourceManager.AppContainers
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -213,7 +212,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -267,7 +266,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            scaleConfiguration = SessionPoolScaleConfiguration.DeserializeSessionPoolScaleConfiguration(property0.Value, options);
+                            scaleConfiguration = ModelSerializationExtensions.JsonDeserialize<SessionPoolScaleConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("secrets"u8))
@@ -290,7 +289,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            dynamicPoolConfiguration = DynamicPoolConfiguration.DeserializeDynamicPoolConfiguration(property0.Value, options);
+                            dynamicPoolConfiguration = ModelSerializationExtensions.JsonDeserialize<DynamicPoolConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("customContainerTemplate"u8))
@@ -299,7 +298,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            customContainerTemplate = CustomContainerTemplate.DeserializeCustomContainerTemplate(property0.Value, options);
+                            customContainerTemplate = ModelSerializationExtensions.JsonDeserialize<CustomContainerTemplate>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sessionNetworkConfiguration"u8))
@@ -308,7 +307,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            sessionNetworkConfiguration = SessionNetworkConfiguration.DeserializeSessionNetworkConfiguration(property0.Value, options);
+                            sessionNetworkConfiguration = ModelSerializationExtensions.JsonDeserialize<SessionNetworkConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("poolManagementEndpoint"u8))

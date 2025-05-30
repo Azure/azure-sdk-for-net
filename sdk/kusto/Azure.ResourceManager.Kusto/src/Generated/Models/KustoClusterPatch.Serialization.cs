@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<KustoSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -89,14 +89,14 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStartArray();
                 foreach (var item in TrustedExternalTenants)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<KustoClusterTrustedExternalTenant>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OptimizedAutoscale))
             {
                 writer.WritePropertyName("optimizedAutoscale"u8);
-                writer.WriteObjectValue(OptimizedAutoscale, options);
+                ((IJsonModel<OptimizedAutoscale>)OptimizedAutoscale).Write(writer, options);
             }
             if (Optional.IsDefined(IsDiskEncryptionEnabled))
             {
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.Kusto.Models
             if (Optional.IsDefined(VirtualNetworkConfiguration))
             {
                 writer.WritePropertyName("virtualNetworkConfiguration"u8);
-                writer.WriteObjectValue(VirtualNetworkConfiguration, options);
+                ((IJsonModel<KustoClusterVirtualNetworkConfiguration>)VirtualNetworkConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties, options);
+                ((IJsonModel<KustoKeyVaultProperties>)KeyVaultProperties).Write(writer, options);
             }
             if (Optional.IsDefined(IsPurgeEnabled))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (Optional.IsDefined(LanguageExtensions))
             {
                 writer.WritePropertyName("languageExtensions"u8);
-                writer.WriteObjectValue(LanguageExtensions, options);
+                ((IJsonModel<KustoLanguageExtensionList>)LanguageExtensions).Write(writer, options);
             }
             if (Optional.IsDefined(IsDoubleEncryptionEnabled))
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStartArray();
                 foreach (var item in AcceptedAudiences)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AcceptedAudience>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStartArray();
                 foreach (var item in CalloutPolicies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<KustoCalloutPolicy>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -209,14 +209,14 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<KustoPrivateEndpointConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(MigrationCluster))
             {
                 writer.WritePropertyName("migrationCluster"u8);
-                writer.WriteObjectValue(MigrationCluster, options);
+                ((IJsonModel<MigrationClusterProperties>)MigrationCluster).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ZoneStatus))
             {
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         continue;
                     }
-                    sku = KustoSku.DeserializeKustoSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<KustoSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             {
                                 continue;
                             }
-                            optimizedAutoscale = OptimizedAutoscale.DeserializeOptimizedAutoscale(property0.Value, options);
+                            optimizedAutoscale = ModelSerializationExtensions.JsonDeserialize<OptimizedAutoscale>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enableDiskEncryption"u8))
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             {
                                 continue;
                             }
-                            virtualNetworkConfiguration = KustoClusterVirtualNetworkConfiguration.DeserializeKustoClusterVirtualNetworkConfiguration(property0.Value, options);
+                            virtualNetworkConfiguration = ModelSerializationExtensions.JsonDeserialize<KustoClusterVirtualNetworkConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("keyVaultProperties"u8))
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             {
                                 continue;
                             }
-                            keyVaultProperties = KustoKeyVaultProperties.DeserializeKustoKeyVaultProperties(property0.Value, options);
+                            keyVaultProperties = ModelSerializationExtensions.JsonDeserialize<KustoKeyVaultProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enablePurge"u8))
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             {
                                 continue;
                             }
-                            languageExtensions = KustoLanguageExtensionList.DeserializeKustoLanguageExtensionList(property0.Value, options);
+                            languageExtensions = ModelSerializationExtensions.JsonDeserialize<KustoLanguageExtensionList>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enableDoubleEncryption"u8))
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             {
                                 continue;
                             }
-                            migrationCluster = MigrationClusterProperties.DeserializeMigrationClusterProperties(property0.Value, options);
+                            migrationCluster = ModelSerializationExtensions.JsonDeserialize<MigrationClusterProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("zoneStatus"u8))

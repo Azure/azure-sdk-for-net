@@ -16,7 +16,7 @@ namespace Azure.Communication.CallingServer
         {
             writer.WriteStartObject();
             writer.WritePropertyName("callLocator"u8);
-            writer.WriteObjectValue(CallLocator);
+            JsonSerializer.Serialize(writer, CallLocator);
             if (Optional.IsDefined(RecordingStateCallbackUri))
             {
                 writer.WritePropertyName("recordingStateCallbackUri"u8);
@@ -43,7 +43,7 @@ namespace Azure.Communication.CallingServer
                 writer.WriteStartArray();
                 foreach (var item in ChannelAffinity)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }

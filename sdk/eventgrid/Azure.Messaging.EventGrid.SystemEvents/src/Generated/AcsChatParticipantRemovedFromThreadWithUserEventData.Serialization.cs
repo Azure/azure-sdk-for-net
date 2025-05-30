@@ -41,9 +41,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStringValue(Time.Value, "O");
             }
             writer.WritePropertyName("removedByCommunicationIdentifier"u8);
-            writer.WriteObjectValue(RemovedByCommunicationIdentifier, options);
+            ((IJsonModel<CommunicationIdentifierModel>)RemovedByCommunicationIdentifier).Write(writer, options);
             writer.WritePropertyName("participantRemoved"u8);
-            writer.WriteObjectValue(ParticipantRemoved, options);
+            ((IJsonModel<AcsChatThreadParticipantProperties>)ParticipantRemoved).Write(writer, options);
         }
 
         AcsChatParticipantRemovedFromThreadWithUserEventData IJsonModel<AcsChatParticipantRemovedFromThreadWithUserEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -89,12 +89,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("removedByCommunicationIdentifier"u8))
                 {
-                    removedByCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value, options);
+                    removedByCommunicationIdentifier = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("participantRemoved"u8))
                 {
-                    participantRemoved = AcsChatThreadParticipantProperties.DeserializeAcsChatThreadParticipantProperties(property.Value, options);
+                    participantRemoved = ModelSerializationExtensions.JsonDeserialize<AcsChatThreadParticipantProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("createTime"u8))
@@ -117,7 +117,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("recipientCommunicationIdentifier"u8))
                 {
-                    recipientCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value, options);
+                    recipientCommunicationIdentifier = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("transactionId"u8))

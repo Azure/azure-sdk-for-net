@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (options.Format != "W" && Optional.IsDefined(AffectedObjectDetails))
             {
                 writer.WritePropertyName("affectedObjectDetails"u8);
-                writer.WriteObjectValue(AffectedObjectDetails, options);
+                ((IJsonModel<AffectedObjectDetails>)AffectedObjectDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

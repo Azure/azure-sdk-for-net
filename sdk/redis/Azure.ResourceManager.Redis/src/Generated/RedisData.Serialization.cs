@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.Redis
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RedisConfiguration))
             {
                 writer.WritePropertyName("redisConfiguration"u8);
-                writer.WriteObjectValue(RedisConfiguration, options);
+                ((IJsonModel<RedisCommonConfiguration>)RedisConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(RedisVersion))
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Redis
                 writer.WriteStringValue(ZonalAllocationPolicy.Value.ToString());
             }
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<RedisSku>)Sku).Write(writer, options);
             if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Redis
                 if (AccessKeys != null)
                 {
                     writer.WritePropertyName("accessKeys"u8);
-                    writer.WriteObjectValue(AccessKeys, options);
+                    ((IJsonModel<RedisAccessKeys>)AccessKeys).Write(writer, options);
                 }
                 else
                 {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Redis
                 writer.WriteStartArray();
                 foreach (var item in LinkedServers)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Redis
                 writer.WriteStartArray();
                 foreach (var item in Instances)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RedisInstanceDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Redis
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RedisPrivateEndpointConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Redis
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Redis
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Redis
                             {
                                 continue;
                             }
-                            redisConfiguration = RedisCommonConfiguration.DeserializeRedisCommonConfiguration(property0.Value, options);
+                            redisConfiguration = ModelSerializationExtensions.JsonDeserialize<RedisCommonConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("redisVersion"u8))
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Redis
                         }
                         if (property0.NameEquals("sku"u8))
                         {
-                            sku = RedisSku.DeserializeRedisSku(property0.Value, options);
+                            sku = ModelSerializationExtensions.JsonDeserialize<RedisSku>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("subnetId"u8))
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.Redis
                                 accessKeys = null;
                                 continue;
                             }
-                            accessKeys = RedisAccessKeys.DeserializeRedisAccessKeys(property0.Value, options);
+                            accessKeys = ModelSerializationExtensions.JsonDeserialize<RedisAccessKeys>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("linkedServers"u8))
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.Redis
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<SubResource>(item));
                             }
                             linkedServers = array;
                             continue;

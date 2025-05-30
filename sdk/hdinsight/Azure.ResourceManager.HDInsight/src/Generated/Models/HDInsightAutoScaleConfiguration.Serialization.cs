@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity, options);
+                ((IJsonModel<HDInsightAutoScaleCapacity>)Capacity).Write(writer, options);
             }
             if (Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
-                writer.WriteObjectValue(Recurrence, options);
+                ((IJsonModel<HDInsightAutoScaleRecurrence>)Recurrence).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    capacity = HDInsightAutoScaleCapacity.DeserializeHDInsightAutoScaleCapacity(property.Value, options);
+                    capacity = ModelSerializationExtensions.JsonDeserialize<HDInsightAutoScaleCapacity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("recurrence"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    recurrence = HDInsightAutoScaleRecurrence.DeserializeHDInsightAutoScaleRecurrence(property.Value, options);
+                    recurrence = ModelSerializationExtensions.JsonDeserialize<HDInsightAutoScaleRecurrence>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(NetworkInterfaceAssociation))
             {
                 writer.WritePropertyName("networkInterfaceAssociation"u8);
-                writer.WriteObjectValue(NetworkInterfaceAssociation, options);
+                ((IJsonModel<NetworkInterfaceAssociation>)NetworkInterfaceAssociation).Write(writer, options);
             }
             if (Optional.IsDefined(SubnetAssociation))
             {
                 writer.WritePropertyName("subnetAssociation"u8);
-                writer.WriteObjectValue(SubnetAssociation, options);
+                ((IJsonModel<SubnetAssociation>)SubnetAssociation).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DefaultSecurityRules))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in DefaultSecurityRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SecurityRuleData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in EffectiveSecurityRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EffectiveNetworkSecurityRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    networkInterfaceAssociation = NetworkInterfaceAssociation.DeserializeNetworkInterfaceAssociation(property.Value, options);
+                    networkInterfaceAssociation = ModelSerializationExtensions.JsonDeserialize<NetworkInterfaceAssociation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("subnetAssociation"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    subnetAssociation = SubnetAssociation.DeserializeSubnetAssociation(property.Value, options);
+                    subnetAssociation = ModelSerializationExtensions.JsonDeserialize<SubnetAssociation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("defaultSecurityRules"u8))

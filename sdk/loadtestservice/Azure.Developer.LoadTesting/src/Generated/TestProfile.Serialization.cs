@@ -62,7 +62,7 @@ namespace Azure.Developer.LoadTesting
             if (Optional.IsDefined(TargetResourceConfigurations))
             {
                 writer.WritePropertyName("targetResourceConfigurations"u8);
-                writer.WriteObjectValue(TargetResourceConfigurations, options);
+                ((IJsonModel<TargetResourceConfigurations>)TargetResourceConfigurations).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedDateTime))
             {
@@ -170,7 +170,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    targetResourceConfigurations = TargetResourceConfigurations.DeserializeTargetResourceConfigurations(property.Value, options);
+                    targetResourceConfigurations = ModelSerializationExtensions.JsonDeserialize<TargetResourceConfigurations>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("createdDateTime"u8))

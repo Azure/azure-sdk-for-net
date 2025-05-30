@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                JsonSerializer.Serialize(writer, Plan);
+                ((IJsonModel<ArmPlan>)Plan).Write(writer, options);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ArmApplicationManagedIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.Resources
             if (options.Format != "W" && Optional.IsDefined(BillingDetails))
             {
                 writer.WritePropertyName("billingDetails"u8);
-                writer.WriteObjectValue(BillingDetails, options);
+                ((IJsonModel<ArmApplicationBillingDetails>)BillingDetails).Write(writer, options);
             }
             if (Optional.IsDefined(JitAccessPolicy))
             {
                 writer.WritePropertyName("jitAccessPolicy"u8);
-                writer.WriteObjectValue(JitAccessPolicy, options);
+                ((IJsonModel<ArmApplicationJitAccessPolicy>)JitAccessPolicy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PublisherTenantId))
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in Authorizations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ArmApplicationAuthorization>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.Resources
             if (options.Format != "W" && Optional.IsDefined(CustomerSupport))
             {
                 writer.WritePropertyName("customerSupport"u8);
-                writer.WriteObjectValue(CustomerSupport, options);
+                ((IJsonModel<ArmApplicationPackageContact>)CustomerSupport).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SupportUris))
             {
                 writer.WritePropertyName("supportUrls"u8);
-                writer.WriteObjectValue(SupportUris, options);
+                ((IJsonModel<ArmApplicationPackageSupportUris>)SupportUris).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Artifacts))
             {
@@ -138,19 +138,19 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in Artifacts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ArmApplicationArtifact>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue(CreatedBy, options);
+                ((IJsonModel<ArmApplicationDetails>)CreatedBy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
-                writer.WriteObjectValue(UpdatedBy, options);
+                ((IJsonModel<ArmApplicationDetails>)UpdatedBy).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    plan = JsonSerializer.Deserialize<ArmPlan>(property.Value.GetRawText());
+                    plan = ModelSerializationExtensions.JsonDeserialize<ArmPlan>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    identity = ArmApplicationManagedIdentity.DeserializeArmApplicationManagedIdentity(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ArmApplicationManagedIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("managedBy"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    sku = ArmApplicationSku.DeserializeArmApplicationSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<ArmApplicationSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            billingDetails = ArmApplicationBillingDetails.DeserializeArmApplicationBillingDetails(property0.Value, options);
+                            billingDetails = ModelSerializationExtensions.JsonDeserialize<ArmApplicationBillingDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("jitAccessPolicy"u8))
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            jitAccessPolicy = ArmApplicationJitAccessPolicy.DeserializeArmApplicationJitAccessPolicy(property0.Value, options);
+                            jitAccessPolicy = ModelSerializationExtensions.JsonDeserialize<ArmApplicationJitAccessPolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publisherTenantId"u8))
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            customerSupport = ArmApplicationPackageContact.DeserializeArmApplicationPackageContact(property0.Value, options);
+                            customerSupport = ModelSerializationExtensions.JsonDeserialize<ArmApplicationPackageContact>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("supportUrls"u8))
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            supportUris = ArmApplicationPackageSupportUris.DeserializeArmApplicationPackageSupportUris(property0.Value, options);
+                            supportUris = ModelSerializationExtensions.JsonDeserialize<ArmApplicationPackageSupportUris>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("artifacts"u8))
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            createdBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value, options);
+                            createdBy = ModelSerializationExtensions.JsonDeserialize<ArmApplicationDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("updatedBy"u8))
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            updatedBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value, options);
+                            updatedBy = ModelSerializationExtensions.JsonDeserialize<ArmApplicationDetails>(property0.Value);
                             continue;
                         }
                     }

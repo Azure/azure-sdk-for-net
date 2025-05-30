@@ -30,47 +30,47 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("aliasesCount"u8))
                 {
-                    aliasesCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
+                    aliasesCount = ModelSerializationExtensions.JsonDeserialize<SearchResourceCounter>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("documentCount"u8))
                 {
-                    documentCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
+                    documentCount = ModelSerializationExtensions.JsonDeserialize<SearchResourceCounter>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("indexesCount"u8))
                 {
-                    indexesCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
+                    indexesCount = ModelSerializationExtensions.JsonDeserialize<SearchResourceCounter>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("indexersCount"u8))
                 {
-                    indexersCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
+                    indexersCount = ModelSerializationExtensions.JsonDeserialize<SearchResourceCounter>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataSourcesCount"u8))
                 {
-                    dataSourcesCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
+                    dataSourcesCount = ModelSerializationExtensions.JsonDeserialize<SearchResourceCounter>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storageSize"u8))
                 {
-                    storageSize = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
+                    storageSize = ModelSerializationExtensions.JsonDeserialize<SearchResourceCounter>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("synonymMaps"u8))
                 {
-                    synonymMaps = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
+                    synonymMaps = ModelSerializationExtensions.JsonDeserialize<SearchResourceCounter>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("skillsetCount"u8))
                 {
-                    skillsetCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
+                    skillsetCount = ModelSerializationExtensions.JsonDeserialize<SearchResourceCounter>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vectorIndexSize"u8))
                 {
-                    vectorIndexSize = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
+                    vectorIndexSize = ModelSerializationExtensions.JsonDeserialize<SearchResourceCounter>(property.Value);
                     continue;
                 }
             }

@@ -43,12 +43,12 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(UsageStats))
             {
                 writer.WritePropertyName("usageStats"u8);
-                writer.WriteObjectValue(UsageStats, options);
+                ((IJsonModel<BatchPoolUsageStatistics>)UsageStats).Write(writer, options);
             }
             if (Optional.IsDefined(ResourceStats))
             {
                 writer.WritePropertyName("resourceStats"u8);
-                writer.WriteObjectValue(ResourceStats, options);
+                ((IJsonModel<BatchPoolResourceStatistics>)ResourceStats).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -117,7 +117,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    usageStats = BatchPoolUsageStatistics.DeserializeBatchPoolUsageStatistics(property.Value, options);
+                    usageStats = ModelSerializationExtensions.JsonDeserialize<BatchPoolUsageStatistics>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceStats"u8))
@@ -126,7 +126,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    resourceStats = BatchPoolResourceStatistics.DeserializeBatchPoolResourceStatistics(property.Value, options);
+                    resourceStats = ModelSerializationExtensions.JsonDeserialize<BatchPoolResourceStatistics>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

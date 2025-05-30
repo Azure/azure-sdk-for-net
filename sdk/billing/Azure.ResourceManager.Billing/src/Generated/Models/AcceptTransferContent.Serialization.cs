@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in ProductDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BillingProductDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

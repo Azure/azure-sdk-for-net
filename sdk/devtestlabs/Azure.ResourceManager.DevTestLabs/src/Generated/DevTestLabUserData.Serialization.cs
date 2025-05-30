@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<DevTestLabUserIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(SecretStore))
             {
                 writer.WritePropertyName("secretStore"u8);
-                writer.WriteObjectValue(SecretStore, options);
+                ((IJsonModel<DevTestLabUserSecretStore>)SecretStore).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            identity = DevTestLabUserIdentity.DeserializeDevTestLabUserIdentity(property0.Value, options);
+                            identity = ModelSerializationExtensions.JsonDeserialize<DevTestLabUserIdentity>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("secretStore"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            secretStore = DevTestLabUserSecretStore.DeserializeDevTestLabUserSecretStore(property0.Value, options);
+                            secretStore = ModelSerializationExtensions.JsonDeserialize<DevTestLabUserSecretStore>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("createdDate"u8))

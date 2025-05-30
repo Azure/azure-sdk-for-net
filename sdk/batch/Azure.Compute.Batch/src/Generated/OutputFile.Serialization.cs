@@ -37,9 +37,9 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("filePattern"u8);
             writer.WriteStringValue(FilePattern);
             writer.WritePropertyName("destination"u8);
-            writer.WriteObjectValue(Destination, options);
+            ((IJsonModel<OutputFileDestination>)Destination).Write(writer, options);
             writer.WritePropertyName("uploadOptions"u8);
-            writer.WriteObjectValue(UploadOptions, options);
+            ((IJsonModel<OutputFileUploadConfig>)UploadOptions).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -91,12 +91,12 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("destination"u8))
                 {
-                    destination = OutputFileDestination.DeserializeOutputFileDestination(property.Value, options);
+                    destination = ModelSerializationExtensions.JsonDeserialize<OutputFileDestination>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("uploadOptions"u8))
                 {
-                    uploadOptions = OutputFileUploadConfig.DeserializeOutputFileUploadConfig(property.Value, options);
+                    uploadOptions = ModelSerializationExtensions.JsonDeserialize<OutputFileUploadConfig>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(Deployment))
             {
                 writer.WritePropertyName("deployment"u8);
-                writer.WriteObjectValue(Deployment, options);
+                ((IJsonModel<SourceControlDeployment>)Deployment).Write(writer, options);
             }
             if (Optional.IsDefined(Message))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    deployment = SourceControlDeployment.DeserializeSourceControlDeployment(property.Value, options);
+                    deployment = ModelSerializationExtensions.JsonDeserialize<SourceControlDeployment>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("message"u8))

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrorDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryHealthError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -127,22 +127,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(AuthenticationIdentityDetails))
             {
                 writer.WritePropertyName("authenticationIdentityDetails"u8);
-                writer.WriteObjectValue(AuthenticationIdentityDetails, options);
+                ((IJsonModel<IdentityProviderDetails>)AuthenticationIdentityDetails).Write(writer, options);
             }
             if (Optional.IsDefined(ResourceAccessIdentityDetails))
             {
                 writer.WritePropertyName("resourceAccessIdentityDetails"u8);
-                writer.WriteObjectValue(ResourceAccessIdentityDetails, options);
+                ((IJsonModel<IdentityProviderDetails>)ResourceAccessIdentityDetails).Write(writer, options);
             }
             if (Optional.IsDefined(DataPlaneAuthenticationIdentityDetails))
             {
                 writer.WritePropertyName("dataPlaneAuthenticationIdentityDetails"u8);
-                writer.WriteObjectValue(DataPlaneAuthenticationIdentityDetails, options);
+                ((IJsonModel<IdentityProviderDetails>)DataPlaneAuthenticationIdentityDetails).Write(writer, options);
             }
             if (Optional.IsDefined(ProviderVersionDetails))
             {
                 writer.WritePropertyName("providerVersionDetails"u8);
-                writer.WriteObjectValue(ProviderVersionDetails, options);
+                ((IJsonModel<SiteRecoveryVersionDetails>)ProviderVersionDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    authenticationIdentityDetails = IdentityProviderDetails.DeserializeIdentityProviderDetails(property.Value, options);
+                    authenticationIdentityDetails = ModelSerializationExtensions.JsonDeserialize<IdentityProviderDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceAccessIdentityDetails"u8))
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    resourceAccessIdentityDetails = IdentityProviderDetails.DeserializeIdentityProviderDetails(property.Value, options);
+                    resourceAccessIdentityDetails = ModelSerializationExtensions.JsonDeserialize<IdentityProviderDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataPlaneAuthenticationIdentityDetails"u8))
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    dataPlaneAuthenticationIdentityDetails = IdentityProviderDetails.DeserializeIdentityProviderDetails(property.Value, options);
+                    dataPlaneAuthenticationIdentityDetails = ModelSerializationExtensions.JsonDeserialize<IdentityProviderDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("providerVersionDetails"u8))
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value, options);
+                    providerVersionDetails = ModelSerializationExtensions.JsonDeserialize<SiteRecoveryVersionDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

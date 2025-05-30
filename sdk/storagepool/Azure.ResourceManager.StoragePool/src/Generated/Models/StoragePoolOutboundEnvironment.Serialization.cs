@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<OutboundEndpointDependency>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

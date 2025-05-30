@@ -29,27 +29,27 @@ namespace Azure.Communication
             if (CallAutomation.Optional.IsDefined(CommunicationUser))
             {
                 writer.WritePropertyName("communicationUser"u8);
-                writer.WriteObjectValue(CommunicationUser);
+                JsonSerializer.Serialize(writer, CommunicationUser);
             }
             if (CallAutomation.Optional.IsDefined(PhoneNumber))
             {
                 writer.WritePropertyName("phoneNumber"u8);
-                writer.WriteObjectValue(PhoneNumber);
+                JsonSerializer.Serialize(writer, PhoneNumber);
             }
             if (CallAutomation.Optional.IsDefined(MicrosoftTeamsUser))
             {
                 writer.WritePropertyName("microsoftTeamsUser"u8);
-                writer.WriteObjectValue(MicrosoftTeamsUser);
+                JsonSerializer.Serialize(writer, MicrosoftTeamsUser);
             }
             if (CallAutomation.Optional.IsDefined(MicrosoftTeamsApp))
             {
                 writer.WritePropertyName("microsoftTeamsApp"u8);
-                writer.WriteObjectValue(MicrosoftTeamsApp);
+                JsonSerializer.Serialize(writer, MicrosoftTeamsApp);
             }
             if (CallAutomation.Optional.IsDefined(TeamsExtensionUser))
             {
                 writer.WritePropertyName("teamsExtensionUser"u8);
-                writer.WriteObjectValue(TeamsExtensionUser);
+                JsonSerializer.Serialize(writer, TeamsExtensionUser);
             }
             writer.WriteEndObject();
         }
@@ -89,7 +89,7 @@ namespace Azure.Communication
                     {
                         continue;
                     }
-                    communicationUser = CommunicationUserIdentifierModel.DeserializeCommunicationUserIdentifierModel(property.Value);
+                    communicationUser = ModelSerializationExtensions.JsonDeserialize<CommunicationUserIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("phoneNumber"u8))
@@ -98,7 +98,7 @@ namespace Azure.Communication
                     {
                         continue;
                     }
-                    phoneNumber = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
+                    phoneNumber = ModelSerializationExtensions.JsonDeserialize<PhoneNumberIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("microsoftTeamsUser"u8))
@@ -107,7 +107,7 @@ namespace Azure.Communication
                     {
                         continue;
                     }
-                    microsoftTeamsUser = MicrosoftTeamsUserIdentifierModel.DeserializeMicrosoftTeamsUserIdentifierModel(property.Value);
+                    microsoftTeamsUser = ModelSerializationExtensions.JsonDeserialize<MicrosoftTeamsUserIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("microsoftTeamsApp"u8))
@@ -116,7 +116,7 @@ namespace Azure.Communication
                     {
                         continue;
                     }
-                    microsoftTeamsApp = MicrosoftTeamsAppIdentifierModel.DeserializeMicrosoftTeamsAppIdentifierModel(property.Value);
+                    microsoftTeamsApp = ModelSerializationExtensions.JsonDeserialize<MicrosoftTeamsAppIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("teamsExtensionUser"u8))
@@ -125,7 +125,7 @@ namespace Azure.Communication
                     {
                         continue;
                     }
-                    teamsExtensionUser = TeamsExtensionUserIdentifierModel.DeserializeTeamsExtensionUserIdentifierModel(property.Value);
+                    teamsExtensionUser = ModelSerializationExtensions.JsonDeserialize<TeamsExtensionUserIdentifierModel>(property.Value);
                     continue;
                 }
             }

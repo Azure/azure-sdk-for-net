@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Nginx
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<NginxCertificateProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Location))
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Nginx
                     {
                         continue;
                     }
-                    properties = NginxCertificateProperties.DeserializeNginxCertificateProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<NginxCertificateProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Nginx
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

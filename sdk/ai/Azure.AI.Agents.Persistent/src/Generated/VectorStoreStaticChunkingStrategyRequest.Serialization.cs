@@ -36,7 +36,7 @@ namespace Azure.AI.Agents.Persistent
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("static"u8);
-            writer.WriteObjectValue(Static, options);
+            ((IJsonModel<VectorStoreStaticChunkingStrategyOptions>)Static).Write(writer, options);
         }
 
         VectorStoreStaticChunkingStrategyRequest IJsonModel<VectorStoreStaticChunkingStrategyRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (property.NameEquals("static"u8))
                 {
-                    @static = VectorStoreStaticChunkingStrategyOptions.DeserializeVectorStoreStaticChunkingStrategyOptions(property.Value, options);
+                    @static = ModelSerializationExtensions.JsonDeserialize<VectorStoreStaticChunkingStrategyOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

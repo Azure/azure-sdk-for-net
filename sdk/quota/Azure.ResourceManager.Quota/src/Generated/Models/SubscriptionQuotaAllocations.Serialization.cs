@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Quota.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<SubscriptionQuotaAllocationsProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    properties = SubscriptionQuotaAllocationsProperties.DeserializeSubscriptionQuotaAllocationsProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<SubscriptionQuotaAllocationsProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

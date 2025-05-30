@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.OperationalInsights
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(ETag))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.OperationalInsights
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<OperationalInsightsWorkspaceSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(RetentionInDays))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.OperationalInsights
             if (Optional.IsDefined(WorkspaceCapping))
             {
                 writer.WritePropertyName("workspaceCapping"u8);
-                writer.WriteObjectValue(WorkspaceCapping, options);
+                ((IJsonModel<OperationalInsightsWorkspaceCapping>)WorkspaceCapping).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkScopedResources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<OperationalInsightsPrivateLinkScopedResourceInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Features))
             {
                 writer.WritePropertyName("features"u8);
-                writer.WriteObjectValue(Features, options);
+                ((IJsonModel<OperationalInsightsWorkspaceFeatures>)Features).Write(writer, options);
             }
             if (Optional.IsDefined(DefaultDataCollectionRuleResourceId))
             {
@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.OperationalInsights
             if (Optional.IsDefined(Replication))
             {
                 writer.WritePropertyName("replication"u8);
-                writer.WriteObjectValue(Replication, options);
+                ((IJsonModel<OperationalInsightsWorkspaceReplicationProperties>)Replication).Write(writer, options);
             }
             if (Optional.IsDefined(Failover))
             {
                 writer.WritePropertyName("failover"u8);
-                writer.WriteObjectValue(Failover, options);
+                ((IJsonModel<OperationalInsightsWorkspaceFailoverProperties>)Failover).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            sku = OperationalInsightsWorkspaceSku.DeserializeOperationalInsightsWorkspaceSku(property0.Value, options);
+                            sku = ModelSerializationExtensions.JsonDeserialize<OperationalInsightsWorkspaceSku>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("retentionInDays"u8))
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            workspaceCapping = OperationalInsightsWorkspaceCapping.DeserializeOperationalInsightsWorkspaceCapping(property0.Value, options);
+                            workspaceCapping = ModelSerializationExtensions.JsonDeserialize<OperationalInsightsWorkspaceCapping>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("createdDate"u8))
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            features = OperationalInsightsWorkspaceFeatures.DeserializeOperationalInsightsWorkspaceFeatures(property0.Value, options);
+                            features = ModelSerializationExtensions.JsonDeserialize<OperationalInsightsWorkspaceFeatures>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("defaultDataCollectionRuleResourceId"u8))
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            replication = OperationalInsightsWorkspaceReplicationProperties.DeserializeOperationalInsightsWorkspaceReplicationProperties(property0.Value, options);
+                            replication = ModelSerializationExtensions.JsonDeserialize<OperationalInsightsWorkspaceReplicationProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("failover"u8))
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            failover = OperationalInsightsWorkspaceFailoverProperties.DeserializeOperationalInsightsWorkspaceFailoverProperties(property0.Value, options);
+                            failover = ModelSerializationExtensions.JsonDeserialize<OperationalInsightsWorkspaceFailoverProperties>(property0.Value);
                             continue;
                         }
                     }

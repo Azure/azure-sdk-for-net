@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(CurrentScenario))
             {
                 writer.WritePropertyName("currentScenario"u8);
-                writer.WriteObjectValue(CurrentScenario, options);
+                ((IJsonModel<CurrentScenarioDetails>)CurrentScenario).Write(writer, options);
             }
             if (Optional.IsDefined(CurrentScenarioStatus))
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Groups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryPlanGroup>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProviderSpecificDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RecoveryPlanProviderSpecificDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    currentScenario = CurrentScenarioDetails.DeserializeCurrentScenarioDetails(property.Value, options);
+                    currentScenario = ModelSerializationExtensions.JsonDeserialize<CurrentScenarioDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("currentScenarioStatus"u8))

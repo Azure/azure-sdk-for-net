@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WritePropertyName("ruleName"u8);
             writer.WriteStringValue(RuleName);
             writer.WritePropertyName("triggerOption"u8);
-            writer.WriteObjectValue(BackupTrigger, options);
+            ((IJsonModel<AdhocBackupTriggerSetting>)BackupTrigger).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (property.NameEquals("triggerOption"u8))
                 {
-                    triggerOption = AdhocBackupTriggerSetting.DeserializeAdhocBackupTriggerSetting(property.Value, options);
+                    triggerOption = ModelSerializationExtensions.JsonDeserialize<AdhocBackupTriggerSetting>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

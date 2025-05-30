@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerService
             if (Optional.IsDefined(CreationData))
             {
                 writer.WritePropertyName("creationData"u8);
-                writer.WriteObjectValue(CreationData, options);
+                ((IJsonModel<ContainerServiceCreationData>)CreationData).Write(writer, options);
             }
             if (Optional.IsDefined(SnapshotType))
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ContainerService
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ContainerService
                             {
                                 continue;
                             }
-                            creationData = ContainerServiceCreationData.DeserializeContainerServiceCreationData(property0.Value, options);
+                            creationData = ModelSerializationExtensions.JsonDeserialize<ContainerServiceCreationData>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("snapshotType"u8))

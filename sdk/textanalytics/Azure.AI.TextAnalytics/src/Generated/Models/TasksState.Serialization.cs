@@ -22,7 +22,7 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("tasks"u8))
                 {
-                    tasks = AnalyzeTasks.DeserializeAnalyzeTasks(property.Value);
+                    tasks = ModelSerializationExtensions.JsonDeserialize<AnalyzeTasks>(property.Value);
                     continue;
                 }
             }

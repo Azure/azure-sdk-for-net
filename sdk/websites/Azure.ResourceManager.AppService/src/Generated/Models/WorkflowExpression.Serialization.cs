@@ -59,14 +59,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Subexpressions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WorkflowExpression>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<WorkflowExpressionResourceErrorInfo>)Error).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    error = WorkflowExpressionResourceErrorInfo.DeserializeWorkflowExpressionResourceErrorInfo(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<WorkflowExpressionResourceErrorInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

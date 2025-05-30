@@ -45,8 +45,7 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -73,7 +72,7 @@ namespace Azure.ResourceManager.Monitor
             if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata, options);
+                ((IJsonModel<DataCollectionRuleMetadata>)Metadata).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(StreamDeclarations))
             {
@@ -82,19 +81,19 @@ namespace Azure.ResourceManager.Monitor
                 foreach (var item in StreamDeclarations)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<DataStreamDeclaration>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(DataSources))
             {
                 writer.WritePropertyName("dataSources"u8);
-                writer.WriteObjectValue(DataSources, options);
+                ((IJsonModel<DataCollectionRuleDataSources>)DataSources).Write(writer, options);
             }
             if (Optional.IsDefined(Destinations))
             {
                 writer.WritePropertyName("destinations"u8);
-                writer.WriteObjectValue(Destinations, options);
+                ((IJsonModel<DataCollectionRuleDestinations>)Destinations).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DataFlows))
             {
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in DataFlows)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataFlow>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -172,7 +171,7 @@ namespace Azure.ResourceManager.Monitor
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -224,7 +223,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -261,7 +260,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            metadata = DataCollectionRuleMetadata.DeserializeDataCollectionRuleMetadata(property0.Value, options);
+                            metadata = ModelSerializationExtensions.JsonDeserialize<DataCollectionRuleMetadata>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("streamDeclarations"u8))
@@ -284,7 +283,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            dataSources = DataCollectionRuleDataSources.DeserializeDataCollectionRuleDataSources(property0.Value, options);
+                            dataSources = ModelSerializationExtensions.JsonDeserialize<DataCollectionRuleDataSources>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("destinations"u8))
@@ -293,7 +292,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            destinations = DataCollectionRuleDestinations.DeserializeDataCollectionRuleDestinations(property0.Value, options);
+                            destinations = ModelSerializationExtensions.JsonDeserialize<DataCollectionRuleDestinations>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dataFlows"u8))

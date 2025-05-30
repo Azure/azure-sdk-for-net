@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<VirtualApplianceNetworkInterfaceConfigurationProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    properties = VirtualApplianceNetworkInterfaceConfigurationProperties.DeserializeVirtualApplianceNetworkInterfaceConfigurationProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<VirtualApplianceNetworkInterfaceConfigurationProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

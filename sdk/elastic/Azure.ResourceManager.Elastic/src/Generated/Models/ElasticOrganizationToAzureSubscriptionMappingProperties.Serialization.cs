@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Elastic.Models
             if (options.Format != "W" && Optional.IsDefined(MarketplaceSaasInfo))
             {
                 writer.WritePropertyName("marketplaceSaasInfo"u8);
-                writer.WriteObjectValue(MarketplaceSaasInfo, options);
+                ((IJsonModel<MarketplaceSaaSInfo>)MarketplaceSaasInfo).Write(writer, options);
             }
             if (Optional.IsDefined(ElasticOrganizationId))
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    marketplaceSaasInfo = MarketplaceSaaSInfo.DeserializeMarketplaceSaaSInfo(property.Value, options);
+                    marketplaceSaasInfo = ModelSerializationExtensions.JsonDeserialize<MarketplaceSaaSInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("elasticOrganizationId"u8))

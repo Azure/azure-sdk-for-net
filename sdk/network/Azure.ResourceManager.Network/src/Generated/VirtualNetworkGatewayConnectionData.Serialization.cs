@@ -50,16 +50,16 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStringValue(AuthorizationKey);
             }
             writer.WritePropertyName("virtualNetworkGateway1"u8);
-            writer.WriteObjectValue(VirtualNetworkGateway1, options);
+            ((IJsonModel<VirtualNetworkGatewayData>)VirtualNetworkGateway1).Write(writer, options);
             if (Optional.IsDefined(VirtualNetworkGateway2))
             {
                 writer.WritePropertyName("virtualNetworkGateway2"u8);
-                writer.WriteObjectValue(VirtualNetworkGateway2, options);
+                ((IJsonModel<VirtualNetworkGatewayData>)VirtualNetworkGateway2).Write(writer, options);
             }
             if (Optional.IsDefined(LocalNetworkGateway2))
             {
                 writer.WritePropertyName("localNetworkGateway2"u8);
-                writer.WriteObjectValue(LocalNetworkGateway2, options);
+                ((IJsonModel<LocalNetworkGatewayData>)LocalNetworkGateway2).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(IngressNatRules))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IngressNatRules)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in EgressNatRules)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in TunnelProperties)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VirtualNetworkGatewayConnectionTunnelProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in TunnelConnectionStatus)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TunnelConnectionHealth>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Peer))
             {
                 writer.WritePropertyName("peer"u8);
-                JsonSerializer.Serialize(writer, Peer);
+                ((IJsonModel<WritableSubResource>)Peer).Write(writer, options);
             }
             if (Optional.IsDefined(EnableBgp))
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in GatewayCustomBgpIPAddresses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<GatewayCustomBgpIPAddressIPConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPsecPolicies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IPsecPolicy>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in TrafficSelectorPolicies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TrafficSelectorPolicy>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("virtualNetworkGateway1"u8))
                         {
-                            virtualNetworkGateway1 = VirtualNetworkGatewayData.DeserializeVirtualNetworkGatewayData(property0.Value, options);
+                            virtualNetworkGateway1 = ModelSerializationExtensions.JsonDeserialize<VirtualNetworkGatewayData>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("virtualNetworkGateway2"u8))
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            virtualNetworkGateway2 = VirtualNetworkGatewayData.DeserializeVirtualNetworkGatewayData(property0.Value, options);
+                            virtualNetworkGateway2 = ModelSerializationExtensions.JsonDeserialize<VirtualNetworkGatewayData>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("localNetworkGateway2"u8))
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            localNetworkGateway2 = LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(property0.Value, options);
+                            localNetworkGateway2 = ModelSerializationExtensions.JsonDeserialize<LocalNetworkGatewayData>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ingressNatRules"u8))
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             ingressNatRules = array;
                             continue;
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             egressNatRules = array;
                             continue;
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            peer = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            peer = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enableBgp"u8))

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MoverOperationStatusError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteStartArray();
                     foreach (var item in AdditionalInfo)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<MoverOperationErrorAdditionalInfo>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }

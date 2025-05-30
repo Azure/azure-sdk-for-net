@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 if (property.NameEquals("backupSettings"u8))
                 {
-                    backupSettings = PostgreSqlFlexibleServerBackupSettings.DeserializePostgreSqlFlexibleServerBackupSettings(property.Value, options);
+                    backupSettings = ModelSerializationExtensions.JsonDeserialize<PostgreSqlFlexibleServerBackupSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

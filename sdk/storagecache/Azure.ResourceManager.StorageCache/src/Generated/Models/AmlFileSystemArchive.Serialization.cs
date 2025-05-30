@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<AmlFileSystemArchiveStatus>)Status).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    status = AmlFileSystemArchiveStatus.DeserializeAmlFileSystemArchiveStatus(property.Value, options);
+                    status = ModelSerializationExtensions.JsonDeserialize<AmlFileSystemArchiveStatus>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             if (Optional.IsDefined(Datastore))
             {
                 writer.WritePropertyName("datastore"u8);
-                writer.WriteObjectValue(Datastore, options);
+                ((IJsonModel<DatabaseWatcherDatastore>)Datastore).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                     {
                         continue;
                     }
-                    datastore = DatabaseWatcherDatastore.DeserializeDatabaseWatcherDatastore(property.Value, options);
+                    datastore = ModelSerializationExtensions.JsonDeserialize<DatabaseWatcherDatastore>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))

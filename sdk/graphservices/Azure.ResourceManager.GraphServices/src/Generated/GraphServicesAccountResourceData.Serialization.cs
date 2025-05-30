@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.GraphServices
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<GraphServicesAccountResourceProperties>)Properties).Write(writer, options);
         }
 
         GraphServicesAccountResourceData IJsonModel<GraphServicesAccountResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.GraphServices
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = GraphServicesAccountResourceProperties.DeserializeGraphServicesAccountResourceProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<GraphServicesAccountResourceProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.GraphServices
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

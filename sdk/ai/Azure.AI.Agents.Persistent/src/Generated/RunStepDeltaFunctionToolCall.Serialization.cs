@@ -38,7 +38,7 @@ namespace Azure.AI.Agents.Persistent
             if (Optional.IsDefined(Function))
             {
                 writer.WritePropertyName("function"u8);
-                writer.WriteObjectValue(Function, options);
+                ((IJsonModel<RunStepDeltaFunction>)Function).Write(writer, options);
             }
         }
 
@@ -76,7 +76,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    function = RunStepDeltaFunction.DeserializeRunStepDeltaFunction(property.Value, options);
+                    function = ModelSerializationExtensions.JsonDeserialize<RunStepDeltaFunction>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("index"u8))

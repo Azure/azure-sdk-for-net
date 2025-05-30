@@ -91,14 +91,14 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in SkuProperties)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SkuProperty>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(Msrp))
             {
                 writer.WritePropertyName("msrp"u8);
-                writer.WriteObjectValue(Msrp, options);
+                ((IJsonModel<ReservationCatalogMsrp>)Msrp).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Restrictions))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in Restrictions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SkuRestriction>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SkuCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    msrp = ReservationCatalogMsrp.DeserializeReservationCatalogMsrp(property.Value, options);
+                    msrp = ModelSerializationExtensions.JsonDeserialize<ReservationCatalogMsrp>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("restrictions"u8))

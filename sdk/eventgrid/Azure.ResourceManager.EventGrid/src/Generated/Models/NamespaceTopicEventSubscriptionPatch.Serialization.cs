@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(DeliveryConfiguration))
             {
                 writer.WritePropertyName("deliveryConfiguration"u8);
-                writer.WriteObjectValue(DeliveryConfiguration, options);
+                ((IJsonModel<DeliveryConfiguration>)DeliveryConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(EventDeliverySchema))
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(FiltersConfiguration))
             {
                 writer.WritePropertyName("filtersConfiguration"u8);
-                writer.WriteObjectValue(FiltersConfiguration, options);
+                ((IJsonModel<FiltersConfiguration>)FiltersConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ExpireOn))
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             {
                                 continue;
                             }
-                            deliveryConfiguration = DeliveryConfiguration.DeserializeDeliveryConfiguration(property0.Value, options);
+                            deliveryConfiguration = ModelSerializationExtensions.JsonDeserialize<DeliveryConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("eventDeliverySchema"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             {
                                 continue;
                             }
-                            filtersConfiguration = FiltersConfiguration.DeserializeFiltersConfiguration(property0.Value, options);
+                            filtersConfiguration = ModelSerializationExtensions.JsonDeserialize<FiltersConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("expirationTimeUtc"u8))

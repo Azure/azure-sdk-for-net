@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in RecoveryPointDataStoresDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RecoveryPointDataStoreDetail>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

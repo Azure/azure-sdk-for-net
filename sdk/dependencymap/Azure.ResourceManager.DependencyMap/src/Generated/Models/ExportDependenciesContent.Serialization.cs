@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
             if (Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
-                writer.WriteObjectValue(Filters, options);
+                ((IJsonModel<DependencyMapVisualizationFilter>)Filters).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
                     {
                         continue;
                     }
-                    filters = DependencyMapVisualizationFilter.DeserializeDependencyMapVisualizationFilter(property.Value, options);
+                    filters = ModelSerializationExtensions.JsonDeserialize<DependencyMapVisualizationFilter>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

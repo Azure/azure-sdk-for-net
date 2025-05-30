@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(Value, options);
+                ((IJsonModel<MachineLearningDiagnoseResultValue>)Value).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    value = MachineLearningDiagnoseResultValue.DeserializeMachineLearningDiagnoseResultValue(property.Value, options);
+                    value = ModelSerializationExtensions.JsonDeserialize<MachineLearningDiagnoseResultValue>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

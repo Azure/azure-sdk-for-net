@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 writer.WriteStartArray();
                 foreach (var item in MatchExpressions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VolumeClaimSpecSelectorMatchExpressions>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

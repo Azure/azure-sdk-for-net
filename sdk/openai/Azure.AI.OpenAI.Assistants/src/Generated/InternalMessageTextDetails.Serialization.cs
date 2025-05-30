@@ -40,7 +40,7 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStartArray();
             foreach (var item in Annotations)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<MessageTextAnnotation>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

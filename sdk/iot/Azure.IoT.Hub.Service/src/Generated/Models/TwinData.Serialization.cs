@@ -46,7 +46,7 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                JsonSerializer.Serialize(writer, Properties);
             }
             if (Optional.IsDefined(Etag))
             {
@@ -101,12 +101,12 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(X509Thumbprint))
             {
                 writer.WritePropertyName("x509Thumbprint"u8);
-                writer.WriteObjectValue(X509Thumbprint);
+                JsonSerializer.Serialize(writer, X509Thumbprint);
             }
             if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
-                writer.WriteObjectValue(Capabilities);
+                JsonSerializer.Serialize(writer, Capabilities);
             }
             if (Optional.IsDefined(DeviceScope))
             {
@@ -178,7 +178,7 @@ namespace Azure.IoT.Hub.Service.Models
                     {
                         continue;
                     }
-                    properties = TwinProperties.DeserializeTwinProperties(property.Value);
+                    properties = ModelSerializationExtensions.JsonDeserialize<TwinProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -265,7 +265,7 @@ namespace Azure.IoT.Hub.Service.Models
                     {
                         continue;
                     }
-                    x509Thumbprint = X509Thumbprint.DeserializeX509Thumbprint(property.Value);
+                    x509Thumbprint = ModelSerializationExtensions.JsonDeserialize<X509Thumbprint>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("capabilities"u8))
@@ -274,7 +274,7 @@ namespace Azure.IoT.Hub.Service.Models
                     {
                         continue;
                     }
-                    capabilities = DeviceCapabilities.DeserializeDeviceCapabilities(property.Value);
+                    capabilities = ModelSerializationExtensions.JsonDeserialize<DeviceCapabilities>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deviceScope"u8))

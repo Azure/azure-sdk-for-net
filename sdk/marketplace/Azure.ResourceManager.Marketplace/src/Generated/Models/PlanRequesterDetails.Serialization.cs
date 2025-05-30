@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in Requesters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PlanRequesterInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

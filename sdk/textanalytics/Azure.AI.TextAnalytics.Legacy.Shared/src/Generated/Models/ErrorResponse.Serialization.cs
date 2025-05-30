@@ -22,7 +22,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             {
                 if (property.NameEquals("error"u8))
                 {
-                    error = TextAnalyticsError.DeserializeTextAnalyticsError(property.Value);
+                    error = ModelSerializationExtensions.JsonDeserialize<TextAnalyticsError>(property.Value);
                     continue;
                 }
             }

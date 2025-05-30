@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataConnectionValidationResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

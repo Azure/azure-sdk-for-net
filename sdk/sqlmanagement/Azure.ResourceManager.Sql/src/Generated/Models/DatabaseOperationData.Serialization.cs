@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(OperationPhaseDetails))
             {
                 writer.WritePropertyName("operationPhaseDetails"u8);
-                writer.WriteObjectValue(OperationPhaseDetails, options);
+                ((IJsonModel<DatabaseOperationPhaseDetails>)OperationPhaseDetails).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            operationPhaseDetails = DatabaseOperationPhaseDetails.DeserializeDatabaseOperationPhaseDetails(property0.Value, options);
+                            operationPhaseDetails = ModelSerializationExtensions.JsonDeserialize<DatabaseOperationPhaseDetails>(property0.Value);
                             continue;
                         }
                     }

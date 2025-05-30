@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             if (Optional.IsDefined(User))
             {
                 writer.WritePropertyName("user"u8);
-                writer.WriteObjectValue(User, options);
+                ((IJsonModel<AccessPolicyAssignmentPropertiesUser>)User).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                             {
                                 continue;
                             }
-                            user = AccessPolicyAssignmentPropertiesUser.DeserializeAccessPolicyAssignmentPropertiesUser(property0.Value, options);
+                            user = ModelSerializationExtensions.JsonDeserialize<AccessPolicyAssignmentPropertiesUser>(property0.Value);
                             continue;
                         }
                     }

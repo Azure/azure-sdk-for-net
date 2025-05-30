@@ -38,13 +38,12 @@ namespace Azure.ResourceManager.Grafana.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<ManagedGrafanaSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.Grafana.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ManagedGrafanaPatchProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -113,7 +112,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    sku = ManagedGrafanaSku.DeserializeManagedGrafanaSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<ManagedGrafanaSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Grafana.Models
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -146,7 +145,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    properties = ManagedGrafanaPatchProperties.DeserializeManagedGrafanaPatchProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ManagedGrafanaPatchProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                JsonSerializer.Serialize(writer, ExtendedLocation);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(AddressSpace))
             {
                 writer.WritePropertyName("addressSpace"u8);
-                writer.WriteObjectValue(AddressSpace, options);
+                ((IJsonModel<VirtualNetworkAddressSpace>)AddressSpace).Write(writer, options);
             }
             if (Optional.IsDefined(DhcpOptions))
             {
                 writer.WritePropertyName("dhcpOptions"u8);
-                writer.WriteObjectValue(DhcpOptions, options);
+                ((IJsonModel<DhcpOptions>)DhcpOptions).Write(writer, options);
             }
             if (Optional.IsDefined(FlowTimeoutInMinutes))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Subnets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SubnetData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkPeerings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VirtualNetworkPeeringData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -107,17 +107,17 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(DdosProtectionPlan))
             {
                 writer.WritePropertyName("ddosProtectionPlan"u8);
-                JsonSerializer.Serialize(writer, DdosProtectionPlan);
+                ((IJsonModel<WritableSubResource>)DdosProtectionPlan).Write(writer, options);
             }
             if (Optional.IsDefined(BgpCommunities))
             {
                 writer.WritePropertyName("bgpCommunities"u8);
-                writer.WriteObjectValue(BgpCommunities, options);
+                ((IJsonModel<VirtualNetworkBgpCommunities>)BgpCommunities).Write(writer, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<VirtualNetworkEncryption>)Encryption).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(IPAllocations))
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPAllocations)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in FlowLogs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FlowLogData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network
             if (options.Format != "W" && Optional.IsDefined(DefaultPublicNatGateway))
             {
                 writer.WritePropertyName("defaultPublicNatGateway"u8);
-                JsonSerializer.Serialize(writer, DefaultPublicNatGateway);
+                ((IJsonModel<WritableSubResource>)DefaultPublicNatGateway).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<ExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            addressSpace = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property0.Value, options);
+                            addressSpace = ModelSerializationExtensions.JsonDeserialize<VirtualNetworkAddressSpace>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dhcpOptions"u8))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            dhcpOptions = DhcpOptions.DeserializeDhcpOptions(property0.Value, options);
+                            dhcpOptions = ModelSerializationExtensions.JsonDeserialize<DhcpOptions>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("flowTimeoutInMinutes"u8))
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            ddosProtectionPlan = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            ddosProtectionPlan = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("bgpCommunities"u8))
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            bgpCommunities = VirtualNetworkBgpCommunities.DeserializeVirtualNetworkBgpCommunities(property0.Value, options);
+                            bgpCommunities = ModelSerializationExtensions.JsonDeserialize<VirtualNetworkBgpCommunities>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            encryption = VirtualNetworkEncryption.DeserializeVirtualNetworkEncryption(property0.Value, options);
+                            encryption = ModelSerializationExtensions.JsonDeserialize<VirtualNetworkEncryption>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ipAllocations"u8))
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             ipAllocations = array;
                             continue;
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            defaultPublicNatGateway = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            defaultPublicNatGateway = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                     }

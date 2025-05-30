@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(Hls))
             {
                 writer.WritePropertyName("hls"u8);
-                writer.WriteObjectValue(Hls, options);
+                ((IJsonModel<Hls>)Hls).Write(writer, options);
             }
             if (Optional.IsDefined(OutputSnapTime))
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Media
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            hls = Hls.DeserializeHls(property0.Value, options);
+                            hls = ModelSerializationExtensions.JsonDeserialize<Hls>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("outputSnapTime"u8))

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
@@ -291,7 +292,7 @@ namespace Azure.ResourceManager.CognitiveServices
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            ((IJsonModel<RaiBlocklistItemData>)data).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -510,7 +511,7 @@ namespace Azure.ResourceManager.CognitiveServices
             content0.JsonWriter.WriteStartArray();
             foreach (var item in content)
             {
-                content0.JsonWriter.WriteObjectValue(item, ModelSerializationExtensions.WireOptions);
+                ((IJsonModel<RaiBlocklistItemBulkContent>)item).Write(content0.JsonWriter, ModelSerializationExtensions.WireOptions);
             }
             content0.JsonWriter.WriteEndArray();
             request.Content = content0;

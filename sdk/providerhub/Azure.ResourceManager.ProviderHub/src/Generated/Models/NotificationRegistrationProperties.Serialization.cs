@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in NotificationEndpoints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NotificationEndpoint>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

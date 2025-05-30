@@ -52,24 +52,24 @@ namespace Azure.ResourceManager.Storage
                 writer.WriteStartArray();
                 foreach (var item in ProvisioningIssues)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetworkSecurityPerimeterProvisioningIssue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(NetworkSecurityPerimeter))
             {
                 writer.WritePropertyName("networkSecurityPerimeter"u8);
-                writer.WriteObjectValue(NetworkSecurityPerimeter, options);
+                ((IJsonModel<NetworkSecurityPerimeter>)NetworkSecurityPerimeter).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceAssociation))
             {
                 writer.WritePropertyName("resourceAssociation"u8);
-                writer.WriteObjectValue(ResourceAssociation, options);
+                ((IJsonModel<NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>)ResourceAssociation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
-                writer.WriteObjectValue(Profile, options);
+                ((IJsonModel<NetworkSecurityPerimeterConfigurationPropertiesProfile>)Profile).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            networkSecurityPerimeter = NetworkSecurityPerimeter.DeserializeNetworkSecurityPerimeter(property0.Value, options);
+                            networkSecurityPerimeter = ModelSerializationExtensions.JsonDeserialize<NetworkSecurityPerimeter>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resourceAssociation"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            resourceAssociation = NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation.DeserializeNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(property0.Value, options);
+                            resourceAssociation = ModelSerializationExtensions.JsonDeserialize<NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("profile"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            profile = NetworkSecurityPerimeterConfigurationPropertiesProfile.DeserializeNetworkSecurityPerimeterConfigurationPropertiesProfile(property0.Value, options);
+                            profile = ModelSerializationExtensions.JsonDeserialize<NetworkSecurityPerimeterConfigurationPropertiesProfile>(property0.Value);
                             continue;
                         }
                     }

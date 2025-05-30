@@ -30,12 +30,12 @@ namespace Azure.IoT.TimeSeriesInsights
             if (Optional.IsDefined(Instances))
             {
                 writer.WritePropertyName("instances"u8);
-                writer.WriteObjectValue(Instances);
+                JsonSerializer.Serialize(writer, Instances);
             }
             if (Optional.IsDefined(Hierarchies))
             {
                 writer.WritePropertyName("hierarchies"u8);
-                writer.WriteObjectValue(Hierarchies);
+                JsonSerializer.Serialize(writer, Hierarchies);
             }
             writer.WriteEndObject();
         }

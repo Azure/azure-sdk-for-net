@@ -83,7 +83,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Classifications)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasClassification>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -128,7 +128,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Meanings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AtlasTermAssignmentHeader>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

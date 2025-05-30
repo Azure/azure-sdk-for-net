@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(ConnectorUiConfig))
             {
                 writer.WritePropertyName("connectorUiConfig"u8);
-                writer.WriteObjectValue(ConnectorUiConfig, options);
+                ((IJsonModel<CodelessUiConnectorConfigProperties>)ConnectorUiConfig).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            connectorUiConfig = CodelessUiConnectorConfigProperties.DeserializeCodelessUiConnectorConfigProperties(property0.Value, options);
+                            connectorUiConfig = ModelSerializationExtensions.JsonDeserialize<CodelessUiConnectorConfigProperties>(property0.Value);
                             continue;
                         }
                     }

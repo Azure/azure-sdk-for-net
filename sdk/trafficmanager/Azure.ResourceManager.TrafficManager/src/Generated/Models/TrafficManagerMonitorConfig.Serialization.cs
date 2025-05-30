@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomHeaders)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TrafficManagerMonitorConfigCustomHeaderInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 writer.WriteStartArray();
                 foreach (var item in ExpectedStatusCodeRanges)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExpectedStatusCodeRangeInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

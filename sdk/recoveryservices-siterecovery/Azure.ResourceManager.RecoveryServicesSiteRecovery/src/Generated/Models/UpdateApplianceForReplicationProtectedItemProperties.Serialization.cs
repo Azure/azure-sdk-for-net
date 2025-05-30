@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WritePropertyName("targetApplianceId"u8);
             writer.WriteStringValue(TargetApplianceId);
             writer.WritePropertyName("providerSpecificDetails"u8);
-            writer.WriteObjectValue(ProviderSpecificDetails, options);
+            ((IJsonModel<UpdateApplianceForReplicationProtectedItemProviderSpecificContent>)ProviderSpecificDetails).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("providerSpecificDetails"u8))
                 {
-                    providerSpecificDetails = UpdateApplianceForReplicationProtectedItemProviderSpecificContent.DeserializeUpdateApplianceForReplicationProtectedItemProviderSpecificContent(property.Value, options);
+                    providerSpecificDetails = ModelSerializationExtensions.JsonDeserialize<UpdateApplianceForReplicationProtectedItemProviderSpecificContent>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source, options);
+                ((IJsonModel<AutomationContentSource>)Source).Write(writer, options);
             }
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration, options);
+                ((IJsonModel<DscConfigurationAssociationProperty>)Configuration).Write(writer, options);
             }
             if (Optional.IsDefined(IsIncrementNodeConfigurationBuildRequired))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            source = AutomationContentSource.DeserializeAutomationContentSource(property0.Value, options);
+                            source = ModelSerializationExtensions.JsonDeserialize<AutomationContentSource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("configuration"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            configuration = DscConfigurationAssociationProperty.DeserializeDscConfigurationAssociationProperty(property0.Value, options);
+                            configuration = ModelSerializationExtensions.JsonDeserialize<DscConfigurationAssociationProperty>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("incrementNodeConfigurationBuild"u8))

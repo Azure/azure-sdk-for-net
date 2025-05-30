@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
-                writer.WriteObjectValue(StorageAccount, options);
+                ((IJsonModel<StreamAnalyticsStorageAccount>)StorageAccount).Write(writer, options);
             }
             if (Optional.IsDefined(Container))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(RefreshConfiguration))
             {
                 writer.WritePropertyName("refreshConfiguration"u8);
-                writer.WriteObjectValue(RefreshConfiguration, options);
+                ((IJsonModel<StreamingJobRefreshConfiguration>)RefreshConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    storageAccount = StreamAnalyticsStorageAccount.DeserializeStreamAnalyticsStorageAccount(property.Value, options);
+                    storageAccount = ModelSerializationExtensions.JsonDeserialize<StreamAnalyticsStorageAccount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("container"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    refreshConfiguration = StreamingJobRefreshConfiguration.DeserializeStreamingJobRefreshConfiguration(property.Value, options);
+                    refreshConfiguration = ModelSerializationExtensions.JsonDeserialize<StreamingJobRefreshConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

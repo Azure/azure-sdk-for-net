@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HybridComputeNetworkInterface>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

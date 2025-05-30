@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Fabric.Models
                 writer.WriteStringValue(State.Value.ToString());
             }
             writer.WritePropertyName("administration"u8);
-            writer.WriteObjectValue(Administration, options);
+            ((IJsonModel<FabricCapacityAdministration>)Administration).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Fabric.Models
                 }
                 if (property.NameEquals("administration"u8))
                 {
-                    administration = FabricCapacityAdministration.DeserializeFabricCapacityAdministration(property.Value, options);
+                    administration = ModelSerializationExtensions.JsonDeserialize<FabricCapacityAdministration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

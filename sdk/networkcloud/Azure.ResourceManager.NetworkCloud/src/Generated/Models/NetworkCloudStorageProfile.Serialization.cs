@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WritePropertyName("osDisk"u8);
-            writer.WriteObjectValue(OSDisk, options);
+            ((IJsonModel<NetworkCloudOSDisk>)OSDisk).Write(writer, options);
             if (Optional.IsCollectionDefined(VolumeAttachments))
             {
                 writer.WritePropertyName("volumeAttachments"u8);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 if (property.NameEquals("osDisk"u8))
                 {
-                    osDisk = NetworkCloudOSDisk.DeserializeNetworkCloudOSDisk(property.Value, options);
+                    osDisk = ModelSerializationExtensions.JsonDeserialize<NetworkCloudOSDisk>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("volumeAttachments"u8))

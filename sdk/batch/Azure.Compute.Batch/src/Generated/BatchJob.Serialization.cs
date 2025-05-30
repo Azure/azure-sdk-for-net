@@ -107,22 +107,22 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(Constraints))
             {
                 writer.WritePropertyName("constraints"u8);
-                writer.WriteObjectValue(Constraints, options);
+                ((IJsonModel<BatchJobConstraints>)Constraints).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(JobManagerTask))
             {
                 writer.WritePropertyName("jobManagerTask"u8);
-                writer.WriteObjectValue(JobManagerTask, options);
+                ((IJsonModel<BatchJobManagerTask>)JobManagerTask).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(JobPreparationTask))
             {
                 writer.WritePropertyName("jobPreparationTask"u8);
-                writer.WriteObjectValue(JobPreparationTask, options);
+                ((IJsonModel<BatchJobPreparationTask>)JobPreparationTask).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(JobReleaseTask))
             {
                 writer.WritePropertyName("jobReleaseTask"u8);
-                writer.WriteObjectValue(JobReleaseTask, options);
+                ((IJsonModel<BatchJobReleaseTask>)JobReleaseTask).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(CommonEnvironmentSettings))
             {
@@ -130,12 +130,12 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in CommonEnvironmentSettings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EnvironmentSetting>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("poolInfo"u8);
-            writer.WriteObjectValue(PoolInfo, options);
+            ((IJsonModel<BatchPoolInfo>)PoolInfo).Write(writer, options);
             if (Optional.IsDefined(OnAllTasksComplete))
             {
                 writer.WritePropertyName("onAllTasksComplete"u8);
@@ -149,7 +149,7 @@ namespace Azure.Compute.Batch
             if (options.Format != "W" && Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
-                writer.WriteObjectValue(NetworkConfiguration, options);
+                ((IJsonModel<BatchJobNetworkConfiguration>)NetworkConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
@@ -157,19 +157,19 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MetadataItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(ExecutionInfo))
             {
                 writer.WritePropertyName("executionInfo"u8);
-                writer.WriteObjectValue(ExecutionInfo, options);
+                ((IJsonModel<BatchJobExecutionInfo>)ExecutionInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Stats))
             {
                 writer.WritePropertyName("stats"u8);
-                writer.WriteObjectValue(Stats, options);
+                ((IJsonModel<BatchJobStatistics>)Stats).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -354,7 +354,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    constraints = BatchJobConstraints.DeserializeBatchJobConstraints(property.Value, options);
+                    constraints = ModelSerializationExtensions.JsonDeserialize<BatchJobConstraints>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("jobManagerTask"u8))
@@ -363,7 +363,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    jobManagerTask = BatchJobManagerTask.DeserializeBatchJobManagerTask(property.Value, options);
+                    jobManagerTask = ModelSerializationExtensions.JsonDeserialize<BatchJobManagerTask>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("jobPreparationTask"u8))
@@ -372,7 +372,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    jobPreparationTask = BatchJobPreparationTask.DeserializeBatchJobPreparationTask(property.Value, options);
+                    jobPreparationTask = ModelSerializationExtensions.JsonDeserialize<BatchJobPreparationTask>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("jobReleaseTask"u8))
@@ -381,7 +381,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    jobReleaseTask = BatchJobReleaseTask.DeserializeBatchJobReleaseTask(property.Value, options);
+                    jobReleaseTask = ModelSerializationExtensions.JsonDeserialize<BatchJobReleaseTask>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("commonEnvironmentSettings"u8))
@@ -400,7 +400,7 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("poolInfo"u8))
                 {
-                    poolInfo = BatchPoolInfo.DeserializeBatchPoolInfo(property.Value, options);
+                    poolInfo = ModelSerializationExtensions.JsonDeserialize<BatchPoolInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("onAllTasksComplete"u8))
@@ -427,7 +427,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    networkConfiguration = BatchJobNetworkConfiguration.DeserializeBatchJobNetworkConfiguration(property.Value, options);
+                    networkConfiguration = ModelSerializationExtensions.JsonDeserialize<BatchJobNetworkConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))
@@ -450,7 +450,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    executionInfo = BatchJobExecutionInfo.DeserializeBatchJobExecutionInfo(property.Value, options);
+                    executionInfo = ModelSerializationExtensions.JsonDeserialize<BatchJobExecutionInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("stats"u8))
@@ -459,7 +459,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    stats = BatchJobStatistics.DeserializeBatchJobStatistics(property.Value, options);
+                    stats = ModelSerializationExtensions.JsonDeserialize<BatchJobStatistics>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

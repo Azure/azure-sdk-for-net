@@ -150,7 +150,7 @@ namespace Azure.Security.Attestation
                     {
                         continue;
                     }
-                    xMsPolicySigner = JsonWebKey.DeserializeJsonWebKey(property.Value);
+                    xMsPolicySigner = ModelSerializationExtensions.JsonDeserialize<JsonWebKey>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("x-ms-policy-hash"u8))
@@ -281,7 +281,7 @@ namespace Azure.Security.Attestation
                     {
                         continue;
                     }
-                    policySigner = JsonWebKey.DeserializeJsonWebKey(property.Value);
+                    policySigner = ModelSerializationExtensions.JsonDeserialize<JsonWebKey>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy_hash"u8))

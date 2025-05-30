@@ -40,7 +40,7 @@ namespace Azure.Monitor.Query.Models
                 }
                 if (property.NameEquals("name"u8))
                 {
-                    name = LocalizableString.DeserializeLocalizableString(property.Value);
+                    name = ModelSerializationExtensions.JsonDeserialize<LocalizableString>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("displayDescription"u8))

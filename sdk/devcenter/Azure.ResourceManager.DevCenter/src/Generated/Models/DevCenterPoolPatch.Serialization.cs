@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             if (Optional.IsDefined(StopOnDisconnect))
             {
                 writer.WritePropertyName("stopOnDisconnect"u8);
-                writer.WriteObjectValue(StopOnDisconnect, options);
+                ((IJsonModel<StopOnDisconnectConfiguration>)StopOnDisconnect).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                             {
                                 continue;
                             }
-                            stopOnDisconnect = StopOnDisconnectConfiguration.DeserializeStopOnDisconnectConfiguration(property0.Value, options);
+                            stopOnDisconnect = ModelSerializationExtensions.JsonDeserialize<StopOnDisconnectConfiguration>(property0.Value);
                             continue;
                         }
                     }

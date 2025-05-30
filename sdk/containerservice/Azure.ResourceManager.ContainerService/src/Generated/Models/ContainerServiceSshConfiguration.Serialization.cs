@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartArray();
             foreach (var item in PublicKeys)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ContainerServiceSshPublicKey>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

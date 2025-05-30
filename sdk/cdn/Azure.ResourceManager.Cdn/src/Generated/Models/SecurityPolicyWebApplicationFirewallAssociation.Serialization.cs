@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Domains)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FrontDoorActivatedResourceInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

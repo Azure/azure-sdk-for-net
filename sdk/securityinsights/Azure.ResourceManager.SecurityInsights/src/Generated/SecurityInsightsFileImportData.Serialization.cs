@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityInsights
             if (options.Format != "W" && Optional.IsDefined(ErrorFile))
             {
                 writer.WritePropertyName("errorFile"u8);
-                writer.WriteObjectValue(ErrorFile, options);
+                ((IJsonModel<SecurityInsightsFileMetadata>)ErrorFile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ErrorsPreview))
             {
@@ -67,14 +67,14 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WriteStartArray();
                 foreach (var item in ErrorsPreview)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SecurityInsightsFileValidationError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ImportFile))
             {
                 writer.WritePropertyName("importFile"u8);
-                writer.WriteObjectValue(ImportFile, options);
+                ((IJsonModel<SecurityInsightsFileMetadata>)ImportFile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IngestedRecordCount))
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            errorFile = SecurityInsightsFileMetadata.DeserializeSecurityInsightsFileMetadata(property0.Value, options);
+                            errorFile = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsFileMetadata>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("errorsPreview"u8))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            importFile = SecurityInsightsFileMetadata.DeserializeSecurityInsightsFileMetadata(property0.Value, options);
+                            importFile = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsFileMetadata>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ingestedRecordCount"u8))

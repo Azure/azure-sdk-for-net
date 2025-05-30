@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in AuthorizationPolicies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SharedAccessSignatureAuthorizationRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,14 +85,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in IPFilterRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IotHubIPFilterRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(NetworkRuleSets))
             {
                 writer.WritePropertyName("networkRuleSets"u8);
-                writer.WriteObjectValue(NetworkRuleSets, options);
+                ((IJsonModel<IotHubNetworkRuleSetProperties>)NetworkRuleSets).Write(writer, options);
             }
             if (Optional.IsDefined(MinTlsVersion))
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IotHubPrivateEndpointConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -131,14 +131,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 foreach (var item in EventHubEndpoints)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<EventHubCompatibleEndpointProperties>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(Routing))
             {
                 writer.WritePropertyName("routing"u8);
-                writer.WriteObjectValue(Routing, options);
+                ((IJsonModel<IotHubRoutingProperties>)Routing).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(StorageEndpoints))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 foreach (var item in StorageEndpoints)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<IotHubStorageEndpointProperties>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 foreach (var item in MessagingEndpoints)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<MessagingEndpointProperties>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(CloudToDevice))
             {
                 writer.WritePropertyName("cloudToDevice"u8);
-                writer.WriteObjectValue(CloudToDevice, options);
+                ((IJsonModel<CloudToDeviceProperties>)CloudToDevice).Write(writer, options);
             }
             if (Optional.IsDefined(Comments))
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IotHubLocationDescription>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    networkRuleSets = IotHubNetworkRuleSetProperties.DeserializeIotHubNetworkRuleSetProperties(property.Value, options);
+                    networkRuleSets = ModelSerializationExtensions.JsonDeserialize<IotHubNetworkRuleSetProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("minTlsVersion"u8))
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    routing = IotHubRoutingProperties.DeserializeIotHubRoutingProperties(property.Value, options);
+                    routing = ModelSerializationExtensions.JsonDeserialize<IotHubRoutingProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storageEndpoints"u8))
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    cloudToDevice = CloudToDeviceProperties.DeserializeCloudToDeviceProperties(property.Value, options);
+                    cloudToDevice = ModelSerializationExtensions.JsonDeserialize<CloudToDeviceProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("comments"u8))

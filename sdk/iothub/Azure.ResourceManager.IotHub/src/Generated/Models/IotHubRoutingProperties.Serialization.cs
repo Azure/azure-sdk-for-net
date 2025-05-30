@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
-                writer.WriteObjectValue(Endpoints, options);
+                ((IJsonModel<RoutingEndpoints>)Endpoints).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Routes))
             {
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Routes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RoutingRuleProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(FallbackRoute))
             {
                 writer.WritePropertyName("fallbackRoute"u8);
-                writer.WriteObjectValue(FallbackRoute, options);
+                ((IJsonModel<IotHubFallbackRouteProperties>)FallbackRoute).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Enrichments))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Enrichments)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IotHubEnrichmentProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    endpoints = RoutingEndpoints.DeserializeRoutingEndpoints(property.Value, options);
+                    endpoints = ModelSerializationExtensions.JsonDeserialize<RoutingEndpoints>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("routes"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    fallbackRoute = IotHubFallbackRouteProperties.DeserializeIotHubFallbackRouteProperties(property.Value, options);
+                    fallbackRoute = ModelSerializationExtensions.JsonDeserialize<IotHubFallbackRouteProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("enrichments"u8))

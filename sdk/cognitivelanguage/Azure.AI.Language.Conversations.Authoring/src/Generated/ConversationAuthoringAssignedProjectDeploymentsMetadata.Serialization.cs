@@ -43,7 +43,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             writer.WriteStartArray();
             foreach (var item in DeploymentsMetadata)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ConversationAuthoringAssignedProjectDeploymentMetadata>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

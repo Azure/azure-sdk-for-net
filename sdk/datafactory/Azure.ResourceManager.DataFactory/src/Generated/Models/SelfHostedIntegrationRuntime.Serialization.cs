@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(LinkedInfo))
             {
                 writer.WritePropertyName("linkedInfo"u8);
-                writer.WriteObjectValue(LinkedInfo, options);
+                ((IJsonModel<LinkedIntegrationRuntimeType>)LinkedInfo).Write(writer, options);
             }
             if (Optional.IsDefined(IsSelfContainedInteractiveAuthoringEnabled))
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            linkedInfo = LinkedIntegrationRuntimeType.DeserializeLinkedIntegrationRuntimeType(property0.Value, options);
+                            linkedInfo = ModelSerializationExtensions.JsonDeserialize<LinkedIntegrationRuntimeType>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("selfContainedInteractiveAuthoringEnabled"u8))

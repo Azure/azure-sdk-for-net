@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
-                writer.WriteObjectValue(Count, options);
+                ((IJsonModel<PredefinedTagCount>)Count).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Values))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PredefinedTagValue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    count = PredefinedTagCount.DeserializePredefinedTagCount(property.Value, options);
+                    count = ModelSerializationExtensions.JsonDeserialize<PredefinedTagCount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("values"u8))

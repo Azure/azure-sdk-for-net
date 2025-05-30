@@ -37,7 +37,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
-                writer.WriteObjectValue(Code, options);
+                ((IJsonModel<FhirR4CodeableConcept>)Code).Write(writer, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -50,7 +50,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Extension)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FhirR4Extension>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    code = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
+                    code = ModelSerializationExtensions.JsonDeserialize<FhirR4CodeableConcept>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))

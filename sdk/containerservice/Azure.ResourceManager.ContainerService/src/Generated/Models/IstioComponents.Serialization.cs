@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in IngressGateways)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IstioIngressGateway>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in EgressGateways)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IstioEgressGateway>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

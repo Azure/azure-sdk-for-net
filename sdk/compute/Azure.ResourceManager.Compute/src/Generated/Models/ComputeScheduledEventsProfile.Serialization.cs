@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(TerminateNotificationProfile))
             {
                 writer.WritePropertyName("terminateNotificationProfile"u8);
-                writer.WriteObjectValue(TerminateNotificationProfile, options);
+                ((IJsonModel<TerminateNotificationProfile>)TerminateNotificationProfile).Write(writer, options);
             }
             if (Optional.IsDefined(OSImageNotificationProfile))
             {
                 writer.WritePropertyName("osImageNotificationProfile"u8);
-                writer.WriteObjectValue(OSImageNotificationProfile, options);
+                ((IJsonModel<OSImageNotificationProfile>)OSImageNotificationProfile).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    terminateNotificationProfile = TerminateNotificationProfile.DeserializeTerminateNotificationProfile(property.Value, options);
+                    terminateNotificationProfile = ModelSerializationExtensions.JsonDeserialize<TerminateNotificationProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("osImageNotificationProfile"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osImageNotificationProfile = OSImageNotificationProfile.DeserializeOSImageNotificationProfile(property.Value, options);
+                    osImageNotificationProfile = ModelSerializationExtensions.JsonDeserialize<OSImageNotificationProfile>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

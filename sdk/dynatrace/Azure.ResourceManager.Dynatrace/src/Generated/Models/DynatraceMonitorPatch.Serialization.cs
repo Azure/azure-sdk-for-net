@@ -58,17 +58,17 @@ namespace Azure.ResourceManager.Dynatrace.Models
             if (Optional.IsDefined(DynatraceEnvironmentProperties))
             {
                 writer.WritePropertyName("dynatraceEnvironmentProperties"u8);
-                writer.WriteObjectValue(DynatraceEnvironmentProperties, options);
+                ((IJsonModel<DynatraceEnvironmentProperties>)DynatraceEnvironmentProperties).Write(writer, options);
             }
             if (Optional.IsDefined(UserInfo))
             {
                 writer.WritePropertyName("userInfo"u8);
-                writer.WriteObjectValue(UserInfo, options);
+                ((IJsonModel<DynatraceMonitorUserInfo>)UserInfo).Write(writer, options);
             }
             if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
-                writer.WriteObjectValue(PlanData, options);
+                ((IJsonModel<DynatraceBillingPlanInfo>)PlanData).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     {
                         continue;
                     }
-                    dynatraceEnvironmentProperties = DynatraceEnvironmentProperties.DeserializeDynatraceEnvironmentProperties(property.Value, options);
+                    dynatraceEnvironmentProperties = ModelSerializationExtensions.JsonDeserialize<DynatraceEnvironmentProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userInfo"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     {
                         continue;
                     }
-                    userInfo = DynatraceMonitorUserInfo.DeserializeDynatraceMonitorUserInfo(property.Value, options);
+                    userInfo = ModelSerializationExtensions.JsonDeserialize<DynatraceMonitorUserInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("planData"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     {
                         continue;
                     }
-                    planData = DynatraceBillingPlanInfo.DeserializeDynatraceBillingPlanInfo(property.Value, options);
+                    planData = ModelSerializationExtensions.JsonDeserialize<DynatraceBillingPlanInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

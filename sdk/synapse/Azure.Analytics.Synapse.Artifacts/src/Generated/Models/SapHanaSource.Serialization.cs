@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
-                writer.WriteObjectValue(PartitionSettings);
+                JsonSerializer.Serialize(writer, PartitionSettings);
             }
             if (Optional.IsDefined(QueryTimeout))
             {
@@ -127,7 +127,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    partitionSettings = SapHanaPartitionSettings.DeserializeSapHanaPartitionSettings(property.Value);
+                    partitionSettings = ModelSerializationExtensions.JsonDeserialize<SapHanaPartitionSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("queryTimeout"u8))

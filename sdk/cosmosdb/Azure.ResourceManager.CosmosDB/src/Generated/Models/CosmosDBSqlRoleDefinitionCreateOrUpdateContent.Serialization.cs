@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Permissions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CosmosDBSqlRolePermission>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

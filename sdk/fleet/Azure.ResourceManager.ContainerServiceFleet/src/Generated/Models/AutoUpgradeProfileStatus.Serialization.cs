@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    lastTriggerError = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    lastTriggerError = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lastTriggerUpgradeVersions"u8))

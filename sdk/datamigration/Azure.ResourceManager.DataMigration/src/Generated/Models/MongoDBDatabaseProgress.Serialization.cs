@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 foreach (var item in Collections)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<MongoDBCollectionProgress>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }

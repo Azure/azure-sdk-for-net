@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WritePropertyName("deliverToDcPackageDetails"u8);
-            writer.WriteObjectValue(DeliverToDataCenterPackageDetails, options);
+            ((IJsonModel<PackageCarrierInfo>)DeliverToDataCenterPackageDetails).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 if (property.NameEquals("deliverToDcPackageDetails"u8))
                 {
-                    deliverToDcPackageDetails = PackageCarrierInfo.DeserializePackageCarrierInfo(property.Value, options);
+                    deliverToDcPackageDetails = ModelSerializationExtensions.JsonDeserialize<PackageCarrierInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

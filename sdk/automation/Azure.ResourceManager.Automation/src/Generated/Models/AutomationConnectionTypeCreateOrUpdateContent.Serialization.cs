@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Automation.Models
             foreach (var item in FieldDefinitions)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                ((IJsonModel<AutomationConnectionFieldDefinition>)item.Value).Write(writer, options);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

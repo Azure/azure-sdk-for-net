@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WritePropertyName("trigger"u8);
-            writer.WriteObjectValue(Trigger, options);
+            ((IJsonModel<MachineLearningTriggerBase>)Trigger).Write(writer, options);
             writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue(Action, options);
+            ((IJsonModel<MachineLearningScheduleAction>)Action).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("trigger"u8))
                 {
-                    trigger = MachineLearningTriggerBase.DeserializeMachineLearningTriggerBase(property.Value, options);
+                    trigger = ModelSerializationExtensions.JsonDeserialize<MachineLearningTriggerBase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("action"u8))
                 {
-                    action = MachineLearningScheduleAction.DeserializeMachineLearningScheduleAction(property.Value, options);
+                    action = ModelSerializationExtensions.JsonDeserialize<MachineLearningScheduleAction>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

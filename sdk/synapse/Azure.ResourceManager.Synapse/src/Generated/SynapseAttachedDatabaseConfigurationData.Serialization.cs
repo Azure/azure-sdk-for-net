@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(TableLevelSharingProperties))
             {
                 writer.WritePropertyName("tableLevelSharingProperties"u8);
-                writer.WriteObjectValue(TableLevelSharingProperties, options);
+                ((IJsonModel<SynapseTableLevelSharingProperties>)TableLevelSharingProperties).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Synapse
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            tableLevelSharingProperties = SynapseTableLevelSharingProperties.DeserializeSynapseTableLevelSharingProperties(property0.Value, options);
+                            tableLevelSharingProperties = ModelSerializationExtensions.JsonDeserialize<SynapseTableLevelSharingProperties>(property0.Value);
                             continue;
                         }
                     }

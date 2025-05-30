@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Migration.Assessment
             if (options.Format != "W" && Optional.IsDefined(WorkloadSummary))
             {
                 writer.WritePropertyName("workloadSummary"u8);
-                writer.WriteObjectValue(WorkloadSummary, options);
+                ((IJsonModel<AssessmentWorkloadSummary>)WorkloadSummary).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
             {
@@ -50,19 +50,19 @@ namespace Azure.ResourceManager.Migration.Assessment
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MigrationAssessmentError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(HostProcessor))
             {
                 writer.WritePropertyName("hostProcessor"u8);
-                writer.WriteObjectValue(HostProcessor, options);
+                ((IJsonModel<AssessedMachineProcessorInfo>)HostProcessor).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProductSupportStatus))
             {
                 writer.WritePropertyName("productSupportStatus"u8);
-                writer.WriteObjectValue(ProductSupportStatus, options);
+                ((IJsonModel<AssessmentProductSupportStatus>)ProductSupportStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DiscoveryMachineArmId))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 foreach (var item in Disks)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<MigrationAssessmentDisk>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 foreach (var item in NetworkAdapters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<MigrationAssessmentNetworkAdapter>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                             {
                                 continue;
                             }
-                            workloadSummary = AssessmentWorkloadSummary.DeserializeAssessmentWorkloadSummary(property0.Value, options);
+                            workloadSummary = ModelSerializationExtensions.JsonDeserialize<AssessmentWorkloadSummary>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("errors"u8))
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                             {
                                 continue;
                             }
-                            hostProcessor = AssessedMachineProcessorInfo.DeserializeAssessedMachineProcessorInfo(property0.Value, options);
+                            hostProcessor = ModelSerializationExtensions.JsonDeserialize<AssessedMachineProcessorInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("productSupportStatus"u8))
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                             {
                                 continue;
                             }
-                            productSupportStatus = AssessmentProductSupportStatus.DeserializeAssessmentProductSupportStatus(property0.Value, options);
+                            productSupportStatus = ModelSerializationExtensions.JsonDeserialize<AssessmentProductSupportStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("discoveryMachineArmId"u8))

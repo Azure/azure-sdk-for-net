@@ -40,24 +40,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VaultErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteRecoveryHealthError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ProtectedItemsHealth))
             {
                 writer.WritePropertyName("protectedItemsHealth"u8);
-                writer.WriteObjectValue(ProtectedItemsHealth, options);
+                ((IJsonModel<ResourceHealthSummary>)ProtectedItemsHealth).Write(writer, options);
             }
             if (Optional.IsDefined(FabricsHealth))
             {
                 writer.WritePropertyName("fabricsHealth"u8);
-                writer.WriteObjectValue(FabricsHealth, options);
+                ((IJsonModel<ResourceHealthSummary>)FabricsHealth).Write(writer, options);
             }
             if (Optional.IsDefined(ContainersHealth))
             {
                 writer.WritePropertyName("containersHealth"u8);
-                writer.WriteObjectValue(ContainersHealth, options);
+                ((IJsonModel<ResourceHealthSummary>)ContainersHealth).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    protectedItemsHealth = ResourceHealthSummary.DeserializeResourceHealthSummary(property.Value, options);
+                    protectedItemsHealth = ModelSerializationExtensions.JsonDeserialize<ResourceHealthSummary>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("fabricsHealth"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    fabricsHealth = ResourceHealthSummary.DeserializeResourceHealthSummary(property.Value, options);
+                    fabricsHealth = ModelSerializationExtensions.JsonDeserialize<ResourceHealthSummary>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("containersHealth"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    containersHealth = ResourceHealthSummary.DeserializeResourceHealthSummary(property.Value, options);
+                    containersHealth = ModelSerializationExtensions.JsonDeserialize<ResourceHealthSummary>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<DataFactoryCmkIdentity>)Identity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    identity = DataFactoryCmkIdentity.DeserializeDataFactoryCmkIdentity(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<DataFactoryCmkIdentity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

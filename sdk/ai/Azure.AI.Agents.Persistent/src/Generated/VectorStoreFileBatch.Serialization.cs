@@ -45,7 +45,7 @@ namespace Azure.AI.Agents.Persistent
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             writer.WritePropertyName("file_counts"u8);
-            writer.WriteObjectValue(FileCounts, options);
+            ((IJsonModel<VectorStoreFileCount>)FileCounts).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -120,7 +120,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (property.NameEquals("file_counts"u8))
                 {
-                    fileCounts = VectorStoreFileCount.DeserializeVectorStoreFileCount(property.Value, options);
+                    fileCounts = ModelSerializationExtensions.JsonDeserialize<VectorStoreFileCount>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

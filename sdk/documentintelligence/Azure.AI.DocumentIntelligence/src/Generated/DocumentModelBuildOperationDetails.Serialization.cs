@@ -38,7 +38,7 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
-                writer.WriteObjectValue(Result, options);
+                ((IJsonModel<DocumentModelDetails>)Result).Write(writer, options);
             }
         }
 
@@ -83,7 +83,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    result = DocumentModelDetails.DeserializeDocumentModelDetails(property.Value, options);
+                    result = ModelSerializationExtensions.JsonDeserialize<DocumentModelDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("operationId"u8))
@@ -150,7 +150,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    error = DocumentIntelligenceError.DeserializeDocumentIntelligenceError(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<DocumentIntelligenceError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

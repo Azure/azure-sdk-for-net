@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartArray();
             foreach (var item in DisksToInclude)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<VMwareCbtDiskContent>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(LicenseType))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(TargetVmSecurityProfile))
             {
                 writer.WritePropertyName("targetVmSecurityProfile"u8);
-                writer.WriteObjectValue(TargetVmSecurityProfile, options);
+                ((IJsonModel<VMwareCbtSecurityProfileProperties>)TargetVmSecurityProfile).Write(writer, options);
             }
             if (Optional.IsDefined(TargetBootDiagnosticsStorageAccountId))
             {
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    targetVmSecurityProfile = VMwareCbtSecurityProfileProperties.DeserializeVMwareCbtSecurityProfileProperties(property.Value, options);
+                    targetVmSecurityProfile = ModelSerializationExtensions.JsonDeserialize<VMwareCbtSecurityProfileProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetBootDiagnosticsStorageAccountId"u8))

@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
         {
             writer.WriteStartObject();
             writer.WritePropertyName("callLocator"u8);
-            writer.WriteObjectValue(CallLocator);
+            JsonSerializer.Serialize(writer, CallLocator);
             writer.WritePropertyName("callbackUri"u8);
             writer.WriteStringValue(CallbackUri);
             if (Optional.IsDefined(OperationContext))
@@ -27,17 +27,17 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(CallIntelligenceOptions))
             {
                 writer.WritePropertyName("callIntelligenceOptions"u8);
-                writer.WriteObjectValue(CallIntelligenceOptions);
+                JsonSerializer.Serialize(writer, CallIntelligenceOptions);
             }
             if (Optional.IsDefined(MediaStreamingOptions))
             {
                 writer.WritePropertyName("mediaStreamingOptions"u8);
-                writer.WriteObjectValue(MediaStreamingOptions);
+                JsonSerializer.Serialize(writer, MediaStreamingOptions);
             }
             if (Optional.IsDefined(TranscriptionOptions))
             {
                 writer.WritePropertyName("transcriptionOptions"u8);
-                writer.WriteObjectValue(TranscriptionOptions);
+                JsonSerializer.Serialize(writer, TranscriptionOptions);
             }
             writer.WriteEndObject();
         }

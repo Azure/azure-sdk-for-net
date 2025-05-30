@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(DiskExclusionContent))
             {
                 writer.WritePropertyName("diskExclusionInput"u8);
-                writer.WriteObjectValue(DiskExclusionContent, options);
+                ((IJsonModel<InMageDiskExclusionContent>)DiskExclusionContent).Write(writer, options);
             }
             writer.WritePropertyName("profileId"u8);
             writer.WriteStringValue(ProfileId);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    diskExclusionContent = InMageDiskExclusionContent.DeserializeInMageDiskExclusionContent(property.Value, options);
+                    diskExclusionContent = ModelSerializationExtensions.JsonDeserialize<InMageDiskExclusionContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("profileId"u8))

@@ -21,12 +21,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
-                writer.WriteObjectValue(LinkedService);
+                JsonSerializer.Serialize(writer, LinkedService);
             }
             if (Optional.IsDefined(TypeProperties))
             {
                 writer.WritePropertyName("typeProperties"u8);
-                writer.WriteObjectValue(TypeProperties);
+                JsonSerializer.Serialize(writer, TypeProperties);
             }
             writer.WriteEndObject();
         }
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    linkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    linkedService = ModelSerializationExtensions.JsonDeserialize<LinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("typeProperties"u8))
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    typeProperties = LinkConnectionSourceDatabaseTypeProperties.DeserializeLinkConnectionSourceDatabaseTypeProperties(property.Value);
+                    typeProperties = ModelSerializationExtensions.JsonDeserialize<LinkConnectionSourceDatabaseTypeProperties>(property.Value);
                     continue;
                 }
             }

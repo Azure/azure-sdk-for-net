@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in Responsibilities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CustomerResponsibility>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

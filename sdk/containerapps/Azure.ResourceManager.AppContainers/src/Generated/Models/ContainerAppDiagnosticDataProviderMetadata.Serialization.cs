@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in PropertyBag)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(MatchedRule))
             {
                 writer.WritePropertyName("matchedRule"u8);
-                writer.WriteObjectValue(MatchedRule, options);
+                ((IJsonModel<MatchedRule>)MatchedRule).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(RulesEvaluationResult))
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RulesEvaluationResult)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetworkSecurityRulesEvaluationResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    matchedRule = MatchedRule.DeserializeMatchedRule(property.Value, options);
+                    matchedRule = ModelSerializationExtensions.JsonDeserialize<MatchedRule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rulesEvaluationResult"u8))

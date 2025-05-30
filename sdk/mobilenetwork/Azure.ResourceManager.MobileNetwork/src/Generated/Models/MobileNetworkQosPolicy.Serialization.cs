@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteStringValue(PreemptionVulnerability.Value.ToString());
             }
             writer.WritePropertyName("maximumBitRate"u8);
-            writer.WriteObjectValue(MaximumBitRate, options);
+            ((IJsonModel<Ambr>)MaximumBitRate).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
                 if (property.NameEquals("maximumBitRate"u8))
                 {
-                    maximumBitRate = Ambr.DeserializeAmbr(property.Value, options);
+                    maximumBitRate = ModelSerializationExtensions.JsonDeserialize<Ambr>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

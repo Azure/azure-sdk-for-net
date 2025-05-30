@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<AppConfigurationSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<AppConfigurationStoreEncryptionProperties>)Encryption).Write(writer, options);
             }
             if (Optional.IsDefined(DisableLocalAuth))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             if (Optional.IsDefined(DataPlaneProxy))
             {
                 writer.WritePropertyName("dataPlaneProxy"u8);
-                writer.WriteObjectValue(DataPlaneProxy, options);
+                ((IJsonModel<AppConfigurationDataPlaneProxyProperties>)DataPlaneProxy).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     {
                         continue;
                     }
-                    sku = AppConfigurationSku.DeserializeAppConfigurationSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<AppConfigurationSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                             {
                                 continue;
                             }
-                            encryption = AppConfigurationStoreEncryptionProperties.DeserializeAppConfigurationStoreEncryptionProperties(property0.Value, options);
+                            encryption = ModelSerializationExtensions.JsonDeserialize<AppConfigurationStoreEncryptionProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("disableLocalAuth"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                             {
                                 continue;
                             }
-                            dataPlaneProxy = AppConfigurationDataPlaneProxyProperties.DeserializeAppConfigurationDataPlaneProxyProperties(property0.Value, options);
+                            dataPlaneProxy = ModelSerializationExtensions.JsonDeserialize<AppConfigurationDataPlaneProxyProperties>(property0.Value);
                             continue;
                         }
                     }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -124,7 +125,7 @@ namespace Azure.Communication.Identity
             request.Headers.Add("Content-Type", "application/json");
             var model = new EntraAssignmentCreateOrUpdateRequest(tenantId, principalType, clientIds.ToList());
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            ((IJsonModel<EntraAssignmentCreateOrUpdateRequest>)model).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }

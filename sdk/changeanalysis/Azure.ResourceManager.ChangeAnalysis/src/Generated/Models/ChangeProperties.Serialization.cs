@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 writer.WriteStartArray();
                 foreach (var item in PropertyChanges)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PropertyChange>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

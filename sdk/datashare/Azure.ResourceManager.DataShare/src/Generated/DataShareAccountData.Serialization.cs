@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataShare
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("identity"u8);
-            JsonSerializer.Serialize(writer, Identity);
+            ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataShare
             {
                 if (property.NameEquals("identity"u8))
                 {
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataShare
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

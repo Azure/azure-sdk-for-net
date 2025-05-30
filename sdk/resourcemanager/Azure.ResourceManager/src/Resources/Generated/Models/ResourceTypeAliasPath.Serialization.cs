@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Pattern))
             {
                 writer.WritePropertyName("pattern"u8);
-                writer.WriteObjectValue(Pattern, options);
+                ((IJsonModel<ResourceTypeAliasPattern>)Pattern).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata, options);
+                ((IJsonModel<ResourceTypeAliasPathMetadata>)Metadata).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    pattern = ResourceTypeAliasPattern.DeserializeResourceTypeAliasPattern(property.Value, options);
+                    pattern = ModelSerializationExtensions.JsonDeserialize<ResourceTypeAliasPattern>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    metadata = ResourceTypeAliasPathMetadata.DeserializeResourceTypeAliasPathMetadata(property.Value, options);
+                    metadata = ModelSerializationExtensions.JsonDeserialize<ResourceTypeAliasPathMetadata>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

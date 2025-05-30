@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination, options);
+                ((IJsonModel<RoutingRuleRouteDestination>)Destination).Write(writer, options);
             }
             if (Optional.IsDefined(NextHop))
             {
                 writer.WritePropertyName("nextHop"u8);
-                writer.WriteObjectValue(NextHop, options);
+                ((IJsonModel<RoutingRuleNextHop>)NextHop).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            destination = RoutingRuleRouteDestination.DeserializeRoutingRuleRouteDestination(property0.Value, options);
+                            destination = ModelSerializationExtensions.JsonDeserialize<RoutingRuleRouteDestination>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("nextHop"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            nextHop = RoutingRuleNextHop.DeserializeRoutingRuleNextHop(property0.Value, options);
+                            nextHop = ModelSerializationExtensions.JsonDeserialize<RoutingRuleNextHop>(property0.Value);
                             continue;
                         }
                     }

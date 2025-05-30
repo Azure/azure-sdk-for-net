@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 writer.WriteStartArray();
                 foreach (var item in Keys)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<JsonWebKey>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

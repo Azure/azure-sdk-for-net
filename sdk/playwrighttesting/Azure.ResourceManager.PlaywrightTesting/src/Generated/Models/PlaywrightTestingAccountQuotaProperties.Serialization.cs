@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
             if (Optional.IsDefined(FreeTrial))
             {
                 writer.WritePropertyName("freeTrial"u8);
-                writer.WriteObjectValue(FreeTrial, options);
+                ((IJsonModel<PlaywrightTestingAccountFreeTrialProperties>)FreeTrial).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                     {
                         continue;
                     }
-                    freeTrial = PlaywrightTestingAccountFreeTrialProperties.DeserializePlaywrightTestingAccountFreeTrialProperties(property.Value, options);
+                    freeTrial = ModelSerializationExtensions.JsonDeserialize<PlaywrightTestingAccountFreeTrialProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.DevCenter.Models
             if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
-                writer.WriteObjectValue(ImageReference, options);
+                ((IJsonModel<DevCenterImageReference>)ImageReference).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<DevCenterSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(OSStorageType))
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                             {
                                 continue;
                             }
-                            imageReference = DevCenterImageReference.DeserializeDevCenterImageReference(property0.Value, options);
+                            imageReference = ModelSerializationExtensions.JsonDeserialize<DevCenterImageReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sku"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                             {
                                 continue;
                             }
-                            sku = DevCenterSku.DeserializeDevCenterSku(property0.Value, options);
+                            sku = ModelSerializationExtensions.JsonDeserialize<DevCenterSku>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("osStorageType"u8))

@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.TrafficManager
                 writer.WriteStartArray();
                 foreach (var item in Subnets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TrafficManagerEndpointSubnetInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.TrafficManager
                 writer.WriteStartArray();
                 foreach (var item in CustomHeaders)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TrafficManagerEndpointCustomHeaderInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

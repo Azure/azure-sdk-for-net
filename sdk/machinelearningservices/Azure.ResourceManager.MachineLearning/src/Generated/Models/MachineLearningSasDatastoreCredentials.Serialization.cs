@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("secrets"u8);
-            writer.WriteObjectValue(Secrets, options);
+            ((IJsonModel<MachineLearningSasDatastoreSecrets>)Secrets).Write(writer, options);
         }
 
         MachineLearningSasDatastoreCredentials IJsonModel<MachineLearningSasDatastoreCredentials>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("secrets"u8))
                 {
-                    secrets = MachineLearningSasDatastoreSecrets.DeserializeMachineLearningSasDatastoreSecrets(property.Value, options);
+                    secrets = ModelSerializationExtensions.JsonDeserialize<MachineLearningSasDatastoreSecrets>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("credentialsType"u8))

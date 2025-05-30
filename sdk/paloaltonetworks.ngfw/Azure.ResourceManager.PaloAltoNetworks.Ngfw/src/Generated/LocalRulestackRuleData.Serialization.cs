@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source, options);
+                ((IJsonModel<SourceAddressInfo>)Source).Write(writer, options);
             }
             if (Optional.IsDefined(NegateSource))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination, options);
+                ((IJsonModel<DestinationAddressInfo>)Destination).Write(writer, options);
             }
             if (Optional.IsDefined(NegateDestination))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
-                writer.WriteObjectValue(Category, options);
+                ((IJsonModel<EdlMatchCategory>)Category).Write(writer, options);
             }
             if (Optional.IsDefined(Protocol))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WriteStartArray();
                 foreach (var item in Tags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RulestackTagInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                             {
                                 continue;
                             }
-                            source = SourceAddressInfo.DeserializeSourceAddressInfo(property0.Value, options);
+                            source = ModelSerializationExtensions.JsonDeserialize<SourceAddressInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("negateSource"u8))
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                             {
                                 continue;
                             }
-                            destination = DestinationAddressInfo.DeserializeDestinationAddressInfo(property0.Value, options);
+                            destination = ModelSerializationExtensions.JsonDeserialize<DestinationAddressInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("negateDestination"u8))
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                             {
                                 continue;
                             }
-                            category = EdlMatchCategory.DeserializeEdlMatchCategory(property0.Value, options);
+                            category = ModelSerializationExtensions.JsonDeserialize<EdlMatchCategory>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("protocol"u8))

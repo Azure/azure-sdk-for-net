@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InconsistentVmDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

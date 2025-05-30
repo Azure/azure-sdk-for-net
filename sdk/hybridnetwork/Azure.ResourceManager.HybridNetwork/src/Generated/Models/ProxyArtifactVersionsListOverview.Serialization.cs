@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ProxyArtifactOverviewPropertiesValue>)Properties).Write(writer, options);
             }
         }
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    properties = ProxyArtifactOverviewPropertiesValue.DeserializeProxyArtifactOverviewPropertiesValue(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ProxyArtifactOverviewPropertiesValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

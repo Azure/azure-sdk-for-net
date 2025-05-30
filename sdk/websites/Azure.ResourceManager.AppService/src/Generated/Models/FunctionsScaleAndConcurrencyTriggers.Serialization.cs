@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Http))
             {
                 writer.WritePropertyName("http"u8);
-                writer.WriteObjectValue(Http, options);
+                ((IJsonModel<FunctionsScaleAndConcurrencyTriggersHttp>)Http).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    http = FunctionsScaleAndConcurrencyTriggersHttp.DeserializeFunctionsScaleAndConcurrencyTriggersHttp(property.Value, options);
+                    http = ModelSerializationExtensions.JsonDeserialize<FunctionsScaleAndConcurrencyTriggersHttp>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

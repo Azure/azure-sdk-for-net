@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials, options);
+                ((IJsonModel<ContainerRegistryImportSourceCredentials>)Credentials).Write(writer, options);
             }
             writer.WritePropertyName("sourceImage"u8);
             writer.WriteStringValue(SourceImage);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    credentials = ContainerRegistryImportSourceCredentials.DeserializeContainerRegistryImportSourceCredentials(property.Value, options);
+                    credentials = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryImportSourceCredentials>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sourceImage"u8))

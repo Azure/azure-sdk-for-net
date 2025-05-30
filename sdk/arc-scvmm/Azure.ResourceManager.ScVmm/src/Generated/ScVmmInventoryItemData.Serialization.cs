@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ScVmm
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<ScVmmInventoryItemProperties>)Properties).Write(writer, options);
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ScVmm
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = ScVmmInventoryItemProperties.DeserializeScVmmInventoryItemProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ScVmmInventoryItemProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ScVmm
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

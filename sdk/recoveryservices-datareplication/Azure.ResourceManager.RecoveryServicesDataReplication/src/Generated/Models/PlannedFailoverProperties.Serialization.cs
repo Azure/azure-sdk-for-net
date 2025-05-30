@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WritePropertyName("customProperties"u8);
-            writer.WriteObjectValue(CustomProperties, options);
+            ((IJsonModel<PlannedFailoverCustomProperties>)CustomProperties).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = PlannedFailoverCustomProperties.DeserializePlannedFailoverCustomProperties(property.Value, options);
+                    customProperties = ModelSerializationExtensions.JsonDeserialize<PlannedFailoverCustomProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

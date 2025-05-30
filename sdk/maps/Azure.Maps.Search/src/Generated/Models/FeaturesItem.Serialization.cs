@@ -46,12 +46,12 @@ namespace Azure.Maps.Search.Models
                     {
                         continue;
                     }
-                    properties = FeaturesItemProperties.DeserializeFeaturesItemProperties(property.Value);
+                    properties = ModelSerializationExtensions.JsonDeserialize<FeaturesItemProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("geometry"u8))
                 {
-                    geometry = GeoJsonPoint.DeserializeGeoJsonPoint(property.Value);
+                    geometry = ModelSerializationExtensions.JsonDeserialize<GeoJsonPoint>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("boundingBox"u8))

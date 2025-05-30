@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
-                writer.WriteObjectValue(Resources, options);
+                ((IJsonModel<ComponentKubernetesResources>)Resources).Write(writer, options);
             }
             if (Optional.IsDefined(NextExpectedUpdateOn))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    resources = ComponentKubernetesResources.DeserializeComponentKubernetesResources(property.Value, options);
+                    resources = ModelSerializationExtensions.JsonDeserialize<ComponentKubernetesResources>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nextExpectedUpdateAt"u8))

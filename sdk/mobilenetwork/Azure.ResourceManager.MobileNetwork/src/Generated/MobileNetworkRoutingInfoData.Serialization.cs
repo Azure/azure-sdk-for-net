@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStartArray();
                 foreach (var item in ControlPlaneAccessRoutes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MobileNetworkIPv4Route>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStartArray();
                 foreach (var item in UserPlaneAccessRoutes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MobileNetworkIPv4Route>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStartArray();
                 foreach (var item in UserPlaneDataRoutes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UserPlaneDataRoutesItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in Aggregates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ReservationUtilizationAggregates>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

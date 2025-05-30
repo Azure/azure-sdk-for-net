@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (options.Format != "W" && Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue(CreatedBy, options);
+                ((IJsonModel<ThreatIntelligenceUserInfo>)CreatedBy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Source))
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
-                writer.WriteObjectValue(LastModifiedBy, options);
+                ((IJsonModel<ThreatIntelligenceUserInfo>)LastModifiedBy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in RelationshipHints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RelationshipHint>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

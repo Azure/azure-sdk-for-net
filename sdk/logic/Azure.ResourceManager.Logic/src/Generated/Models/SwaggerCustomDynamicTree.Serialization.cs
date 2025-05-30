@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
-                writer.WriteObjectValue(Settings, options);
+                ((IJsonModel<SwaggerCustomDynamicTreeSettings>)Settings).Write(writer, options);
             }
             if (Optional.IsDefined(Open))
             {
                 writer.WritePropertyName("open"u8);
-                writer.WriteObjectValue(Open, options);
+                ((IJsonModel<SwaggerCustomDynamicTreeCommand>)Open).Write(writer, options);
             }
             if (Optional.IsDefined(Browse))
             {
                 writer.WritePropertyName("browse"u8);
-                writer.WriteObjectValue(Browse, options);
+                ((IJsonModel<SwaggerCustomDynamicTreeCommand>)Browse).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    settings = SwaggerCustomDynamicTreeSettings.DeserializeSwaggerCustomDynamicTreeSettings(property.Value, options);
+                    settings = ModelSerializationExtensions.JsonDeserialize<SwaggerCustomDynamicTreeSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("open"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    open = SwaggerCustomDynamicTreeCommand.DeserializeSwaggerCustomDynamicTreeCommand(property.Value, options);
+                    open = ModelSerializationExtensions.JsonDeserialize<SwaggerCustomDynamicTreeCommand>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("browse"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    browse = SwaggerCustomDynamicTreeCommand.DeserializeSwaggerCustomDynamicTreeCommand(property.Value, options);
+                    browse = ModelSerializationExtensions.JsonDeserialize<SwaggerCustomDynamicTreeCommand>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

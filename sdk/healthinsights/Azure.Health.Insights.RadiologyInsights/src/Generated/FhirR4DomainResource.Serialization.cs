@@ -38,7 +38,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
-                writer.WriteObjectValue(Text, options);
+                ((IJsonModel<FhirR4Narrative>)Text).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Contained))
             {
@@ -46,7 +46,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Contained)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FhirR4Resource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -56,7 +56,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Extension)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FhirR4Extension>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +66,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in ModifierExtension)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FhirR4Extension>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

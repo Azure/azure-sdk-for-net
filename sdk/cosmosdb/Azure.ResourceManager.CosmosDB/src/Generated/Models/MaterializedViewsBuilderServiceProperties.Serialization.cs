@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MaterializedViewsBuilderRegionalService>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

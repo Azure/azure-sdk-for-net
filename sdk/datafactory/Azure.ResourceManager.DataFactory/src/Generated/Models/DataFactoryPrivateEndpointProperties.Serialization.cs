@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
-                writer.WriteObjectValue(ConnectionState, options);
+                ((IJsonModel<ConnectionStateProperties>)ConnectionState).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Fqdns))
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectionState = ConnectionStateProperties.DeserializeConnectionStateProperties(property.Value, options);
+                    connectionState = ModelSerializationExtensions.JsonDeserialize<ConnectionStateProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("fqdns"u8))

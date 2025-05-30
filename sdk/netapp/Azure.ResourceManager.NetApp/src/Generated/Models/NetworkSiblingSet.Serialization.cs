@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in NicInfoList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NicInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

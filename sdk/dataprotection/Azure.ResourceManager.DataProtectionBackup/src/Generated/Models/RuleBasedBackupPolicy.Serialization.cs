@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartArray();
             foreach (var item in PolicyRules)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DataProtectionBasePolicyRule>)item).Write(writer, options);
             }
             writer.WriteEndArray();
         }

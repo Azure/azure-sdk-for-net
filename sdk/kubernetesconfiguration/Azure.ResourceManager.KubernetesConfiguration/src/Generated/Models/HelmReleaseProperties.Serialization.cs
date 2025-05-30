@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (HelmChartRef != null)
                 {
                     writer.WritePropertyName("helmChartRef"u8);
-                    writer.WriteObjectValue(HelmChartRef, options);
+                    ((IJsonModel<KubernetesObjectReference>)HelmChartRef).Write(writer, options);
                 }
                 else
                 {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         helmChartRef = null;
                         continue;
                     }
-                    helmChartRef = KubernetesObjectReference.DeserializeKubernetesObjectReference(property.Value, options);
+                    helmChartRef = ModelSerializationExtensions.JsonDeserialize<KubernetesObjectReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("failureCount"u8))

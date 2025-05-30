@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("expression"u8);
-            writer.WriteObjectValue(Expression, options);
+            ((IJsonModel<DataFactoryExpression>)Expression).Write(writer, options);
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
-                JsonSerializer.Serialize(writer, Timeout);
+                ((IJsonModel<DataFactoryElement<T>>)Timeout).Write(writer, options);
             }
             writer.WritePropertyName("activities"u8);
             writer.WriteStartArray();
             foreach (var item in Activities)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<PipelineActivity>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("expression"u8))
                         {
-                            expression = DataFactoryExpression.DeserializeDataFactoryExpression(property0.Value, options);
+                            expression = ModelSerializationExtensions.JsonDeserialize<DataFactoryExpression>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("timeout"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            timeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            timeout = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("activities"u8))

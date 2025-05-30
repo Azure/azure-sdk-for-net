@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
-                writer.WriteObjectValue(SasToken, options);
+                ((IJsonModel<SynapseSecureString>)SasToken).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    sasToken = SynapseSecureString.DeserializeSynapseSecureString(property.Value, options);
+                    sasToken = ModelSerializationExtensions.JsonDeserialize<SynapseSecureString>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

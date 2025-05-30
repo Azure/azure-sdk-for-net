@@ -57,17 +57,17 @@ namespace Azure.ResourceManager.Dynatrace
             if (Optional.IsDefined(DynatraceEnvironmentProperties))
             {
                 writer.WritePropertyName("dynatraceEnvironmentProperties"u8);
-                writer.WriteObjectValue(DynatraceEnvironmentProperties, options);
+                ((IJsonModel<DynatraceEnvironmentProperties>)DynatraceEnvironmentProperties).Write(writer, options);
             }
             if (Optional.IsDefined(UserInfo))
             {
                 writer.WritePropertyName("userInfo"u8);
-                writer.WriteObjectValue(UserInfo, options);
+                ((IJsonModel<DynatraceMonitorUserInfo>)UserInfo).Write(writer, options);
             }
             if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
-                writer.WriteObjectValue(PlanData, options);
+                ((IJsonModel<DynatraceBillingPlanInfo>)PlanData).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LiftrResourceCategory))
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Dynatrace
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Dynatrace
                             {
                                 continue;
                             }
-                            dynatraceEnvironmentProperties = DynatraceEnvironmentProperties.DeserializeDynatraceEnvironmentProperties(property0.Value, options);
+                            dynatraceEnvironmentProperties = ModelSerializationExtensions.JsonDeserialize<DynatraceEnvironmentProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("userInfo"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Dynatrace
                             {
                                 continue;
                             }
-                            userInfo = DynatraceMonitorUserInfo.DeserializeDynatraceMonitorUserInfo(property0.Value, options);
+                            userInfo = ModelSerializationExtensions.JsonDeserialize<DynatraceMonitorUserInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("planData"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Dynatrace
                             {
                                 continue;
                             }
-                            planData = DynatraceBillingPlanInfo.DeserializeDynatraceBillingPlanInfo(property0.Value, options);
+                            planData = ModelSerializationExtensions.JsonDeserialize<DynatraceBillingPlanInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("liftrResourceCategory"u8))

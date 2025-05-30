@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
-                writer.WriteObjectValue(Summary, options);
+                ((IJsonModel<SavingsPlanSummaryCount>)Summary).Write(writer, options);
             }
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    summary = SavingsPlanSummaryCount.DeserializeSavingsPlanSummaryCount(property.Value, options);
+                    summary = ModelSerializationExtensions.JsonDeserialize<SavingsPlanSummaryCount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("value"u8))

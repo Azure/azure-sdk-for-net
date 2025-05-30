@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<AutonomousDatabaseUpdateProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    properties = AutonomousDatabaseUpdateProperties.DeserializeAutonomousDatabaseUpdateProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<AutonomousDatabaseUpdateProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

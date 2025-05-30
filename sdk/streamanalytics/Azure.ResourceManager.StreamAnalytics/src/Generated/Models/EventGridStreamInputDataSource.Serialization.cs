@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(Subscriber))
             {
                 writer.WritePropertyName("subscriber"u8);
-                writer.WriteObjectValue(Subscriber, options);
+                ((IJsonModel<EventHubV2StreamInputDataSource>)Subscriber).Write(writer, options);
             }
             if (Optional.IsDefined(Schema))
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StreamAnalyticsStorageAccount>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             {
                                 continue;
                             }
-                            subscriber = EventHubV2StreamInputDataSource.DeserializeEventHubV2StreamInputDataSource(property0.Value, options);
+                            subscriber = ModelSerializationExtensions.JsonDeserialize<EventHubV2StreamInputDataSource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("schema"u8))

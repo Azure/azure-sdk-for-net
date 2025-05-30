@@ -40,7 +40,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in CustomTrials)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ClinicalTrialDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in RegistryFilters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ClinicalTrialRegistryFilter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

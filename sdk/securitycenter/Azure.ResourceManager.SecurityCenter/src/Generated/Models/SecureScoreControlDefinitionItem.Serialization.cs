@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (options.Format != "W" && Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source, options);
+                ((IJsonModel<SecureScoreControlDefinitionSource>)Source).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AssessmentDefinitions))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in AssessmentDefinitions)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             {
                                 continue;
                             }
-                            source = SecureScoreControlDefinitionSource.DeserializeSecureScoreControlDefinitionSource(property0.Value, options);
+                            source = ModelSerializationExtensions.JsonDeserialize<SecureScoreControlDefinitionSource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("assessmentDefinitions"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<SubResource>(item));
                             }
                             assessmentDefinitions = array;
                             continue;

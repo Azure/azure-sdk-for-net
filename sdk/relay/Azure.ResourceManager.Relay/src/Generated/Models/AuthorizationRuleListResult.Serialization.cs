@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Relay.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RelayAuthorizationRuleData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

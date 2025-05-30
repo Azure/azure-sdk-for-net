@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Logic.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<SwaggerCustomDynamicTreeParameterInfo>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }

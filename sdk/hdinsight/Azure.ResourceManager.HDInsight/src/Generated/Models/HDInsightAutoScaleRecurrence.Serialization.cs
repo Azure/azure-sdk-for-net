@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in Schedule)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HDInsightAutoScaleSchedule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

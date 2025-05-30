@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Aggregation))
             {
                 writer.WritePropertyName("aggregation"u8);
-                writer.WriteObjectValue(Aggregation, options);
+                ((IJsonModel<ManagementEventAggregationCondition>)Aggregation).Write(writer, options);
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    aggregation = ManagementEventAggregationCondition.DeserializeManagementEventAggregationCondition(property.Value, options);
+                    aggregation = ModelSerializationExtensions.JsonDeserialize<ManagementEventAggregationCondition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("odata.type"u8))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    dataSource = RuleDataSource.DeserializeRuleDataSource(property.Value, options);
+                    dataSource = ModelSerializationExtensions.JsonDeserialize<RuleDataSource>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

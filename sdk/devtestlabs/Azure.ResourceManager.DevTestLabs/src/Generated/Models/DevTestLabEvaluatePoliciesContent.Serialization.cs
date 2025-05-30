@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in Policies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DevTestLabEvaluatePolicy>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

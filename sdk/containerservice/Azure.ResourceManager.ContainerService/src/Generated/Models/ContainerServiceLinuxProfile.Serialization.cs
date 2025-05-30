@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WritePropertyName("adminUsername"u8);
             writer.WriteStringValue(AdminUsername);
             writer.WritePropertyName("ssh"u8);
-            writer.WriteObjectValue(Ssh, options);
+            ((IJsonModel<ContainerServiceSshConfiguration>)Ssh).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (property.NameEquals("ssh"u8))
                 {
-                    ssh = ContainerServiceSshConfiguration.DeserializeContainerServiceSshConfiguration(property.Value, options);
+                    ssh = ModelSerializationExtensions.JsonDeserialize<ContainerServiceSshConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

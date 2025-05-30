@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(Criteria))
             {
                 writer.WritePropertyName("criteria"u8);
-                writer.WriteObjectValue(Criteria, options);
+                ((IJsonModel<ScheduledQueryRuleCriteria>)Criteria).Write(writer, options);
             }
             if (Optional.IsDefined(MuteActionsDuration))
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
-                writer.WriteObjectValue(Actions, options);
+                ((IJsonModel<ScheduledQueryRuleActions>)Actions).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsWorkspaceAlertsStorageConfigured))
             {
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            criteria = ScheduledQueryRuleCriteria.DeserializeScheduledQueryRuleCriteria(property0.Value, options);
+                            criteria = ModelSerializationExtensions.JsonDeserialize<ScheduledQueryRuleCriteria>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("muteActionsDuration"u8))
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            actions = ScheduledQueryRuleActions.DeserializeScheduledQueryRuleActions(property0.Value, options);
+                            actions = ModelSerializationExtensions.JsonDeserialize<ScheduledQueryRuleActions>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("isWorkspaceAlertsStorageConfigured"u8))

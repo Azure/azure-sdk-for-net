@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+                ((IJsonModel<StreamAnalyticsPrivateLinkConnectionState>)PrivateLinkServiceConnectionState).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = StreamAnalyticsPrivateLinkConnectionState.DeserializeStreamAnalyticsPrivateLinkConnectionState(property0.Value, options);
+                            privateLinkServiceConnectionState = ModelSerializationExtensions.JsonDeserialize<StreamAnalyticsPrivateLinkConnectionState>(property0.Value);
                             continue;
                         }
                     }

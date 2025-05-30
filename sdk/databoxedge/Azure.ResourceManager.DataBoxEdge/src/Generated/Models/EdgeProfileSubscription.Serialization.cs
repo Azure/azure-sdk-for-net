@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in RegisteredFeatures)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SubscriptionRegisteredFeatures>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -44,7 +44,7 @@ namespace Azure.Monitor.Query.Models
                     {
                         continue;
                     }
-                    body = LogsBatchQueryResult.DeserializeLogsBatchQueryResult(property.Value);
+                    body = ModelSerializationExtensions.JsonDeserialize<LogsBatchQueryResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("headers"u8))

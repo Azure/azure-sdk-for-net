@@ -42,22 +42,22 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(ResourceDetails))
             {
                 writer.WritePropertyName("resourceDetails"u8);
-                writer.WriteObjectValue(ResourceDetails, options);
+                ((IJsonModel<HealthReportResourceDetails>)ResourceDetails).Write(writer, options);
             }
             if (Optional.IsDefined(EnvironmentDetails))
             {
                 writer.WritePropertyName("environmentDetails"u8);
-                writer.WriteObjectValue(EnvironmentDetails, options);
+                ((IJsonModel<EnvironmentDetails>)EnvironmentDetails).Write(writer, options);
             }
             if (Optional.IsDefined(HealthDataClassification))
             {
                 writer.WritePropertyName("healthDataClassification"u8);
-                writer.WriteObjectValue(HealthDataClassification, options);
+                ((IJsonModel<HealthDataClassification>)HealthDataClassification).Write(writer, options);
             }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<HealthReportStatus>)Status).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AffectedDefendersPlans))
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Issues)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SecurityHealthReportIssue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            resourceDetails = HealthReportResourceDetails.DeserializeHealthReportResourceDetails(property0.Value, options);
+                            resourceDetails = ModelSerializationExtensions.JsonDeserialize<HealthReportResourceDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("environmentDetails"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            environmentDetails = EnvironmentDetails.DeserializeEnvironmentDetails(property0.Value, options);
+                            environmentDetails = ModelSerializationExtensions.JsonDeserialize<EnvironmentDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("healthDataClassification"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            healthDataClassification = HealthDataClassification.DeserializeHealthDataClassification(property0.Value, options);
+                            healthDataClassification = ModelSerializationExtensions.JsonDeserialize<HealthDataClassification>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            status = HealthReportStatus.DeserializeHealthReportStatus(property0.Value, options);
+                            status = ModelSerializationExtensions.JsonDeserialize<HealthReportStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("affectedDefendersPlans"u8))

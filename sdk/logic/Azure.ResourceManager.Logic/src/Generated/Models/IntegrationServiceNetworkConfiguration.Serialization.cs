@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(AccessEndpoint))
             {
                 writer.WritePropertyName("accessEndpoint"u8);
-                writer.WriteObjectValue(AccessEndpoint, options);
+                ((IJsonModel<IntegrationServiceEnvironmentAccessEndpoint>)AccessEndpoint).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Subnets))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in Subnets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LogicResourceReference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    accessEndpoint = IntegrationServiceEnvironmentAccessEndpoint.DeserializeIntegrationServiceEnvironmentAccessEndpoint(property.Value, options);
+                    accessEndpoint = ModelSerializationExtensions.JsonDeserialize<IntegrationServiceEnvironmentAccessEndpoint>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("subnets"u8))

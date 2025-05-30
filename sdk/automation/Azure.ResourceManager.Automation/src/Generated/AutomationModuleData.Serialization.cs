@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(ContentLink))
             {
                 writer.WritePropertyName("contentLink"u8);
-                writer.WriteObjectValue(ContentLink, options);
+                ((IJsonModel<AutomationContentLink>)ContentLink).Write(writer, options);
             }
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<AutomationModuleErrorInfo>)Error).Write(writer, options);
             }
             if (Optional.IsDefined(CreatedOn))
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            contentLink = AutomationContentLink.DeserializeAutomationContentLink(property0.Value, options);
+                            contentLink = ModelSerializationExtensions.JsonDeserialize<AutomationContentLink>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("error"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            error = AutomationModuleErrorInfo.DeserializeAutomationModuleErrorInfo(property0.Value, options);
+                            error = ModelSerializationExtensions.JsonDeserialize<AutomationModuleErrorInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("creationTime"u8))

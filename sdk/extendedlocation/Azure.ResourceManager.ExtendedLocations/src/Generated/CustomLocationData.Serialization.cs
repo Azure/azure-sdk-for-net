@@ -40,14 +40,14 @@ namespace Azure.ResourceManager.ExtendedLocations
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication, options);
+                ((IJsonModel<CustomLocationAuthentication>)Authentication).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ClusterExtensionIds))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                             {
                                 continue;
                             }
-                            authentication = CustomLocationAuthentication.DeserializeCustomLocationAuthentication(property0.Value, options);
+                            authentication = ModelSerializationExtensions.JsonDeserialize<CustomLocationAuthentication>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clusterExtensionIds"u8))

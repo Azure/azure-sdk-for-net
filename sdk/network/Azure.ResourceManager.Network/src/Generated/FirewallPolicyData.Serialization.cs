@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in RuleCollectionGroups)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(BasePolicy))
             {
                 writer.WritePropertyName("basePolicy"u8);
-                JsonSerializer.Serialize(writer, BasePolicy);
+                ((IJsonModel<WritableSubResource>)BasePolicy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Firewalls))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Firewalls)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ChildPolicies)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -103,47 +103,47 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ThreatIntelWhitelist))
             {
                 writer.WritePropertyName("threatIntelWhitelist"u8);
-                writer.WriteObjectValue(ThreatIntelWhitelist, options);
+                ((IJsonModel<FirewallPolicyThreatIntelWhitelist>)ThreatIntelWhitelist).Write(writer, options);
             }
             if (Optional.IsDefined(Insights))
             {
                 writer.WritePropertyName("insights"u8);
-                writer.WriteObjectValue(Insights, options);
+                ((IJsonModel<FirewallPolicyInsights>)Insights).Write(writer, options);
             }
             if (Optional.IsDefined(Snat))
             {
                 writer.WritePropertyName("snat"u8);
-                writer.WriteObjectValue(Snat, options);
+                ((IJsonModel<FirewallPolicySnat>)Snat).Write(writer, options);
             }
             if (Optional.IsDefined(Sql))
             {
                 writer.WritePropertyName("sql"u8);
-                writer.WriteObjectValue(Sql, options);
+                ((IJsonModel<FirewallPolicySQL>)Sql).Write(writer, options);
             }
             if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
-                writer.WriteObjectValue(DnsSettings, options);
+                ((IJsonModel<DnsSettings>)DnsSettings).Write(writer, options);
             }
             if (Optional.IsDefined(ExplicitProxy))
             {
                 writer.WritePropertyName("explicitProxy"u8);
-                writer.WriteObjectValue(ExplicitProxy, options);
+                ((IJsonModel<FirewallPolicyExplicitProxy>)ExplicitProxy).Write(writer, options);
             }
             if (Optional.IsDefined(IntrusionDetection))
             {
                 writer.WritePropertyName("intrusionDetection"u8);
-                writer.WriteObjectValue(IntrusionDetection, options);
+                ((IJsonModel<FirewallPolicyIntrusionDetection>)IntrusionDetection).Write(writer, options);
             }
             if (Optional.IsDefined(TransportSecurity))
             {
                 writer.WritePropertyName("transportSecurity"u8);
-                writer.WriteObjectValue(TransportSecurity, options);
+                ((IJsonModel<FirewallPolicyTransportSecurity>)TransportSecurity).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<FirewallPolicySku>)Sku).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             ruleCollectionGroups = array;
                             continue;
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            basePolicy = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            basePolicy = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("firewalls"u8))
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             firewalls = array;
                             continue;
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             childPolicies = array;
                             continue;
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            threatIntelWhitelist = FirewallPolicyThreatIntelWhitelist.DeserializeFirewallPolicyThreatIntelWhitelist(property0.Value, options);
+                            threatIntelWhitelist = ModelSerializationExtensions.JsonDeserialize<FirewallPolicyThreatIntelWhitelist>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("insights"u8))
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            insights = FirewallPolicyInsights.DeserializeFirewallPolicyInsights(property0.Value, options);
+                            insights = ModelSerializationExtensions.JsonDeserialize<FirewallPolicyInsights>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("snat"u8))
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            snat = FirewallPolicySnat.DeserializeFirewallPolicySnat(property0.Value, options);
+                            snat = ModelSerializationExtensions.JsonDeserialize<FirewallPolicySnat>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sql"u8))
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            sql = FirewallPolicySQL.DeserializeFirewallPolicySQL(property0.Value, options);
+                            sql = ModelSerializationExtensions.JsonDeserialize<FirewallPolicySQL>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dnsSettings"u8))
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            dnsSettings = DnsSettings.DeserializeDnsSettings(property0.Value, options);
+                            dnsSettings = ModelSerializationExtensions.JsonDeserialize<DnsSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("explicitProxy"u8))
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            explicitProxy = FirewallPolicyExplicitProxy.DeserializeFirewallPolicyExplicitProxy(property0.Value, options);
+                            explicitProxy = ModelSerializationExtensions.JsonDeserialize<FirewallPolicyExplicitProxy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("intrusionDetection"u8))
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            intrusionDetection = FirewallPolicyIntrusionDetection.DeserializeFirewallPolicyIntrusionDetection(property0.Value, options);
+                            intrusionDetection = ModelSerializationExtensions.JsonDeserialize<FirewallPolicyIntrusionDetection>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("transportSecurity"u8))
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            transportSecurity = FirewallPolicyTransportSecurity.DeserializeFirewallPolicyTransportSecurity(property0.Value, options);
+                            transportSecurity = ModelSerializationExtensions.JsonDeserialize<FirewallPolicyTransportSecurity>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sku"u8))
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            sku = FirewallPolicySku.DeserializeFirewallPolicySku(property0.Value, options);
+                            sku = ModelSerializationExtensions.JsonDeserialize<FirewallPolicySku>(property0.Value);
                             continue;
                         }
                     }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(Related))
             {
                 writer.WritePropertyName("related"u8);
-                writer.WriteObjectValue(Related, options);
+                ((IJsonModel<LogAnalyticsQuerySearchRelatedMetadata>)Related).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    related = LogAnalyticsQuerySearchRelatedMetadata.DeserializeLogAnalyticsQuerySearchRelatedMetadata(property.Value, options);
+                    related = ModelSerializationExtensions.JsonDeserialize<LogAnalyticsQuerySearchRelatedMetadata>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

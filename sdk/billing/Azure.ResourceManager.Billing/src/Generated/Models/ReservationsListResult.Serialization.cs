@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
-                writer.WriteObjectValue(Summary, options);
+                ((IJsonModel<ReservationSummary>)Summary).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BillingReservationData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    summary = ReservationSummary.DeserializeReservationSummary(property.Value, options);
+                    summary = ModelSerializationExtensions.JsonDeserialize<ReservationSummary>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("value"u8))

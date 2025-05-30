@@ -37,12 +37,12 @@ namespace Azure.Health.Insights.CancerProfiling
             if (Optional.IsDefined(PatientDataEvidence))
             {
                 writer.WritePropertyName("patientDataEvidence"u8);
-                writer.WriteObjectValue(PatientDataEvidence, options);
+                ((IJsonModel<ClinicalNoteEvidence>)PatientDataEvidence).Write(writer, options);
             }
             if (Optional.IsDefined(PatientInfoEvidence))
             {
                 writer.WritePropertyName("patientInfoEvidence"u8);
-                writer.WriteObjectValue(PatientInfoEvidence, options);
+                ((IJsonModel<ClinicalCodedElement>)PatientInfoEvidence).Write(writer, options);
             }
             if (Optional.IsDefined(Importance))
             {
@@ -99,7 +99,7 @@ namespace Azure.Health.Insights.CancerProfiling
                     {
                         continue;
                     }
-                    patientDataEvidence = ClinicalNoteEvidence.DeserializeClinicalNoteEvidence(property.Value, options);
+                    patientDataEvidence = ModelSerializationExtensions.JsonDeserialize<ClinicalNoteEvidence>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("patientInfoEvidence"u8))
@@ -108,7 +108,7 @@ namespace Azure.Health.Insights.CancerProfiling
                     {
                         continue;
                     }
-                    patientInfoEvidence = ClinicalCodedElement.DeserializeClinicalCodedElement(property.Value, options);
+                    patientInfoEvidence = ModelSerializationExtensions.JsonDeserialize<ClinicalCodedElement>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("importance"u8))

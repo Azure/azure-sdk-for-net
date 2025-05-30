@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (options.Format != "W" && Optional.IsDefined(Tls))
             {
                 writer.WritePropertyName("tls"u8);
-                writer.WriteObjectValue(Tls, options);
+                ((IJsonModel<ContainerRegistryTlsProperties>)Tls).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    tls = ContainerRegistryTlsProperties.DeserializeContainerRegistryTlsProperties(property.Value, options);
+                    tls = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryTlsProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(CiemDiscovery))
             {
                 writer.WritePropertyName("ciemDiscovery"u8);
-                writer.WriteObjectValue(CiemDiscovery, options);
+                ((IJsonModel<DefenderCspmAwsOfferingCiemDiscovery>)CiemDiscovery).Write(writer, options);
             }
             if (Optional.IsDefined(CiemOidc))
             {
                 writer.WritePropertyName("ciemOidc"u8);
-                writer.WriteObjectValue(CiemOidc, options);
+                ((IJsonModel<DefenderCspmAwsOfferingCiemOidc>)CiemOidc).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    ciemDiscovery = DefenderCspmAwsOfferingCiemDiscovery.DeserializeDefenderCspmAwsOfferingCiemDiscovery(property.Value, options);
+                    ciemDiscovery = ModelSerializationExtensions.JsonDeserialize<DefenderCspmAwsOfferingCiemDiscovery>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ciemOidc"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    ciemOidc = DefenderCspmAwsOfferingCiemOidc.DeserializeDefenderCspmAwsOfferingCiemOidc(property.Value, options);
+                    ciemOidc = ModelSerializationExtensions.JsonDeserialize<DefenderCspmAwsOfferingCiemOidc>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

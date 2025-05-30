@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             if (Optional.IsDefined(UsernamePasswordCredentials))
             {
                 writer.WritePropertyName("usernamePasswordCredentials"u8);
-                writer.WriteObjectValue(UsernamePasswordCredentials, options);
+                ((IJsonModel<DeviceRegistryUsernamePasswordCredentials>)UsernamePasswordCredentials).Write(writer, options);
             }
             if (Optional.IsDefined(X509Credentials))
             {
                 writer.WritePropertyName("x509Credentials"u8);
-                writer.WriteObjectValue(X509Credentials, options);
+                ((IJsonModel<DeviceRegistryX509Credentials>)X509Credentials).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     {
                         continue;
                     }
-                    usernamePasswordCredentials = DeviceRegistryUsernamePasswordCredentials.DeserializeDeviceRegistryUsernamePasswordCredentials(property.Value, options);
+                    usernamePasswordCredentials = ModelSerializationExtensions.JsonDeserialize<DeviceRegistryUsernamePasswordCredentials>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("x509Credentials"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     {
                         continue;
                     }
-                    x509Credentials = DeviceRegistryX509Credentials.DeserializeDeviceRegistryX509Credentials(property.Value, options);
+                    x509Credentials = ModelSerializationExtensions.JsonDeserialize<DeviceRegistryX509Credentials>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedElasticPoolPerformanceLevels)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ElasticPoolPerformanceLevelCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

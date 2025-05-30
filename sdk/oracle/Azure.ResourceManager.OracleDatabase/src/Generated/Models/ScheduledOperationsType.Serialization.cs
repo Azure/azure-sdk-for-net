@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
 
             writer.WritePropertyName("dayOfWeek"u8);
-            writer.WriteObjectValue(DayOfWeek, options);
+            ((IJsonModel<OracleDatabaseDayOfWeek>)DayOfWeek).Write(writer, options);
             if (Optional.IsDefined(AutoStartOn))
             {
                 writer.WritePropertyName("scheduledStartTime"u8);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 if (property.NameEquals("dayOfWeek"u8))
                 {
-                    dayOfWeek = OracleDatabaseDayOfWeek.DeserializeOracleDatabaseDayOfWeek(property.Value, options);
+                    dayOfWeek = ModelSerializationExtensions.JsonDeserialize<OracleDatabaseDayOfWeek>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scheduledStartTime"u8))

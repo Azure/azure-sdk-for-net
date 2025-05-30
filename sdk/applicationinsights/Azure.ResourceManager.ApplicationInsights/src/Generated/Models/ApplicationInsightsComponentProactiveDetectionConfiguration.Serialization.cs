@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             if (Optional.IsDefined(RuleDefinitions))
             {
                 writer.WritePropertyName("RuleDefinitions"u8);
-                writer.WriteObjectValue(RuleDefinitions, options);
+                ((IJsonModel<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>)RuleDefinitions).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    ruleDefinitions = ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions.DeserializeApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(property.Value, options);
+                    ruleDefinitions = ModelSerializationExtensions.JsonDeserialize<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

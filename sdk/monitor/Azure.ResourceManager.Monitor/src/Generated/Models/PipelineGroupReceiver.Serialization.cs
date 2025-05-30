@@ -41,17 +41,17 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Syslog))
             {
                 writer.WritePropertyName("syslog"u8);
-                writer.WriteObjectValue(Syslog, options);
+                ((IJsonModel<SyslogReceiver>)Syslog).Write(writer, options);
             }
             if (Optional.IsDefined(Otlp))
             {
                 writer.WritePropertyName("otlp"u8);
-                writer.WriteObjectValue(Otlp, options);
+                ((IJsonModel<OtlpReceiver>)Otlp).Write(writer, options);
             }
             if (Optional.IsDefined(Udp))
             {
                 writer.WritePropertyName("udp"u8);
-                writer.WriteObjectValue(Udp, options);
+                ((IJsonModel<UdpReceiver>)Udp).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    syslog = SyslogReceiver.DeserializeSyslogReceiver(property.Value, options);
+                    syslog = ModelSerializationExtensions.JsonDeserialize<SyslogReceiver>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("otlp"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    otlp = OtlpReceiver.DeserializeOtlpReceiver(property.Value, options);
+                    otlp = ModelSerializationExtensions.JsonDeserialize<OtlpReceiver>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("udp"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    udp = UdpReceiver.DeserializeUdpReceiver(property.Value, options);
+                    udp = ModelSerializationExtensions.JsonDeserialize<UdpReceiver>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

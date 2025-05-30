@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (options.Format != "W" && Optional.IsDefined(ExtensionInstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(ExtensionInstanceView, options);
+                ((IJsonModel<ArcExtensionInstanceView>)ExtensionInstanceView).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    instanceView = ArcExtensionInstanceView.DeserializeArcExtensionInstanceView(property.Value, options);
+                    instanceView = ModelSerializationExtensions.JsonDeserialize<ArcExtensionInstanceView>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

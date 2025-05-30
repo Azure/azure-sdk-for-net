@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplianceNetworkConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in AccountCredentialDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataBoxAccountCredentialDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

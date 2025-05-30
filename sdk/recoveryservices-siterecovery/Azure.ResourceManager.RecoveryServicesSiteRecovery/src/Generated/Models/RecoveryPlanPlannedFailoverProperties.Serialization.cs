@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProviderSpecificDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RecoveryPlanProviderSpecificFailoverContent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

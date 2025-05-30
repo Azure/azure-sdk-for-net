@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkIntentPolicyConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetworkIntentPolicyConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

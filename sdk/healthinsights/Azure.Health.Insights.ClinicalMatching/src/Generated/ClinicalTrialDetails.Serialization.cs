@@ -44,10 +44,10 @@ namespace Azure.Health.Insights.ClinicalMatching
             if (Optional.IsDefined(Demographics))
             {
                 writer.WritePropertyName("demographics"u8);
-                writer.WriteObjectValue(Demographics, options);
+                ((IJsonModel<ClinicalTrialDemographics>)Demographics).Write(writer, options);
             }
             writer.WritePropertyName("metadata"u8);
-            writer.WriteObjectValue(Metadata, options);
+            ((IJsonModel<ClinicalTrialMetadata>)Metadata).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -109,12 +109,12 @@ namespace Azure.Health.Insights.ClinicalMatching
                     {
                         continue;
                     }
-                    demographics = ClinicalTrialDemographics.DeserializeClinicalTrialDemographics(property.Value, options);
+                    demographics = ModelSerializationExtensions.JsonDeserialize<ClinicalTrialDemographics>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))
                 {
-                    metadata = ClinicalTrialMetadata.DeserializeClinicalTrialMetadata(property.Value, options);
+                    metadata = ModelSerializationExtensions.JsonDeserialize<ClinicalTrialMetadata>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

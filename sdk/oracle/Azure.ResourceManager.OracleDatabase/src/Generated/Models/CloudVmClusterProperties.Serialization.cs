@@ -229,14 +229,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WriteStartArray();
                 foreach (var item in NsgCidrs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CloudVmClusterNsgCidr>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DataCollectionOptions))
             {
                 writer.WritePropertyName("dataCollectionOptions"u8);
-                writer.WriteObjectValue(DataCollectionOptions, options);
+                ((IJsonModel<DiagnosticCollectionConfig>)DataCollectionOptions).Write(writer, options);
             }
             writer.WritePropertyName("displayName"u8);
             writer.WriteStringValue(DisplayName);
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             if (options.Format != "W" && Optional.IsDefined(IormConfigCache))
             {
                 writer.WritePropertyName("iormConfigCache"u8);
-                writer.WriteObjectValue(IormConfigCache, options);
+                ((IJsonModel<ExadataIormConfig>)IormConfigCache).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastUpdateHistoryEntryId))
             {
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    dataCollectionOptions = DiagnosticCollectionConfig.DeserializeDiagnosticCollectionConfig(property.Value, options);
+                    dataCollectionOptions = ModelSerializationExtensions.JsonDeserialize<DiagnosticCollectionConfig>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    iormConfigCache = ExadataIormConfig.DeserializeExadataIormConfig(property.Value, options);
+                    iormConfigCache = ModelSerializationExtensions.JsonDeserialize<ExadataIormConfig>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lastUpdateHistoryEntryId"u8))

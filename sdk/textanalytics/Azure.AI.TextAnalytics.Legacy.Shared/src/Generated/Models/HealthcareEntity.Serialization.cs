@@ -36,7 +36,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     {
                         continue;
                     }
-                    assertion = HealthcareAssertion.DeserializeHealthcareAssertion(property.Value);
+                    assertion = ModelSerializationExtensions.JsonDeserialize<HealthcareAssertion>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

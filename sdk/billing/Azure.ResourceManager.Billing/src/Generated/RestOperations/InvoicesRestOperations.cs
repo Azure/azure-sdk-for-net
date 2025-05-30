@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
@@ -232,7 +233,7 @@ namespace Azure.ResourceManager.Billing
             content.JsonWriter.WriteStartArray();
             foreach (var item in arrayOfDocumentDownloadRequest)
             {
-                content.JsonWriter.WriteObjectValue(item, ModelSerializationExtensions.WireOptions);
+                ((IJsonModel<BillingDocumentDownloadRequestContent>)item).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;
@@ -803,7 +804,7 @@ namespace Azure.ResourceManager.Billing
             content.JsonWriter.WriteStartArray();
             foreach (var item in arrayOfDocumentDownloadRequest)
             {
-                content.JsonWriter.WriteObjectValue(item, ModelSerializationExtensions.WireOptions);
+                ((IJsonModel<BillingDocumentDownloadRequestContent>)item).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;

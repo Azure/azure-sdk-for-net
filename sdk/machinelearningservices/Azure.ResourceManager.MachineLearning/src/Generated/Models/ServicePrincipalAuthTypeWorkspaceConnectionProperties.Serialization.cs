@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials, options);
+                ((IJsonModel<WorkspaceConnectionServicePrincipal>)Credentials).Write(writer, options);
             }
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    credentials = WorkspaceConnectionServicePrincipal.DeserializeWorkspaceConnectionServicePrincipal(property.Value, options);
+                    credentials = ModelSerializationExtensions.JsonDeserialize<WorkspaceConnectionServicePrincipal>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("authType"u8))

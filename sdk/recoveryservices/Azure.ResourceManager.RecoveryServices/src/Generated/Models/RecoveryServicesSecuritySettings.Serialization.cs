@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(ImmutabilitySettings))
             {
                 writer.WritePropertyName("immutabilitySettings"u8);
-                writer.WriteObjectValue(ImmutabilitySettings, options);
+                ((IJsonModel<ImmutabilitySettings>)ImmutabilitySettings).Write(writer, options);
             }
             if (Optional.IsDefined(SoftDeleteSettings))
             {
                 writer.WritePropertyName("softDeleteSettings"u8);
-                writer.WriteObjectValue(SoftDeleteSettings, options);
+                ((IJsonModel<RecoveryServicesSoftDeleteSettings>)SoftDeleteSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MultiUserAuthorization))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    immutabilitySettings = ImmutabilitySettings.DeserializeImmutabilitySettings(property.Value, options);
+                    immutabilitySettings = ModelSerializationExtensions.JsonDeserialize<ImmutabilitySettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("softDeleteSettings"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    softDeleteSettings = RecoveryServicesSoftDeleteSettings.DeserializeRecoveryServicesSoftDeleteSettings(property.Value, options);
+                    softDeleteSettings = ModelSerializationExtensions.JsonDeserialize<RecoveryServicesSoftDeleteSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("multiUserAuthorization"u8))

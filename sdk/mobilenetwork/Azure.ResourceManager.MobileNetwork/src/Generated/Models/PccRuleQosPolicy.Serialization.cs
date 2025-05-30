@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(GuaranteedBitRate))
             {
                 writer.WritePropertyName("guaranteedBitRate"u8);
-                writer.WriteObjectValue(GuaranteedBitRate, options);
+                ((IJsonModel<Ambr>)GuaranteedBitRate).Write(writer, options);
             }
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    guaranteedBitRate = Ambr.DeserializeAmbr(property.Value, options);
+                    guaranteedBitRate = ModelSerializationExtensions.JsonDeserialize<Ambr>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("5qi"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
                 if (property.NameEquals("maximumBitRate"u8))
                 {
-                    maximumBitRate = Ambr.DeserializeAmbr(property.Value, options);
+                    maximumBitRate = ModelSerializationExtensions.JsonDeserialize<Ambr>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

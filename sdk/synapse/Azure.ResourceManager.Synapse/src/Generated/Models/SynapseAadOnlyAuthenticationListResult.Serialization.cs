@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SynapseAadOnlyAuthenticationData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

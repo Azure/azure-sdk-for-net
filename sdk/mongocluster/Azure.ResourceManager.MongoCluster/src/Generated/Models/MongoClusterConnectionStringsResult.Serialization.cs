@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 writer.WriteStartArray();
                 foreach (var item in ConnectionStrings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MongoClusterConnectionString>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

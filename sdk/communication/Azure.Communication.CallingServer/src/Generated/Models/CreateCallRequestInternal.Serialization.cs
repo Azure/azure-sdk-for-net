@@ -19,11 +19,11 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartArray();
             foreach (var item in Targets)
             {
-                writer.WriteObjectValue(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            JsonSerializer.Serialize(writer, Source);
             if (Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
@@ -34,7 +34,7 @@ namespace Azure.Communication.CallingServer
             if (Optional.IsDefined(MediaStreamingConfiguration))
             {
                 writer.WritePropertyName("mediaStreamingConfiguration"u8);
-                writer.WriteObjectValue(MediaStreamingConfiguration);
+                JsonSerializer.Serialize(writer, MediaStreamingConfiguration);
             }
             writer.WriteEndObject();
         }

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<SecurityPolicyProperties>)Properties).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             {
                                 continue;
                             }
-                            parameters = SecurityPolicyProperties.DeserializeSecurityPolicyProperties(property0.Value, options);
+                            parameters = ModelSerializationExtensions.JsonDeserialize<SecurityPolicyProperties>(property0.Value);
                             continue;
                         }
                     }

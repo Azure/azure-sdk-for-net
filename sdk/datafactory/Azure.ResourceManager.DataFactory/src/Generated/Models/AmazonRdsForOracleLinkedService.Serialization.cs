@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-                JsonSerializer.Serialize(writer, ConnectionString);
+                ((IJsonModel<DataFactoryElement<T>>)ConnectionString).Write(writer, options);
             }
             if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
-                JsonSerializer.Serialize(writer, Server);
+                ((IJsonModel<DataFactoryElement<T>>)Server).Write(writer, options);
             }
             if (Optional.IsDefined(AuthenticationType))
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                JsonSerializer.Serialize(writer, Username);
+                ((IJsonModel<DataFactoryElement<T>>)Username).Write(writer, options);
             }
             if (Optional.IsDefined(Password))
             {
@@ -66,57 +66,57 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EncryptionClient))
             {
                 writer.WritePropertyName("encryptionClient"u8);
-                JsonSerializer.Serialize(writer, EncryptionClient);
+                ((IJsonModel<DataFactoryElement<T>>)EncryptionClient).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptionTypesClient))
             {
                 writer.WritePropertyName("encryptionTypesClient"u8);
-                JsonSerializer.Serialize(writer, EncryptionTypesClient);
+                ((IJsonModel<DataFactoryElement<T>>)EncryptionTypesClient).Write(writer, options);
             }
             if (Optional.IsDefined(CryptoChecksumClient))
             {
                 writer.WritePropertyName("cryptoChecksumClient"u8);
-                JsonSerializer.Serialize(writer, CryptoChecksumClient);
+                ((IJsonModel<DataFactoryElement<T>>)CryptoChecksumClient).Write(writer, options);
             }
             if (Optional.IsDefined(CryptoChecksumTypesClient))
             {
                 writer.WritePropertyName("cryptoChecksumTypesClient"u8);
-                JsonSerializer.Serialize(writer, CryptoChecksumTypesClient);
+                ((IJsonModel<DataFactoryElement<T>>)CryptoChecksumTypesClient).Write(writer, options);
             }
             if (Optional.IsDefined(InitialLobFetchSize))
             {
                 writer.WritePropertyName("initialLobFetchSize"u8);
-                JsonSerializer.Serialize(writer, InitialLobFetchSize);
+                ((IJsonModel<DataFactoryElement<T>>)InitialLobFetchSize).Write(writer, options);
             }
             if (Optional.IsDefined(FetchSize))
             {
                 writer.WritePropertyName("fetchSize"u8);
-                JsonSerializer.Serialize(writer, FetchSize);
+                ((IJsonModel<DataFactoryElement<T>>)FetchSize).Write(writer, options);
             }
             if (Optional.IsDefined(StatementCacheSize))
             {
                 writer.WritePropertyName("statementCacheSize"u8);
-                JsonSerializer.Serialize(writer, StatementCacheSize);
+                ((IJsonModel<DataFactoryElement<T>>)StatementCacheSize).Write(writer, options);
             }
             if (Optional.IsDefined(InitializationString))
             {
                 writer.WritePropertyName("initializationString"u8);
-                JsonSerializer.Serialize(writer, InitializationString);
+                ((IJsonModel<DataFactoryElement<T>>)InitializationString).Write(writer, options);
             }
             if (Optional.IsDefined(EnableBulkLoad))
             {
                 writer.WritePropertyName("enableBulkLoad"u8);
-                JsonSerializer.Serialize(writer, EnableBulkLoad);
+                ((IJsonModel<DataFactoryElement<T>>)EnableBulkLoad).Write(writer, options);
             }
             if (Optional.IsDefined(SupportV1DataTypes))
             {
                 writer.WritePropertyName("supportV1DataTypes"u8);
-                JsonSerializer.Serialize(writer, SupportV1DataTypes);
+                ((IJsonModel<DataFactoryElement<T>>)SupportV1DataTypes).Write(writer, options);
             }
             if (Optional.IsDefined(FetchTswtzAsTimestamp))
             {
                 writer.WritePropertyName("fetchTswtzAsTimestamp"u8);
-                JsonSerializer.Serialize(writer, FetchTswtzAsTimestamp);
+                ((IJsonModel<DataFactoryElement<T>>)FetchTswtzAsTimestamp).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
+                    connectVia = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            connectionString = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            connectionString = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("server"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            server = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            server = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("authenticationType"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            username = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            username = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("password"u8))
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            password = ModelSerializationExtensions.JsonDeserialize<DataFactorySecret>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptionClient"u8))
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            encryptionClient = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            encryptionClient = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptionTypesClient"u8))
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            encryptionTypesClient = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            encryptionTypesClient = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cryptoChecksumClient"u8))
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            cryptoChecksumClient = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            cryptoChecksumClient = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cryptoChecksumTypesClient"u8))
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            cryptoChecksumTypesClient = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            cryptoChecksumTypesClient = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("initialLobFetchSize"u8))
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            initialLobFetchSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            initialLobFetchSize = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("fetchSize"u8))
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            fetchSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            fetchSize = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("statementCacheSize"u8))
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            statementCacheSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            statementCacheSize = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("initializationString"u8))
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            initializationString = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            initializationString = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enableBulkLoad"u8))
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            enableBulkLoad = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            enableBulkLoad = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("supportV1DataTypes"u8))
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            supportV1DataTypes = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            supportV1DataTypes = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("fetchTswtzAsTimestamp"u8))
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            fetchTswtzAsTimestamp = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            fetchTswtzAsTimestamp = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

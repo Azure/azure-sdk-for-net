@@ -62,22 +62,22 @@ namespace Azure.ResourceManager.IotOperations.Models
             if (Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("dataSource"u8);
-                writer.WriteObjectValue(DataSource, options);
+                ((IJsonModel<LocalKubernetesReference>)DataSource).Write(writer, options);
             }
             if (Optional.IsDefined(DataSourceRef))
             {
                 writer.WritePropertyName("dataSourceRef"u8);
-                writer.WriteObjectValue(DataSourceRef, options);
+                ((IJsonModel<KubernetesReference>)DataSourceRef).Write(writer, options);
             }
             if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
-                writer.WriteObjectValue(Resources, options);
+                ((IJsonModel<VolumeClaimResourceRequirements>)Resources).Write(writer, options);
             }
             if (Optional.IsDefined(Selector))
             {
                 writer.WritePropertyName("selector"u8);
-                writer.WriteObjectValue(Selector, options);
+                ((IJsonModel<VolumeClaimSpecSelector>)Selector).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    dataSource = LocalKubernetesReference.DeserializeLocalKubernetesReference(property.Value, options);
+                    dataSource = ModelSerializationExtensions.JsonDeserialize<LocalKubernetesReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataSourceRef"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    dataSourceRef = KubernetesReference.DeserializeKubernetesReference(property.Value, options);
+                    dataSourceRef = ModelSerializationExtensions.JsonDeserialize<KubernetesReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resources"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    resources = VolumeClaimResourceRequirements.DeserializeVolumeClaimResourceRequirements(property.Value, options);
+                    resources = ModelSerializationExtensions.JsonDeserialize<VolumeClaimResourceRequirements>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("selector"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    selector = VolumeClaimSpecSelector.DeserializeVolumeClaimSpecSelector(property.Value, options);
+                    selector = ModelSerializationExtensions.JsonDeserialize<VolumeClaimSpecSelector>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

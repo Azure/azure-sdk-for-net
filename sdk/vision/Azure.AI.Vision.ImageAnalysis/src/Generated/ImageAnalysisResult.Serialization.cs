@@ -37,41 +37,41 @@ namespace Azure.AI.Vision.ImageAnalysis
             if (Optional.IsDefined(Caption))
             {
                 writer.WritePropertyName("captionResult"u8);
-                writer.WriteObjectValue(Caption, options);
+                ((IJsonModel<CaptionResult>)Caption).Write(writer, options);
             }
             if (Optional.IsDefined(DenseCaptions))
             {
                 writer.WritePropertyName("denseCaptionsResult"u8);
-                writer.WriteObjectValue(DenseCaptions, options);
+                ((IJsonModel<DenseCaptionsResult>)DenseCaptions).Write(writer, options);
             }
             writer.WritePropertyName("metadata"u8);
-            writer.WriteObjectValue(Metadata, options);
+            ((IJsonModel<ImageMetadata>)Metadata).Write(writer, options);
             writer.WritePropertyName("modelVersion"u8);
             writer.WriteStringValue(ModelVersion);
             if (Optional.IsDefined(Objects))
             {
                 writer.WritePropertyName("objectsResult"u8);
-                writer.WriteObjectValue(Objects, options);
+                ((IJsonModel<ObjectsResult>)Objects).Write(writer, options);
             }
             if (Optional.IsDefined(People))
             {
                 writer.WritePropertyName("peopleResult"u8);
-                writer.WriteObjectValue(People, options);
+                ((IJsonModel<PeopleResult>)People).Write(writer, options);
             }
             if (Optional.IsDefined(Read))
             {
                 writer.WritePropertyName("readResult"u8);
-                writer.WriteObjectValue(Read, options);
+                ((IJsonModel<ReadResult>)Read).Write(writer, options);
             }
             if (Optional.IsDefined(SmartCrops))
             {
                 writer.WritePropertyName("smartCropsResult"u8);
-                writer.WriteObjectValue(SmartCrops, options);
+                ((IJsonModel<SmartCropsResult>)SmartCrops).Write(writer, options);
             }
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tagsResult"u8);
-                writer.WriteObjectValue(Tags, options);
+                ((IJsonModel<TagsResult>)Tags).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -129,7 +129,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    captionResult = CaptionResult.DeserializeCaptionResult(property.Value, options);
+                    captionResult = ModelSerializationExtensions.JsonDeserialize<CaptionResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("denseCaptionsResult"u8))
@@ -138,12 +138,12 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    denseCaptionsResult = DenseCaptionsResult.DeserializeDenseCaptionsResult(property.Value, options);
+                    denseCaptionsResult = ModelSerializationExtensions.JsonDeserialize<DenseCaptionsResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))
                 {
-                    metadata = ImageMetadata.DeserializeImageMetadata(property.Value, options);
+                    metadata = ModelSerializationExtensions.JsonDeserialize<ImageMetadata>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("modelVersion"u8))
@@ -157,7 +157,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    objectsResult = ObjectsResult.DeserializeObjectsResult(property.Value, options);
+                    objectsResult = ModelSerializationExtensions.JsonDeserialize<ObjectsResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("peopleResult"u8))
@@ -166,7 +166,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    peopleResult = PeopleResult.DeserializePeopleResult(property.Value, options);
+                    peopleResult = ModelSerializationExtensions.JsonDeserialize<PeopleResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("readResult"u8))
@@ -175,7 +175,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    readResult = ReadResult.DeserializeReadResult(property.Value, options);
+                    readResult = ModelSerializationExtensions.JsonDeserialize<ReadResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("smartCropsResult"u8))
@@ -184,7 +184,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    smartCropsResult = SmartCropsResult.DeserializeSmartCropsResult(property.Value, options);
+                    smartCropsResult = ModelSerializationExtensions.JsonDeserialize<SmartCropsResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tagsResult"u8))
@@ -193,7 +193,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    tagsResult = TagsResult.DeserializeTagsResult(property.Value, options);
+                    tagsResult = ModelSerializationExtensions.JsonDeserialize<TagsResult>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -57,7 +57,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(InferenceOptions))
             {
                 writer.WritePropertyName("inferenceOptions"u8);
-                writer.WriteObjectValue(InferenceOptions, options);
+                ((IJsonModel<RadiologyInsightsInferenceOptions>)InferenceOptions).Write(writer, options);
             }
             if (Optional.IsDefined(Locale))
             {
@@ -148,7 +148,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    inferenceOptions = RadiologyInsightsInferenceOptions.DeserializeRadiologyInsightsInferenceOptions(property.Value, options);
+                    inferenceOptions = ModelSerializationExtensions.JsonDeserialize<RadiologyInsightsInferenceOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("locale"u8))

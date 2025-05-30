@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.ContainerService
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("controlPlaneProfile"u8);
-            writer.WriteObjectValue(ControlPlaneProfile, options);
+            ((IJsonModel<ManagedClusterPoolUpgradeProfile>)ControlPlaneProfile).Write(writer, options);
             writer.WritePropertyName("agentPoolProfiles"u8);
             writer.WriteStartArray();
             foreach (var item in AgentPoolProfiles)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ManagedClusterPoolUpgradeProfile>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerService
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ContainerService
                     {
                         if (property0.NameEquals("controlPlaneProfile"u8))
                         {
-                            controlPlaneProfile = ManagedClusterPoolUpgradeProfile.DeserializeManagedClusterPoolUpgradeProfile(property0.Value, options);
+                            controlPlaneProfile = ModelSerializationExtensions.JsonDeserialize<ManagedClusterPoolUpgradeProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("agentPoolProfiles"u8))

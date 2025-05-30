@@ -94,17 +94,17 @@ namespace Azure.Developer.DevCenter.Models
             if (options.Format != "W" && Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile, options);
+                ((IJsonModel<DevBoxHardwareProfile>)HardwareProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile, options);
+                ((IJsonModel<DevBoxStorageProfile>)StorageProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
-                writer.WriteObjectValue(ImageReference, options);
+                ((IJsonModel<DevBoxImageReference>)ImageReference).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedTime))
             {
@@ -236,7 +236,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -272,7 +272,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    hardwareProfile = DevBoxHardwareProfile.DeserializeDevBoxHardwareProfile(property.Value, options);
+                    hardwareProfile = ModelSerializationExtensions.JsonDeserialize<DevBoxHardwareProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storageProfile"u8))
@@ -281,7 +281,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    storageProfile = DevBoxStorageProfile.DeserializeDevBoxStorageProfile(property.Value, options);
+                    storageProfile = ModelSerializationExtensions.JsonDeserialize<DevBoxStorageProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("imageReference"u8))
@@ -290,7 +290,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    imageReference = DevBoxImageReference.DeserializeDevBoxImageReference(property.Value, options);
+                    imageReference = ModelSerializationExtensions.JsonDeserialize<DevBoxImageReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("createdTime"u8))

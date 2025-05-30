@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in ProfilePropertyReferences)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ParticipantProfilePropertyReference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in RelatedProfilePropertyReferences)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ParticipantProfilePropertyReference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
