@@ -5,7 +5,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.WebJobs" />
-    <PackageReference Include="Microsoft.Extensions.Logging" />
   </ItemGroup>
 
   <ItemGroup>
