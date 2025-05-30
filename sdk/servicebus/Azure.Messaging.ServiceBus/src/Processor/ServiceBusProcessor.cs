@@ -1072,7 +1072,12 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         private void UpdatePrefetchCountOnReceivers()
         {
-            int prefetchCount = Options.PrefetchCount;
+            int prefetchCount;
+            lock (_optionsLock)
+            {
+                prefetchCount = Options.PrefetchCount;
+            }
+            
             foreach (var receiverManager in _receiverManagers)
             {
                 receiverManager.UpdatePrefetchCount(prefetchCount);
