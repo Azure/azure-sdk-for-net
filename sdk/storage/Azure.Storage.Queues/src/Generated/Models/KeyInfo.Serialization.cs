@@ -16,9 +16,12 @@ namespace Azure.Storage.Queues.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "KeyInfo");
-            writer.WriteStartElement("Start");
-            writer.WriteValue(Start);
-            writer.WriteEndElement();
+            if (Common.Optional.IsDefined(Start))
+            {
+                writer.WriteStartElement("Start");
+                writer.WriteValue(Start);
+                writer.WriteEndElement();
+            }
             writer.WriteStartElement("Expiry");
             writer.WriteValue(Expiry);
             writer.WriteEndElement();

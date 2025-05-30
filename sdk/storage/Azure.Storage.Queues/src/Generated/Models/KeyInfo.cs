@@ -14,15 +14,12 @@ namespace Azure.Storage.Queues.Models
     public partial class KeyInfo
     {
         /// <summary> Initializes a new instance of <see cref="KeyInfo"/>. </summary>
-        /// <param name="start"> The date-time the key is active in ISO 8601 UTC time. </param>
         /// <param name="expiry"> The date-time the key expires in ISO 8601 UTC time. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="start"/> or <paramref name="expiry"/> is null. </exception>
-        public KeyInfo(string start, string expiry)
+        /// <exception cref="ArgumentNullException"> <paramref name="expiry"/> is null. </exception>
+        public KeyInfo(string expiry)
         {
-            Argument.AssertNotNull(start, nameof(start));
             Argument.AssertNotNull(expiry, nameof(expiry));
 
-            Start = start;
             Expiry = expiry;
         }
 
@@ -38,7 +35,7 @@ namespace Azure.Storage.Queues.Models
         }
 
         /// <summary> The date-time the key is active in ISO 8601 UTC time. </summary>
-        public string Start { get; }
+        public string Start { get; set; }
         /// <summary> The date-time the key expires in ISO 8601 UTC time. </summary>
         public string Expiry { get; }
         /// <summary> Optional. String, The delegated user tenant ID in Entra ID. </summary>

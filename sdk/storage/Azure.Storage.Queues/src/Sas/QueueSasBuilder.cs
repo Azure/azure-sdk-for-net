@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Text;
 using Azure.Core;
 using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
 
 namespace Azure.Storage.Sas
 {
