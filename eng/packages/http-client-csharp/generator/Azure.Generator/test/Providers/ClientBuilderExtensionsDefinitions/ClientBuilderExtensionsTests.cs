@@ -65,5 +65,24 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
             var file = writer.Write();
             Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
         }
+
+        [Test]
+        public void AddsClientExtensionForEachAuthMethodMultipleClients()
+        {
+            var client1  = InputFactory.Client("TestClient", "Samples", "");
+            var client2  = InputFactory.Client("TestClient2", "Samples", "");
+            var plugin = MockHelpers.LoadMockPlugin(
+                apiKeyAuth: () => new InputApiKeyAuth("mock", null),
+                oauth2Auth: ()=> new InputOAuth2Auth(["mock"]),
+                clients: () => [client1, client2]);
+
+            var builderExtensions = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ClientBuilderExtensionsDefinition>().SingleOrDefault();
+
+            Assert.IsNotNull(builderExtensions);
+            var writer = new TypeProviderWriter(builderExtensions!);
+            var file = writer.Write();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+        }
     }
 }
