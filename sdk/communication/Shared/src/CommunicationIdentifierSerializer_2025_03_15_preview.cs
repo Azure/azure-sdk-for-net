@@ -13,7 +13,6 @@ namespace Azure.Communication
         // Uncomment and use in CallAutomation SDK instead of the base CommunicationIdentifierSerializer once the common swagger is updated to 2025-03-15-preview
         // and includes the new TeamsExtensionUserIdentifierModel and new properties for PhoneNumberIdentifierModel
 
-        /*
         public static CommunicationIdentifier Deserialize(CommunicationIdentifierModel identifier)
         {
             string rawId = Base.AssertNotNull(identifier.RawId, nameof(identifier.RawId), nameof(CommunicationIdentifierModel));
@@ -86,6 +85,5 @@ namespace Azure.Communication
                 },
                 _ => Base.Serialize(identifier),
             };
-        */
     }
 }

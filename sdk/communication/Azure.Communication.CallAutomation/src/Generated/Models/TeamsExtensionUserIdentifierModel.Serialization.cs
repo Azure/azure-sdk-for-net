@@ -6,11 +6,12 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.CallAutomation;
 using Azure.Core;
 
-namespace Azure.Communication.CallAutomation
+namespace Azure.Communication
 {
-    public partial class TeamsExtensionUserIdentifierModel : IUtf8JsonSerializable
+    internal partial class TeamsExtensionUserIdentifierModel : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -21,7 +22,7 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStringValue(TenantId);
             writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
-            if (Optional.IsDefined(Cloud))
+            if (CallAutomation.Optional.IsDefined(Cloud))
             {
                 writer.WritePropertyName("cloud"u8);
                 writer.WriteStringValue(Cloud.Value.ToString());
@@ -80,7 +81,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
-            var content = new Utf8JsonRequestContent();
+            var content = new CallAutomation.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this);
             return content;
         }
