@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Humanizer;
-using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
@@ -20,7 +20,6 @@ namespace Azure.Generator.Management.Providers
     {
         private protected readonly IReadOnlyList<ResourceClientProvider> _resources;
 
-        private const string GetCachedClient = "GetCachedClient";
         private const string IdProperty = "Id";
 
         // TODO -- in the future we need to update this to include the operations this mockable resource should include.
@@ -91,11 +90,10 @@ namespace Azure.Generator.Management.Providers
                     $"An object representing collection of {pluralOfResourceName} and their operations over a {resource.Name}.",
                     []
                     );
-                var clientVar = new CodeWriterDeclaration("client");
-                var lambda = new FuncExpression([clientVar], New.Instance(collection.Type, new ValueExpression[] { new VariableExpression(typeof(ArmClient), clientVar), This.Property(IdProperty) }));
+
                 var bodyStatement = new MethodBodyStatement[]
                 {
-                    Return(This.Invoke(GetCachedClient, lambda))
+                    Return(This.As<ArmResource>().GetCachedClient(new CodeWriterDeclaration("client"), client => New.Instance(collection.Type, client, This.As<ArmResource>().Id())))
                 };
                 yield return new MethodProvider(
                     collectionMethodSignature,

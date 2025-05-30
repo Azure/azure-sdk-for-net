@@ -1,15 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using Azure.Core;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers.OperationMethodProviders;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -69,9 +70,31 @@ namespace Azure.Generator.Management.Providers
         protected override ConstructorProvider[] BuildConstructors()
             => [ConstructorProviderHelper.BuildMockingConstructor(this), BuildResourceIdentifierConstructor()];
 
-        protected override ValueExpression ExpectedResourceTypeForValidation => Static(typeof(ResourceGroupResource)).Property("ResourceType");
+        // TODO -- we need to change this type to its parent resource type.
+        private ScopedApi<ResourceType>? _resourceTypeExpression;
+        protected override ScopedApi<ResourceType> ResourceTypeExpression => _resourceTypeExpression??= BuildCollectionResourceTypeExpression();
 
-        protected override ValueExpression ResourceTypeExpression => Static(_resource.Type).Property("ResourceType");
+        private ScopedApi<ResourceType> BuildCollectionResourceTypeExpression()
+        {
+            // we need to know the parent of the current resource, and use the `ResourceType` property of the parent resource.
+            return Static(GetParentResourceType()).Property("ResourceType").As<ResourceType>();
+        }
+
+        private CSharpType GetParentResourceType()
+        {
+            // TODO -- implement this to be more accurate when we implement the parent of resources.
+            switch (ResourceScope)
+            {
+                case ResourceScope.ResourceGroup:
+                    return typeof(ResourceGroupResource);
+                case ResourceScope.Subscription:
+                    return typeof(SubscriptionResource);
+                case ResourceScope.Tenant:
+                    return typeof(TenantResource);
+                default:
+                    throw new NotSupportedException($"Unsupported resource scope: {ResourceScope}");
+            }
+        }
 
         protected internal override CSharpType ResourceClientCSharpType => _resource.Type;
 

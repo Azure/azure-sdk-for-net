@@ -5,10 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 
@@ -29,33 +25,13 @@ namespace MgmtTypeSpec
         {
         }
 
-        /// <summary> Gets a collection of Foos in the <see cref="ArmClient"/>. </summary>
-        /// <returns> An object representing collection of Foos and their operations over a FooResource. </returns>
-        public virtual FooCollection GetFoos()
+        /// <summary> Gets an object representing a <see cref="FooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FooResource"/> object. </returns>
+        public virtual FooResource GetFooResource(ResourceIdentifier id)
         {
-            return GetCachedClient(client => new FooCollection(client, Id));
-        }
-
-        /// <summary> Get a Foo. </summary>
-        /// <param name="fooName"> The name of the Foo. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
-        public virtual Response<FooResource> Get(string fooName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(fooName, nameof(fooName));
-
-            return GetFoos().Get(fooName, cancellationToken);
-        }
-
-        /// <summary> Get a Foo. </summary>
-        /// <param name="fooName"> The name of the Foo. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
-        public virtual async Task<Response<FooResource>> GetAsync(string fooName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(fooName, nameof(fooName));
-
-            return await GetFoos().GetAsync(fooName, cancellationToken).ConfigureAwait(false);
+            FooResource.ValidateResourceId(id);
+            return new FooResource(Client, id);
         }
     }
 }

@@ -63,7 +63,7 @@ namespace Azure.Generator.Management.Providers
         private MethodProvider BuildGetCachedClientMethod(MockableResourceProvider mockableResource)
         {
             var coreType = mockableResource.ArmCoreType;
-            var parameter = new ParameterProvider(coreType.Name.ToVariableName(), $"", coreType);
+            var parameter = new ParameterProvider(GetArmCoreTypeVariableName(coreType), $"", coreType);
             var methodSignature = new MethodSignature(
                 $"Get{mockableResource.Name}",
                 null,
@@ -86,14 +86,14 @@ namespace Azure.Generator.Management.Providers
             return new MethodProvider(methodSignature, statements, this);
         }
 
-        private MethodProvider BuildRedirectMethod(CSharpType armCoreType, MethodProvider targetMethod, MethodProvider getCachedClientMethod)
+        private MethodProvider BuildRedirectMethod(CSharpType coreType, MethodProvider targetMethod, MethodProvider getCachedClientMethod)
         {
             var target = targetMethod.Signature;
             // TODO -- add mocking information in method description
             var extensionParameter = new ParameterProvider(
-                armCoreType.Name.ToVariableName(),
-                $"The {armCoreType:C} the method will execute against.",
-                armCoreType,
+                GetArmCoreTypeVariableName(coreType),
+                $"The {coreType:C} the method will execute against.",
+                coreType,
                 validation: ParameterValidationType.AssertNotNull);
             IReadOnlyList<ParameterProvider> parameters = [
                 extensionParameter,
@@ -114,6 +114,20 @@ namespace Azure.Generator.Management.Providers
             };
 
             return new MethodProvider(methodSignature, body, this);
+        }
+
+        private string GetArmCoreTypeVariableName(CSharpType armCoreType)
+        {
+            if (armCoreType.Equals(typeof(ArmClient)))
+            {
+                // For ArmClient, we use "client" as the variable name
+                return "client";
+            }
+            else
+            {
+                // The variable name for the ArmCoreType is the same as the type name, but in camelCase
+                return armCoreType.Name.ToVariableName();
+            }
         }
     }
 }

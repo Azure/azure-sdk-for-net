@@ -9,6 +9,9 @@ namespace Azure.Generator.Management.Snippets
     internal static class ResourceIdentifierSnippets
     {
         public static ScopedApi<ResourceIdentifier> Root(this ScopedApi<ResourceIdentifier> resourceIdentifier)
-            => resourceIdentifier.Property("Root").As<ResourceIdentifier>();
+            => resourceIdentifier.Property(nameof(ResourceIdentifier.Root)).As<ResourceIdentifier>();
+
+        public static ScopedApi<ResourceType> ResourceType(this ScopedApi<ResourceIdentifier> resourceIdentifier)
+            => resourceIdentifier.Property(nameof(ResourceIdentifier.ResourceType)).As<ResourceType>();
     }
 }

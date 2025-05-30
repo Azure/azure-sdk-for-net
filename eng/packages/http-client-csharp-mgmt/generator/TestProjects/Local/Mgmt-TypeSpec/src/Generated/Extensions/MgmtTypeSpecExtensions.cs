@@ -18,10 +18,10 @@ namespace MgmtTypeSpec
     /// <summary></summary>
     public static partial class MgmtTypeSpecExtensions
     {
-        /// <param name="armClient"></param>
-        public static MockableMgmtTypeSpecArmClient GetMockableMgmtTypeSpecArmClient(ArmClient armClient)
+        /// <param name="client"></param>
+        public static MockableMgmtTypeSpecArmClient GetMockableMgmtTypeSpecArmClient(ArmClient client)
         {
-            return armClient.GetCachedClient(client => new MockableMgmtTypeSpecArmClient(client, ResourceIdentifier.Root));
+            return client.GetCachedClient(client0 => new MockableMgmtTypeSpecArmClient(client0, ResourceIdentifier.Root));
         }
 
         /// <param name="resourceGroupResource"></param>
@@ -30,41 +30,16 @@ namespace MgmtTypeSpec
             return resourceGroupResource.GetCachedClient(client => new MockableMgmtTypeSpecResourceGroupResource(client, resourceGroupResource.Id));
         }
 
-        /// <summary> Gets a collection of Foos in the <see cref="ArmClient"/>. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="armClient"/> is null. </exception>
-        /// <returns> An object representing collection of Foos and their operations over a FooResource. </returns>
-        public static FooCollection GetFoos(this ArmClient armClient)
+        /// <summary> Gets an object representing a <see cref="FooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="FooResource"/> object. </returns>
+        public static FooResource GetFooResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(armClient, nameof(armClient));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMgmtTypeSpecArmClient(armClient).GetFoos();
-        }
-
-        /// <summary> Get a Foo. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="fooName"> The name of the Foo. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="armClient"/> or <paramref name="fooName"/> is null. </exception>
-        public static Response<FooResource> Get(this ArmClient armClient, string fooName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(armClient, nameof(armClient));
-            Argument.AssertNotNull(fooName, nameof(fooName));
-
-            return GetMockableMgmtTypeSpecArmClient(armClient).Get(fooName, cancellationToken);
-        }
-
-        /// <summary> Get a Foo. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="fooName"> The name of the Foo. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="armClient"/> or <paramref name="fooName"/> is null. </exception>
-        public static async Task<Response<FooResource>> GetAsync(this ArmClient armClient, string fooName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(armClient, nameof(armClient));
-            Argument.AssertNotNull(fooName, nameof(fooName));
-
-            return await GetMockableMgmtTypeSpecArmClient(armClient).GetAsync(fooName, cancellationToken).ConfigureAwait(false);
+            return GetMockableMgmtTypeSpecArmClient(client).GetFooResource(id);
         }
 
         /// <summary> Gets a collection of Foos in the <see cref="ResourceGroupResource"/>. </summary>

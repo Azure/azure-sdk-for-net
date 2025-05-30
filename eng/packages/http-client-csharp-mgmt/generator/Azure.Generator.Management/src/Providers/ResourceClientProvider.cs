@@ -6,6 +6,7 @@ using Azure.Core.Pipeline;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers.OperationMethodProviders;
+using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -183,16 +184,16 @@ namespace Azure.Generator.Management.Providers
 
             var bodyStatements = new MethodBodyStatement[]
             {
-                _clientDiagnosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), ResourceTypeExpression.Property(nameof(ResourceType.Namespace)), This.Property("Diagnostics"))).Terminate(),
+                _clientDiagnosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), ResourceTypeExpression.Property(nameof(ResourceType.Namespace)), This.As<ArmResource>().Diagnostics())).Terminate(),
                 TryGetApiVersion(out var apiVersion).Terminate(),
-                _clientField.Assign(New.Instance(_restClientProvider.Type, _clientDiagnosticsField, This.Property("Pipeline"), This.Property("Endpoint"), apiVersion)).Terminate(),
+                _clientField.Assign(New.Instance(_restClientProvider.Type, _clientDiagnosticsField, This.As<ArmResource>().Pipeline(), This.As<ArmResource>().Endpoint(), apiVersion)).Terminate(),
                 Static(Type).Invoke(ValidateResourceIdMethodName, idParameter).Terminate()
             };
 
             return new ConstructorProvider(signature, bodyStatements, this);
         }
 
-        private const string ValidateResourceIdMethodName = "ValidateResourceId";
+        internal const string ValidateResourceIdMethodName = "ValidateResourceId";
         protected MethodProvider BuildValidateResourceIdMethod()
         {
             var idParameter = new ParameterProvider("id", $"", typeof(ResourceIdentifier));
@@ -206,20 +207,18 @@ namespace Azure.Generator.Management.Providers
                     idParameter
                 ],
                 [new AttributeStatement(typeof(ConditionalAttribute), Literal("DEBUG"))]);
-            var bodyStatements = new IfStatement(idParameter.NotEqual(ExpectedResourceTypeForValidation))
+            var bodyStatements = new IfStatement(idParameter.As<ResourceIdentifier>().ResourceType().NotEqual(ResourceTypeExpression))
             {
-                Throw(New.ArgumentException(idParameter, StringSnippets.Format(Literal("Invalid resource type {0} expected {1}"), idParameter.Property(nameof(ResourceIdentifier.ResourceType)), ResourceTypeExpression), false))
+                Throw(New.ArgumentException(idParameter, StringSnippets.Format(Literal("Invalid resource type {0} expected {1}"), idParameter.As<ResourceIdentifier>().ResourceType(), ResourceTypeExpression), false))
             };
             return new MethodProvider(signature, bodyStatements, this);
         }
 
-        protected virtual ValueExpression ResourceTypeExpression => _resourceTypeField;
+        protected virtual ScopedApi<ResourceType> ResourceTypeExpression => _resourceTypeField.As<ResourceType>();
 
-        protected virtual ValueExpression ExpectedResourceTypeForValidation => _resourceTypeField;
+        protected internal virtual CSharpType ResourceClientCSharpType => Type;
 
-        protected internal virtual CSharpType ResourceClientCSharpType => this.Type;
-
-        internal ValueExpression GetClientDiagnosticsField() => _clientDiagnosticsField;
+        internal ScopedApi<ClientDiagnostics> GetClientDiagnosticsField() => _clientDiagnosticsField.As<ClientDiagnostics>();
         internal ValueExpression GetRestClientField() => _clientField;
         internal ClientProvider GetClientProvider() => _restClientProvider;
         internal IReadOnlyList<string> ContextualParameters { get; }
