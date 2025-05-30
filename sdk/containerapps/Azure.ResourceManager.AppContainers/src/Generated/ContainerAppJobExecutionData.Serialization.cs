@@ -60,6 +60,11 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("template"u8);
                 writer.WriteObjectValue(Template, options);
             }
+            if (Optional.IsDefined(DetailedStatus))
+            {
+                writer.WritePropertyName("detailedStatus"u8);
+                writer.WriteObjectValue(DetailedStatus, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -91,6 +96,7 @@ namespace Azure.ResourceManager.AppContainers
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
             ContainerAppJobExecutionTemplate template = default;
+            ExecutionStatus detailedStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,6 +170,15 @@ namespace Azure.ResourceManager.AppContainers
                             template = ContainerAppJobExecutionTemplate.DeserializeContainerAppJobExecutionTemplate(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("detailedStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            detailedStatus = ExecutionStatus.DeserializeExecutionStatus(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -182,6 +197,7 @@ namespace Azure.ResourceManager.AppContainers
                 startTime,
                 endTime,
                 template,
+                detailedStatus,
                 serializedAdditionalRawData);
         }
 
@@ -310,6 +326,26 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     builder.Append("    template: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Template, options, 4, false, "    template: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("DetailedStatusReplicas", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    detailedStatus: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      detailedStatus: {");
+                builder.Append("        replicas: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(DetailedStatus))
+                {
+                    builder.Append("    detailedStatus: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, DetailedStatus, options, 4, false, "    detailedStatus: ");
                 }
             }
 

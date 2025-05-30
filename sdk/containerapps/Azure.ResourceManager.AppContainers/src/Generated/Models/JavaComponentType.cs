@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string SpringBootAdminValue = "SpringBootAdmin";
         private const string SpringCloudEurekaValue = "SpringCloudEureka";
         private const string SpringCloudConfigValue = "SpringCloudConfig";
+        private const string SpringCloudGatewayValue = "SpringCloudGateway";
+        private const string NacosValue = "Nacos";
 
         /// <summary> SpringBootAdmin. </summary>
         public static JavaComponentType SpringBootAdmin { get; } = new JavaComponentType(SpringBootAdminValue);
@@ -32,6 +34,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static JavaComponentType SpringCloudEureka { get; } = new JavaComponentType(SpringCloudEurekaValue);
         /// <summary> SpringCloudConfig. </summary>
         public static JavaComponentType SpringCloudConfig { get; } = new JavaComponentType(SpringCloudConfigValue);
+        /// <summary> SpringCloudGateway. </summary>
+        public static JavaComponentType SpringCloudGateway { get; } = new JavaComponentType(SpringCloudGatewayValue);
+        /// <summary> Nacos. </summary>
+        public static JavaComponentType Nacos { get; } = new JavaComponentType(NacosValue);
         /// <summary> Determines if two <see cref="JavaComponentType"/> values are the same. </summary>
         public static bool operator ==(JavaComponentType left, JavaComponentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JavaComponentType"/> values are not the same. </summary>
