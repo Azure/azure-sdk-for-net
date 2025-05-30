@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         private EventGridNamespaceCollection NamespaceCollection { get; set; }
         private ResourceGroupResource ResourceGroup { get; set; }
 
-        // Pre-generated Key Vault Certificate URL for testing purposes. This URL is saniized in the test environment. To run the test cases in Live/Record mode,
+        // Pre-generated Key Vault Certificate URL for testing purposes. This URL is sanitized in the test environment. To run the test cases in Live/Record mode,
         // replace the SANITIZED_CERTIFICATE_URL with the actual URL of a valid certificate in your Key Vault.
         // Go to Azure Portal -> Key Vault -> Select sdk-pre-generated-kv -> Certificates -> sdk-test-cert -> Properties -> Certificate URL
         private const string KeyVaultCertificateUrl = "https://sdk-pre-generated-kv.vault.azure.net/certificates/sdk-test-cert/SANITIZED_CERTIFICATE_URL";
