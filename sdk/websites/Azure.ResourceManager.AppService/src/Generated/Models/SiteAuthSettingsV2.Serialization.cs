@@ -47,27 +47,27 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
-                writer.WriteObjectValue(Platform, options);
+                ((IJsonModel<AuthPlatform>)Platform).Write(writer, options);
             }
             if (Optional.IsDefined(GlobalValidation))
             {
                 writer.WritePropertyName("globalValidation"u8);
-                writer.WriteObjectValue(GlobalValidation, options);
+                ((IJsonModel<GlobalValidation>)GlobalValidation).Write(writer, options);
             }
             if (Optional.IsDefined(IdentityProviders))
             {
                 writer.WritePropertyName("identityProviders"u8);
-                writer.WriteObjectValue(IdentityProviders, options);
+                ((IJsonModel<AppServiceIdentityProviders>)IdentityProviders).Write(writer, options);
             }
             if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
-                writer.WriteObjectValue(Login, options);
+                ((IJsonModel<WebAppLoginInfo>)Login).Write(writer, options);
             }
             if (Optional.IsDefined(HttpSettings))
             {
                 writer.WritePropertyName("httpSettings"u8);
-                writer.WriteObjectValue(HttpSettings, options);
+                ((IJsonModel<AppServiceHttpSettings>)HttpSettings).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            platform = AuthPlatform.DeserializeAuthPlatform(property0.Value, options);
+                            platform = ModelSerializationExtensions.JsonDeserialize<AuthPlatform>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("globalValidation"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            globalValidation = GlobalValidation.DeserializeGlobalValidation(property0.Value, options);
+                            globalValidation = ModelSerializationExtensions.JsonDeserialize<GlobalValidation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("identityProviders"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            identityProviders = AppServiceIdentityProviders.DeserializeAppServiceIdentityProviders(property0.Value, options);
+                            identityProviders = ModelSerializationExtensions.JsonDeserialize<AppServiceIdentityProviders>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("login"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            login = WebAppLoginInfo.DeserializeWebAppLoginInfo(property0.Value, options);
+                            login = ModelSerializationExtensions.JsonDeserialize<WebAppLoginInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("httpSettings"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            httpSettings = AppServiceHttpSettings.DeserializeAppServiceHttpSettings(property0.Value, options);
+                            httpSettings = ModelSerializationExtensions.JsonDeserialize<AppServiceHttpSettings>(property0.Value);
                             continue;
                         }
                     }

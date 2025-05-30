@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                         output = null;
                         continue;
                     }
-                    output = SparkStatementOutput.DeserializeSparkStatementOutput(property.Value);
+                    output = ModelSerializationExtensions.JsonDeserialize<SparkStatementOutput>(property.Value);
                     continue;
                 }
             }

@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("results"u8);
-            writer.WriteObjectValue(Results);
+            JsonSerializer.Serialize(writer, Results);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(TaskName))
@@ -47,7 +47,7 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("results"u8))
                 {
-                    results = CustomEntitiesResult.DeserializeCustomEntitiesResult(property.Value);
+                    results = ModelSerializationExtensions.JsonDeserialize<CustomEntitiesResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

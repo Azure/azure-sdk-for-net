@@ -34,7 +34,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             {
                 if (property.NameEquals("tasks"u8))
                 {
-                    tasks = TasksStateTasks.DeserializeTasksStateTasks(property.Value);
+                    tasks = ModelSerializationExtensions.JsonDeserialize<TasksStateTasks>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
@@ -57,7 +57,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     {
                         continue;
                     }
-                    statistics = RequestStatistics.DeserializeRequestStatistics(property.Value);
+                    statistics = ModelSerializationExtensions.JsonDeserialize<RequestStatistics>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@nextLink"u8))

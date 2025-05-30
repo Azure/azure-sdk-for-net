@@ -20,20 +20,20 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Documents)
             {
-                writer.WriteObjectValue(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("errors"u8);
             writer.WriteStartArray();
             foreach (var item in Errors)
             {
-                writer.WriteObjectValue(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics);
+                JsonSerializer.Serialize(writer, Statistics);
             }
             writer.WritePropertyName("projectName"u8);
             writer.WriteStringValue(ProjectName);
@@ -81,7 +81,7 @@ namespace Azure.AI.TextAnalytics.Models
                     {
                         continue;
                     }
-                    statistics = TextDocumentBatchStatistics.DeserializeTextDocumentBatchStatistics(property.Value);
+                    statistics = ModelSerializationExtensions.JsonDeserialize<TextDocumentBatchStatistics>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("projectName"u8))

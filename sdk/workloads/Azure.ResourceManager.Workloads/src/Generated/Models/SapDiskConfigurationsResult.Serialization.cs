@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 foreach (var item in VolumeConfigurations)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<SapDiskConfiguration>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }

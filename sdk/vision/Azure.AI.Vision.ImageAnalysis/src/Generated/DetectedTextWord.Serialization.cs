@@ -40,7 +40,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             writer.WriteStartArray();
             foreach (var item in BoundingPolygon)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ImagePoint>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("confidence"u8);

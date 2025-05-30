@@ -21,9 +21,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("target"u8);
-            writer.WriteObjectValue(Target);
+            JsonSerializer.Serialize(writer, Target);
             writer.WritePropertyName("iotHubDeviceConnection"u8);
-            writer.WriteObjectValue(IotHubDeviceConnection);
+            JsonSerializer.Serialize(writer, IotHubDeviceConnection);
             writer.WriteEndObject();
         }
 
@@ -45,12 +45,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
                 if (property.NameEquals("target"u8))
                 {
-                    target = RemoteDeviceAdapterTarget.DeserializeRemoteDeviceAdapterTarget(property.Value);
+                    target = ModelSerializationExtensions.JsonDeserialize<RemoteDeviceAdapterTarget>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("iotHubDeviceConnection"u8))
                 {
-                    iotHubDeviceConnection = IotHubDeviceConnection.DeserializeIotHubDeviceConnection(property.Value);
+                    iotHubDeviceConnection = ModelSerializationExtensions.JsonDeserialize<IotHubDeviceConnection>(property.Value);
                     continue;
                 }
             }

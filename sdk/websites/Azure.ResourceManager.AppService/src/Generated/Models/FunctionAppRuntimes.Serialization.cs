@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(LinuxRuntimeSettings))
             {
                 writer.WritePropertyName("linuxRuntimeSettings"u8);
-                writer.WriteObjectValue(LinuxRuntimeSettings, options);
+                ((IJsonModel<FunctionAppRuntimeSettings>)LinuxRuntimeSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(WindowsRuntimeSettings))
             {
                 writer.WritePropertyName("windowsRuntimeSettings"u8);
-                writer.WriteObjectValue(WindowsRuntimeSettings, options);
+                ((IJsonModel<FunctionAppRuntimeSettings>)WindowsRuntimeSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    linuxRuntimeSettings = FunctionAppRuntimeSettings.DeserializeFunctionAppRuntimeSettings(property.Value, options);
+                    linuxRuntimeSettings = ModelSerializationExtensions.JsonDeserialize<FunctionAppRuntimeSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("windowsRuntimeSettings"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    windowsRuntimeSettings = FunctionAppRuntimeSettings.DeserializeFunctionAppRuntimeSettings(property.Value, options);
+                    windowsRuntimeSettings = ModelSerializationExtensions.JsonDeserialize<FunctionAppRuntimeSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

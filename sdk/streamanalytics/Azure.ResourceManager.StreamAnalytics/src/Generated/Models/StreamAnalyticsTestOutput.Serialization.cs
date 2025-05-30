@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WritePropertyName("output"u8);
-            writer.WriteObjectValue(Output, options);
+            ((IJsonModel<StreamingJobOutputData>)Output).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 if (property.NameEquals("output"u8))
                 {
-                    output = StreamingJobOutputData.DeserializeStreamingJobOutputData(property.Value, options);
+                    output = ModelSerializationExtensions.JsonDeserialize<StreamingJobOutputData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -34,12 +34,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PackagePassword))
             {
                 writer.WritePropertyName("packagePassword"u8);
-                writer.WriteObjectValue(PackagePassword);
+                JsonSerializer.Serialize(writer, PackagePassword);
             }
             if (Optional.IsDefined(AccessCredential))
             {
                 writer.WritePropertyName("accessCredential"u8);
-                writer.WriteObjectValue(AccessCredential);
+                JsonSerializer.Serialize(writer, AccessCredential);
             }
             if (Optional.IsDefined(ConfigurationPath))
             {
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ConfigurationAccessCredential))
             {
                 writer.WritePropertyName("configurationAccessCredential"u8);
-                writer.WriteObjectValue(ConfigurationAccessCredential);
+                JsonSerializer.Serialize(writer, ConfigurationAccessCredential);
             }
             if (Optional.IsDefined(PackageName))
             {
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in ChildPackages)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -131,7 +131,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            packagePassword = SecretBase.DeserializeSecretBase(property0.Value);
+                            packagePassword = ModelSerializationExtensions.JsonDeserialize<SecretBase>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("accessCredential"u8))
@@ -140,7 +140,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            accessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value);
+                            accessCredential = ModelSerializationExtensions.JsonDeserialize<SsisAccessCredential>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("configurationPath"u8))
@@ -158,7 +158,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            configurationAccessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value);
+                            configurationAccessCredential = ModelSerializationExtensions.JsonDeserialize<SsisAccessCredential>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("packageName"u8))

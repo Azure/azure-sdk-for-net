@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.TrafficManager
             if (Optional.IsDefined(GeographicHierarchy))
             {
                 writer.WritePropertyName("geographicHierarchy"u8);
-                writer.WriteObjectValue(GeographicHierarchy, options);
+                ((IJsonModel<TrafficManagerRegion>)GeographicHierarchy).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.TrafficManager
                             {
                                 continue;
                             }
-                            geographicHierarchy = TrafficManagerRegion.DeserializeTrafficManagerRegion(property0.Value, options);
+                            geographicHierarchy = ModelSerializationExtensions.JsonDeserialize<TrafficManagerRegion>(property0.Value);
                             continue;
                         }
                     }

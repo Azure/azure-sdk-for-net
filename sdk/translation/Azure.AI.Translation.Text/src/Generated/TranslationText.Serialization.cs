@@ -41,17 +41,17 @@ namespace Azure.AI.Translation.Text
             if (Optional.IsDefined(Transliteration))
             {
                 writer.WritePropertyName("transliteration"u8);
-                writer.WriteObjectValue(Transliteration, options);
+                ((IJsonModel<TransliteratedText>)Transliteration).Write(writer, options);
             }
             if (Optional.IsDefined(Alignment))
             {
                 writer.WritePropertyName("alignment"u8);
-                writer.WriteObjectValue(Alignment, options);
+                ((IJsonModel<TranslatedTextAlignment>)Alignment).Write(writer, options);
             }
             if (Optional.IsDefined(SentenceBoundaries))
             {
                 writer.WritePropertyName("sentLen"u8);
-                writer.WriteObjectValue(SentenceBoundaries, options);
+                ((IJsonModel<SentenceBoundaries>)SentenceBoundaries).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -115,7 +115,7 @@ namespace Azure.AI.Translation.Text
                     {
                         continue;
                     }
-                    transliteration = TransliteratedText.DeserializeTransliteratedText(property.Value, options);
+                    transliteration = ModelSerializationExtensions.JsonDeserialize<TransliteratedText>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("alignment"u8))
@@ -124,7 +124,7 @@ namespace Azure.AI.Translation.Text
                     {
                         continue;
                     }
-                    alignment = TranslatedTextAlignment.DeserializeTranslatedTextAlignment(property.Value, options);
+                    alignment = ModelSerializationExtensions.JsonDeserialize<TranslatedTextAlignment>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sentLen"u8))
@@ -133,7 +133,7 @@ namespace Azure.AI.Translation.Text
                     {
                         continue;
                     }
-                    sentLen = SentenceBoundaries.DeserializeSentenceBoundaries(property.Value, options);
+                    sentLen = ModelSerializationExtensions.JsonDeserialize<SentenceBoundaries>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

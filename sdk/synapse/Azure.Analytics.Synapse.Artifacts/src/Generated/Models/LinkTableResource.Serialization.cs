@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    source = LinkTableRequestSource.DeserializeLinkTableRequestSource(property.Value);
+                    source = ModelSerializationExtensions.JsonDeserialize<LinkTableRequestSource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("target"u8))
@@ -51,7 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    target = LinkTableRequestTarget.DeserializeLinkTableRequestTarget(property.Value);
+                    target = ModelSerializationExtensions.JsonDeserialize<LinkTableRequestTarget>(property.Value);
                     continue;
                 }
             }

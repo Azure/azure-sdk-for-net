@@ -38,28 +38,28 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
-                writer.WriteObjectValue(NetworkConfiguration, options);
+                ((IJsonModel<NetworkConfiguration>)NetworkConfiguration).Write(writer, options);
             }
             writer.WritePropertyName("centralServer"u8);
-            writer.WriteObjectValue(CentralServer, options);
+            ((IJsonModel<CentralServerConfiguration>)CentralServer).Write(writer, options);
             writer.WritePropertyName("applicationServer"u8);
-            writer.WriteObjectValue(ApplicationServer, options);
+            ((IJsonModel<ApplicationServerConfiguration>)ApplicationServer).Write(writer, options);
             writer.WritePropertyName("databaseServer"u8);
-            writer.WriteObjectValue(DatabaseServer, options);
+            ((IJsonModel<DatabaseConfiguration>)DatabaseServer).Write(writer, options);
             if (Optional.IsDefined(HighAvailabilityConfig))
             {
                 writer.WritePropertyName("highAvailabilityConfig"u8);
-                writer.WriteObjectValue(HighAvailabilityConfig, options);
+                ((IJsonModel<HighAvailabilityConfiguration>)HighAvailabilityConfig).Write(writer, options);
             }
             if (Optional.IsDefined(StorageConfiguration))
             {
                 writer.WritePropertyName("storageConfiguration"u8);
-                writer.WriteObjectValue(StorageConfiguration, options);
+                ((IJsonModel<SapStorageConfiguration>)StorageConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(CustomResourceNames))
             {
                 writer.WritePropertyName("customResourceNames"u8);
-                writer.WriteObjectValue(CustomResourceNames, options);
+                ((IJsonModel<ThreeTierCustomResourceNames>)CustomResourceNames).Write(writer, options);
             }
         }
 
@@ -102,22 +102,22 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    networkConfiguration = NetworkConfiguration.DeserializeNetworkConfiguration(property.Value, options);
+                    networkConfiguration = ModelSerializationExtensions.JsonDeserialize<NetworkConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("centralServer"u8))
                 {
-                    centralServer = CentralServerConfiguration.DeserializeCentralServerConfiguration(property.Value, options);
+                    centralServer = ModelSerializationExtensions.JsonDeserialize<CentralServerConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("applicationServer"u8))
                 {
-                    applicationServer = ApplicationServerConfiguration.DeserializeApplicationServerConfiguration(property.Value, options);
+                    applicationServer = ModelSerializationExtensions.JsonDeserialize<ApplicationServerConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("databaseServer"u8))
                 {
-                    databaseServer = DatabaseConfiguration.DeserializeDatabaseConfiguration(property.Value, options);
+                    databaseServer = ModelSerializationExtensions.JsonDeserialize<DatabaseConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("highAvailabilityConfig"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    highAvailabilityConfig = HighAvailabilityConfiguration.DeserializeHighAvailabilityConfiguration(property.Value, options);
+                    highAvailabilityConfig = ModelSerializationExtensions.JsonDeserialize<HighAvailabilityConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storageConfiguration"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    storageConfiguration = SapStorageConfiguration.DeserializeSapStorageConfiguration(property.Value, options);
+                    storageConfiguration = ModelSerializationExtensions.JsonDeserialize<SapStorageConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("customResourceNames"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    customResourceNames = ThreeTierCustomResourceNames.DeserializeThreeTierCustomResourceNames(property.Value, options);
+                    customResourceNames = ModelSerializationExtensions.JsonDeserialize<ThreeTierCustomResourceNames>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deploymentType"u8))

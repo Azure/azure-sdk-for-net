@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(SensitivityLabel))
             {
                 writer.WritePropertyName("sensitivityLabel"u8);
-                writer.WriteObjectValue(SensitivityLabel, options);
+                ((IJsonModel<SynapseSensitivityLabelData>)SensitivityLabel).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             {
                                 continue;
                             }
-                            sensitivityLabel = SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(property0.Value, options);
+                            sensitivityLabel = ModelSerializationExtensions.JsonDeserialize<SynapseSensitivityLabelData>(property0.Value);
                             continue;
                         }
                     }

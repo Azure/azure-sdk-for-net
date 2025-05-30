@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -78,27 +78,27 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(EndpointsConfiguration))
             {
                 writer.WritePropertyName("endpointsConfiguration"u8);
-                writer.WriteObjectValue(EndpointsConfiguration, options);
+                ((IJsonModel<FlowEndpointsConfiguration>)EndpointsConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(AccessControl))
             {
                 writer.WritePropertyName("accessControl"u8);
-                writer.WriteObjectValue(AccessControl, options);
+                ((IJsonModel<FlowAccessControlConfiguration>)AccessControl).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<WorkflowSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(IntegrationAccount))
             {
                 writer.WritePropertyName("integrationAccount"u8);
-                writer.WriteObjectValue(IntegrationAccount, options);
+                ((IJsonModel<WorkflowResourceReference>)IntegrationAccount).Write(writer, options);
             }
             if (Optional.IsDefined(IntegrationServiceEnvironment))
             {
                 writer.WritePropertyName("integrationServiceEnvironment"u8);
-                writer.WriteObjectValue(IntegrationServiceEnvironment, options);
+                ((IJsonModel<WorkflowResourceReference>)IntegrationServiceEnvironment).Write(writer, options);
             }
             if (Optional.IsDefined(Definition))
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<WorkflowContent>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            endpointsConfiguration = FlowEndpointsConfiguration.DeserializeFlowEndpointsConfiguration(property0.Value, options);
+                            endpointsConfiguration = ModelSerializationExtensions.JsonDeserialize<FlowEndpointsConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("accessControl"u8))
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            accessControl = FlowAccessControlConfiguration.DeserializeFlowAccessControlConfiguration(property0.Value, options);
+                            accessControl = ModelSerializationExtensions.JsonDeserialize<FlowAccessControlConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sku"u8))
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            sku = WorkflowSku.DeserializeWorkflowSku(property0.Value, options);
+                            sku = ModelSerializationExtensions.JsonDeserialize<WorkflowSku>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("integrationAccount"u8))
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            integrationAccount = WorkflowResourceReference.DeserializeWorkflowResourceReference(property0.Value, options);
+                            integrationAccount = ModelSerializationExtensions.JsonDeserialize<WorkflowResourceReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("integrationServiceEnvironment"u8))
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            integrationServiceEnvironment = WorkflowResourceReference.DeserializeWorkflowResourceReference(property0.Value, options);
+                            integrationServiceEnvironment = ModelSerializationExtensions.JsonDeserialize<WorkflowResourceReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("definition"u8))

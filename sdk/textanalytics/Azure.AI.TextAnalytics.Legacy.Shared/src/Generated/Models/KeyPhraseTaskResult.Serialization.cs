@@ -26,7 +26,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     {
                         continue;
                     }
-                    results = KeyPhraseResult.DeserializeKeyPhraseResult(property.Value);
+                    results = ModelSerializationExtensions.JsonDeserialize<KeyPhraseResult>(property.Value);
                     continue;
                 }
             }

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata, options);
+                ((IJsonModel<DetectorInfo>)Metadata).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Dataset))
             {
@@ -57,14 +57,14 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in Dataset)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DiagnosticDataset>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<AppServiceStatusInfo>)Status).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DataProvidersMetadata))
             {
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in DataProvidersMetadata)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataProviderMetadata>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SuggestedUtterances))
             {
                 writer.WritePropertyName("suggestedUtterances"u8);
-                writer.WriteObjectValue(SuggestedUtterances, options);
+                ((IJsonModel<QueryUtterancesResults>)SuggestedUtterances).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            metadata = DetectorInfo.DeserializeDetectorInfo(property0.Value, options);
+                            metadata = ModelSerializationExtensions.JsonDeserialize<DetectorInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dataset"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            status = AppServiceStatusInfo.DeserializeAppServiceStatusInfo(property0.Value, options);
+                            status = ModelSerializationExtensions.JsonDeserialize<AppServiceStatusInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dataProvidersMetadata"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            suggestedUtterances = QueryUtterancesResults.DeserializeQueryUtterancesResults(property0.Value, options);
+                            suggestedUtterances = ModelSerializationExtensions.JsonDeserialize<QueryUtterancesResults>(property0.Value);
                             continue;
                         }
                     }

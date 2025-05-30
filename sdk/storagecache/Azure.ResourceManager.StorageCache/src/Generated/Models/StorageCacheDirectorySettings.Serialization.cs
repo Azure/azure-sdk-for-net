@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (Optional.IsDefined(ActiveDirectory))
             {
                 writer.WritePropertyName("activeDirectory"u8);
-                writer.WriteObjectValue(ActiveDirectory, options);
+                ((IJsonModel<StorageCacheActiveDirectorySettings>)ActiveDirectory).Write(writer, options);
             }
             if (Optional.IsDefined(UsernameDownload))
             {
                 writer.WritePropertyName("usernameDownload"u8);
-                writer.WriteObjectValue(UsernameDownload, options);
+                ((IJsonModel<StorageCacheUsernameDownloadSettings>)UsernameDownload).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    activeDirectory = StorageCacheActiveDirectorySettings.DeserializeStorageCacheActiveDirectorySettings(property.Value, options);
+                    activeDirectory = ModelSerializationExtensions.JsonDeserialize<StorageCacheActiveDirectorySettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("usernameDownload"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    usernameDownload = StorageCacheUsernameDownloadSettings.DeserializeStorageCacheUsernameDownloadSettings(property.Value, options);
+                    usernameDownload = ModelSerializationExtensions.JsonDeserialize<StorageCacheUsernameDownloadSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -40,15 +40,14 @@ namespace Azure.ResourceManager.StreamAnalytics
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<StreamAnalyticsSku>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(JobId))
             {
@@ -126,14 +125,14 @@ namespace Azure.ResourceManager.StreamAnalytics
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StreamingJobInputData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Transformation))
             {
                 writer.WritePropertyName("transformation"u8);
-                writer.WriteObjectValue(Transformation, options);
+                ((IJsonModel<StreamingJobTransformationData>)Transformation).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Outputs))
             {
@@ -141,7 +140,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StreamingJobOutputData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -151,7 +150,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 writer.WriteStartArray();
                 foreach (var item in Functions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StreamingJobFunctionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -165,7 +164,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 if (JobStorageAccount != null)
                 {
                     writer.WritePropertyName("jobStorageAccount"u8);
-                    writer.WriteObjectValue(JobStorageAccount, options);
+                    ((IJsonModel<StreamingJobStorageAccount>)JobStorageAccount).Write(writer, options);
                 }
                 else
                 {
@@ -180,14 +179,14 @@ namespace Azure.ResourceManager.StreamAnalytics
             if (Optional.IsDefined(Externals))
             {
                 writer.WritePropertyName("externals"u8);
-                writer.WriteObjectValue(Externals, options);
+                ((IJsonModel<StreamingJobExternal>)Externals).Write(writer, options);
             }
             if (Optional.IsDefined(Cluster))
             {
                 if (Cluster != null)
                 {
                     writer.WritePropertyName("cluster"u8);
-                    writer.WriteObjectValue(Cluster, options);
+                    ((IJsonModel<ClusterInfo>)Cluster).Write(writer, options);
                 }
                 else
                 {
@@ -259,7 +258,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -302,7 +301,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -320,7 +319,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             {
                                 continue;
                             }
-                            sku = StreamAnalyticsSku.DeserializeStreamAnalyticsSku(property0.Value, options);
+                            sku = ModelSerializationExtensions.JsonDeserialize<StreamAnalyticsSku>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("jobId"u8))
@@ -461,7 +460,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             {
                                 continue;
                             }
-                            transformation = StreamingJobTransformationData.DeserializeStreamingJobTransformationData(property0.Value, options);
+                            transformation = ModelSerializationExtensions.JsonDeserialize<StreamingJobTransformationData>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("outputs"u8))
@@ -508,7 +507,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                                 jobStorageAccount = null;
                                 continue;
                             }
-                            jobStorageAccount = StreamingJobStorageAccount.DeserializeStreamingJobStorageAccount(property0.Value, options);
+                            jobStorageAccount = ModelSerializationExtensions.JsonDeserialize<StreamingJobStorageAccount>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("contentStoragePolicy"u8))
@@ -526,7 +525,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             {
                                 continue;
                             }
-                            externals = StreamingJobExternal.DeserializeStreamingJobExternal(property0.Value, options);
+                            externals = ModelSerializationExtensions.JsonDeserialize<StreamingJobExternal>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cluster"u8))
@@ -536,7 +535,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                                 cluster = null;
                                 continue;
                             }
-                            cluster = ClusterInfo.DeserializeClusterInfo(property0.Value, options);
+                            cluster = ModelSerializationExtensions.JsonDeserialize<ClusterInfo>(property0.Value);
                             continue;
                         }
                     }

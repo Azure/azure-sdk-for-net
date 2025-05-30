@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<WeightsAndBiasesInstanceData>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))

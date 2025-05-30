@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(TypeConversionSettings))
             {
                 writer.WritePropertyName("typeConversionSettings"u8);
-                writer.WriteObjectValue(TypeConversionSettings);
+                JsonSerializer.Serialize(writer, TypeConversionSettings);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -142,7 +142,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    typeConversionSettings = TypeConversionSettings.DeserializeTypeConversionSettings(property.Value);
+                    typeConversionSettings = ModelSerializationExtensions.JsonDeserialize<TypeConversionSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

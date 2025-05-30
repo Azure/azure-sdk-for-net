@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             if (Optional.IsDefined(Datasource))
             {
                 writer.WritePropertyName("datasource"u8);
-                writer.WriteObjectValue(Datasource, options);
+                ((IJsonModel<StreamingJobOutputDataSource>)Datasource).Write(writer, options);
             }
             if (Optional.IsDefined(TimeFrame))
             {
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.StreamAnalytics
             if (Optional.IsDefined(Serialization))
             {
                 writer.WritePropertyName("serialization"u8);
-                writer.WriteObjectValue(Serialization, options);
+                ((IJsonModel<StreamAnalyticsDataSerialization>)Serialization).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Diagnostics))
             {
                 writer.WritePropertyName("diagnostics"u8);
-                writer.WriteObjectValue(Diagnostics, options);
+                ((IJsonModel<StreamingJobDiagnostics>)Diagnostics).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.StreamAnalytics
                 writer.WriteStartArray();
                 foreach (var item in LastOutputEventTimestamps)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LastOutputEventTimestamp>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(WatermarkSettings))
             {
                 writer.WritePropertyName("watermarkSettings"u8);
-                writer.WriteObjectValue(WatermarkSettings, options);
+                ((IJsonModel<StreamingJobOutputWatermarkProperties>)WatermarkSettings).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             {
                                 continue;
                             }
-                            datasource = StreamingJobOutputDataSource.DeserializeStreamingJobOutputDataSource(property0.Value, options);
+                            datasource = ModelSerializationExtensions.JsonDeserialize<StreamingJobOutputDataSource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("timeWindow"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             {
                                 continue;
                             }
-                            serialization = StreamAnalyticsDataSerialization.DeserializeStreamAnalyticsDataSerialization(property0.Value, options);
+                            serialization = ModelSerializationExtensions.JsonDeserialize<StreamAnalyticsDataSerialization>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("diagnostics"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             {
                                 continue;
                             }
-                            diagnostics = StreamingJobDiagnostics.DeserializeStreamingJobDiagnostics(property0.Value, options);
+                            diagnostics = ModelSerializationExtensions.JsonDeserialize<StreamingJobDiagnostics>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("etag"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             {
                                 continue;
                             }
-                            watermarkSettings = StreamingJobOutputWatermarkProperties.DeserializeStreamingJobOutputWatermarkProperties(property0.Value, options);
+                            watermarkSettings = ModelSerializationExtensions.JsonDeserialize<StreamingJobOutputWatermarkProperties>(property0.Value);
                             continue;
                         }
                     }

@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
-                writer.WriteObjectValue(Content);
+                JsonSerializer.Serialize(writer, Content);
             }
             writer.WriteEndObject();
         }
@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    content = KqlScriptContent.DeserializeKqlScriptContent(property.Value);
+                    content = ModelSerializationExtensions.JsonDeserialize<KqlScriptContent>(property.Value);
                     continue;
                 }
             }

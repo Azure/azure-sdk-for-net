@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Synapse
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<SynapseIntegrationRuntimeProperties>)Properties).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Synapse
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = SynapseIntegrationRuntimeProperties.DeserializeSynapseIntegrationRuntimeProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<SynapseIntegrationRuntimeProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Synapse
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

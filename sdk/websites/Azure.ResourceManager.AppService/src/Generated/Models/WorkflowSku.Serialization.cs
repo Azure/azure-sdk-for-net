@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                writer.WriteObjectValue(Plan, options);
+                ((IJsonModel<WorkflowResourceReference>)Plan).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    plan = WorkflowResourceReference.DeserializeWorkflowResourceReference(property.Value, options);
+                    plan = ModelSerializationExtensions.JsonDeserialize<WorkflowResourceReference>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

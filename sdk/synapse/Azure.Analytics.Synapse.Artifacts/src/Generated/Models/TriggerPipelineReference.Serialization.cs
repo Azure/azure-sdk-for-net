@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PipelineReference))
             {
                 writer.WritePropertyName("pipelineReference"u8);
-                writer.WriteObjectValue(PipelineReference);
+                JsonSerializer.Serialize(writer, PipelineReference);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    pipelineReference = PipelineReference.DeserializePipelineReference(property.Value);
+                    pipelineReference = ModelSerializationExtensions.JsonDeserialize<PipelineReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))

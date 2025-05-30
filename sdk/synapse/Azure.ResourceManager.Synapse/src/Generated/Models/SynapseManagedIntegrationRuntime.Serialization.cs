@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(ComputeProperties))
             {
                 writer.WritePropertyName("computeProperties"u8);
-                writer.WriteObjectValue(ComputeProperties, options);
+                ((IJsonModel<SynapseIntegrationRuntimeComputeProperties>)ComputeProperties).Write(writer, options);
             }
             if (Optional.IsDefined(SsisProperties))
             {
                 writer.WritePropertyName("ssisProperties"u8);
-                writer.WriteObjectValue(SsisProperties, options);
+                ((IJsonModel<SynapseIntegrationRuntimeSsisProperties>)SsisProperties).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             {
                                 continue;
                             }
-                            computeProperties = SynapseIntegrationRuntimeComputeProperties.DeserializeSynapseIntegrationRuntimeComputeProperties(property0.Value, options);
+                            computeProperties = ModelSerializationExtensions.JsonDeserialize<SynapseIntegrationRuntimeComputeProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ssisProperties"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             {
                                 continue;
                             }
-                            ssisProperties = SynapseIntegrationRuntimeSsisProperties.DeserializeSynapseIntegrationRuntimeSsisProperties(property0.Value, options);
+                            ssisProperties = ModelSerializationExtensions.JsonDeserialize<SynapseIntegrationRuntimeSsisProperties>(property0.Value);
                             continue;
                         }
                     }

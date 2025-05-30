@@ -30,13 +30,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(Type.Value.ToString());
             }
             writer.WritePropertyName("content"u8);
-            writer.WriteObjectValue(Content);
+            JsonSerializer.Serialize(writer, Content);
             if (Optional.IsDefined(Folder))
             {
                 if (Folder != null)
                 {
                     writer.WritePropertyName("folder"u8);
-                    writer.WriteObjectValue(Folder);
+                    JsonSerializer.Serialize(writer, Folder);
                 }
                 else
                 {
@@ -81,7 +81,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("content"u8))
                 {
-                    content = SqlScriptContent.DeserializeSqlScriptContent(property.Value);
+                    content = ModelSerializationExtensions.JsonDeserialize<SqlScriptContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("folder"u8))
@@ -91,7 +91,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         folder = null;
                         continue;
                     }
-                    folder = SqlScriptFolder.DeserializeSqlScriptFolder(property.Value);
+                    folder = ModelSerializationExtensions.JsonDeserialize<SqlScriptFolder>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());

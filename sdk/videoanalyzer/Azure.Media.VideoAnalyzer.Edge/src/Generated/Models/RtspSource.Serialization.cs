@@ -21,7 +21,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStringValue(Transport.Value.ToString());
             }
             writer.WritePropertyName("endpoint"u8);
-            writer.WriteObjectValue(Endpoint);
+            JsonSerializer.Serialize(writer, Endpoint);
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("name"u8);
@@ -52,7 +52,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
                 if (property.NameEquals("endpoint"u8))
                 {
-                    endpoint = EndpointBase.DeserializeEndpointBase(property.Value);
+                    endpoint = ModelSerializationExtensions.JsonDeserialize<EndpointBase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@type"u8))

@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(DistcpSettings))
             {
                 writer.WritePropertyName("distcpSettings"u8);
-                writer.WriteObjectValue(DistcpSettings);
+                JsonSerializer.Serialize(writer, DistcpSettings);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -85,7 +85,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    distcpSettings = DistcpSettings.DeserializeDistcpSettings(property.Value);
+                    distcpSettings = ModelSerializationExtensions.JsonDeserialize<DistcpSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

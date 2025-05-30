@@ -48,22 +48,22 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ContactAdmin))
             {
                 writer.WritePropertyName("contactAdmin"u8);
-                writer.WriteObjectValue(ContactAdmin, options);
+                ((IJsonModel<RegistrationContactInfo>)ContactAdmin).Write(writer, options);
             }
             if (Optional.IsDefined(ContactBilling))
             {
                 writer.WritePropertyName("contactBilling"u8);
-                writer.WriteObjectValue(ContactBilling, options);
+                ((IJsonModel<RegistrationContactInfo>)ContactBilling).Write(writer, options);
             }
             if (Optional.IsDefined(ContactRegistrant))
             {
                 writer.WritePropertyName("contactRegistrant"u8);
-                writer.WriteObjectValue(ContactRegistrant, options);
+                ((IJsonModel<RegistrationContactInfo>)ContactRegistrant).Write(writer, options);
             }
             if (Optional.IsDefined(ContactTech))
             {
                 writer.WritePropertyName("contactTech"u8);
-                writer.WriteObjectValue(ContactTech, options);
+                ((IJsonModel<RegistrationContactInfo>)ContactTech).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RegistrationStatus))
             {
@@ -121,14 +121,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in ManagedHostNames)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AppServiceHostName>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Consent))
             {
                 writer.WritePropertyName("consent"u8);
-                writer.WriteObjectValue(Consent, options);
+                ((IJsonModel<DomainPurchaseConsent>)Consent).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(DomainNotRenewableReasons))
             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            contactAdmin = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value, options);
+                            contactAdmin = ModelSerializationExtensions.JsonDeserialize<RegistrationContactInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("contactBilling"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            contactBilling = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value, options);
+                            contactBilling = ModelSerializationExtensions.JsonDeserialize<RegistrationContactInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("contactRegistrant"u8))
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            contactRegistrant = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value, options);
+                            contactRegistrant = ModelSerializationExtensions.JsonDeserialize<RegistrationContactInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("contactTech"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            contactTech = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value, options);
+                            contactTech = ModelSerializationExtensions.JsonDeserialize<RegistrationContactInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("registrationStatus"u8))
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            consent = DomainPurchaseConsent.DeserializeDomainPurchaseConsent(property0.Value, options);
+                            consent = ModelSerializationExtensions.JsonDeserialize<DomainPurchaseConsent>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("domainNotRenewableReasons"u8))

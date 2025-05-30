@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.AppService
             if (options.Format != "W" && Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
-                writer.WriteObjectValue(Recurrence, options);
+                ((IJsonModel<WorkflowTriggerRecurrence>)Recurrence).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Workflow))
             {
                 writer.WritePropertyName("workflow"u8);
-                writer.WriteObjectValue(Workflow, options);
+                ((IJsonModel<WorkflowResourceReference>)Workflow).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            recurrence = WorkflowTriggerRecurrence.DeserializeWorkflowTriggerRecurrence(property0.Value, options);
+                            recurrence = ModelSerializationExtensions.JsonDeserialize<WorkflowTriggerRecurrence>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("workflow"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            workflow = WorkflowResourceReference.DeserializeWorkflowResourceReference(property0.Value, options);
+                            workflow = ModelSerializationExtensions.JsonDeserialize<WorkflowResourceReference>(property0.Value);
                             continue;
                         }
                     }

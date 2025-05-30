@@ -16,20 +16,20 @@ namespace Azure.IoT.TimeSeriesInsights
         {
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
-            writer.WriteObjectValue(Value);
+            JsonSerializer.Serialize(writer, Value);
             if (Optional.IsDefined(Interpolation))
             {
                 writer.WritePropertyName("interpolation"u8);
-                writer.WriteObjectValue(Interpolation);
+                JsonSerializer.Serialize(writer, Interpolation);
             }
             writer.WritePropertyName("aggregation"u8);
-            writer.WriteObjectValue(Aggregation);
+            JsonSerializer.Serialize(writer, Aggregation);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                JsonSerializer.Serialize(writer, Filter);
             }
             writer.WriteEndObject();
         }
@@ -49,7 +49,7 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 if (property.NameEquals("value"u8))
                 {
-                    value = TimeSeriesExpression.DeserializeTimeSeriesExpression(property.Value);
+                    value = ModelSerializationExtensions.JsonDeserialize<TimeSeriesExpression>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("interpolation"u8))
@@ -58,12 +58,12 @@ namespace Azure.IoT.TimeSeriesInsights
                     {
                         continue;
                     }
-                    interpolation = TimeSeriesInterpolation.DeserializeTimeSeriesInterpolation(property.Value);
+                    interpolation = ModelSerializationExtensions.JsonDeserialize<TimeSeriesInterpolation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("aggregation"u8))
                 {
-                    aggregation = TimeSeriesExpression.DeserializeTimeSeriesExpression(property.Value);
+                    aggregation = ModelSerializationExtensions.JsonDeserialize<TimeSeriesExpression>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -77,7 +77,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     {
                         continue;
                     }
-                    filter = TimeSeriesExpression.DeserializeTimeSeriesExpression(property.Value);
+                    filter = ModelSerializationExtensions.JsonDeserialize<TimeSeriesExpression>(property.Value);
                     continue;
                 }
             }

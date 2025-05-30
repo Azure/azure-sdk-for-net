@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LinkedInfo))
             {
                 writer.WritePropertyName("linkedInfo"u8);
-                writer.WriteObjectValue(LinkedInfo);
+                JsonSerializer.Serialize(writer, LinkedInfo);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -80,7 +80,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            linkedInfo = LinkedIntegrationRuntimeType.DeserializeLinkedIntegrationRuntimeType(property0.Value);
+                            linkedInfo = ModelSerializationExtensions.JsonDeserialize<LinkedIntegrationRuntimeType>(property0.Value);
                             continue;
                         }
                     }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (Optional.IsDefined(Display))
             {
                 writer.WritePropertyName("display"u8);
-                writer.WriteObjectValue(Display, options);
+                ((IJsonModel<StorageCacheUsageModelDisplay>)Display).Write(writer, options);
             }
             if (Optional.IsDefined(ModelName))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    display = StorageCacheUsageModelDisplay.DeserializeStorageCacheUsageModelDisplay(property.Value, options);
+                    display = ModelSerializationExtensions.JsonDeserialize<StorageCacheUsageModelDisplay>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("modelName"u8))

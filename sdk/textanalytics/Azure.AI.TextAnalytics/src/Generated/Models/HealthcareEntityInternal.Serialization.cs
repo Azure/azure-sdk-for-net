@@ -34,7 +34,7 @@ namespace Azure.AI.TextAnalytics.Models
             if (Optional.IsDefined(Assertion))
             {
                 writer.WritePropertyName("assertion"u8);
-                writer.WriteObjectValue(Assertion);
+                JsonSerializer.Serialize(writer, Assertion);
             }
             if (Optional.IsDefined(Name))
             {
@@ -47,7 +47,7 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -107,7 +107,7 @@ namespace Azure.AI.TextAnalytics.Models
                     {
                         continue;
                     }
-                    assertion = HealthcareEntityAssertion.DeserializeHealthcareEntityAssertion(property.Value);
+                    assertion = ModelSerializationExtensions.JsonDeserialize<HealthcareEntityAssertion>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

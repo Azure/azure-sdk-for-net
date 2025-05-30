@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
-                writer.WriteObjectValue(Request, options);
+                ((IJsonModel<WebAppRequest>)Request).Write(writer, options);
             }
             if (Optional.IsDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
-                writer.WriteObjectValue(Response, options);
+                ((IJsonModel<WebAppResponse>)Response).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    request = WebAppRequest.DeserializeWebAppRequest(property.Value, options);
+                    request = ModelSerializationExtensions.JsonDeserialize<WebAppRequest>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("response"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    response = WebAppResponse.DeserializeWebAppResponse(property.Value, options);
+                    response = ModelSerializationExtensions.JsonDeserialize<WebAppResponse>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(InfrastructureConfiguration))
             {
                 writer.WritePropertyName("infrastructureConfiguration"u8);
-                writer.WriteObjectValue(InfrastructureConfiguration, options);
+                ((IJsonModel<InfrastructureConfiguration>)InfrastructureConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(SoftwareConfiguration))
             {
                 writer.WritePropertyName("softwareConfiguration"u8);
-                writer.WriteObjectValue(SoftwareConfiguration, options);
+                ((IJsonModel<SapSoftwareConfiguration>)SoftwareConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(OSSapConfiguration))
             {
                 writer.WritePropertyName("osSapConfiguration"u8);
-                writer.WriteObjectValue(OSSapConfiguration, options);
+                ((IJsonModel<OSSapConfiguration>)OSSapConfiguration).Write(writer, options);
             }
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    infrastructureConfiguration = InfrastructureConfiguration.DeserializeInfrastructureConfiguration(property.Value, options);
+                    infrastructureConfiguration = ModelSerializationExtensions.JsonDeserialize<InfrastructureConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("softwareConfiguration"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    softwareConfiguration = SapSoftwareConfiguration.DeserializeSapSoftwareConfiguration(property.Value, options);
+                    softwareConfiguration = ModelSerializationExtensions.JsonDeserialize<SapSoftwareConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("osSapConfiguration"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    osSapConfiguration = OSSapConfiguration.DeserializeOSSapConfiguration(property.Value, options);
+                    osSapConfiguration = ModelSerializationExtensions.JsonDeserialize<OSSapConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("configurationType"u8))

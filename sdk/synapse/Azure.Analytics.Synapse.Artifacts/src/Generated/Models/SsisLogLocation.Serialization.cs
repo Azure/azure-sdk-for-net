@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(AccessCredential))
             {
                 writer.WritePropertyName("accessCredential"u8);
-                writer.WriteObjectValue(AccessCredential);
+                JsonSerializer.Serialize(writer, AccessCredential);
             }
             if (Optional.IsDefined(LogRefreshInterval))
             {
@@ -75,7 +75,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            accessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value);
+                            accessCredential = ModelSerializationExtensions.JsonDeserialize<SsisAccessCredential>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("logRefreshInterval"u8))

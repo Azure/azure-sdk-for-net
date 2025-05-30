@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<AppServiceSkuDescription>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                JsonSerializer.Serialize(writer, ExtendedLocation);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService
                 if (HostingEnvironmentProfile != null)
                 {
                     writer.WritePropertyName("hostingEnvironmentProfile"u8);
-                    writer.WriteObjectValue(HostingEnvironmentProfile, options);
+                    ((IJsonModel<HostingEnvironmentProfile>)HostingEnvironmentProfile).Write(writer, options);
                 }
                 else
                 {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppService
                 if (KubeEnvironmentProfile != null)
                 {
                     writer.WritePropertyName("kubeEnvironmentProfile"u8);
-                    writer.WriteObjectValue(KubeEnvironmentProfile, options);
+                    ((IJsonModel<KubeEnvironmentProfile>)KubeEnvironmentProfile).Write(writer, options);
                 }
                 else
                 {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    sku = AppServiceSkuDescription.DeserializeAppServiceSkuDescription(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<AppServiceSkuDescription>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"u8))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<ExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.AppService
                                 hostingEnvironmentProfile = null;
                                 continue;
                             }
-                            hostingEnvironmentProfile = HostingEnvironmentProfile.DeserializeHostingEnvironmentProfile(property0.Value, options);
+                            hostingEnvironmentProfile = ModelSerializationExtensions.JsonDeserialize<HostingEnvironmentProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("maximumNumberOfWorkers"u8))
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.AppService
                                 kubeEnvironmentProfile = null;
                                 continue;
                             }
-                            kubeEnvironmentProfile = KubeEnvironmentProfile.DeserializeKubeEnvironmentProfile(property0.Value, options);
+                            kubeEnvironmentProfile = ModelSerializationExtensions.JsonDeserialize<KubeEnvironmentProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("zoneRedundant"u8))

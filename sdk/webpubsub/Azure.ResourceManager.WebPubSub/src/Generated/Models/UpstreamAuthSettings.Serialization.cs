@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             if (Optional.IsDefined(ManagedIdentity))
             {
                 writer.WritePropertyName("managedIdentity"u8);
-                writer.WriteObjectValue(ManagedIdentity, options);
+                ((IJsonModel<ManagedIdentitySettings>)ManagedIdentity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     {
                         continue;
                     }
-                    managedIdentity = ManagedIdentitySettings.DeserializeManagedIdentitySettings(property.Value, options);
+                    managedIdentity = ModelSerializationExtensions.JsonDeserialize<ManagedIdentitySettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

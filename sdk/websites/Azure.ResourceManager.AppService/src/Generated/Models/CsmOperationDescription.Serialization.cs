@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Display))
             {
                 writer.WritePropertyName("display"u8);
-                writer.WriteObjectValue(Display, options);
+                ((IJsonModel<CsmOperationDisplay>)Display).Write(writer, options);
             }
             if (Optional.IsDefined(Origin))
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<CsmOperationDescriptionProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    display = CsmOperationDisplay.DeserializeCsmOperationDisplay(property.Value, options);
+                    display = ModelSerializationExtensions.JsonDeserialize<CsmOperationDisplay>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("origin"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    properties = CsmOperationDescriptionProperties.DeserializeCsmOperationDescriptionProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<CsmOperationDescriptionProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

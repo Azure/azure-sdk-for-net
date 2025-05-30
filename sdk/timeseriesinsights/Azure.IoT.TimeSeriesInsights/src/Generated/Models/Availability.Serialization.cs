@@ -30,7 +30,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     {
                         continue;
                     }
-                    range = DateTimeRange.DeserializeDateTimeRange(property.Value);
+                    range = ModelSerializationExtensions.JsonDeserialize<DateTimeRange>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("intervalSize"u8))

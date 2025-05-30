@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<AppServiceSkuDescription>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity, options);
+                ((IJsonModel<AppServiceSkuCapacity>)Capacity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    sku = AppServiceSkuDescription.DeserializeAppServiceSkuDescription(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<AppServiceSkuDescription>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    capacity = AppServiceSkuCapacity.DeserializeAppServiceSkuCapacity(property.Value, options);
+                    capacity = ModelSerializationExtensions.JsonDeserialize<AppServiceSkuCapacity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

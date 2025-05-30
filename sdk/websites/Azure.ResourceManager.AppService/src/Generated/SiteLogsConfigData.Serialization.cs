@@ -48,22 +48,22 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(ApplicationLogs))
             {
                 writer.WritePropertyName("applicationLogs"u8);
-                writer.WriteObjectValue(ApplicationLogs, options);
+                ((IJsonModel<ApplicationLogsConfig>)ApplicationLogs).Write(writer, options);
             }
             if (Optional.IsDefined(HttpLogs))
             {
                 writer.WritePropertyName("httpLogs"u8);
-                writer.WriteObjectValue(HttpLogs, options);
+                ((IJsonModel<AppServiceHttpLogsConfig>)HttpLogs).Write(writer, options);
             }
             if (Optional.IsDefined(IsFailedRequestsTracing))
             {
                 writer.WritePropertyName("failedRequestsTracing"u8);
-                writer.WriteObjectValue(IsFailedRequestsTracing, options);
+                ((IJsonModel<WebAppEnabledConfig>)IsFailedRequestsTracing).Write(writer, options);
             }
             if (Optional.IsDefined(IsDetailedErrorMessages))
             {
                 writer.WritePropertyName("detailedErrorMessages"u8);
-                writer.WriteObjectValue(IsDetailedErrorMessages, options);
+                ((IJsonModel<WebAppEnabledConfig>)IsDetailedErrorMessages).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            applicationLogs = ApplicationLogsConfig.DeserializeApplicationLogsConfig(property0.Value, options);
+                            applicationLogs = ModelSerializationExtensions.JsonDeserialize<ApplicationLogsConfig>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("httpLogs"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            httpLogs = AppServiceHttpLogsConfig.DeserializeAppServiceHttpLogsConfig(property0.Value, options);
+                            httpLogs = ModelSerializationExtensions.JsonDeserialize<AppServiceHttpLogsConfig>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("failedRequestsTracing"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            failedRequestsTracing = WebAppEnabledConfig.DeserializeWebAppEnabledConfig(property0.Value, options);
+                            failedRequestsTracing = ModelSerializationExtensions.JsonDeserialize<WebAppEnabledConfig>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("detailedErrorMessages"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            detailedErrorMessages = WebAppEnabledConfig.DeserializeWebAppEnabledConfig(property0.Value, options);
+                            detailedErrorMessages = ModelSerializationExtensions.JsonDeserialize<WebAppEnabledConfig>(property0.Value);
                             continue;
                         }
                     }

@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(Ssh))
             {
                 writer.WritePropertyName("ssh"u8);
-                writer.WriteObjectValue(Ssh, options);
+                ((IJsonModel<SapSshConfiguration>)Ssh).Write(writer, options);
             }
             if (Optional.IsDefined(SshKeyPair))
             {
                 writer.WritePropertyName("sshKeyPair"u8);
-                writer.WriteObjectValue(SshKeyPair, options);
+                ((IJsonModel<SapSshKeyPair>)SshKeyPair).Write(writer, options);
             }
         }
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    ssh = SapSshConfiguration.DeserializeSapSshConfiguration(property.Value, options);
+                    ssh = ModelSerializationExtensions.JsonDeserialize<SapSshConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sshKeyPair"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    sshKeyPair = SapSshKeyPair.DeserializeSapSshKeyPair(property.Value, options);
+                    sshKeyPair = ModelSerializationExtensions.JsonDeserialize<SapSshKeyPair>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("osType"u8))

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in ColumnNames)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MachineLearningStudioInputColumn>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

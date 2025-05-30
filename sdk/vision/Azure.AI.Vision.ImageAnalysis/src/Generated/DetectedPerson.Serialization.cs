@@ -37,7 +37,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             if (options.Format != "W")
             {
                 writer.WritePropertyName("boundingBox"u8);
-                writer.WriteObjectValue(BoundingBox, options);
+                ((IJsonModel<ImageBoundingBox>)BoundingBox).Write(writer, options);
             }
             if (options.Format != "W")
             {
@@ -89,7 +89,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             {
                 if (property.NameEquals("boundingBox"u8))
                 {
-                    boundingBox = ImageBoundingBox.DeserializeImageBoundingBox(property.Value, options);
+                    boundingBox = ModelSerializationExtensions.JsonDeserialize<ImageBoundingBox>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("confidence"u8))

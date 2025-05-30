@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             if (Optional.IsDefined(UploadLimitSchedule))
             {
                 writer.WritePropertyName("uploadLimitSchedule"u8);
-                writer.WriteObjectValue(UploadLimitSchedule, options);
+                ((IJsonModel<UploadLimitSchedule>)UploadLimitSchedule).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                             {
                                 continue;
                             }
-                            uploadLimitSchedule = UploadLimitSchedule.DeserializeUploadLimitSchedule(property0.Value, options);
+                            uploadLimitSchedule = ModelSerializationExtensions.JsonDeserialize<UploadLimitSchedule>(property0.Value);
                             continue;
                         }
                     }

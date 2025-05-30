@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WorkflowExpressionResourceErrorInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -23,12 +23,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                JsonSerializer.Serialize(writer, Metadata);
             }
             if (Optional.IsDefined(CurrentConnection))
             {
                 writer.WritePropertyName("currentConnection"u8);
-                writer.WriteObjectValue(CurrentConnection);
+                JsonSerializer.Serialize(writer, CurrentConnection);
             }
             writer.WriteEndObject();
         }
@@ -55,7 +55,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    metadata = KqlScriptContentMetadata.DeserializeKqlScriptContentMetadata(property.Value);
+                    metadata = ModelSerializationExtensions.JsonDeserialize<KqlScriptContentMetadata>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("currentConnection"u8))
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    currentConnection = KqlScriptContentCurrentConnection.DeserializeKqlScriptContentCurrentConnection(property.Value);
+                    currentConnection = ModelSerializationExtensions.JsonDeserialize<KqlScriptContentCurrentConnection>(property.Value);
                     continue;
                 }
             }

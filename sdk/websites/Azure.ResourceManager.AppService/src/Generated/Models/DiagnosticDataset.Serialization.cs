@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
-                writer.WriteObjectValue(Table, options);
+                ((IJsonModel<DataTableResponseObject>)Table).Write(writer, options);
             }
             if (Optional.IsDefined(RenderingProperties))
             {
                 writer.WritePropertyName("renderingProperties"u8);
-                writer.WriteObjectValue(RenderingProperties, options);
+                ((IJsonModel<DiagnosticDataRendering>)RenderingProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    table = DataTableResponseObject.DeserializeDataTableResponseObject(property.Value, options);
+                    table = ModelSerializationExtensions.JsonDeserialize<DataTableResponseObject>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("renderingProperties"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    renderingProperties = DiagnosticDataRendering.DeserializeDiagnosticDataRendering(property.Value, options);
+                    renderingProperties = ModelSerializationExtensions.JsonDeserialize<DiagnosticDataRendering>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

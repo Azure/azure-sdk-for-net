@@ -85,17 +85,17 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(Correlation))
             {
                 writer.WritePropertyName("correlation"u8);
-                writer.WriteObjectValue(Correlation, options);
+                ((IJsonModel<Correlation>)Correlation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(InputsLink))
             {
                 writer.WritePropertyName("inputsLink"u8);
-                writer.WriteObjectValue(InputsLink, options);
+                ((IJsonModel<WebAppContentLink>)InputsLink).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OutputsLink))
             {
                 writer.WritePropertyName("outputsLink"u8);
-                writer.WriteObjectValue(OutputsLink, options);
+                ((IJsonModel<WebAppContentLink>)OutputsLink).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsFired))
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppService
             if (options.Format != "W" && Optional.IsDefined(Run))
             {
                 writer.WritePropertyName("run"u8);
-                writer.WriteObjectValue(Run, options);
+                ((IJsonModel<WorkflowResourceReference>)Run).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            correlation = Correlation.DeserializeCorrelation(property0.Value, options);
+                            correlation = ModelSerializationExtensions.JsonDeserialize<Correlation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("inputsLink"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            inputsLink = WebAppContentLink.DeserializeWebAppContentLink(property0.Value, options);
+                            inputsLink = ModelSerializationExtensions.JsonDeserialize<WebAppContentLink>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("outputsLink"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            outputsLink = WebAppContentLink.DeserializeWebAppContentLink(property0.Value, options);
+                            outputsLink = ModelSerializationExtensions.JsonDeserialize<WebAppContentLink>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("fired"u8))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            run = WorkflowResourceReference.DeserializeWorkflowResourceReference(property0.Value, options);
+                            run = ModelSerializationExtensions.JsonDeserialize<WorkflowResourceReference>(property0.Value);
                             continue;
                         }
                     }

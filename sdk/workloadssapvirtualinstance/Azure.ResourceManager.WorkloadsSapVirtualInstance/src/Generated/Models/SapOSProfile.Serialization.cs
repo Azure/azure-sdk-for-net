@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             if (Optional.IsDefined(OSConfiguration))
             {
                 writer.WritePropertyName("osConfiguration"u8);
-                writer.WriteObjectValue(OSConfiguration, options);
+                ((IJsonModel<SapOSConfiguration>)OSConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     {
                         continue;
                     }
-                    osConfiguration = SapOSConfiguration.DeserializeSapOSConfiguration(property.Value, options);
+                    osConfiguration = ModelSerializationExtensions.JsonDeserialize<SapOSConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

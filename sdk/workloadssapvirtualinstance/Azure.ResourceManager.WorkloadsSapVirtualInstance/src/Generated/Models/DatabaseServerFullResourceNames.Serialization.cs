@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualMachines)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VirtualMachineResourceNames>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             if (Optional.IsDefined(LoadBalancer))
             {
                 writer.WritePropertyName("loadBalancer"u8);
-                writer.WriteObjectValue(LoadBalancer, options);
+                ((IJsonModel<LoadBalancerResourceNames>)LoadBalancer).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     {
                         continue;
                     }
-                    loadBalancer = LoadBalancerResourceNames.DeserializeLoadBalancerResourceNames(property.Value, options);
+                    loadBalancer = ModelSerializationExtensions.JsonDeserialize<LoadBalancerResourceNames>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(LatestRun))
             {
                 writer.WritePropertyName("latest_run"u8);
-                writer.WriteObjectValue(LatestRun, options);
+                ((IJsonModel<TriggeredJobRun>)LatestRun).Write(writer, options);
             }
             if (Optional.IsDefined(HistoryUri))
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            latestRun = TriggeredJobRun.DeserializeTriggeredJobRun(property0.Value, options);
+                            latestRun = ModelSerializationExtensions.JsonDeserialize<TriggeredJobRun>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("history_url"u8))

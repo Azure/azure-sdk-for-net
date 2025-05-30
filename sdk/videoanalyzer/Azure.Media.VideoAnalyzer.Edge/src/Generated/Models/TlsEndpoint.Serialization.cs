@@ -18,19 +18,19 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(TrustedCertificates))
             {
                 writer.WritePropertyName("trustedCertificates"u8);
-                writer.WriteObjectValue(TrustedCertificates);
+                JsonSerializer.Serialize(writer, TrustedCertificates);
             }
             if (Optional.IsDefined(ValidationOptions))
             {
                 writer.WritePropertyName("validationOptions"u8);
-                writer.WriteObjectValue(ValidationOptions);
+                JsonSerializer.Serialize(writer, ValidationOptions);
             }
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                JsonSerializer.Serialize(writer, Credentials);
             }
             writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Url);
@@ -56,7 +56,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     {
                         continue;
                     }
-                    trustedCertificates = CertificateSource.DeserializeCertificateSource(property.Value);
+                    trustedCertificates = ModelSerializationExtensions.JsonDeserialize<CertificateSource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("validationOptions"u8))
@@ -65,7 +65,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     {
                         continue;
                     }
-                    validationOptions = TlsValidationOptions.DeserializeTlsValidationOptions(property.Value);
+                    validationOptions = ModelSerializationExtensions.JsonDeserialize<TlsValidationOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@type"u8))
@@ -79,7 +79,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     {
                         continue;
                     }
-                    credentials = CredentialsBase.DeserializeCredentialsBase(property.Value);
+                    credentials = ModelSerializationExtensions.JsonDeserialize<CredentialsBase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("url"u8))

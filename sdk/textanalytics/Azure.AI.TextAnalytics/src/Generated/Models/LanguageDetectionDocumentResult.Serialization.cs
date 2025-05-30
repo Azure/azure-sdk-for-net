@@ -17,20 +17,20 @@ namespace Azure.AI.TextAnalytics.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("detectedLanguage"u8);
-            writer.WriteObjectValue(DetectedLanguage);
+            JsonSerializer.Serialize(writer, DetectedLanguage);
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("warnings"u8);
             writer.WriteStartArray();
             foreach (var item in Warnings)
             {
-                writer.WriteObjectValue(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics);
+                JsonSerializer.Serialize(writer, Statistics);
             }
             writer.WriteEndObject();
         }
@@ -49,7 +49,7 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("detectedLanguage"u8))
                 {
-                    detectedLanguage = DetectedLanguageInternal.DeserializeDetectedLanguageInternal(property.Value);
+                    detectedLanguage = ModelSerializationExtensions.JsonDeserialize<DetectedLanguageInternal>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -73,7 +73,7 @@ namespace Azure.AI.TextAnalytics.Models
                     {
                         continue;
                     }
-                    statistics = TextDocumentStatistics.DeserializeTextDocumentStatistics(property.Value);
+                    statistics = ModelSerializationExtensions.JsonDeserialize<TextDocumentStatistics?>(property.Value);
                     continue;
                 }
             }

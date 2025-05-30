@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(IntegrationRuntime))
             {
                 writer.WritePropertyName("integrationRuntime"u8);
-                writer.WriteObjectValue(IntegrationRuntime);
+                JsonSerializer.Serialize(writer, IntegrationRuntime);
             }
             writer.WriteEndObject();
         }
@@ -82,7 +82,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    integrationRuntime = IntegrationRuntimeDebugResource.DeserializeIntegrationRuntimeDebugResource(property.Value);
+                    integrationRuntime = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeDebugResource>(property.Value);
                     continue;
                 }
             }

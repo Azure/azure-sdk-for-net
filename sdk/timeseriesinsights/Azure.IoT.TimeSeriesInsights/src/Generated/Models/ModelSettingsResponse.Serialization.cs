@@ -26,7 +26,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     {
                         continue;
                     }
-                    modelSettings = TimeSeriesModelSettings.DeserializeTimeSeriesModelSettings(property.Value);
+                    modelSettings = ModelSerializationExtensions.JsonDeserialize<TimeSeriesModelSettings>(property.Value);
                     continue;
                 }
             }

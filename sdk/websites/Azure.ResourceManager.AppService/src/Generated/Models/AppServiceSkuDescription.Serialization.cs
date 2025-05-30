@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(SkuCapacity))
             {
                 writer.WritePropertyName("skuCapacity"u8);
-                writer.WriteObjectValue(SkuCapacity, options);
+                ((IJsonModel<AppServiceSkuCapacity>)SkuCapacity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Locations))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AppServiceSkuCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    skuCapacity = AppServiceSkuCapacity.DeserializeAppServiceSkuCapacity(property.Value, options);
+                    skuCapacity = ModelSerializationExtensions.JsonDeserialize<AppServiceSkuCapacity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("locations"u8))

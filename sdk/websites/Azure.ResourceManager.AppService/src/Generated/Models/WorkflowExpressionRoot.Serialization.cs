@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    error = WorkflowExpressionResourceErrorInfo.DeserializeWorkflowExpressionResourceErrorInfo(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<WorkflowExpressionResourceErrorInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

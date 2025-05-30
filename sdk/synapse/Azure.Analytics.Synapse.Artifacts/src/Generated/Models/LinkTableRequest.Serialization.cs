@@ -26,12 +26,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                JsonSerializer.Serialize(writer, Source);
             }
             if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
-                writer.WriteObjectValue(Target);
+                JsonSerializer.Serialize(writer, Target);
             }
             if (Optional.IsDefined(OperationType))
             {
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    source = LinkTableRequestSource.DeserializeLinkTableRequestSource(property.Value);
+                    source = ModelSerializationExtensions.JsonDeserialize<LinkTableRequestSource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("target"u8))
@@ -73,7 +73,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    target = LinkTableRequestTarget.DeserializeLinkTableRequestTarget(property.Value);
+                    target = ModelSerializationExtensions.JsonDeserialize<LinkTableRequestTarget>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("operationType"u8))

@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("snapshot"u8))
                 {
-                    snapshot = RunNotebookSnapshot.DeserializeRunNotebookSnapshot(property.Value);
+                    snapshot = ModelSerializationExtensions.JsonDeserialize<RunNotebookSnapshot>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    error = RunNotebookError.DeserializeRunNotebookError(property.Value);
+                    error = ModelSerializationExtensions.JsonDeserialize<RunNotebookError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("runId"u8))

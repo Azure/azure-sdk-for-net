@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (options.Format != "W" && Optional.IsDefined(ContainerStorageInterface))
             {
                 writer.WritePropertyName("containerStorageInterface"u8);
-                writer.WriteObjectValue(ContainerStorageInterface, options);
+                ((IJsonModel<AmlFileSystemContainerStorageInterface>)ContainerStorageInterface).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    containerStorageInterface = AmlFileSystemContainerStorageInterface.DeserializeAmlFileSystemContainerStorageInterface(property.Value, options);
+                    containerStorageInterface = ModelSerializationExtensions.JsonDeserialize<AmlFileSystemContainerStorageInterface>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -16,7 +16,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("livePipeline"u8);
-            writer.WriteObjectValue(LivePipeline);
+            JsonSerializer.Serialize(writer, LivePipeline);
             writer.WritePropertyName("methodName"u8);
             writer.WriteStringValue(MethodName);
             if (Optional.IsDefined(ApiVersion))
@@ -40,7 +40,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 if (property.NameEquals("livePipeline"u8))
                 {
-                    livePipeline = LivePipeline.DeserializeLivePipeline(property.Value);
+                    livePipeline = ModelSerializationExtensions.JsonDeserialize<LivePipeline>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("methodName"u8))

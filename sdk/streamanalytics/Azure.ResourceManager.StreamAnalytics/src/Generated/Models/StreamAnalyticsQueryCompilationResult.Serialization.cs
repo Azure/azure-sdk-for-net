@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StreamAnalyticsQueryCompilationError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

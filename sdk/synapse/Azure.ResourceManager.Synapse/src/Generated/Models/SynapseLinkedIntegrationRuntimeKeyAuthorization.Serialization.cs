@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("key"u8);
-            writer.WriteObjectValue(Key, options);
+            ((IJsonModel<SynapseSecureString>)Key).Write(writer, options);
         }
 
         SynapseLinkedIntegrationRuntimeKeyAuthorization IJsonModel<SynapseLinkedIntegrationRuntimeKeyAuthorization>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 if (property.NameEquals("key"u8))
                 {
-                    key = SynapseSecureString.DeserializeSynapseSecureString(property.Value, options);
+                    key = ModelSerializationExtensions.JsonDeserialize<SynapseSecureString>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("authorizationType"u8))

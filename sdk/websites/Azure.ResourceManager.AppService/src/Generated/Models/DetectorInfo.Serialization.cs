@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportTopicList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DetectorSupportTopic>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

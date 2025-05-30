@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                JsonSerializer.Serialize(writer, ConnectVia);
             }
             if (Optional.IsDefined(Description))
             {
@@ -43,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    JsonSerializer.Serialize(writer, item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -76,11 +76,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("consumerKey"u8);
             writer.WriteObjectValue<object>(ConsumerKey);
             writer.WritePropertyName("consumerSecret"u8);
-            writer.WriteObjectValue(ConsumerSecret);
+            JsonSerializer.Serialize(writer, ConsumerSecret);
             writer.WritePropertyName("accessToken"u8);
-            writer.WriteObjectValue(AccessToken);
+            JsonSerializer.Serialize(writer, AccessToken);
             writer.WritePropertyName("accessTokenSecret"u8);
-            writer.WriteObjectValue(AccessTokenSecret);
+            JsonSerializer.Serialize(writer, AccessTokenSecret);
             if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
@@ -141,7 +141,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
+                    connectVia = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -219,17 +219,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("consumerSecret"u8))
                         {
-                            consumerSecret = SecretBase.DeserializeSecretBase(property0.Value);
+                            consumerSecret = ModelSerializationExtensions.JsonDeserialize<SecretBase>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("accessToken"u8))
                         {
-                            accessToken = SecretBase.DeserializeSecretBase(property0.Value);
+                            accessToken = ModelSerializationExtensions.JsonDeserialize<SecretBase>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("accessTokenSecret"u8))
                         {
-                            accessTokenSecret = SecretBase.DeserializeSecretBase(property0.Value);
+                            accessTokenSecret = ModelSerializationExtensions.JsonDeserialize<SecretBase>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("useEncryptedEndpoints"u8))

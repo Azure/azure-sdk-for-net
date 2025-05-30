@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             if (Optional.IsDefined(TransportFileShareConfiguration))
             {
                 writer.WritePropertyName("transportFileShareConfiguration"u8);
-                writer.WriteObjectValue(TransportFileShareConfiguration, options);
+                ((IJsonModel<FileShareConfiguration>)TransportFileShareConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     {
                         continue;
                     }
-                    transportFileShareConfiguration = FileShareConfiguration.DeserializeFileShareConfiguration(property.Value, options);
+                    transportFileShareConfiguration = ModelSerializationExtensions.JsonDeserialize<FileShareConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

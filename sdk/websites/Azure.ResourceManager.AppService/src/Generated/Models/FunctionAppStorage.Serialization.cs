@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication, options);
+                ((IJsonModel<FunctionAppStorageAuthentication>)Authentication).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    authentication = FunctionAppStorageAuthentication.DeserializeFunctionAppStorageAuthentication(property.Value, options);
+                    authentication = ModelSerializationExtensions.JsonDeserialize<FunctionAppStorageAuthentication>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

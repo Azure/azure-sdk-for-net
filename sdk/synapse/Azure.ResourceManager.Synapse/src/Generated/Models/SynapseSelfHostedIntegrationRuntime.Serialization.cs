@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(LinkedInfo))
             {
                 writer.WritePropertyName("linkedInfo"u8);
-                writer.WriteObjectValue(LinkedInfo, options);
+                ((IJsonModel<SynapseLinkedIntegrationRuntimeType>)LinkedInfo).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             {
                                 continue;
                             }
-                            linkedInfo = SynapseLinkedIntegrationRuntimeType.DeserializeSynapseLinkedIntegrationRuntimeType(property0.Value, options);
+                            linkedInfo = ModelSerializationExtensions.JsonDeserialize<SynapseLinkedIntegrationRuntimeType>(property0.Value);
                             continue;
                         }
                     }

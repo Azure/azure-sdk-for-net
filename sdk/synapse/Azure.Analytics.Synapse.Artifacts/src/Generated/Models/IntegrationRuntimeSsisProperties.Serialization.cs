@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CatalogInfo))
             {
                 writer.WritePropertyName("catalogInfo"u8);
-                writer.WriteObjectValue(CatalogInfo);
+                JsonSerializer.Serialize(writer, CatalogInfo);
             }
             if (Optional.IsDefined(LicenseType))
             {
@@ -32,12 +32,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CustomSetupScriptProperties))
             {
                 writer.WritePropertyName("customSetupScriptProperties"u8);
-                writer.WriteObjectValue(CustomSetupScriptProperties);
+                JsonSerializer.Serialize(writer, CustomSetupScriptProperties);
             }
             if (Optional.IsDefined(DataProxyProperties))
             {
                 writer.WritePropertyName("dataProxyProperties"u8);
-                writer.WriteObjectValue(DataProxyProperties);
+                JsonSerializer.Serialize(writer, DataProxyProperties);
             }
             if (Optional.IsDefined(Edition))
             {
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in ExpressCustomSetupProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    catalogInfo = IntegrationRuntimeSsisCatalogInfo.DeserializeIntegrationRuntimeSsisCatalogInfo(property.Value);
+                    catalogInfo = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeSsisCatalogInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("licenseType"u8))
@@ -102,7 +102,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    customSetupScriptProperties = IntegrationRuntimeCustomSetupScriptProperties.DeserializeIntegrationRuntimeCustomSetupScriptProperties(property.Value);
+                    customSetupScriptProperties = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeCustomSetupScriptProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataProxyProperties"u8))
@@ -111,7 +111,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    dataProxyProperties = IntegrationRuntimeDataProxyProperties.DeserializeIntegrationRuntimeDataProxyProperties(property.Value);
+                    dataProxyProperties = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeDataProxyProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("edition"u8))

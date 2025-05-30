@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteStartArray();
                     foreach (var item0 in item)
                     {
-                        writer.WriteObjectValue(item0, options);
+                        ((IJsonModel<AppServiceNameValuePair>)item0).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Solutions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DiagnosticSolution>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

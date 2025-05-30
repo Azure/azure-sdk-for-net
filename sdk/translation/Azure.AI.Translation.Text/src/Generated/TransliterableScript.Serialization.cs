@@ -39,7 +39,7 @@ namespace Azure.AI.Translation.Text
             writer.WriteStartArray();
             foreach (var item in TargetLanguageScripts)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<LanguageScript>)item).Write(writer, options);
             }
             writer.WriteEndArray();
         }

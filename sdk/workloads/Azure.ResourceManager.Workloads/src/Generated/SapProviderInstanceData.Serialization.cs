@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Workloads
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<UserAssignedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Workloads
             if (Optional.IsDefined(ProviderSettings))
             {
                 writer.WritePropertyName("providerSettings"u8);
-                writer.WriteObjectValue(ProviderSettings, options);
+                ((IJsonModel<ProviderSpecificProperties>)ProviderSettings).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Workloads
                     {
                         continue;
                     }
-                    identity = UserAssignedServiceIdentity.DeserializeUserAssignedServiceIdentity(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<UserAssignedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Workloads
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            errors = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
+                            errors = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("providerSettings"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            providerSettings = ProviderSpecificProperties.DeserializeProviderSpecificProperties(property0.Value, options);
+                            providerSettings = ModelSerializationExtensions.JsonDeserialize<ProviderSpecificProperties>(property0.Value);
                             continue;
                         }
                     }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             if (Optional.IsDefined(RecommendedConfiguration))
             {
                 writer.WritePropertyName("recommendedConfiguration"u8);
-                writer.WriteObjectValue(RecommendedConfiguration, options);
+                ((IJsonModel<DiskVolumeConfiguration>)RecommendedConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(SupportedConfigurations))
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SupportedConfigurationsDiskDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     {
                         continue;
                     }
-                    recommendedConfiguration = DiskVolumeConfiguration.DeserializeDiskVolumeConfiguration(property.Value, options);
+                    recommendedConfiguration = ModelSerializationExtensions.JsonDeserialize<DiskVolumeConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("supportedConfigurations"u8))

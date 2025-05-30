@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<TrustedSigningAccountSku>)Sku).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                             {
                                 continue;
                             }
-                            sku = TrustedSigningAccountSku.DeserializeTrustedSigningAccountSku(property0.Value, options);
+                            sku = ModelSerializationExtensions.JsonDeserialize<TrustedSigningAccountSku>(property0.Value);
                             continue;
                         }
                     }

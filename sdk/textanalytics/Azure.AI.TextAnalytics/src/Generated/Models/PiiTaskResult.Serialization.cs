@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("results"u8))
                 {
-                    results = PiiEntitiesResult.DeserializePiiEntitiesResult(property.Value);
+                    results = ModelSerializationExtensions.JsonDeserialize<PiiEntitiesResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

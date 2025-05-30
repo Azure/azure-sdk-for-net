@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("key"u8);
-            writer.WriteObjectValue(Key);
+            JsonSerializer.Serialize(writer, Key);
             writer.WritePropertyName("authorizationType"u8);
             writer.WriteStringValue(AuthorizationType);
             writer.WriteEndObject();
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("key"u8))
                 {
-                    key = SecureString.DeserializeSecureString(property.Value);
+                    key = ModelSerializationExtensions.JsonDeserialize<SecureString>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("authorizationType"u8))

@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CurrentCpuStats))
             {
                 writer.WritePropertyName("currentCpuStats"u8);
-                writer.WriteObjectValue(CurrentCpuStats, options);
+                ((IJsonModel<ContainerCpuStatistics>)CurrentCpuStats).Write(writer, options);
             }
             if (Optional.IsDefined(PreviousCpuStats))
             {
                 writer.WritePropertyName("previousCpuStats"u8);
-                writer.WriteObjectValue(PreviousCpuStats, options);
+                ((IJsonModel<ContainerCpuStatistics>)PreviousCpuStats).Write(writer, options);
             }
             if (Optional.IsDefined(MemoryStats))
             {
                 writer.WritePropertyName("memoryStats"u8);
-                writer.WriteObjectValue(MemoryStats, options);
+                ((IJsonModel<ContainerMemoryStatistics>)MemoryStats).Write(writer, options);
             }
             if (Optional.IsDefined(Name))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Eth0))
             {
                 writer.WritePropertyName("eth0"u8);
-                writer.WriteObjectValue(Eth0, options);
+                ((IJsonModel<ContainerNetworkInterfaceStatistics>)Eth0).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    currentCpuStats = ContainerCpuStatistics.DeserializeContainerCpuStatistics(property.Value, options);
+                    currentCpuStats = ModelSerializationExtensions.JsonDeserialize<ContainerCpuStatistics>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("previousCpuStats"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    previousCpuStats = ContainerCpuStatistics.DeserializeContainerCpuStatistics(property.Value, options);
+                    previousCpuStats = ModelSerializationExtensions.JsonDeserialize<ContainerCpuStatistics>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("memoryStats"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    memoryStats = ContainerMemoryStatistics.DeserializeContainerMemoryStatistics(property.Value, options);
+                    memoryStats = ModelSerializationExtensions.JsonDeserialize<ContainerMemoryStatistics>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    eth0 = ContainerNetworkInterfaceStatistics.DeserializeContainerNetworkInterfaceStatistics(property.Value, options);
+                    eth0 = ModelSerializationExtensions.JsonDeserialize<ContainerNetworkInterfaceStatistics>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

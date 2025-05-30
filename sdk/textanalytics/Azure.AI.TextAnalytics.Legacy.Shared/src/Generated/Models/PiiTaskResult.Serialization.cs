@@ -26,7 +26,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     {
                         continue;
                     }
-                    results = PiiResult.DeserializePiiResult(property.Value);
+                    results = ModelSerializationExtensions.JsonDeserialize<PiiResult>(property.Value);
                     continue;
                 }
             }

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StreamAnalyticsErrorDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

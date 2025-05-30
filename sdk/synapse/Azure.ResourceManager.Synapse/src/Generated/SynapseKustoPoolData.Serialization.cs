@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Synapse
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<SynapseDataSourceSku>)Sku).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(OptimizedAutoscale))
             {
                 writer.WritePropertyName("optimizedAutoscale"u8);
-                writer.WriteObjectValue(OptimizedAutoscale, options);
+                ((IJsonModel<SynapseOptimizedAutoscale>)OptimizedAutoscale).Write(writer, options);
             }
             if (Optional.IsDefined(EnableStreamingIngest))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Synapse
             if (options.Format != "W" && Optional.IsDefined(LanguageExtensions))
             {
                 writer.WritePropertyName("languageExtensions"u8);
-                writer.WriteObjectValue(LanguageExtensions, options);
+                ((IJsonModel<SynapseLanguageExtensionsList>)LanguageExtensions).Write(writer, options);
             }
             if (Optional.IsDefined(WorkspaceUid))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Synapse
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = SynapseDataSourceSku.DeserializeSynapseDataSourceSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<SynapseDataSourceSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Synapse
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            optimizedAutoscale = SynapseOptimizedAutoscale.DeserializeSynapseOptimizedAutoscale(property0.Value, options);
+                            optimizedAutoscale = ModelSerializationExtensions.JsonDeserialize<SynapseOptimizedAutoscale>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enableStreamingIngest"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            languageExtensions = SynapseLanguageExtensionsList.DeserializeSynapseLanguageExtensionsList(property0.Value, options);
+                            languageExtensions = ModelSerializationExtensions.JsonDeserialize<SynapseLanguageExtensionsList>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("workspaceUID"u8))

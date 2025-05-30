@@ -53,22 +53,22 @@ namespace Azure.ResourceManager.Workloads
             if (Optional.IsDefined(MessageServerProperties))
             {
                 writer.WritePropertyName("messageServerProperties"u8);
-                writer.WriteObjectValue(MessageServerProperties, options);
+                ((IJsonModel<MessageServerProperties>)MessageServerProperties).Write(writer, options);
             }
             if (Optional.IsDefined(EnqueueServerProperties))
             {
                 writer.WritePropertyName("enqueueServerProperties"u8);
-                writer.WriteObjectValue(EnqueueServerProperties, options);
+                ((IJsonModel<EnqueueServerProperties>)EnqueueServerProperties).Write(writer, options);
             }
             if (Optional.IsDefined(GatewayServerProperties))
             {
                 writer.WritePropertyName("gatewayServerProperties"u8);
-                writer.WriteObjectValue(GatewayServerProperties, options);
+                ((IJsonModel<GatewayServerProperties>)GatewayServerProperties).Write(writer, options);
             }
             if (Optional.IsDefined(EnqueueReplicationServerProperties))
             {
                 writer.WritePropertyName("enqueueReplicationServerProperties"u8);
-                writer.WriteObjectValue(EnqueueReplicationServerProperties, options);
+                ((IJsonModel<EnqueueReplicationServerProperties>)EnqueueReplicationServerProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(KernelVersion))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Workloads
             if (options.Format != "W" && Optional.IsDefined(LoadBalancerDetails))
             {
                 writer.WritePropertyName("loadBalancerDetails"u8);
-                JsonSerializer.Serialize(writer, LoadBalancerDetails);
+                ((IJsonModel<SubResource>)LoadBalancerDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(VmDetails))
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Workloads
                 writer.WriteStartArray();
                 foreach (var item in VmDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CentralServerVmDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Workloads
             if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
-                writer.WriteObjectValue(Errors, options);
+                ((IJsonModel<SapVirtualInstanceError>)Errors).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Workloads
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            messageServerProperties = MessageServerProperties.DeserializeMessageServerProperties(property0.Value, options);
+                            messageServerProperties = ModelSerializationExtensions.JsonDeserialize<MessageServerProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enqueueServerProperties"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            enqueueServerProperties = EnqueueServerProperties.DeserializeEnqueueServerProperties(property0.Value, options);
+                            enqueueServerProperties = ModelSerializationExtensions.JsonDeserialize<EnqueueServerProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("gatewayServerProperties"u8))
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            gatewayServerProperties = GatewayServerProperties.DeserializeGatewayServerProperties(property0.Value, options);
+                            gatewayServerProperties = ModelSerializationExtensions.JsonDeserialize<GatewayServerProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enqueueReplicationServerProperties"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            enqueueReplicationServerProperties = EnqueueReplicationServerProperties.DeserializeEnqueueReplicationServerProperties(property0.Value, options);
+                            enqueueReplicationServerProperties = ModelSerializationExtensions.JsonDeserialize<EnqueueReplicationServerProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("kernelVersion"u8))
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            loadBalancerDetails = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
+                            loadBalancerDetails = ModelSerializationExtensions.JsonDeserialize<SubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("vmDetails"u8))
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            errors = SapVirtualInstanceError.DeserializeSapVirtualInstanceError(property0.Value, options);
+                            errors = ModelSerializationExtensions.JsonDeserialize<SapVirtualInstanceError>(property0.Value);
                             continue;
                         }
                     }

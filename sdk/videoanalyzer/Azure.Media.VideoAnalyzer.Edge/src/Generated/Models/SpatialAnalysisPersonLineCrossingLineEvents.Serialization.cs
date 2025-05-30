@@ -17,14 +17,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("line"u8);
-            writer.WriteObjectValue(Line);
+            JsonSerializer.Serialize(writer, Line);
             if (Optional.IsCollectionDefined(Events))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -43,7 +43,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 if (property.NameEquals("line"u8))
                 {
-                    line = NamedLineBase.DeserializeNamedLineBase(property.Value);
+                    line = ModelSerializationExtensions.JsonDeserialize<NamedLineBase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("events"u8))

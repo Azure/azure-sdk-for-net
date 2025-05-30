@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in EnvironmentRefs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SynapseSsisEnvironmentReference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SynapseSsisParameter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

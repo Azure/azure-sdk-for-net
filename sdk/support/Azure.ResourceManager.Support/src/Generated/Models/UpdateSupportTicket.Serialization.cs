@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Support.Models
             if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
-                writer.WriteObjectValue(ContactDetails, options);
+                ((IJsonModel<SupportContactProfileContent>)ContactDetails).Write(writer, options);
             }
             if (Optional.IsDefined(AdvancedDiagnosticConsent))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Support.Models
                 writer.WriteStartArray();
                 foreach (var item in SecondaryConsent)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SecondaryConsent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Support.Models
                     {
                         continue;
                     }
-                    contactDetails = SupportContactProfileContent.DeserializeSupportContactProfileContent(property.Value, options);
+                    contactDetails = ModelSerializationExtensions.JsonDeserialize<SupportContactProfileContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("advancedDiagnosticConsent"u8))

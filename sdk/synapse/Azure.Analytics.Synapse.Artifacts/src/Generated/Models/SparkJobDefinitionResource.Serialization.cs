@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            JsonSerializer.Serialize(writer, Properties);
             writer.WriteEndObject();
         }
 
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = SparkJobDefinition.DeserializeSparkJobDefinition(property.Value);
+                    properties = ModelSerializationExtensions.JsonDeserialize<SparkJobDefinition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))

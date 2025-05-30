@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
 
             writer.WritePropertyName("startTime"u8);
-            writer.WriteObjectValue(StartTime, options);
+            ((IJsonModel<ScheduleTime>)StartTime).Write(writer, options);
             writer.WritePropertyName("endTime"u8);
-            writer.WriteObjectValue(EndTime, options);
+            ((IJsonModel<ScheduleTime>)EndTime).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 if (property.NameEquals("startTime"u8))
                 {
-                    startTime = ScheduleTime.DeserializeScheduleTime(property.Value, options);
+                    startTime = ModelSerializationExtensions.JsonDeserialize<ScheduleTime>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("endTime"u8))
                 {
-                    endTime = ScheduleTime.DeserializeScheduleTime(property.Value, options);
+                    endTime = ModelSerializationExtensions.JsonDeserialize<ScheduleTime>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

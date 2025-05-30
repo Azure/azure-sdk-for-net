@@ -38,22 +38,22 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(LinuxRuntimeSettings))
             {
                 writer.WritePropertyName("linuxRuntimeSettings"u8);
-                writer.WriteObjectValue(LinuxRuntimeSettings, options);
+                ((IJsonModel<WebAppRuntimeSettings>)LinuxRuntimeSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(WindowsRuntimeSettings))
             {
                 writer.WritePropertyName("windowsRuntimeSettings"u8);
-                writer.WriteObjectValue(WindowsRuntimeSettings, options);
+                ((IJsonModel<WebAppRuntimeSettings>)WindowsRuntimeSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LinuxContainerSettings))
             {
                 writer.WritePropertyName("linuxContainerSettings"u8);
-                writer.WriteObjectValue(LinuxContainerSettings, options);
+                ((IJsonModel<LinuxJavaContainerSettings>)LinuxContainerSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(WindowsContainerSettings))
             {
                 writer.WritePropertyName("windowsContainerSettings"u8);
-                writer.WriteObjectValue(WindowsContainerSettings, options);
+                ((IJsonModel<WindowsJavaContainerSettings>)WindowsContainerSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    linuxRuntimeSettings = WebAppRuntimeSettings.DeserializeWebAppRuntimeSettings(property.Value, options);
+                    linuxRuntimeSettings = ModelSerializationExtensions.JsonDeserialize<WebAppRuntimeSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("windowsRuntimeSettings"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    windowsRuntimeSettings = WebAppRuntimeSettings.DeserializeWebAppRuntimeSettings(property.Value, options);
+                    windowsRuntimeSettings = ModelSerializationExtensions.JsonDeserialize<WebAppRuntimeSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("linuxContainerSettings"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    linuxContainerSettings = LinuxJavaContainerSettings.DeserializeLinuxJavaContainerSettings(property.Value, options);
+                    linuxContainerSettings = ModelSerializationExtensions.JsonDeserialize<LinuxJavaContainerSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("windowsContainerSettings"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    windowsContainerSettings = WindowsJavaContainerSettings.DeserializeWindowsJavaContainerSettings(property.Value, options);
+                    windowsContainerSettings = ModelSerializationExtensions.JsonDeserialize<WindowsJavaContainerSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

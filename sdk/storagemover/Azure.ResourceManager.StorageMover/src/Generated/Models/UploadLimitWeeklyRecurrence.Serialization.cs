@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
                 if (property.NameEquals("startTime"u8))
                 {
-                    startTime = ScheduleTime.DeserializeScheduleTime(property.Value, options);
+                    startTime = ModelSerializationExtensions.JsonDeserialize<ScheduleTime>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("endTime"u8))
                 {
-                    endTime = ScheduleTime.DeserializeScheduleTime(property.Value, options);
+                    endTime = ModelSerializationExtensions.JsonDeserialize<ScheduleTime>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

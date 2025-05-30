@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials, options);
+                ((IJsonModel<AzureKeyVaultSmbCredentials>)Credentials).Write(writer, options);
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     {
                         continue;
                     }
-                    credentials = AzureKeyVaultSmbCredentials.DeserializeAzureKeyVaultSmbCredentials(property.Value, options);
+                    credentials = ModelSerializationExtensions.JsonDeserialize<AzureKeyVaultSmbCredentials>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("endpointType"u8))

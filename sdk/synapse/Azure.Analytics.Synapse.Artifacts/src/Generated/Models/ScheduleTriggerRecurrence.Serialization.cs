@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule);
+                JsonSerializer.Serialize(writer, Schedule);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -120,7 +120,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    schedule = RecurrenceSchedule.DeserializeRecurrenceSchedule(property.Value);
+                    schedule = ModelSerializationExtensions.JsonDeserialize<RecurrenceSchedule>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());

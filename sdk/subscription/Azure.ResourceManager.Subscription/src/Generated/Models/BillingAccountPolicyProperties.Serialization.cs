@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceTenants)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ServiceTenant>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

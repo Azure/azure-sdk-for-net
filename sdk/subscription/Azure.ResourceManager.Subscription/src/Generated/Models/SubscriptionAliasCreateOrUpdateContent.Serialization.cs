@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Subscription.Models
             if (Optional.IsDefined(AdditionalProperties))
             {
                 writer.WritePropertyName("additionalProperties"u8);
-                writer.WriteObjectValue(AdditionalProperties, options);
+                ((IJsonModel<SubscriptionAliasAdditionalProperties>)AdditionalProperties).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Subscription.Models
                             {
                                 continue;
                             }
-                            additionalProperties = SubscriptionAliasAdditionalProperties.DeserializeSubscriptionAliasAdditionalProperties(property0.Value, options);
+                            additionalProperties = ModelSerializationExtensions.JsonDeserialize<SubscriptionAliasAdditionalProperties>(property0.Value);
                             continue;
                         }
                     }

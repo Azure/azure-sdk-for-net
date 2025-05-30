@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(HighAvailabilitySoftwareConfiguration))
             {
                 writer.WritePropertyName("highAvailabilitySoftwareConfiguration"u8);
-                writer.WriteObjectValue(HighAvailabilitySoftwareConfiguration, options);
+                ((IJsonModel<HighAvailabilitySoftwareConfiguration>)HighAvailabilitySoftwareConfiguration).Write(writer, options);
             }
         }
 
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    highAvailabilitySoftwareConfiguration = HighAvailabilitySoftwareConfiguration.DeserializeHighAvailabilitySoftwareConfiguration(property.Value, options);
+                    highAvailabilitySoftwareConfiguration = ModelSerializationExtensions.JsonDeserialize<HighAvailabilitySoftwareConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("softwareInstallationType"u8))

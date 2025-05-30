@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WritePropertyName("streamingJob"u8);
-            writer.WriteObjectValue(StreamingJob, options);
+            ((IJsonModel<StreamingJobData>)StreamingJob).Write(writer, options);
             writer.WritePropertyName("diagnostics"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(WriteUri))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 if (property.NameEquals("streamingJob"u8))
                 {
-                    streamingJob = StreamingJobData.DeserializeStreamingJobData(property.Value, options);
+                    streamingJob = ModelSerializationExtensions.JsonDeserialize<StreamingJobData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("diagnostics"u8))

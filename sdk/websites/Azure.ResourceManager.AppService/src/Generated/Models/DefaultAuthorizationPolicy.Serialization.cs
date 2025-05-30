@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(AllowedPrincipals))
             {
                 writer.WritePropertyName("allowedPrincipals"u8);
-                writer.WriteObjectValue(AllowedPrincipals, options);
+                ((IJsonModel<AppServiceAadAllowedPrincipals>)AllowedPrincipals).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AllowedApplications))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    allowedPrincipals = AppServiceAadAllowedPrincipals.DeserializeAppServiceAadAllowedPrincipals(property.Value, options);
+                    allowedPrincipals = ModelSerializationExtensions.JsonDeserialize<AppServiceAadAllowedPrincipals>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("allowedApplications"u8))

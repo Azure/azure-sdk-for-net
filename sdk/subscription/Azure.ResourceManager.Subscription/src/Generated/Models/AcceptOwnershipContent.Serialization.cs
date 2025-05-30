@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Subscription.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<AcceptOwnershipRequestProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Subscription.Models
                     {
                         continue;
                     }
-                    properties = AcceptOwnershipRequestProperties.DeserializeAcceptOwnershipRequestProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<AcceptOwnershipRequestProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

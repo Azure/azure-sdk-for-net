@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(DataFlowProperties))
             {
                 writer.WritePropertyName("dataFlowProperties"u8);
-                writer.WriteObjectValue(DataFlowProperties, options);
+                ((IJsonModel<SynapseIntegrationRuntimeDataFlowProperties>)DataFlowProperties).Write(writer, options);
             }
             if (Optional.IsDefined(VnetProperties))
             {
                 writer.WritePropertyName("vNetProperties"u8);
-                writer.WriteObjectValue(VnetProperties, options);
+                ((IJsonModel<SynapseIntegrationRuntimeVnetProperties>)VnetProperties).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    dataFlowProperties = SynapseIntegrationRuntimeDataFlowProperties.DeserializeSynapseIntegrationRuntimeDataFlowProperties(property.Value, options);
+                    dataFlowProperties = ModelSerializationExtensions.JsonDeserialize<SynapseIntegrationRuntimeDataFlowProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vNetProperties"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    vNetProperties = SynapseIntegrationRuntimeVnetProperties.DeserializeSynapseIntegrationRuntimeVnetProperties(property.Value, options);
+                    vNetProperties = ModelSerializationExtensions.JsonDeserialize<SynapseIntegrationRuntimeVnetProperties>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

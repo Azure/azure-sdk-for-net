@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("userName"u8);
             writer.WriteObjectValue<object>(UserName);
             writer.WritePropertyName("password"u8);
-            writer.WriteObjectValue(Password);
+            JsonSerializer.Serialize(writer, Password);
             writer.WriteEndObject();
         }
 
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("password"u8))
                 {
-                    password = SecretBase.DeserializeSecretBase(property.Value);
+                    password = ModelSerializationExtensions.JsonDeserialize<SecretBase>(property.Value);
                     continue;
                 }
             }

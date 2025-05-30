@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in EndpointDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

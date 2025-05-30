@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia, options);
+                ((IJsonModel<SynapseEntityReference>)ConnectVia).Write(writer, options);
             }
             if (Optional.IsDefined(StagingLinkedService))
             {
                 writer.WritePropertyName("stagingLinkedService"u8);
-                writer.WriteObjectValue(StagingLinkedService, options);
+                ((IJsonModel<SynapseEntityReference>)StagingLinkedService).Write(writer, options);
             }
             if (Optional.IsDefined(Path))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    connectVia = SynapseEntityReference.DeserializeSynapseEntityReference(property.Value, options);
+                    connectVia = ModelSerializationExtensions.JsonDeserialize<SynapseEntityReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("stagingLinkedService"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    stagingLinkedService = SynapseEntityReference.DeserializeSynapseEntityReference(property.Value, options);
+                    stagingLinkedService = ModelSerializationExtensions.JsonDeserialize<SynapseEntityReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("path"u8))

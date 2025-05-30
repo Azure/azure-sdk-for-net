@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(VirtualNetwork))
             {
                 writer.WritePropertyName("virtualNetwork"u8);
-                writer.WriteObjectValue(VirtualNetwork, options);
+                ((IJsonModel<AppServiceVirtualNetworkProfile>)VirtualNetwork).Write(writer, options);
             }
             if (Optional.IsDefined(InternalLoadBalancingMode))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in ClusterSettings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AppServiceNameValuePair>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -143,12 +143,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CustomDnsSuffixConfiguration))
             {
                 writer.WritePropertyName("customDnsSuffixConfiguration"u8);
-                writer.WriteObjectValue(CustomDnsSuffixConfiguration, options);
+                ((IJsonModel<CustomDnsSuffixConfigurationData>)CustomDnsSuffixConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkingConfiguration))
             {
                 writer.WritePropertyName("networkingConfiguration"u8);
-                writer.WriteObjectValue(NetworkingConfiguration, options);
+                ((IJsonModel<AseV3NetworkingConfigurationData>)NetworkingConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(UpgradeAvailability))
             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            virtualNetwork = AppServiceVirtualNetworkProfile.DeserializeAppServiceVirtualNetworkProfile(property0.Value, options);
+                            virtualNetwork = ModelSerializationExtensions.JsonDeserialize<AppServiceVirtualNetworkProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("internalLoadBalancingMode"u8))
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            customDnsSuffixConfiguration = CustomDnsSuffixConfigurationData.DeserializeCustomDnsSuffixConfigurationData(property0.Value, options);
+                            customDnsSuffixConfiguration = ModelSerializationExtensions.JsonDeserialize<CustomDnsSuffixConfigurationData>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkingConfiguration"u8))
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            networkingConfiguration = AseV3NetworkingConfigurationData.DeserializeAseV3NetworkingConfigurationData(property0.Value, options);
+                            networkingConfiguration = ModelSerializationExtensions.JsonDeserialize<AseV3NetworkingConfigurationData>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("upgradeAvailability"u8))

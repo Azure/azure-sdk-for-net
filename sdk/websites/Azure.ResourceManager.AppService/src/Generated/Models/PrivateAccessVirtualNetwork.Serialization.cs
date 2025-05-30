@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Subnets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PrivateAccessSubnet>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

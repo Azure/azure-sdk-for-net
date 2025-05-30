@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials, options);
+                ((IJsonModel<StorageCacheUsernameDownloadCredential>)Credentials).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    credentials = StorageCacheUsernameDownloadCredential.DeserializeStorageCacheUsernameDownloadCredential(property.Value, options);
+                    credentials = ModelSerializationExtensions.JsonDeserialize<StorageCacheUsernameDownloadCredential>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

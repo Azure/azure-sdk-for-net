@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
-                writer.WriteObjectValue(PartitionSettings);
+                JsonSerializer.Serialize(writer, PartitionSettings);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
@@ -121,7 +121,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    partitionSettings = OraclePartitionSettings.DeserializeOraclePartitionSettings(property.Value);
+                    partitionSettings = ModelSerializationExtensions.JsonDeserialize<OraclePartitionSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("additionalColumns"u8))

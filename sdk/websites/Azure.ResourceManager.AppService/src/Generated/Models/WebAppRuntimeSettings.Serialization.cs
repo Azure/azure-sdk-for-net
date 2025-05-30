@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(AppInsightsSettings))
             {
                 writer.WritePropertyName("appInsightsSettings"u8);
-                writer.WriteObjectValue(AppInsightsSettings, options);
+                ((IJsonModel<AppInsightsWebAppStackSettings>)AppInsightsSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(GitHubActionSettings))
             {
                 writer.WritePropertyName("gitHubActionSettings"u8);
-                writer.WriteObjectValue(GitHubActionSettings, options);
+                ((IJsonModel<GitHubActionWebAppStackSettings>)GitHubActionSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsPreview))
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    appInsightsSettings = AppInsightsWebAppStackSettings.DeserializeAppInsightsWebAppStackSettings(property.Value, options);
+                    appInsightsSettings = ModelSerializationExtensions.JsonDeserialize<AppInsightsWebAppStackSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("gitHubActionSettings"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    gitHubActionSettings = GitHubActionWebAppStackSettings.DeserializeGitHubActionWebAppStackSettings(property.Value, options);
+                    gitHubActionSettings = ModelSerializationExtensions.JsonDeserialize<GitHubActionWebAppStackSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isPreview"u8))

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(DetectorDefinition))
             {
                 writer.WritePropertyName("detectorDefinition"u8);
-                writer.WriteObjectValue(DetectorDefinition, options);
+                ((IJsonModel<DetectorDefinition>)DetectorDefinition).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Metrics))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DiagnosticMetricSet>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteStartArray();
                     foreach (var item0 in item)
                     {
-                        writer.WriteObjectValue(item0, options);
+                        ((IJsonModel<AppServiceNameValuePair>)item0).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(DetectorMetaData))
             {
                 writer.WritePropertyName("detectorMetaData"u8);
-                writer.WriteObjectValue(DetectorMetaData, options);
+                ((IJsonModel<DetectorMetadata>)DetectorMetaData).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    detectorDefinition = DetectorDefinition.DeserializeDetectorDefinition(property.Value, options);
+                    detectorDefinition = ModelSerializationExtensions.JsonDeserialize<DetectorDefinition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metrics"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    detectorMetaData = DetectorMetadata.DeserializeDetectorMetadata(property.Value, options);
+                    detectorMetaData = ModelSerializationExtensions.JsonDeserialize<DetectorMetadata>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

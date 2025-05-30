@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StoragePoolSkuInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

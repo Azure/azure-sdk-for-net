@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Expression))
             {
                 writer.WritePropertyName("expression"u8);
-                writer.WriteObjectValue(Expression);
+                JsonSerializer.Serialize(writer, Expression);
             }
             if (Optional.IsDefined(PageSize))
             {
@@ -88,7 +88,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    expression = ExpressionV2.DeserializeExpressionV2(property.Value);
+                    expression = ModelSerializationExtensions.JsonDeserialize<ExpressionV2>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("pageSize"u8))

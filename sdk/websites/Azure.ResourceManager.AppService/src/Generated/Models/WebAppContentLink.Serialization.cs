@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(ContentHash))
             {
                 writer.WritePropertyName("contentHash"u8);
-                writer.WriteObjectValue(ContentHash, options);
+                ((IJsonModel<WebAppContentHash>)ContentHash).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    contentHash = WebAppContentHash.DeserializeWebAppContentHash(property.Value, options);
+                    contentHash = ModelSerializationExtensions.JsonDeserialize<WebAppContentHash>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))

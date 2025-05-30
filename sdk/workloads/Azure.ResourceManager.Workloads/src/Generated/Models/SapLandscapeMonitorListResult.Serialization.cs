@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SapLandscapeMonitorData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

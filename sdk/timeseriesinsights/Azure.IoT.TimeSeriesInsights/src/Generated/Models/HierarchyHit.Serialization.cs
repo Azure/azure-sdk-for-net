@@ -42,7 +42,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     {
                         continue;
                     }
-                    hierarchyNodes = SearchHierarchyNodesResponse.DeserializeSearchHierarchyNodesResponse(property.Value);
+                    hierarchyNodes = ModelSerializationExtensions.JsonDeserialize<SearchHierarchyNodesResponse>(property.Value);
                     continue;
                 }
             }

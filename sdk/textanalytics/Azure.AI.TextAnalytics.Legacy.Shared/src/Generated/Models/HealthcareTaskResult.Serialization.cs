@@ -28,7 +28,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     {
                         continue;
                     }
-                    results = HealthcareResult.DeserializeHealthcareResult(property.Value);
+                    results = ModelSerializationExtensions.JsonDeserialize<HealthcareResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("errors"u8))

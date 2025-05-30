@@ -20,7 +20,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                JsonSerializer.Serialize(writer, Credentials);
             }
             writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Url);
@@ -49,7 +49,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     {
                         continue;
                     }
-                    credentials = CredentialsBase.DeserializeCredentialsBase(property.Value);
+                    credentials = ModelSerializationExtensions.JsonDeserialize<CredentialsBase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("url"u8))

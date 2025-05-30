@@ -28,22 +28,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
-                writer.WriteObjectValue(Resolution);
+                JsonSerializer.Serialize(writer, Resolution);
             }
             if (Optional.IsDefined(RateControl))
             {
                 writer.WritePropertyName("rateControl"u8);
-                writer.WriteObjectValue(RateControl);
+                JsonSerializer.Serialize(writer, RateControl);
             }
             if (Optional.IsDefined(H264))
             {
                 writer.WritePropertyName("h264"u8);
-                writer.WriteObjectValue(H264);
+                JsonSerializer.Serialize(writer, H264);
             }
             if (Optional.IsDefined(Mpeg4))
             {
                 writer.WritePropertyName("mpeg4"u8);
-                writer.WriteObjectValue(Mpeg4);
+                JsonSerializer.Serialize(writer, Mpeg4);
             }
             writer.WriteEndObject();
         }
@@ -86,7 +86,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     {
                         continue;
                     }
-                    resolution = VideoResolution.DeserializeVideoResolution(property.Value);
+                    resolution = ModelSerializationExtensions.JsonDeserialize<VideoResolution>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rateControl"u8))
@@ -95,7 +95,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     {
                         continue;
                     }
-                    rateControl = RateControl.DeserializeRateControl(property.Value);
+                    rateControl = ModelSerializationExtensions.JsonDeserialize<RateControl>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("h264"u8))
@@ -104,7 +104,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     {
                         continue;
                     }
-                    h264 = H264Configuration.DeserializeH264Configuration(property.Value);
+                    h264 = ModelSerializationExtensions.JsonDeserialize<H264Configuration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mpeg4"u8))
@@ -113,7 +113,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     {
                         continue;
                     }
-                    mpeg4 = Mpeg4Configuration.DeserializeMpeg4Configuration(property.Value);
+                    mpeg4 = ModelSerializationExtensions.JsonDeserialize<Mpeg4Configuration>(property.Value);
                     continue;
                 }
             }

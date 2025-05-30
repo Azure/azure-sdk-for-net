@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Support.Models
                 writer.WriteStartArray();
                 foreach (var item in QuotaChangeRequests)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SupportQuotaChangeContent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

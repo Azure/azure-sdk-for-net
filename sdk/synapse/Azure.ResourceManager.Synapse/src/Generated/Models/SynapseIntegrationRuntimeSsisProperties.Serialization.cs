@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(CatalogInfo))
             {
                 writer.WritePropertyName("catalogInfo"u8);
-                writer.WriteObjectValue(CatalogInfo, options);
+                ((IJsonModel<SynapseIntegrationRuntimeSsisCatalogInfo>)CatalogInfo).Write(writer, options);
             }
             if (Optional.IsDefined(LicenseType))
             {
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(CustomSetupScriptProperties))
             {
                 writer.WritePropertyName("customSetupScriptProperties"u8);
-                writer.WriteObjectValue(CustomSetupScriptProperties, options);
+                ((IJsonModel<SynapseIntegrationRuntimeCustomSetupScriptProperties>)CustomSetupScriptProperties).Write(writer, options);
             }
             if (Optional.IsDefined(DataProxyProperties))
             {
                 writer.WritePropertyName("dataProxyProperties"u8);
-                writer.WriteObjectValue(DataProxyProperties, options);
+                ((IJsonModel<SynapseIntegrationRuntimeDataProxyProperties>)DataProxyProperties).Write(writer, options);
             }
             if (Optional.IsDefined(Edition))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in ExpressCustomSetupProperties)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SynapseCustomSetupBase>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    catalogInfo = SynapseIntegrationRuntimeSsisCatalogInfo.DeserializeSynapseIntegrationRuntimeSsisCatalogInfo(property.Value, options);
+                    catalogInfo = ModelSerializationExtensions.JsonDeserialize<SynapseIntegrationRuntimeSsisCatalogInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("licenseType"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    customSetupScriptProperties = SynapseIntegrationRuntimeCustomSetupScriptProperties.DeserializeSynapseIntegrationRuntimeCustomSetupScriptProperties(property.Value, options);
+                    customSetupScriptProperties = ModelSerializationExtensions.JsonDeserialize<SynapseIntegrationRuntimeCustomSetupScriptProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataProxyProperties"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    dataProxyProperties = SynapseIntegrationRuntimeDataProxyProperties.DeserializeSynapseIntegrationRuntimeDataProxyProperties(property.Value, options);
+                    dataProxyProperties = ModelSerializationExtensions.JsonDeserialize<SynapseIntegrationRuntimeDataProxyProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("edition"u8))

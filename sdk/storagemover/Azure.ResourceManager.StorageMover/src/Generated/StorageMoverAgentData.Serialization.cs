@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.StorageMover
             if (Optional.IsDefined(UploadLimitSchedule))
             {
                 writer.WritePropertyName("uploadLimitSchedule"u8);
-                writer.WriteObjectValue(UploadLimitSchedule, options);
+                ((IJsonModel<UploadLimitSchedule>)UploadLimitSchedule).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
-                writer.WriteObjectValue(ErrorDetails, options);
+                ((IJsonModel<StorageMoverAgentPropertiesErrorDetails>)ErrorDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.StorageMover
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.StorageMover
                             {
                                 continue;
                             }
-                            uploadLimitSchedule = UploadLimitSchedule.DeserializeUploadLimitSchedule(property0.Value, options);
+                            uploadLimitSchedule = ModelSerializationExtensions.JsonDeserialize<UploadLimitSchedule>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("errorDetails"u8))
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.StorageMover
                             {
                                 continue;
                             }
-                            errorDetails = StorageMoverAgentPropertiesErrorDetails.DeserializeStorageMoverAgentPropertiesErrorDetails(property0.Value, options);
+                            errorDetails = ModelSerializationExtensions.JsonDeserialize<StorageMoverAgentPropertiesErrorDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

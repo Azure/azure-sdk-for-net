@@ -71,7 +71,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
-                writer.WriteObjectValue(ClientSecret);
+                JsonSerializer.Serialize(writer, ClientSecret);
             }
             writer.WriteEndObject();
         }
@@ -155,7 +155,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    clientSecret = GitHubClientSecret.DeserializeGitHubClientSecret(property.Value);
+                    clientSecret = ModelSerializationExtensions.JsonDeserialize<GitHubClientSecret>(property.Value);
                     continue;
                 }
             }

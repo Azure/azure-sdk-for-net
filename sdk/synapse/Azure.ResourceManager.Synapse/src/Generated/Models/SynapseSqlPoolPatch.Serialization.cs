@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<SynapseSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    sku = SynapseSku.DeserializeSynapseSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<SynapseSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

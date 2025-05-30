@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(SampleUtterance))
             {
                 writer.WritePropertyName("sampleUtterance"u8);
-                writer.WriteObjectValue(SampleUtterance, options);
+                ((IJsonModel<SampleUtterance>)SampleUtterance).Write(writer, options);
             }
             if (Optional.IsDefined(Score))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    sampleUtterance = SampleUtterance.DeserializeSampleUtterance(property.Value, options);
+                    sampleUtterance = ModelSerializationExtensions.JsonDeserialize<SampleUtterance>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("score"u8))

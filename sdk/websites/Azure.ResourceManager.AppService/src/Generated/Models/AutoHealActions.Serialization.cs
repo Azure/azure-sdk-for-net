@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CustomAction))
             {
                 writer.WritePropertyName("customAction"u8);
-                writer.WriteObjectValue(CustomAction, options);
+                ((IJsonModel<AutoHealCustomAction>)CustomAction).Write(writer, options);
             }
             if (Optional.IsDefined(MinProcessExecutionTime))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    customAction = AutoHealCustomAction.DeserializeAutoHealCustomAction(property.Value, options);
+                    customAction = ModelSerializationExtensions.JsonDeserialize<AutoHealCustomAction>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("minProcessExecutionTime"u8))

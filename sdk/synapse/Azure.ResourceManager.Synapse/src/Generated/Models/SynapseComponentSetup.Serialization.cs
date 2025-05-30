@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(LicenseKey))
             {
                 writer.WritePropertyName("licenseKey"u8);
-                writer.WriteObjectValue(LicenseKey, options);
+                ((IJsonModel<SynapseSecretBase>)LicenseKey).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             {
                                 continue;
                             }
-                            licenseKey = SynapseSecretBase.DeserializeSynapseSecretBase(property0.Value, options);
+                            licenseKey = ModelSerializationExtensions.JsonDeserialize<SynapseSecretBase>(property0.Value);
                             continue;
                         }
                     }

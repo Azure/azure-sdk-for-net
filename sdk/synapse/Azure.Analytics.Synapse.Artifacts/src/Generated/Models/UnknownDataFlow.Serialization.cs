@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                JsonSerializer.Serialize(writer, Folder);
             }
             writer.WriteEndObject();
         }
@@ -95,7 +95,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value);
+                    folder = ModelSerializationExtensions.JsonDeserialize<DataFlowFolder>(property.Value);
                     continue;
                 }
             }

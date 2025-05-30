@@ -21,12 +21,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                JsonSerializer.Serialize(writer, ConnectVia);
             }
             if (Optional.IsDefined(StagingLinkedService))
             {
                 writer.WritePropertyName("stagingLinkedService"u8);
-                writer.WriteObjectValue(StagingLinkedService);
+                JsonSerializer.Serialize(writer, StagingLinkedService);
             }
             if (Optional.IsDefined(Path))
             {
@@ -53,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    connectVia = EntityReference.DeserializeEntityReference(property.Value);
+                    connectVia = ModelSerializationExtensions.JsonDeserialize<EntityReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("stagingLinkedService"u8))
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    stagingLinkedService = EntityReference.DeserializeEntityReference(property.Value);
+                    stagingLinkedService = ModelSerializationExtensions.JsonDeserialize<EntityReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("path"u8))

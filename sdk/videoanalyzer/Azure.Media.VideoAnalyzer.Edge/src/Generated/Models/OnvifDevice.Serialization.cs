@@ -19,17 +19,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
-                writer.WriteObjectValue(Hostname);
+                JsonSerializer.Serialize(writer, Hostname);
             }
             if (Optional.IsDefined(SystemDateTime))
             {
                 writer.WritePropertyName("systemDateTime"u8);
-                writer.WriteObjectValue(SystemDateTime);
+                JsonSerializer.Serialize(writer, SystemDateTime);
             }
             if (Optional.IsDefined(Dns))
             {
                 writer.WritePropertyName("dns"u8);
-                writer.WriteObjectValue(Dns);
+                JsonSerializer.Serialize(writer, Dns);
             }
             if (Optional.IsCollectionDefined(MediaProfiles))
             {
@@ -37,7 +37,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStartArray();
                 foreach (var item in MediaProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     {
                         continue;
                     }
-                    hostname = OnvifHostName.DeserializeOnvifHostName(property.Value);
+                    hostname = ModelSerializationExtensions.JsonDeserialize<OnvifHostName>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("systemDateTime"u8))
@@ -71,7 +71,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     {
                         continue;
                     }
-                    systemDateTime = OnvifSystemDateTime.DeserializeOnvifSystemDateTime(property.Value);
+                    systemDateTime = ModelSerializationExtensions.JsonDeserialize<OnvifSystemDateTime>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dns"u8))
@@ -80,7 +80,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     {
                         continue;
                     }
-                    dns = OnvifDns.DeserializeOnvifDns(property.Value);
+                    dns = ModelSerializationExtensions.JsonDeserialize<OnvifDns>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mediaProfiles"u8))

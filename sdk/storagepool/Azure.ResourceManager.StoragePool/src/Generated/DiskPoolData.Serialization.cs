@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StoragePool
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<StoragePoolSku>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ManagedBy))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StoragePool
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.StoragePool
                     {
                         continue;
                     }
-                    sku = StoragePoolSku.DeserializeStoragePoolSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<StoragePoolSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("managedBy"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.StoragePool
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.StoragePool
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             disks = array;
                             continue;

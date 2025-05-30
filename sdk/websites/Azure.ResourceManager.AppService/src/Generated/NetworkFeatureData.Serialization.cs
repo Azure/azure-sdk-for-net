@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
             if (options.Format != "W" && Optional.IsDefined(VirtualNetworkConnection))
             {
                 writer.WritePropertyName("virtualNetworkConnection"u8);
-                writer.WriteObjectValue(VirtualNetworkConnection, options);
+                ((IJsonModel<AppServiceVirtualNetworkProperties>)VirtualNetworkConnection).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(HybridConnections))
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in HybridConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RelayServiceConnectionEntityData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in HybridConnectionsV2)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HybridConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            virtualNetworkConnection = AppServiceVirtualNetworkProperties.DeserializeAppServiceVirtualNetworkProperties(property0.Value, options);
+                            virtualNetworkConnection = ModelSerializationExtensions.JsonDeserialize<AppServiceVirtualNetworkProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hybridConnections"u8))

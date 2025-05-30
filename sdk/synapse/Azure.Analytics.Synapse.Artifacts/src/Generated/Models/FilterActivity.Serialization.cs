@@ -44,7 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -54,16 +54,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("items"u8);
-            writer.WriteObjectValue(Items);
+            JsonSerializer.Serialize(writer, Items);
             writer.WritePropertyName("condition"u8);
-            writer.WriteObjectValue(Condition);
+            JsonSerializer.Serialize(writer, Condition);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -164,12 +164,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("items"u8))
                         {
-                            items = Expression.DeserializeExpression(property0.Value);
+                            items = ModelSerializationExtensions.JsonDeserialize<Expression>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("condition"u8))
                         {
-                            condition = Expression.DeserializeExpression(property0.Value);
+                            condition = ModelSerializationExtensions.JsonDeserialize<Expression>(property0.Value);
                             continue;
                         }
                     }

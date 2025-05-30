@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.TrafficManager
             if (Optional.IsDefined(DnsConfig))
             {
                 writer.WritePropertyName("dnsConfig"u8);
-                writer.WriteObjectValue(DnsConfig, options);
+                ((IJsonModel<TrafficManagerDnsConfig>)DnsConfig).Write(writer, options);
             }
             if (Optional.IsDefined(MonitorConfig))
             {
                 writer.WritePropertyName("monitorConfig"u8);
-                writer.WriteObjectValue(MonitorConfig, options);
+                ((IJsonModel<TrafficManagerMonitorConfig>)MonitorConfig).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Endpoints))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.TrafficManager
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TrafficManagerEndpointData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.TrafficManager
                             {
                                 continue;
                             }
-                            dnsConfig = TrafficManagerDnsConfig.DeserializeTrafficManagerDnsConfig(property0.Value, options);
+                            dnsConfig = ModelSerializationExtensions.JsonDeserialize<TrafficManagerDnsConfig>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("monitorConfig"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.TrafficManager
                             {
                                 continue;
                             }
-                            monitorConfig = TrafficManagerMonitorConfig.DeserializeTrafficManagerMonitorConfig(property0.Value, options);
+                            monitorConfig = ModelSerializationExtensions.JsonDeserialize<TrafficManagerMonitorConfig>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("endpoints"u8))

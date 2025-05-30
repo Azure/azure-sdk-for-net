@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in PropertyBag)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataProviderKeyValuePair>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

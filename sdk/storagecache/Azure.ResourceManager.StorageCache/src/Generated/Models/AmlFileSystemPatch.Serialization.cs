@@ -50,17 +50,17 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (Optional.IsDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
-                writer.WriteObjectValue(EncryptionSettings, options);
+                ((IJsonModel<AmlFileSystemEncryptionSettings>)EncryptionSettings).Write(writer, options);
             }
             if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
-                writer.WriteObjectValue(MaintenanceWindow, options);
+                ((IJsonModel<AmlFileSystemUpdatePropertiesMaintenanceWindow>)MaintenanceWindow).Write(writer, options);
             }
             if (Optional.IsDefined(RootSquashSettings))
             {
                 writer.WritePropertyName("rootSquashSettings"u8);
-                writer.WriteObjectValue(RootSquashSettings, options);
+                ((IJsonModel<AmlFileSystemRootSquashSettings>)RootSquashSettings).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                             {
                                 continue;
                             }
-                            encryptionSettings = AmlFileSystemEncryptionSettings.DeserializeAmlFileSystemEncryptionSettings(property0.Value, options);
+                            encryptionSettings = ModelSerializationExtensions.JsonDeserialize<AmlFileSystemEncryptionSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("maintenanceWindow"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                             {
                                 continue;
                             }
-                            maintenanceWindow = AmlFileSystemUpdatePropertiesMaintenanceWindow.DeserializeAmlFileSystemUpdatePropertiesMaintenanceWindow(property0.Value, options);
+                            maintenanceWindow = ModelSerializationExtensions.JsonDeserialize<AmlFileSystemUpdatePropertiesMaintenanceWindow>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("rootSquashSettings"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                             {
                                 continue;
                             }
-                            rootSquashSettings = AmlFileSystemRootSquashSettings.DeserializeAmlFileSystemRootSquashSettings(property0.Value, options);
+                            rootSquashSettings = ModelSerializationExtensions.JsonDeserialize<AmlFileSystemRootSquashSettings>(property0.Value);
                             continue;
                         }
                     }

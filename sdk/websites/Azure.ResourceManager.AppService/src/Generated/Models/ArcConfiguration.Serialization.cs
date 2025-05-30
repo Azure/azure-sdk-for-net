@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(FrontEndServiceConfiguration))
             {
                 writer.WritePropertyName("frontEndServiceConfiguration"u8);
-                writer.WriteObjectValue(FrontEndServiceConfiguration, options);
+                ((IJsonModel<FrontEndConfiguration>)FrontEndServiceConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(KubeConfig))
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    frontEndServiceConfiguration = FrontEndConfiguration.DeserializeFrontEndConfiguration(property.Value, options);
+                    frontEndServiceConfiguration = ModelSerializationExtensions.JsonDeserialize<FrontEndConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kubeConfig"u8))

@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CurrentConnection))
             {
                 writer.WritePropertyName("currentConnection"u8);
-                writer.WriteObjectValue(CurrentConnection);
+                JsonSerializer.Serialize(writer, CurrentConnection);
             }
             if (Optional.IsDefined(ResultLimit))
             {
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                JsonSerializer.Serialize(writer, Metadata);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -69,7 +69,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    currentConnection = SqlConnection.DeserializeSqlConnection(property.Value);
+                    currentConnection = ModelSerializationExtensions.JsonDeserialize<SqlConnection>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resultLimit"u8))
@@ -87,7 +87,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    metadata = SqlScriptMetadata.DeserializeSqlScriptMetadata(property.Value);
+                    metadata = ModelSerializationExtensions.JsonDeserialize<SqlScriptMetadata>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());

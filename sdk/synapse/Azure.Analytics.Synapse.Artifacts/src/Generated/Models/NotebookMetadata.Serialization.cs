@@ -22,14 +22,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Kernelspec))
             {
                 writer.WritePropertyName("kernelspec"u8);
-                writer.WriteObjectValue(Kernelspec);
+                JsonSerializer.Serialize(writer, Kernelspec);
             }
             if (Optional.IsDefined(LanguageInfo))
             {
                 if (LanguageInfo != null)
                 {
                     writer.WritePropertyName("language_info"u8);
-                    writer.WriteObjectValue(LanguageInfo);
+                    JsonSerializer.Serialize(writer, LanguageInfo);
                 }
                 else
                 {
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    kernelspec = NotebookKernelSpec.DeserializeNotebookKernelSpec(property.Value);
+                    kernelspec = ModelSerializationExtensions.JsonDeserialize<NotebookKernelSpec>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("language_info"u8))
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         languageInfo = null;
                         continue;
                     }
-                    languageInfo = NotebookLanguageInfo.DeserializeNotebookLanguageInfo(property.Value);
+                    languageInfo = ModelSerializationExtensions.JsonDeserialize<NotebookLanguageInfo>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SynapseManagedIntegrationRuntimeError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

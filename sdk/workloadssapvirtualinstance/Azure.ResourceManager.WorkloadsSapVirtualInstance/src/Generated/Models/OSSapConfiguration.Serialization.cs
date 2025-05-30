@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             if (Optional.IsDefined(DeployerVmPackages))
             {
                 writer.WritePropertyName("deployerVmPackages"u8);
-                writer.WriteObjectValue(DeployerVmPackages, options);
+                ((IJsonModel<DeployerVmPackages>)DeployerVmPackages).Write(writer, options);
             }
             if (Optional.IsDefined(SapFqdn))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     {
                         continue;
                     }
-                    deployerVmPackages = DeployerVmPackages.DeserializeDeployerVmPackages(property.Value, options);
+                    deployerVmPackages = ModelSerializationExtensions.JsonDeserialize<DeployerVmPackages>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sapFqdn"u8))

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
-                writer.WriteObjectValue(Data, options);
+                ((IJsonModel<PerfMonSet>)Data).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    data = PerfMonSet.DeserializePerfMonSet(property.Value, options);
+                    data = ModelSerializationExtensions.JsonDeserialize<PerfMonSet>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

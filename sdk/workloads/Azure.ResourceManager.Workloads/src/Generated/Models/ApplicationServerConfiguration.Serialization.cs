@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
             writer.WritePropertyName("virtualMachineConfiguration"u8);
-            writer.WriteObjectValue(VirtualMachineConfiguration, options);
+            ((IJsonModel<SapVirtualMachineConfiguration>)VirtualMachineConfiguration).Write(writer, options);
             writer.WritePropertyName("instanceCount"u8);
             writer.WriteNumberValue(InstanceCount);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (property.NameEquals("virtualMachineConfiguration"u8))
                 {
-                    virtualMachineConfiguration = SapVirtualMachineConfiguration.DeserializeSapVirtualMachineConfiguration(property.Value, options);
+                    virtualMachineConfiguration = ModelSerializationExtensions.JsonDeserialize<SapVirtualMachineConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("instanceCount"u8))

@@ -22,12 +22,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
-                writer.WriteObjectValue(LinkedServiceName);
+                JsonSerializer.Serialize(writer, LinkedServiceName);
             }
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                JsonSerializer.Serialize(writer, Policy);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -64,14 +64,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("sparkJob"u8);
-            writer.WriteObjectValue(SparkJob);
+            JsonSerializer.Serialize(writer, SparkJob);
             if (Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("args"u8);
@@ -150,7 +150,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(TargetBigDataPool))
             {
                 writer.WritePropertyName("targetBigDataPool"u8);
-                writer.WriteObjectValue(TargetBigDataPool);
+                JsonSerializer.Serialize(writer, TargetBigDataPool);
             }
             if (Optional.IsDefined(ExecutorSize))
             {
@@ -180,7 +180,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(TargetSparkConfiguration))
             {
                 writer.WritePropertyName("targetSparkConfiguration"u8);
-                writer.WriteObjectValue(TargetSparkConfiguration);
+                JsonSerializer.Serialize(writer, TargetSparkConfiguration);
             }
             if (Optional.IsCollectionDefined(SparkConfig))
             {
@@ -201,7 +201,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
+                JsonSerializer.Serialize(writer, Authentication);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -254,7 +254,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    linkedServiceName = ModelSerializationExtensions.JsonDeserialize<LinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -263,7 +263,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
+                    policy = ModelSerializationExtensions.JsonDeserialize<ActivityPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -338,7 +338,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("sparkJob"u8))
                         {
-                            sparkJob = SynapseSparkJobReference.DeserializeSynapseSparkJobReference(property0.Value);
+                            sparkJob = ModelSerializationExtensions.JsonDeserialize<SynapseSparkJobReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("args"u8))
@@ -458,7 +458,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            targetBigDataPool = BigDataPoolParametrizationReference.DeserializeBigDataPoolParametrizationReference(property0.Value);
+                            targetBigDataPool = ModelSerializationExtensions.JsonDeserialize<BigDataPoolParametrizationReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("executorSize"u8))
@@ -512,7 +512,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            targetSparkConfiguration = SparkConfigurationParametrizationReference.DeserializeSparkConfigurationParametrizationReference(property0.Value);
+                            targetSparkConfiguration = ModelSerializationExtensions.JsonDeserialize<SparkConfigurationParametrizationReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sparkConfig"u8))
@@ -542,7 +542,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            authentication = SynapseActivityAuthentication.DeserializeSynapseActivityAuthentication(property0.Value);
+                            authentication = ModelSerializationExtensions.JsonDeserialize<SynapseActivityAuthentication>(property0.Value);
                             continue;
                         }
                     }

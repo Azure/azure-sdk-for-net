@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in ConfigurationFiles)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StaticSiteDatabaseConnectionConfigurationFileOverview>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

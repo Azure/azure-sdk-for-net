@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ManagedVirtualNetwork))
             {
                 writer.WritePropertyName("managedVirtualNetwork"u8);
-                writer.WriteObjectValue(ManagedVirtualNetwork);
+                JsonSerializer.Serialize(writer, ManagedVirtualNetwork);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -36,12 +36,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ComputeProperties))
             {
                 writer.WritePropertyName("computeProperties"u8);
-                writer.WriteObjectValue(ComputeProperties);
+                JsonSerializer.Serialize(writer, ComputeProperties);
             }
             if (Optional.IsDefined(SsisProperties))
             {
                 writer.WritePropertyName("ssisProperties"u8);
-                writer.WriteObjectValue(SsisProperties);
+                JsonSerializer.Serialize(writer, SsisProperties);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -83,7 +83,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    managedVirtualNetwork = ManagedVirtualNetworkReference.DeserializeManagedVirtualNetworkReference(property.Value);
+                    managedVirtualNetwork = ModelSerializationExtensions.JsonDeserialize<ManagedVirtualNetworkReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -111,7 +111,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            computeProperties = IntegrationRuntimeComputeProperties.DeserializeIntegrationRuntimeComputeProperties(property0.Value);
+                            computeProperties = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeComputeProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ssisProperties"u8))
@@ -120,7 +120,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            ssisProperties = IntegrationRuntimeSsisProperties.DeserializeIntegrationRuntimeSsisProperties(property0.Value);
+                            ssisProperties = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeSsisProperties>(property0.Value);
                             continue;
                         }
                     }

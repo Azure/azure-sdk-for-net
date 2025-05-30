@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Terraform.Models
             if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<TerraformExportResult>)Properties).Write(writer, options);
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Terraform.Models
                     {
                         continue;
                     }
-                    properties = TerraformExportResult.DeserializeTerraformExportResult(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<TerraformExportResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Terraform.Models
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

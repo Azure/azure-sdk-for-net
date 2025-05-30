@@ -37,19 +37,19 @@ namespace Azure.AI.Translation.Text
             if (Optional.IsDefined(DetectedLanguage))
             {
                 writer.WritePropertyName("detectedLanguage"u8);
-                writer.WriteObjectValue(DetectedLanguage, options);
+                ((IJsonModel<DetectedLanguage>)DetectedLanguage).Write(writer, options);
             }
             writer.WritePropertyName("translations"u8);
             writer.WriteStartArray();
             foreach (var item in Translations)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<TranslationText>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(SourceText))
             {
                 writer.WritePropertyName("sourceText"u8);
-                writer.WriteObjectValue(SourceText, options);
+                ((IJsonModel<SourceText>)SourceText).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -101,7 +101,7 @@ namespace Azure.AI.Translation.Text
                     {
                         continue;
                     }
-                    detectedLanguage = DetectedLanguage.DeserializeDetectedLanguage(property.Value, options);
+                    detectedLanguage = ModelSerializationExtensions.JsonDeserialize<DetectedLanguage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("translations"u8))
@@ -120,7 +120,7 @@ namespace Azure.AI.Translation.Text
                     {
                         continue;
                     }
-                    sourceText = SourceText.DeserializeSourceText(property.Value, options);
+                    sourceText = ModelSerializationExtensions.JsonDeserialize<SourceText>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

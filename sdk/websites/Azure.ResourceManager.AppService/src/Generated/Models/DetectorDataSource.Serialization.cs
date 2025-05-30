@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in DataSourceUri)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AppServiceNameValuePair>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

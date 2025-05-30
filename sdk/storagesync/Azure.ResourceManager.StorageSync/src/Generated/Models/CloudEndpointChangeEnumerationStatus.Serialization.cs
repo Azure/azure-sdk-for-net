@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.StorageSync.Models
             if (options.Format != "W" && Optional.IsDefined(LastEnumerationStatus))
             {
                 writer.WritePropertyName("lastEnumerationStatus"u8);
-                writer.WriteObjectValue(LastEnumerationStatus, options);
+                ((IJsonModel<CloudEndpointLastChangeEnumerationStatus>)LastEnumerationStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Activity))
             {
                 writer.WritePropertyName("activity"u8);
-                writer.WriteObjectValue(Activity, options);
+                ((IJsonModel<CloudEndpointChangeEnumerationActivity>)Activity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    lastEnumerationStatus = CloudEndpointLastChangeEnumerationStatus.DeserializeCloudEndpointLastChangeEnumerationStatus(property.Value, options);
+                    lastEnumerationStatus = ModelSerializationExtensions.JsonDeserialize<CloudEndpointLastChangeEnumerationStatus>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("activity"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    activity = CloudEndpointChangeEnumerationActivity.DeserializeCloudEndpointChangeEnumerationActivity(property.Value, options);
+                    activity = ModelSerializationExtensions.JsonDeserialize<CloudEndpointChangeEnumerationActivity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -22,12 +22,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
-                writer.WriteObjectValue(LinkedServiceName);
+                JsonSerializer.Serialize(writer, LinkedServiceName);
             }
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                JsonSerializer.Serialize(writer, Policy);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -64,14 +64,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("packageLocation"u8);
-            writer.WriteObjectValue(PackageLocation);
+            JsonSerializer.Serialize(writer, PackageLocation);
             if (Optional.IsDefined(Runtime))
             {
                 writer.WritePropertyName("runtime"u8);
@@ -90,10 +90,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ExecutionCredential))
             {
                 writer.WritePropertyName("executionCredential"u8);
-                writer.WriteObjectValue(ExecutionCredential);
+                JsonSerializer.Serialize(writer, ExecutionCredential);
             }
             writer.WritePropertyName("connectVia"u8);
-            writer.WriteObjectValue(ConnectVia);
+            JsonSerializer.Serialize(writer, ConnectVia);
             if (Optional.IsCollectionDefined(ProjectParameters))
             {
                 writer.WritePropertyName("projectParameters"u8);
@@ -101,7 +101,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in ProjectParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    JsonSerializer.Serialize(writer, item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in PackageParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    JsonSerializer.Serialize(writer, item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -132,7 +132,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     foreach (var item0 in item.Value)
                     {
                         writer.WritePropertyName(item0.Key);
-                        writer.WriteObjectValue(item0.Value);
+                        JsonSerializer.Serialize(writer, item0.Value);
                     }
                     writer.WriteEndObject();
                 }
@@ -154,7 +154,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     foreach (var item0 in item.Value)
                     {
                         writer.WritePropertyName(item0.Key);
-                        writer.WriteObjectValue(item0.Value);
+                        JsonSerializer.Serialize(writer, item0.Value);
                     }
                     writer.WriteEndObject();
                 }
@@ -167,14 +167,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in PropertyOverrides)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    JsonSerializer.Serialize(writer, item.Value);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(LogLocation))
             {
                 writer.WritePropertyName("logLocation"u8);
-                writer.WriteObjectValue(LogLocation);
+                JsonSerializer.Serialize(writer, LogLocation);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -222,7 +222,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    linkedServiceName = ModelSerializationExtensions.JsonDeserialize<LinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -231,7 +231,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
+                    policy = ModelSerializationExtensions.JsonDeserialize<ActivityPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -306,7 +306,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("packageLocation"u8))
                         {
-                            packageLocation = SsisPackageLocation.DeserializeSsisPackageLocation(property0.Value);
+                            packageLocation = ModelSerializationExtensions.JsonDeserialize<SsisPackageLocation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("runtime"u8))
@@ -342,12 +342,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            executionCredential = SsisExecutionCredential.DeserializeSsisExecutionCredential(property0.Value);
+                            executionCredential = ModelSerializationExtensions.JsonDeserialize<SsisExecutionCredential>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("connectVia"u8))
                         {
-                            connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property0.Value);
+                            connectVia = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("projectParameters"u8))
@@ -450,7 +450,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            logLocation = SsisLogLocation.DeserializeSsisLogLocation(property0.Value);
+                            logLocation = ModelSerializationExtensions.JsonDeserialize<SsisLogLocation>(property0.Value);
                             continue;
                         }
                     }

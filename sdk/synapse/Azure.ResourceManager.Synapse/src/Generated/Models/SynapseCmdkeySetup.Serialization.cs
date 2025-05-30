@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 #endif
             writer.WritePropertyName("password"u8);
-            writer.WriteObjectValue(Password, options);
+            ((IJsonModel<SynapseSecretBase>)Password).Write(writer, options);
             writer.WriteEndObject();
         }
 
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         }
                         if (property0.NameEquals("password"u8))
                         {
-                            password = SynapseSecretBase.DeserializeSynapseSecretBase(property0.Value, options);
+                            password = ModelSerializationExtensions.JsonDeserialize<SynapseSecretBase>(property0.Value);
                             continue;
                         }
                     }

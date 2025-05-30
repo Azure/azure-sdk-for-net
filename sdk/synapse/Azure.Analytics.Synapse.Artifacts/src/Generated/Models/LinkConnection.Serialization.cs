@@ -21,22 +21,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(SourceDatabase))
             {
                 writer.WritePropertyName("sourceDatabase"u8);
-                writer.WriteObjectValue(SourceDatabase);
+                JsonSerializer.Serialize(writer, SourceDatabase);
             }
             if (Optional.IsDefined(TargetDatabase))
             {
                 writer.WritePropertyName("targetDatabase"u8);
-                writer.WriteObjectValue(TargetDatabase);
+                JsonSerializer.Serialize(writer, TargetDatabase);
             }
             if (Optional.IsDefined(LandingZone))
             {
                 writer.WritePropertyName("landingZone"u8);
-                writer.WriteObjectValue(LandingZone);
+                JsonSerializer.Serialize(writer, LandingZone);
             }
             if (Optional.IsDefined(Compute))
             {
                 writer.WritePropertyName("compute"u8);
-                writer.WriteObjectValue(Compute);
+                JsonSerializer.Serialize(writer, Compute);
             }
             writer.WriteEndObject();
         }
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    sourceDatabase = LinkConnectionSourceDatabase.DeserializeLinkConnectionSourceDatabase(property.Value);
+                    sourceDatabase = ModelSerializationExtensions.JsonDeserialize<LinkConnectionSourceDatabase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetDatabase"u8))
@@ -68,7 +68,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    targetDatabase = LinkConnectionTargetDatabase.DeserializeLinkConnectionTargetDatabase(property.Value);
+                    targetDatabase = ModelSerializationExtensions.JsonDeserialize<LinkConnectionTargetDatabase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("landingZone"u8))
@@ -77,7 +77,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    landingZone = LinkConnectionLandingZone.DeserializeLinkConnectionLandingZone(property.Value);
+                    landingZone = ModelSerializationExtensions.JsonDeserialize<LinkConnectionLandingZone>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("compute"u8))
@@ -86,7 +86,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    compute = LinkConnectionCompute.DeserializeLinkConnectionCompute(property.Value);
+                    compute = ModelSerializationExtensions.JsonDeserialize<LinkConnectionCompute>(property.Value);
                     continue;
                 }
             }

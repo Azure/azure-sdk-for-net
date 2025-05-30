@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in BlockingFeatures)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteCloneabilityCriterion>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in UnsupportedFeatures)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteCloneabilityCriterion>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in BlockingCharacteristics)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SiteCloneabilityCriterion>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

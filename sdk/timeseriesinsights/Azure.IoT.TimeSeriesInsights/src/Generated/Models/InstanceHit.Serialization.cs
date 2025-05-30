@@ -76,7 +76,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     {
                         continue;
                     }
-                    highlights = InstanceHitHighlights.DeserializeInstanceHitHighlights(property.Value);
+                    highlights = ModelSerializationExtensions.JsonDeserialize<InstanceHitHighlights>(property.Value);
                     continue;
                 }
             }

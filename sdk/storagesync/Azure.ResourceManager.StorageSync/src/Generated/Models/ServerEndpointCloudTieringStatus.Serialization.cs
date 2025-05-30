@@ -62,32 +62,32 @@ namespace Azure.ResourceManager.StorageSync.Models
             if (options.Format != "W" && Optional.IsDefined(SpaceSavings))
             {
                 writer.WritePropertyName("spaceSavings"u8);
-                writer.WriteObjectValue(SpaceSavings, options);
+                ((IJsonModel<CloudTieringSpaceSavings>)SpaceSavings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CachePerformance))
             {
                 writer.WritePropertyName("cachePerformance"u8);
-                writer.WriteObjectValue(CachePerformance, options);
+                ((IJsonModel<CloudTieringCachePerformance>)CachePerformance).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(FilesNotTiering))
             {
                 writer.WritePropertyName("filesNotTiering"u8);
-                writer.WriteObjectValue(FilesNotTiering, options);
+                ((IJsonModel<CloudTieringFilesNotTiering>)FilesNotTiering).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(VolumeFreeSpacePolicyStatus))
             {
                 writer.WritePropertyName("volumeFreeSpacePolicyStatus"u8);
-                writer.WriteObjectValue(VolumeFreeSpacePolicyStatus, options);
+                ((IJsonModel<CloudTieringVolumeFreeSpacePolicyStatus>)VolumeFreeSpacePolicyStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DatePolicyStatus))
             {
                 writer.WritePropertyName("datePolicyStatus"u8);
-                writer.WriteObjectValue(DatePolicyStatus, options);
+                ((IJsonModel<CloudTieringDatePolicyStatus>)DatePolicyStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LowDiskMode))
             {
                 writer.WritePropertyName("lowDiskMode"u8);
-                writer.WriteObjectValue(LowDiskMode, options);
+                ((IJsonModel<CloudTieringLowDiskMode>)LowDiskMode).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    spaceSavings = CloudTieringSpaceSavings.DeserializeCloudTieringSpaceSavings(property.Value, options);
+                    spaceSavings = ModelSerializationExtensions.JsonDeserialize<CloudTieringSpaceSavings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("cachePerformance"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    cachePerformance = CloudTieringCachePerformance.DeserializeCloudTieringCachePerformance(property.Value, options);
+                    cachePerformance = ModelSerializationExtensions.JsonDeserialize<CloudTieringCachePerformance>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("filesNotTiering"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    filesNotTiering = CloudTieringFilesNotTiering.DeserializeCloudTieringFilesNotTiering(property.Value, options);
+                    filesNotTiering = ModelSerializationExtensions.JsonDeserialize<CloudTieringFilesNotTiering>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("volumeFreeSpacePolicyStatus"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    volumeFreeSpacePolicyStatus = CloudTieringVolumeFreeSpacePolicyStatus.DeserializeCloudTieringVolumeFreeSpacePolicyStatus(property.Value, options);
+                    volumeFreeSpacePolicyStatus = ModelSerializationExtensions.JsonDeserialize<CloudTieringVolumeFreeSpacePolicyStatus>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("datePolicyStatus"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    datePolicyStatus = CloudTieringDatePolicyStatus.DeserializeCloudTieringDatePolicyStatus(property.Value, options);
+                    datePolicyStatus = ModelSerializationExtensions.JsonDeserialize<CloudTieringDatePolicyStatus>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lowDiskMode"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    lowDiskMode = CloudTieringLowDiskMode.DeserializeCloudTieringLowDiskMode(property.Value, options);
+                    lowDiskMode = ModelSerializationExtensions.JsonDeserialize<CloudTieringLowDiskMode>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

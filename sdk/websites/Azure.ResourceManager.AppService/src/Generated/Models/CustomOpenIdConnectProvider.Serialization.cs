@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
-                writer.WriteObjectValue(Registration, options);
+                ((IJsonModel<OpenIdConnectRegistration>)Registration).Write(writer, options);
             }
             if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
-                writer.WriteObjectValue(Login, options);
+                ((IJsonModel<OpenIdConnectLogin>)Login).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    registration = OpenIdConnectRegistration.DeserializeOpenIdConnectRegistration(property.Value, options);
+                    registration = ModelSerializationExtensions.JsonDeserialize<OpenIdConnectRegistration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("login"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    login = OpenIdConnectLogin.DeserializeOpenIdConnectLogin(property.Value, options);
+                    login = ModelSerializationExtensions.JsonDeserialize<OpenIdConnectLogin>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

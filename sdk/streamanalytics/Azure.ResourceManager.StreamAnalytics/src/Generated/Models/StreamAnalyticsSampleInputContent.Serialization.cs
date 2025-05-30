@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue(Input, options);
+                ((IJsonModel<StreamingJobInputData>)Input).Write(writer, options);
             }
             if (Optional.IsDefined(CompatibilityLevel))
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    input = StreamingJobInputData.DeserializeStreamingJobInputData(property.Value, options);
+                    input = ModelSerializationExtensions.JsonDeserialize<StreamingJobInputData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("compatibilityLevel"u8))

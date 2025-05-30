@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(RedshiftUnloadSettings))
             {
                 writer.WritePropertyName("redshiftUnloadSettings"u8);
-                writer.WriteObjectValue(RedshiftUnloadSettings);
+                JsonSerializer.Serialize(writer, RedshiftUnloadSettings);
             }
             if (Optional.IsDefined(QueryTimeout))
             {
@@ -97,7 +97,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    redshiftUnloadSettings = RedshiftUnloadSettings.DeserializeRedshiftUnloadSettings(property.Value);
+                    redshiftUnloadSettings = ModelSerializationExtensions.JsonDeserialize<RedshiftUnloadSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("queryTimeout"u8))

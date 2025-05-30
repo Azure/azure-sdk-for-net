@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ShareablePrivateLinkProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     {
                         continue;
                     }
-                    properties = ShareablePrivateLinkProperties.DeserializeShareablePrivateLinkProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ShareablePrivateLinkProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

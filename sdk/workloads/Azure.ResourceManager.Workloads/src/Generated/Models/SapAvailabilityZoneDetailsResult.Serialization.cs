@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WriteStartArray();
                 foreach (var item in AvailabilityZonePairs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SapAvailabilityZonePair>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

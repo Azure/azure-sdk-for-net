@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
             }
 
             writer.WritePropertyName("marketplace"u8);
-            writer.WriteObjectValue(Marketplace, options);
+            ((IJsonModel<WeightsAndBiasesMarketplaceDetails>)Marketplace).Write(writer, options);
             writer.WritePropertyName("user"u8);
-            writer.WriteObjectValue(User, options);
+            ((IJsonModel<WeightsAndBiasesUserDetails>)User).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
             if (Optional.IsDefined(PartnerProperties))
             {
                 writer.WritePropertyName("partnerProperties"u8);
-                writer.WriteObjectValue(PartnerProperties, options);
+                ((IJsonModel<WeightsAndBiasesPartnerProperties>)PartnerProperties).Write(writer, options);
             }
             if (Optional.IsDefined(SingleSignOnProperties))
             {
                 writer.WritePropertyName("singleSignOnProperties"u8);
-                writer.WriteObjectValue(SingleSignOnProperties, options);
+                ((IJsonModel<WeightsAndBiasesSingleSignOnPropertiesV2>)SingleSignOnProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
             {
                 if (property.NameEquals("marketplace"u8))
                 {
-                    marketplace = WeightsAndBiasesMarketplaceDetails.DeserializeWeightsAndBiasesMarketplaceDetails(property.Value, options);
+                    marketplace = ModelSerializationExtensions.JsonDeserialize<WeightsAndBiasesMarketplaceDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("user"u8))
                 {
-                    user = WeightsAndBiasesUserDetails.DeserializeWeightsAndBiasesUserDetails(property.Value, options);
+                    user = ModelSerializationExtensions.JsonDeserialize<WeightsAndBiasesUserDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
                     {
                         continue;
                     }
-                    partnerProperties = WeightsAndBiasesPartnerProperties.DeserializeWeightsAndBiasesPartnerProperties(property.Value, options);
+                    partnerProperties = ModelSerializationExtensions.JsonDeserialize<WeightsAndBiasesPartnerProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("singleSignOnProperties"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
                     {
                         continue;
                     }
-                    singleSignOnProperties = WeightsAndBiasesSingleSignOnPropertiesV2.DeserializeWeightsAndBiasesSingleSignOnPropertiesV2(property.Value, options);
+                    singleSignOnProperties = ModelSerializationExtensions.JsonDeserialize<WeightsAndBiasesSingleSignOnPropertiesV2>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

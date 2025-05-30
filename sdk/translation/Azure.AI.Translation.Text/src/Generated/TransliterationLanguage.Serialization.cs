@@ -42,7 +42,7 @@ namespace Azure.AI.Translation.Text
             writer.WriteStartArray();
             foreach (var item in Scripts)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<TransliterableScript>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

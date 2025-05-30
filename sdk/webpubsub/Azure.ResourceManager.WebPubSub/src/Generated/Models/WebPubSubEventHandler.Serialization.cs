@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             if (Optional.IsDefined(Auth))
             {
                 writer.WritePropertyName("auth"u8);
-                writer.WriteObjectValue(Auth, options);
+                ((IJsonModel<UpstreamAuthSettings>)Auth).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     {
                         continue;
                     }
-                    auth = UpstreamAuthSettings.DeserializeUpstreamAuthSettings(property.Value, options);
+                    auth = ModelSerializationExtensions.JsonDeserialize<UpstreamAuthSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

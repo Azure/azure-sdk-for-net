@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.TrustedSigning
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<TrustedSigningAccountSku>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.TrustedSigning
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.TrustedSigning
                             {
                                 continue;
                             }
-                            sku = TrustedSigningAccountSku.DeserializeTrustedSigningAccountSku(property0.Value, options);
+                            sku = ModelSerializationExtensions.JsonDeserialize<TrustedSigningAccountSku>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

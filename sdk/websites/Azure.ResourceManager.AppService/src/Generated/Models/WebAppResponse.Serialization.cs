@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(BodyLink))
             {
                 writer.WritePropertyName("bodyLink"u8);
-                writer.WriteObjectValue(BodyLink, options);
+                ((IJsonModel<WebAppContentLink>)BodyLink).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    bodyLink = WebAppContentLink.DeserializeWebAppContentLink(property.Value, options);
+                    bodyLink = ModelSerializationExtensions.JsonDeserialize<WebAppContentLink>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

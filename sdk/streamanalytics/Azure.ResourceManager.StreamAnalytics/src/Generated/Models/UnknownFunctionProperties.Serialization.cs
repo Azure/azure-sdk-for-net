@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             {
                                 continue;
                             }
-                            output = StreamingJobFunctionOutput.DeserializeStreamingJobFunctionOutput(property0.Value, options);
+                            output = ModelSerializationExtensions.JsonDeserialize<StreamingJobFunctionOutput>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("binding"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             {
                                 continue;
                             }
-                            binding = StreamingJobFunctionBinding.DeserializeStreamingJobFunctionBinding(property0.Value, options);
+                            binding = ModelSerializationExtensions.JsonDeserialize<StreamingJobFunctionBinding>(property0.Value);
                             continue;
                         }
                     }

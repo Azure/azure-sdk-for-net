@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CursorMethods))
             {
                 writer.WritePropertyName("cursorMethods"u8);
-                writer.WriteObjectValue(CursorMethods);
+                JsonSerializer.Serialize(writer, CursorMethods);
             }
             if (Optional.IsDefined(BatchSize))
             {
@@ -103,7 +103,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    cursorMethods = MongoDbCursorMethodsProperties.DeserializeMongoDbCursorMethodsProperties(property.Value);
+                    cursorMethods = ModelSerializationExtensions.JsonDeserialize<MongoDbCursorMethodsProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("batchSize"u8))

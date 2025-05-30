@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(FileSystem))
             {
                 writer.WritePropertyName("fileSystem"u8);
-                writer.WriteObjectValue(FileSystem, options);
+                ((IJsonModel<FileSystemApplicationLogsConfig>)FileSystem).Write(writer, options);
             }
             if (Optional.IsDefined(AzureTableStorage))
             {
                 writer.WritePropertyName("azureTableStorage"u8);
-                writer.WriteObjectValue(AzureTableStorage, options);
+                ((IJsonModel<AppServiceTableStorageApplicationLogsConfig>)AzureTableStorage).Write(writer, options);
             }
             if (Optional.IsDefined(AzureBlobStorage))
             {
                 writer.WritePropertyName("azureBlobStorage"u8);
-                writer.WriteObjectValue(AzureBlobStorage, options);
+                ((IJsonModel<AppServiceBlobStorageApplicationLogsConfig>)AzureBlobStorage).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    fileSystem = FileSystemApplicationLogsConfig.DeserializeFileSystemApplicationLogsConfig(property.Value, options);
+                    fileSystem = ModelSerializationExtensions.JsonDeserialize<FileSystemApplicationLogsConfig>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azureTableStorage"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    azureTableStorage = AppServiceTableStorageApplicationLogsConfig.DeserializeAppServiceTableStorageApplicationLogsConfig(property.Value, options);
+                    azureTableStorage = ModelSerializationExtensions.JsonDeserialize<AppServiceTableStorageApplicationLogsConfig>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azureBlobStorage"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    azureBlobStorage = AppServiceBlobStorageApplicationLogsConfig.DeserializeAppServiceBlobStorageApplicationLogsConfig(property.Value, options);
+                    azureBlobStorage = ModelSerializationExtensions.JsonDeserialize<AppServiceBlobStorageApplicationLogsConfig>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

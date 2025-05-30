@@ -38,22 +38,22 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             if (Optional.IsDefined(CentralServer))
             {
                 writer.WritePropertyName("centralServer"u8);
-                writer.WriteObjectValue(CentralServer, options);
+                ((IJsonModel<CentralServerFullResourceNames>)CentralServer).Write(writer, options);
             }
             if (Optional.IsDefined(ApplicationServer))
             {
                 writer.WritePropertyName("applicationServer"u8);
-                writer.WriteObjectValue(ApplicationServer, options);
+                ((IJsonModel<ApplicationServerFullResourceNames>)ApplicationServer).Write(writer, options);
             }
             if (Optional.IsDefined(DatabaseServer))
             {
                 writer.WritePropertyName("databaseServer"u8);
-                writer.WriteObjectValue(DatabaseServer, options);
+                ((IJsonModel<DatabaseServerFullResourceNames>)DatabaseServer).Write(writer, options);
             }
             if (Optional.IsDefined(SharedStorage))
             {
                 writer.WritePropertyName("sharedStorage"u8);
-                writer.WriteObjectValue(SharedStorage, options);
+                ((IJsonModel<SharedStorageResourceNames>)SharedStorage).Write(writer, options);
             }
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     {
                         continue;
                     }
-                    centralServer = CentralServerFullResourceNames.DeserializeCentralServerFullResourceNames(property.Value, options);
+                    centralServer = ModelSerializationExtensions.JsonDeserialize<CentralServerFullResourceNames>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("applicationServer"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     {
                         continue;
                     }
-                    applicationServer = ApplicationServerFullResourceNames.DeserializeApplicationServerFullResourceNames(property.Value, options);
+                    applicationServer = ModelSerializationExtensions.JsonDeserialize<ApplicationServerFullResourceNames>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("databaseServer"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     {
                         continue;
                     }
-                    databaseServer = DatabaseServerFullResourceNames.DeserializeDatabaseServerFullResourceNames(property.Value, options);
+                    databaseServer = ModelSerializationExtensions.JsonDeserialize<DatabaseServerFullResourceNames>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sharedStorage"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     {
                         continue;
                     }
-                    sharedStorage = SharedStorageResourceNames.DeserializeSharedStorageResourceNames(property.Value, options);
+                    sharedStorage = ModelSerializationExtensions.JsonDeserialize<SharedStorageResourceNames>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("namingPatternType"u8))

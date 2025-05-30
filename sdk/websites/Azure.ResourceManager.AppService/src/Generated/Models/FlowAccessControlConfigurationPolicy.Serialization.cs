@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in AllowedCallerIPAddresses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WebAppIPAddressRange>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OpenAuthenticationPolicies))
             {
                 writer.WritePropertyName("openAuthenticationPolicies"u8);
-                writer.WriteObjectValue(OpenAuthenticationPolicies, options);
+                ((IJsonModel<OpenAuthenticationAccessPolicies>)OpenAuthenticationPolicies).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    openAuthenticationPolicies = OpenAuthenticationAccessPolicies.DeserializeOpenAuthenticationAccessPolicies(property.Value, options);
+                    openAuthenticationPolicies = ModelSerializationExtensions.JsonDeserialize<OpenAuthenticationAccessPolicies>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

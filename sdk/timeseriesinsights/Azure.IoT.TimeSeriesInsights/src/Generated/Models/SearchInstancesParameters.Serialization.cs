@@ -23,7 +23,7 @@ namespace Azure.IoT.TimeSeriesInsights
             if (Optional.IsDefined(Sort))
             {
                 writer.WritePropertyName("sort"u8);
-                writer.WriteObjectValue(Sort);
+                JsonSerializer.Serialize(writer, Sort);
             }
             if (Optional.IsDefined(Highlights))
             {

@@ -17,19 +17,19 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
-            writer.WriteObjectValue(Endpoint);
+            JsonSerializer.Serialize(writer, Endpoint);
             if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
-                writer.WriteObjectValue(Image);
+                JsonSerializer.Serialize(writer, Image);
             }
             if (Optional.IsDefined(SamplingOptions))
             {
                 writer.WritePropertyName("samplingOptions"u8);
-                writer.WriteObjectValue(SamplingOptions);
+                JsonSerializer.Serialize(writer, SamplingOptions);
             }
             writer.WritePropertyName("operation"u8);
-            writer.WriteObjectValue(Operation);
+            JsonSerializer.Serialize(writer, Operation);
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("name"u8);
@@ -38,7 +38,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -61,7 +61,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 if (property.NameEquals("endpoint"u8))
                 {
-                    endpoint = EndpointBase.DeserializeEndpointBase(property.Value);
+                    endpoint = ModelSerializationExtensions.JsonDeserialize<EndpointBase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("image"u8))
@@ -70,7 +70,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     {
                         continue;
                     }
-                    image = ImageProperties.DeserializeImageProperties(property.Value);
+                    image = ModelSerializationExtensions.JsonDeserialize<ImageProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("samplingOptions"u8))
@@ -79,12 +79,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     {
                         continue;
                     }
-                    samplingOptions = SamplingOptions.DeserializeSamplingOptions(property.Value);
+                    samplingOptions = ModelSerializationExtensions.JsonDeserialize<SamplingOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("operation"u8))
                 {
-                    operation = SpatialAnalysisOperationBase.DeserializeSpatialAnalysisOperationBase(property.Value);
+                    operation = ModelSerializationExtensions.JsonDeserialize<SpatialAnalysisOperationBase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@type"u8))

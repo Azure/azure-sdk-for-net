@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<SapDiskSku>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    sku = SapDiskSku.DeserializeSapDiskSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<SapDiskSku>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

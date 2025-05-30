@@ -16,7 +16,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
-            writer.WriteObjectValue(Endpoint);
+            JsonSerializer.Serialize(writer, Endpoint);
             writer.WritePropertyName("methodName"u8);
             writer.WriteStringValue(MethodName);
             if (Optional.IsDefined(ApiVersion))
@@ -40,7 +40,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 if (property.NameEquals("endpoint"u8))
                 {
-                    endpoint = EndpointBase.DeserializeEndpointBase(property.Value);
+                    endpoint = ModelSerializationExtensions.JsonDeserialize<EndpointBase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("methodName"u8))

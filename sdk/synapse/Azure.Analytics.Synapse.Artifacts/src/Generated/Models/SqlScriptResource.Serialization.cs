@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            JsonSerializer.Serialize(writer, Properties);
             writer.WriteEndObject();
         }
 
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = SqlScript.DeserializeSqlScript(property.Value);
+                    properties = ModelSerializationExtensions.JsonDeserialize<SqlScript>(property.Value);
                     continue;
                 }
             }

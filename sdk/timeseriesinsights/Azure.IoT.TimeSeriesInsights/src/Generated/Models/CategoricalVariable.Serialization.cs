@@ -17,11 +17,11 @@ namespace Azure.IoT.TimeSeriesInsights
         {
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
-            writer.WriteObjectValue(Value);
+            JsonSerializer.Serialize(writer, Value);
             if (Optional.IsDefined(Interpolation))
             {
                 writer.WritePropertyName("interpolation"u8);
-                writer.WriteObjectValue(Interpolation);
+                JsonSerializer.Serialize(writer, Interpolation);
             }
             if (Optional.IsCollectionDefined(Categories))
             {
@@ -29,18 +29,18 @@ namespace Azure.IoT.TimeSeriesInsights
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("defaultCategory"u8);
-            writer.WriteObjectValue(DefaultCategory);
+            JsonSerializer.Serialize(writer, DefaultCategory);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                JsonSerializer.Serialize(writer, Filter);
             }
             writer.WriteEndObject();
         }
@@ -61,7 +61,7 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 if (property.NameEquals("value"u8))
                 {
-                    value = TimeSeriesExpression.DeserializeTimeSeriesExpression(property.Value);
+                    value = ModelSerializationExtensions.JsonDeserialize<TimeSeriesExpression>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("interpolation"u8))
@@ -70,7 +70,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     {
                         continue;
                     }
-                    interpolation = TimeSeriesInterpolation.DeserializeTimeSeriesInterpolation(property.Value);
+                    interpolation = ModelSerializationExtensions.JsonDeserialize<TimeSeriesInterpolation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("categories"u8))
@@ -89,7 +89,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 }
                 if (property.NameEquals("defaultCategory"u8))
                 {
-                    defaultCategory = TimeSeriesDefaultCategory.DeserializeTimeSeriesDefaultCategory(property.Value);
+                    defaultCategory = ModelSerializationExtensions.JsonDeserialize<TimeSeriesDefaultCategory>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -103,7 +103,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     {
                         continue;
                     }
-                    filter = TimeSeriesExpression.DeserializeTimeSeriesExpression(property.Value);
+                    filter = ModelSerializationExtensions.JsonDeserialize<TimeSeriesExpression>(property.Value);
                     continue;
                 }
             }

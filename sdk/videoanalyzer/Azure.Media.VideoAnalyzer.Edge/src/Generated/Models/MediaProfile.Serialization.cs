@@ -28,7 +28,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(VideoEncoderConfiguration))
             {
                 writer.WritePropertyName("videoEncoderConfiguration"u8);
-                writer.WriteObjectValue(VideoEncoderConfiguration);
+                JsonSerializer.Serialize(writer, VideoEncoderConfiguration);
             }
             writer.WriteEndObject();
         }
@@ -64,7 +64,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     {
                         continue;
                     }
-                    videoEncoderConfiguration = VideoEncoderConfiguration.DeserializeVideoEncoderConfiguration(property.Value);
+                    videoEncoderConfiguration = ModelSerializationExtensions.JsonDeserialize<VideoEncoderConfiguration>(property.Value);
                     continue;
                 }
             }

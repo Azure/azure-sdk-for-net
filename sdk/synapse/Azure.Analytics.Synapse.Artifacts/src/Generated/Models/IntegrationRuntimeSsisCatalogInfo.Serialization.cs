@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CatalogAdminPassword))
             {
                 writer.WritePropertyName("catalogAdminPassword"u8);
-                writer.WriteObjectValue(CatalogAdminPassword);
+                JsonSerializer.Serialize(writer, CatalogAdminPassword);
             }
             if (Optional.IsDefined(CatalogPricingTier))
             {
@@ -77,7 +77,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    catalogAdminPassword = SecureString.DeserializeSecureString(property.Value);
+                    catalogAdminPassword = ModelSerializationExtensions.JsonDeserialize<SecureString>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("catalogPricingTier"u8))

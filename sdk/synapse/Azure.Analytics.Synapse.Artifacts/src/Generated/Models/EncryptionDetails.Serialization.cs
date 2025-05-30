@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Cmk))
             {
                 writer.WritePropertyName("cmk"u8);
-                writer.WriteObjectValue(Cmk);
+                JsonSerializer.Serialize(writer, Cmk);
             }
             writer.WriteEndObject();
         }
@@ -51,7 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    cmk = CustomerManagedKeyDetails.DeserializeCustomerManagedKeyDetails(property.Value);
+                    cmk = ModelSerializationExtensions.JsonDeserialize<CustomerManagedKeyDetails>(property.Value);
                     continue;
                 }
             }

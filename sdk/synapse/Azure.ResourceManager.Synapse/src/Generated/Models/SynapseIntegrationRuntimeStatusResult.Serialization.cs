@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<SynapseIntegrationRuntimeStatus>)Properties).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = SynapseIntegrationRuntimeStatus.DeserializeSynapseIntegrationRuntimeStatus(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<SynapseIntegrationRuntimeStatus>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

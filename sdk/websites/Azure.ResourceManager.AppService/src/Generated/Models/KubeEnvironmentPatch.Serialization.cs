@@ -72,17 +72,17 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ArcConfiguration))
             {
                 writer.WritePropertyName("arcConfiguration"u8);
-                writer.WriteObjectValue(ArcConfiguration, options);
+                ((IJsonModel<ArcConfiguration>)ArcConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(AppLogsConfiguration))
             {
                 writer.WritePropertyName("appLogsConfiguration"u8);
-                writer.WriteObjectValue(AppLogsConfiguration, options);
+                ((IJsonModel<AppLogsConfiguration>)AppLogsConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ContainerAppsConfiguration))
             {
                 writer.WritePropertyName("containerAppsConfiguration"u8);
-                writer.WriteObjectValue(ContainerAppsConfiguration, options);
+                ((IJsonModel<ContainerAppsConfiguration>)ContainerAppsConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(AksResourceId))
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            arcConfiguration = ArcConfiguration.DeserializeArcConfiguration(property0.Value, options);
+                            arcConfiguration = ModelSerializationExtensions.JsonDeserialize<ArcConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("appLogsConfiguration"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            appLogsConfiguration = AppLogsConfiguration.DeserializeAppLogsConfiguration(property0.Value, options);
+                            appLogsConfiguration = ModelSerializationExtensions.JsonDeserialize<AppLogsConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("containerAppsConfiguration"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            containerAppsConfiguration = ContainerAppsConfiguration.DeserializeContainerAppsConfiguration(property0.Value, options);
+                            containerAppsConfiguration = ModelSerializationExtensions.JsonDeserialize<ContainerAppsConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("aksResourceID"u8))
