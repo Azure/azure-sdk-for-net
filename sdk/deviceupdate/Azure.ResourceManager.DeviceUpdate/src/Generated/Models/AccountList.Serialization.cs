@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DeviceUpdateAccountData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

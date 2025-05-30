@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination, options);
+                ((IJsonModel<EventHubDestination>)Destination).Write(writer, options);
             }
             if (Optional.IsDefined(SkipEmptyArchives))
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     {
                         continue;
                     }
-                    destination = EventHubDestination.DeserializeEventHubDestination(property.Value, options);
+                    destination = ModelSerializationExtensions.JsonDeserialize<EventHubDestination>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("skipEmptyArchives"u8))

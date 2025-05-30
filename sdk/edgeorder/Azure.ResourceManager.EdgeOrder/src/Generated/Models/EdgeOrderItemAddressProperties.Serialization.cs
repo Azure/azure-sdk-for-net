@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress, options);
+                ((IJsonModel<EdgeOrderShippingAddress>)ShippingAddress).Write(writer, options);
             }
             writer.WritePropertyName("contactDetails"u8);
-            writer.WriteObjectValue(ContactDetails, options);
+            ((IJsonModel<EdgeOrderAddressContactDetails>)ContactDetails).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(AddressValidationStatus))
             {
                 writer.WritePropertyName("addressValidationStatus"u8);
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    shippingAddress = EdgeOrderShippingAddress.DeserializeEdgeOrderShippingAddress(property.Value, options);
+                    shippingAddress = ModelSerializationExtensions.JsonDeserialize<EdgeOrderShippingAddress>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("contactDetails"u8))
                 {
-                    contactDetails = EdgeOrderAddressContactDetails.DeserializeEdgeOrderAddressContactDetails(property.Value, options);
+                    contactDetails = ModelSerializationExtensions.JsonDeserialize<EdgeOrderAddressContactDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("addressValidationStatus"u8))

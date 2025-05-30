@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
 
             writer.WritePropertyName("metadata"u8);
-            writer.WriteObjectValue(Metadata, options);
+            ((IJsonModel<DeviceTwinMetadata>)Metadata).Write(writer, options);
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
@@ -86,7 +86,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("metadata"u8))
                 {
-                    metadata = DeviceTwinMetadata.DeserializeDeviceTwinMetadata(property.Value, options);
+                    metadata = ModelSerializationExtensions.JsonDeserialize<DeviceTwinMetadata>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("version"u8))

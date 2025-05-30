@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in EndpointDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DevCenterEndpointDetail>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

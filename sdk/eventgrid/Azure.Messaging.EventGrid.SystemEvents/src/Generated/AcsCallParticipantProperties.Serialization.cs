@@ -37,7 +37,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             if (Optional.IsDefined(CommunicationIdentifier))
             {
                 writer.WritePropertyName("communicationIdentifier"u8);
-                writer.WriteObjectValue(CommunicationIdentifier, options);
+                ((IJsonModel<CommunicationIdentifierModel>)CommunicationIdentifier).Write(writer, options);
             }
             if (Optional.IsDefined(Role))
             {
@@ -93,7 +93,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    communicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value, options);
+                    communicationIdentifier = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("role"u8))

@@ -66,12 +66,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("resourceInfo"u8))
                 {
-                    resourceInfo = ResourceNotificationsResourceUpdatedDetails.DeserializeResourceNotificationsResourceUpdatedDetails(property.Value, options);
+                    resourceInfo = ModelSerializationExtensions.JsonDeserialize<ResourceNotificationsResourceUpdatedDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("operationalInfo"u8))
                 {
-                    operationalInfo = ResourceNotificationsOperationalDetails.DeserializeResourceNotificationsOperationalDetails(property.Value, options);
+                    operationalInfo = ModelSerializationExtensions.JsonDeserialize<ResourceNotificationsOperationalDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("apiVersion"u8))

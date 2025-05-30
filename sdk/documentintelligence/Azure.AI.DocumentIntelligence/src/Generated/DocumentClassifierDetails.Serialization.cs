@@ -65,7 +65,7 @@ namespace Azure.AI.DocumentIntelligence
             foreach (var item in DocumentTypes)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                ((IJsonModel<ClassifierDocumentTypeDetails>)item.Value).Write(writer, options);
             }
             writer.WriteEndObject();
             if (Optional.IsCollectionDefined(Warnings))
@@ -74,7 +74,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Warnings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DocumentIntelligenceWarning>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

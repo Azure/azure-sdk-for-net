@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(PercentageThreshold))
             {
                 writer.WritePropertyName("percentageThreshold"u8);
-                writer.WriteObjectValue(PercentageThreshold, options);
+                ((IJsonModel<PercentageCostThresholdProperties>)PercentageThreshold).Write(writer, options);
             }
             if (Optional.IsDefined(DisplayOnChart))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    percentageThreshold = PercentageCostThresholdProperties.DeserializePercentageCostThresholdProperties(property.Value, options);
+                    percentageThreshold = ModelSerializationExtensions.JsonDeserialize<PercentageCostThresholdProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("displayOnChart"u8))

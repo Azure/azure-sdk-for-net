@@ -65,7 +65,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    media = AcsMessageMediaContent.DeserializeAcsMessageMediaContent(property.Value);
+                    media = ModelSerializationExtensions.JsonDeserialize<AcsMessageMediaContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("reaction"u8))
@@ -74,7 +74,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    reaction = AcsMessageReactionContent.DeserializeAcsMessageReactionContent(property.Value);
+                    reaction = ModelSerializationExtensions.JsonDeserialize<AcsMessageReactionContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("context"u8))
@@ -83,7 +83,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    context = AcsMessageContext.DeserializeAcsMessageContext(property.Value);
+                    context = ModelSerializationExtensions.JsonDeserialize<AcsMessageContext>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("button"u8))
@@ -92,7 +92,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    button = AcsMessageButtonContent.DeserializeAcsMessageButtonContent(property.Value);
+                    button = ModelSerializationExtensions.JsonDeserialize<AcsMessageButtonContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("interactive"u8))
@@ -101,7 +101,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    interactive = AcsMessageInteractiveContent.DeserializeAcsMessageInteractiveContent(property.Value);
+                    interactive = ModelSerializationExtensions.JsonDeserialize<AcsMessageInteractiveContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("from"u8))
@@ -129,7 +129,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    error = AcsMessageChannelEventError.DeserializeAcsMessageChannelEventError(property.Value);
+                    error = ModelSerializationExtensions.JsonDeserialize<AcsMessageChannelEventError>(property.Value);
                     continue;
                 }
             }

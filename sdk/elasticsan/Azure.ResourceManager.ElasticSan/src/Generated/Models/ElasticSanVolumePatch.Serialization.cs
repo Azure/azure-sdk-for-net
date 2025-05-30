@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             if (Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
-                writer.WriteObjectValue(ManagedBy, options);
+                ((IJsonModel<ManagedByInfo>)ManagedBy).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                             {
                                 continue;
                             }
-                            managedBy = ManagedByInfo.DeserializeManagedByInfo(property0.Value, options);
+                            managedBy = ModelSerializationExtensions.JsonDeserialize<ManagedByInfo>(property0.Value);
                             continue;
                         }
                     }

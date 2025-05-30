@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.DependencyMap.Models
             if (Optional.IsDefined(DateTime))
             {
                 writer.WritePropertyName("dateTime"u8);
-                writer.WriteObjectValue(DateTime, options);
+                ((IJsonModel<DependencyMapDateTimeFilter>)DateTime).Write(writer, options);
             }
             if (Optional.IsDefined(ProcessNameFilter))
             {
                 writer.WritePropertyName("processNameFilter"u8);
-                writer.WriteObjectValue(ProcessNameFilter, options);
+                ((IJsonModel<DependencyMapProcessNameFilter>)ProcessNameFilter).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
                     {
                         continue;
                     }
-                    dateTime = DependencyMapDateTimeFilter.DeserializeDependencyMapDateTimeFilter(property.Value, options);
+                    dateTime = ModelSerializationExtensions.JsonDeserialize<DependencyMapDateTimeFilter>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("processNameFilter"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
                     {
                         continue;
                     }
-                    processNameFilter = DependencyMapProcessNameFilter.DeserializeDependencyMapProcessNameFilter(property.Value, options);
+                    processNameFilter = ModelSerializationExtensions.JsonDeserialize<DependencyMapProcessNameFilter>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -107,12 +107,12 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(Announcement))
             {
                 writer.WritePropertyName("announcement"u8);
-                writer.WriteObjectValue(Announcement, options);
+                ((IJsonModel<DevTestLabAnnouncement>)Announcement).Write(writer, options);
             }
             if (Optional.IsDefined(Support))
             {
                 writer.WritePropertyName("support"u8);
-                writer.WriteObjectValue(Support, options);
+                ((IJsonModel<DevTestLabSupport>)Support).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(VmCreationResourceGroup))
             {
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            announcement = DevTestLabAnnouncement.DeserializeDevTestLabAnnouncement(property0.Value, options);
+                            announcement = ModelSerializationExtensions.JsonDeserialize<DevTestLabAnnouncement>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("support"u8))
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            support = DevTestLabSupport.DeserializeDevTestLabSupport(property0.Value, options);
+                            support = ModelSerializationExtensions.JsonDeserialize<DevTestLabSupport>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("vmCreationResourceGroup"u8))

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             if (Optional.IsDefined(OrchestratorSpecificConnectionDetails))
             {
                 writer.WritePropertyName("orchestratorSpecificConnectionDetails"u8);
-                writer.WriteObjectValue(OrchestratorSpecificConnectionDetails, options);
+                ((IJsonModel<OrchestratorSpecificConnectionDetails>)OrchestratorSpecificConnectionDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                     {
                         continue;
                     }
-                    orchestratorSpecificConnectionDetails = OrchestratorSpecificConnectionDetails.DeserializeOrchestratorSpecificConnectionDetails(property.Value, options);
+                    orchestratorSpecificConnectionDetails = ModelSerializationExtensions.JsonDeserialize<OrchestratorSpecificConnectionDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -38,12 +38,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             if (Optional.IsDefined(EndedBy))
             {
                 writer.WritePropertyName("endedBy"u8);
-                writer.WriteObjectValue(EndedBy, options);
+                ((IJsonModel<AcsCallEndedByProperties>)EndedBy).Write(writer, options);
             }
             if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
-                writer.WriteObjectValue(Reason, options);
+                ((IJsonModel<AcsCallEndReasonProperties>)Reason).Write(writer, options);
             }
             if (Optional.IsDefined(CallDuration))
             {
@@ -92,7 +92,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    endedBy = AcsCallEndedByProperties.DeserializeAcsCallEndedByProperties(property.Value, options);
+                    endedBy = ModelSerializationExtensions.JsonDeserialize<AcsCallEndedByProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("reason"u8))
@@ -101,7 +101,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    reason = AcsCallEndReasonProperties.DeserializeAcsCallEndReasonProperties(property.Value, options);
+                    reason = ModelSerializationExtensions.JsonDeserialize<AcsCallEndReasonProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("callDurationInSeconds"u8))
@@ -115,7 +115,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("startedBy"u8))
                 {
-                    startedBy = AcsCallParticipantProperties.DeserializeAcsCallParticipantProperties(property.Value, options);
+                    startedBy = ModelSerializationExtensions.JsonDeserialize<AcsCallParticipantProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("serverCallId"u8))
@@ -129,7 +129,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    group = AcsCallGroupProperties.DeserializeAcsCallGroupProperties(property.Value, options);
+                    group = ModelSerializationExtensions.JsonDeserialize<AcsCallGroupProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("room"u8))
@@ -138,7 +138,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    room = AcsCallRoomProperties.DeserializeAcsCallRoomProperties(property.Value, options);
+                    room = ModelSerializationExtensions.JsonDeserialize<AcsCallRoomProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isTwoParty"u8))

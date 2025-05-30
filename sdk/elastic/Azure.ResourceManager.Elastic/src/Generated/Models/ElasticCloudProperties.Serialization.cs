@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Elastic.Models
             if (Optional.IsDefined(ElasticCloudUser))
             {
                 writer.WritePropertyName("elasticCloudUser"u8);
-                writer.WriteObjectValue(ElasticCloudUser, options);
+                ((IJsonModel<ElasticCloudUser>)ElasticCloudUser).Write(writer, options);
             }
             if (Optional.IsDefined(ElasticCloudDeployment))
             {
                 writer.WritePropertyName("elasticCloudDeployment"u8);
-                writer.WriteObjectValue(ElasticCloudDeployment, options);
+                ((IJsonModel<ElasticCloudDeployment>)ElasticCloudDeployment).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    elasticCloudUser = ElasticCloudUser.DeserializeElasticCloudUser(property.Value, options);
+                    elasticCloudUser = ModelSerializationExtensions.JsonDeserialize<ElasticCloudUser>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("elasticCloudDeployment"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    elasticCloudDeployment = ElasticCloudDeployment.DeserializeElasticCloudDeployment(property.Value, options);
+                    elasticCloudDeployment = ModelSerializationExtensions.JsonDeserialize<ElasticCloudDeployment>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

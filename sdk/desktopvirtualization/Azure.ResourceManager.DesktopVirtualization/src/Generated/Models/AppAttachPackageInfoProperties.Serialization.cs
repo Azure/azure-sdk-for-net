@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     writer.WriteStartArray();
                     foreach (var item in PackageDependencies)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<MsixPackageDependencies>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteStartArray();
                 foreach (var item in PackageApplications)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MsixPackageApplications>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("editedByCommunicationIdentifier"u8);
-            writer.WriteObjectValue(EditedByCommunicationIdentifier, options);
+            ((IJsonModel<CommunicationIdentifierModel>)EditedByCommunicationIdentifier).Write(writer, options);
             if (Optional.IsDefined(EditTime))
             {
                 writer.WritePropertyName("editTime"u8);
@@ -110,7 +110,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("editedByCommunicationIdentifier"u8))
                 {
-                    editedByCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value, options);
+                    editedByCommunicationIdentifier = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("editTime"u8))
@@ -173,7 +173,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("recipientCommunicationIdentifier"u8))
                 {
-                    recipientCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value, options);
+                    recipientCommunicationIdentifier = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("transactionId"u8))

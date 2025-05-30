@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DevSpaces
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<DevSpacesSku>)Sku).Write(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DevSpaces
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = DevSpacesSku.DeserializeDevSpacesSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<DevSpacesSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DevSpaces
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

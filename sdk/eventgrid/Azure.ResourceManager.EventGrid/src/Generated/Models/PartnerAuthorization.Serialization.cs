@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in AuthorizedPartnersList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EventGridPartnerContent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

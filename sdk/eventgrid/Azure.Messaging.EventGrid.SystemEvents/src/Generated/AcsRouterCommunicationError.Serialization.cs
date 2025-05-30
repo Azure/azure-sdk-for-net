@@ -50,14 +50,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStringValue(Target);
             }
             writer.WritePropertyName("innererror"u8);
-            writer.WriteObjectValue(Innererror, options);
+            ((IJsonModel<AcsRouterCommunicationError>)Innererror).Write(writer, options);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AcsRouterCommunicationError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -124,7 +124,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("innererror"u8))
                 {
-                    innererror = DeserializeAcsRouterCommunicationError(property.Value, options);
+                    innererror = ModelSerializationExtensions.JsonDeserialize<AcsRouterCommunicationError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("details"u8))

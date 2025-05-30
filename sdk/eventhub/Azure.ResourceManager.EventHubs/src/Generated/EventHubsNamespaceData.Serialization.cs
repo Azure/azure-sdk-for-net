@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.EventHubs
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<EventHubsSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.EventHubs
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<EventHubsEncryption>)Encryption).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EventHubsPrivateEndpointConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         continue;
                     }
-                    sku = EventHubsSku.DeserializeEventHubsSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<EventHubsSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.EventHubs
                             {
                                 continue;
                             }
-                            encryption = EventHubsEncryption.DeserializeEventHubsEncryption(property0.Value, options);
+                            encryption = ModelSerializationExtensions.JsonDeserialize<EventHubsEncryption>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))

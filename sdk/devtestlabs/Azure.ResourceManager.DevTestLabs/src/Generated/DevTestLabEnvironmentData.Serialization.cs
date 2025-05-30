@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(DeploymentProperties))
             {
                 writer.WritePropertyName("deploymentProperties"u8);
-                writer.WriteObjectValue(DeploymentProperties, options);
+                ((IJsonModel<DevTestLabEnvironmentDeployment>)DeploymentProperties).Write(writer, options);
             }
             if (Optional.IsDefined(ArmTemplateDisplayName))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            deploymentProperties = DevTestLabEnvironmentDeployment.DeserializeDevTestLabEnvironmentDeployment(property0.Value, options);
+                            deploymentProperties = ModelSerializationExtensions.JsonDeserialize<DevTestLabEnvironmentDeployment>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("armTemplateDisplayName"u8))

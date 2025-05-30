@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
 
             writer.WritePropertyName("recordingStorageInfo"u8);
-            writer.WriteObjectValue(RecordingStorageInfo, options);
+            ((IJsonModel<AcsRecordingStorageInfoProperties>)RecordingStorageInfo).Write(writer, options);
             if (Optional.IsDefined(RecordingStartTime))
             {
                 writer.WritePropertyName("recordingStartTime"u8);
@@ -116,7 +116,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("recordingStorageInfo"u8))
                 {
-                    recordingStorageInfo = AcsRecordingStorageInfoProperties.DeserializeAcsRecordingStorageInfoProperties(property.Value, options);
+                    recordingStorageInfo = ModelSerializationExtensions.JsonDeserialize<AcsRecordingStorageInfoProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("recordingStartTime"u8))

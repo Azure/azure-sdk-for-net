@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (Optional.IsDefined(ReturnAddress))
             {
                 writer.WritePropertyName("returnAddress"u8);
-                writer.WriteObjectValue(ReturnAddress, options);
+                ((IJsonModel<EdgeOrderItemAddressProperties>)ReturnAddress).Write(writer, options);
             }
             writer.WritePropertyName("returnReason"u8);
             writer.WriteStringValue(ReturnReason);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    returnAddress = EdgeOrderItemAddressProperties.DeserializeEdgeOrderItemAddressProperties(property.Value, options);
+                    returnAddress = ModelSerializationExtensions.JsonDeserialize<EdgeOrderItemAddressProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("returnReason"u8))

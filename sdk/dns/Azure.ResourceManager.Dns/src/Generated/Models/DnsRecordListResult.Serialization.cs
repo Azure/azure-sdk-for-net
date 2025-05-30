@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Dns.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DnsRecordData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

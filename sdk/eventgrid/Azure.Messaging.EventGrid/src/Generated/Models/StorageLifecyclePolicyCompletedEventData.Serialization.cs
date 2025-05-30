@@ -39,7 +39,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    policyRunSummary = StorageLifecyclePolicyRunSummary.DeserializeStorageLifecyclePolicyRunSummary(property.Value);
+                    policyRunSummary = ModelSerializationExtensions.JsonDeserialize<StorageLifecyclePolicyRunSummary>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deleteSummary"u8))
@@ -48,7 +48,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    deleteSummary = StorageLifecyclePolicyActionSummaryDetail.DeserializeStorageLifecyclePolicyActionSummaryDetail(property.Value);
+                    deleteSummary = ModelSerializationExtensions.JsonDeserialize<StorageLifecyclePolicyActionSummaryDetail>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tierToCoolSummary"u8))
@@ -57,7 +57,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    tierToCoolSummary = StorageLifecyclePolicyActionSummaryDetail.DeserializeStorageLifecyclePolicyActionSummaryDetail(property.Value);
+                    tierToCoolSummary = ModelSerializationExtensions.JsonDeserialize<StorageLifecyclePolicyActionSummaryDetail>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tierToColdSummary"u8))
@@ -66,7 +66,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    tierToColdSummary = StorageLifecyclePolicyActionSummaryDetail.DeserializeStorageLifecyclePolicyActionSummaryDetail(property.Value);
+                    tierToColdSummary = ModelSerializationExtensions.JsonDeserialize<StorageLifecyclePolicyActionSummaryDetail>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tierToArchiveSummary"u8))
@@ -75,7 +75,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    tierToArchiveSummary = StorageLifecyclePolicyActionSummaryDetail.DeserializeStorageLifecyclePolicyActionSummaryDetail(property.Value);
+                    tierToArchiveSummary = ModelSerializationExtensions.JsonDeserialize<StorageLifecyclePolicyActionSummaryDetail>(property.Value);
                     continue;
                 }
             }

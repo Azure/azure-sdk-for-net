@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
-                writer.WriteObjectValue(Image, options);
+                ((IJsonModel<AppAttachPackageInfoProperties>)Image).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(HostPoolReferences))
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    image = AppAttachPackageInfoProperties.DeserializeAppAttachPackageInfoProperties(property.Value, options);
+                    image = ModelSerializationExtensions.JsonDeserialize<AppAttachPackageInfoProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("hostPoolReferences"u8))

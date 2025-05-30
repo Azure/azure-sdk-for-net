@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteStartArray();
                 foreach (var item in Schedules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ScalingSchedule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteStartArray();
                 foreach (var item in HostPoolReferences)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ScalingHostPoolReference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

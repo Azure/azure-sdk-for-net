@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ControllerData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

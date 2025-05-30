@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EventHubsClusterData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

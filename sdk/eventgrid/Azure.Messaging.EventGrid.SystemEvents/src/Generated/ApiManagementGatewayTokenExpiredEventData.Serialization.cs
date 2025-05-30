@@ -35,9 +35,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
 
             writer.WritePropertyName("gatewayInfo"u8);
-            writer.WriteObjectValue(GatewayInfo, options);
+            ((IJsonModel<ApiManagementGatewayProperties>)GatewayInfo).Write(writer, options);
             writer.WritePropertyName("tokenInfo"u8);
-            writer.WriteObjectValue(TokenInfo, options);
+            ((IJsonModel<ApiManagementExpiredGatewayTokenProperties>)TokenInfo).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,12 +83,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("gatewayInfo"u8))
                 {
-                    gatewayInfo = ApiManagementGatewayProperties.DeserializeApiManagementGatewayProperties(property.Value, options);
+                    gatewayInfo = ModelSerializationExtensions.JsonDeserialize<ApiManagementGatewayProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tokenInfo"u8))
                 {
-                    tokenInfo = ApiManagementExpiredGatewayTokenProperties.DeserializeApiManagementExpiredGatewayTokenProperties(property.Value, options);
+                    tokenInfo = ModelSerializationExtensions.JsonDeserialize<ApiManagementExpiredGatewayTokenProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

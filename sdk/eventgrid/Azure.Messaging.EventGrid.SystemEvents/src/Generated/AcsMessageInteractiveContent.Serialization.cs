@@ -42,12 +42,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             if (Optional.IsDefined(ButtonReply))
             {
                 writer.WritePropertyName("buttonReply"u8);
-                writer.WriteObjectValue(ButtonReply, options);
+                ((IJsonModel<AcsMessageInteractiveButtonReplyContent>)ButtonReply).Write(writer, options);
             }
             if (Optional.IsDefined(ListReply))
             {
                 writer.WritePropertyName("listReply"u8);
-                writer.WriteObjectValue(ListReply, options);
+                ((IJsonModel<AcsMessageInteractiveListReplyContent>)ListReply).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -108,7 +108,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    buttonReply = AcsMessageInteractiveButtonReplyContent.DeserializeAcsMessageInteractiveButtonReplyContent(property.Value, options);
+                    buttonReply = ModelSerializationExtensions.JsonDeserialize<AcsMessageInteractiveButtonReplyContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("listReply"u8))
@@ -117,7 +117,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    listReply = AcsMessageInteractiveListReplyContent.DeserializeAcsMessageInteractiveListReplyContent(property.Value, options);
+                    listReply = ModelSerializationExtensions.JsonDeserialize<AcsMessageInteractiveListReplyContent>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

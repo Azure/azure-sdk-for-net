@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WriteStartArray();
                 foreach (var item in KeyVaultProperties)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EventHubsKeyVaultProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

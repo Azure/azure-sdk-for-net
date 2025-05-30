@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
-                writer.WriteObjectValue(ImageReference, options);
+                ((IJsonModel<DevTestLabGalleryImageReference>)ImageReference).Write(writer, options);
             }
             if (Optional.IsDefined(Icon))
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             {
                                 continue;
                             }
-                            imageReference = DevTestLabGalleryImageReference.DeserializeDevTestLabGalleryImageReference(property0.Value, options);
+                            imageReference = ModelSerializationExtensions.JsonDeserialize<DevTestLabGalleryImageReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("icon"u8))

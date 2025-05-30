@@ -46,12 +46,12 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(BlobSource))
             {
                 writer.WritePropertyName("azureBlobSource"u8);
-                writer.WriteObjectValue<BlobContentSource>(BlobSource, options);
+                ((IJsonModel<BlobContentSource>)BlobSource).Write(writer, options);
             }
             if (Optional.IsDefined(BlobFileListSource))
             {
                 writer.WritePropertyName("azureBlobFileListSource"u8);
-                writer.WriteObjectValue<BlobFileListContentSource>(BlobFileListSource, options);
+                ((IJsonModel<BlobFileListContentSource>)BlobFileListSource).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -144,7 +144,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    azureBlobSource = BlobContentSource.DeserializeBlobContentSource(property.Value, options);
+                    azureBlobSource = ModelSerializationExtensions.JsonDeserialize<BlobContentSource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azureBlobFileListSource"u8))
@@ -153,7 +153,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    azureBlobFileListSource = BlobFileListContentSource.DeserializeBlobFileListContentSource(property.Value, options);
+                    azureBlobFileListSource = ModelSerializationExtensions.JsonDeserialize<BlobFileListContentSource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

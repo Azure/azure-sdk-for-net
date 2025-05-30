@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Dns.Models
                 writer.WriteStartArray();
                 foreach (var item in DnsResourceReferences)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DnsResourceReference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

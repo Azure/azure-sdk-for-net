@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Dynatrace
             if (Optional.IsDefined(LogRules))
             {
                 writer.WritePropertyName("logRules"u8);
-                writer.WriteObjectValue(LogRules, options);
+                ((IJsonModel<DynatraceMonitorResourceLogRules>)LogRules).Write(writer, options);
             }
             if (Optional.IsDefined(MetricRules))
             {
                 writer.WritePropertyName("metricRules"u8);
-                writer.WriteObjectValue(MetricRules, options);
+                ((IJsonModel<DynatraceMonitorResourceMetricRules>)MetricRules).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Dynatrace
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Dynatrace
                             {
                                 continue;
                             }
-                            logRules = DynatraceMonitorResourceLogRules.DeserializeDynatraceMonitorResourceLogRules(property0.Value, options);
+                            logRules = ModelSerializationExtensions.JsonDeserialize<DynatraceMonitorResourceLogRules>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("metricRules"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Dynatrace
                             {
                                 continue;
                             }
-                            metricRules = DynatraceMonitorResourceMetricRules.DeserializeDynatraceMonitorResourceMetricRules(property0.Value, options);
+                            metricRules = ModelSerializationExtensions.JsonDeserialize<DynatraceMonitorResourceMetricRules>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

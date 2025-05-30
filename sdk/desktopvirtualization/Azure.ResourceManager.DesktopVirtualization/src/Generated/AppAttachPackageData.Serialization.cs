@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<AppAttachPackageProperties>)Properties).Write(writer, options);
         }
 
         AppAttachPackageData IJsonModel<AppAttachPackageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = AppAttachPackageProperties.DeserializeAppAttachPackageProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<AppAttachPackageProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -96,7 +96,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("target"u8))
                 {
-                    target = ContainerRegistryEventTarget.DeserializeContainerRegistryEventTarget(property.Value, options);
+                    target = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryEventTarget>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("request"u8))
@@ -105,7 +105,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    request = ContainerRegistryEventRequest.DeserializeContainerRegistryEventRequest(property.Value, options);
+                    request = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryEventRequest>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("actor"u8))
@@ -114,7 +114,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    actor = ContainerRegistryEventActor.DeserializeContainerRegistryEventActor(property.Value, options);
+                    actor = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryEventActor>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("source"u8))
@@ -123,7 +123,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    source = ContainerRegistryEventSource.DeserializeContainerRegistryEventSource(property.Value, options);
+                    source = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryEventSource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("connectedRegistry"u8))
@@ -132,7 +132,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    connectedRegistry = ContainerRegistryEventConnectedRegistry.DeserializeContainerRegistryEventConnectedRegistry(property.Value, options);
+                    connectedRegistry = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryEventConnectedRegistry>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

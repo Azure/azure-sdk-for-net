@@ -39,7 +39,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             writer.WritePropertyName("hubName"u8);
             writer.WriteStringValue(HubName);
             writer.WritePropertyName("twin"u8);
-            writer.WriteObjectValue(Twin, options);
+            ((IJsonModel<DeviceTwinInfo>)Twin).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -96,7 +96,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("twin"u8))
                 {
-                    twin = DeviceTwinInfo.DeserializeDeviceTwinInfo(property.Value, options);
+                    twin = ModelSerializationExtensions.JsonDeserialize<DeviceTwinInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

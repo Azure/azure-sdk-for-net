@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (Optional.IsDefined(ForwardAddress))
             {
                 writer.WritePropertyName("forwardAddress"u8);
-                writer.WriteObjectValue(ForwardAddress, options);
+                ((IJsonModel<EdgeOrderItemAddressProperties>)ForwardAddress).Write(writer, options);
             }
             if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
-                writer.WriteObjectValue(Preferences, options);
+                ((IJsonModel<OrderItemPreferences>)Preferences).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(NotificationEmailList))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             {
                                 continue;
                             }
-                            forwardAddress = EdgeOrderItemAddressProperties.DeserializeEdgeOrderItemAddressProperties(property0.Value, options);
+                            forwardAddress = ModelSerializationExtensions.JsonDeserialize<EdgeOrderItemAddressProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("preferences"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             {
                                 continue;
                             }
-                            preferences = OrderItemPreferences.DeserializeOrderItemPreferences(property0.Value, options);
+                            preferences = ModelSerializationExtensions.JsonDeserialize<OrderItemPreferences>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("notificationEmailList"u8))

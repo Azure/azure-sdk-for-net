@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress, options);
+                ((IJsonModel<EdgeOrderShippingAddress>)ShippingAddress).Write(writer, options);
             }
             if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
-                writer.WriteObjectValue(ContactDetails, options);
+                ((IJsonModel<EdgeOrderAddressContactDetails>)ContactDetails).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             {
                                 continue;
                             }
-                            shippingAddress = EdgeOrderShippingAddress.DeserializeEdgeOrderShippingAddress(property0.Value, options);
+                            shippingAddress = ModelSerializationExtensions.JsonDeserialize<EdgeOrderShippingAddress>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("contactDetails"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             {
                                 continue;
                             }
-                            contactDetails = EdgeOrderAddressContactDetails.DeserializeEdgeOrderAddressContactDetails(property0.Value, options);
+                            contactDetails = ModelSerializationExtensions.JsonDeserialize<EdgeOrderAddressContactDetails>(property0.Value);
                             continue;
                         }
                     }

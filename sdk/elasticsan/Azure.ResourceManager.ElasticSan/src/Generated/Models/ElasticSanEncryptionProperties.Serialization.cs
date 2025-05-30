@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties, options);
+                ((IJsonModel<ElasticSanKeyVaultProperties>)KeyVaultProperties).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptionIdentity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(EncryptionIdentity, options);
+                ((IJsonModel<ElasticSanEncryptionIdentity>)EncryptionIdentity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = ElasticSanKeyVaultProperties.DeserializeElasticSanKeyVaultProperties(property.Value, options);
+                    keyVaultProperties = ModelSerializationExtensions.JsonDeserialize<ElasticSanKeyVaultProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     {
                         continue;
                     }
-                    identity = ElasticSanEncryptionIdentity.DeserializeElasticSanEncryptionIdentity(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ElasticSanEncryptionIdentity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

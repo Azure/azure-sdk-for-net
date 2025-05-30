@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<NamespaceSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EventGridPrivateEndpointConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(TopicsConfiguration))
             {
                 writer.WritePropertyName("topicsConfiguration"u8);
-                writer.WriteObjectValue(TopicsConfiguration, options);
+                ((IJsonModel<TopicsConfiguration>)TopicsConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(TopicSpacesConfiguration))
             {
                 writer.WritePropertyName("topicSpacesConfiguration"u8);
-                writer.WriteObjectValue(TopicSpacesConfiguration, options);
+                ((IJsonModel<TopicSpacesConfiguration>)TopicSpacesConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(IsZoneRedundant))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WriteStartArray();
                 foreach (var item in InboundIPRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EventGridInboundIPRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.EventGrid
                     {
                         continue;
                     }
-                    sku = NamespaceSku.DeserializeNamespaceSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<NamespaceSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.EventGrid
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.EventGrid
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            topicsConfiguration = TopicsConfiguration.DeserializeTopicsConfiguration(property0.Value, options);
+                            topicsConfiguration = ModelSerializationExtensions.JsonDeserialize<TopicsConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("topicSpacesConfiguration"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            topicSpacesConfiguration = TopicSpacesConfiguration.DeserializeTopicSpacesConfiguration(property0.Value, options);
+                            topicSpacesConfiguration = ModelSerializationExtensions.JsonDeserialize<TopicSpacesConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("isZoneRedundant"u8))

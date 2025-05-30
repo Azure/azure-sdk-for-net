@@ -38,7 +38,7 @@ namespace Azure.Analytics.Defender.Easm
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(Value, options);
+                ((IJsonModel<ObservedLocationDetails>)Value).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Sources))
             {
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SourceDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +88,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    value = ObservedLocationDetails.DeserializeObservedLocationDetails(property.Value, options);
+                    value = ModelSerializationExtensions.JsonDeserialize<ObservedLocationDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sources"u8))

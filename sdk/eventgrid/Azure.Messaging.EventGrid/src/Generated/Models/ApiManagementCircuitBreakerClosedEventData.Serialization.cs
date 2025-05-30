@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    circuitBreaker = ApiManagementCircuitBreakerProperties.DeserializeApiManagementCircuitBreakerProperties(property.Value);
+                    circuitBreaker = ModelSerializationExtensions.JsonDeserialize<ApiManagementCircuitBreakerProperties>(property.Value);
                     continue;
                 }
             }

@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    specification = ApiCenterApiSpecification.DeserializeApiCenterApiSpecification(property.Value);
+                    specification = ModelSerializationExtensions.JsonDeserialize<ApiCenterApiSpecification>(property.Value);
                     continue;
                 }
             }

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(DeliveryConfiguration))
             {
                 writer.WritePropertyName("deliveryConfiguration"u8);
-                writer.WriteObjectValue(DeliveryConfiguration, options);
+                ((IJsonModel<DeliveryConfiguration>)DeliveryConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(EventDeliverySchema))
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(FiltersConfiguration))
             {
                 writer.WritePropertyName("filtersConfiguration"u8);
-                writer.WriteObjectValue(FiltersConfiguration, options);
+                ((IJsonModel<FiltersConfiguration>)FiltersConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ExpireOn))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.EventGrid
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            deliveryConfiguration = DeliveryConfiguration.DeserializeDeliveryConfiguration(property0.Value, options);
+                            deliveryConfiguration = ModelSerializationExtensions.JsonDeserialize<DeliveryConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("eventDeliverySchema"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            filtersConfiguration = FiltersConfiguration.DeserializeFiltersConfiguration(property0.Value, options);
+                            filtersConfiguration = ModelSerializationExtensions.JsonDeserialize<FiltersConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("expirationTimeUtc"u8))

@@ -45,7 +45,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStartArray();
                 foreach (var item in QueueAssignments)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AcsRouterQueueDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStartArray();
                 foreach (var item in ChannelConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AcsRouterChannelConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(LabVmsShutdown))
             {
                 writer.WritePropertyName("labVmsShutdown"u8);
-                writer.WriteObjectValue(LabVmsShutdown, options);
+                ((IJsonModel<DevTestLabScheduleData>)LabVmsShutdown).Write(writer, options);
             }
             if (Optional.IsDefined(LabVmsStartup))
             {
                 writer.WritePropertyName("labVmsStartup"u8);
-                writer.WriteObjectValue(LabVmsStartup, options);
+                ((IJsonModel<DevTestLabScheduleData>)LabVmsStartup).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             {
                                 continue;
                             }
-                            labVmsShutdown = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(property0.Value, options);
+                            labVmsShutdown = ModelSerializationExtensions.JsonDeserialize<DevTestLabScheduleData>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("labVmsStartup"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             {
                                 continue;
                             }
-                            labVmsStartup = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(property0.Value, options);
+                            labVmsStartup = ModelSerializationExtensions.JsonDeserialize<DevTestLabScheduleData>(property0.Value);
                             continue;
                         }
                     }

@@ -41,9 +41,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStringValue(Time.Value, "O");
             }
             writer.WritePropertyName("removedByCommunicationIdentifier"u8);
-            writer.WriteObjectValue(RemovedByCommunicationIdentifier, options);
+            ((IJsonModel<CommunicationIdentifierModel>)RemovedByCommunicationIdentifier).Write(writer, options);
             writer.WritePropertyName("participantRemoved"u8);
-            writer.WriteObjectValue(ParticipantRemoved, options);
+            ((IJsonModel<AcsChatThreadParticipantProperties>)ParticipantRemoved).Write(writer, options);
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
@@ -92,12 +92,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("removedByCommunicationIdentifier"u8))
                 {
-                    removedByCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value, options);
+                    removedByCommunicationIdentifier = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("participantRemoved"u8))
                 {
-                    participantRemoved = AcsChatThreadParticipantProperties.DeserializeAcsChatThreadParticipantProperties(property.Value, options);
+                    participantRemoved = ModelSerializationExtensions.JsonDeserialize<AcsChatThreadParticipantProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("version"u8))

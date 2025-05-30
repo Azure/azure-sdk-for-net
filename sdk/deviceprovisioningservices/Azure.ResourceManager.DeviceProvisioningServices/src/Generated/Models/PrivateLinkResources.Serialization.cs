@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DeviceProvisioningServicesPrivateLinkResourceData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

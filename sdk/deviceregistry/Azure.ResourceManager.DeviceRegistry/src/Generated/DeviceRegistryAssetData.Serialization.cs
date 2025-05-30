@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.DeviceRegistry
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<AssetProperties>)Properties).Write(writer, options);
             }
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation, options);
+            ((IJsonModel<DeviceRegistryExtendedLocation>)ExtendedLocation).Write(writer, options);
         }
 
         DeviceRegistryAssetData IJsonModel<DeviceRegistryAssetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.DeviceRegistry
                     {
                         continue;
                     }
-                    properties = AssetProperties.DeserializeAssetProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<AssetProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = DeviceRegistryExtendedLocation.DeserializeDeviceRegistryExtendedLocation(property.Value, options);
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<DeviceRegistryExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

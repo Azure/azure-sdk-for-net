@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.DevCenter.Models
             if (Optional.IsDefined(GitHub))
             {
                 writer.WritePropertyName("gitHub"u8);
-                writer.WriteObjectValue(GitHub, options);
+                ((IJsonModel<DevCenterGitCatalog>)GitHub).Write(writer, options);
             }
             if (Optional.IsDefined(AdoGit))
             {
                 writer.WritePropertyName("adoGit"u8);
-                writer.WriteObjectValue(AdoGit, options);
+                ((IJsonModel<DevCenterGitCatalog>)AdoGit).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                             {
                                 continue;
                             }
-                            gitHub = DevCenterGitCatalog.DeserializeDevCenterGitCatalog(property0.Value, options);
+                            gitHub = ModelSerializationExtensions.JsonDeserialize<DevCenterGitCatalog>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("adoGit"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                             {
                                 continue;
                             }
-                            adoGit = DevCenterGitCatalog.DeserializeDevCenterGitCatalog(property0.Value, options);
+                            adoGit = ModelSerializationExtensions.JsonDeserialize<DevCenterGitCatalog>(property0.Value);
                             continue;
                         }
                     }

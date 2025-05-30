@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    metadata = DeviceTwinMetadata.DeserializeDeviceTwinMetadata(property.Value);
+                    metadata = ModelSerializationExtensions.JsonDeserialize<DeviceTwinMetadata>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("version"u8))

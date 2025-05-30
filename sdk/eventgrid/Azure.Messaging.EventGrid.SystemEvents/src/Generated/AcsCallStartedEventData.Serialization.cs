@@ -70,7 +70,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("startedBy"u8))
                 {
-                    startedBy = AcsCallParticipantProperties.DeserializeAcsCallParticipantProperties(property.Value, options);
+                    startedBy = ModelSerializationExtensions.JsonDeserialize<AcsCallParticipantProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("serverCallId"u8))
@@ -84,7 +84,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    group = AcsCallGroupProperties.DeserializeAcsCallGroupProperties(property.Value, options);
+                    group = ModelSerializationExtensions.JsonDeserialize<AcsCallGroupProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("room"u8))
@@ -93,7 +93,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    room = AcsCallRoomProperties.DeserializeAcsCallRoomProperties(property.Value, options);
+                    room = ModelSerializationExtensions.JsonDeserialize<AcsCallRoomProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isTwoParty"u8))

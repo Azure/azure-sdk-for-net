@@ -46,26 +46,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             writer.WritePropertyName("target"u8);
-            writer.WriteObjectValue(Target, options);
+            ((IJsonModel<ContainerRegistryEventTarget>)Target).Write(writer, options);
             if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
-                writer.WriteObjectValue(Request, options);
+                ((IJsonModel<ContainerRegistryEventRequest>)Request).Write(writer, options);
             }
             if (Optional.IsDefined(Actor))
             {
                 writer.WritePropertyName("actor"u8);
-                writer.WriteObjectValue(Actor, options);
+                ((IJsonModel<ContainerRegistryEventActor>)Actor).Write(writer, options);
             }
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source, options);
+                ((IJsonModel<ContainerRegistryEventSource>)Source).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectedRegistry))
             {
                 writer.WritePropertyName("connectedRegistry"u8);
-                writer.WriteObjectValue(ConnectedRegistry, options);
+                ((IJsonModel<ContainerRegistryEventConnectedRegistry>)ConnectedRegistry).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -143,7 +143,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("target"u8))
                 {
-                    target = ContainerRegistryEventTarget.DeserializeContainerRegistryEventTarget(property.Value, options);
+                    target = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryEventTarget>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("request"u8))
@@ -152,7 +152,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    request = ContainerRegistryEventRequest.DeserializeContainerRegistryEventRequest(property.Value, options);
+                    request = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryEventRequest>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("actor"u8))
@@ -161,7 +161,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    actor = ContainerRegistryEventActor.DeserializeContainerRegistryEventActor(property.Value, options);
+                    actor = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryEventActor>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("source"u8))
@@ -170,7 +170,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    source = ContainerRegistryEventSource.DeserializeContainerRegistryEventSource(property.Value, options);
+                    source = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryEventSource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("connectedRegistry"u8))
@@ -179,7 +179,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    connectedRegistry = ContainerRegistryEventConnectedRegistry.DeserializeContainerRegistryEventConnectedRegistry(property.Value, options);
+                    connectedRegistry = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryEventConnectedRegistry>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

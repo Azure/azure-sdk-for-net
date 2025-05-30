@@ -135,7 +135,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in SriChecks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SubResourceIntegrityCheck>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -50,7 +50,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             writer.WritePropertyName("lastActivityTime"u8);
             writer.WriteStringValue(LastActivityTime);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<DeviceTwinInfoProperties>)Properties).Write(writer, options);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status);
             writer.WritePropertyName("statusUpdateTime"u8);
@@ -61,7 +61,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteNumberValue(Version.Value);
             }
             writer.WritePropertyName("x509Thumbprint"u8);
-            writer.WriteObjectValue(X509Thumbprint, options);
+            ((IJsonModel<DeviceTwinInfoX509Thumbprint>)X509Thumbprint).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -150,7 +150,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DeviceTwinInfoProperties.DeserializeDeviceTwinInfoProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<DeviceTwinInfoProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -174,7 +174,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("x509Thumbprint"u8))
                 {
-                    x509Thumbprint = DeviceTwinInfoX509Thumbprint.DeserializeDeviceTwinInfoX509Thumbprint(property.Value, options);
+                    x509Thumbprint = ModelSerializationExtensions.JsonDeserialize<DeviceTwinInfoX509Thumbprint>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

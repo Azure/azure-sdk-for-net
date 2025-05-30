@@ -41,7 +41,7 @@ namespace Azure.Developer.DevCenter.Models
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteObjectValue(Action, options);
+                ((IJsonModel<DevBoxAction>)Action).Write(writer, options);
             }
             if (Optional.IsDefined(Error))
             {
@@ -109,7 +109,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    action = DevBoxAction.DeserializeDevBoxAction(property.Value, options);
+                    action = ModelSerializationExtensions.JsonDeserialize<DevBoxAction>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -118,7 +118,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

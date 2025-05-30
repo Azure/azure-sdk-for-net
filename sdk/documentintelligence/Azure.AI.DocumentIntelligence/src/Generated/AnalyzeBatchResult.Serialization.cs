@@ -46,7 +46,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AnalyzeBatchResultDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -56,24 +56,24 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WriteStartArray();
                 foreach (var item in ProvisioningIssues)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EventHubsProvisioningIssue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(NetworkSecurityPerimeter))
             {
                 writer.WritePropertyName("networkSecurityPerimeter"u8);
-                writer.WriteObjectValue(NetworkSecurityPerimeter, options);
+                ((IJsonModel<EventHubsNetworkSecurityPerimeter>)NetworkSecurityPerimeter).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceAssociation))
             {
                 writer.WritePropertyName("resourceAssociation"u8);
-                writer.WriteObjectValue(ResourceAssociation, options);
+                ((IJsonModel<EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>)ResourceAssociation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
-                writer.WriteObjectValue(Profile, options);
+                ((IJsonModel<EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>)Profile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsBackingResource))
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                             {
                                 continue;
                             }
-                            networkSecurityPerimeter = EventHubsNetworkSecurityPerimeter.DeserializeEventHubsNetworkSecurityPerimeter(property0.Value, options);
+                            networkSecurityPerimeter = ModelSerializationExtensions.JsonDeserialize<EventHubsNetworkSecurityPerimeter>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resourceAssociation"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                             {
                                 continue;
                             }
-                            resourceAssociation = EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation.DeserializeEventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(property0.Value, options);
+                            resourceAssociation = ModelSerializationExtensions.JsonDeserialize<EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("profile"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                             {
                                 continue;
                             }
-                            profile = EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile.DeserializeEventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(property0.Value, options);
+                            profile = ModelSerializationExtensions.JsonDeserialize<EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("isBackingResource"u8))

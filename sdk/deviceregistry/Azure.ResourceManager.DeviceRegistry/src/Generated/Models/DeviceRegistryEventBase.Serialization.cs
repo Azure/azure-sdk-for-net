@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             if (Optional.IsDefined(Topic))
             {
                 writer.WritePropertyName("topic"u8);
-                writer.WriteObjectValue(Topic, options);
+                ((IJsonModel<DeviceRegistryTopic>)Topic).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     {
                         continue;
                     }
-                    topic = DeviceRegistryTopic.DeserializeDeviceRegistryTopic(property.Value, options);
+                    topic = ModelSerializationExtensions.JsonDeserialize<DeviceRegistryTopic>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

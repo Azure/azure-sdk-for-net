@@ -53,21 +53,21 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             writer.WriteStartArray();
             foreach (var item in LocationInfo)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ResourceSkuLocationInfo>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("capabilities"u8);
             writer.WriteStartArray();
             foreach (var item in Capabilities)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ResourceSkuCapabilities>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("restrictions"u8);
             writer.WriteStartArray();
             foreach (var item in Restrictions)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ResourceSkuRestrictions>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

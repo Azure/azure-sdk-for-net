@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     {
                         continue;
                     }
-                    topic = DeviceRegistryTopic.DeserializeDeviceRegistryTopic(property.Value, options);
+                    topic = ModelSerializationExtensions.JsonDeserialize<DeviceRegistryTopic>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

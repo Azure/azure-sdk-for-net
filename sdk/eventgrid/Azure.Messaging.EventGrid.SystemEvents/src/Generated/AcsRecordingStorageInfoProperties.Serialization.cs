@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStartArray();
                 foreach (var item in RecordingChunks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AcsRecordingChunkInfoProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Elastic.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ElasticUserApiKeyProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    properties = ElasticUserApiKeyProperties.DeserializeElasticUserApiKeyProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ElasticUserApiKeyProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

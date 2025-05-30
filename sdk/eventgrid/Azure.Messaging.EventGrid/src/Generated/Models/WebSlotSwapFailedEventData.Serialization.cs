@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    appEventTypeDetail = AppEventTypeDetail.DeserializeAppEventTypeDetail(property.Value);
+                    appEventTypeDetail = ModelSerializationExtensions.JsonDeserialize<AppEventTypeDetail>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

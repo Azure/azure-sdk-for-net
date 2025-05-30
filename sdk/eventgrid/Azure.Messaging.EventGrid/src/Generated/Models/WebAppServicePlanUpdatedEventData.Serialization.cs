@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    appServicePlanEventTypeDetail = AppServicePlanEventTypeDetail.DeserializeAppServicePlanEventTypeDetail(property.Value);
+                    appServicePlanEventTypeDetail = ModelSerializationExtensions.JsonDeserialize<AppServicePlanEventTypeDetail>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -45,7 +45,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    sku = WebAppServicePlanUpdatedEventDataSku.DeserializeWebAppServicePlanUpdatedEventDataSku(property.Value);
+                    sku = ModelSerializationExtensions.JsonDeserialize<WebAppServicePlanUpdatedEventDataSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

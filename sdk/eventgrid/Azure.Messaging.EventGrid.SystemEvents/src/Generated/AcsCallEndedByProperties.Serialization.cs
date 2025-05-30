@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
 
             writer.WritePropertyName("communicationIdentifier"u8);
-            writer.WriteObjectValue(CommunicationIdentifier, options);
+            ((IJsonModel<CommunicationIdentifierModel>)CommunicationIdentifier).Write(writer, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("name"u8);
@@ -86,7 +86,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("communicationIdentifier"u8))
                 {
-                    communicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value, options);
+                    communicationIdentifier = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

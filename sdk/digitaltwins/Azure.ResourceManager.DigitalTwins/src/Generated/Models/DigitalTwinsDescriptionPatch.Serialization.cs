@@ -56,15 +56,14 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Properties))
             {
                 if (Properties != null)
                 {
                     writer.WritePropertyName("properties"u8);
-                    writer.WriteObjectValue(Properties, options);
+                    ((IJsonModel<DigitalTwinsPatchProperties>)Properties).Write(writer, options);
                 }
                 else
                 {
@@ -137,7 +136,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -147,7 +146,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         properties = null;
                         continue;
                     }
-                    properties = DigitalTwinsPatchProperties.DeserializeDigitalTwinsPatchProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<DigitalTwinsPatchProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

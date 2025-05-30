@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("recordingStorageInfo"u8))
                 {
-                    recordingStorageInfo = AcsRecordingStorageInfoProperties.DeserializeAcsRecordingStorageInfoProperties(property.Value);
+                    recordingStorageInfo = ModelSerializationExtensions.JsonDeserialize<AcsRecordingStorageInfoProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("recordingStartTime"u8))

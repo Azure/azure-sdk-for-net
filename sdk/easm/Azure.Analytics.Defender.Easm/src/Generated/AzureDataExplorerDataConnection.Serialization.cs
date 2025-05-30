@@ -36,7 +36,7 @@ namespace Azure.Analytics.Defender.Easm
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<AzureDataExplorerDataConnectionProperties>)Properties).Write(writer, options);
         }
 
         AzureDataExplorerDataConnection IJsonModel<AzureDataExplorerDataConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -78,7 +78,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = AzureDataExplorerDataConnectionProperties.DeserializeAzureDataExplorerDataConnectionProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<AzureDataExplorerDataConnectionProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

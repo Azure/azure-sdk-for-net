@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (options.Format != "W" && Optional.IsDefined(MeterDetails))
             {
                 writer.WritePropertyName("meterDetails"u8);
-                writer.WriteObjectValue(MeterDetails, options);
+                ((IJsonModel<EdgeOrderProductMeterDetails>)MeterDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MeteringType))
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    meterDetails = EdgeOrderProductMeterDetails.DeserializeEdgeOrderProductMeterDetails(property.Value, options);
+                    meterDetails = ModelSerializationExtensions.JsonDeserialize<EdgeOrderProductMeterDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("meteringType"u8))

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WriteStartArray();
                 foreach (var item in AccessRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EventHubsNspAccessRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

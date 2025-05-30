@@ -44,7 +44,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    deviceConnectionStateEventInfo = DeviceConnectionStateEventInfo.DeserializeDeviceConnectionStateEventInfo(property.Value);
+                    deviceConnectionStateEventInfo = ModelSerializationExtensions.JsonDeserialize<DeviceConnectionStateEventInfo>(property.Value);
                     continue;
                 }
             }

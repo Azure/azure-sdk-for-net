@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in AdvancedFilters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AdvancedFilter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

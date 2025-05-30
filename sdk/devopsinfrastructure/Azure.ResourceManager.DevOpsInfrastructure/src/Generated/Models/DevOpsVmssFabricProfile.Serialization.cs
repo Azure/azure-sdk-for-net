@@ -36,28 +36,28 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<DevOpsAzureSku>)Sku).Write(writer, options);
             writer.WritePropertyName("images"u8);
             writer.WriteStartArray();
             foreach (var item in Images)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DevOpsPoolVmImage>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile, options);
+                ((IJsonModel<DevOpsOSProfile>)OSProfile).Write(writer, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile, options);
+                ((IJsonModel<DevOpsStorageProfile>)StorageProfile).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile, options);
+                ((IJsonModel<DevOpsNetworkProfile>)NetworkProfile).Write(writer, options);
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = DevOpsAzureSku.DeserializeDevOpsAzureSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<DevOpsAzureSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("images"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     {
                         continue;
                     }
-                    osProfile = DevOpsOSProfile.DeserializeDevOpsOSProfile(property.Value, options);
+                    osProfile = ModelSerializationExtensions.JsonDeserialize<DevOpsOSProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storageProfile"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     {
                         continue;
                     }
-                    storageProfile = DevOpsStorageProfile.DeserializeDevOpsStorageProfile(property.Value, options);
+                    storageProfile = ModelSerializationExtensions.JsonDeserialize<DevOpsStorageProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("networkProfile"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     {
                         continue;
                     }
-                    networkProfile = DevOpsNetworkProfile.DeserializeDevOpsNetworkProfile(property.Value, options);
+                    networkProfile = ModelSerializationExtensions.JsonDeserialize<DevOpsNetworkProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

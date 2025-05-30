@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(PartnerTopicInfo))
             {
                 writer.WritePropertyName("partnerTopicInfo"u8);
-                writer.WriteObjectValue(PartnerTopicInfo, options);
+                ((IJsonModel<PartnerUpdateTopicInfo>)PartnerTopicInfo).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             {
                                 continue;
                             }
-                            partnerTopicInfo = PartnerUpdateTopicInfo.DeserializePartnerUpdateTopicInfo(property0.Value, options);
+                            partnerTopicInfo = ModelSerializationExtensions.JsonDeserialize<PartnerUpdateTopicInfo>(property0.Value);
                             continue;
                         }
                     }

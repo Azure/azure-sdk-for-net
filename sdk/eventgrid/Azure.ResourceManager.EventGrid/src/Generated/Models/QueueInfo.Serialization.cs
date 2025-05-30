@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(DeadLetterDestinationWithResourceIdentity))
             {
                 writer.WritePropertyName("deadLetterDestinationWithResourceIdentity"u8);
-                writer.WriteObjectValue(DeadLetterDestinationWithResourceIdentity, options);
+                ((IJsonModel<DeadLetterWithResourceIdentity>)DeadLetterDestinationWithResourceIdentity).Write(writer, options);
             }
             if (Optional.IsDefined(EventTimeToLive))
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    deadLetterDestinationWithResourceIdentity = DeadLetterWithResourceIdentity.DeserializeDeadLetterWithResourceIdentity(property.Value, options);
+                    deadLetterDestinationWithResourceIdentity = ModelSerializationExtensions.JsonDeserialize<DeadLetterWithResourceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eventTimeToLive"u8))

@@ -46,11 +46,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             writer.WritePropertyName("target"u8);
-            writer.WriteObjectValue(Target, options);
+            ((IJsonModel<ContainerRegistryArtifactEventTarget>)Target).Write(writer, options);
             if (Optional.IsDefined(ConnectedRegistry))
             {
                 writer.WritePropertyName("connectedRegistry"u8);
-                writer.WriteObjectValue(ConnectedRegistry, options);
+                ((IJsonModel<ContainerRegistryEventConnectedRegistry>)ConnectedRegistry).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -125,7 +125,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("target"u8))
                 {
-                    target = ContainerRegistryArtifactEventTarget.DeserializeContainerRegistryArtifactEventTarget(property.Value, options);
+                    target = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryArtifactEventTarget>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("connectedRegistry"u8))
@@ -134,7 +134,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    connectedRegistry = ContainerRegistryEventConnectedRegistry.DeserializeContainerRegistryEventConnectedRegistry(property.Value, options);
+                    connectedRegistry = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryEventConnectedRegistry>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(AttachNewDataDiskOptions))
             {
                 writer.WritePropertyName("attachNewDataDiskOptions"u8);
-                writer.WriteObjectValue(AttachNewDataDiskOptions, options);
+                ((IJsonModel<AttachNewDataDiskDetails>)AttachNewDataDiskOptions).Write(writer, options);
             }
             if (Optional.IsDefined(ExistingLabDiskId))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    attachNewDataDiskOptions = AttachNewDataDiskDetails.DeserializeAttachNewDataDiskDetails(property.Value, options);
+                    attachNewDataDiskOptions = ModelSerializationExtensions.JsonDeserialize<AttachNewDataDiskDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("existingLabDiskId"u8))

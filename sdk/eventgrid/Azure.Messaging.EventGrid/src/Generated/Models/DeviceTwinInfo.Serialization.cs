@@ -70,7 +70,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    properties = DeviceTwinInfoProperties.DeserializeDeviceTwinInfoProperties(property.Value);
+                    properties = ModelSerializationExtensions.JsonDeserialize<DeviceTwinInfoProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -98,7 +98,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    x509Thumbprint = DeviceTwinInfoX509Thumbprint.DeserializeDeviceTwinInfoX509Thumbprint(property.Value);
+                    x509Thumbprint = ModelSerializationExtensions.JsonDeserialize<DeviceTwinInfoX509Thumbprint>(property.Value);
                     continue;
                 }
             }

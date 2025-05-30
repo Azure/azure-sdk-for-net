@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(Vm))
             {
                 writer.WritePropertyName("vm"u8);
-                writer.WriteObjectValue(Vm, options);
+                ((IJsonModel<DevTestLabCustomImageVm>)Vm).Write(writer, options);
             }
             if (Optional.IsDefined(Vhd))
             {
                 writer.WritePropertyName("vhd"u8);
-                writer.WriteObjectValue(Vhd, options);
+                ((IJsonModel<DevTestLabCustomImageVhd>)Vhd).Write(writer, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -80,14 +80,14 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WriteStartArray();
                 foreach (var item in DataDiskStorageInfo)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DevTestLabDataDiskStorageTypeInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(CustomImagePlan))
             {
                 writer.WritePropertyName("customImagePlan"u8);
-                writer.WriteObjectValue(CustomImagePlan, options);
+                ((IJsonModel<DevTestLabCustomImagePlan>)CustomImagePlan).Write(writer, options);
             }
             if (Optional.IsDefined(IsPlanAuthorized))
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            vm = DevTestLabCustomImageVm.DeserializeDevTestLabCustomImageVm(property0.Value, options);
+                            vm = ModelSerializationExtensions.JsonDeserialize<DevTestLabCustomImageVm>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("vhd"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            vhd = DevTestLabCustomImageVhd.DeserializeDevTestLabCustomImageVhd(property0.Value, options);
+                            vhd = ModelSerializationExtensions.JsonDeserialize<DevTestLabCustomImageVhd>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("description"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            customImagePlan = DevTestLabCustomImagePlan.DeserializeDevTestLabCustomImagePlan(property0.Value, options);
+                            customImagePlan = ModelSerializationExtensions.JsonDeserialize<DevTestLabCustomImagePlan>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("isPlanAuthorized"u8))

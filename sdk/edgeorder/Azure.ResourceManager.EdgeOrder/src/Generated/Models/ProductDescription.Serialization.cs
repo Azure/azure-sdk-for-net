@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ProductLink>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

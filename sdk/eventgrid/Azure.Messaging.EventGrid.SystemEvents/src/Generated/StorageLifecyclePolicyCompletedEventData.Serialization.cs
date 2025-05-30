@@ -40,15 +40,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStringValue(ScheduleTime);
             }
             writer.WritePropertyName("policyRunSummary"u8);
-            writer.WriteObjectValue(PolicyRunSummary, options);
+            ((IJsonModel<StorageLifecyclePolicyRunSummary>)PolicyRunSummary).Write(writer, options);
             writer.WritePropertyName("deleteSummary"u8);
-            writer.WriteObjectValue(DeleteSummary, options);
+            ((IJsonModel<StorageLifecyclePolicyActionSummaryDetail>)DeleteSummary).Write(writer, options);
             writer.WritePropertyName("tierToCoolSummary"u8);
-            writer.WriteObjectValue(TierToCoolSummary, options);
+            ((IJsonModel<StorageLifecyclePolicyActionSummaryDetail>)TierToCoolSummary).Write(writer, options);
             writer.WritePropertyName("tierToArchiveSummary"u8);
-            writer.WriteObjectValue(TierToArchiveSummary, options);
+            ((IJsonModel<StorageLifecyclePolicyActionSummaryDetail>)TierToArchiveSummary).Write(writer, options);
             writer.WritePropertyName("tierToColdSummary"u8);
-            writer.WriteObjectValue(TierToColdSummary, options);
+            ((IJsonModel<StorageLifecyclePolicyActionSummaryDetail>)TierToColdSummary).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -103,27 +103,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("policyRunSummary"u8))
                 {
-                    policyRunSummary = StorageLifecyclePolicyRunSummary.DeserializeStorageLifecyclePolicyRunSummary(property.Value, options);
+                    policyRunSummary = ModelSerializationExtensions.JsonDeserialize<StorageLifecyclePolicyRunSummary>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deleteSummary"u8))
                 {
-                    deleteSummary = StorageLifecyclePolicyActionSummaryDetail.DeserializeStorageLifecyclePolicyActionSummaryDetail(property.Value, options);
+                    deleteSummary = ModelSerializationExtensions.JsonDeserialize<StorageLifecyclePolicyActionSummaryDetail>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tierToCoolSummary"u8))
                 {
-                    tierToCoolSummary = StorageLifecyclePolicyActionSummaryDetail.DeserializeStorageLifecyclePolicyActionSummaryDetail(property.Value, options);
+                    tierToCoolSummary = ModelSerializationExtensions.JsonDeserialize<StorageLifecyclePolicyActionSummaryDetail>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tierToArchiveSummary"u8))
                 {
-                    tierToArchiveSummary = StorageLifecyclePolicyActionSummaryDetail.DeserializeStorageLifecyclePolicyActionSummaryDetail(property.Value, options);
+                    tierToArchiveSummary = ModelSerializationExtensions.JsonDeserialize<StorageLifecyclePolicyActionSummaryDetail>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tierToColdSummary"u8))
                 {
-                    tierToColdSummary = StorageLifecyclePolicyActionSummaryDetail.DeserializeStorageLifecyclePolicyActionSummaryDetail(property.Value, options);
+                    tierToColdSummary = ModelSerializationExtensions.JsonDeserialize<StorageLifecyclePolicyActionSummaryDetail>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

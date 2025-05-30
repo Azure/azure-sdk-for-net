@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             if (Optional.IsDefined(Topic))
             {
                 writer.WritePropertyName("topic"u8);
-                writer.WriteObjectValue(Topic, options);
+                ((IJsonModel<DeviceRegistryTopic>)Topic).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DataPoints))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in DataPoints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DeviceRegistryDataPoint>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     {
                         continue;
                     }
-                    topic = DeviceRegistryTopic.DeserializeDeviceRegistryTopic(property.Value, options);
+                    topic = ModelSerializationExtensions.JsonDeserialize<DeviceRegistryTopic>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataPoints"u8))

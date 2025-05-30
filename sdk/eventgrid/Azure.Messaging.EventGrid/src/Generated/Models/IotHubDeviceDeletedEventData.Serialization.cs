@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    twin = DeviceTwinInfo.DeserializeDeviceTwinInfo(property.Value);
+                    twin = ModelSerializationExtensions.JsonDeserialize<DeviceTwinInfo>(property.Value);
                     continue;
                 }
             }

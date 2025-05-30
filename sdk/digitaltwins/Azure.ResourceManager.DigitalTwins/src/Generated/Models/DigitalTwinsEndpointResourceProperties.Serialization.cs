@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity, options);
+                    ((IJsonModel<DigitalTwinsManagedIdentityReference>)Identity).Write(writer, options);
                 }
                 else
                 {

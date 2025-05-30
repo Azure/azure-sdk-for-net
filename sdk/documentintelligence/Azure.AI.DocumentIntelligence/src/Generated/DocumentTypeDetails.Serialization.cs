@@ -51,7 +51,7 @@ namespace Azure.AI.DocumentIntelligence
                 foreach (var item in FieldSchema)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<DocumentFieldSchema>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }

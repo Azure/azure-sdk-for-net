@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<DeviceProvisioningServicesPrivateLinkResourceProperties>)Properties).Write(writer, options);
         }
 
         DeviceProvisioningServicesPrivateLinkResourceData IJsonModel<DeviceProvisioningServicesPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DeviceProvisioningServicesPrivateLinkResourceProperties.DeserializeDeviceProvisioningServicesPrivateLinkResourceProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<DeviceProvisioningServicesPrivateLinkResourceProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

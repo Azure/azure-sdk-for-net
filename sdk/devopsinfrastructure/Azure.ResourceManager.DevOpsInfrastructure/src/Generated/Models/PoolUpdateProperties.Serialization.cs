@@ -47,17 +47,17 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             if (Optional.IsDefined(OrganizationProfile))
             {
                 writer.WritePropertyName("organizationProfile"u8);
-                writer.WriteObjectValue(OrganizationProfile, options);
+                ((IJsonModel<DevOpsOrganizationProfile>)OrganizationProfile).Write(writer, options);
             }
             if (Optional.IsDefined(AgentProfile))
             {
                 writer.WritePropertyName("agentProfile"u8);
-                writer.WriteObjectValue(AgentProfile, options);
+                ((IJsonModel<DevOpsPoolAgentProfile>)AgentProfile).Write(writer, options);
             }
             if (Optional.IsDefined(FabricProfile))
             {
                 writer.WritePropertyName("fabricProfile"u8);
-                writer.WriteObjectValue(FabricProfile, options);
+                ((IJsonModel<DevOpsFabricProfile>)FabricProfile).Write(writer, options);
             }
             if (Optional.IsDefined(DevCenterProjectResourceId))
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     {
                         continue;
                     }
-                    organizationProfile = DevOpsOrganizationProfile.DeserializeDevOpsOrganizationProfile(property.Value, options);
+                    organizationProfile = ModelSerializationExtensions.JsonDeserialize<DevOpsOrganizationProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("agentProfile"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     {
                         continue;
                     }
-                    agentProfile = DevOpsPoolAgentProfile.DeserializeDevOpsPoolAgentProfile(property.Value, options);
+                    agentProfile = ModelSerializationExtensions.JsonDeserialize<DevOpsPoolAgentProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("fabricProfile"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     {
                         continue;
                     }
-                    fabricProfile = DevOpsFabricProfile.DeserializeDevOpsFabricProfile(property.Value, options);
+                    fabricProfile = ModelSerializationExtensions.JsonDeserialize<DevOpsFabricProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("devCenterProjectResourceId"u8))

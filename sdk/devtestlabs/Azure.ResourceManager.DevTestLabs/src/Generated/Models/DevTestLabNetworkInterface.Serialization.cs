@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(SharedPublicIPAddressConfiguration))
             {
                 writer.WritePropertyName("sharedPublicIpAddressConfiguration"u8);
-                writer.WriteObjectValue(SharedPublicIPAddressConfiguration, options);
+                ((IJsonModel<SharedPublicIPAddressConfiguration>)SharedPublicIPAddressConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    sharedPublicIPAddressConfiguration = SharedPublicIPAddressConfiguration.DeserializeSharedPublicIPAddressConfiguration(property.Value, options);
+                    sharedPublicIPAddressConfiguration = ModelSerializationExtensions.JsonDeserialize<SharedPublicIPAddressConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

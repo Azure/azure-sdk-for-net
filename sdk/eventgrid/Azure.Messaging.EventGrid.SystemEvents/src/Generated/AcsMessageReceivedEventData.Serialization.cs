@@ -55,27 +55,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             if (Optional.IsDefined(MediaContent))
             {
                 writer.WritePropertyName("media"u8);
-                writer.WriteObjectValue(MediaContent, options);
+                ((IJsonModel<AcsMessageMediaContent>)MediaContent).Write(writer, options);
             }
             if (Optional.IsDefined(Reaction))
             {
                 writer.WritePropertyName("reaction"u8);
-                writer.WriteObjectValue(Reaction, options);
+                ((IJsonModel<AcsMessageReactionContent>)Reaction).Write(writer, options);
             }
             if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
-                writer.WriteObjectValue(Context, options);
+                ((IJsonModel<AcsMessageContext>)Context).Write(writer, options);
             }
             if (Optional.IsDefined(Button))
             {
                 writer.WritePropertyName("button"u8);
-                writer.WriteObjectValue(Button, options);
+                ((IJsonModel<AcsMessageButtonContent>)Button).Write(writer, options);
             }
             if (Optional.IsDefined(InteractiveContent))
             {
                 writer.WritePropertyName("interactive"u8);
-                writer.WriteObjectValue(InteractiveContent, options);
+                ((IJsonModel<AcsMessageInteractiveContent>)InteractiveContent).Write(writer, options);
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    media = AcsMessageMediaContent.DeserializeAcsMessageMediaContent(property.Value, options);
+                    media = ModelSerializationExtensions.JsonDeserialize<AcsMessageMediaContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("reaction"u8))
@@ -155,7 +155,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    reaction = AcsMessageReactionContent.DeserializeAcsMessageReactionContent(property.Value, options);
+                    reaction = ModelSerializationExtensions.JsonDeserialize<AcsMessageReactionContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("context"u8))
@@ -164,7 +164,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    context = AcsMessageContext.DeserializeAcsMessageContext(property.Value, options);
+                    context = ModelSerializationExtensions.JsonDeserialize<AcsMessageContext>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("button"u8))
@@ -173,7 +173,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    button = AcsMessageButtonContent.DeserializeAcsMessageButtonContent(property.Value, options);
+                    button = ModelSerializationExtensions.JsonDeserialize<AcsMessageButtonContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("interactive"u8))
@@ -182,7 +182,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    interactive = AcsMessageInteractiveContent.DeserializeAcsMessageInteractiveContent(property.Value, options);
+                    interactive = ModelSerializationExtensions.JsonDeserialize<AcsMessageInteractiveContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("from"u8))
@@ -210,7 +210,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    error = AcsMessageChannelEventError.DeserializeAcsMessageChannelEventError(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<AcsMessageChannelEventError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

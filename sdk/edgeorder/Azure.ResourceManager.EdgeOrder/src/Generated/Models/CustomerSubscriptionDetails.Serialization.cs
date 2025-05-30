@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in RegisteredFeatures)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CustomerSubscriptionRegisteredFeatures>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

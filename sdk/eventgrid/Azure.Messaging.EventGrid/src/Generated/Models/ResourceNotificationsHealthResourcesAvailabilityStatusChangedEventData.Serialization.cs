@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    resourceInfo = ResourceNotificationsResourceUpdatedDetails.DeserializeResourceNotificationsResourceUpdatedDetails(property.Value);
+                    resourceInfo = ModelSerializationExtensions.JsonDeserialize<ResourceNotificationsResourceUpdatedDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("operationalInfo"u8))
@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    operationalInfo = ResourceNotificationsOperationalDetails.DeserializeResourceNotificationsOperationalDetails(property.Value);
+                    operationalInfo = ModelSerializationExtensions.JsonDeserialize<ResourceNotificationsOperationalDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("apiVersion"u8))

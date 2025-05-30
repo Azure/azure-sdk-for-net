@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in InboundIPRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EventGridInboundIPRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

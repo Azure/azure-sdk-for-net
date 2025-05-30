@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             writer.WriteStartArray();
             foreach (var item in ZoneDetails)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ResourceSkuZoneDetails>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

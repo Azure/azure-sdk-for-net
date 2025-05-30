@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication, options);
+                ((IJsonModel<CustomLocationAuthentication>)Authentication).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ClusterExtensionIds))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                             {
                                 continue;
                             }
-                            authentication = CustomLocationAuthentication.DeserializeCustomLocationAuthentication(property0.Value, options);
+                            authentication = ModelSerializationExtensions.JsonDeserialize<CustomLocationAuthentication>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clusterExtensionIds"u8))

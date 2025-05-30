@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Dynatrace.Models
             if (Optional.IsDefined(LogRules))
             {
                 writer.WritePropertyName("logRules"u8);
-                writer.WriteObjectValue(LogRules, options);
+                ((IJsonModel<DynatraceMonitorResourceLogRules>)LogRules).Write(writer, options);
             }
             if (Optional.IsDefined(MetricRules))
             {
                 writer.WritePropertyName("metricRules"u8);
-                writer.WriteObjectValue(MetricRules, options);
+                ((IJsonModel<DynatraceMonitorResourceMetricRules>)MetricRules).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     {
                         continue;
                     }
-                    logRules = DynatraceMonitorResourceLogRules.DeserializeDynatraceMonitorResourceLogRules(property.Value, options);
+                    logRules = ModelSerializationExtensions.JsonDeserialize<DynatraceMonitorResourceLogRules>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metricRules"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     {
                         continue;
                     }
-                    metricRules = DynatraceMonitorResourceMetricRules.DeserializeDynatraceMonitorResourceMetricRules(property.Value, options);
+                    metricRules = ModelSerializationExtensions.JsonDeserialize<DynatraceMonitorResourceMetricRules>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

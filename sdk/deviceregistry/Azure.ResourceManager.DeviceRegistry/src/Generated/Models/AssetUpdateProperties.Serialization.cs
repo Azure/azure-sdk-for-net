@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             if (Optional.IsDefined(DefaultTopic))
             {
                 writer.WritePropertyName("defaultTopic"u8);
-                writer.WriteObjectValue(DefaultTopic, options);
+                ((IJsonModel<DeviceRegistryTopic>)DefaultTopic).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Datasets))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Datasets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DeviceRegistryDataset>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DeviceRegistryEvent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     {
                         continue;
                     }
-                    defaultTopic = DeviceRegistryTopic.DeserializeDeviceRegistryTopic(property.Value, options);
+                    defaultTopic = ModelSerializationExtensions.JsonDeserialize<DeviceRegistryTopic>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("datasets"u8))

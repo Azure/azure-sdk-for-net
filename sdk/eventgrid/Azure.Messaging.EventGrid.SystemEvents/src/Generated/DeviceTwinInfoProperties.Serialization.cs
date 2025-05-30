@@ -35,9 +35,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
 
             writer.WritePropertyName("desired"u8);
-            writer.WriteObjectValue(Desired, options);
+            ((IJsonModel<DeviceTwinProperties>)Desired).Write(writer, options);
             writer.WritePropertyName("reported"u8);
-            writer.WriteObjectValue(Reported, options);
+            ((IJsonModel<DeviceTwinProperties>)Reported).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,12 +83,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("desired"u8))
                 {
-                    desired = DeviceTwinProperties.DeserializeDeviceTwinProperties(property.Value, options);
+                    desired = ModelSerializationExtensions.JsonDeserialize<DeviceTwinProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("reported"u8))
                 {
-                    reported = DeviceTwinProperties.DeserializeDeviceTwinProperties(property.Value, options);
+                    reported = ModelSerializationExtensions.JsonDeserialize<DeviceTwinProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

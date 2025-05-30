@@ -85,7 +85,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Children)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AssetSummaryResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

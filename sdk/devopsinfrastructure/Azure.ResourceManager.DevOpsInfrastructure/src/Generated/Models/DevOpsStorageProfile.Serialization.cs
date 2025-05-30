@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDisks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DevOpsDataDisk>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

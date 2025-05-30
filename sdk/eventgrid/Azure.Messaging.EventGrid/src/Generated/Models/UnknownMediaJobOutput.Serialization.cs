@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventGrid.Models
                     {
                         continue;
                     }
-                    error = MediaJobError.DeserializeMediaJobError(property.Value);
+                    error = ModelSerializationExtensions.JsonDeserialize<MediaJobError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("label"u8))

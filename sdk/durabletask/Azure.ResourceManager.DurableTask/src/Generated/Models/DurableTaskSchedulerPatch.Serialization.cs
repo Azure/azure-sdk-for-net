@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DurableTask.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<DurableTaskSchedulerPatchProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DurableTask.Models
                     {
                         continue;
                     }
-                    properties = DurableTaskSchedulerPatchProperties.DeserializeDurableTaskSchedulerPatchProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<DurableTaskSchedulerPatchProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

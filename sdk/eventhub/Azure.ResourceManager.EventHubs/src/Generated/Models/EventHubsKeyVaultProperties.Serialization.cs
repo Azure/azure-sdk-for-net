@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<UserAssignedIdentityProperties>)Identity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     {
                         continue;
                     }
-                    identity = UserAssignedIdentityProperties.DeserializeUserAssignedIdentityProperties(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<UserAssignedIdentityProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

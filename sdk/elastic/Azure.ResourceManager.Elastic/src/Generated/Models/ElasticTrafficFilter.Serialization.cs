@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ElasticTrafficFilterRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

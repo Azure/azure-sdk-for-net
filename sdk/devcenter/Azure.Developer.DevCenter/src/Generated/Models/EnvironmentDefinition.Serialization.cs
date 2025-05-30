@@ -54,7 +54,7 @@ namespace Azure.Developer.DevCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EnvironmentDefinitionParameter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

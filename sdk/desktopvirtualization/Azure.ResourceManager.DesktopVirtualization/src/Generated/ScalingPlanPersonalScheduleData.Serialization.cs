@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(RampUpStartTime))
             {
                 writer.WritePropertyName("rampUpStartTime"u8);
-                writer.WriteObjectValue(RampUpStartTime, options);
+                ((IJsonModel<ScalingActionTime>)RampUpStartTime).Write(writer, options);
             }
             if (Optional.IsDefined(RampUpAutoStartHosts))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(PeakStartTime))
             {
                 writer.WritePropertyName("peakStartTime"u8);
-                writer.WriteObjectValue(PeakStartTime, options);
+                ((IJsonModel<ScalingActionTime>)PeakStartTime).Write(writer, options);
             }
             if (Optional.IsDefined(PeakStartVmOnConnect))
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(RampDownStartTime))
             {
                 writer.WritePropertyName("rampDownStartTime"u8);
-                writer.WriteObjectValue(RampDownStartTime, options);
+                ((IJsonModel<ScalingActionTime>)RampDownStartTime).Write(writer, options);
             }
             if (Optional.IsDefined(RampDownStartVmOnConnect))
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(OffPeakStartTime))
             {
                 writer.WritePropertyName("offPeakStartTime"u8);
-                writer.WriteObjectValue(OffPeakStartTime, options);
+                ((IJsonModel<ScalingActionTime>)OffPeakStartTime).Write(writer, options);
             }
             if (Optional.IsDefined(OffPeakStartVmOnConnect))
             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             {
                                 continue;
                             }
-                            rampUpStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value, options);
+                            rampUpStartTime = ModelSerializationExtensions.JsonDeserialize<ScalingActionTime>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("rampUpAutoStartHosts"u8))
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             {
                                 continue;
                             }
-                            peakStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value, options);
+                            peakStartTime = ModelSerializationExtensions.JsonDeserialize<ScalingActionTime>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("peakStartVMOnConnect"u8))
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             {
                                 continue;
                             }
-                            rampDownStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value, options);
+                            rampDownStartTime = ModelSerializationExtensions.JsonDeserialize<ScalingActionTime>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("rampDownStartVMOnConnect"u8))
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             {
                                 continue;
                             }
-                            offPeakStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value, options);
+                            offPeakStartTime = ModelSerializationExtensions.JsonDeserialize<ScalingActionTime>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("offPeakStartVMOnConnect"u8))

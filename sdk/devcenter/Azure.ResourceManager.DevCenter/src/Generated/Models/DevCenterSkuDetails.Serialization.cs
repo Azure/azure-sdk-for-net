@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DevCenterCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

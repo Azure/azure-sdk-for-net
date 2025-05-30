@@ -35,11 +35,11 @@ namespace Azure.AI.DocumentIntelligence
             }
 
             writer.WritePropertyName("key"u8);
-            writer.WriteObjectValue(Key, options);
+            ((IJsonModel<DocumentKeyValueElement>)Key).Write(writer, options);
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(Value, options);
+                ((IJsonModel<DocumentKeyValueElement>)Value).Write(writer, options);
             }
             writer.WritePropertyName("confidence"u8);
             writer.WriteNumberValue(Confidence);
@@ -89,7 +89,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 if (property.NameEquals("key"u8))
                 {
-                    key = DocumentKeyValueElement.DeserializeDocumentKeyValueElement(property.Value, options);
+                    key = ModelSerializationExtensions.JsonDeserialize<DocumentKeyValueElement>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("value"u8))
@@ -98,7 +98,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    value = DocumentKeyValueElement.DeserializeDocumentKeyValueElement(property.Value, options);
+                    value = ModelSerializationExtensions.JsonDeserialize<DocumentKeyValueElement>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("confidence"u8))

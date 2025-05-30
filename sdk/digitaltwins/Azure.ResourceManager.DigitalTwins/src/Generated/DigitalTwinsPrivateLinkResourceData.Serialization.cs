@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DigitalTwins
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<DigitalTwinsPrivateLinkResourceProperties>)Properties).Write(writer, options);
         }
 
         DigitalTwinsPrivateLinkResourceData IJsonModel<DigitalTwinsPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DigitalTwins
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DigitalTwinsPrivateLinkResourceProperties.DeserializeDigitalTwinsPrivateLinkResourceProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<DigitalTwinsPrivateLinkResourceProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DigitalTwins
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

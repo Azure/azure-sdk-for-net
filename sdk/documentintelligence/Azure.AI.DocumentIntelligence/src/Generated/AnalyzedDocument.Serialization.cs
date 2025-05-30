@@ -42,7 +42,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in BoundingRegions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BoundingRegion>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartArray();
             foreach (var item in Spans)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DocumentSpan>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(FieldsPrivate))
@@ -60,7 +60,7 @@ namespace Azure.AI.DocumentIntelligence
                 foreach (var item in FieldsPrivate)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<DocumentField>(item.Value, options);
+                    ((IJsonModel<DocumentField>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }

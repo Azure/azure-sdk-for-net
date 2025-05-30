@@ -54,17 +54,17 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination, options);
+                ((IJsonModel<EventSubscriptionDestination>)Destination).Write(writer, options);
             }
             if (Optional.IsDefined(DeliveryWithResourceIdentity))
             {
                 writer.WritePropertyName("deliveryWithResourceIdentity"u8);
-                writer.WriteObjectValue(DeliveryWithResourceIdentity, options);
+                ((IJsonModel<DeliveryWithResourceIdentity>)DeliveryWithResourceIdentity).Write(writer, options);
             }
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter, options);
+                ((IJsonModel<EventSubscriptionFilter>)Filter).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Labels))
             {
@@ -89,17 +89,17 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(RetryPolicy))
             {
                 writer.WritePropertyName("retryPolicy"u8);
-                writer.WriteObjectValue(RetryPolicy, options);
+                ((IJsonModel<EventSubscriptionRetryPolicy>)RetryPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(DeadLetterDestination))
             {
                 writer.WritePropertyName("deadLetterDestination"u8);
-                writer.WriteObjectValue(DeadLetterDestination, options);
+                ((IJsonModel<DeadLetterDestination>)DeadLetterDestination).Write(writer, options);
             }
             if (Optional.IsDefined(DeadLetterWithResourceIdentity))
             {
                 writer.WritePropertyName("deadLetterWithResourceIdentity"u8);
-                writer.WriteObjectValue(DeadLetterWithResourceIdentity, options);
+                ((IJsonModel<DeadLetterWithResourceIdentity>)DeadLetterWithResourceIdentity).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.EventGrid
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            destination = EventSubscriptionDestination.DeserializeEventSubscriptionDestination(property0.Value, options);
+                            destination = ModelSerializationExtensions.JsonDeserialize<EventSubscriptionDestination>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("deliveryWithResourceIdentity"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            deliveryWithResourceIdentity = DeliveryWithResourceIdentity.DeserializeDeliveryWithResourceIdentity(property0.Value, options);
+                            deliveryWithResourceIdentity = ModelSerializationExtensions.JsonDeserialize<DeliveryWithResourceIdentity>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("filter"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            filter = EventSubscriptionFilter.DeserializeEventSubscriptionFilter(property0.Value, options);
+                            filter = ModelSerializationExtensions.JsonDeserialize<EventSubscriptionFilter>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("labels"u8))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            retryPolicy = EventSubscriptionRetryPolicy.DeserializeEventSubscriptionRetryPolicy(property0.Value, options);
+                            retryPolicy = ModelSerializationExtensions.JsonDeserialize<EventSubscriptionRetryPolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("deadLetterDestination"u8))
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            deadLetterDestination = DeadLetterDestination.DeserializeDeadLetterDestination(property0.Value, options);
+                            deadLetterDestination = ModelSerializationExtensions.JsonDeserialize<DeadLetterDestination>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("deadLetterWithResourceIdentity"u8))
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            deadLetterWithResourceIdentity = DeadLetterWithResourceIdentity.DeserializeDeadLetterWithResourceIdentity(property0.Value, options);
+                            deadLetterWithResourceIdentity = ModelSerializationExtensions.JsonDeserialize<DeadLetterWithResourceIdentity>(property0.Value);
                             continue;
                         }
                     }

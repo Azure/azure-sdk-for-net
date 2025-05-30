@@ -82,7 +82,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("deviceConnectionStateEventInfo"u8))
                 {
-                    deviceConnectionStateEventInfo = DeviceConnectionStateEventInfo.DeserializeDeviceConnectionStateEventInfo(property.Value, options);
+                    deviceConnectionStateEventInfo = ModelSerializationExtensions.JsonDeserialize<DeviceConnectionStateEventInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

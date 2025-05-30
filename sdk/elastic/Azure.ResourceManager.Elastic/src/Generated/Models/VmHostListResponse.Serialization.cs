@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ElasticVmResourceInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

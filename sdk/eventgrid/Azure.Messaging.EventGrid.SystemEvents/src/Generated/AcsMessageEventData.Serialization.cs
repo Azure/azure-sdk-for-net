@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<AcsMessageChannelEventError>)Error).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -118,7 +118,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    error = AcsMessageChannelEventError.DeserializeAcsMessageChannelEventError(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<AcsMessageChannelEventError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

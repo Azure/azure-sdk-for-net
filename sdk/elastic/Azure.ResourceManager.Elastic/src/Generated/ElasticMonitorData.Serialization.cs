@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.Elastic
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<ElasticSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ElasticMonitorProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Elastic
                     {
                         continue;
                     }
-                    sku = ElasticSku.DeserializeElasticSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<ElasticSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Elastic
                     {
                         continue;
                     }
-                    properties = ElasticMonitorProperties.DeserializeElasticMonitorProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ElasticMonitorProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Elastic
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Elastic
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

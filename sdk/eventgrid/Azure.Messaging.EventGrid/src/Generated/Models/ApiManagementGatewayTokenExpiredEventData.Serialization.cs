@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    gatewayInfo = ApiManagementGatewayProperties.DeserializeApiManagementGatewayProperties(property.Value);
+                    gatewayInfo = ModelSerializationExtensions.JsonDeserialize<ApiManagementGatewayProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tokenInfo"u8))
@@ -39,7 +39,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    tokenInfo = ApiManagementExpiredGatewayTokenProperties.DeserializeApiManagementExpiredGatewayTokenProperties(property.Value);
+                    tokenInfo = ModelSerializationExtensions.JsonDeserialize<ApiManagementExpiredGatewayTokenProperties>(property.Value);
                     continue;
                 }
             }

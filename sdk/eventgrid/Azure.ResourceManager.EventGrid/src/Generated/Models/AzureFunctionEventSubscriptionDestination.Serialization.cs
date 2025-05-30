@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in DeliveryAttributeMappings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DeliveryAttributeMapping>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

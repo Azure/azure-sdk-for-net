@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ElasticSanVolumeGroupData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

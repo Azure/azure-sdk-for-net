@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStartArray();
                 foreach (var item in ExpiredAttachedWorkerSelectors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AcsRouterWorkerSelector>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -56,7 +56,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStartArray();
                 foreach (var item in ExpiredRequestedWorkerSelectors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AcsRouterWorkerSelector>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

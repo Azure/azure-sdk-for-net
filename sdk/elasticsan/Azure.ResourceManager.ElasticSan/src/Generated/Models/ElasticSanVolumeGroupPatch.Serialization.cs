@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
             if (Optional.IsDefined(EncryptionProperties))
             {
                 writer.WritePropertyName("encryptionProperties"u8);
-                writer.WriteObjectValue(EncryptionProperties, options);
+                ((IJsonModel<ElasticSanEncryptionProperties>)EncryptionProperties).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkAcls, options);
+                ((IJsonModel<ElasticSanNetworkRuleSet>)NetworkAcls).Write(writer, options);
             }
             if (Optional.IsDefined(EnforceDataIntegrityCheckForIscsi))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             if (Optional.IsDefined(DeleteRetentionPolicy))
             {
                 writer.WritePropertyName("deleteRetentionPolicy"u8);
-                writer.WriteObjectValue(DeleteRetentionPolicy, options);
+                ((IJsonModel<ElasticSanDeleteRetentionPolicy>)DeleteRetentionPolicy).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                             {
                                 continue;
                             }
-                            encryptionProperties = ElasticSanEncryptionProperties.DeserializeElasticSanEncryptionProperties(property0.Value, options);
+                            encryptionProperties = ModelSerializationExtensions.JsonDeserialize<ElasticSanEncryptionProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkAcls"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                             {
                                 continue;
                             }
-                            networkAcls = ElasticSanNetworkRuleSet.DeserializeElasticSanNetworkRuleSet(property0.Value, options);
+                            networkAcls = ModelSerializationExtensions.JsonDeserialize<ElasticSanNetworkRuleSet>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enforceDataIntegrityCheckForIscsi"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                             {
                                 continue;
                             }
-                            deleteRetentionPolicy = ElasticSanDeleteRetentionPolicy.DeserializeElasticSanDeleteRetentionPolicy(property0.Value, options);
+                            deleteRetentionPolicy = ModelSerializationExtensions.JsonDeserialize<ElasticSanDeleteRetentionPolicy>(property0.Value);
                             continue;
                         }
                     }

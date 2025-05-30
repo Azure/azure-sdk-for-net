@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in CostThresholds)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DevTestLabCostThreshold>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

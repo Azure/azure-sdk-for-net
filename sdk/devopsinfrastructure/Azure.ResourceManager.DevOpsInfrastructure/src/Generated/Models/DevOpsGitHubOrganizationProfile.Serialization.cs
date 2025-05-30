@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             writer.WriteStartArray();
             foreach (var item in Organizations)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DevOpsGitHubOrganization>)item).Write(writer, options);
             }
             writer.WriteEndArray();
         }

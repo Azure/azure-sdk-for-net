@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomDomains)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CustomDomainConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

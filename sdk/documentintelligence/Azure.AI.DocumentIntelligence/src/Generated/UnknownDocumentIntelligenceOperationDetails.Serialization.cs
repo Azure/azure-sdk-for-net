@@ -135,7 +135,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    error = DocumentIntelligenceError.DeserializeDocumentIntelligenceError(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<DocumentIntelligenceError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

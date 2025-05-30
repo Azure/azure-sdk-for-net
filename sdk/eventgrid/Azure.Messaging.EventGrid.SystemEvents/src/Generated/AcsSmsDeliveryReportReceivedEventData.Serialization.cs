@@ -45,7 +45,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStartArray();
                 foreach (var item in DeliveryAttempts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AcsSmsDeliveryAttemptProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

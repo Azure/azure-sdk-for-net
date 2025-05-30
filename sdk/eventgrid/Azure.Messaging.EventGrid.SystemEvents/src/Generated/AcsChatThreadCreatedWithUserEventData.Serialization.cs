@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("createdByCommunicationIdentifier"u8);
-            writer.WriteObjectValue(CreatedByCommunicationIdentifier, options);
+            ((IJsonModel<CommunicationIdentifierModel>)CreatedByCommunicationIdentifier).Write(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             foreach (var item in Properties)
@@ -74,7 +74,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStartArray();
                 foreach (var item in Participants)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AcsChatThreadParticipantProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -115,7 +115,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("createdByCommunicationIdentifier"u8))
                 {
-                    createdByCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value, options);
+                    createdByCommunicationIdentifier = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -179,7 +179,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("recipientCommunicationIdentifier"u8))
                 {
-                    recipientCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value, options);
+                    recipientCommunicationIdentifier = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("transactionId"u8))

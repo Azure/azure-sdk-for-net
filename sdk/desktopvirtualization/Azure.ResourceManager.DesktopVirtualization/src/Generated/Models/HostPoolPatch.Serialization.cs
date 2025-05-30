@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 if (RegistrationInfo != null)
                 {
                     writer.WritePropertyName("registrationInfo"u8);
-                    writer.WriteObjectValue(RegistrationInfo, options);
+                    ((IJsonModel<HostPoolRegistrationInfoPatch>)RegistrationInfo).Write(writer, options);
                 }
                 else
                 {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 if (AgentUpdate != null)
                 {
                     writer.WritePropertyName("agentUpdate"u8);
-                    writer.WriteObjectValue(AgentUpdate, options);
+                    ((IJsonModel<SessionHostAgentUpdatePatchProperties>)AgentUpdate).Write(writer, options);
                 }
                 else
                 {
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                                 registrationInfo = null;
                                 continue;
                             }
-                            registrationInfo = HostPoolRegistrationInfoPatch.DeserializeHostPoolRegistrationInfoPatch(property0.Value, options);
+                            registrationInfo = ModelSerializationExtensions.JsonDeserialize<HostPoolRegistrationInfoPatch>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("vmTemplate"u8))
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                                 agentUpdate = null;
                                 continue;
                             }
-                            agentUpdate = SessionHostAgentUpdatePatchProperties.DeserializeSessionHostAgentUpdatePatchProperties(property0.Value, options);
+                            agentUpdate = ModelSerializationExtensions.JsonDeserialize<SessionHostAgentUpdatePatchProperties>(property0.Value);
                             continue;
                         }
                     }

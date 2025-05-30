@@ -45,7 +45,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    communicationUser = CommunicationUserIdentifierModel.DeserializeCommunicationUserIdentifierModel(property.Value);
+                    communicationUser = ModelSerializationExtensions.JsonDeserialize<CommunicationUserIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("phoneNumber"u8))
@@ -54,7 +54,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    phoneNumber = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
+                    phoneNumber = ModelSerializationExtensions.JsonDeserialize<PhoneNumberIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("microsoftTeamsUser"u8))
@@ -63,7 +63,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    microsoftTeamsUser = MicrosoftTeamsUserIdentifierModel.DeserializeMicrosoftTeamsUserIdentifierModel(property.Value);
+                    microsoftTeamsUser = ModelSerializationExtensions.JsonDeserialize<MicrosoftTeamsUserIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("microsoftTeamsApp"u8))
@@ -72,7 +72,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    microsoftTeamsApp = AcsMicrosoftTeamsAppIdentifier.DeserializeAcsMicrosoftTeamsAppIdentifier(property.Value);
+                    microsoftTeamsApp = ModelSerializationExtensions.JsonDeserialize<AcsMicrosoftTeamsAppIdentifier>(property.Value);
                     continue;
                 }
             }

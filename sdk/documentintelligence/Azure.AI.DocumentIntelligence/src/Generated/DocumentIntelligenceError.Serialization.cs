@@ -49,14 +49,14 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DocumentIntelligenceError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(InnerError))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(InnerError, options);
+                ((IJsonModel<DocumentIntelligenceInnerError>)InnerError).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    innererror = DocumentIntelligenceInnerError.DeserializeDocumentIntelligenceInnerError(property.Value, options);
+                    innererror = ModelSerializationExtensions.JsonDeserialize<DocumentIntelligenceInnerError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

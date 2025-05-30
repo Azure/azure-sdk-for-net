@@ -80,12 +80,12 @@ namespace Azure.AI.DocumentIntelligence
             if (options.Format != "W" && Optional.IsDefined(BlobSource))
             {
                 writer.WritePropertyName("azureBlobSource"u8);
-                writer.WriteObjectValue(BlobSource, options);
+                ((IJsonModel<BlobContentSource>)BlobSource).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(BlobFileListSource))
             {
                 writer.WritePropertyName("azureBlobFileListSource"u8);
-                writer.WriteObjectValue(BlobFileListSource, options);
+                ((IJsonModel<BlobFileListContentSource>)BlobFileListSource).Write(writer, options);
             }
             if (Optional.IsDefined(ClassifierId))
             {
@@ -104,7 +104,7 @@ namespace Azure.AI.DocumentIntelligence
                 foreach (var item in DocumentTypes)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<DocumentTypeDetails>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -114,7 +114,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Warnings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DocumentIntelligenceWarning>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -246,7 +246,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    azureBlobSource = BlobContentSource.DeserializeBlobContentSource(property.Value, options);
+                    azureBlobSource = ModelSerializationExtensions.JsonDeserialize<BlobContentSource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azureBlobFileListSource"u8))
@@ -255,7 +255,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    azureBlobFileListSource = BlobFileListContentSource.DeserializeBlobFileListContentSource(property.Value, options);
+                    azureBlobFileListSource = ModelSerializationExtensions.JsonDeserialize<BlobFileListContentSource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("classifierId"u8))

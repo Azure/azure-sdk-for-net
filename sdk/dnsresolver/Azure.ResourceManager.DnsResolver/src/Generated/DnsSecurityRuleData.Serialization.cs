@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.DnsResolver
             writer.WritePropertyName("priority"u8);
             writer.WriteNumberValue(Priority);
             writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue(Action, options);
+            ((IJsonModel<DnsSecurityRuleAction>)Action).Write(writer, options);
             writer.WritePropertyName("dnsResolverDomainLists"u8);
             writer.WriteStartArray();
             foreach (var item in DnsResolverDomainLists)
             {
-                JsonSerializer.Serialize(writer, item);
+                ((IJsonModel<WritableSubResource>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(DnsSecurityRuleState))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DnsResolver
                         }
                         if (property0.NameEquals("action"u8))
                         {
-                            action = DnsSecurityRuleAction.DeserializeDnsSecurityRuleAction(property0.Value, options);
+                            action = ModelSerializationExtensions.JsonDeserialize<DnsSecurityRuleAction>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dnsResolverDomainLists"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DnsResolver
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             dnsResolverDomainLists = array;
                             continue;

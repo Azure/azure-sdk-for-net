@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -50,7 +51,7 @@ namespace Azure.Messaging.EventGrid
             content.JsonWriter.WriteStartArray();
             foreach (var item in events)
             {
-                content.JsonWriter.WriteObjectValue(item);
+                ((IJsonModel<EventGridEventInternal>)item).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;
@@ -130,7 +131,7 @@ namespace Azure.Messaging.EventGrid
             content.JsonWriter.WriteStartArray();
             foreach (var item in events)
             {
-                content.JsonWriter.WriteObjectValue(item);
+                ((IJsonModel<CloudEventInternal>)item).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;

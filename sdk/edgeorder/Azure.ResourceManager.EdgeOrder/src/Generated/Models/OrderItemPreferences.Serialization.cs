@@ -40,24 +40,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in NotificationPreferences)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NotificationPreference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(TransportPreferences))
             {
                 writer.WritePropertyName("transportPreferences"u8);
-                writer.WriteObjectValue(TransportPreferences, options);
+                ((IJsonModel<TransportPreferences>)TransportPreferences).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptionPreferences))
             {
                 writer.WritePropertyName("encryptionPreferences"u8);
-                writer.WriteObjectValue(EncryptionPreferences, options);
+                ((IJsonModel<EncryptionPreferences>)EncryptionPreferences).Write(writer, options);
             }
             if (Optional.IsDefined(ManagementResourcePreferences))
             {
                 writer.WritePropertyName("managementResourcePreferences"u8);
-                writer.WriteObjectValue(ManagementResourcePreferences, options);
+                ((IJsonModel<ManagementResourcePreferences>)ManagementResourcePreferences).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    transportPreferences = TransportPreferences.DeserializeTransportPreferences(property.Value, options);
+                    transportPreferences = ModelSerializationExtensions.JsonDeserialize<TransportPreferences>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("encryptionPreferences"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    encryptionPreferences = EncryptionPreferences.DeserializeEncryptionPreferences(property.Value, options);
+                    encryptionPreferences = ModelSerializationExtensions.JsonDeserialize<EncryptionPreferences>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("managementResourcePreferences"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    managementResourcePreferences = ManagementResourcePreferences.DeserializeManagementResourcePreferences(property.Value, options);
+                    managementResourcePreferences = ModelSerializationExtensions.JsonDeserialize<ManagementResourcePreferences>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

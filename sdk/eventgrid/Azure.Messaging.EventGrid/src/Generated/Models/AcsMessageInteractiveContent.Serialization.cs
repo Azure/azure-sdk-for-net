@@ -37,7 +37,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    buttonReply = AcsMessageInteractiveButtonReplyContent.DeserializeAcsMessageInteractiveButtonReplyContent(property.Value);
+                    buttonReply = ModelSerializationExtensions.JsonDeserialize<AcsMessageInteractiveButtonReplyContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("listReply"u8))
@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    listReply = AcsMessageInteractiveListReplyContent.DeserializeAcsMessageInteractiveListReplyContent(property.Value);
+                    listReply = ModelSerializationExtensions.JsonDeserialize<AcsMessageInteractiveListReplyContent>(property.Value);
                     continue;
                 }
             }

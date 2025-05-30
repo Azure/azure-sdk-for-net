@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(SharedPublicIPAddressConfiguration))
             {
                 writer.WritePropertyName("sharedPublicIpAddressConfiguration"u8);
-                writer.WriteObjectValue(SharedPublicIPAddressConfiguration, options);
+                ((IJsonModel<SubnetSharedPublicIPAddressConfiguration>)SharedPublicIPAddressConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(VirtualNetworkPoolName))
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    sharedPublicIPAddressConfiguration = SubnetSharedPublicIPAddressConfiguration.DeserializeSubnetSharedPublicIPAddressConfiguration(property.Value, options);
+                    sharedPublicIPAddressConfiguration = ModelSerializationExtensions.JsonDeserialize<SubnetSharedPublicIPAddressConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("virtualNetworkPoolName"u8))

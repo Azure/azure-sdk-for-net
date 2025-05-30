@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<DeviceProvisioningServicesCertificateProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                     {
                         continue;
                     }
-                    properties = DeviceProvisioningServicesCertificateProperties.DeserializeDeviceProvisioningServicesCertificateProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<DeviceProvisioningServicesCertificateProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

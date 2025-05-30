@@ -35,18 +35,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
 
             writer.WritePropertyName("startedBy"u8);
-            writer.WriteObjectValue(StartedBy, options);
+            ((IJsonModel<AcsCallParticipantProperties>)StartedBy).Write(writer, options);
             writer.WritePropertyName("serverCallId"u8);
             writer.WriteStringValue(ServerCallId);
             if (Optional.IsDefined(Group))
             {
                 writer.WritePropertyName("group"u8);
-                writer.WriteObjectValue(Group, options);
+                ((IJsonModel<AcsCallGroupProperties>)Group).Write(writer, options);
             }
             if (Optional.IsDefined(Room))
             {
                 writer.WritePropertyName("room"u8);
-                writer.WriteObjectValue(Room, options);
+                ((IJsonModel<AcsCallRoomProperties>)Room).Write(writer, options);
             }
             if (Optional.IsDefined(IsTwoParty))
             {
@@ -110,7 +110,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("startedBy"u8))
                 {
-                    startedBy = AcsCallParticipantProperties.DeserializeAcsCallParticipantProperties(property.Value, options);
+                    startedBy = ModelSerializationExtensions.JsonDeserialize<AcsCallParticipantProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("serverCallId"u8))
@@ -124,7 +124,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    group = AcsCallGroupProperties.DeserializeAcsCallGroupProperties(property.Value, options);
+                    group = ModelSerializationExtensions.JsonDeserialize<AcsCallGroupProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("room"u8))
@@ -133,7 +133,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    room = AcsCallRoomProperties.DeserializeAcsCallRoomProperties(property.Value, options);
+                    room = ModelSerializationExtensions.JsonDeserialize<AcsCallRoomProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isTwoParty"u8))

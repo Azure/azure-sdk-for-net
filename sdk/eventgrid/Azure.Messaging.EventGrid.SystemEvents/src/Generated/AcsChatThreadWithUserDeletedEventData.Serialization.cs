@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("deletedByCommunicationIdentifier"u8);
-            writer.WriteObjectValue(DeletedByCommunicationIdentifier, options);
+            ((IJsonModel<CommunicationIdentifierModel>)DeletedByCommunicationIdentifier).Write(writer, options);
             if (Optional.IsDefined(DeleteTime))
             {
                 writer.WritePropertyName("deleteTime"u8);
@@ -77,7 +77,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("deletedByCommunicationIdentifier"u8))
                 {
-                    deletedByCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value, options);
+                    deletedByCommunicationIdentifier = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deleteTime"u8))
@@ -109,7 +109,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("recipientCommunicationIdentifier"u8))
                 {
-                    recipientCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value, options);
+                    recipientCommunicationIdentifier = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("transactionId"u8))
