@@ -435,6 +435,8 @@ namespace Azure.Storage
             public const string UriSubDomain = "queue";
 
             public const string QueueTraitsMetadata = "metadata";
+
+            public const string Name = "Queue";
         }
 
         /// <summary>
