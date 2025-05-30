@@ -185,6 +185,52 @@ namespace Azure.Communication.Sms.Tests
         }
 
         [Test]
+        public async Task SendingSmsWithNullMessagingConnectApiKeyShouldThrow()
+        {
+            SmsClient client = CreateSmsClientWithoutOptions();
+            try
+            {
+                SmsSendResult result = await client.SendAsync(
+                   from: TestEnvironment.FromPhoneNumber,
+                   to: TestEnvironment.ToPhoneNumber,
+                   message: "Hi",
+                   options: new SmsSendOptions(true)
+                   {
+                       MessagingConnect = new MessagingConnectOptions(null, "partner")
+                   });
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual(nameof(MessagingConnectOptions.ApiKey).ToLower(), ex.ParamName?.ToLower());
+                return;
+            }
+            Assert.Fail("SendAsync should have thrown an exception.");
+        }
+
+        [Test]
+        public async Task SendingSmsWithNullMessagingConnectPartnerShouldThrow()
+        {
+            SmsClient client = CreateSmsClientWithoutOptions();
+            try
+            {
+                SmsSendResult result = await client.SendAsync(
+                   from: TestEnvironment.FromPhoneNumber,
+                   to: TestEnvironment.ToPhoneNumber,
+                   message: "Hi",
+                   options: new SmsSendOptions(true)
+                   {
+                       MessagingConnect = new MessagingConnectOptions("apiKey", null)
+                   });
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual(nameof(MessagingConnectOptions.Partner).ToLower(), ex.ParamName?.ToLower());
+                return;
+            }
+            Assert.Fail("SendAsync should have thrown an exception.");
+        }
+
+        [Test]
         public async Task SendingSmsToNullNumberShouldThrow()
         {
             SmsClient client = CreateSmsClient();
@@ -587,19 +633,6 @@ namespace Azure.Communication.Sms.Tests
                 streamReader.BaseStream.Seek(0, SeekOrigin.Begin);
                 string rawResponse = streamReader.ReadToEnd();
                 Assert.True(rawResponse.Contains("\"repeatabilityResult\":\"accepted\""));
-                return;
-            }
-            Assert.Fail("Response content stream is empty.");
-        }
-
-        private void AssertOptOutRawResponseBadRequest(Stream contentStream)
-        {
-            if (contentStream.Length > 0)
-            {
-                StreamReader streamReader = new StreamReader(contentStream);
-                streamReader.BaseStream.Seek(0, SeekOrigin.Begin);
-                string rawResponse = streamReader.ReadToEnd();
-                Assert.True(rawResponse.Contains("\"code\":\"InvalidInput\""));
                 return;
             }
             Assert.Fail("Response content stream is empty.");

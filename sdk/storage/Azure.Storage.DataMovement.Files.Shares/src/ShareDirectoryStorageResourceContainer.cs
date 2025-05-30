@@ -68,8 +68,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     = destinationContainer as ShareDirectoryStorageResourceContainer;
                 ShareFileStorageResourceOptions destinationOptions = destinationStorageResourceContainer.ResourceOptions;
                 // both source and destination must be SMB
-                if (((ResourceOptions?.ShareProtocol ?? ShareProtocol.Smb) == ShareProtocol.Smb)
-                    && ((destinationOptions?.ShareProtocol ?? ShareProtocol.Smb) == ShareProtocol.Smb))
+                ShareProtocol sourceShareProtocol = ResourceOptions?.ShareProtocol ?? ShareProtocol.Smb;
+                ShareProtocol destinationShareProtocol = destinationOptions?.ShareProtocol ?? ShareProtocol.Smb;
+                if (sourceShareProtocol == ShareProtocol.Smb && destinationShareProtocol == ShareProtocol.Smb)
                 {
                     traits = ShareFileTraits.Attributes;
                     if (destinationOptions?.FilePermissions ?? false)
@@ -168,7 +169,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             StorageResourceContainerProperties sourceProperties,
             CancellationToken cancellationToken = default)
         {
-            IDictionary<string, string> metadata = ResourceOptions?.GetFileMetadata(sourceProperties?.RawProperties);
+            IDictionary<string, string> metadata = ResourceOptions?.GetDirectoryMetadata(sourceProperties?.RawProperties);
             string filePermission = ResourceOptions?.GetFilePermission(sourceProperties);
             FileSmbProperties smbProperties = ResourceOptions?.GetFileSmbProperties(sourceProperties);
             FilePosixProperties filePosixProperties = ResourceOptions?.GetFilePosixProperties(sourceProperties);
@@ -196,9 +197,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
             // ShareDirectory to ShareDirectory Copy transfer
             if (sourceResource is ShareDirectoryStorageResourceContainer sourceShareDirectoryResource)
             {
+                ShareProtocol sourceProtocol = sourceShareDirectoryResource.ResourceOptions?.ShareProtocol ?? ShareProtocol.Smb;
+                ShareProtocol destinationProtocol = ResourceOptions?.ShareProtocol ?? ShareProtocol.Smb;
                 // Ensure the transfer is supported (NFS -> NFS and SMB -> SMB)
-                if ((ResourceOptions?.ShareProtocol ?? ShareProtocol.Smb)
-                    != (sourceShareDirectoryResource.ResourceOptions?.ShareProtocol ?? ShareProtocol.Smb))
+                if (destinationProtocol != sourceProtocol)
                 {
                     throw Errors.ShareTransferNotSupported();
                 }
