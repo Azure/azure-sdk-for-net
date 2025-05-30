@@ -11,4 +11,4 @@ param (
 Set-Location -Path "$PSScriptRoot\src"
 $null = dotnet build
 Set-Location -Path "$PSScriptRoot"
-dotnet "..\..\..\..\artifacts\bin\Azure.Messaging.ServiceBus.Stress\Debug\net6.0\Azure.Messaging.ServiceBus.Stress.dll" --test $TestToRun
+dotnet "..\..\..\..\artifacts\bin\Azure.Messaging.ServiceBus.Stress\Debug\net8.0\Azure.Messaging.ServiceBus.Stress.dll" --test $TestToRun
