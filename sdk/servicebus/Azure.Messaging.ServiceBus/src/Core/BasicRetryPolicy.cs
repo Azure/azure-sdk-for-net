@@ -59,6 +59,16 @@ namespace Azure.Messaging.ServiceBus.Core
         }
 
         /// <summary>
+        ///   Calculates the number of retry attempts remaining.
+        /// </summary>
+        ///
+        /// <param name="currentTryCount">The current try count.</param>
+        ///
+        /// <returns>The number of retry attempts remaining.</returns>
+        ///
+        protected override int CalculateRemainingRetries(int currentTryCount) => Options.MaxRetries - currentTryCount;
+
+        /// <summary>
         ///   Calculates the amount of time to allow the current attempt for an operation to
         ///   complete before considering it to be timed out.
         /// </summary>
@@ -68,16 +78,6 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <returns>The amount of time to allow for an operation to complete.</returns>
         ///
         public override TimeSpan CalculateTryTimeout(int attemptCount) => Options.TryTimeout;
-
-        /// <summary>
-        ///   Calculates the number of retry attempts remaining.
-        /// </summary>
-        ///
-        /// <param name="currentTryCount">The current try count.</param>
-        ///
-        /// <returns>The number of retry attempts remaining.</returns>
-        ///
-        protected override int CalculateRemainingRetries(int currentTryCount) => Options.MaxRetries - currentTryCount;
 
         /// <summary>
         ///   Calculates the amount of time to wait before another attempt should be made.
