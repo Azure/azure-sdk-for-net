@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Cities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AvailableProvidersListCity>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

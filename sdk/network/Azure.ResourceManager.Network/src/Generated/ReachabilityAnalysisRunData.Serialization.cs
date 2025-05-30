@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<ReachabilityAnalysisRunProperties>)Properties).Write(writer, options);
         }
 
         ReachabilityAnalysisRunData IJsonModel<ReachabilityAnalysisRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = ReachabilityAnalysisRunProperties.DeserializeReachabilityAnalysisRunProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ReachabilityAnalysisRunProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

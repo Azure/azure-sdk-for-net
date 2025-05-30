@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkAcls, options);
+                ((IJsonModel<NotificationHubNetworkAcls>)NetworkAcls).Write(writer, options);
             }
             if (Optional.IsDefined(PnsCredentials))
             {
                 writer.WritePropertyName("pnsCredentials"u8);
-                writer.WriteObjectValue(PnsCredentials, options);
+                ((IJsonModel<PnsCredentials>)PnsCredentials).Write(writer, options);
             }
             if (Optional.IsDefined(ServiceBusEndpoint))
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NotificationHubPrivateEndpointConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     {
                         continue;
                     }
-                    networkAcls = NotificationHubNetworkAcls.DeserializeNotificationHubNetworkAcls(property.Value, options);
+                    networkAcls = ModelSerializationExtensions.JsonDeserialize<NotificationHubNetworkAcls>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("pnsCredentials"u8))
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     {
                         continue;
                     }
-                    pnsCredentials = PnsCredentials.DeserializePnsCredentials(property.Value, options);
+                    pnsCredentials = ModelSerializationExtensions.JsonDeserialize<PnsCredentials>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("serviceBusEndpoint"u8))

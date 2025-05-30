@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in FrontendIPConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LoadBalancerVipSwapRequestFrontendIPConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

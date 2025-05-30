@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Nginx.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("capacity"u8);
-            writer.WriteObjectValue(Capacity, options);
+            ((IJsonModel<NginxScaleProfileCapacity>)Capacity).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
                 if (property.NameEquals("capacity"u8))
                 {
-                    capacity = NginxScaleProfileCapacity.DeserializeNginxScaleProfileCapacity(property.Value, options);
+                    capacity = ModelSerializationExtensions.JsonDeserialize<NginxScaleProfileCapacity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

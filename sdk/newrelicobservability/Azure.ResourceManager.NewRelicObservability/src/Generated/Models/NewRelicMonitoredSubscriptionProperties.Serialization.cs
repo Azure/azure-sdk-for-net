@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 writer.WriteStartArray();
                 foreach (var item in MonitoredSubscriptionList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NewRelicMonitoredSubscriptionInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

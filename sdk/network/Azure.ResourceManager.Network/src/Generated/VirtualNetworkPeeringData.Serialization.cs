@@ -67,37 +67,37 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(RemoteVirtualNetwork))
             {
                 writer.WritePropertyName("remoteVirtualNetwork"u8);
-                JsonSerializer.Serialize(writer, RemoteVirtualNetwork);
+                ((IJsonModel<WritableSubResource>)RemoteVirtualNetwork).Write(writer, options);
             }
             if (Optional.IsDefined(LocalAddressSpace))
             {
                 writer.WritePropertyName("localAddressSpace"u8);
-                writer.WriteObjectValue(LocalAddressSpace, options);
+                ((IJsonModel<VirtualNetworkAddressSpace>)LocalAddressSpace).Write(writer, options);
             }
             if (Optional.IsDefined(LocalVirtualNetworkAddressSpace))
             {
                 writer.WritePropertyName("localVirtualNetworkAddressSpace"u8);
-                writer.WriteObjectValue(LocalVirtualNetworkAddressSpace, options);
+                ((IJsonModel<VirtualNetworkAddressSpace>)LocalVirtualNetworkAddressSpace).Write(writer, options);
             }
             if (Optional.IsDefined(RemoteAddressSpace))
             {
                 writer.WritePropertyName("remoteAddressSpace"u8);
-                writer.WriteObjectValue(RemoteAddressSpace, options);
+                ((IJsonModel<VirtualNetworkAddressSpace>)RemoteAddressSpace).Write(writer, options);
             }
             if (Optional.IsDefined(RemoteVirtualNetworkAddressSpace))
             {
                 writer.WritePropertyName("remoteVirtualNetworkAddressSpace"u8);
-                writer.WriteObjectValue(RemoteVirtualNetworkAddressSpace, options);
+                ((IJsonModel<VirtualNetworkAddressSpace>)RemoteVirtualNetworkAddressSpace).Write(writer, options);
             }
             if (Optional.IsDefined(RemoteBgpCommunities))
             {
                 writer.WritePropertyName("remoteBgpCommunities"u8);
-                writer.WriteObjectValue(RemoteBgpCommunities, options);
+                ((IJsonModel<VirtualNetworkBgpCommunities>)RemoteBgpCommunities).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RemoteVirtualNetworkEncryption))
             {
                 writer.WritePropertyName("remoteVirtualNetworkEncryption"u8);
-                writer.WriteObjectValue(RemoteVirtualNetworkEncryption, options);
+                ((IJsonModel<VirtualNetworkEncryption>)RemoteVirtualNetworkEncryption).Write(writer, options);
             }
             if (Optional.IsDefined(PeeringState))
             {
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            remoteVirtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            remoteVirtualNetwork = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("localAddressSpace"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            localAddressSpace = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property0.Value, options);
+                            localAddressSpace = ModelSerializationExtensions.JsonDeserialize<VirtualNetworkAddressSpace>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("localVirtualNetworkAddressSpace"u8))
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            localVirtualNetworkAddressSpace = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property0.Value, options);
+                            localVirtualNetworkAddressSpace = ModelSerializationExtensions.JsonDeserialize<VirtualNetworkAddressSpace>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("remoteAddressSpace"u8))
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            remoteAddressSpace = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property0.Value, options);
+                            remoteAddressSpace = ModelSerializationExtensions.JsonDeserialize<VirtualNetworkAddressSpace>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("remoteVirtualNetworkAddressSpace"u8))
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            remoteVirtualNetworkAddressSpace = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property0.Value, options);
+                            remoteVirtualNetworkAddressSpace = ModelSerializationExtensions.JsonDeserialize<VirtualNetworkAddressSpace>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("remoteBgpCommunities"u8))
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            remoteBgpCommunities = VirtualNetworkBgpCommunities.DeserializeVirtualNetworkBgpCommunities(property0.Value, options);
+                            remoteBgpCommunities = ModelSerializationExtensions.JsonDeserialize<VirtualNetworkBgpCommunities>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("remoteVirtualNetworkEncryption"u8))
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            remoteVirtualNetworkEncryption = VirtualNetworkEncryption.DeserializeVirtualNetworkEncryption(property0.Value, options);
+                            remoteVirtualNetworkEncryption = ModelSerializationExtensions.JsonDeserialize<VirtualNetworkEncryption>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("peeringState"u8))

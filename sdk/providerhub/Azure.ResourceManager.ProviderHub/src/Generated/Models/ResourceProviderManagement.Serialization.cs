@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceTreeInfos)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ServiceTreeInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in InternalMappings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VpnNatRuleMapping>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ExternalMappings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VpnNatRuleMapping>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

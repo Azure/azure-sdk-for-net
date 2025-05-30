@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExpressRouteLinkData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Circuits)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             circuits = array;
                             continue;

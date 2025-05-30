@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    localStandbyDB = AutonomousDatabaseStandbySummary.DeserializeAutonomousDatabaseStandbySummary(property.Value, options);
+                    localStandbyDB = ModelSerializationExtensions.JsonDeserialize<AutonomousDatabaseStandbySummary>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("failedDataRecoveryInSeconds"u8))
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    scheduledOperations = ScheduledOperationsType.DeserializeScheduledOperationsType(property.Value, options);
+                    scheduledOperations = ModelSerializationExtensions.JsonDeserialize<ScheduledOperationsType>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("privateEndpointIp"u8))
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    apexDetails = OracleApexDetailsType.DeserializeOracleApexDetailsType(property.Value, options);
+                    apexDetails = ModelSerializationExtensions.JsonDeserialize<OracleApexDetailsType>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("availableUpgradeVersions"u8))
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    connectionStrings = AutonomousDatabaseConnectionStrings.DeserializeAutonomousDatabaseConnectionStrings(property.Value, options);
+                    connectionStrings = ModelSerializationExtensions.JsonDeserialize<AutonomousDatabaseConnectionStrings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("connectionUrls"u8))
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    connectionUrls = AutonomousDatabaseConnectionUrls.DeserializeAutonomousDatabaseConnectionUrls(property.Value, options);
+                    connectionUrls = ModelSerializationExtensions.JsonDeserialize<AutonomousDatabaseConnectionUrls>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataSafeStatus"u8))
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    longTermBackupSchedule = LongTermBackUpScheduleDetails.DeserializeLongTermBackUpScheduleDetails(property.Value, options);
+                    longTermBackupSchedule = ModelSerializationExtensions.JsonDeserialize<LongTermBackUpScheduleDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isPreview"u8))

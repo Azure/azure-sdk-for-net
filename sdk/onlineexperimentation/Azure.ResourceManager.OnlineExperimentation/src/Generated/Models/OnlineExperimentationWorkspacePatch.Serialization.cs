@@ -38,8 +38,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -55,12 +54,12 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<OnlineExperimentationWorkspaceSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<OnlineExperimentationWorkspacePatchProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -137,7 +136,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
                     {
                         continue;
                     }
-                    sku = OnlineExperimentationWorkspaceSku.DeserializeOnlineExperimentationWorkspaceSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<OnlineExperimentationWorkspaceSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -146,7 +145,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
                     {
                         continue;
                     }
-                    properties = OnlineExperimentationWorkspacePatchProperties.DeserializeOnlineExperimentationWorkspacePatchProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<OnlineExperimentationWorkspacePatchProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

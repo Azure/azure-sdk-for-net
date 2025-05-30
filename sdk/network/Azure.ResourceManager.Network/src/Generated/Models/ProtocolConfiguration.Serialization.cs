@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(HttpProtocolConfiguration))
             {
                 writer.WritePropertyName("HTTPConfiguration"u8);
-                writer.WriteObjectValue(HttpProtocolConfiguration, options);
+                ((IJsonModel<NetworkHttpConfiguration>)HttpProtocolConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    httpConfiguration = NetworkHttpConfiguration.DeserializeNetworkHttpConfiguration(property.Value, options);
+                    httpConfiguration = ModelSerializationExtensions.JsonDeserialize<NetworkHttpConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

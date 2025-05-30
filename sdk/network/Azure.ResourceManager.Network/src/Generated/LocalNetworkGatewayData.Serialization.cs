@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(LocalNetworkAddressSpace))
             {
                 writer.WritePropertyName("localNetworkAddressSpace"u8);
-                writer.WriteObjectValue(LocalNetworkAddressSpace, options);
+                ((IJsonModel<VirtualNetworkAddressSpace>)LocalNetworkAddressSpace).Write(writer, options);
             }
             if (Optional.IsDefined(GatewayIPAddress))
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(BgpSettings))
             {
                 writer.WritePropertyName("bgpSettings"u8);
-                writer.WriteObjectValue(BgpSettings, options);
+                ((IJsonModel<BgpSettings>)BgpSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            localNetworkAddressSpace = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property0.Value, options);
+                            localNetworkAddressSpace = ModelSerializationExtensions.JsonDeserialize<VirtualNetworkAddressSpace>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("gatewayIpAddress"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            bgpSettings = BgpSettings.DeserializeBgpSettings(property0.Value, options);
+                            bgpSettings = ModelSerializationExtensions.JsonDeserialize<BgpSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resourceGuid"u8))

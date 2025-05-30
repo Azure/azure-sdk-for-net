@@ -36,7 +36,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             if (Common.Optional.IsDefined(ConversionConfiguration))
             {
                 writer.WritePropertyName("ingestionConfiguration"u8);
-                writer.WriteObjectValue<AssetConversionConfiguration>(ConversionConfiguration);
+                JsonSerializer.Serialize(writer, ConversionConfiguration);
             }
             writer.WriteEndObject();
         }
@@ -127,7 +127,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     {
                         continue;
                     }
-                    ingestionConfiguration = AssetConversionConfiguration.DeserializeAssetConversionConfiguration(property.Value);
+                    ingestionConfiguration = ModelSerializationExtensions.JsonDeserialize<AssetConversionConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scaledAssetDimensions"u8))
@@ -137,7 +137,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                         scaledAssetDimensions = null;
                         continue;
                     }
-                    scaledAssetDimensions = Vector3.DeserializeVector3(property.Value);
+                    scaledAssetDimensions = ModelSerializationExtensions.JsonDeserialize<Vector3>(property.Value);
                     continue;
                 }
             }

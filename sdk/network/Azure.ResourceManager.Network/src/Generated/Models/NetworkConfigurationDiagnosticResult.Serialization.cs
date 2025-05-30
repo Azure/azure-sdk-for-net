@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
-                writer.WriteObjectValue(Profile, options);
+                ((IJsonModel<NetworkConfigurationDiagnosticProfile>)Profile).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkSecurityGroupResult))
             {
                 writer.WritePropertyName("networkSecurityGroupResult"u8);
-                writer.WriteObjectValue(NetworkSecurityGroupResult, options);
+                ((IJsonModel<NetworkSecurityGroupResult>)NetworkSecurityGroupResult).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    profile = NetworkConfigurationDiagnosticProfile.DeserializeNetworkConfigurationDiagnosticProfile(property.Value, options);
+                    profile = ModelSerializationExtensions.JsonDeserialize<NetworkConfigurationDiagnosticProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("networkSecurityGroupResult"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    networkSecurityGroupResult = NetworkSecurityGroupResult.DeserializeNetworkSecurityGroupResult(property.Value, options);
+                    networkSecurityGroupResult = ModelSerializationExtensions.JsonDeserialize<NetworkSecurityGroupResult>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

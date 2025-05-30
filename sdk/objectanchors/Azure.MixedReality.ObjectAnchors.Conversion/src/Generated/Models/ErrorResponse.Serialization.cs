@@ -23,7 +23,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
             {
                 if (property.NameEquals("error"u8))
                 {
-                    error = ErrorDetail.DeserializeErrorDetail(property.Value);
+                    error = ModelSerializationExtensions.JsonDeserialize<ErrorDetail>(property.Value);
                     continue;
                 }
             }

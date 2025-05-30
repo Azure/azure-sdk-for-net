@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(RemotePath))
             {
                 writer.WritePropertyName("remotePath"u8);
-                writer.WriteObjectValue(RemotePath, options);
+                ((IJsonModel<RemotePath>)RemotePath).Write(writer, options);
             }
             if (Optional.IsDefined(RemoteVolumeRegion))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in DestinationReplications)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetAppDestinationReplication>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    remotePath = RemotePath.DeserializeRemotePath(property.Value, options);
+                    remotePath = ModelSerializationExtensions.JsonDeserialize<RemotePath>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("remoteVolumeRegion"u8))

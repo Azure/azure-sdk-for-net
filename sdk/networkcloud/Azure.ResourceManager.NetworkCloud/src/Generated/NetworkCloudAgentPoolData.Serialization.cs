@@ -45,24 +45,24 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation, options);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AdministratorConfiguration))
             {
                 writer.WritePropertyName("administratorConfiguration"u8);
-                writer.WriteObjectValue(AdministratorConfiguration, options);
+                ((IJsonModel<AdministratorConfiguration>)AdministratorConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(AgentOptions))
             {
                 writer.WritePropertyName("agentOptions"u8);
-                writer.WriteObjectValue(AgentOptions, options);
+                ((IJsonModel<NetworkCloudAgentConfiguration>)AgentOptions).Write(writer, options);
             }
             if (Optional.IsDefined(AttachedNetworkConfiguration))
             {
                 writer.WritePropertyName("attachedNetworkConfiguration"u8);
-                writer.WriteObjectValue(AttachedNetworkConfiguration, options);
+                ((IJsonModel<AttachedNetworkConfiguration>)AttachedNetworkConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AvailabilityZones))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in Labels)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<KubernetesLabel>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in Taints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<KubernetesLabel>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(UpgradeSettings))
             {
                 writer.WritePropertyName("upgradeSettings"u8);
-                writer.WriteObjectValue(UpgradeSettings, options);
+                ((IJsonModel<AgentPoolUpgradeSettings>)UpgradeSettings).Write(writer, options);
             }
             writer.WritePropertyName("vmSkuName"u8);
             writer.WriteStringValue(VmSkuName);
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<ExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            administratorConfiguration = AdministratorConfiguration.DeserializeAdministratorConfiguration(property0.Value, options);
+                            administratorConfiguration = ModelSerializationExtensions.JsonDeserialize<AdministratorConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("agentOptions"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            agentOptions = NetworkCloudAgentConfiguration.DeserializeNetworkCloudAgentConfiguration(property0.Value, options);
+                            agentOptions = ModelSerializationExtensions.JsonDeserialize<NetworkCloudAgentConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("attachedNetworkConfiguration"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            attachedNetworkConfiguration = AttachedNetworkConfiguration.DeserializeAttachedNetworkConfiguration(property0.Value, options);
+                            attachedNetworkConfiguration = ModelSerializationExtensions.JsonDeserialize<AttachedNetworkConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("availabilityZones"u8))
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            upgradeSettings = AgentPoolUpgradeSettings.DeserializeAgentPoolUpgradeSettings(property0.Value, options);
+                            upgradeSettings = ModelSerializationExtensions.JsonDeserialize<AgentPoolUpgradeSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("vmSkuName"u8))

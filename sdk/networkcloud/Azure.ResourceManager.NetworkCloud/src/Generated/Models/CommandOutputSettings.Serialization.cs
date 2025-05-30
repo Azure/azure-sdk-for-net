@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(AssociatedIdentity))
             {
                 writer.WritePropertyName("associatedIdentity"u8);
-                writer.WriteObjectValue(AssociatedIdentity, options);
+                ((IJsonModel<ManagedServiceIdentitySelector>)AssociatedIdentity).Write(writer, options);
             }
             if (Optional.IsDefined(ContainerUri))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    associatedIdentity = ManagedServiceIdentitySelector.DeserializeManagedServiceIdentitySelector(property.Value, options);
+                    associatedIdentity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentitySelector>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("containerUrl"u8))

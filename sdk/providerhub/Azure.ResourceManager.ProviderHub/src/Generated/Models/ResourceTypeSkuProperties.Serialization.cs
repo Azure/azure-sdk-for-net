@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartArray();
             foreach (var item in SkuSettings)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ResourceTypeSkuSetting>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(ProvisioningState))

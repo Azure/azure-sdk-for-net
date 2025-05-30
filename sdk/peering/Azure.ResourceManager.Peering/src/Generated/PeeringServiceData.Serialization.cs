@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Peering
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<PeeringServiceSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Peering
             if (Optional.IsDefined(LogAnalyticsWorkspaceProperties))
             {
                 writer.WritePropertyName("logAnalyticsWorkspaceProperties"u8);
-                writer.WriteObjectValue(LogAnalyticsWorkspaceProperties, options);
+                ((IJsonModel<PeeringLogAnalyticsWorkspaceProperties>)LogAnalyticsWorkspaceProperties).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Peering
                     {
                         continue;
                     }
-                    sku = PeeringServiceSku.DeserializePeeringServiceSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<PeeringServiceSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Peering
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Peering
                             {
                                 continue;
                             }
-                            logAnalyticsWorkspaceProperties = PeeringLogAnalyticsWorkspaceProperties.DeserializePeeringLogAnalyticsWorkspaceProperties(property0.Value, options);
+                            logAnalyticsWorkspaceProperties = ModelSerializationExtensions.JsonDeserialize<PeeringLogAnalyticsWorkspaceProperties>(property0.Value);
                             continue;
                         }
                     }

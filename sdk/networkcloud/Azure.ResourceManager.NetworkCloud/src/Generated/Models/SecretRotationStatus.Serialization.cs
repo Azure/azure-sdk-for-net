@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (options.Format != "W" && Optional.IsDefined(SecretArchiveReference))
             {
                 writer.WritePropertyName("secretArchiveReference"u8);
-                writer.WriteObjectValue(SecretArchiveReference, options);
+                ((IJsonModel<SecretArchiveReference>)SecretArchiveReference).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SecretType))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    secretArchiveReference = SecretArchiveReference.DeserializeSecretArchiveReference(property.Value, options);
+                    secretArchiveReference = ModelSerializationExtensions.JsonDeserialize<SecretArchiveReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("secretType"u8))

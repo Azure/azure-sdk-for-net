@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PrivateDnsRecordData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

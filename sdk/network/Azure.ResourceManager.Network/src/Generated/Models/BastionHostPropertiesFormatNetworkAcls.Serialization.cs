@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BastionHostIPRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

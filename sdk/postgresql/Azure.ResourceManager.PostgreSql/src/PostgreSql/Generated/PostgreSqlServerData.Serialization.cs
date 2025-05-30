@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PostgreSql.Models;
 
 namespace Azure.ResourceManager.PostgreSql
@@ -41,12 +42,12 @@ namespace Azure.ResourceManager.PostgreSql
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<PostgreSqlSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.PostgreSql
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile, options);
+                ((IJsonModel<PostgreSqlStorageProfile>)StorageProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ReplicationRole))
             {
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.PostgreSql
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PostgreSqlServerPrivateEndpointConnection>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

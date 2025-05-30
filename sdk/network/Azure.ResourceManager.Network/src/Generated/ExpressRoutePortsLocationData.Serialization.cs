@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in AvailableBandwidths)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExpressRoutePortsLocationBandwidths>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

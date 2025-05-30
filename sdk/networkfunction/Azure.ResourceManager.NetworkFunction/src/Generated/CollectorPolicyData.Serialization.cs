@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetworkFunction
             if (Optional.IsDefined(IngestionPolicy))
             {
                 writer.WritePropertyName("ingestionPolicy"u8);
-                writer.WriteObjectValue(IngestionPolicy, options);
+                ((IJsonModel<IngestionPolicyPropertiesFormat>)IngestionPolicy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(EmissionPolicies))
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 writer.WriteStartArray();
                 foreach (var item in EmissionPolicies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EmissionPoliciesPropertiesFormat>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.NetworkFunction
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.NetworkFunction
                             {
                                 continue;
                             }
-                            ingestionPolicy = IngestionPolicyPropertiesFormat.DeserializeIngestionPolicyPropertiesFormat(property0.Value, options);
+                            ingestionPolicy = ModelSerializationExtensions.JsonDeserialize<IngestionPolicyPropertiesFormat>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("emissionPolicies"u8))

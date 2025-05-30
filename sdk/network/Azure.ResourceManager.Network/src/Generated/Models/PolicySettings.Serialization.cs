@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(LogScrubbing))
             {
                 writer.WritePropertyName("logScrubbing"u8);
-                writer.WriteObjectValue(LogScrubbing, options);
+                ((IJsonModel<PolicySettingsLogScrubbing>)LogScrubbing).Write(writer, options);
             }
             if (Optional.IsDefined(JsChallengeCookieExpirationInMins))
             {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    logScrubbing = PolicySettingsLogScrubbing.DeserializePolicySettingsLogScrubbing(property.Value, options);
+                    logScrubbing = ModelSerializationExtensions.JsonDeserialize<PolicySettingsLogScrubbing>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("jsChallengeCookieExpirationInMins"u8))

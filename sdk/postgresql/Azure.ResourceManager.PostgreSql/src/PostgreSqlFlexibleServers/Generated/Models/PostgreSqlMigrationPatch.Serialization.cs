@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             if (Optional.IsDefined(SecretParameters))
             {
                 writer.WritePropertyName("secretParameters"u8);
-                writer.WriteObjectValue(SecretParameters, options);
+                ((IJsonModel<PostgreSqlMigrationSecretParameters>)SecretParameters).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DbsToMigrate))
             {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            secretParameters = PostgreSqlMigrationSecretParameters.DeserializePostgreSqlMigrationSecretParameters(property0.Value, options);
+                            secretParameters = ModelSerializationExtensions.JsonDeserialize<PostgreSqlMigrationSecretParameters>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dbsToMigrate"u8))

@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WritePropertyName("resourceDetails"u8);
-            writer.WriteObjectValue(ResourceDetails, options);
+            ((IJsonModel<CheckRestrictionsResourceDetails>)ResourceDetails).Write(writer, options);
             if (Optional.IsCollectionDefined(PendingFields))
             {
                 writer.WritePropertyName("pendingFields"u8);
                 writer.WriteStartArray();
                 foreach (var item in PendingFields)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PendingField>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 if (property.NameEquals("resourceDetails"u8))
                 {
-                    resourceDetails = CheckRestrictionsResourceDetails.DeserializeCheckRestrictionsResourceDetails(property.Value, options);
+                    resourceDetails = ModelSerializationExtensions.JsonDeserialize<CheckRestrictionsResourceDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("pendingFields"u8))

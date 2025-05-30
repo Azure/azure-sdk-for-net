@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NeonPostgres
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<NeonBranchProperties>)Properties).Write(writer, options);
             }
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NeonPostgres
                     {
                         continue;
                     }
-                    properties = NeonBranchProperties.DeserializeNeonBranchProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<NeonBranchProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.NeonPostgres
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

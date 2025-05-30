@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(VirtualHub))
             {
                 writer.WritePropertyName("virtualHub"u8);
-                JsonSerializer.Serialize(writer, VirtualHub);
+                ((IJsonModel<WritableSubResource>)VirtualHub).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(P2SConnectionConfigurations))
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in P2SConnectionConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<P2SConnectionConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(VpnServerConfiguration))
             {
                 writer.WritePropertyName("vpnServerConfiguration"u8);
-                JsonSerializer.Serialize(writer, VpnServerConfiguration);
+                ((IJsonModel<WritableSubResource>)VpnServerConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(VpnClientConnectionHealth))
             {
                 writer.WritePropertyName("vpnClientConnectionHealth"u8);
-                writer.WriteObjectValue(VpnClientConnectionHealth, options);
+                ((IJsonModel<VpnClientConnectionHealth>)VpnClientConnectionHealth).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(CustomDnsServers))
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            virtualHub = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            virtualHub = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("p2SConnectionConfigurations"u8))
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            vpnServerConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            vpnServerConfiguration = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("vpnClientConnectionHealth"u8))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            vpnClientConnectionHealth = VpnClientConnectionHealth.DeserializeVpnClientConnectionHealth(property0.Value, options);
+                            vpnClientConnectionHealth = ModelSerializationExtensions.JsonDeserialize<VpnClientConnectionHealth>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("customDnsServers"u8))

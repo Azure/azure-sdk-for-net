@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in BgpPeeringAddresses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetworkIPConfigurationBgpPeeringAddress>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

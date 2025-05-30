@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
+                ((IJsonModel<VirtualNetworkUsageName>)Name).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Unit))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    name = VirtualNetworkUsageName.DeserializeVirtualNetworkUsageName(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<VirtualNetworkUsageName>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("unit"u8))

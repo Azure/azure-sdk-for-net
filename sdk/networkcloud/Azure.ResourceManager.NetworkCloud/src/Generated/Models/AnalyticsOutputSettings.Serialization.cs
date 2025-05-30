@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(AssociatedIdentity))
             {
                 writer.WritePropertyName("associatedIdentity"u8);
-                writer.WriteObjectValue(AssociatedIdentity, options);
+                ((IJsonModel<ManagedServiceIdentitySelector>)AssociatedIdentity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    associatedIdentity = ManagedServiceIdentitySelector.DeserializeManagedServiceIdentitySelector(property.Value, options);
+                    associatedIdentity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentitySelector>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

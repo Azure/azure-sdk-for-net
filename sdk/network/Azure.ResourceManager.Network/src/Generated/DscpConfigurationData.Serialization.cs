@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in SourceIPRanges)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<QosIPRange>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in DestinationIPRanges)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<QosIPRange>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in SourcePortRanges)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<QosPortRange>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in DestinationPortRanges)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<QosPortRange>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in QosDefinitionCollection)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DscpQosDefinition>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in AssociatedNetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetworkInterfaceData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

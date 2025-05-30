@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(ResourceCreationBegin))
             {
                 writer.WritePropertyName("resourceCreationBegin"u8);
-                writer.WriteObjectValue(ResourceCreationBegin, options);
+                ((IJsonModel<ExtensionOptions>)ResourceCreationBegin).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    resourceCreationBegin = ExtensionOptions.DeserializeExtensionOptions(property.Value, options);
+                    resourceCreationBegin = ModelSerializationExtensions.JsonDeserialize<ExtensionOptions>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

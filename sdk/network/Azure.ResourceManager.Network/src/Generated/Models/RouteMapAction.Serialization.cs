@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RouteMapActionParameter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

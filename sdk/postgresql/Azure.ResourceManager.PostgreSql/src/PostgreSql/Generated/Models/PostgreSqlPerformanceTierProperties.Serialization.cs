@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceLevelObjectives)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PostgreSqlPerformanceTierServiceLevelObjectives>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

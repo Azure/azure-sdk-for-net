@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(RemoteVirtualNetwork))
             {
                 writer.WritePropertyName("remoteVirtualNetwork"u8);
-                JsonSerializer.Serialize(writer, RemoteVirtualNetwork);
+                ((IJsonModel<WritableSubResource>)RemoteVirtualNetwork).Write(writer, options);
             }
             if (Optional.IsDefined(AllowHubToRemoteVnetTransit))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(RoutingConfiguration))
             {
                 writer.WritePropertyName("routingConfiguration"u8);
-                writer.WriteObjectValue(RoutingConfiguration, options);
+                ((IJsonModel<RoutingConfiguration>)RoutingConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            remoteVirtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            remoteVirtualNetwork = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("allowHubToRemoteVnetTransit"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            routingConfiguration = RoutingConfiguration.DeserializeRoutingConfiguration(property0.Value, options);
+                            routingConfiguration = ModelSerializationExtensions.JsonDeserialize<RoutingConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

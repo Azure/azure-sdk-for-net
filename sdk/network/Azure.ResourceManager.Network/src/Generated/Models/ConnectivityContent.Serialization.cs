@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source, options);
+            ((IJsonModel<ConnectivitySource>)Source).Write(writer, options);
             writer.WritePropertyName("destination"u8);
-            writer.WriteObjectValue(Destination, options);
+            ((IJsonModel<ConnectivityDestination>)Destination).Write(writer, options);
             if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(ProtocolConfiguration))
             {
                 writer.WritePropertyName("protocolConfiguration"u8);
-                writer.WriteObjectValue(ProtocolConfiguration, options);
+                ((IJsonModel<ProtocolConfiguration>)ProtocolConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(PreferredIPVersion))
             {
@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("source"u8))
                 {
-                    source = ConnectivitySource.DeserializeConnectivitySource(property.Value, options);
+                    source = ModelSerializationExtensions.JsonDeserialize<ConnectivitySource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("destination"u8))
                 {
-                    destination = ConnectivityDestination.DeserializeConnectivityDestination(property.Value, options);
+                    destination = ModelSerializationExtensions.JsonDeserialize<ConnectivityDestination>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("protocol"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    protocolConfiguration = ProtocolConfiguration.DeserializeProtocolConfiguration(property.Value, options);
+                    protocolConfiguration = ModelSerializationExtensions.JsonDeserialize<ProtocolConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("preferredIPVersion"u8))

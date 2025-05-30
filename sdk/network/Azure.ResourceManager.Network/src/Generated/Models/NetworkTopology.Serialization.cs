@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TopologyResourceInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

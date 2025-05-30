@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<AutoScaleVCoreSku>)Sku).Write(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CapacityLimit))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = AutoScaleVCoreSku.DeserializeAutoScaleVCoreSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<AutoScaleVCoreSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                     {
                         continue;
                     }
-                    systemData = SystemData.DeserializeSystemData(property.Value, options);
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

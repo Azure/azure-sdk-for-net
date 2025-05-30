@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in DelegatedSubnetsUsage)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PostgreSqlFlexibleServerDelegatedSubnetUsage>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

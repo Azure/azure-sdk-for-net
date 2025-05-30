@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(VirtualHub))
             {
                 writer.WritePropertyName("virtualHub"u8);
-                JsonSerializer.Serialize(writer, VirtualHub);
+                ((IJsonModel<WritableSubResource>)VirtualHub).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Connections))
             {
@@ -55,14 +55,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Connections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VpnConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(BgpSettings))
             {
                 writer.WritePropertyName("bgpSettings"u8);
-                writer.WriteObjectValue(BgpSettings, options);
+                ((IJsonModel<BgpSettings>)BgpSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VpnGatewayIPConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in NatRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VpnGatewayNatRuleData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            virtualHub = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            virtualHub = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("connections"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            bgpSettings = BgpSettings.DeserializeBgpSettings(property0.Value, options);
+                            bgpSettings = ModelSerializationExtensions.JsonDeserialize<BgpSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

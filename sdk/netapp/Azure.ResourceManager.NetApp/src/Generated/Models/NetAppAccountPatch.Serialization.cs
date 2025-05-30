@@ -39,8 +39,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -55,14 +54,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in ActiveDirectories)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetAppAccountActiveDirectory>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<NetAppAccountEncryption>)Encryption).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DisableShowmount))
             {
@@ -140,7 +139,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -183,7 +182,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -220,7 +219,7 @@ namespace Azure.ResourceManager.NetApp.Models
                             {
                                 continue;
                             }
-                            encryption = NetAppAccountEncryption.DeserializeNetAppAccountEncryption(property0.Value, options);
+                            encryption = ModelSerializationExtensions.JsonDeserialize<NetAppAccountEncryption>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("disableShowmount"u8))

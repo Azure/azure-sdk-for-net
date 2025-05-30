@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
             writer.WritePropertyName("frontendConfiguration"u8);
-            writer.WriteObjectValue(FrontendConfiguration, options);
+            ((IJsonModel<FirewallEndpointConfiguration>)FrontendConfiguration).Write(writer, options);
             writer.WritePropertyName("backendConfiguration"u8);
-            writer.WriteObjectValue(BackendConfiguration, options);
+            ((IJsonModel<FirewallEndpointConfiguration>)BackendConfiguration).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 if (property.NameEquals("frontendConfiguration"u8))
                 {
-                    frontendConfiguration = FirewallEndpointConfiguration.DeserializeFirewallEndpointConfiguration(property.Value, options);
+                    frontendConfiguration = ModelSerializationExtensions.JsonDeserialize<FirewallEndpointConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("backendConfiguration"u8))
                 {
-                    backendConfiguration = FirewallEndpointConfiguration.DeserializeFirewallEndpointConfiguration(property.Value, options);
+                    backendConfiguration = ModelSerializationExtensions.JsonDeserialize<FirewallEndpointConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

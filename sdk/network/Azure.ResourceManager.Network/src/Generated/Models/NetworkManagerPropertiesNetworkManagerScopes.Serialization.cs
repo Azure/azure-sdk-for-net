@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in CrossTenantScopes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CrossTenantScopes>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WritePropertyName("providerLocation"u8);
-            writer.WriteObjectValue(ProviderLocation, options);
+            ((IJsonModel<AzureReachabilityReportLocation>)ProviderLocation).Write(writer, options);
             if (Optional.IsCollectionDefined(Providers))
             {
                 writer.WritePropertyName("providers"u8);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("providerLocation"u8))
                 {
-                    providerLocation = AzureReachabilityReportLocation.DeserializeAzureReachabilityReportLocation(property.Value, options);
+                    providerLocation = ModelSerializationExtensions.JsonDeserialize<AzureReachabilityReportLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("providers"u8))

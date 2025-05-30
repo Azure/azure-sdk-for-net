@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (options.Format != "W" && Optional.IsDefined(PolicyInfo))
             {
                 writer.WritePropertyName("policyInfo"u8);
-                writer.WriteObjectValue(PolicyInfo, options);
+                ((IJsonModel<PolicyReference>)PolicyInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EvaluationResult))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (options.Format != "W" && Optional.IsDefined(EvaluationDetails))
             {
                 writer.WritePropertyName("evaluationDetails"u8);
-                writer.WriteObjectValue(EvaluationDetails, options);
+                ((IJsonModel<PolicyEvaluationDetails>)EvaluationDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    policyInfo = PolicyReference.DeserializePolicyReference(property.Value, options);
+                    policyInfo = ModelSerializationExtensions.JsonDeserialize<PolicyReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("evaluationResult"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    evaluationDetails = PolicyEvaluationDetails.DeserializePolicyEvaluationDetails(property.Value, options);
+                    evaluationDetails = ModelSerializationExtensions.JsonDeserialize<PolicyEvaluationDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network
             if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
+                ((IJsonModel<SystemData>)SystemData).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(NetworkManagerScopes))
             {
                 writer.WritePropertyName("networkManagerScopes"u8);
-                writer.WriteObjectValue(NetworkManagerScopes, options);
+                ((IJsonModel<NetworkManagerPropertiesNetworkManagerScopes>)NetworkManagerScopes).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(NetworkManagerScopeAccesses))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            networkManagerScopes = NetworkManagerPropertiesNetworkManagerScopes.DeserializeNetworkManagerPropertiesNetworkManagerScopes(property0.Value, options);
+                            networkManagerScopes = ModelSerializationExtensions.JsonDeserialize<NetworkManagerPropertiesNetworkManagerScopes>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkManagerScopeAccesses"u8))

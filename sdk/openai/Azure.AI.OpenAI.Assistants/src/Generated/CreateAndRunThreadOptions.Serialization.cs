@@ -39,7 +39,7 @@ namespace Azure.AI.OpenAI.Assistants
             if (Optional.IsDefined(Thread))
             {
                 writer.WritePropertyName("thread"u8);
-                writer.WriteObjectValue(Thread, options);
+                ((IJsonModel<AssistantThreadCreationOptions>)Thread).Write(writer, options);
             }
             if (Optional.IsDefined(OverrideModelName))
             {
@@ -57,7 +57,7 @@ namespace Azure.AI.OpenAI.Assistants
                 writer.WriteStartArray();
                 foreach (var item in OverrideTools)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ToolDefinition>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -137,7 +137,7 @@ namespace Azure.AI.OpenAI.Assistants
                     {
                         continue;
                     }
-                    thread = AssistantThreadCreationOptions.DeserializeAssistantThreadCreationOptions(property.Value, options);
+                    thread = ModelSerializationExtensions.JsonDeserialize<AssistantThreadCreationOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("model"u8))

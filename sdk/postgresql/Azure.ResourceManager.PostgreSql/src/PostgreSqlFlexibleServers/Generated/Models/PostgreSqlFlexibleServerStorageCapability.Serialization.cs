@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedIopsTiers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PostgreSqlFlexibleServerStorageTierCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

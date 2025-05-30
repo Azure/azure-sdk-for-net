@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in SourceApplicationSecurityGroups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationSecurityGroupData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in DestinationApplicationSecurityGroups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationSecurityGroupData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

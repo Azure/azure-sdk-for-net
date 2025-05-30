@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(AttachedNetworkConfiguration))
             {
                 writer.WritePropertyName("attachedNetworkConfiguration"u8);
-                writer.WriteObjectValue(AttachedNetworkConfiguration, options);
+                ((IJsonModel<AttachedNetworkConfiguration>)AttachedNetworkConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(BgpServiceLoadBalancerConfiguration))
             {
                 writer.WritePropertyName("bgpServiceLoadBalancerConfiguration"u8);
-                writer.WriteObjectValue(BgpServiceLoadBalancerConfiguration, options);
+                ((IJsonModel<BgpServiceLoadBalancerConfiguration>)BgpServiceLoadBalancerConfiguration).Write(writer, options);
             }
             writer.WritePropertyName("cloudServicesNetworkId"u8);
             writer.WriteStringValue(CloudServicesNetworkId);
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(L2ServiceLoadBalancerConfiguration))
             {
                 writer.WritePropertyName("l2ServiceLoadBalancerConfiguration"u8);
-                writer.WriteObjectValue(L2ServiceLoadBalancerConfiguration, options);
+                ((IJsonModel<L2ServiceLoadBalancerConfiguration>)L2ServiceLoadBalancerConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(PodCidrs))
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    attachedNetworkConfiguration = AttachedNetworkConfiguration.DeserializeAttachedNetworkConfiguration(property.Value, options);
+                    attachedNetworkConfiguration = ModelSerializationExtensions.JsonDeserialize<AttachedNetworkConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("bgpServiceLoadBalancerConfiguration"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    bgpServiceLoadBalancerConfiguration = BgpServiceLoadBalancerConfiguration.DeserializeBgpServiceLoadBalancerConfiguration(property.Value, options);
+                    bgpServiceLoadBalancerConfiguration = ModelSerializationExtensions.JsonDeserialize<BgpServiceLoadBalancerConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("cloudServicesNetworkId"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    l2ServiceLoadBalancerConfiguration = L2ServiceLoadBalancerConfiguration.DeserializeL2ServiceLoadBalancerConfiguration(property.Value, options);
+                    l2ServiceLoadBalancerConfiguration = ModelSerializationExtensions.JsonDeserialize<L2ServiceLoadBalancerConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("podCidrs"u8))

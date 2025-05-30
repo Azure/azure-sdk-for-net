@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Flags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AzureFirewallPacketCaptureFlags>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Filters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AzureFirewallPacketCaptureRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

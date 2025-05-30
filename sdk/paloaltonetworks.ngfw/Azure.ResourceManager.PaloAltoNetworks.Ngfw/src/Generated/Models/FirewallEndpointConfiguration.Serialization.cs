@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WritePropertyName("port"u8);
             writer.WriteStringValue(Port);
             writer.WritePropertyName("address"u8);
-            writer.WriteObjectValue(Address, options);
+            ((IJsonModel<IPAddressInfo>)Address).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 if (property.NameEquals("address"u8))
                 {
-                    address = IPAddressInfo.DeserializeIPAddressInfo(property.Value, options);
+                    address = ModelSerializationExtensions.JsonDeserialize<IPAddressInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

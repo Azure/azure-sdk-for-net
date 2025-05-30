@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Associations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TopologyAssociation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

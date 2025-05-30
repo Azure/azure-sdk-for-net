@@ -55,7 +55,7 @@ namespace Azure.Analytics.OnlineExperimentation
             writer.WritePropertyName("desiredDirection"u8);
             writer.WriteStringValue(DesiredDirection.ToString());
             writer.WritePropertyName("definition"u8);
-            writer.WriteObjectValue(Definition, options);
+            ((IJsonModel<ExperimentMetricDefinition>)Definition).Write(writer, options);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("eTag"u8);
@@ -153,7 +153,7 @@ namespace Azure.Analytics.OnlineExperimentation
                 }
                 if (property.NameEquals("definition"u8))
                 {
-                    definition = ExperimentMetricDefinition.DeserializeExperimentMetricDefinition(property.Value, options);
+                    definition = ModelSerializationExtensions.JsonDeserialize<ExperimentMetricDefinition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eTag"u8))

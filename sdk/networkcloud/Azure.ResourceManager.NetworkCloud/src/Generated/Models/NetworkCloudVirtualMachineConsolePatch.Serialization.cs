@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(SshPublicKey))
             {
                 writer.WritePropertyName("sshPublicKey"u8);
-                writer.WriteObjectValue(SshPublicKey, options);
+                ((IJsonModel<NetworkCloudSshPublicKey>)SshPublicKey).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             {
                                 continue;
                             }
-                            sshPublicKey = NetworkCloudSshPublicKey.DeserializeNetworkCloudSshPublicKey(property0.Value, options);
+                            sshPublicKey = ModelSerializationExtensions.JsonDeserialize<NetworkCloudSshPublicKey>(property0.Value);
                             continue;
                         }
                     }

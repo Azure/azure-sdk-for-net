@@ -52,32 +52,32 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(VirtualWan))
             {
                 writer.WritePropertyName("virtualWan"u8);
-                JsonSerializer.Serialize(writer, VirtualWan);
+                ((IJsonModel<WritableSubResource>)VirtualWan).Write(writer, options);
             }
             if (Optional.IsDefined(VpnGateway))
             {
                 writer.WritePropertyName("vpnGateway"u8);
-                JsonSerializer.Serialize(writer, VpnGateway);
+                ((IJsonModel<WritableSubResource>)VpnGateway).Write(writer, options);
             }
             if (Optional.IsDefined(P2SVpnGateway))
             {
                 writer.WritePropertyName("p2SVpnGateway"u8);
-                JsonSerializer.Serialize(writer, P2SVpnGateway);
+                ((IJsonModel<WritableSubResource>)P2SVpnGateway).Write(writer, options);
             }
             if (Optional.IsDefined(ExpressRouteGateway))
             {
                 writer.WritePropertyName("expressRouteGateway"u8);
-                JsonSerializer.Serialize(writer, ExpressRouteGateway);
+                ((IJsonModel<WritableSubResource>)ExpressRouteGateway).Write(writer, options);
             }
             if (Optional.IsDefined(AzureFirewall))
             {
                 writer.WritePropertyName("azureFirewall"u8);
-                JsonSerializer.Serialize(writer, AzureFirewall);
+                ((IJsonModel<WritableSubResource>)AzureFirewall).Write(writer, options);
             }
             if (Optional.IsDefined(SecurityPartnerProvider))
             {
                 writer.WritePropertyName("securityPartnerProvider"u8);
-                JsonSerializer.Serialize(writer, SecurityPartnerProvider);
+                ((IJsonModel<WritableSubResource>)SecurityPartnerProvider).Write(writer, options);
             }
             if (Optional.IsDefined(AddressPrefix))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(RouteTable))
             {
                 writer.WritePropertyName("routeTable"u8);
-                writer.WriteObjectValue(RouteTable, options);
+                ((IJsonModel<VirtualHubRouteTable>)RouteTable).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VirtualHubRouteTableV2S)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VirtualHubRouteTableV2Data>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in BgpConnections)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in RouteMaps)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(VirtualRouterAutoScaleConfiguration))
             {
                 writer.WritePropertyName("virtualRouterAutoScaleConfiguration"u8);
-                writer.WriteObjectValue(VirtualRouterAutoScaleConfiguration, options);
+                ((IJsonModel<VirtualRouterAutoScaleConfiguration>)VirtualRouterAutoScaleConfiguration).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            virtualWan = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            virtualWan = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("vpnGateway"u8))
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            vpnGateway = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            vpnGateway = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("p2SVpnGateway"u8))
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            p2sVpnGateway = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            p2sVpnGateway = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("expressRouteGateway"u8))
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            expressRouteGateway = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            expressRouteGateway = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("azureFirewall"u8))
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            azureFirewall = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            azureFirewall = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("securityPartnerProvider"u8))
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            securityPartnerProvider = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            securityPartnerProvider = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("addressPrefix"u8))
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            routeTable = VirtualHubRouteTable.DeserializeVirtualHubRouteTable(property0.Value, options);
+                            routeTable = ModelSerializationExtensions.JsonDeserialize<VirtualHubRouteTable>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             bgpConnections = array;
                             continue;
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             ipConfigurations = array;
                             continue;
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             routeMaps = array;
                             continue;
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            virtualRouterAutoScaleConfiguration = VirtualRouterAutoScaleConfiguration.DeserializeVirtualRouterAutoScaleConfiguration(property0.Value, options);
+                            virtualRouterAutoScaleConfiguration = ModelSerializationExtensions.JsonDeserialize<VirtualRouterAutoScaleConfiguration>(property0.Value);
                             continue;
                         }
                     }

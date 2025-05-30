@@ -36,9 +36,9 @@ namespace Azure.Analytics.OnlineExperimentation
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("startEvent"u8);
-            writer.WriteObjectValue(StartEvent, options);
+            ((IJsonModel<ObservedEvent>)StartEvent).Write(writer, options);
             writer.WritePropertyName("endEvent"u8);
-            writer.WriteObjectValue(EndEvent, options);
+            ((IJsonModel<ObservedEvent>)EndEvent).Write(writer, options);
         }
 
         UserRateMetricDefinition IJsonModel<UserRateMetricDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -70,12 +70,12 @@ namespace Azure.Analytics.OnlineExperimentation
             {
                 if (property.NameEquals("startEvent"u8))
                 {
-                    startEvent = ObservedEvent.DeserializeObservedEvent(property.Value, options);
+                    startEvent = ModelSerializationExtensions.JsonDeserialize<ObservedEvent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("endEvent"u8))
                 {
-                    endEvent = ObservedEvent.DeserializeObservedEvent(property.Value, options);
+                    endEvent = ModelSerializationExtensions.JsonDeserialize<ObservedEvent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

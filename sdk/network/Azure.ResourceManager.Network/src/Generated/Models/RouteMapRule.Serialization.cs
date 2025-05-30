@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in MatchCriteria)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RouteCriterion>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RouteMapAction>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

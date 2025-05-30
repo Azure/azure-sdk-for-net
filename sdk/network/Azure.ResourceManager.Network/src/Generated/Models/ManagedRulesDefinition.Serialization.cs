@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Exceptions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExceptionEntry>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Exclusions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<OwaspCrsExclusionEntry>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartArray();
             foreach (var item in ManagedRuleSets)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ManagedRuleSet>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

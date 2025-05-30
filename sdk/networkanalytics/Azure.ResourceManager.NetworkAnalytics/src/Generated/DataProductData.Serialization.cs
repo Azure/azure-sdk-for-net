@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -112,17 +112,17 @@ namespace Azure.ResourceManager.NetworkAnalytics
             if (Optional.IsDefined(CustomerEncryptionKey))
             {
                 writer.WritePropertyName("customerEncryptionKey"u8);
-                writer.WriteObjectValue(CustomerEncryptionKey, options);
+                ((IJsonModel<EncryptionKeyDetails>)CustomerEncryptionKey).Write(writer, options);
             }
             if (Optional.IsDefined(Networkacls))
             {
                 writer.WritePropertyName("networkacls"u8);
-                writer.WriteObjectValue(Networkacls, options);
+                ((IJsonModel<DataProductNetworkAcls>)Networkacls).Write(writer, options);
             }
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration, options);
+                ((IJsonModel<NetworkAnalyticsManagedResourceGroupConfiguration>)ManagedResourceGroupConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AvailableMinorVersions))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
             if (options.Format != "W" && Optional.IsDefined(ConsumptionEndpoints))
             {
                 writer.WritePropertyName("consumptionEndpoints"u8);
-                writer.WriteObjectValue(ConsumptionEndpoints, options);
+                ((IJsonModel<ConsumptionEndpointsProperties>)ConsumptionEndpoints).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(KeyVaultUri))
             {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                             {
                                 continue;
                             }
-                            customerEncryptionKey = EncryptionKeyDetails.DeserializeEncryptionKeyDetails(property0.Value, options);
+                            customerEncryptionKey = ModelSerializationExtensions.JsonDeserialize<EncryptionKeyDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkacls"u8))
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                             {
                                 continue;
                             }
-                            networkacls = DataProductNetworkAcls.DeserializeDataProductNetworkAcls(property0.Value, options);
+                            networkacls = ModelSerializationExtensions.JsonDeserialize<DataProductNetworkAcls>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("managedResourceGroupConfiguration"u8))
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                             {
                                 continue;
                             }
-                            managedResourceGroupConfiguration = NetworkAnalyticsManagedResourceGroupConfiguration.DeserializeNetworkAnalyticsManagedResourceGroupConfiguration(property0.Value, options);
+                            managedResourceGroupConfiguration = ModelSerializationExtensions.JsonDeserialize<NetworkAnalyticsManagedResourceGroupConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("availableMinorVersions"u8))
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                             {
                                 continue;
                             }
-                            consumptionEndpoints = ConsumptionEndpointsProperties.DeserializeConsumptionEndpointsProperties(property0.Value, options);
+                            consumptionEndpoints = ModelSerializationExtensions.JsonDeserialize<ConsumptionEndpointsProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("keyVaultUrl"u8))

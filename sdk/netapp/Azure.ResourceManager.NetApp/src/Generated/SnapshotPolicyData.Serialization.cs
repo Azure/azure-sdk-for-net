@@ -47,22 +47,22 @@ namespace Azure.ResourceManager.NetApp
             if (Optional.IsDefined(HourlySchedule))
             {
                 writer.WritePropertyName("hourlySchedule"u8);
-                writer.WriteObjectValue(HourlySchedule, options);
+                ((IJsonModel<SnapshotPolicyHourlySchedule>)HourlySchedule).Write(writer, options);
             }
             if (Optional.IsDefined(DailySchedule))
             {
                 writer.WritePropertyName("dailySchedule"u8);
-                writer.WriteObjectValue(DailySchedule, options);
+                ((IJsonModel<SnapshotPolicyDailySchedule>)DailySchedule).Write(writer, options);
             }
             if (Optional.IsDefined(WeeklySchedule))
             {
                 writer.WritePropertyName("weeklySchedule"u8);
-                writer.WriteObjectValue(WeeklySchedule, options);
+                ((IJsonModel<SnapshotPolicyWeeklySchedule>)WeeklySchedule).Write(writer, options);
             }
             if (Optional.IsDefined(MonthlySchedule))
             {
                 writer.WritePropertyName("monthlySchedule"u8);
-                writer.WriteObjectValue(MonthlySchedule, options);
+                ((IJsonModel<SnapshotPolicyMonthlySchedule>)MonthlySchedule).Write(writer, options);
             }
             if (Optional.IsDefined(IsEnabled))
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.NetApp
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            hourlySchedule = SnapshotPolicyHourlySchedule.DeserializeSnapshotPolicyHourlySchedule(property0.Value, options);
+                            hourlySchedule = ModelSerializationExtensions.JsonDeserialize<SnapshotPolicyHourlySchedule>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dailySchedule"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            dailySchedule = SnapshotPolicyDailySchedule.DeserializeSnapshotPolicyDailySchedule(property0.Value, options);
+                            dailySchedule = ModelSerializationExtensions.JsonDeserialize<SnapshotPolicyDailySchedule>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("weeklySchedule"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            weeklySchedule = SnapshotPolicyWeeklySchedule.DeserializeSnapshotPolicyWeeklySchedule(property0.Value, options);
+                            weeklySchedule = ModelSerializationExtensions.JsonDeserialize<SnapshotPolicyWeeklySchedule>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("monthlySchedule"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            monthlySchedule = SnapshotPolicyMonthlySchedule.DeserializeSnapshotPolicyMonthlySchedule(property0.Value, options);
+                            monthlySchedule = ModelSerializationExtensions.JsonDeserialize<SnapshotPolicyMonthlySchedule>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enabled"u8))

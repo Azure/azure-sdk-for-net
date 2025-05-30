@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AddressPrefixItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Destinations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AddressPrefixItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

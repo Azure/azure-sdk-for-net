@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<CopilotSettingsResourceUpdateProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
                     {
                         continue;
                     }
-                    properties = CopilotSettingsResourceUpdateProperties.DeserializeCopilotSettingsResourceUpdateProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<CopilotSettingsResourceUpdateProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

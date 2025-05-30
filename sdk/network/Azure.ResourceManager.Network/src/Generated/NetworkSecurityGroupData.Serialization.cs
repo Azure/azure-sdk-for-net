@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in SecurityRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SecurityRuleData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in DefaultSecurityRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SecurityRuleData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetworkInterfaceData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Subnets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SubnetData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in FlowLogs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FlowLogData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

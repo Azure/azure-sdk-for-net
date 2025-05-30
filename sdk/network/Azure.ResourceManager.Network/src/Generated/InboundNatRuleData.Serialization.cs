@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(FrontendIPConfiguration))
             {
                 writer.WritePropertyName("frontendIPConfiguration"u8);
-                JsonSerializer.Serialize(writer, FrontendIPConfiguration);
+                ((IJsonModel<WritableSubResource>)FrontendIPConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(BackendIPConfiguration))
             {
                 writer.WritePropertyName("backendIPConfiguration"u8);
-                writer.WriteObjectValue(BackendIPConfiguration, options);
+                ((IJsonModel<NetworkInterfaceIPConfigurationData>)BackendIPConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(Protocol))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool"u8);
-                JsonSerializer.Serialize(writer, BackendAddressPool);
+                ((IJsonModel<WritableSubResource>)BackendAddressPool).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            frontendIPConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            frontendIPConfiguration = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("backendIPConfiguration"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            backendIPConfiguration = NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(property0.Value, options);
+                            backendIPConfiguration = ModelSerializationExtensions.JsonDeserialize<NetworkInterfaceIPConfigurationData>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("protocol"u8))
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            backendAddressPool = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            backendAddressPool = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in TrustedClientCertificates)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SslPolicy))
             {
                 writer.WritePropertyName("sslPolicy"u8);
-                writer.WriteObjectValue(SslPolicy, options);
+                ((IJsonModel<ApplicationGatewaySslPolicy>)SslPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(ClientAuthConfiguration))
             {
                 writer.WritePropertyName("clientAuthConfiguration"u8);
-                writer.WriteObjectValue(ClientAuthConfiguration, options);
+                ((IJsonModel<ApplicationGatewayClientAuthConfiguration>)ClientAuthConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             trustedClientCertificates = array;
                             continue;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            sslPolicy = ApplicationGatewaySslPolicy.DeserializeApplicationGatewaySslPolicy(property0.Value, options);
+                            sslPolicy = ModelSerializationExtensions.JsonDeserialize<ApplicationGatewaySslPolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clientAuthConfiguration"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            clientAuthConfiguration = ApplicationGatewayClientAuthConfiguration.DeserializeApplicationGatewayClientAuthConfiguration(property0.Value, options);
+                            clientAuthConfiguration = ModelSerializationExtensions.JsonDeserialize<ApplicationGatewayClientAuthConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

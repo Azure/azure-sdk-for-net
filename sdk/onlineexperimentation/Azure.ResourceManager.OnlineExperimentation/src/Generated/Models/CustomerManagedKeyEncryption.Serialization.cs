@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             if (Optional.IsDefined(KeyEncryptionKeyIdentity))
             {
                 writer.WritePropertyName("keyEncryptionKeyIdentity"u8);
-                writer.WriteObjectValue(KeyEncryptionKeyIdentity, options);
+                ((IJsonModel<KeyEncryptionKeyIdentity>)KeyEncryptionKeyIdentity).Write(writer, options);
             }
             if (Optional.IsDefined(KeyEncryptionKeyUri))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
                     {
                         continue;
                     }
-                    keyEncryptionKeyIdentity = KeyEncryptionKeyIdentity.DeserializeKeyEncryptionKeyIdentity(property.Value, options);
+                    keyEncryptionKeyIdentity = ModelSerializationExtensions.JsonDeserialize<KeyEncryptionKeyIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("keyEncryptionKeyUrl"u8))

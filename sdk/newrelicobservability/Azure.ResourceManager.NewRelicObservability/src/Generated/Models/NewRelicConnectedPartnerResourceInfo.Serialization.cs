@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<NewRelicConnectedPartnerResourceProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    properties = NewRelicConnectedPartnerResourceProperties.DeserializeNewRelicConnectedPartnerResourceProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<NewRelicConnectedPartnerResourceProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

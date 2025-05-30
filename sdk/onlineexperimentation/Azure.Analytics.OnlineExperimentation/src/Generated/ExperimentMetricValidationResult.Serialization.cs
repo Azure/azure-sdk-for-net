@@ -42,7 +42,7 @@ namespace Azure.Analytics.OnlineExperimentation
                 writer.WriteStartArray();
                 foreach (var item in Diagnostics)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DiagnosticDetail>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

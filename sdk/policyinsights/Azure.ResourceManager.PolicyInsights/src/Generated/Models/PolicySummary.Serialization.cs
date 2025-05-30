@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (Optional.IsDefined(Results))
             {
                 writer.WritePropertyName("results"u8);
-                writer.WriteObjectValue(Results, options);
+                ((IJsonModel<PolicySummaryResults>)Results).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(PolicyAssignments))
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in PolicyAssignments)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PolicyAssignmentSummary>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value, options);
+                    results = ModelSerializationExtensions.JsonDeserialize<PolicySummaryResults>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policyAssignments"u8))

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ProviderHub
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<CustomRolloutProperties>)Properties).Write(writer, options);
         }
 
         CustomRolloutData IJsonModel<CustomRolloutData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = CustomRolloutProperties.DeserializeCustomRolloutProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<CustomRolloutProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ProviderHub
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

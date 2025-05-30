@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WriteStartArray();
                 foreach (var item in PeeringFacilities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DirectPeeringFacility>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WriteStartArray();
                 foreach (var item in BandwidthOffers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PeeringBandwidthOffer>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

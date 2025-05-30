@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                writer.WriteObjectValue(Subnet, options);
+                ((IJsonModel<SubnetData>)Subnet).Write(writer, options);
             }
             if (Optional.IsDefined(Primary))
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            subnet = SubnetData.DeserializeSubnetData(property0.Value, options);
+                            subnet = ModelSerializationExtensions.JsonDeserialize<SubnetData>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("primary"u8))

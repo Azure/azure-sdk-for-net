@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Match))
             {
                 writer.WritePropertyName("match"u8);
-                writer.WriteObjectValue(Match, options);
+                ((IJsonModel<ApplicationGatewayProbeHealthResponseMatch>)Match).Write(writer, options);
             }
             if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool"u8);
-                JsonSerializer.Serialize(writer, BackendAddressPool);
+                ((IJsonModel<WritableSubResource>)BackendAddressPool).Write(writer, options);
             }
             if (Optional.IsDefined(BackendHttpSettings))
             {
                 writer.WritePropertyName("backendHttpSettings"u8);
-                JsonSerializer.Serialize(writer, BackendHttpSettings);
+                ((IJsonModel<WritableSubResource>)BackendHttpSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    match = ApplicationGatewayProbeHealthResponseMatch.DeserializeApplicationGatewayProbeHealthResponseMatch(property.Value, options);
+                    match = ModelSerializationExtensions.JsonDeserialize<ApplicationGatewayProbeHealthResponseMatch>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("backendAddressPool"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    backendAddressPool = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    backendAddressPool = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("backendHttpSettings"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    backendHttpSettings = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    backendHttpSettings = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

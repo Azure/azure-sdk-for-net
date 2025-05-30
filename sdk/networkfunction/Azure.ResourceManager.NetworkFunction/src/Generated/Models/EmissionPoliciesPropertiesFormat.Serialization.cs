@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 writer.WriteStartArray();
                 foreach (var item in EmissionDestinations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EmissionPolicyDestination>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

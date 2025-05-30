@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteObjectValue(Action, options);
+                ((IJsonModel<FirewallPolicyFilterRuleCollectionAction>)Action).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Rules))
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FirewallPolicyRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    action = FirewallPolicyFilterRuleCollectionAction.DeserializeFirewallPolicyFilterRuleCollectionAction(property.Value, options);
+                    action = ModelSerializationExtensions.JsonDeserialize<FirewallPolicyFilterRuleCollectionAction>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rules"u8))

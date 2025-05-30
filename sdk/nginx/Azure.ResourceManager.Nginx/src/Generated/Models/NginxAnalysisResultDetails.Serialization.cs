@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NginxAnalysisDiagnostic>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WriteStartArray();
                 foreach (var item in Diagnostics)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NginxDiagnosticItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

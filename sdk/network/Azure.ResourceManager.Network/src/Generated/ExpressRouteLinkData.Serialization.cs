@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(MacSecConfig))
             {
                 writer.WritePropertyName("macSecConfig"u8);
-                writer.WriteObjectValue(MacSecConfig, options);
+                ((IJsonModel<ExpressRouteLinkMacSecConfig>)MacSecConfig).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            macSecConfig = ExpressRouteLinkMacSecConfig.DeserializeExpressRouteLinkMacSecConfig(property0.Value, options);
+                            macSecConfig = ModelSerializationExtensions.JsonDeserialize<ExpressRouteLinkMacSecConfig>(property0.Value);
                             continue;
                         }
                     }

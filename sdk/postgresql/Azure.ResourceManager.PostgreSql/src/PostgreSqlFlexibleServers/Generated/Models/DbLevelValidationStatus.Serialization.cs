@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in Summary)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ValidationSummaryItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

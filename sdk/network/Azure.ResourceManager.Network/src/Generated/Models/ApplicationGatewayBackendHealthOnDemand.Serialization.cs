@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool"u8);
-                writer.WriteObjectValue(BackendAddressPool, options);
+                ((IJsonModel<ApplicationGatewayBackendAddressPool>)BackendAddressPool).Write(writer, options);
             }
             if (Optional.IsDefined(BackendHealthHttpSettings))
             {
                 writer.WritePropertyName("backendHealthHttpSettings"u8);
-                writer.WriteObjectValue(BackendHealthHttpSettings, options);
+                ((IJsonModel<ApplicationGatewayBackendHealthHttpSettings>)BackendHealthHttpSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    backendAddressPool = ApplicationGatewayBackendAddressPool.DeserializeApplicationGatewayBackendAddressPool(property.Value, options);
+                    backendAddressPool = ModelSerializationExtensions.JsonDeserialize<ApplicationGatewayBackendAddressPool>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("backendHealthHttpSettings"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    backendHealthHttpSettings = ApplicationGatewayBackendHealthHttpSettings.DeserializeApplicationGatewayBackendHealthHttpSettings(property.Value, options);
+                    backendHealthHttpSettings = ModelSerializationExtensions.JsonDeserialize<ApplicationGatewayBackendHealthHttpSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

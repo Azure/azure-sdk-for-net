@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -69,17 +69,17 @@ namespace Azure.ResourceManager.NewRelicObservability
             if (Optional.IsDefined(NewRelicAccountProperties))
             {
                 writer.WritePropertyName("newRelicAccountProperties"u8);
-                writer.WriteObjectValue(NewRelicAccountProperties, options);
+                ((IJsonModel<NewRelicAccountProperties>)NewRelicAccountProperties).Write(writer, options);
             }
             if (Optional.IsDefined(UserInfo))
             {
                 writer.WritePropertyName("userInfo"u8);
-                writer.WriteObjectValue(UserInfo, options);
+                ((IJsonModel<NewRelicObservabilityUserInfo>)UserInfo).Write(writer, options);
             }
             if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
-                writer.WriteObjectValue(PlanData, options);
+                ((IJsonModel<NewRelicPlanDetails>)PlanData).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LiftrResourceCategory))
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                             {
                                 continue;
                             }
-                            newRelicAccountProperties = NewRelicAccountProperties.DeserializeNewRelicAccountProperties(property0.Value, options);
+                            newRelicAccountProperties = ModelSerializationExtensions.JsonDeserialize<NewRelicAccountProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("userInfo"u8))
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                             {
                                 continue;
                             }
-                            userInfo = NewRelicObservabilityUserInfo.DeserializeNewRelicObservabilityUserInfo(property0.Value, options);
+                            userInfo = ModelSerializationExtensions.JsonDeserialize<NewRelicObservabilityUserInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("planData"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                             {
                                 continue;
                             }
-                            planData = NewRelicPlanDetails.DeserializeNewRelicPlanDetails(property0.Value, options);
+                            planData = ModelSerializationExtensions.JsonDeserialize<NewRelicPlanDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("liftrResourceCategory"u8))

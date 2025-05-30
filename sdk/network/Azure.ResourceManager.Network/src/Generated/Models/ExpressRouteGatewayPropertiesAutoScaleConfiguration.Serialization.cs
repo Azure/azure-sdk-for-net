@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Bounds))
             {
                 writer.WritePropertyName("bounds"u8);
-                writer.WriteObjectValue(Bounds, options);
+                ((IJsonModel<ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds>)Bounds).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    bounds = ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds.DeserializeExpressRouteGatewayPropertiesAutoScaleConfigurationBounds(property.Value, options);
+                    bounds = ModelSerializationExtensions.JsonDeserialize<ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

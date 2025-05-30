@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RequestHeaderConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayHeaderConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,14 +50,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in ResponseHeaderConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayHeaderConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(UrlConfiguration))
             {
                 writer.WritePropertyName("urlConfiguration"u8);
-                writer.WriteObjectValue(UrlConfiguration, options);
+                ((IJsonModel<ApplicationGatewayUrlConfiguration>)UrlConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    urlConfiguration = ApplicationGatewayUrlConfiguration.DeserializeApplicationGatewayUrlConfiguration(property.Value, options);
+                    urlConfiguration = ModelSerializationExtensions.JsonDeserialize<ApplicationGatewayUrlConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

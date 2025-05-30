@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Probe))
             {
                 writer.WritePropertyName("probe"u8);
-                JsonSerializer.Serialize(writer, Probe);
+                ((IJsonModel<WritableSubResource>)Probe).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AuthenticationCertificates))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in AuthenticationCertificates)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,14 +84,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in TrustedRootCertificates)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ConnectionDraining))
             {
                 writer.WritePropertyName("connectionDraining"u8);
-                writer.WriteObjectValue(ConnectionDraining, options);
+                ((IJsonModel<ApplicationGatewayConnectionDraining>)ConnectionDraining).Write(writer, options);
             }
             if (Optional.IsDefined(HostName))
             {
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            probe = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            probe = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("authenticationCertificates"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             authenticationCertificates = array;
                             continue;
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             trustedRootCertificates = array;
                             continue;
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            connectionDraining = ApplicationGatewayConnectionDraining.DeserializeApplicationGatewayConnectionDraining(property0.Value, options);
+                            connectionDraining = ModelSerializationExtensions.JsonDeserialize<ApplicationGatewayConnectionDraining>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hostName"u8))

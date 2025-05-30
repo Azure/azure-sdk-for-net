@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in LocationInfo)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceTypeSkuLocationInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity, options);
+                ((IJsonModel<ResourceTypeSkuCapacity>)Capacity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Costs))
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Costs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceTypeSkuCost>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceSkuCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    capacity = ResourceTypeSkuCapacity.DeserializeResourceTypeSkuCapacity(property.Value, options);
+                    capacity = ModelSerializationExtensions.JsonDeserialize<ResourceTypeSkuCapacity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("costs"u8))

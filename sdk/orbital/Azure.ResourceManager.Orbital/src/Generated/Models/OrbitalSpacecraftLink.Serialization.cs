@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Orbital.Models
                 writer.WriteStartArray();
                 foreach (var item in Authorizations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AuthorizedGroundStation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

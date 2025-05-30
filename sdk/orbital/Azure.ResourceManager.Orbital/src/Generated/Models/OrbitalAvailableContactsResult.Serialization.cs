@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Orbital.Models
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<OrbitalAvailableContact>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

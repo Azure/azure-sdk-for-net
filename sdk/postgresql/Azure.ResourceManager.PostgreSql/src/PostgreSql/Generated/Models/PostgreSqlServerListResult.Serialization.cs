@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PostgreSqlServerData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

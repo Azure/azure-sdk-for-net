@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in AuthorizationActionMappings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AuthorizationActionMapping>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in LinkedAccessChecks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LinkedAccessCheck>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in LoggingRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LoggingRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ThrottlingRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ThrottlingRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceProviderEndpoint>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(IdentityManagement))
             {
                 writer.WritePropertyName("identityManagement"u8);
-                writer.WriteObjectValue(IdentityManagement, options);
+                ((IJsonModel<IdentityManagement>)IdentityManagement).Write(writer, options);
             }
             if (Optional.IsDefined(Metadata))
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(FeaturesRule))
             {
                 writer.WritePropertyName("featuresRule"u8);
-                writer.WriteObjectValue(FeaturesRule, options);
+                ((IJsonModel<FeaturesRule>)FeaturesRule).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(SubscriptionStateRules))
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in SubscriptionStateRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ProviderSubscriptionStateRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -167,14 +167,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceTreeInfos)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ServiceTreeInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(RequestHeaderOptions))
             {
                 writer.WritePropertyName("requestHeaderOptions"u8);
-                writer.WriteObjectValue(RequestHeaderOptions, options);
+                ((IJsonModel<RequestHeaderOptions>)RequestHeaderOptions).Write(writer, options);
             }
             if (Optional.IsDefined(SkuLink))
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(TemplateDeploymentPolicy))
             {
                 writer.WritePropertyName("templateDeploymentPolicy"u8);
-                writer.WriteObjectValue(TemplateDeploymentPolicy, options);
+                ((IJsonModel<TemplateDeploymentPolicy>)TemplateDeploymentPolicy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ExtendedLocations))
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ExtendedLocations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ProviderHubExtendedLocationOptions>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in LinkedOperationRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LinkedOperationRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    identityManagement = IdentityManagement.DeserializeIdentityManagement(property.Value, options);
+                    identityManagement = ModelSerializationExtensions.JsonDeserialize<IdentityManagement>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    featuresRule = FeaturesRule.DeserializeFeaturesRule(property.Value, options);
+                    featuresRule = ModelSerializationExtensions.JsonDeserialize<FeaturesRule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("subscriptionStateRules"u8))
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    requestHeaderOptions = RequestHeaderOptions.DeserializeRequestHeaderOptions(property.Value, options);
+                    requestHeaderOptions = ModelSerializationExtensions.JsonDeserialize<RequestHeaderOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("skuLink"u8))
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    templateDeploymentPolicy = TemplateDeploymentPolicy.DeserializeTemplateDeploymentPolicy(property.Value, options);
+                    templateDeploymentPolicy = ModelSerializationExtensions.JsonDeserialize<TemplateDeploymentPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extendedLocations"u8))

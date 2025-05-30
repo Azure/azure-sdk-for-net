@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.OperationalInsights
             if (Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
-                writer.WriteObjectValue(StorageAccount, options);
+                ((IJsonModel<OperationalInsightsStorageAccount>)StorageAccount).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<StorageInsightStatus>)Status).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            storageAccount = OperationalInsightsStorageAccount.DeserializeOperationalInsightsStorageAccount(property0.Value, options);
+                            storageAccount = ModelSerializationExtensions.JsonDeserialize<OperationalInsightsStorageAccount>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            status = StorageInsightStatus.DeserializeStorageInsightStatus(property0.Value, options);
+                            status = ModelSerializationExtensions.JsonDeserialize<StorageInsightStatus>(property0.Value);
                             continue;
                         }
                     }

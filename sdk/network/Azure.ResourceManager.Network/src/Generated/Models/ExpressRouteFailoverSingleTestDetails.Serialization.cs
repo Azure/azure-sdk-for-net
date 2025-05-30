@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RedundantRoutes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExpressRouteFailoverRedundantRoute>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in FailoverConnectionDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FailoverConnectionDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

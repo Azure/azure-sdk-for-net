@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            connectivityCapabilities = ConnectivityConfigurationPropertiesConnectivityCapabilities.DeserializeConnectivityConfigurationPropertiesConnectivityCapabilities(property0.Value, options);
+                            connectivityCapabilities = ModelSerializationExtensions.JsonDeserialize<ConnectivityConfigurationPropertiesConnectivityCapabilities>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("appliesToGroups"u8))

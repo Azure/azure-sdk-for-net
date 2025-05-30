@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Circuits)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExpressRouteFailoverCircuitResourceDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Connections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExpressRouteFailoverConnectionResourceDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Restrictions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FieldRestriction>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

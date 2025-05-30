@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
-                writer.WriteObjectValue(PlanData, options);
+                ((IJsonModel<NewRelicPlanDetails>)PlanData).Write(writer, options);
             }
             writer.WritePropertyName("userEmail"u8);
             writer.WriteStringValue(UserEmail);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    planData = NewRelicPlanDetails.DeserializeNewRelicPlanDetails(property.Value, options);
+                    planData = ModelSerializationExtensions.JsonDeserialize<NewRelicPlanDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userEmail"u8))

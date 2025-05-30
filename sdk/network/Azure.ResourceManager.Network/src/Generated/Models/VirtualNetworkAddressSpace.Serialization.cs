@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in IpamPoolPrefixAllocations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IpamPoolPrefixAllocation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RuleGroupOverrides)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedRuleGroupOverride>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in ComputedDisabledRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedRuleSetRuleGroup>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

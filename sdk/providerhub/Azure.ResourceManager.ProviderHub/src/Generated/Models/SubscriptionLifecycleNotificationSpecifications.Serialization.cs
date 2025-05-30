@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in SubscriptionStateOverrideActions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SubscriptionStateOverrideAction>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

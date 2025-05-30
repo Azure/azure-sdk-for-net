@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<NotificationHubSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<NotificationHubNamespaceProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     {
                         continue;
                     }
-                    sku = NotificationHubSku.DeserializeNotificationHubSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<NotificationHubSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     {
                         continue;
                     }
-                    properties = NotificationHubNamespaceProperties.DeserializeNotificationHubNamespaceProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<NotificationHubNamespaceProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

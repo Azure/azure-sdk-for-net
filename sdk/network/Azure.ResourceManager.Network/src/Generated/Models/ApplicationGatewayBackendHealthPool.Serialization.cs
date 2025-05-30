@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool"u8);
-                writer.WriteObjectValue(BackendAddressPool, options);
+                ((IJsonModel<ApplicationGatewayBackendAddressPool>)BackendAddressPool).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(BackendHttpSettingsCollection))
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in BackendHttpSettingsCollection)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayBackendHealthHttpSettings>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    backendAddressPool = ApplicationGatewayBackendAddressPool.DeserializeApplicationGatewayBackendAddressPool(property.Value, options);
+                    backendAddressPool = ModelSerializationExtensions.JsonDeserialize<ApplicationGatewayBackendAddressPool>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("backendHttpSettingsCollection"u8))

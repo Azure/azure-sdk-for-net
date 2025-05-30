@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (options.Format != "W" && Optional.IsDefined(LldpNeighbor))
             {
                 writer.WritePropertyName("lldpNeighbor"u8);
-                writer.WriteObjectValue(LldpNeighbor, options);
+                ((IJsonModel<LldpNeighbor>)LldpNeighbor).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MacAddress))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    lldpNeighbor = LldpNeighbor.DeserializeLldpNeighbor(property.Value, options);
+                    lldpNeighbor = ModelSerializationExtensions.JsonDeserialize<LldpNeighbor>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("macAddress"u8))

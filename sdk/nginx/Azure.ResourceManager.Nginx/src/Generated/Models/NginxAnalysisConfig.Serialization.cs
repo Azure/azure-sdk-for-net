@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WriteStartArray();
                 foreach (var item in Files)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NginxConfigurationFile>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,14 +55,14 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedFiles)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NginxConfigurationProtectedFileContent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Package))
             {
                 writer.WritePropertyName("package"u8);
-                writer.WriteObjectValue(Package, options);
+                ((IJsonModel<NginxConfigurationPackage>)Package).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    package = NginxConfigurationPackage.DeserializeNginxConfigurationPackage(property.Value, options);
+                    package = ModelSerializationExtensions.JsonDeserialize<NginxConfigurationPackage>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

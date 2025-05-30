@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetAppBackupVaultData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

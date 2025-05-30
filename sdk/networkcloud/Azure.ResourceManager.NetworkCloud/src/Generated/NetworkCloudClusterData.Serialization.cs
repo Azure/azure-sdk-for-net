@@ -43,21 +43,20 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation, options);
+            ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("aggregatorOrSingleRackDefinition"u8);
-            writer.WriteObjectValue(AggregatorOrSingleRackDefinition, options);
+            ((IJsonModel<NetworkCloudRackDefinition>)AggregatorOrSingleRackDefinition).Write(writer, options);
             if (Optional.IsDefined(AnalyticsOutputSettings))
             {
                 writer.WritePropertyName("analyticsOutputSettings"u8);
-                writer.WriteObjectValue(AnalyticsOutputSettings, options);
+                ((IJsonModel<AnalyticsOutputSettings>)AnalyticsOutputSettings).Write(writer, options);
             }
             if (Optional.IsDefined(AnalyticsWorkspaceId))
             {
@@ -70,14 +69,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in AvailableUpgradeVersions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ClusterAvailableUpgradeVersion>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(ClusterCapacity))
             {
                 writer.WritePropertyName("clusterCapacity"u8);
-                writer.WriteObjectValue(ClusterCapacity, options);
+                ((IJsonModel<ClusterCapacity>)ClusterCapacity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ClusterConnectionStatus))
             {
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.NetworkCloud
             if (options.Format != "W" && Optional.IsDefined(ClusterExtendedLocation))
             {
                 writer.WritePropertyName("clusterExtendedLocation"u8);
-                writer.WriteObjectValue(ClusterExtendedLocation, options);
+                ((IJsonModel<ExtendedLocation>)ClusterExtendedLocation).Write(writer, options);
             }
             if (Optional.IsDefined(ClusterLocation))
             {
@@ -107,7 +106,7 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(ClusterServicePrincipal))
             {
                 writer.WritePropertyName("clusterServicePrincipal"u8);
-                writer.WriteObjectValue(ClusterServicePrincipal, options);
+                ((IJsonModel<ServicePrincipalInformation>)ClusterServicePrincipal).Write(writer, options);
             }
             writer.WritePropertyName("clusterType"u8);
             writer.WriteStringValue(ClusterType.ToString());
@@ -116,12 +115,12 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(CommandOutputSettings))
             {
                 writer.WritePropertyName("commandOutputSettings"u8);
-                writer.WriteObjectValue(CommandOutputSettings, options);
+                ((IJsonModel<CommandOutputSettings>)CommandOutputSettings).Write(writer, options);
             }
             if (Optional.IsDefined(ComputeDeploymentThreshold))
             {
                 writer.WritePropertyName("computeDeploymentThreshold"u8);
-                writer.WriteObjectValue(ComputeDeploymentThreshold, options);
+                ((IJsonModel<ValidationThreshold>)ComputeDeploymentThreshold).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ComputeRackDefinitions))
             {
@@ -129,7 +128,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in ComputeRackDefinitions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetworkCloudRackDefinition>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -146,12 +145,12 @@ namespace Azure.ResourceManager.NetworkCloud
             if (options.Format != "W" && Optional.IsDefined(HybridAksExtendedLocation))
             {
                 writer.WritePropertyName("hybridAksExtendedLocation"u8);
-                writer.WriteObjectValue(HybridAksExtendedLocation, options);
+                ((IJsonModel<ExtendedLocation>)HybridAksExtendedLocation).Write(writer, options);
             }
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration, options);
+                ((IJsonModel<ManagedResourceGroupConfiguration>)ManagedResourceGroupConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ManualActionCount))
             {
@@ -168,17 +167,17 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(RuntimeProtectionConfiguration))
             {
                 writer.WritePropertyName("runtimeProtectionConfiguration"u8);
-                writer.WriteObjectValue(RuntimeProtectionConfiguration, options);
+                ((IJsonModel<RuntimeProtectionConfiguration>)RuntimeProtectionConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(SecretArchive))
             {
                 writer.WritePropertyName("secretArchive"u8);
-                writer.WriteObjectValue(SecretArchive, options);
+                ((IJsonModel<ClusterSecretArchive>)SecretArchive).Write(writer, options);
             }
             if (Optional.IsDefined(SecretArchiveSettings))
             {
                 writer.WritePropertyName("secretArchiveSettings"u8);
-                writer.WriteObjectValue(SecretArchiveSettings, options);
+                ((IJsonModel<SecretArchiveSettings>)SecretArchiveSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SupportExpireOn))
             {
@@ -188,12 +187,12 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(UpdateStrategy))
             {
                 writer.WritePropertyName("updateStrategy"u8);
-                writer.WriteObjectValue(UpdateStrategy, options);
+                ((IJsonModel<ClusterUpdateStrategy>)UpdateStrategy).Write(writer, options);
             }
             if (Optional.IsDefined(VulnerabilityScanningSettings))
             {
                 writer.WritePropertyName("vulnerabilityScanningSettings"u8);
-                writer.WriteObjectValue(VulnerabilityScanningSettings, options);
+                ((IJsonModel<VulnerabilityScanningSettings>)VulnerabilityScanningSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(WorkloadResourceIds))
             {
@@ -287,7 +286,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 if (property.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<ExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -297,7 +296,7 @@ namespace Azure.ResourceManager.NetworkCloud
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -340,7 +339,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -354,7 +353,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         if (property0.NameEquals("aggregatorOrSingleRackDefinition"u8))
                         {
-                            aggregatorOrSingleRackDefinition = NetworkCloudRackDefinition.DeserializeNetworkCloudRackDefinition(property0.Value, options);
+                            aggregatorOrSingleRackDefinition = ModelSerializationExtensions.JsonDeserialize<NetworkCloudRackDefinition>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("analyticsOutputSettings"u8))
@@ -363,7 +362,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            analyticsOutputSettings = AnalyticsOutputSettings.DeserializeAnalyticsOutputSettings(property0.Value, options);
+                            analyticsOutputSettings = ModelSerializationExtensions.JsonDeserialize<AnalyticsOutputSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("analyticsWorkspaceId"u8))
@@ -395,7 +394,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            clusterCapacity = ClusterCapacity.DeserializeClusterCapacity(property0.Value, options);
+                            clusterCapacity = ModelSerializationExtensions.JsonDeserialize<ClusterCapacity>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clusterConnectionStatus"u8))
@@ -413,7 +412,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            clusterExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property0.Value, options);
+                            clusterExtendedLocation = ModelSerializationExtensions.JsonDeserialize<ExtendedLocation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clusterLocation"u8))
@@ -445,7 +444,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            clusterServicePrincipal = ServicePrincipalInformation.DeserializeServicePrincipalInformation(property0.Value, options);
+                            clusterServicePrincipal = ModelSerializationExtensions.JsonDeserialize<ServicePrincipalInformation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clusterType"u8))
@@ -464,7 +463,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            commandOutputSettings = CommandOutputSettings.DeserializeCommandOutputSettings(property0.Value, options);
+                            commandOutputSettings = ModelSerializationExtensions.JsonDeserialize<CommandOutputSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("computeDeploymentThreshold"u8))
@@ -473,7 +472,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            computeDeploymentThreshold = ValidationThreshold.DeserializeValidationThreshold(property0.Value, options);
+                            computeDeploymentThreshold = ModelSerializationExtensions.JsonDeserialize<ValidationThreshold>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("computeRackDefinitions"u8))
@@ -510,7 +509,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            hybridAksExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property0.Value, options);
+                            hybridAksExtendedLocation = ModelSerializationExtensions.JsonDeserialize<ExtendedLocation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("managedResourceGroupConfiguration"u8))
@@ -519,7 +518,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            managedResourceGroupConfiguration = ManagedResourceGroupConfiguration.DeserializeManagedResourceGroupConfiguration(property0.Value, options);
+                            managedResourceGroupConfiguration = ModelSerializationExtensions.JsonDeserialize<ManagedResourceGroupConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("manualActionCount"u8))
@@ -551,7 +550,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            runtimeProtectionConfiguration = RuntimeProtectionConfiguration.DeserializeRuntimeProtectionConfiguration(property0.Value, options);
+                            runtimeProtectionConfiguration = ModelSerializationExtensions.JsonDeserialize<RuntimeProtectionConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("secretArchive"u8))
@@ -560,7 +559,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            secretArchive = ClusterSecretArchive.DeserializeClusterSecretArchive(property0.Value, options);
+                            secretArchive = ModelSerializationExtensions.JsonDeserialize<ClusterSecretArchive>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("secretArchiveSettings"u8))
@@ -569,7 +568,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            secretArchiveSettings = SecretArchiveSettings.DeserializeSecretArchiveSettings(property0.Value, options);
+                            secretArchiveSettings = ModelSerializationExtensions.JsonDeserialize<SecretArchiveSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("supportExpiryDate"u8))
@@ -587,7 +586,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            updateStrategy = ClusterUpdateStrategy.DeserializeClusterUpdateStrategy(property0.Value, options);
+                            updateStrategy = ModelSerializationExtensions.JsonDeserialize<ClusterUpdateStrategy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("vulnerabilityScanningSettings"u8))
@@ -596,7 +595,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            vulnerabilityScanningSettings = VulnerabilityScanningSettings.DeserializeVulnerabilityScanningSettings(property0.Value, options);
+                            vulnerabilityScanningSettings = ModelSerializationExtensions.JsonDeserialize<VulnerabilityScanningSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("workloadResourceIds"u8))

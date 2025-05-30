@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PolicyTrackedResourceRecord>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

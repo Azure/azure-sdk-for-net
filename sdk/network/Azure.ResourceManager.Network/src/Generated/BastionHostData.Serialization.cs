@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<NetworkSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BastionHostIPConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(VirtualNetwork))
             {
                 writer.WritePropertyName("virtualNetwork"u8);
-                JsonSerializer.Serialize(writer, VirtualNetwork);
+                ((IJsonModel<WritableSubResource>)VirtualNetwork).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkAcls, options);
+                ((IJsonModel<BastionHostPropertiesFormatNetworkAcls>)NetworkAcls).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    sku = NetworkSku.DeserializeNetworkSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<NetworkSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            virtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            virtualNetwork = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkAcls"u8))
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            networkAcls = BastionHostPropertiesFormatNetworkAcls.DeserializeBastionHostPropertiesFormatNetworkAcls(property0.Value, options);
+                            networkAcls = ModelSerializationExtensions.JsonDeserialize<BastionHostPropertiesFormatNetworkAcls>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<ApplicationGatewaySku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(SslPolicy))
             {
                 writer.WritePropertyName("sslPolicy"u8);
-                writer.WriteObjectValue(SslPolicy, options);
+                ((IJsonModel<ApplicationGatewaySslPolicy>)SslPolicy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OperationalState))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in GatewayIPConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayIPConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in AuthenticationCertificates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayAuthenticationCertificate>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in TrustedRootCertificates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayTrustedRootCertificate>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in TrustedClientCertificates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayTrustedClientCertificate>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in SslCertificates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewaySslCertificate>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in FrontendIPConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayFrontendIPConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in FrontendPorts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayFrontendPort>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Probes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayProbe>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in BackendAddressPools)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayBackendAddressPool>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in BackendHttpSettingsCollection)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayBackendHttpSettings>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in BackendSettingsCollection)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayBackendSettings>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in HttpListeners)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayHttpListener>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Listeners)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayListener>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in SslProfiles)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewaySslProfile>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in UrlPathMaps)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayUrlPathMap>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in RequestRoutingRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayRequestRoutingRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in RoutingRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayRoutingRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in RewriteRuleSets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayRewriteRuleSet>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -261,19 +261,19 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in RedirectConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayRedirectConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(WebApplicationFirewallConfiguration))
             {
                 writer.WritePropertyName("webApplicationFirewallConfiguration"u8);
-                writer.WriteObjectValue(WebApplicationFirewallConfiguration, options);
+                ((IJsonModel<ApplicationGatewayWebApplicationFirewallConfiguration>)WebApplicationFirewallConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(FirewallPolicy))
             {
                 writer.WritePropertyName("firewallPolicy"u8);
-                JsonSerializer.Serialize(writer, FirewallPolicy);
+                ((IJsonModel<WritableSubResource>)FirewallPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(EnableHttp2))
             {
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(AutoscaleConfiguration))
             {
                 writer.WritePropertyName("autoscaleConfiguration"u8);
-                writer.WriteObjectValue(AutoscaleConfiguration, options);
+                ((IJsonModel<ApplicationGatewayAutoscaleConfiguration>)AutoscaleConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(PrivateLinkConfigurations))
             {
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayPrivateLinkConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayPrivateEndpointConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in CustomErrorConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayCustomError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -341,14 +341,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in LoadDistributionPolicies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayLoadDistributionPolicy>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(GlobalConfiguration))
             {
                 writer.WritePropertyName("globalConfiguration"u8);
-                writer.WriteObjectValue(GlobalConfiguration, options);
+                ((IJsonModel<ApplicationGatewayGlobalConfiguration>)GlobalConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DefaultPredefinedSslPolicy))
             {
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            sku = ApplicationGatewaySku.DeserializeApplicationGatewaySku(property0.Value, options);
+                            sku = ModelSerializationExtensions.JsonDeserialize<ApplicationGatewaySku>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sslPolicy"u8))
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            sslPolicy = ApplicationGatewaySslPolicy.DeserializeApplicationGatewaySslPolicy(property0.Value, options);
+                            sslPolicy = ModelSerializationExtensions.JsonDeserialize<ApplicationGatewaySslPolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("operationalState"u8))
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            webApplicationFirewallConfiguration = ApplicationGatewayWebApplicationFirewallConfiguration.DeserializeApplicationGatewayWebApplicationFirewallConfiguration(property0.Value, options);
+                            webApplicationFirewallConfiguration = ModelSerializationExtensions.JsonDeserialize<ApplicationGatewayWebApplicationFirewallConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("firewallPolicy"u8))
@@ -821,7 +821,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            firewallPolicy = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            firewallPolicy = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enableHttp2"u8))
@@ -848,7 +848,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            autoscaleConfiguration = ApplicationGatewayAutoscaleConfiguration.DeserializeApplicationGatewayAutoscaleConfiguration(property0.Value, options);
+                            autoscaleConfiguration = ModelSerializationExtensions.JsonDeserialize<ApplicationGatewayAutoscaleConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkConfigurations"u8))
@@ -940,7 +940,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            globalConfiguration = ApplicationGatewayGlobalConfiguration.DeserializeApplicationGatewayGlobalConfiguration(property0.Value, options);
+                            globalConfiguration = ModelSerializationExtensions.JsonDeserialize<ApplicationGatewayGlobalConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("defaultPredefinedSslPolicy"u8))

@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                JsonSerializer.Serialize(writer, Plan);
+                ((IJsonModel<ArmPlan>)Plan).Write(writer, options);
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<OracleSubscriptionUpdateProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    plan = JsonSerializer.Deserialize<ArmPlan>(property.Value.GetRawText());
+                    plan = ModelSerializationExtensions.JsonDeserialize<ArmPlan>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    properties = OracleSubscriptionUpdateProperties.DeserializeOracleSubscriptionUpdateProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<OracleSubscriptionUpdateProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

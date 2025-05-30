@@ -48,7 +48,7 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStartArray();
             foreach (var item in ContentItems)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<MessageContent>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(AssistantId))

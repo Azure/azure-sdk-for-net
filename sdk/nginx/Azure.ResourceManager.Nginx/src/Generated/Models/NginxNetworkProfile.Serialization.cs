@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Nginx.Models
             if (Optional.IsDefined(FrontEndIPConfiguration))
             {
                 writer.WritePropertyName("frontEndIPConfiguration"u8);
-                writer.WriteObjectValue(FrontEndIPConfiguration, options);
+                ((IJsonModel<NginxFrontendIPConfiguration>)FrontEndIPConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkInterfaceConfiguration))
             {
                 writer.WritePropertyName("networkInterfaceConfiguration"u8);
-                writer.WriteObjectValue(NetworkInterfaceConfiguration, options);
+                ((IJsonModel<NginxNetworkInterfaceConfiguration>)NetworkInterfaceConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    frontEndIPConfiguration = NginxFrontendIPConfiguration.DeserializeNginxFrontendIPConfiguration(property.Value, options);
+                    frontEndIPConfiguration = ModelSerializationExtensions.JsonDeserialize<NginxFrontendIPConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("networkInterfaceConfiguration"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    networkInterfaceConfiguration = NginxNetworkInterfaceConfiguration.DeserializeNginxNetworkInterfaceConfiguration(property.Value, options);
+                    networkInterfaceConfiguration = ModelSerializationExtensions.JsonDeserialize<NginxNetworkInterfaceConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RouteSets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<GatewayRouteSet>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
                 foreach (var item in CircuitsMetadataMap)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<CircuitMetadataMap>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }

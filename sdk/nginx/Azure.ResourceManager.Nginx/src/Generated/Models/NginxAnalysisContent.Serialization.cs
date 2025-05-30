@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Nginx.Models
             }
 
             writer.WritePropertyName("config"u8);
-            writer.WriteObjectValue(Config, options);
+            ((IJsonModel<NginxAnalysisConfig>)Config).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 if (property.NameEquals("config"u8))
                 {
-                    config = NginxAnalysisConfig.DeserializeNginxAnalysisConfig(property.Value, options);
+                    config = ModelSerializationExtensions.JsonDeserialize<NginxAnalysisConfig>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

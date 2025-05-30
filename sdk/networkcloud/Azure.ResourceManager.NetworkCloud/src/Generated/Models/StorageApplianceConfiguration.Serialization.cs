@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WritePropertyName("adminCredentials"u8);
-            writer.WriteObjectValue(AdminCredentials, options);
+            ((IJsonModel<AdministrativeCredentials>)AdminCredentials).Write(writer, options);
             writer.WritePropertyName("rackSlot"u8);
             writer.WriteNumberValue(RackSlot);
             writer.WritePropertyName("serialNumber"u8);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 if (property.NameEquals("adminCredentials"u8))
                 {
-                    adminCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(property.Value, options);
+                    adminCredentials = ModelSerializationExtensions.JsonDeserialize<AdministrativeCredentials>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rackSlot"u8))

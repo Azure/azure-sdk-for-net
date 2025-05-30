@@ -50,14 +50,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Conditions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayRewriteRuleCondition>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ActionSet))
             {
                 writer.WritePropertyName("actionSet"u8);
-                writer.WriteObjectValue(ActionSet, options);
+                ((IJsonModel<ApplicationGatewayRewriteRuleActionSet>)ActionSet).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    actionSet = ApplicationGatewayRewriteRuleActionSet.DeserializeApplicationGatewayRewriteRuleActionSet(property.Value, options);
+                    actionSet = ModelSerializationExtensions.JsonDeserialize<ApplicationGatewayRewriteRuleActionSet>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

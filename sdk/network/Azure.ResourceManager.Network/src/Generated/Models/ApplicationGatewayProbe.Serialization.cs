@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Match))
             {
                 writer.WritePropertyName("match"u8);
-                writer.WriteObjectValue(Match, options);
+                ((IJsonModel<ApplicationGatewayProbeHealthResponseMatch>)Match).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            match = ApplicationGatewayProbeHealthResponseMatch.DeserializeApplicationGatewayProbeHealthResponseMatch(property0.Value, options);
+                            match = ModelSerializationExtensions.JsonDeserialize<ApplicationGatewayProbeHealthResponseMatch>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

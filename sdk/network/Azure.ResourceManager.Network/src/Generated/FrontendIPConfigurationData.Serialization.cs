@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in InboundNatRules)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in InboundNatPools)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in OutboundRules)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancingRules)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -112,22 +112,22 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                writer.WriteObjectValue(Subnet, options);
+                ((IJsonModel<SubnetData>)Subnet).Write(writer, options);
             }
             if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIPAddress"u8);
-                writer.WriteObjectValue(PublicIPAddress, options);
+                ((IJsonModel<PublicIPAddressData>)PublicIPAddress).Write(writer, options);
             }
             if (Optional.IsDefined(PublicIPPrefix))
             {
                 writer.WritePropertyName("publicIPPrefix"u8);
-                JsonSerializer.Serialize(writer, PublicIPPrefix);
+                ((IJsonModel<WritableSubResource>)PublicIPPrefix).Write(writer, options);
             }
             if (Optional.IsDefined(GatewayLoadBalancer))
             {
                 writer.WritePropertyName("gatewayLoadBalancer"u8);
-                JsonSerializer.Serialize(writer, GatewayLoadBalancer);
+                ((IJsonModel<WritableSubResource>)GatewayLoadBalancer).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             inboundNatRules = array;
                             continue;
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             inboundNatPools = array;
                             continue;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             outboundRules = array;
                             continue;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             loadBalancingRules = array;
                             continue;
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            subnet = SubnetData.DeserializeSubnetData(property0.Value, options);
+                            subnet = ModelSerializationExtensions.JsonDeserialize<SubnetData>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicIPAddress"u8))
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            publicIPAddress = PublicIPAddressData.DeserializePublicIPAddressData(property0.Value, options);
+                            publicIPAddress = ModelSerializationExtensions.JsonDeserialize<PublicIPAddressData>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicIPPrefix"u8))
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            publicIPPrefix = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            publicIPPrefix = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("gatewayLoadBalancer"u8))
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            gatewayLoadBalancer = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            gatewayLoadBalancer = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

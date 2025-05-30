@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(SourceNetworkIntentPolicy))
             {
                 writer.WritePropertyName("sourceNetworkIntentPolicy"u8);
-                writer.WriteObjectValue(SourceNetworkIntentPolicy, options);
+                ((IJsonModel<NetworkIntentPolicy>)SourceNetworkIntentPolicy).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    sourceNetworkIntentPolicy = NetworkIntentPolicy.DeserializeNetworkIntentPolicy(property.Value, options);
+                    sourceNetworkIntentPolicy = ModelSerializationExtensions.JsonDeserialize<NetworkIntentPolicy>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

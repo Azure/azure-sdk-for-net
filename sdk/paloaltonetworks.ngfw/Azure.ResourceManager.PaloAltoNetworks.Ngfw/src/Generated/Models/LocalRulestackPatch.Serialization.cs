@@ -38,8 +38,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<LocalRulestackUpdateProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -108,7 +107,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -131,7 +130,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    properties = LocalRulestackUpdateProperties.DeserializeLocalRulestackUpdateProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<LocalRulestackUpdateProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

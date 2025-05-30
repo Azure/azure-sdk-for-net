@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NotificationHubs
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<NotificationHubSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -60,54 +60,54 @@ namespace Azure.ResourceManager.NotificationHubs
                 writer.WriteStartArray();
                 foreach (var item in AuthorizationRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SharedAccessAuthorizationRuleProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ApnsCredential))
             {
                 writer.WritePropertyName("apnsCredential"u8);
-                writer.WriteObjectValue(ApnsCredential, options);
+                ((IJsonModel<NotificationHubApnsCredential>)ApnsCredential).Write(writer, options);
             }
             if (Optional.IsDefined(WnsCredential))
             {
                 writer.WritePropertyName("wnsCredential"u8);
-                writer.WriteObjectValue(WnsCredential, options);
+                ((IJsonModel<NotificationHubWnsCredential>)WnsCredential).Write(writer, options);
             }
             if (Optional.IsDefined(GcmCredential))
             {
                 writer.WritePropertyName("gcmCredential"u8);
-                writer.WriteObjectValue(GcmCredential, options);
+                ((IJsonModel<NotificationHubGcmCredential>)GcmCredential).Write(writer, options);
             }
             if (Optional.IsDefined(MpnsCredential))
             {
                 writer.WritePropertyName("mpnsCredential"u8);
-                writer.WriteObjectValue(MpnsCredential, options);
+                ((IJsonModel<NotificationHubMpnsCredential>)MpnsCredential).Write(writer, options);
             }
             if (Optional.IsDefined(AdmCredential))
             {
                 writer.WritePropertyName("admCredential"u8);
-                writer.WriteObjectValue(AdmCredential, options);
+                ((IJsonModel<NotificationHubAdmCredential>)AdmCredential).Write(writer, options);
             }
             if (Optional.IsDefined(BaiduCredential))
             {
                 writer.WritePropertyName("baiduCredential"u8);
-                writer.WriteObjectValue(BaiduCredential, options);
+                ((IJsonModel<NotificationHubBaiduCredential>)BaiduCredential).Write(writer, options);
             }
             if (Optional.IsDefined(BrowserCredential))
             {
                 writer.WritePropertyName("browserCredential"u8);
-                writer.WriteObjectValue(BrowserCredential, options);
+                ((IJsonModel<BrowserCredential>)BrowserCredential).Write(writer, options);
             }
             if (Optional.IsDefined(XiaomiCredential))
             {
                 writer.WritePropertyName("xiaomiCredential"u8);
-                writer.WriteObjectValue(XiaomiCredential, options);
+                ((IJsonModel<XiaomiCredential>)XiaomiCredential).Write(writer, options);
             }
             if (Optional.IsDefined(FcmV1Credential))
             {
                 writer.WritePropertyName("fcmV1Credential"u8);
-                writer.WriteObjectValue(FcmV1Credential, options);
+                ((IJsonModel<FcmV1Credential>)FcmV1Credential).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DailyMaxActiveDevices))
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     {
                         continue;
                     }
-                    sku = NotificationHubSku.DeserializeNotificationHubSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<NotificationHubSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.NotificationHubs
                             {
                                 continue;
                             }
-                            apnsCredential = NotificationHubApnsCredential.DeserializeNotificationHubApnsCredential(property0.Value, options);
+                            apnsCredential = ModelSerializationExtensions.JsonDeserialize<NotificationHubApnsCredential>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("wnsCredential"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.NotificationHubs
                             {
                                 continue;
                             }
-                            wnsCredential = NotificationHubWnsCredential.DeserializeNotificationHubWnsCredential(property0.Value, options);
+                            wnsCredential = ModelSerializationExtensions.JsonDeserialize<NotificationHubWnsCredential>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("gcmCredential"u8))
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.NotificationHubs
                             {
                                 continue;
                             }
-                            gcmCredential = NotificationHubGcmCredential.DeserializeNotificationHubGcmCredential(property0.Value, options);
+                            gcmCredential = ModelSerializationExtensions.JsonDeserialize<NotificationHubGcmCredential>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("mpnsCredential"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.NotificationHubs
                             {
                                 continue;
                             }
-                            mpnsCredential = NotificationHubMpnsCredential.DeserializeNotificationHubMpnsCredential(property0.Value, options);
+                            mpnsCredential = ModelSerializationExtensions.JsonDeserialize<NotificationHubMpnsCredential>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("admCredential"u8))
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.NotificationHubs
                             {
                                 continue;
                             }
-                            admCredential = NotificationHubAdmCredential.DeserializeNotificationHubAdmCredential(property0.Value, options);
+                            admCredential = ModelSerializationExtensions.JsonDeserialize<NotificationHubAdmCredential>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("baiduCredential"u8))
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.NotificationHubs
                             {
                                 continue;
                             }
-                            baiduCredential = NotificationHubBaiduCredential.DeserializeNotificationHubBaiduCredential(property0.Value, options);
+                            baiduCredential = ModelSerializationExtensions.JsonDeserialize<NotificationHubBaiduCredential>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("browserCredential"u8))
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.NotificationHubs
                             {
                                 continue;
                             }
-                            browserCredential = BrowserCredential.DeserializeBrowserCredential(property0.Value, options);
+                            browserCredential = ModelSerializationExtensions.JsonDeserialize<BrowserCredential>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("xiaomiCredential"u8))
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.NotificationHubs
                             {
                                 continue;
                             }
-                            xiaomiCredential = XiaomiCredential.DeserializeXiaomiCredential(property0.Value, options);
+                            xiaomiCredential = ModelSerializationExtensions.JsonDeserialize<XiaomiCredential>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("fcmV1Credential"u8))
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.NotificationHubs
                             {
                                 continue;
                             }
-                            fcmV1Credential = FcmV1Credential.DeserializeFcmV1Credential(property0.Value, options);
+                            fcmV1Credential = ModelSerializationExtensions.JsonDeserialize<FcmV1Credential>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dailyMaxActiveDevices"u8))

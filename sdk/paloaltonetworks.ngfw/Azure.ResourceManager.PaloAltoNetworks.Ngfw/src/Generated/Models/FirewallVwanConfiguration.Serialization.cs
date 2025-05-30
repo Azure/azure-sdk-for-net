@@ -40,21 +40,21 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WriteStringValue(NetworkVirtualApplianceId);
             }
             writer.WritePropertyName("vHub"u8);
-            writer.WriteObjectValue(Vhub, options);
+            ((IJsonModel<IPAddressSpaceInfo>)Vhub).Write(writer, options);
             if (Optional.IsDefined(TrustSubnet))
             {
                 writer.WritePropertyName("trustSubnet"u8);
-                writer.WriteObjectValue(TrustSubnet, options);
+                ((IJsonModel<IPAddressSpaceInfo>)TrustSubnet).Write(writer, options);
             }
             if (Optional.IsDefined(UnTrustSubnet))
             {
                 writer.WritePropertyName("unTrustSubnet"u8);
-                writer.WriteObjectValue(UnTrustSubnet, options);
+                ((IJsonModel<IPAddressSpaceInfo>)UnTrustSubnet).Write(writer, options);
             }
             if (Optional.IsDefined(IPOfTrustSubnetForUdr))
             {
                 writer.WritePropertyName("ipOfTrustSubnetForUdr"u8);
-                writer.WriteObjectValue(IPOfTrustSubnetForUdr, options);
+                ((IJsonModel<IPAddressInfo>)IPOfTrustSubnetForUdr).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 if (property.NameEquals("vHub"u8))
                 {
-                    vHub = IPAddressSpaceInfo.DeserializeIPAddressSpaceInfo(property.Value, options);
+                    vHub = ModelSerializationExtensions.JsonDeserialize<IPAddressSpaceInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("trustSubnet"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    trustSubnet = IPAddressSpaceInfo.DeserializeIPAddressSpaceInfo(property.Value, options);
+                    trustSubnet = ModelSerializationExtensions.JsonDeserialize<IPAddressSpaceInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("unTrustSubnet"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    unTrustSubnet = IPAddressSpaceInfo.DeserializeIPAddressSpaceInfo(property.Value, options);
+                    unTrustSubnet = ModelSerializationExtensions.JsonDeserialize<IPAddressSpaceInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ipOfTrustSubnetForUdr"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    ipOfTrustSubnetForUdr = IPAddressInfo.DeserializeIPAddressInfo(property.Value, options);
+                    ipOfTrustSubnetForUdr = ModelSerializationExtensions.JsonDeserialize<IPAddressInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

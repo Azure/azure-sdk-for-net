@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(SecurityRuleAssociations))
             {
                 writer.WritePropertyName("securityRuleAssociations"u8);
-                writer.WriteObjectValue(SecurityRuleAssociations, options);
+                ((IJsonModel<SecurityRuleAssociations>)SecurityRuleAssociations).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    securityRuleAssociations = SecurityRuleAssociations.DeserializeSecurityRuleAssociations(property.Value, options);
+                    securityRuleAssociations = ModelSerializationExtensions.JsonDeserialize<SecurityRuleAssociations>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

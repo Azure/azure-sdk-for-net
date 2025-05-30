@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WritePropertyName("canary"u8);
-            writer.WriteObjectValue(Canary, options);
+            ((IJsonModel<TrafficRegions>)Canary).Write(writer, options);
             if (Optional.IsDefined(ProviderRegistration))
             {
                 writer.WritePropertyName("providerRegistration"u8);
-                writer.WriteObjectValue(ProviderRegistration, options);
+                ((IJsonModel<ProviderRegistrationData>)ProviderRegistration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ResourceTypeRegistrations))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceTypeRegistrations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceTypeRegistrationData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 if (property.NameEquals("canary"u8))
                 {
-                    canary = TrafficRegions.DeserializeTrafficRegions(property.Value, options);
+                    canary = ModelSerializationExtensions.JsonDeserialize<TrafficRegions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("providerRegistration"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    providerRegistration = ProviderRegistrationData.DeserializeProviderRegistrationData(property.Value, options);
+                    providerRegistration = ModelSerializationExtensions.JsonDeserialize<ProviderRegistrationData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceTypeRegistrations"u8))

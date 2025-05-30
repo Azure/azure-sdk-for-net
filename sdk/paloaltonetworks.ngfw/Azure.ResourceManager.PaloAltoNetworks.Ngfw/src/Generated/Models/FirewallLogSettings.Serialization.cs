@@ -47,27 +47,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             if (Optional.IsDefined(ApplicationInsights))
             {
                 writer.WritePropertyName("applicationInsights"u8);
-                writer.WriteObjectValue(ApplicationInsights, options);
+                ((IJsonModel<FirewallApplicationInsights>)ApplicationInsights).Write(writer, options);
             }
             if (Optional.IsDefined(CommonDestination))
             {
                 writer.WritePropertyName("commonDestination"u8);
-                writer.WriteObjectValue(CommonDestination, options);
+                ((IJsonModel<FirewallLogDestination>)CommonDestination).Write(writer, options);
             }
             if (Optional.IsDefined(TrafficLogDestination))
             {
                 writer.WritePropertyName("trafficLogDestination"u8);
-                writer.WriteObjectValue(TrafficLogDestination, options);
+                ((IJsonModel<FirewallLogDestination>)TrafficLogDestination).Write(writer, options);
             }
             if (Optional.IsDefined(ThreatLogDestination))
             {
                 writer.WritePropertyName("threatLogDestination"u8);
-                writer.WriteObjectValue(ThreatLogDestination, options);
+                ((IJsonModel<FirewallLogDestination>)ThreatLogDestination).Write(writer, options);
             }
             if (Optional.IsDefined(DecryptLogDestination))
             {
                 writer.WritePropertyName("decryptLogDestination"u8);
-                writer.WriteObjectValue(DecryptLogDestination, options);
+                ((IJsonModel<FirewallLogDestination>)DecryptLogDestination).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    applicationInsights = FirewallApplicationInsights.DeserializeFirewallApplicationInsights(property.Value, options);
+                    applicationInsights = ModelSerializationExtensions.JsonDeserialize<FirewallApplicationInsights>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("commonDestination"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    commonDestination = FirewallLogDestination.DeserializeFirewallLogDestination(property.Value, options);
+                    commonDestination = ModelSerializationExtensions.JsonDeserialize<FirewallLogDestination>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("trafficLogDestination"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    trafficLogDestination = FirewallLogDestination.DeserializeFirewallLogDestination(property.Value, options);
+                    trafficLogDestination = ModelSerializationExtensions.JsonDeserialize<FirewallLogDestination>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("threatLogDestination"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    threatLogDestination = FirewallLogDestination.DeserializeFirewallLogDestination(property.Value, options);
+                    threatLogDestination = ModelSerializationExtensions.JsonDeserialize<FirewallLogDestination>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("decryptLogDestination"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    decryptLogDestination = FirewallLogDestination.DeserializeFirewallLogDestination(property.Value, options);
+                    decryptLogDestination = ModelSerializationExtensions.JsonDeserialize<FirewallLogDestination>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

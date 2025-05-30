@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(AutoScaleConfiguration))
             {
                 writer.WritePropertyName("autoScaleConfiguration"u8);
-                writer.WriteObjectValue(AutoScaleConfiguration, options);
+                ((IJsonModel<ExpressRouteGatewayPropertiesAutoScaleConfiguration>)AutoScaleConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ExpressRouteConnectionList))
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ExpressRouteConnectionList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExpressRouteConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(VirtualHub))
             {
                 writer.WritePropertyName("virtualHub"u8);
-                JsonSerializer.Serialize(writer, VirtualHub);
+                ((IJsonModel<WritableSubResource>)VirtualHub).Write(writer, options);
             }
             if (Optional.IsDefined(AllowNonVirtualWanTraffic))
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            autoScaleConfiguration = ExpressRouteGatewayPropertiesAutoScaleConfiguration.DeserializeExpressRouteGatewayPropertiesAutoScaleConfiguration(property0.Value, options);
+                            autoScaleConfiguration = ModelSerializationExtensions.JsonDeserialize<ExpressRouteGatewayPropertiesAutoScaleConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("expressRouteConnections"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            virtualHub = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            virtualHub = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("allowNonVirtualWanTraffic"u8))

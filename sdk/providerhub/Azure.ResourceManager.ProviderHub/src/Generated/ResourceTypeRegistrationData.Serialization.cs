@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ProviderHub
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ResourceTypeRegistrationProperties>)Properties).Write(writer, options);
             }
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ProviderHub
                     {
                         continue;
                     }
-                    properties = ResourceTypeRegistrationProperties.DeserializeResourceTypeRegistrationProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ResourceTypeRegistrationProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ProviderHub
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

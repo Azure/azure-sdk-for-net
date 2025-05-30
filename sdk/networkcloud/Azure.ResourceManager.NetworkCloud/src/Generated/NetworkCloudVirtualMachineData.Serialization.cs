@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation, options);
+            ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("adminUsername"u8);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(BootMethod.Value.ToString());
             }
             writer.WritePropertyName("cloudServicesNetworkAttachment"u8);
-            writer.WriteObjectValue(CloudServicesNetworkAttachment, options);
+            ((IJsonModel<NetworkAttachment>)CloudServicesNetworkAttachment).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(ConsoleExtendedLocation))
             {
                 writer.WritePropertyName("consoleExtendedLocation"u8);
-                writer.WriteObjectValue(ConsoleExtendedLocation, options);
+                ((IJsonModel<ExtendedLocation>)ConsoleExtendedLocation).Write(writer, options);
             }
             writer.WritePropertyName("cpuCores"u8);
             writer.WriteNumberValue(CpuCores);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in NetworkAttachments)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetworkAttachment>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in PlacementHints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VirtualMachinePlacementHint>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in SshPublicKeys)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetworkCloudSshPublicKey>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("storageProfile"u8);
-            writer.WriteObjectValue(StorageProfile, options);
+            ((IJsonModel<NetworkCloudStorageProfile>)StorageProfile).Write(writer, options);
             if (Optional.IsDefined(UserData))
             {
                 writer.WritePropertyName("userData"u8);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(VmImageRepositoryCredentials))
             {
                 writer.WritePropertyName("vmImageRepositoryCredentials"u8);
-                writer.WriteObjectValue(VmImageRepositoryCredentials, options);
+                ((IJsonModel<ImageRepositoryCredentials>)VmImageRepositoryCredentials).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Volumes))
             {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 if (property.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<ExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.NetworkCloud
                         }
                         if (property0.NameEquals("cloudServicesNetworkAttachment"u8))
                         {
-                            cloudServicesNetworkAttachment = NetworkAttachment.DeserializeNetworkAttachment(property0.Value, options);
+                            cloudServicesNetworkAttachment = ModelSerializationExtensions.JsonDeserialize<NetworkAttachment>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clusterId"u8))
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            consoleExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property0.Value, options);
+                            consoleExtendedLocation = ModelSerializationExtensions.JsonDeserialize<ExtendedLocation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cpuCores"u8))
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.NetworkCloud
                         }
                         if (property0.NameEquals("storageProfile"u8))
                         {
-                            storageProfile = NetworkCloudStorageProfile.DeserializeNetworkCloudStorageProfile(property0.Value, options);
+                            storageProfile = ModelSerializationExtensions.JsonDeserialize<NetworkCloudStorageProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("userData"u8))
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            vmImageRepositoryCredentials = ImageRepositoryCredentials.DeserializeImageRepositoryCredentials(property0.Value, options);
+                            vmImageRepositoryCredentials = ModelSerializationExtensions.JsonDeserialize<ImageRepositoryCredentials>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("volumes"u8))

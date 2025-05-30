@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Include)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConnectionMonitorEndpointScopeItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Exclude)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConnectionMonitorEndpointScopeItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RecommendedActions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TroubleshootingRecommendedActions>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

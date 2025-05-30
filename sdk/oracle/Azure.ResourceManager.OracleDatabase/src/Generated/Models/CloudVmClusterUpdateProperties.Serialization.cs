@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             if (Optional.IsDefined(DataCollectionOptions))
             {
                 writer.WritePropertyName("dataCollectionOptions"u8);
-                writer.WriteObjectValue(DataCollectionOptions, options);
+                ((IJsonModel<DiagnosticCollectionConfig>)DataCollectionOptions).Write(writer, options);
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    dataCollectionOptions = DiagnosticCollectionConfig.DeserializeDiagnosticCollectionConfig(property.Value, options);
+                    dataCollectionOptions = ModelSerializationExtensions.JsonDeserialize<DiagnosticCollectionConfig>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))

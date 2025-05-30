@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ContainerNetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerNetworkInterface>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ContainerNetworkInterfaceConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerNetworkInterfaceConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

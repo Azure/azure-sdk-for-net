@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<NetworkVerifierWorkspaceProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    properties = NetworkVerifierWorkspaceProperties.DeserializeNetworkVerifierWorkspaceProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<NetworkVerifierWorkspaceProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

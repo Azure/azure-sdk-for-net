@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             }
 
             writer.WritePropertyName("marketplaceDetails"u8);
-            writer.WriteObjectValue(MarketplaceDetails, options);
+            ((IJsonModel<NeonMarketplaceDetails>)MarketplaceDetails).Write(writer, options);
             writer.WritePropertyName("userDetails"u8);
-            writer.WriteObjectValue(UserDetails, options);
+            ((IJsonModel<NeonUserDetails>)UserDetails).Write(writer, options);
             writer.WritePropertyName("companyDetails"u8);
-            writer.WriteObjectValue(CompanyDetails, options);
+            ((IJsonModel<NeonCompanyDetails>)CompanyDetails).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             if (Optional.IsDefined(PartnerOrganizationProperties))
             {
                 writer.WritePropertyName("partnerOrganizationProperties"u8);
-                writer.WriteObjectValue(PartnerOrganizationProperties, options);
+                ((IJsonModel<PartnerOrganizationProperties>)PartnerOrganizationProperties).Write(writer, options);
             }
             if (Optional.IsDefined(ProjectProperties))
             {
                 writer.WritePropertyName("projectProperties"u8);
-                writer.WriteObjectValue(ProjectProperties, options);
+                ((IJsonModel<NeonProjectProperties>)ProjectProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -104,17 +104,17 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             {
                 if (property.NameEquals("marketplaceDetails"u8))
                 {
-                    marketplaceDetails = NeonMarketplaceDetails.DeserializeNeonMarketplaceDetails(property.Value, options);
+                    marketplaceDetails = ModelSerializationExtensions.JsonDeserialize<NeonMarketplaceDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userDetails"u8))
                 {
-                    userDetails = NeonUserDetails.DeserializeNeonUserDetails(property.Value, options);
+                    userDetails = ModelSerializationExtensions.JsonDeserialize<NeonUserDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("companyDetails"u8))
                 {
-                    companyDetails = NeonCompanyDetails.DeserializeNeonCompanyDetails(property.Value, options);
+                    companyDetails = ModelSerializationExtensions.JsonDeserialize<NeonCompanyDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                     {
                         continue;
                     }
-                    partnerOrganizationProperties = PartnerOrganizationProperties.DeserializePartnerOrganizationProperties(property.Value, options);
+                    partnerOrganizationProperties = ModelSerializationExtensions.JsonDeserialize<PartnerOrganizationProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("projectProperties"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                     {
                         continue;
                     }
-                    projectProperties = NeonProjectProperties.DeserializeNeonProjectProperties(property.Value, options);
+                    projectProperties = ModelSerializationExtensions.JsonDeserialize<NeonProjectProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

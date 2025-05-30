@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteObjectValue(Scope, options);
+                ((IJsonModel<PacketCaptureMachineScope>)Scope).Write(writer, options);
             }
             if (Optional.IsDefined(TargetType))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(StorageLocation))
             {
                 writer.WritePropertyName("storageLocation"u8);
-                writer.WriteObjectValue(StorageLocation, options);
+                ((IJsonModel<PacketCaptureStorageLocation>)StorageLocation).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Filters))
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Filters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PacketCaptureFilter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(CaptureSettings))
             {
                 writer.WritePropertyName("captureSettings"u8);
-                writer.WriteObjectValue(CaptureSettings, options);
+                ((IJsonModel<PacketCaptureSettings>)CaptureSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            scope = PacketCaptureMachineScope.DeserializePacketCaptureMachineScope(property0.Value, options);
+                            scope = ModelSerializationExtensions.JsonDeserialize<PacketCaptureMachineScope>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("targetType"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            storageLocation = PacketCaptureStorageLocation.DeserializePacketCaptureStorageLocation(property0.Value, options);
+                            storageLocation = ModelSerializationExtensions.JsonDeserialize<PacketCaptureStorageLocation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("filters"u8))
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            captureSettings = PacketCaptureSettings.DeserializePacketCaptureSettings(property0.Value, options);
+                            captureSettings = ModelSerializationExtensions.JsonDeserialize<PacketCaptureSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

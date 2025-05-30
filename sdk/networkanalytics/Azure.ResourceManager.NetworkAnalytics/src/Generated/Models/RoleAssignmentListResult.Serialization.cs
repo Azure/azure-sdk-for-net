@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in RoleAssignmentResponse)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<RoleAssignmentDetail>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

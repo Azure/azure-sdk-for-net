@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MachineDisk>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetworkCloudNetworkInterface>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

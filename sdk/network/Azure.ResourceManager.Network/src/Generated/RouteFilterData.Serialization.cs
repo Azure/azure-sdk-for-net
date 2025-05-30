@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RouteFilterRuleData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Peerings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExpressRouteCircuitPeeringData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPv6Peerings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExpressRouteCircuitPeeringData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

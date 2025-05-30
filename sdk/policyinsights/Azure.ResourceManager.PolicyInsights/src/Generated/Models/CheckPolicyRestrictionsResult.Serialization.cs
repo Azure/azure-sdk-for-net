@@ -40,14 +40,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in FieldRestrictions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FieldRestrictions>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(ContentEvaluationResult))
             {
                 writer.WritePropertyName("contentEvaluationResult"u8);
-                writer.WriteObjectValue(ContentEvaluationResult, options);
+                ((IJsonModel<CheckRestrictionsResultContentEvaluationResult>)ContentEvaluationResult).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    contentEvaluationResult = CheckRestrictionsResultContentEvaluationResult.DeserializeCheckRestrictionsResultContentEvaluationResult(property.Value, options);
+                    contentEvaluationResult = ModelSerializationExtensions.JsonDeserialize<CheckRestrictionsResultContentEvaluationResult>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

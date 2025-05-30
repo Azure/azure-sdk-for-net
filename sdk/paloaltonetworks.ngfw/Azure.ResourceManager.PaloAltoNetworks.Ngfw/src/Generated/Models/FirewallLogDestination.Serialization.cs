@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             if (Optional.IsDefined(StorageConfiguration))
             {
                 writer.WritePropertyName("storageConfigurations"u8);
-                writer.WriteObjectValue(StorageConfiguration, options);
+                ((IJsonModel<StorageAccountConfiguration>)StorageConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(EventHubConfiguration))
             {
                 writer.WritePropertyName("eventHubConfigurations"u8);
-                writer.WriteObjectValue(EventHubConfiguration, options);
+                ((IJsonModel<EventHubConfiguration>)EventHubConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(MonitorConfiguration))
             {
                 writer.WritePropertyName("monitorConfigurations"u8);
-                writer.WriteObjectValue(MonitorConfiguration, options);
+                ((IJsonModel<MonitorLogConfiguration>)MonitorConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    storageConfigurations = StorageAccountConfiguration.DeserializeStorageAccountConfiguration(property.Value, options);
+                    storageConfigurations = ModelSerializationExtensions.JsonDeserialize<StorageAccountConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eventHubConfigurations"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    eventHubConfigurations = EventHubConfiguration.DeserializeEventHubConfiguration(property.Value, options);
+                    eventHubConfigurations = ModelSerializationExtensions.JsonDeserialize<EventHubConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("monitorConfigurations"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    monitorConfigurations = MonitorLogConfiguration.DeserializeMonitorLogConfiguration(property.Value, options);
+                    monitorConfigurations = ModelSerializationExtensions.JsonDeserialize<MonitorLogConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

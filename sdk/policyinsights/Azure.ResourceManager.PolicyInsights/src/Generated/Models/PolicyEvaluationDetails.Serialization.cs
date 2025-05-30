@@ -40,14 +40,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in EvaluatedExpressions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExpressionEvaluationDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(IfNotExistsDetails))
             {
                 writer.WritePropertyName("ifNotExistsDetails"u8);
-                writer.WriteObjectValue(IfNotExistsDetails, options);
+                ((IJsonModel<IfNotExistsEvaluationDetails>)IfNotExistsDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    ifNotExistsDetails = IfNotExistsEvaluationDetails.DeserializeIfNotExistsEvaluationDetails(property.Value, options);
+                    ifNotExistsDetails = ModelSerializationExtensions.JsonDeserialize<IfNotExistsEvaluationDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

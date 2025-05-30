@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             if (Optional.IsDefined(SingleSignOnProperties))
             {
                 writer.WritePropertyName("singleSignOnProperties"u8);
-                writer.WriteObjectValue(SingleSignOnProperties, options);
+                ((IJsonModel<NeonSingleSignOnProperties>)SingleSignOnProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                     {
                         continue;
                     }
-                    singleSignOnProperties = NeonSingleSignOnProperties.DeserializeNeonSingleSignOnProperties(property.Value, options);
+                    singleSignOnProperties = ModelSerializationExtensions.JsonDeserialize<NeonSingleSignOnProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

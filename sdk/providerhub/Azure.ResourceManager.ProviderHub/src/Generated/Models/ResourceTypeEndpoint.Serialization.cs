@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(FeaturesRule))
             {
                 writer.WritePropertyName("featuresRule"u8);
-                writer.WriteObjectValue(FeaturesRule, options);
+                ((IJsonModel<FeaturesRule>)FeaturesRule).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Extensions))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceTypeExtension>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    featuresRule = FeaturesRule.DeserializeFeaturesRule(property.Value, options);
+                    featuresRule = ModelSerializationExtensions.JsonDeserialize<FeaturesRule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extensions"u8))

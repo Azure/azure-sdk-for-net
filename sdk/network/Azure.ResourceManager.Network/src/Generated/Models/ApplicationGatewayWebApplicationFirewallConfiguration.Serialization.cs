@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in DisabledRuleGroups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayFirewallDisabledRuleGroup>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Exclusions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayFirewallExclusion>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

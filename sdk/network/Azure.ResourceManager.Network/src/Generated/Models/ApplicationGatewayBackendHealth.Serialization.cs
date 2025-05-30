@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in BackendAddressPools)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ApplicationGatewayBackendHealthPool>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Routes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VirtualHubRouteV2>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

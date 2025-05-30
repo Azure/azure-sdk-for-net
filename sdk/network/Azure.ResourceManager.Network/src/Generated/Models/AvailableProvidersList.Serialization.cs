@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartArray();
             foreach (var item in Countries)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<AvailableProvidersListCountry>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

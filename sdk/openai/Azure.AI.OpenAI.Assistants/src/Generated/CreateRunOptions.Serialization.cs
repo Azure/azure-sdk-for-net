@@ -80,7 +80,7 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteStartArray();
                     foreach (var item in OverrideTools)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<ToolDefinition>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }

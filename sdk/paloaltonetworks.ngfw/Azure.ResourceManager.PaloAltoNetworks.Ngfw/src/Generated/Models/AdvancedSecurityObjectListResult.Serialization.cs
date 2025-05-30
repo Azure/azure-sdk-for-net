@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WritePropertyName("value"u8);
-            writer.WriteObjectValue(Value, options);
+            ((IJsonModel<AdvancedSecurityObject>)Value).Write(writer, options);
             if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    value = AdvancedSecurityObject.DeserializeAdvancedSecurityObject(property.Value, options);
+                    value = ModelSerializationExtensions.JsonDeserialize<AdvancedSecurityObject>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nextLink"u8))

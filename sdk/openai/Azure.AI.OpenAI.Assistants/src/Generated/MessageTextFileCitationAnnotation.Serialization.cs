@@ -36,7 +36,7 @@ namespace Azure.AI.OpenAI.Assistants
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("file_citation"u8);
-            writer.WriteObjectValue<InternalMessageTextFileCitationDetails>(InternalDetails, options);
+            ((IJsonModel<InternalMessageTextFileCitationDetails>)InternalDetails).Write(writer, options);
         }
 
         MessageTextFileCitationAnnotation IJsonModel<MessageTextFileCitationAnnotation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -70,7 +70,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("file_citation"u8))
                 {
-                    fileCitation = InternalMessageTextFileCitationDetails.DeserializeInternalMessageTextFileCitationDetails(property.Value, options);
+                    fileCitation = ModelSerializationExtensions.JsonDeserialize<InternalMessageTextFileCitationDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

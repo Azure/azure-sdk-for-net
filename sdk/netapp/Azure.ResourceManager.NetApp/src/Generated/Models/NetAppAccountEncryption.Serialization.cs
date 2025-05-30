@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties, options);
+                ((IJsonModel<NetAppKeyVaultProperties>)KeyVaultProperties).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<NetAppEncryptionIdentity>)Identity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = NetAppKeyVaultProperties.DeserializeNetAppKeyVaultProperties(property.Value, options);
+                    keyVaultProperties = ModelSerializationExtensions.JsonDeserialize<NetAppKeyVaultProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    identity = NetAppEncryptionIdentity.DeserializeNetAppEncryptionIdentity(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<NetAppEncryptionIdentity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

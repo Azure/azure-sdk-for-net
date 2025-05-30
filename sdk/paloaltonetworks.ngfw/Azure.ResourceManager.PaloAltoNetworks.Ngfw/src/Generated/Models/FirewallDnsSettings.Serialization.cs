@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WriteStartArray();
                 foreach (var item in DnsServers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IPAddressInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

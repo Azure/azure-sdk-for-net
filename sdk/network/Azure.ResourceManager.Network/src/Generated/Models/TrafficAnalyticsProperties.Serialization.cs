@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(TrafficAnalyticsConfiguration))
             {
                 writer.WritePropertyName("networkWatcherFlowAnalyticsConfiguration"u8);
-                writer.WriteObjectValue(TrafficAnalyticsConfiguration, options);
+                ((IJsonModel<TrafficAnalyticsConfigurationProperties>)TrafficAnalyticsConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    networkWatcherFlowAnalyticsConfiguration = TrafficAnalyticsConfigurationProperties.DeserializeTrafficAnalyticsConfigurationProperties(property.Value, options);
+                    networkWatcherFlowAnalyticsConfiguration = ModelSerializationExtensions.JsonDeserialize<TrafficAnalyticsConfigurationProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

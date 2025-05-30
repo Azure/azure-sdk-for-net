@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in SecurityRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SecurityRuleData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

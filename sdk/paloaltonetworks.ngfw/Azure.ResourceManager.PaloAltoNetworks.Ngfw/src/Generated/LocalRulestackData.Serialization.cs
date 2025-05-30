@@ -40,8 +40,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(SecurityServices))
             {
                 writer.WritePropertyName("securityServices"u8);
-                writer.WriteObjectValue(SecurityServices, options);
+                ((IJsonModel<RulestackSecurityServices>)SecurityServices).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -145,7 +144,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -188,7 +187,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -275,7 +274,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                             {
                                 continue;
                             }
-                            securityServices = RulestackSecurityServices.DeserializeRulestackSecurityServices(property0.Value, options);
+                            securityServices = ModelSerializationExtensions.JsonDeserialize<RulestackSecurityServices>(property0.Value);
                             continue;
                         }
                     }

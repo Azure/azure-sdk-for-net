@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ExpressRouteCircuitPeering))
             {
                 writer.WritePropertyName("expressRouteCircuitPeering"u8);
-                JsonSerializer.Serialize(writer, ExpressRouteCircuitPeering);
+                ((IJsonModel<WritableSubResource>)ExpressRouteCircuitPeering).Write(writer, options);
             }
             if (Optional.IsDefined(PeerExpressRouteCircuitPeering))
             {
                 writer.WritePropertyName("peerExpressRouteCircuitPeering"u8);
-                JsonSerializer.Serialize(writer, PeerExpressRouteCircuitPeering);
+                ((IJsonModel<WritableSubResource>)PeerExpressRouteCircuitPeering).Write(writer, options);
             }
             if (Optional.IsDefined(AddressPrefix))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(IPv6CircuitConnectionConfig))
             {
                 writer.WritePropertyName("ipv6CircuitConnectionConfig"u8);
-                writer.WriteObjectValue(IPv6CircuitConnectionConfig, options);
+                ((IJsonModel<IPv6CircuitConnectionConfig>)IPv6CircuitConnectionConfig).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CircuitConnectionStatus))
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            expressRouteCircuitPeering = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            expressRouteCircuitPeering = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("peerExpressRouteCircuitPeering"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            peerExpressRouteCircuitPeering = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            peerExpressRouteCircuitPeering = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("addressPrefix"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            ipv6CircuitConnectionConfig = IPv6CircuitConnectionConfig.DeserializeIPv6CircuitConnectionConfig(property0.Value, options);
+                            ipv6CircuitConnectionConfig = ModelSerializationExtensions.JsonDeserialize<IPv6CircuitConnectionConfig>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("circuitConnectionStatus"u8))

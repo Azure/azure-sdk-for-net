@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("targetDetails"u8);
-            writer.WriteObjectValue(TargetDetails, options);
+            ((IJsonModel<PostgreSqlFlexibleServerBackupStoreDetails>)TargetDetails).Write(writer, options);
         }
 
         PostgreSqlFlexibleServerLtrBackupContent IJsonModel<PostgreSqlFlexibleServerLtrBackupContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 if (property.NameEquals("targetDetails"u8))
                 {
-                    targetDetails = PostgreSqlFlexibleServerBackupStoreDetails.DeserializePostgreSqlFlexibleServerBackupStoreDetails(property.Value, options);
+                    targetDetails = ModelSerializationExtensions.JsonDeserialize<PostgreSqlFlexibleServerBackupStoreDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("backupSettings"u8))
                 {
-                    backupSettings = PostgreSqlFlexibleServerBackupSettings.DeserializePostgreSqlFlexibleServerBackupSettings(property.Value, options);
+                    backupSettings = ModelSerializationExtensions.JsonDeserialize<PostgreSqlFlexibleServerBackupSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

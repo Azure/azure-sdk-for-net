@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStartArray();
             foreach (var item in KeyVaultPrivateEndpoints)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<NetAppKeyVaultPrivateEndpoint>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

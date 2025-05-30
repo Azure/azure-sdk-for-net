@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(O365Policy))
             {
                 writer.WritePropertyName("o365Policy"u8);
-                writer.WriteObjectValue(O365Policy, options);
+                ((IJsonModel<Office365PolicyProperties>)O365Policy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            o365Policy = Office365PolicyProperties.DeserializeOffice365PolicyProperties(property0.Value, options);
+                            o365Policy = ModelSerializationExtensions.JsonDeserialize<Office365PolicyProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartArray();
             foreach (var item in Metrics)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ThrottlingMetric>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(RequiredFeatures))

@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.PostgreSql.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<PostgreSqlSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile, options);
+                ((IJsonModel<PostgreSqlStorageProfile>)StorageProfile).Write(writer, options);
             }
             if (Optional.IsDefined(AdministratorLoginPassword))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     {
                         continue;
                     }
-                    sku = PostgreSqlSku.DeserializePostgreSqlSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<PostgreSqlSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                             {
                                 continue;
                             }
-                            storageProfile = PostgreSqlStorageProfile.DeserializePostgreSqlStorageProfile(property0.Value, options);
+                            storageProfile = ModelSerializationExtensions.JsonDeserialize<PostgreSqlStorageProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("administratorLoginPassword"u8))

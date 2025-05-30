@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation, options);
+            ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsCollectionDefined(AssociatedResourceIds))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WritePropertyName("bmcConnectionString"u8);
             writer.WriteStringValue(BmcConnectionString);
             writer.WritePropertyName("bmcCredentials"u8);
-            writer.WriteObjectValue(BmcCredentials, options);
+            ((IJsonModel<AdministrativeCredentials>)BmcCredentials).Write(writer, options);
             writer.WritePropertyName("bmcMacAddress"u8);
             writer.WriteStringValue(BmcMacAddress);
             writer.WritePropertyName("bootMacAddress"u8);
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.NetworkCloud
             if (options.Format != "W" && Optional.IsDefined(HardwareInventory))
             {
                 writer.WritePropertyName("hardwareInventory"u8);
-                writer.WriteObjectValue(HardwareInventory, options);
+                ((IJsonModel<HardwareInventory>)HardwareInventory).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HardwareValidationStatus))
             {
                 writer.WritePropertyName("hardwareValidationStatus"u8);
-                writer.WriteObjectValue(HardwareValidationStatus, options);
+                ((IJsonModel<HardwareValidationStatus>)HardwareValidationStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(HybridAksClustersAssociatedIds))
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.NetworkCloud
             if (options.Format != "W" && Optional.IsDefined(RuntimeProtectionStatus))
             {
                 writer.WritePropertyName("runtimeProtectionStatus"u8);
-                writer.WriteObjectValue(RuntimeProtectionStatus, options);
+                ((IJsonModel<RuntimeProtectionStatus>)RuntimeProtectionStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SecretRotationStatus))
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in SecretRotationStatus)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SecretRotationStatus>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 if (property.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<ExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.NetworkCloud
                         }
                         if (property0.NameEquals("bmcCredentials"u8))
                         {
-                            bmcCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(property0.Value, options);
+                            bmcCredentials = ModelSerializationExtensions.JsonDeserialize<AdministrativeCredentials>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("bmcMacAddress"u8))
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            hardwareInventory = HardwareInventory.DeserializeHardwareInventory(property0.Value, options);
+                            hardwareInventory = ModelSerializationExtensions.JsonDeserialize<HardwareInventory>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hardwareValidationStatus"u8))
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            hardwareValidationStatus = HardwareValidationStatus.DeserializeHardwareValidationStatus(property0.Value, options);
+                            hardwareValidationStatus = ModelSerializationExtensions.JsonDeserialize<HardwareValidationStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hybridAksClustersAssociatedIds"u8))
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            runtimeProtectionStatus = RuntimeProtectionStatus.DeserializeRuntimeProtectionStatus(property0.Value, options);
+                            runtimeProtectionStatus = ModelSerializationExtensions.JsonDeserialize<RuntimeProtectionStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("secretRotationStatus"u8))

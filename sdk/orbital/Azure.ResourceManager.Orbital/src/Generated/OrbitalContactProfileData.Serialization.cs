@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Orbital
             if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
-                writer.WriteObjectValue(NetworkConfiguration, options);
+                ((IJsonModel<ContactProfilesPropertiesNetworkConfiguration>)NetworkConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Links))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Orbital
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<OrbitalContactProfileLink>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Orbital
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Orbital
                             {
                                 continue;
                             }
-                            networkConfiguration = ContactProfilesPropertiesNetworkConfiguration.DeserializeContactProfilesPropertiesNetworkConfiguration(property0.Value, options);
+                            networkConfiguration = ModelSerializationExtensions.JsonDeserialize<ContactProfilesPropertiesNetworkConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("links"u8))

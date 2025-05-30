@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             if (Optional.IsDefined(TagRules))
             {
                 writer.WritePropertyName("tagRules"u8);
-                writer.WriteObjectValue(TagRules, options);
+                ((IJsonModel<NewRelicMonitoringTagRules>)TagRules).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    tagRules = NewRelicMonitoringTagRules.DeserializeNewRelicMonitoringTagRules(property.Value, options);
+                    tagRules = ModelSerializationExtensions.JsonDeserialize<NewRelicMonitoringTagRules>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

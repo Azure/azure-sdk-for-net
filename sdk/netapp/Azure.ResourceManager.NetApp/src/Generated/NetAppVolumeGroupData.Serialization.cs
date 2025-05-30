@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp
             if (Optional.IsDefined(GroupMetaData))
             {
                 writer.WritePropertyName("groupMetaData"u8);
-                writer.WriteObjectValue(GroupMetaData, options);
+                ((IJsonModel<NetAppVolumeGroupMetadata>)GroupMetaData).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Volumes))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetApp
                 writer.WriteStartArray();
                 foreach (var item in Volumes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetAppVolumeGroupVolume>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.NetApp
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            groupMetaData = NetAppVolumeGroupMetadata.DeserializeNetAppVolumeGroupMetadata(property0.Value, options);
+                            groupMetaData = ModelSerializationExtensions.JsonDeserialize<NetAppVolumeGroupMetadata>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("volumes"u8))

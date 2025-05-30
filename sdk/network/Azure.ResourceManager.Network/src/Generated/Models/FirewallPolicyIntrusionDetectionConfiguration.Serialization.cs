@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in SignatureOverrides)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FirewallPolicyIntrusionDetectionSignatureSpecification>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in BypassTrafficSettings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

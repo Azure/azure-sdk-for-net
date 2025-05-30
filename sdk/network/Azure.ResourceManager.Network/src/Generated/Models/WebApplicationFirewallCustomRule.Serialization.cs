@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartArray();
             foreach (var item in MatchConditions)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<MatchCondition>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(GroupByUserSession))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in GroupByUserSession)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<GroupByUserSession>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

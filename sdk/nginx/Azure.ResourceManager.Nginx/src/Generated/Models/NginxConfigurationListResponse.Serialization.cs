@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NginxConfigurationData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

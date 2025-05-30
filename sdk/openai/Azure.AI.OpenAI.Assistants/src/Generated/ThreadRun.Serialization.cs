@@ -49,7 +49,7 @@ namespace Azure.AI.OpenAI.Assistants
                 if (RequiredAction != null)
                 {
                     writer.WritePropertyName("required_action"u8);
-                    writer.WriteObjectValue(RequiredAction, options);
+                    ((IJsonModel<RequiredAction>)RequiredAction).Write(writer, options);
                 }
                 else
                 {
@@ -59,7 +59,7 @@ namespace Azure.AI.OpenAI.Assistants
             if (LastError != null)
             {
                 writer.WritePropertyName("last_error"u8);
-                writer.WriteObjectValue(LastError, options);
+                ((IJsonModel<RunError>)LastError).Write(writer, options);
             }
             else
             {
@@ -73,7 +73,7 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStartArray();
             foreach (var item in Tools)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ToolDefinition>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("file_ids"u8);
@@ -236,7 +236,7 @@ namespace Azure.AI.OpenAI.Assistants
                         requiredAction = null;
                         continue;
                     }
-                    requiredAction = RequiredAction.DeserializeRequiredAction(property.Value, options);
+                    requiredAction = ModelSerializationExtensions.JsonDeserialize<RequiredAction>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("last_error"u8))
@@ -246,7 +246,7 @@ namespace Azure.AI.OpenAI.Assistants
                         lastError = null;
                         continue;
                     }
-                    lastError = RunError.DeserializeRunError(property.Value, options);
+                    lastError = ModelSerializationExtensions.JsonDeserialize<RunError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("model"u8))

@@ -36,7 +36,7 @@ namespace Azure.AI.OpenAI.Assistants
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("image_file"u8);
-            writer.WriteObjectValue<InternalMessageImageFileDetails>(InternalDetails, options);
+            ((IJsonModel<InternalMessageImageFileDetails>)InternalDetails).Write(writer, options);
         }
 
         MessageImageFileContent IJsonModel<MessageImageFileContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("image_file"u8))
                 {
-                    imageFile = InternalMessageImageFileDetails.DeserializeInternalMessageImageFileDetails(property.Value, options);
+                    imageFile = ModelSerializationExtensions.JsonDeserialize<InternalMessageImageFileDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

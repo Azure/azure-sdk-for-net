@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaceConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VirtualApplianceNetworkInterfaceConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation, options);
+            ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("administratorCredentials"u8);
-            writer.WriteObjectValue(AdministratorCredentials, options);
+            ((IJsonModel<AdministrativeCredentials>)AdministratorCredentials).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in SecretRotationStatus)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SecretRotationStatus>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 if (property.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<ExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         if (property0.NameEquals("administratorCredentials"u8))
                         {
-                            administratorCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(property0.Value, options);
+                            administratorCredentials = ModelSerializationExtensions.JsonDeserialize<AdministrativeCredentials>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("capacity"u8))

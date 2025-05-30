@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaceTapConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetworkInterfaceTapConfigurationData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(DestinationNetworkInterfaceIPConfiguration))
             {
                 writer.WritePropertyName("destinationNetworkInterfaceIPConfiguration"u8);
-                writer.WriteObjectValue(DestinationNetworkInterfaceIPConfiguration, options);
+                ((IJsonModel<NetworkInterfaceIPConfigurationData>)DestinationNetworkInterfaceIPConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(DestinationLoadBalancerFrontEndIPConfiguration))
             {
                 writer.WritePropertyName("destinationLoadBalancerFrontEndIPConfiguration"u8);
-                writer.WriteObjectValue(DestinationLoadBalancerFrontEndIPConfiguration, options);
+                ((IJsonModel<FrontendIPConfigurationData>)DestinationLoadBalancerFrontEndIPConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(DestinationPort))
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            destinationNetworkInterfaceIPConfiguration = NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(property0.Value, options);
+                            destinationNetworkInterfaceIPConfiguration = ModelSerializationExtensions.JsonDeserialize<NetworkInterfaceIPConfigurationData>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("destinationLoadBalancerFrontEndIPConfiguration"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            destinationLoadBalancerFrontEndIPConfiguration = FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(property0.Value, options);
+                            destinationLoadBalancerFrontEndIPConfiguration = ModelSerializationExtensions.JsonDeserialize<FrontendIPConfigurationData>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("destinationPort"u8))

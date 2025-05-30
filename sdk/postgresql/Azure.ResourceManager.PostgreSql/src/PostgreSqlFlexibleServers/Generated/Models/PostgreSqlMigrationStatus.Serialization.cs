@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             if (options.Format != "W" && Optional.IsDefined(CurrentSubStateDetails))
             {
                 writer.WritePropertyName("currentSubStateDetails"u8);
-                writer.WriteObjectValue(CurrentSubStateDetails, options);
+                ((IJsonModel<PostgreSqlMigrationSubStateDetails>)CurrentSubStateDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    currentSubStateDetails = PostgreSqlMigrationSubStateDetails.DeserializePostgreSqlMigrationSubStateDetails(property.Value, options);
+                    currentSubStateDetails = ModelSerializationExtensions.JsonDeserialize<PostgreSqlMigrationSubStateDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

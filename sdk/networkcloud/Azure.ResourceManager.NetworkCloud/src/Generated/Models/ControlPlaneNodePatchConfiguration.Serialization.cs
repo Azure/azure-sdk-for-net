@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(AdministratorConfiguration))
             {
                 writer.WritePropertyName("administratorConfiguration"u8);
-                writer.WriteObjectValue(AdministratorConfiguration, options);
+                ((IJsonModel<AdministratorConfigurationPatch>)AdministratorConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(Count))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    administratorConfiguration = AdministratorConfigurationPatch.DeserializeAdministratorConfigurationPatch(property.Value, options);
+                    administratorConfiguration = ModelSerializationExtensions.JsonDeserialize<AdministratorConfigurationPatch>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("count"u8))

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(AdministratorConfiguration))
             {
                 writer.WritePropertyName("administratorConfiguration"u8);
-                writer.WriteObjectValue(AdministratorConfiguration, options);
+                ((IJsonModel<NodePoolAdministratorConfigurationPatch>)AdministratorConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(Count))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(UpgradeSettings))
             {
                 writer.WritePropertyName("upgradeSettings"u8);
-                writer.WriteObjectValue(UpgradeSettings, options);
+                ((IJsonModel<AgentPoolUpgradeSettings>)UpgradeSettings).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             {
                                 continue;
                             }
-                            administratorConfiguration = NodePoolAdministratorConfigurationPatch.DeserializeNodePoolAdministratorConfigurationPatch(property0.Value, options);
+                            administratorConfiguration = ModelSerializationExtensions.JsonDeserialize<NodePoolAdministratorConfigurationPatch>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("count"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             {
                                 continue;
                             }
-                            upgradeSettings = AgentPoolUpgradeSettings.DeserializeAgentPoolUpgradeSettings(property0.Value, options);
+                            upgradeSettings = ModelSerializationExtensions.JsonDeserialize<AgentPoolUpgradeSettings>(property0.Value);
                             continue;
                         }
                     }

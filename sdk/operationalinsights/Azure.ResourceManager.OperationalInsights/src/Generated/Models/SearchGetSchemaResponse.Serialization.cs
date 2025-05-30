@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata, options);
+                ((IJsonModel<SearchMetadata>)Metadata).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Value))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<OperationalInsightsSearchSchemaValue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    metadata = SearchMetadata.DeserializeSearchMetadata(property.Value, options);
+                    metadata = ModelSerializationExtensions.JsonDeserialize<SearchMetadata>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("value"u8))

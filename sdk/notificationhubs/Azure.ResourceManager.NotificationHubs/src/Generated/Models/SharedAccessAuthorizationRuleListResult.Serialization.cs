@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NotificationHubAuthorizationRuleData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

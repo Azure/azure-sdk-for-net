@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(NvaSku))
             {
                 writer.WritePropertyName("nvaSku"u8);
-                writer.WriteObjectValue(NvaSku, options);
+                ((IJsonModel<VirtualApplianceSkuProperties>)NvaSku).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AddressPrefix))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(VirtualHub))
             {
                 writer.WritePropertyName("virtualHub"u8);
-                JsonSerializer.Serialize(writer, VirtualHub);
+                ((IJsonModel<WritableSubResource>)VirtualHub).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(CloudInitConfigurationBlobs))
             {
@@ -106,14 +106,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VirtualApplianceNics)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VirtualApplianceNicProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile, options);
+                ((IJsonModel<NetworkVirtualAppliancePropertiesFormatNetworkProfile>)NetworkProfile).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AdditionalNics))
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in AdditionalNics)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VirtualApplianceAdditionalNicProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in InternetIngressPublicIPs)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VirtualApplianceSites)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VirtualApplianceConnections)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in InboundSecurityRules)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -178,12 +178,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Delegation))
             {
                 writer.WritePropertyName("delegation"u8);
-                writer.WriteObjectValue(Delegation, options);
+                ((IJsonModel<VirtualApplianceDelegationProperties>)Delegation).Write(writer, options);
             }
             if (Optional.IsDefined(PartnerManagedResource))
             {
                 writer.WritePropertyName("partnerManagedResource"u8);
-                writer.WriteObjectValue(PartnerManagedResource, options);
+                ((IJsonModel<PartnerManagedResourceProperties>)PartnerManagedResource).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            nvaSku = VirtualApplianceSkuProperties.DeserializeVirtualApplianceSkuProperties(property0.Value, options);
+                            nvaSku = ModelSerializationExtensions.JsonDeserialize<VirtualApplianceSkuProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("addressPrefix"u8))
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            virtualHub = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            virtualHub = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cloudInitConfigurationBlobs"u8))
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            networkProfile = NetworkVirtualAppliancePropertiesFormatNetworkProfile.DeserializeNetworkVirtualAppliancePropertiesFormatNetworkProfile(property0.Value, options);
+                            networkProfile = ModelSerializationExtensions.JsonDeserialize<NetworkVirtualAppliancePropertiesFormatNetworkProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("additionalNics"u8))
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             internetIngressPublicIPs = array;
                             continue;
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             virtualApplianceSites = array;
                             continue;
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             virtualApplianceConnections = array;
                             continue;
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             inboundSecurityRules = array;
                             continue;
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            delegation = VirtualApplianceDelegationProperties.DeserializeVirtualApplianceDelegationProperties(property0.Value, options);
+                            delegation = ModelSerializationExtensions.JsonDeserialize<VirtualApplianceDelegationProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("partnerManagedResource"u8))
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            partnerManagedResource = PartnerManagedResourceProperties.DeserializePartnerManagedResourceProperties(property0.Value, options);
+                            partnerManagedResource = ModelSerializationExtensions.JsonDeserialize<PartnerManagedResourceProperties>(property0.Value);
                             continue;
                         }
                     }

@@ -39,7 +39,7 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStartArray();
             foreach (var item in ToolCalls)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<RunStepToolCall>)item).Write(writer, options);
             }
             writer.WriteEndArray();
         }

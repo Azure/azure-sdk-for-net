@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
             }
 
             writer.WritePropertyName("marketplace"u8);
-            writer.WriteObjectValue(Marketplace, options);
+            ((IJsonModel<PineconeVectorDBMarketplaceDetails>)Marketplace).Write(writer, options);
             writer.WritePropertyName("user"u8);
-            writer.WriteObjectValue(User, options);
+            ((IJsonModel<PineconeVectorDBUserDetails>)User).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
             if (Optional.IsDefined(PartnerProperties))
             {
                 writer.WritePropertyName("partnerProperties"u8);
-                writer.WriteObjectValue(PartnerProperties, options);
+                ((IJsonModel<PineconeVectorDBPartnerProperties>)PartnerProperties).Write(writer, options);
             }
             if (Optional.IsDefined(SingleSignOnProperties))
             {
                 writer.WritePropertyName("singleSignOnProperties"u8);
-                writer.WriteObjectValue(SingleSignOnProperties, options);
+                ((IJsonModel<PineconeVectorDBSingleSignOnPropertiesV2>)SingleSignOnProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
             {
                 if (property.NameEquals("marketplace"u8))
                 {
-                    marketplace = PineconeVectorDBMarketplaceDetails.DeserializePineconeVectorDBMarketplaceDetails(property.Value, options);
+                    marketplace = ModelSerializationExtensions.JsonDeserialize<PineconeVectorDBMarketplaceDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("user"u8))
                 {
-                    user = PineconeVectorDBUserDetails.DeserializePineconeVectorDBUserDetails(property.Value, options);
+                    user = ModelSerializationExtensions.JsonDeserialize<PineconeVectorDBUserDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
                     {
                         continue;
                     }
-                    partnerProperties = PineconeVectorDBPartnerProperties.DeserializePineconeVectorDBPartnerProperties(property.Value, options);
+                    partnerProperties = ModelSerializationExtensions.JsonDeserialize<PineconeVectorDBPartnerProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("singleSignOnProperties"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
                     {
                         continue;
                     }
-                    singleSignOnProperties = PineconeVectorDBSingleSignOnPropertiesV2.DeserializePineconeVectorDBSingleSignOnPropertiesV2(property.Value, options);
+                    singleSignOnProperties = ModelSerializationExtensions.JsonDeserialize<PineconeVectorDBSingleSignOnPropertiesV2>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

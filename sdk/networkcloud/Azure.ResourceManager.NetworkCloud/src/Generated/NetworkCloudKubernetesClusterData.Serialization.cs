@@ -43,18 +43,18 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation, options);
+            ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AadConfiguration))
             {
                 writer.WritePropertyName("aadConfiguration"u8);
-                writer.WriteObjectValue(AadConfiguration, options);
+                ((IJsonModel<NetworkCloudAadConfiguration>)AadConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(AdministratorConfiguration))
             {
                 writer.WritePropertyName("administratorConfiguration"u8);
-                writer.WriteObjectValue(AdministratorConfiguration, options);
+                ((IJsonModel<AdministratorConfiguration>)AdministratorConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AttachedNetworkIds))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in AvailableUpgrades)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AvailableUpgrade>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(ControlPlaneKubernetesVersion);
             }
             writer.WritePropertyName("controlPlaneNodeConfiguration"u8);
-            writer.WriteObjectValue(ControlPlaneNodeConfiguration, options);
+            ((IJsonModel<ControlPlaneNodeConfiguration>)ControlPlaneNodeConfiguration).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
             {
                 writer.WritePropertyName("detailedStatus"u8);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in FeatureStatuses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FeatureStatus>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartArray();
             foreach (var item in InitialAgentPoolConfigurations)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<InitialAgentPoolConfiguration>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("kubernetesVersion"u8);
@@ -130,17 +130,17 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration, options);
+                ((IJsonModel<ManagedResourceGroupConfiguration>)ManagedResourceGroupConfiguration).Write(writer, options);
             }
             writer.WritePropertyName("networkConfiguration"u8);
-            writer.WriteObjectValue(NetworkConfiguration, options);
+            ((IJsonModel<KubernetesClusterNetworkConfiguration>)NetworkConfiguration).Write(writer, options);
             if (options.Format != "W" && Optional.IsCollectionDefined(Nodes))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<KubernetesClusterNode>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 if (property.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<ExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            aadConfiguration = NetworkCloudAadConfiguration.DeserializeNetworkCloudAadConfiguration(property0.Value, options);
+                            aadConfiguration = ModelSerializationExtensions.JsonDeserialize<NetworkCloudAadConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("administratorConfiguration"u8))
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            administratorConfiguration = AdministratorConfiguration.DeserializeAdministratorConfiguration(property0.Value, options);
+                            administratorConfiguration = ModelSerializationExtensions.JsonDeserialize<AdministratorConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("attachedNetworkIds"u8))
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.NetworkCloud
                         }
                         if (property0.NameEquals("controlPlaneNodeConfiguration"u8))
                         {
-                            controlPlaneNodeConfiguration = ControlPlaneNodeConfiguration.DeserializeControlPlaneNodeConfiguration(property0.Value, options);
+                            controlPlaneNodeConfiguration = ModelSerializationExtensions.JsonDeserialize<ControlPlaneNodeConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("detailedStatus"u8))
@@ -397,12 +397,12 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            managedResourceGroupConfiguration = ManagedResourceGroupConfiguration.DeserializeManagedResourceGroupConfiguration(property0.Value, options);
+                            managedResourceGroupConfiguration = ModelSerializationExtensions.JsonDeserialize<ManagedResourceGroupConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkConfiguration"u8))
                         {
-                            networkConfiguration = KubernetesClusterNetworkConfiguration.DeserializeKubernetesClusterNetworkConfiguration(property0.Value, options);
+                            networkConfiguration = ModelSerializationExtensions.JsonDeserialize<KubernetesClusterNetworkConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("nodes"u8))

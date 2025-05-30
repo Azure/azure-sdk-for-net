@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(VpnClientAddressPool))
             {
                 writer.WritePropertyName("vpnClientAddressPool"u8);
-                writer.WriteObjectValue(VpnClientAddressPool, options);
+                ((IJsonModel<VirtualNetworkAddressSpace>)VpnClientAddressPool).Write(writer, options);
             }
             if (Optional.IsDefined(RoutingConfiguration))
             {
                 writer.WritePropertyName("routingConfiguration"u8);
-                writer.WriteObjectValue(RoutingConfiguration, options);
+                ((IJsonModel<RoutingConfiguration>)RoutingConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(EnableInternetSecurity))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in ConfigurationPolicyGroups)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in PreviousConfigurationPolicyGroupAssociations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VpnServerConfigurationPolicyGroupData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            vpnClientAddressPool = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property0.Value, options);
+                            vpnClientAddressPool = ModelSerializationExtensions.JsonDeserialize<VirtualNetworkAddressSpace>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("routingConfiguration"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            routingConfiguration = RoutingConfiguration.DeserializeRoutingConfiguration(property0.Value, options);
+                            routingConfiguration = ModelSerializationExtensions.JsonDeserialize<RoutingConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enableInternetSecurity"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             configurationPolicyGroupAssociations = array;
                             continue;

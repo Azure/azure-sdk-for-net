@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WriteStartArray();
                 foreach (var item in DBPlans)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DBIormConfig>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

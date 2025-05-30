@@ -36,7 +36,7 @@ namespace Azure.AI.OpenAI.Assistants
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("function"u8);
-            writer.WriteObjectValue<InternalFunctionDefinition>(InternalFunction, options);
+            ((IJsonModel<InternalFunctionDefinition>)InternalFunction).Write(writer, options);
         }
 
         FunctionToolDefinition IJsonModel<FunctionToolDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("function"u8))
                 {
-                    function = InternalFunctionDefinition.DeserializeInternalFunctionDefinition(property.Value, options);
+                    function = ModelSerializationExtensions.JsonDeserialize<InternalFunctionDefinition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

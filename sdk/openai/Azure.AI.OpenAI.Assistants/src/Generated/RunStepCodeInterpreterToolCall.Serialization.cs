@@ -36,7 +36,7 @@ namespace Azure.AI.OpenAI.Assistants
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("code_interpreter"u8);
-            writer.WriteObjectValue<InternalCodeInterpreterToolCallDetails>(InternalDetails, options);
+            ((IJsonModel<InternalCodeInterpreterToolCallDetails>)InternalDetails).Write(writer, options);
         }
 
         RunStepCodeInterpreterToolCall IJsonModel<RunStepCodeInterpreterToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -68,7 +68,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("code_interpreter"u8))
                 {
-                    codeInterpreter = InternalCodeInterpreterToolCallDetails.DeserializeInternalCodeInterpreterToolCallDetails(property.Value, options);
+                    codeInterpreter = ModelSerializationExtensions.JsonDeserialize<InternalCodeInterpreterToolCallDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

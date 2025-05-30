@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStringValue(BmcConnectionString);
             }
             writer.WritePropertyName("bmcCredentials"u8);
-            writer.WriteObjectValue(BmcCredentials, options);
+            ((IJsonModel<AdministrativeCredentials>)BmcCredentials).Write(writer, options);
             writer.WritePropertyName("bmcMacAddress"u8);
             writer.WriteStringValue(BmcMacAddress);
             writer.WritePropertyName("bootMacAddress"u8);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (property.NameEquals("bmcCredentials"u8))
                 {
-                    bmcCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(property.Value, options);
+                    bmcCredentials = ModelSerializationExtensions.JsonDeserialize<AdministrativeCredentials>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("bmcMacAddress"u8))

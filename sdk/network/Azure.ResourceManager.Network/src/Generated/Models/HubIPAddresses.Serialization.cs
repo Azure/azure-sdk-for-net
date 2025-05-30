@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(PublicIPs))
             {
                 writer.WritePropertyName("publicIPs"u8);
-                writer.WriteObjectValue(PublicIPs, options);
+                ((IJsonModel<HubPublicIPAddresses>)PublicIPs).Write(writer, options);
             }
             if (Optional.IsDefined(PrivateIPAddress))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    publicIPs = HubPublicIPAddresses.DeserializeHubPublicIPAddresses(property.Value, options);
+                    publicIPs = ModelSerializationExtensions.JsonDeserialize<HubPublicIPAddresses>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("privateIPAddress"u8))

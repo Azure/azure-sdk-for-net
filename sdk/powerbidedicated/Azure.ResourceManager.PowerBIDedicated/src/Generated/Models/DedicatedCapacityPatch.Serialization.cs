@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<CapacitySku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             if (Optional.IsDefined(Administration))
             {
                 writer.WritePropertyName("administration"u8);
-                writer.WriteObjectValue(Administration, options);
+                ((IJsonModel<DedicatedCapacityAdministrators>)Administration).Write(writer, options);
             }
             if (Optional.IsDefined(Mode))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     {
                         continue;
                     }
-                    sku = CapacitySku.DeserializeCapacitySku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<CapacitySku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                             {
                                 continue;
                             }
-                            administration = DedicatedCapacityAdministrators.DeserializeDedicatedCapacityAdministrators(property0.Value, options);
+                            administration = ModelSerializationExtensions.JsonDeserialize<DedicatedCapacityAdministrators>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("mode"u8))

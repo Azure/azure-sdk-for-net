@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(IPConfiguration))
             {
                 writer.WritePropertyName("ipConfiguration"u8);
-                writer.WriteObjectValue(IPConfiguration, options);
+                ((IJsonModel<NetworkInterfaceIPConfigurationData>)IPConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(Health))
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    ipConfiguration = NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(property.Value, options);
+                    ipConfiguration = ModelSerializationExtensions.JsonDeserialize<NetworkInterfaceIPConfigurationData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("health"u8))

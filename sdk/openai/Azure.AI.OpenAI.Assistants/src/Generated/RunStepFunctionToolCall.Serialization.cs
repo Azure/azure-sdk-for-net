@@ -36,7 +36,7 @@ namespace Azure.AI.OpenAI.Assistants
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("function"u8);
-            writer.WriteObjectValue<InternalRunStepFunctionToolCallDetails>(InternalDetails, options);
+            ((IJsonModel<InternalRunStepFunctionToolCallDetails>)InternalDetails).Write(writer, options);
         }
 
         RunStepFunctionToolCall IJsonModel<RunStepFunctionToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -68,7 +68,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("function"u8))
                 {
-                    function = InternalRunStepFunctionToolCallDetails.DeserializeInternalRunStepFunctionToolCallDetails(property.Value, options);
+                    function = ModelSerializationExtensions.JsonDeserialize<InternalRunStepFunctionToolCallDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

@@ -45,8 +45,7 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in ClusterVersions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ClusterAvailableVersion>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,12 +89,12 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration, options);
+                ((IJsonModel<ManagedResourceGroupConfiguration>)ManagedResourceGroupConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ManagerExtendedLocation))
             {
                 writer.WritePropertyName("managerExtendedLocation"u8);
-                writer.WriteObjectValue(ManagerExtendedLocation, options);
+                ((IJsonModel<ExtendedLocation>)ManagerExtendedLocation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -168,7 +167,7 @@ namespace Azure.ResourceManager.NetworkCloud
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -211,7 +210,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -285,7 +284,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            managedResourceGroupConfiguration = ManagedResourceGroupConfiguration.DeserializeManagedResourceGroupConfiguration(property0.Value, options);
+                            managedResourceGroupConfiguration = ModelSerializationExtensions.JsonDeserialize<ManagedResourceGroupConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("managerExtendedLocation"u8))
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            managerExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property0.Value, options);
+                            managerExtendedLocation = ModelSerializationExtensions.JsonDeserialize<ExtendedLocation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

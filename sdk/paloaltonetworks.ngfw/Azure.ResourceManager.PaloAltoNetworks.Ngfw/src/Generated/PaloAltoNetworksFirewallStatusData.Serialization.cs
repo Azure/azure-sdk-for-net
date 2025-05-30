@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (options.Format != "W" && Optional.IsDefined(PanoramaStatus))
             {
                 writer.WritePropertyName("panoramaStatus"u8);
-                writer.WriteObjectValue(PanoramaStatus, options);
+                ((IJsonModel<FirewallPanoramaStatus>)PanoramaStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                             {
                                 continue;
                             }
-                            panoramaStatus = FirewallPanoramaStatus.DeserializeFirewallPanoramaStatus(property0.Value, options);
+                            panoramaStatus = ModelSerializationExtensions.JsonDeserialize<FirewallPanoramaStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

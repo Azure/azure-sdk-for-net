@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CollectorPolicyData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

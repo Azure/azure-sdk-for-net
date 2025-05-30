@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
@@ -251,7 +252,7 @@ namespace Azure.ResourceManager.Network
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            ((IJsonModel<ApplicationGatewayData>)data).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -343,7 +344,7 @@ namespace Azure.ResourceManager.Network
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(networkTagsObject, ModelSerializationExtensions.WireOptions);
+            ((IJsonModel<NetworkTagsObject>)networkTagsObject).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -885,7 +886,7 @@ namespace Azure.ResourceManager.Network
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(probeRequest, ModelSerializationExtensions.WireOptions);
+            ((IJsonModel<ApplicationGatewayOnDemandProbe>)probeRequest).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;

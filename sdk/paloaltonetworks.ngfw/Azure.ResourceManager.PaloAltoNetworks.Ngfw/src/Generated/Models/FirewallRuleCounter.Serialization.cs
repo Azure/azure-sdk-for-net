@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             if (Optional.IsDefined(AppSeen))
             {
                 writer.WritePropertyName("appSeen"u8);
-                writer.WriteObjectValue(AppSeen, options);
+                ((IJsonModel<AppSeenInfoList>)AppSeen).Write(writer, options);
             }
             if (Optional.IsDefined(ResponseOn))
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    appSeen = AppSeenInfoList.DeserializeAppSeenInfoList(property.Value, options);
+                    appSeen = ModelSerializationExtensions.JsonDeserialize<AppSeenInfoList>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("timestamp"u8))

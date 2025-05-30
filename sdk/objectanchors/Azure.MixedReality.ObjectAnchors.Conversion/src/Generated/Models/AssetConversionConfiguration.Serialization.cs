@@ -23,7 +23,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 if (AssetDimensionsWrapper != null)
                 {
                     writer.WritePropertyName("dimensions"u8);
-                    writer.WriteObjectValue<Vector3>(AssetDimensionsWrapper);
+                    JsonSerializer.Serialize(writer, AssetDimensionsWrapper);
                 }
                 else
                 {
@@ -35,7 +35,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 if (BoundingBoxCenterWrapper != null)
                 {
                     writer.WritePropertyName("boundingBoxCenter"u8);
-                    writer.WriteObjectValue<Vector3>(BoundingBoxCenterWrapper);
+                    JsonSerializer.Serialize(writer, BoundingBoxCenterWrapper);
                 }
                 else
                 {
@@ -43,7 +43,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 }
             }
             writer.WritePropertyName("gravity"u8);
-            writer.WriteObjectValue<Vector3>(GravityWrapper);
+            JsonSerializer.Serialize(writer, GravityWrapper);
             if (Common.Optional.IsCollectionDefined(KeyFrameIndexes))
             {
                 if (KeyFrameIndexes != null)
@@ -67,7 +67,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 writer.WriteStartArray();
                 foreach (var item in GroundTruthTrajectoryCameraPoses)
                 {
-                    writer.WriteObjectValue<TrajectoryPose>(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +76,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 if (PrincipalAxisWrapper != null)
                 {
                     writer.WritePropertyName("principalAxis"u8);
-                    writer.WriteObjectValue<Quaternion>(PrincipalAxisWrapper);
+                    JsonSerializer.Serialize(writer, PrincipalAxisWrapper);
                 }
                 else
                 {
@@ -92,7 +92,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 if (SupportingPlaneWrapper != null)
                 {
                     writer.WritePropertyName("supportingPlane"u8);
-                    writer.WriteObjectValue<Vector4>(SupportingPlaneWrapper);
+                    JsonSerializer.Serialize(writer, SupportingPlaneWrapper);
                 }
                 else
                 {
@@ -105,7 +105,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 writer.WriteStartArray();
                 foreach (var item in TestTrajectoryCameraPoses)
                 {
-                    writer.WriteObjectValue<TrajectoryPose>(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -137,7 +137,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                         dimensions = null;
                         continue;
                     }
-                    dimensions = Vector3.DeserializeVector3(property.Value);
+                    dimensions = ModelSerializationExtensions.JsonDeserialize<Vector3>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("boundingBoxCenter"u8))
@@ -147,12 +147,12 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                         boundingBoxCenter = null;
                         continue;
                     }
-                    boundingBoxCenter = Vector3.DeserializeVector3(property.Value);
+                    boundingBoxCenter = ModelSerializationExtensions.JsonDeserialize<Vector3>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("gravity"u8))
                 {
-                    gravity = Vector3.DeserializeVector3(property.Value);
+                    gravity = ModelSerializationExtensions.JsonDeserialize<Vector3>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("keyFrameIndexes"u8))
@@ -190,7 +190,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                         principalAxis = null;
                         continue;
                     }
-                    principalAxis = Quaternion.DeserializeQuaternion(property.Value);
+                    principalAxis = ModelSerializationExtensions.JsonDeserialize<Quaternion>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scale"u8))
@@ -214,7 +214,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                         supportingPlane = null;
                         continue;
                     }
-                    supportingPlane = Vector4.DeserializeVector4(property.Value);
+                    supportingPlane = ModelSerializationExtensions.JsonDeserialize<Vector4>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("testTrajectory"u8))
