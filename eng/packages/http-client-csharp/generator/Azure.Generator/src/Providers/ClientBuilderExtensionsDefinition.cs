@@ -108,6 +108,7 @@ namespace Azure.Generator.Providers
                 }
 
                 // Add the configuration overload
+                var requiresUnreferencedCodeMessage = Literal("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.");
                 methods.Add(new MethodProvider(
                     new MethodSignature(
                         methodName,
@@ -120,10 +121,10 @@ namespace Azure.Generator.Providers
                         [
                             new AttributeStatement(
                                 typeof(RequiresUnreferencedCodeAttribute),
-                                Literal("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")),
+                                requiresUnreferencedCodeMessage),
                             new AttributeStatement(
                                 typeof(RequiresDynamicCodeAttribute),
-                                Literal("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator."))
+                                requiresUnreferencedCodeMessage)
                         ],
                         GenericArguments: [tBuilder, tConfiguration],
                         GenericParameterConstraints:
@@ -133,10 +134,10 @@ namespace Azure.Generator.Providers
                                 new CSharpType(typeof(IAzureClientFactoryBuilderWithConfiguration<>), tConfiguration))
                         ]),
                     bodyStatements:
-                    Return(builderParameter.Invoke(
-                        "RegisterClientFactory",
-                        args: [configurationParameter],
-                        typeArgs: [client.Type, client.ClientOptionsParameter.Type])),
+                        Return(builderParameter.Invoke(
+                            "RegisterClientFactory",
+                            args: [configurationParameter],
+                            typeArgs: [client.Type, client.ClientOptionsParameter.Type])),
                     enclosingType: this));
             }
 

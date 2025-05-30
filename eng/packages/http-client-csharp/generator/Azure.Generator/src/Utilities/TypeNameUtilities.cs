@@ -13,7 +13,7 @@ namespace Azure.Generator.Utilities
         /// <summary>
         /// Returns the name of the RP from the namespace by the following rule:
         /// If the namespace starts with `Azure.ResourceManager` and it is a management plane package, returns every segment concatenating after the `Azure.ResourceManager` prefix.
-        /// If the namespace starts with `Azure`, returns every segment concatenating together after the `Azure` prefix
+        /// If the namespace starts with `Azure`, returns every segment concatenating together after the `Azure` prefix.
         /// Returns the namespace as the RP name if nothing matches.
         /// </summary>
         /// <param name="namespaceName"></param>

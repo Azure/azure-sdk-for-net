@@ -22,7 +22,7 @@ namespace Microsoft.Extensions.Azure
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public static IAzureClientBuilder<BasicTypeSpecClient, BasicTypeSpecClientOptions> AddBasicTypeSpecClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
-            where TBuilder : IAzureClientFactoryBuilder 
+            where TBuilder : IAzureClientFactoryBuilder
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -35,7 +35,7 @@ namespace Microsoft.Extensions.Azure
         /// <param name="endpoint"> Service endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public static IAzureClientBuilder<BasicTypeSpecClient, BasicTypeSpecClientOptions> AddBasicTypeSpecClient<TBuilder>(this TBuilder builder, Uri endpoint)
-            where TBuilder : IAzureClientFactoryBuilderWithCredential 
+            where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
@@ -48,7 +48,7 @@ namespace Microsoft.Extensions.Azure
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<BasicTypeSpecClient, BasicTypeSpecClientOptions> AddBasicTypeSpecClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
-            where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> 
+            where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<BasicTypeSpecClient, BasicTypeSpecClientOptions>(configuration);
         }
