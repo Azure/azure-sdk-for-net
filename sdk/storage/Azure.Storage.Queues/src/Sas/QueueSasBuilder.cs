@@ -298,13 +298,30 @@ namespace Azure.Storage.Sas
         /// </param>
         /// <param name="accountName">The name of the storage account.</param>
         /// <returns>
+        /// The <see cref="QueueSasQueryParameters"/> used for authenticating requests.
+        /// </returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
+        public QueueSasQueryParameters ToSasQueryParameters(UserDelegationKey userDelegationKey, string accountName)
+            => ToSasQueryParameters(userDelegationKey, accountName, out _);
+
+        /// <summary>
+        /// Use an account's <see cref="UserDelegationKey"/> to sign this
+        /// shared access signature values to produce the proper SAS query
+        /// parameters for authenticating requests.
+        /// </summary>
+        /// <param name="userDelegationKey">
+        /// A <see cref="UserDelegationKey"/> returned from
+        /// <see cref="QueueServiceClient.GetUserDelegationKeyAsync"/>.
+        /// </param>
+        /// <param name="accountName">The name of the storage account.</param>
+        /// <returns>
         /// <param name="stringToSign">
         /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the <see cref="SasQueryParameters"/>.
         /// </param>
         /// The <see cref="SasQueryParameters"/> used for authenticating requests.
         /// </returns>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
-        public SasQueryParameters ToSasQueryParameters(UserDelegationKey userDelegationKey, string accountName, out string stringToSign)
+        public QueueSasQueryParameters ToSasQueryParameters(UserDelegationKey userDelegationKey, string accountName, out string stringToSign)
         {
             userDelegationKey = userDelegationKey ?? throw Errors.ArgumentNull(nameof(userDelegationKey));
 
@@ -314,35 +331,32 @@ namespace Azure.Storage.Sas
 
             string signature = SasExtensions.ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
 
-            //SasQueryParameters p = new SasQueryParameters(
-            //    version: Version,
-            //    services: default,
-            //    resourceTypes: default,
-            //    protocol: Protocol,
-            //    startsOn: StartsOn,
-            //    expiresOn: ExpiresOn,
-            //    ipRange: IPRange,
-            //    identifier: null,
-            //    resource: Resource,
-            //    permissions: Permissions,
-            //    keyOid: userDelegationKey.SignedObjectId,
-            //    keyTid: userDelegationKey.SignedTenantId,
-            //    keyStart: userDelegationKey.SignedStartsOn,
-            //    keyExpiry: userDelegationKey.SignedExpiresOn,
-            //    keyService: userDelegationKey.SignedService,
-            //    keyVersion: userDelegationKey.SignedVersion,
-            //    signature: signature,
-            //    cacheControl: CacheControl,
-            //    contentDisposition: ContentDisposition,
-            //    contentEncoding: ContentEncoding,
-            //    contentLanguage: ContentLanguage,
-            //    contentType: ContentType,
-            //    authorizedAadObjectId: PreauthorizedAgentObjectId,
-            //    correlationId: CorrelationId,
-            //    encryptionScope: EncryptionScope);
-            //return p;
-
-            SasQueryParameters p = new SasQueryParameters();
+            QueueSasQueryParameters p = new QueueSasQueryParameters(
+                version: Version,
+                services: default,
+                resourceTypes: default,
+                protocol: Protocol,
+                startsOn: StartsOn,
+                expiresOn: ExpiresOn,
+                ipRange: IPRange,
+                identifier: null,
+                resource: Resource.Queue,
+                permissions: Permissions,
+                keyOid: userDelegationKey.SignedObjectId,
+                keyTid: userDelegationKey.SignedTenantId,
+                keyStart: userDelegationKey.SignedStartsOn,
+                keyExpiry: userDelegationKey.SignedExpiresOn,
+                keyService: userDelegationKey.SignedService,
+                keyVersion: userDelegationKey.SignedVersion,
+                signature: signature,
+                cacheControl: null, // CacheControl,
+                contentDisposition: null, // ContentDisposition,
+                contentEncoding: null, // ContentEncoding,
+                contentLanguage: null, // ContentLanguage,
+                contentType: null, // ContentType,
+                authorizedAadObjectId: PreauthorizedAgentObjectId,
+                correlationId: null, //CorrelationId,
+                encryptionScope: null /*EncryptionScope*/);
             return p;
         }
 

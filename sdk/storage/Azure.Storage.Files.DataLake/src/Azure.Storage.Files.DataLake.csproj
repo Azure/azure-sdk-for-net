@@ -36,7 +36,7 @@
     <Compile Include="$(AzureCoreSharedSources)XmlWriterExtensions.cs" LinkBase="SharedCore" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Azure.Storage.Blobs\src\Sas\SasQueryParametersExtensions.cs" Link="Shared\Sas\KeySasQueryParametersExtensions.cs" />
+    <Compile Include="..\..\Azure.Storage.Common\src\Shared\SasQueryParametersExtensions.cs" Link="Shared\Sas\KeySasQueryParametersExtensions.cs" />
     <Compile Include="$(AzureStorageSharedSources)AggregatingProgressIncrementer.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)BufferExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ChecksumCalculatingStream.cs" LinkBase="Shared" />
