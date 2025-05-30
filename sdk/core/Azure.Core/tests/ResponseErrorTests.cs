@@ -319,29 +319,6 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void DirectWriterMethodSerializesCorrectly()
-        {
-            // Create a simple ResponseError
-            var error = new ResponseError("TestCode", "Test message");
-
-            // Use the direct Write method with a JsonWriter
-            using var stream = new System.IO.MemoryStream();
-            using var writer = new Utf8JsonWriter(stream);
-
-            error.Write(writer, ModelReaderWriterOptions.Json);
-            writer.Flush();
-
-            // Read the JSON back
-            stream.Position = 0;
-            using var document = JsonDocument.Parse(stream);
-            var element = document.RootElement;
-
-            // Verify content
-            Assert.AreEqual("TestCode", element.GetProperty("code").GetString());
-            Assert.AreEqual("Test message", element.GetProperty("message").GetString());
-        }
-
-        [Test]
         public void UnsupportedFormatThrowsFormatExceptionWhenWriting()
         {
             var error = new ResponseError("TestCode", "Test message");

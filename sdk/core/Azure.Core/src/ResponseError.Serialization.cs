@@ -38,7 +38,7 @@ namespace Azure
         /// <summary>
         /// Writes the <see cref="ResponseError"/> to the provided <see cref="Utf8JsonWriter"/>.
         /// </summary>
-        public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        private void Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
 
@@ -79,7 +79,7 @@ namespace Azure
                     }
                     else
                     {
-                        detail.Write(writer, options);
+                        detail.Write(writer);
                     }
                 }
 
@@ -185,7 +185,7 @@ namespace Azure
                     }
                     else
                     {
-                        detail.Write(writer, options);
+                        detail.Write(writer);
                     }
                 }
 

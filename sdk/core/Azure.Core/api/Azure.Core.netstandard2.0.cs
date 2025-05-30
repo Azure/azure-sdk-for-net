@@ -271,7 +271,6 @@ namespace Azure
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResponseError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResponseError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public override string ToString() { throw null; }
-        public void Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
     }
     public abstract partial class Response<T> : Azure.NullableResponse<T>
     {
