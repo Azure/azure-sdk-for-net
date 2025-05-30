@@ -11,10 +11,10 @@ namespace Azure.Generator.Utilities
         private const string AzureMgmtPackageNamespacePrefix = "Azure.ResourceManager.";
 
         /// <summary>
-        /// Returns the name of the RP from the namespace by the following rule:
+        /// Returns the name of the RP from the package name using the following:
         /// If the package name starts with `Azure.ResourceManager`, returns every segment concatenating after the `Azure.ResourceManager` prefix.
         /// If the package name starts with `Azure`, returns every segment concatenating together after the `Azure` prefix.
-        /// Returns the namespace as the RP name if nothing matches.
+        /// Returns the package name as the RP name if nothing matches.
         /// </summary>
         public static string GetResourceProviderName()
         {
