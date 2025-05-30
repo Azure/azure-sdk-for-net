@@ -31,6 +31,9 @@ namespace Azure.Messaging.ServiceBus
     /// ensuring efficient network, CPU, and memory use. Calling <see cref="DisposeAsync" /> on the
     /// associated <see cref="ServiceBusClient" /> as the application is shutting down will ensure that
     /// network resources and other unmanaged objects used by the processor are properly cleaned up.
+    /// 
+    /// The processor uses a fixed concurrency model where the number of ReceiverManager instances is 
+    /// determined at construction time and cannot be changed dynamically during runtime.
     /// </remarks>
 #pragma warning disable CA1001 // Types that own disposable fields should be disposable
     public class ServiceBusProcessor : IAsyncDisposable
@@ -125,10 +128,11 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>Gets the maximum number of concurrent calls to the
         /// <see cref="ProcessMessageAsync"/> message handler the processor should initiate.
+        /// This value is fixed at processor construction and cannot be changed dynamically.
         /// </summary>
         /// <value>
         /// The number of maximum concurrent calls is specified using <see cref="ServiceBusProcessorOptions.MaxConcurrentCalls"/>
-        /// and has a default value of 1.
+        /// and has a default value of 1. This value is fixed at construction time.
         /// </value>
         public virtual int MaxConcurrentCalls => Options.MaxConcurrentCalls;
         private int _currentConcurrentCalls;
@@ -268,6 +272,43 @@ namespace Azure.Messaging.ServiceBus
                 DiagnosticProperty.ServiceBusServiceContext,
                 FullyQualifiedNamespace,
                 EntityPath);
+
+            // Initialize fixed number of ReceiverManager instances at construction
+            InitializeFixedReceiverManagers();
+        }
+
+        /// <summary>
+        /// Initializes a fixed number of ReceiverManager instances based on the processor configuration.
+        /// This method replaces the dynamic ReceiverManager management with a fixed approach.
+        /// </summary>
+        private void InitializeFixedReceiverManagers()
+        {
+            if (IsSessionProcessor)
+            {
+                var numReceivers = _sessionIds.Length > 0 ? _sessionIds.Length : _maxConcurrentSessions;
+                for (int i = 0; i < numReceivers; i++)
+                {
+                    var sessionId = _sessionIds.Length > 0 ? _sessionIds[i] : null;
+
+                    _receiverManagers.Add(
+                        new SessionReceiverManager(
+                            _sessionProcessor,
+                            sessionId,
+                            _maxConcurrentAcceptSessionsSemaphore,
+                            _clientDiagnostics,
+                            KeepOpenOnReceiveTimeout));
+                }
+            }
+            else
+            {
+                // For non-session processors, create exactly one ReceiverManager
+                // The concurrency is managed at the task level, not the receiver level
+                _receiverManagers.Add(
+                    new ReceiverManager(
+                        this,
+                        _clientDiagnostics,
+                        false));
+            }
         }
 
         /// <summary>
@@ -629,80 +670,6 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        private void ReconcileReceiverManagers(int maxConcurrentSessions, int prefetchCount)
-        {
-            if (_receiverManagers.Count == 0)
-            {
-                if (IsSessionProcessor)
-                {
-                    var numReceivers = _sessionIds.Length > 0 ? _sessionIds.Length : _maxConcurrentSessions;
-                    for (int i = 0; i < numReceivers; i++)
-                    {
-                        var sessionId = _sessionIds.Length > 0 ? _sessionIds[i] : null;
-
-                        _receiverManagers.Add(
-                            new SessionReceiverManager(
-                                _sessionProcessor,
-                                sessionId,
-                                _maxConcurrentAcceptSessionsSemaphore,
-                                _clientDiagnostics,
-                                KeepOpenOnReceiveTimeout));
-                    }
-                }
-                else
-                {
-                    _receiverManagers.Add(
-                        new ReceiverManager(
-                            this,
-                            _clientDiagnostics,
-                            false));
-                }
-            }
-            else
-            {
-                if (IsSessionProcessor && _sessionIds.Length == 0)
-                {
-                    var diffSessions = maxConcurrentSessions - _currentConcurrentSessions;
-
-                    if (diffSessions > 0)
-                    {
-                        for (int i = 0; i < diffSessions; i++)
-                        {
-                            _receiverManagers.Add(
-                                new SessionReceiverManager(
-                                    _sessionProcessor,
-                                    null,
-                                    _maxConcurrentAcceptSessionsSemaphore,
-                                    _clientDiagnostics,
-                                    KeepOpenOnReceiveTimeout));
-                        }
-                    }
-                    else
-                    {
-                        int diffSessionsLimit = Math.Abs(diffSessions);
-                        for (int i = 0; i < diffSessionsLimit; i++)
-                        {
-                            // These should generally be closed as part of the normal bookkeeping in SessionReceiverManager,
-                            // but we will track them so that they can be explicitly closed when stopping, just like we do with
-                            // _receiverManagers.
-                            _orphanedReceiverManagers.Add(_receiverManagers[0]);
-
-                            // these tasks will be awaited when closing the orphaned receivers as part of CloseAsync
-                            _ = _receiverManagers[0].CancelAsync();
-                            _receiverManagers.RemoveAt(0);
-                        }
-                    }
-                }
-
-                int receiverManagers = _receiverManagers.Count;
-                for (int i = 0; i < receiverManagers; i++)
-                {
-                    var receiverManager = _receiverManagers[i];
-                    receiverManager.UpdatePrefetchCount(prefetchCount);
-                }
-            }
-        }
-
         private void ValidateErrorHandler()
         {
             if (_processErrorAsync == null)
@@ -1027,17 +994,14 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Updates the concurrency for the processor. This method can be used to dynamically change the concurrency of a running processor.
+        /// Dynamic concurrency updates are no longer supported. The number of concurrent calls is fixed at processor construction.
         /// </summary>
-        /// <param name="maxConcurrentCalls">The new max concurrent calls value. This will be reflected in the <see cref="ServiceBusProcessor.MaxConcurrentCalls"/>
-        /// property.</param>
+        /// <param name="maxConcurrentCalls">The new max concurrent calls value (ignored).</param>
+        /// <exception cref="NotSupportedException">This method is no longer supported in the fixed concurrency model.</exception>
+        [Obsolete("Dynamic concurrency updates are no longer supported. The number of concurrent calls is fixed at processor construction.")]
         public void UpdateConcurrency(int maxConcurrentCalls)
         {
-            lock (_optionsLock)
-            {
-                Options.MaxConcurrentCalls = maxConcurrentCalls;
-                WakeLoop();
-            }
+            throw new NotSupportedException("Dynamic concurrency updates are no longer supported. The number of concurrent calls is fixed at processor construction.");
         }
 
         /// <summary>
@@ -1054,20 +1018,16 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
+        /// <summary>
+        /// Dynamic concurrency updates are no longer supported for session processors. The number of concurrent sessions is fixed at processor construction.
+        /// </summary>
+        /// <param name="maxConcurrentSessions">The new max concurrent sessions value (ignored).</param>
+        /// <param name="maxConcurrentCallsPerSession">The new max concurrent calls per session value (ignored).</param>
+        /// <exception cref="NotSupportedException">This method is no longer supported in the fixed concurrency model.</exception>
+        [Obsolete("Dynamic concurrency updates are no longer supported. The number of concurrent sessions is fixed at processor construction.")]
         internal void UpdateConcurrency(int maxConcurrentSessions, int maxConcurrentCallsPerSession)
         {
-            Argument.AssertAtLeast(maxConcurrentSessions, 1, nameof(maxConcurrentSessions));
-            Argument.AssertAtLeast(maxConcurrentCallsPerSession, 1, nameof(maxConcurrentCallsPerSession));
-
-            lock (_optionsLock)
-            {
-                Options.MaxConcurrentCalls = (_sessionIds.Length > 0
-                    ? Math.Min(_sessionIds.Length, maxConcurrentSessions)
-                    : maxConcurrentSessions) * maxConcurrentCallsPerSession;
-                _maxConcurrentSessions = maxConcurrentSessions;
-                _maxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
-                WakeLoop();
-            }
+            throw new NotSupportedException("Dynamic concurrency updates are no longer supported. The number of concurrent sessions is fixed at processor construction.");
         }
 
         private void WakeLoop()
@@ -1080,68 +1040,43 @@ namespace Azure.Messaging.ServiceBus
 
         private async Task ReconcileConcurrencyAsync()
         {
-            int maxConcurrentCalls = 0;
-            int maxConcurrentSessions = 0;
-            int prefetchCount = 0;
+            // In the fixed concurrency model, we only need to initialize semaphores once
+            // The ReceiverManager instances are already fixed at construction
+            int maxConcurrentCalls = Options.MaxConcurrentCalls;
 
-            lock (_optionsLock)
+            // Initialize semaphores only if not already initialized
+            if (_currentConcurrentCalls == 0)
             {
-                // read synchronized values once to avoid race conditions
-                maxConcurrentCalls = Options.MaxConcurrentCalls;
-                prefetchCount = Options.PrefetchCount;
-                maxConcurrentSessions = _maxConcurrentSessions;
-            }
-
-            int diff = maxConcurrentCalls - _currentConcurrentCalls;
-
-            // increasing concurrency
-            if (diff > 0)
-            {
-                _messageHandlerSemaphore.Release(diff);
-            }
-            // decreasing concurrency
-            else if (diff < 0)
-            {
-                var activeTasks = TaskTuples.Where(t => !t.Task.IsCompleted).ToList();
-                int excessTasks = activeTasks.Count - maxConcurrentCalls;
-
-                // cancel excess tasks
-                for (int i = 0; i < excessTasks; i++)
+                _messageHandlerSemaphore.Release(maxConcurrentCalls);
+                
+                if (IsSessionProcessor)
                 {
-                    activeTasks[i].Cts.Cancel();
+                    int maxAcceptSessions = Math.Min(maxConcurrentCalls, 2 * _processorCount);
+                    _maxConcurrentAcceptSessionsSemaphore.Release(maxAcceptSessions);
+                    _currentAcceptSessions = maxAcceptSessions;
                 }
 
-                int diffLimit = Math.Abs(diff);
-                // limit the number of new tasks that can spawn to newly specified concurrency
-                for (int i = 0; i < diffLimit; i++)
-                {
-                    await _messageHandlerSemaphore.WaitAsync().ConfigureAwait(false);
-                }
+                _currentConcurrentCalls = maxConcurrentCalls;
+                _currentConcurrentSessions = _maxConcurrentSessions;
             }
 
-            if (IsSessionProcessor)
+            // Update prefetch count on existing receivers if needed
+            UpdatePrefetchCountOnReceivers();
+            
+            await Task.CompletedTask; // Maintain async signature for compatibility
+        }
+
+        /// <summary>
+        /// Updates the prefetch count on all existing ReceiverManager instances.
+        /// This is still supported as it doesn't change the number of receivers.
+        /// </summary>
+        private void UpdatePrefetchCountOnReceivers()
+        {
+            int prefetchCount = Options.PrefetchCount;
+            foreach (var receiverManager in _receiverManagers)
             {
-                int maxAcceptSessions = Math.Min(maxConcurrentCalls, 2 * _processorCount);
-                int diffAcceptSessions = maxAcceptSessions - _currentAcceptSessions;
-                if (diffAcceptSessions > 0)
-                {
-                    _maxConcurrentAcceptSessionsSemaphore.Release(diffAcceptSessions);
-                }
-                else
-                {
-                    int diffAcceptLimit = Math.Abs(diffAcceptSessions);
-                    for (int i = 0; i < diffAcceptLimit; i++)
-                    {
-                        await _maxConcurrentAcceptSessionsSemaphore.WaitAsync().ConfigureAwait(false);
-                    }
-                }
-                _currentAcceptSessions = maxAcceptSessions;
+                receiverManager.UpdatePrefetchCount(prefetchCount);
             }
-
-            ReconcileReceiverManagers(maxConcurrentSessions, prefetchCount);
-
-            _currentConcurrentCalls = maxConcurrentCalls;
-            _currentConcurrentSessions = maxConcurrentSessions;
         }
     }
 }

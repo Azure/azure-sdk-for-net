@@ -463,11 +463,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
-        public void CanUpdateConcurrencyOnMockProcessor()
+        public void UpdateConcurrencyThrowsNotSupportedException()
         {
             var mockProcessor = new Mock<ServiceBusProcessor> { CallBase = true };
-            mockProcessor.Object.UpdateConcurrency(5);
-            Assert.AreEqual(5, mockProcessor.Object.MaxConcurrentCalls);
+            Assert.Throws<NotSupportedException>(() => mockProcessor.Object.UpdateConcurrency(5));
         }
 
         [Test]

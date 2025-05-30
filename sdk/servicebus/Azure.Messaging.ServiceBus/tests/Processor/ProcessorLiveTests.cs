@@ -1014,19 +1014,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
-        public async Task CanUpdateConcurrency()
+        public async Task ConcurrencyIsFixedAndUpdateThrowsException()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
-                int messageCount = 200;
+                int messageCount = 50;
 
                 await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount));
 
                 await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
                 {
-                    MaxConcurrentCalls = 20
+                    MaxConcurrentCalls = 5
                 });
 
                 int receivedCount = 0;
@@ -1045,23 +1045,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         tcs.SetResult(true);
                     }
 
-                    // decrease concurrency
-                    if (count == 100)
+                    // Verify that concurrency is fixed
+                    Assert.AreEqual(5, processor.MaxConcurrentCalls);
+                    
+                    // Verify that UpdateConcurrency throws exception
+                    if (count == 10)
                     {
-                        processor.UpdateConcurrency(1);
-                        Assert.AreEqual(1, processor.MaxConcurrentCalls);
-                    }
-
-                    // increase concurrency
-                    if (count == 150)
-                    {
-                        Assert.LessOrEqual(processor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 1);
-                        processor.UpdateConcurrency(10);
-                        Assert.AreEqual(10, processor.MaxConcurrentCalls);
-                    }
-                    if (count == 175)
-                    {
-                        Assert.GreaterOrEqual(processor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 5);
+                        Assert.Throws<NotSupportedException>(() => processor.UpdateConcurrency(10));
                     }
                 }
 

@@ -2099,13 +2099,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
-        public async Task CanUpdateSessionConcurrency()
+        public async Task SessionConcurrencyIsFixedAndUpdateThrowsException()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
                 await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
-                int messageCount = 100;
+                int messageCount = 20;
 
                 for (int i = 0; i < messageCount / 2; i++)
                 {
@@ -2114,8 +2114,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
                 {
-                    MaxConcurrentSessions = 1,
-                    MaxConcurrentCallsPerSession = 1,
+                    MaxConcurrentSessions = 5,
+                    MaxConcurrentCallsPerSession = 2,
                     SessionIdleTimeout = TimeSpan.FromSeconds(3)
                 });
 
@@ -2135,29 +2135,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         tcs.SetResult(true);
                     }
 
+                    // Verify that concurrency is fixed
+                    Assert.AreEqual(5, processor.MaxConcurrentSessions);
+                    Assert.AreEqual(2, processor.MaxConcurrentCallsPerSession);
+
+                    // Verify that UpdateConcurrency throws exception
                     if (count == 5)
                     {
-                        processor.UpdateConcurrency(20, 2);
-                        Assert.AreEqual(20, processor.MaxConcurrentSessions);
-                        Assert.AreEqual(2, processor.MaxConcurrentCallsPerSession);
-
-                        // add a small delay to allow concurrency to update
-                        await Task.Delay(TimeSpan.FromSeconds(5));
-                    }
-
-                    if (count == 60)
-                    {
-                        Assert.GreaterOrEqual(processor.InnerProcessor.TaskTuples.Count, 20);
-                    }
-                    if (count == 75)
-                    {
-                        processor.UpdateConcurrency(1, 1);
-                        Assert.AreEqual(1, processor.MaxConcurrentSessions);
-                        Assert.AreEqual(1, processor.MaxConcurrentCallsPerSession);
-                    }
-                    if (count == 95)
-                    {
-                        Assert.LessOrEqual(processor.InnerProcessor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 1);
+                        Assert.Throws<NotSupportedException>(() => processor.UpdateConcurrency(20, 2));
                     }
                 }
 
@@ -2171,20 +2156,20 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
-        public async Task CanUpdateMaxCallsPerSessionConcurrency()
+        public async Task MaxCallsPerSessionConcurrencyIsFixedAndUpdateThrowsException()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
                 await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
-                int messageCount = 200;
-                int stopCount = 100;
+                int messageCount = 50;
+                int stopCount = 25;
                 await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount, "sessionId"));
 
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
                 {
-                    MaxConcurrentSessions = 1,
-                    MaxConcurrentCallsPerSession = 1
+                    MaxConcurrentSessions = 2,
+                    MaxConcurrentCallsPerSession = 5
                 });
 
                 int receivedCount = 0;
@@ -2203,17 +2188,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         tcs.SetResult(true);
                     }
 
+                    // Verify that concurrency is fixed
+                    Assert.AreEqual(2, processor.MaxConcurrentSessions);
+                    Assert.AreEqual(5, processor.MaxConcurrentCallsPerSession);
+
+                    // Verify that UpdateConcurrency throws exception
                     if (count == 5)
                     {
-                        processor.UpdateConcurrency(10, 20);
-                        Assert.AreEqual(10, processor.MaxConcurrentSessions);
-                        Assert.AreEqual(20, processor.MaxConcurrentCallsPerSession);
-                    }
-
-                    if (count == 100)
-                    {
-                        // at least 10 tasks for the session, plus at least 1 more trying to accept other sessions.
-                        Assert.Greater(processor.InnerProcessor.TaskTuples.Count, 10);
+                        Assert.Throws<NotSupportedException>(() => processor.UpdateConcurrency(10, 20));
                     }
                 }
 
@@ -2228,21 +2210,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
-        public async Task CanUpdateMaxCallsPerSessionConcurrencyWithSessionIdsSet()
+        public async Task MaxCallsPerSessionConcurrencyWithSessionIdsIsFixedAndUpdateThrowsException()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
                 await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
-                int messageCount = 200;
-                int stopCount = 100;
+                int messageCount = 50;
+                int stopCount = 25;
                 string sessionId = "sessionId";
                 await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount, sessionId));
 
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
                 {
-                    MaxConcurrentSessions = 1,
-                    MaxConcurrentCallsPerSession = 1,
+                    MaxConcurrentSessions = 2,
+                    MaxConcurrentCallsPerSession = 5,
                     SessionIds = { sessionId }
                 });
 
@@ -2262,17 +2244,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         tcs.SetResult(true);
                     }
 
+                    // Verify that concurrency is fixed
+                    Assert.AreEqual(2, processor.MaxConcurrentSessions);
+                    Assert.AreEqual(5, processor.MaxConcurrentCallsPerSession);
+
+                    // Verify that UpdateConcurrency throws exception
                     if (count == 5)
                     {
-                        processor.UpdateConcurrency(10, 20);
-                        Assert.AreEqual(10, processor.MaxConcurrentSessions);
-                        Assert.AreEqual(20, processor.MaxConcurrentCallsPerSession);
-                    }
-
-                    if (count == 100)
-                    {
-                        // at least 10 tasks for the session, plus at least 1 more trying to accept other sessions.
-                        Assert.Greater(processor.InnerProcessor.TaskTuples.Count, 10);
+                        Assert.Throws<NotSupportedException>(() => processor.UpdateConcurrency(10, 20));
                     }
                 }
 
