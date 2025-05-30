@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    dataImports = DataSourcesSpecDataImports.DeserializeDataSourcesSpecDataImports(property.Value, options);
+                    dataImports = ModelSerializationExtensions.JsonDeserialize<DataSourcesSpecDataImports>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(CosmosDb))
             {
                 writer.WritePropertyName("cosmosDb"u8);
-                writer.WriteObjectValue(CosmosDb, options);
+                ((IJsonModel<CosmosDbSettings>)CosmosDb).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    cosmosDb = CosmosDbSettings.DeserializeCosmosDbSettings(property.Value, options);
+                    cosmosDb = ModelSerializationExtensions.JsonDeserialize<CosmosDbSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

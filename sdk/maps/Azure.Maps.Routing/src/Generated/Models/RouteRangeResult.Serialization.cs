@@ -34,7 +34,7 @@ namespace Azure.Maps.Routing.Models
                     {
                         continue;
                     }
-                    reachableRange = RouteRange.DeserializeRouteRange(property.Value);
+                    reachableRange = ModelSerializationExtensions.JsonDeserialize<RouteRange>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("report"u8))
@@ -43,7 +43,7 @@ namespace Azure.Maps.Routing.Models
                     {
                         continue;
                     }
-                    report = RouteReport.DeserializeRouteReport(property.Value);
+                    report = ModelSerializationExtensions.JsonDeserialize<RouteReport>(property.Value);
                     continue;
                 }
             }

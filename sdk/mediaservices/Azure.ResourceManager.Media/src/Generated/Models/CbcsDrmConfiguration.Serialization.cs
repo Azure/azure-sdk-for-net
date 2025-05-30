@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(FairPlay))
             {
                 writer.WritePropertyName("fairPlay"u8);
-                writer.WriteObjectValue(FairPlay, options);
+                ((IJsonModel<StreamingPolicyFairPlayConfiguration>)FairPlay).Write(writer, options);
             }
             if (Optional.IsDefined(PlayReady))
             {
                 writer.WritePropertyName("playReady"u8);
-                writer.WriteObjectValue(PlayReady, options);
+                ((IJsonModel<StreamingPolicyPlayReadyConfiguration>)PlayReady).Write(writer, options);
             }
             if (Optional.IsDefined(Widevine))
             {
                 writer.WritePropertyName("widevine"u8);
-                writer.WriteObjectValue(Widevine, options);
+                ((IJsonModel<StreamingPolicyWidevineConfiguration>)Widevine).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    fairPlay = StreamingPolicyFairPlayConfiguration.DeserializeStreamingPolicyFairPlayConfiguration(property.Value, options);
+                    fairPlay = ModelSerializationExtensions.JsonDeserialize<StreamingPolicyFairPlayConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("playReady"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    playReady = StreamingPolicyPlayReadyConfiguration.DeserializeStreamingPolicyPlayReadyConfiguration(property.Value, options);
+                    playReady = ModelSerializationExtensions.JsonDeserialize<StreamingPolicyPlayReadyConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("widevine"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    widevine = StreamingPolicyWidevineConfiguration.DeserializeStreamingPolicyWidevineConfiguration(property.Value, options);
+                    widevine = ModelSerializationExtensions.JsonDeserialize<StreamingPolicyWidevineConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

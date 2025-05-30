@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in PlansContext)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContextAndPlansDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

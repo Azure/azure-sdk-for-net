@@ -31,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (property.NameEquals("series"u8))
                 {
-                    series = SeriesIdentity.DeserializeSeriesIdentity(property.Value);
+                    series = ModelSerializationExtensions.JsonDeserialize<SeriesIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("timestampList"u8))

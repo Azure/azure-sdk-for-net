@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteBooleanValue(IsDefault.Value);
             }
             writer.WritePropertyName("credentials"u8);
-            writer.WriteObjectValue(Credentials, options);
+            ((IJsonModel<MachineLearningDatastoreCredentials>)Credentials).Write(writer, options);
         }
 
         MachineLearningDatastoreProperties IJsonModel<MachineLearningDatastoreProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

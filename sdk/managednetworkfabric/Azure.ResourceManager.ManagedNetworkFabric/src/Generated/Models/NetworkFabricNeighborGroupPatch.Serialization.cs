@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination, options);
+                ((IJsonModel<NeighborGroupDestination>)Destination).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            destination = NeighborGroupDestination.DeserializeNeighborGroupDestination(property0.Value, options);
+                            destination = ModelSerializationExtensions.JsonDeserialize<NeighborGroupDestination>(property0.Value);
                             continue;
                         }
                     }

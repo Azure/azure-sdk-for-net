@@ -43,25 +43,24 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<MachineLearningSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(SubResource))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                JsonSerializer.Serialize(writer, SubResource);
+                ((IJsonModel<SubResource>)SubResource).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState, options);
+                ((IJsonModel<MachineLearningPrivateLinkServiceConnectionState>)ConnectionState).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -113,7 +112,7 @@ namespace Azure.ResourceManager.MachineLearning
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -122,7 +121,7 @@ namespace Azure.ResourceManager.MachineLearning
                     {
                         continue;
                     }
-                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<MachineLearningSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -165,7 +164,7 @@ namespace Azure.ResourceManager.MachineLearning
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -183,7 +182,7 @@ namespace Azure.ResourceManager.MachineLearning
                             {
                                 continue;
                             }
-                            privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
+                            privateEndpoint = ModelSerializationExtensions.JsonDeserialize<SubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))
@@ -192,7 +191,7 @@ namespace Azure.ResourceManager.MachineLearning
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = MachineLearningPrivateLinkServiceConnectionState.DeserializeMachineLearningPrivateLinkServiceConnectionState(property0.Value, options);
+                            privateLinkServiceConnectionState = ModelSerializationExtensions.JsonDeserialize<MachineLearningPrivateLinkServiceConnectionState>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

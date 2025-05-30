@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(TerminalServerConfiguration))
             {
                 writer.WritePropertyName("terminalServerConfiguration"u8);
-                writer.WriteObjectValue(TerminalServerConfiguration, options);
+                ((IJsonModel<NetworkFabricPatchablePropertiesTerminalServerConfiguration>)TerminalServerConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ManagementNetworkConfiguration))
             {
                 writer.WritePropertyName("managementNetworkConfiguration"u8);
-                writer.WriteObjectValue(ManagementNetworkConfiguration, options);
+                ((IJsonModel<ManagementNetworkConfigurationPatchableProperties>)ManagementNetworkConfiguration).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            terminalServerConfiguration = NetworkFabricPatchablePropertiesTerminalServerConfiguration.DeserializeNetworkFabricPatchablePropertiesTerminalServerConfiguration(property0.Value, options);
+                            terminalServerConfiguration = ModelSerializationExtensions.JsonDeserialize<NetworkFabricPatchablePropertiesTerminalServerConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("managementNetworkConfiguration"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            managementNetworkConfiguration = ManagementNetworkConfigurationPatchableProperties.DeserializeManagementNetworkConfigurationPatchableProperties(property0.Value, options);
+                            managementNetworkConfiguration = ModelSerializationExtensions.JsonDeserialize<ManagementNetworkConfigurationPatchableProperties>(property0.Value);
                             continue;
                         }
                     }

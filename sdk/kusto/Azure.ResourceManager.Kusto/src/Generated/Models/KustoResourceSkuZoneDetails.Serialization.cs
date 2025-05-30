@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<KustoResourceSkuCapabilities>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

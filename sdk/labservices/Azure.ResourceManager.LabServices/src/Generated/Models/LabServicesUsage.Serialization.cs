@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.LabServices.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
+                ((IJsonModel<LabServicesUsageName>)Name).Write(writer, options);
             }
             if (Optional.IsDefined(Id))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     {
                         continue;
                     }
-                    name = LabServicesUsageName.DeserializeLabServicesUsageName(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<LabServicesUsageName>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

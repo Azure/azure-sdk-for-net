@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in InputAssets)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value, options);
+                        ((IJsonModel<MonitoringInputDataBase>)item.Value).Write(writer, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Inputs)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value, options);
+                        ((IJsonModel<MachineLearningJobInput>)item.Value).Write(writer, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartArray();
             foreach (var item in MetricThresholds)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<CustomMetricThreshold>)item).Write(writer, options);
             }
             writer.WriteEndArray();
         }

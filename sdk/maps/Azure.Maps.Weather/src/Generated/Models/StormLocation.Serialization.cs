@@ -43,7 +43,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    location = LatLongPair.DeserializeLatLongPair(property.Value);
+                    location = ModelSerializationExtensions.JsonDeserialize<LatLongPair>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("maxWindGust"u8))
@@ -52,7 +52,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    maxWindGust = WeatherValue.DeserializeWeatherValue(property.Value);
+                    maxWindGust = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sustainedWind"u8))
@@ -61,7 +61,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    sustainedWind = WeatherValue.DeserializeWeatherValue(property.Value);
+                    sustainedWind = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("minimumPressure"u8))
@@ -70,7 +70,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    minimumPressure = WeatherValue.DeserializeWeatherValue(property.Value);
+                    minimumPressure = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("movement"u8))
@@ -79,7 +79,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    movement = WindDetails.DeserializeWindDetails(property.Value);
+                    movement = ModelSerializationExtensions.JsonDeserialize<WindDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))

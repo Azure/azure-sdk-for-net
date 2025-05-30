@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
-                writer.WriteObjectValue(Context, options);
+                ((IJsonModel<NotificationContext>)Context).Write(writer, options);
             }
             writer.WritePropertyName("state"u8);
             writer.WriteStringValue(State);
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in ActionDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NotificationActionDetail>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    context = NotificationContext.DeserializeNotificationContext(property.Value, options);
+                    context = ModelSerializationExtensions.JsonDeserialize<NotificationContext>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("state"u8))

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    dataSource = RuleDataSource.DeserializeRuleDataSource(property.Value, options);
+                    dataSource = ModelSerializationExtensions.JsonDeserialize<RuleDataSource>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

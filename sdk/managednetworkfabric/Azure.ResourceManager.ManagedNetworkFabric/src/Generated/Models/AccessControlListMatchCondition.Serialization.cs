@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(PortCondition))
             {
                 writer.WritePropertyName("portCondition"u8);
-                writer.WriteObjectValue(PortCondition, options);
+                ((IJsonModel<AccessControlListPortCondition>)PortCondition).Write(writer, options);
             }
         }
 
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    portCondition = AccessControlListPortCondition.DeserializeAccessControlListPortCondition(property.Value, options);
+                    portCondition = ModelSerializationExtensions.JsonDeserialize<AccessControlListPortCondition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("protocolTypes"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    vlanMatchCondition = VlanMatchCondition.DeserializeVlanMatchCondition(property.Value, options);
+                    vlanMatchCondition = ModelSerializationExtensions.JsonDeserialize<VlanMatchCondition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ipCondition"u8))
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    ipCondition = IPMatchCondition.DeserializeIPMatchCondition(property.Value, options);
+                    ipCondition = ModelSerializationExtensions.JsonDeserialize<IPMatchCondition>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

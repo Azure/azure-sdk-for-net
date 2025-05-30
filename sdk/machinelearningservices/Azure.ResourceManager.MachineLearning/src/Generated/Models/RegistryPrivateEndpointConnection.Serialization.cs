@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (PrivateEndpoint != null)
                 {
                     writer.WritePropertyName("privateEndpoint"u8);
-                    writer.WriteObjectValue(PrivateEndpoint, options);
+                    ((IJsonModel<RegistryPrivateEndpoint>)PrivateEndpoint).Write(writer, options);
                 }
                 else
                 {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (RegistryPrivateLinkServiceConnectionState != null)
                 {
                     writer.WritePropertyName("registryPrivateLinkServiceConnectionState"u8);
-                    writer.WriteObjectValue(RegistryPrivateLinkServiceConnectionState, options);
+                    ((IJsonModel<RegistryPrivateLinkServiceConnectionState>)RegistryPrivateLinkServiceConnectionState).Write(writer, options);
                 }
                 else
                 {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                                 privateEndpoint = null;
                                 continue;
                             }
-                            privateEndpoint = RegistryPrivateEndpoint.DeserializeRegistryPrivateEndpoint(property0.Value, options);
+                            privateEndpoint = ModelSerializationExtensions.JsonDeserialize<RegistryPrivateEndpoint>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("registryPrivateLinkServiceConnectionState"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                                 registryPrivateLinkServiceConnectionState = null;
                                 continue;
                             }
-                            registryPrivateLinkServiceConnectionState = RegistryPrivateLinkServiceConnectionState.DeserializeRegistryPrivateLinkServiceConnectionState(property0.Value, options);
+                            registryPrivateLinkServiceConnectionState = ModelSerializationExtensions.JsonDeserialize<RegistryPrivateLinkServiceConnectionState>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

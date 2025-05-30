@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    eventHub = DataImportSourcesEventHub.DeserializeDataImportSourcesEventHub(property.Value, options);
+                    eventHub = ModelSerializationExtensions.JsonDeserialize<DataImportSourcesEventHub>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

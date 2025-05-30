@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             writer.WriteStartObject();
             writer.WritePropertyName("parameters"u8);
-            writer.WriteObjectValue<AzureSQLConnectionStringParam>(Parameters);
+            JsonSerializer.Serialize(writer, Parameters);
             writer.WritePropertyName("dataSourceCredentialType"u8);
             writer.WriteStringValue(CredentialKind.ToString());
             writer.WritePropertyName("dataSourceCredentialName"u8);
@@ -45,7 +45,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = AzureSQLConnectionStringParam.DeserializeAzureSQLConnectionStringParam(property.Value);
+                    parameters = ModelSerializationExtensions.JsonDeserialize<AzureSQLConnectionStringParam>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataSourceCredentialType"u8))

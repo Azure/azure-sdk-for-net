@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(IsolationDomainProperties))
             {
                 writer.WritePropertyName("isolationDomainProperties"u8);
-                writer.WriteObjectValue(IsolationDomainProperties, options);
+                ((IJsonModel<IsolationDomainProperties>)IsolationDomainProperties).Write(writer, options);
             }
             if (Optional.IsDefined(DestinationTapRuleId))
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    isolationDomainProperties = IsolationDomainProperties.DeserializeIsolationDomainProperties(property.Value, options);
+                    isolationDomainProperties = ModelSerializationExtensions.JsonDeserialize<IsolationDomainProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("destinationTapRuleId"u8))

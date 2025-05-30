@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.MySql.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<MySqlSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MySql.Models
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile, options);
+                ((IJsonModel<MySqlStorageProfile>)StorageProfile).Write(writer, options);
             }
             if (Optional.IsDefined(AdministratorLoginPassword))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.MySql.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.MySql.Models
                     {
                         continue;
                     }
-                    sku = MySqlSku.DeserializeMySqlSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<MySqlSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.MySql.Models
                             {
                                 continue;
                             }
-                            storageProfile = MySqlStorageProfile.DeserializeMySqlStorageProfile(property0.Value, options);
+                            storageProfile = ModelSerializationExtensions.JsonDeserialize<MySqlStorageProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("administratorLoginPassword"u8))

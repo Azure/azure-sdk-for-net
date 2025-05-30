@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MonitorPrivateEndpointConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("accessModeSettings"u8);
-            writer.WriteObjectValue(AccessModeSettings, options);
+            ((IJsonModel<MonitorPrivateLinkAccessModeSettings>)AccessModeSettings).Write(writer, options);
             writer.WriteEndObject();
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Monitor
                         }
                         if (property0.NameEquals("accessModeSettings"u8))
                         {
-                            accessModeSettings = MonitorPrivateLinkAccessModeSettings.DeserializeMonitorPrivateLinkAccessModeSettings(property0.Value, options);
+                            accessModeSettings = ModelSerializationExtensions.JsonDeserialize<MonitorPrivateLinkAccessModeSettings>(property0.Value);
                             continue;
                         }
                     }

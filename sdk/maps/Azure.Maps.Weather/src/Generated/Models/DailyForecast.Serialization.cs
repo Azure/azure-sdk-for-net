@@ -47,7 +47,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    temperature = WeatherValueRange.DeserializeWeatherValueRange(property.Value);
+                    temperature = ModelSerializationExtensions.JsonDeserialize<WeatherValueRange>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("realFeelTemperature"u8))
@@ -56,7 +56,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    realFeelTemperature = WeatherValueRange.DeserializeWeatherValueRange(property.Value);
+                    realFeelTemperature = ModelSerializationExtensions.JsonDeserialize<WeatherValueRange>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("realFeelTemperatureShade"u8))
@@ -65,7 +65,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    realFeelTemperatureShade = WeatherValueRange.DeserializeWeatherValueRange(property.Value);
+                    realFeelTemperatureShade = ModelSerializationExtensions.JsonDeserialize<WeatherValueRange>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("hoursOfSun"u8))
@@ -83,7 +83,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    degreeDaySummary = DegreeDaySummary.DeserializeDegreeDaySummary(property.Value);
+                    degreeDaySummary = ModelSerializationExtensions.JsonDeserialize<DegreeDaySummary>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("airAndPollen"u8))
@@ -106,7 +106,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    day = DailyForecastDetail.DeserializeDailyForecastDetail(property.Value);
+                    day = ModelSerializationExtensions.JsonDeserialize<DailyForecastDetail>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("night"u8))
@@ -115,7 +115,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    night = DailyForecastDetail.DeserializeDailyForecastDetail(property.Value);
+                    night = ModelSerializationExtensions.JsonDeserialize<DailyForecastDetail>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sources"u8))

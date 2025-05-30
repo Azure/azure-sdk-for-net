@@ -30,7 +30,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    summary = MinuteForecastSummary.DeserializeMinuteForecastSummary(property.Value);
+                    summary = ModelSerializationExtensions.JsonDeserialize<MinuteForecastSummary>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("intervalSummaries"u8))

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Logic
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<IntegrationAccountBatchConfigurationProperties>)Properties).Write(writer, options);
         }
 
         IntegrationAccountBatchConfigurationData IJsonModel<IntegrationAccountBatchConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Logic
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = IntegrationAccountBatchConfigurationProperties.DeserializeIntegrationAccountBatchConfigurationProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<IntegrationAccountBatchConfigurationProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Logic
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Queries))
             {
                 writer.WritePropertyName("queries"u8);
-                writer.WriteObjectValue(Queries, options);
+                ((IJsonModel<LogicWorkflowTriggerCallbackQueryParameterInfo>)Queries).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    queries = LogicWorkflowTriggerCallbackQueryParameterInfo.DeserializeLogicWorkflowTriggerCallbackQueryParameterInfo(property.Value, options);
+                    queries = ModelSerializationExtensions.JsonDeserialize<LogicWorkflowTriggerCallbackQueryParameterInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

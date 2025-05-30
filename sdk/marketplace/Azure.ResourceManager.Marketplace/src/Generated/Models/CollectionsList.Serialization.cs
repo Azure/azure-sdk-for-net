@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PrivateStoreCollectionInfoData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPExtendedCommunityRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IPExtendedCommunityRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

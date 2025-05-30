@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WritePropertyName("dataCollectionRule"u8);
             writer.WriteStringValue(DataCollectionRule);
             writer.WritePropertyName("schema"u8);
-            writer.WriteObjectValue(Schema, options);
+            ((IJsonModel<MonitorWorkspaceLogsSchemaMap>)Schema).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("schema"u8))
                 {
-                    schema = MonitorWorkspaceLogsSchemaMap.DeserializeMonitorWorkspaceLogsSchemaMap(property.Value, options);
+                    schema = ModelSerializationExtensions.JsonDeserialize<MonitorWorkspaceLogsSchemaMap>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

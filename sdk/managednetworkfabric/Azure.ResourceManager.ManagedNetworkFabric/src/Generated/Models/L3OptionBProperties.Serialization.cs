@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(RouteTargets))
             {
                 writer.WritePropertyName("routeTargets"u8);
-                writer.WriteObjectValue(RouteTargets, options);
+                ((IJsonModel<RouteTargetInformation>)RouteTargets).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    routeTargets = RouteTargetInformation.DeserializeRouteTargetInformation(property.Value, options);
+                    routeTargets = ModelSerializationExtensions.JsonDeserialize<RouteTargetInformation>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -35,24 +35,24 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WritePropertyName("validationSettings"u8);
-            writer.WriteObjectValue(ValidationSettings, options);
+            ((IJsonModel<EdifactValidationSettings>)ValidationSettings).Write(writer, options);
             writer.WritePropertyName("framingSettings"u8);
-            writer.WriteObjectValue(FramingSettings, options);
+            ((IJsonModel<EdifactFramingSettings>)FramingSettings).Write(writer, options);
             writer.WritePropertyName("envelopeSettings"u8);
-            writer.WriteObjectValue(EnvelopeSettings, options);
+            ((IJsonModel<EdifactEnvelopeSettings>)EnvelopeSettings).Write(writer, options);
             writer.WritePropertyName("acknowledgementSettings"u8);
-            writer.WriteObjectValue(AcknowledgementSettings, options);
+            ((IJsonModel<EdifactAcknowledgementSettings>)AcknowledgementSettings).Write(writer, options);
             writer.WritePropertyName("messageFilter"u8);
-            writer.WriteObjectValue(MessageFilter, options);
+            ((IJsonModel<EdifactMessageFilter>)MessageFilter).Write(writer, options);
             writer.WritePropertyName("processingSettings"u8);
-            writer.WriteObjectValue(ProcessingSettings, options);
+            ((IJsonModel<EdifactProcessingSettings>)ProcessingSettings).Write(writer, options);
             if (Optional.IsCollectionDefined(EnvelopeOverrides))
             {
                 writer.WritePropertyName("envelopeOverrides"u8);
                 writer.WriteStartArray();
                 foreach (var item in EnvelopeOverrides)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EdifactEnvelopeOverride>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in MessageFilterList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EdifactMessageIdentifier>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartArray();
             foreach (var item in SchemaReferences)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<EdifactSchemaReference>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(ValidationOverrides))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationOverrides)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EdifactValidationOverride>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in EdifactDelimiterOverrides)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EdifactDelimiterOverride>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -147,32 +147,32 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 if (property.NameEquals("validationSettings"u8))
                 {
-                    validationSettings = EdifactValidationSettings.DeserializeEdifactValidationSettings(property.Value, options);
+                    validationSettings = ModelSerializationExtensions.JsonDeserialize<EdifactValidationSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("framingSettings"u8))
                 {
-                    framingSettings = EdifactFramingSettings.DeserializeEdifactFramingSettings(property.Value, options);
+                    framingSettings = ModelSerializationExtensions.JsonDeserialize<EdifactFramingSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("envelopeSettings"u8))
                 {
-                    envelopeSettings = EdifactEnvelopeSettings.DeserializeEdifactEnvelopeSettings(property.Value, options);
+                    envelopeSettings = ModelSerializationExtensions.JsonDeserialize<EdifactEnvelopeSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("acknowledgementSettings"u8))
                 {
-                    acknowledgementSettings = EdifactAcknowledgementSettings.DeserializeEdifactAcknowledgementSettings(property.Value, options);
+                    acknowledgementSettings = ModelSerializationExtensions.JsonDeserialize<EdifactAcknowledgementSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("messageFilter"u8))
                 {
-                    messageFilter = EdifactMessageFilter.DeserializeEdifactMessageFilter(property.Value, options);
+                    messageFilter = ModelSerializationExtensions.JsonDeserialize<EdifactMessageFilter>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("processingSettings"u8))
                 {
-                    processingSettings = EdifactProcessingSettings.DeserializeEdifactProcessingSettings(property.Value, options);
+                    processingSettings = ModelSerializationExtensions.JsonDeserialize<EdifactProcessingSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("envelopeOverrides"u8))

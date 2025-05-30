@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Maps
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<MapsCreatorProperties>)Properties).Write(writer, options);
         }
 
         MapsCreatorData IJsonModel<MapsCreatorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Maps
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = MapsCreatorProperties.DeserializeMapsCreatorProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<MapsCreatorProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Maps
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

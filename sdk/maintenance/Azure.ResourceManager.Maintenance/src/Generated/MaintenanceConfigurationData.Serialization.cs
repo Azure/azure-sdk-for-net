@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Maintenance
             if (Optional.IsDefined(InstallPatches))
             {
                 writer.WritePropertyName("installPatches"u8);
-                writer.WriteObjectValue(InstallPatches, options);
+                ((IJsonModel<MaintenancePatchConfiguration>)InstallPatches).Write(writer, options);
             }
             writer.WritePropertyName("maintenanceWindow"u8);
             writer.WriteStartObject();
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Maintenance
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Maintenance
                             {
                                 continue;
                             }
-                            installPatches = MaintenancePatchConfiguration.DeserializeMaintenancePatchConfiguration(property0.Value, options);
+                            installPatches = ModelSerializationExtensions.JsonDeserialize<MaintenancePatchConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("maintenanceWindow"u8))

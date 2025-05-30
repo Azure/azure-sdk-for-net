@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("computeIdentity"u8);
-            writer.WriteObjectValue(ComputeIdentity, options);
+            ((IJsonModel<MonitorComputeIdentityBase>)ComputeIdentity).Write(writer, options);
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WritePropertyName("runtimeVersion"u8);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("computeIdentity"u8))
                 {
-                    computeIdentity = MonitorComputeIdentityBase.DeserializeMonitorComputeIdentityBase(property.Value, options);
+                    computeIdentity = ModelSerializationExtensions.JsonDeserialize<MonitorComputeIdentityBase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))

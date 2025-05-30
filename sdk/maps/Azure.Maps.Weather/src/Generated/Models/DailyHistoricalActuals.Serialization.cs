@@ -42,7 +42,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    temperature = WeatherValueMaxMinAvg.DeserializeWeatherValueMaxMinAvg(property.Value);
+                    temperature = ModelSerializationExtensions.JsonDeserialize<WeatherValueMaxMinAvg>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("degreeDaySummary"u8))
@@ -51,7 +51,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    degreeDaySummary = DegreeDaySummary.DeserializeDegreeDaySummary(property.Value);
+                    degreeDaySummary = ModelSerializationExtensions.JsonDeserialize<DegreeDaySummary>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("precipitation"u8))
@@ -60,7 +60,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    precipitation = WeatherValue.DeserializeWeatherValue(property.Value);
+                    precipitation = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("snowfall"u8))
@@ -69,7 +69,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    snowfall = WeatherValue.DeserializeWeatherValue(property.Value);
+                    snowfall = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("snowDepth"u8))
@@ -78,7 +78,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    snowDepth = WeatherValue.DeserializeWeatherValue(property.Value);
+                    snowDepth = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
             }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (NotebookPreparationError != null)
                 {
                     writer.WritePropertyName("notebookPreparationError"u8);
-                    writer.WriteObjectValue(NotebookPreparationError, options);
+                    ((IJsonModel<MachineLearningNotebookPreparationError>)NotebookPreparationError).Write(writer, options);
                 }
                 else
                 {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         notebookPreparationError = null;
                         continue;
                     }
-                    notebookPreparationError = MachineLearningNotebookPreparationError.DeserializeMachineLearningNotebookPreparationError(property.Value, options);
+                    notebookPreparationError = ModelSerializationExtensions.JsonDeserialize<MachineLearningNotebookPreparationError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

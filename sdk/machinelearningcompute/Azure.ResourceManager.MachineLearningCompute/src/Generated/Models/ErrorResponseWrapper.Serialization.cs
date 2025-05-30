@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<ErrorResponse>)Error).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    error = ErrorResponse.DeserializeErrorResponse(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<ErrorResponse>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

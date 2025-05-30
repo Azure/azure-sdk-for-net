@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
-                writer.WriteObjectValue(Email, options);
+                ((IJsonModel<EmailNotification>)Email).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Webhooks))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Webhooks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WebhookNotification>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    email = EmailNotification.DeserializeEmailNotification(property.Value, options);
+                    email = ModelSerializationExtensions.JsonDeserialize<EmailNotification>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("webhooks"u8))

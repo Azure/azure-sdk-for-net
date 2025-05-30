@@ -31,7 +31,7 @@ namespace Azure.Maps.Routing.Models
                     {
                         continue;
                     }
-                    summary = RouteSummary.DeserializeRouteSummary(property.Value);
+                    summary = ModelSerializationExtensions.JsonDeserialize<RouteSummary>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("legs"u8))
@@ -68,7 +68,7 @@ namespace Azure.Maps.Routing.Models
                     {
                         continue;
                     }
-                    guidance = RouteGuidance.DeserializeRouteGuidance(property.Value);
+                    guidance = ModelSerializationExtensions.JsonDeserialize<RouteGuidance>(property.Value);
                     continue;
                 }
             }

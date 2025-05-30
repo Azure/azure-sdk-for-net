@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Migration.Assessment
             if (Optional.IsDefined(EntityUptime))
             {
                 writer.WritePropertyName("entityUptime"u8);
-                writer.WriteObjectValue(EntityUptime, options);
+                ((IJsonModel<AssessmentEntityUptime>)EntityUptime).Write(writer, options);
             }
             if (Optional.IsDefined(OptimizationLogic))
             {
@@ -82,17 +82,17 @@ namespace Azure.ResourceManager.Migration.Assessment
             if (Optional.IsDefined(AzureSqlManagedInstanceSettings))
             {
                 writer.WritePropertyName("azureSqlManagedInstanceSettings"u8);
-                writer.WriteObjectValue(AzureSqlManagedInstanceSettings, options);
+                ((IJsonModel<AssessmentSqlMISettings>)AzureSqlManagedInstanceSettings).Write(writer, options);
             }
             if (Optional.IsDefined(AzureSqlDatabaseSettings))
             {
                 writer.WritePropertyName("azureSqlDatabaseSettings"u8);
-                writer.WriteObjectValue(AzureSqlDatabaseSettings, options);
+                ((IJsonModel<AssessmentSqlDBSettings>)AzureSqlDatabaseSettings).Write(writer, options);
             }
             if (Optional.IsDefined(AzureSqlVmSettings))
             {
                 writer.WritePropertyName("azureSqlVmSettings"u8);
-                writer.WriteObjectValue(AzureSqlVmSettings, options);
+                ((IJsonModel<AssessmentSqlVmSettings>)AzureSqlVmSettings).Write(writer, options);
             }
             if (Optional.IsDefined(MultiSubnetIntent))
             {
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                             {
                                 continue;
                             }
-                            entityUptime = AssessmentEntityUptime.DeserializeAssessmentEntityUptime(property0.Value, options);
+                            entityUptime = ModelSerializationExtensions.JsonDeserialize<AssessmentEntityUptime>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("optimizationLogic"u8))
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                             {
                                 continue;
                             }
-                            azureSqlManagedInstanceSettings = AssessmentSqlMISettings.DeserializeAssessmentSqlMISettings(property0.Value, options);
+                            azureSqlManagedInstanceSettings = ModelSerializationExtensions.JsonDeserialize<AssessmentSqlMISettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("azureSqlDatabaseSettings"u8))
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                             {
                                 continue;
                             }
-                            azureSqlDatabaseSettings = AssessmentSqlDBSettings.DeserializeAssessmentSqlDBSettings(property0.Value, options);
+                            azureSqlDatabaseSettings = ModelSerializationExtensions.JsonDeserialize<AssessmentSqlDBSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("azureSqlVmSettings"u8))
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                             {
                                 continue;
                             }
-                            azureSqlVmSettings = AssessmentSqlVmSettings.DeserializeAssessmentSqlVmSettings(property0.Value, options);
+                            azureSqlVmSettings = ModelSerializationExtensions.JsonDeserialize<AssessmentSqlVmSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("multiSubnetIntent"u8))

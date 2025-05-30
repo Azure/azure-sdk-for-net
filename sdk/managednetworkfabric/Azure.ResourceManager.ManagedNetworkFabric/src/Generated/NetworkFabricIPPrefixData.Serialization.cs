@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in IPPrefixRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IPPrefixRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

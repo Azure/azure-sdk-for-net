@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(LivenessRoute))
             {
                 writer.WritePropertyName("livenessRoute"u8);
-                writer.WriteObjectValue(LivenessRoute, options);
+                ((IJsonModel<MachineLearningInferenceContainerRoute>)LivenessRoute).Write(writer, options);
             }
             if (Optional.IsDefined(ReadinessRoute))
             {
                 writer.WritePropertyName("readinessRoute"u8);
-                writer.WriteObjectValue(ReadinessRoute, options);
+                ((IJsonModel<MachineLearningInferenceContainerRoute>)ReadinessRoute).Write(writer, options);
             }
             if (Optional.IsDefined(ScoringRoute))
             {
                 writer.WritePropertyName("scoringRoute"u8);
-                writer.WriteObjectValue(ScoringRoute, options);
+                ((IJsonModel<MachineLearningInferenceContainerRoute>)ScoringRoute).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    livenessRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value, options);
+                    livenessRoute = ModelSerializationExtensions.JsonDeserialize<MachineLearningInferenceContainerRoute>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("readinessRoute"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    readinessRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value, options);
+                    readinessRoute = ModelSerializationExtensions.JsonDeserialize<MachineLearningInferenceContainerRoute>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scoringRoute"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    scoringRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value, options);
+                    scoringRoute = ModelSerializationExtensions.JsonDeserialize<MachineLearningInferenceContainerRoute>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

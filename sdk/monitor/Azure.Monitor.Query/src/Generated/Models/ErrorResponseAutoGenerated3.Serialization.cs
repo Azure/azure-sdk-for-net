@@ -22,7 +22,7 @@ namespace Azure.Monitor.Query.Models
             {
                 if (property.NameEquals("error"u8))
                 {
-                    error = ErrorInfo.DeserializeErrorInfo(property.Value);
+                    error = ModelSerializationExtensions.JsonDeserialize<ErrorInfo>(property.Value);
                     continue;
                 }
             }

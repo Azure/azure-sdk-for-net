@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Maps
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<MapsSku>)Sku).Write(writer, options);
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Maps
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<MapsAccountProperties>)Properties).Write(writer, options);
             }
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Maps
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = MapsSku.DeserializeMapsSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<MapsSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Maps
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Maps
                     {
                         continue;
                     }
-                    properties = MapsAccountProperties.DeserializeMapsAccountProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<MapsAccountProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Maps
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

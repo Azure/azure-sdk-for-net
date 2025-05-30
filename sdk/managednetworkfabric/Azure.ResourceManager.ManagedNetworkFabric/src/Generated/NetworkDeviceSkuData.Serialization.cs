@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in SupportedVersions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SupportedVersionProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in Interfaces)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetworkDeviceInterfaceProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

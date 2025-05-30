@@ -58,7 +58,7 @@ namespace Azure.Monitor.Query.Models
                     {
                         continue;
                     }
-                    name = LocalizableString.DeserializeLocalizableString(property.Value);
+                    name = ModelSerializationExtensions.JsonDeserialize<LocalizableString>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("displayDescription"u8))

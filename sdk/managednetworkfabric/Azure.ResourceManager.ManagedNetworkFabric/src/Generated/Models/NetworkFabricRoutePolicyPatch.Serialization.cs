@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in Statements)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RoutePolicyStatementProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

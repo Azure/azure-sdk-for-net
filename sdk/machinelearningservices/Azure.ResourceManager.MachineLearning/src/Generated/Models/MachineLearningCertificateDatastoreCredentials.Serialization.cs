@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WritePropertyName("thumbprint"u8);
             writer.WriteStringValue(Thumbprint);
             writer.WritePropertyName("secrets"u8);
-            writer.WriteObjectValue(Secrets, options);
+            ((IJsonModel<MachineLearningCertificateDatastoreSecrets>)Secrets).Write(writer, options);
         }
 
         MachineLearningCertificateDatastoreCredentials IJsonModel<MachineLearningCertificateDatastoreCredentials>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("secrets"u8))
                 {
-                    secrets = MachineLearningCertificateDatastoreSecrets.DeserializeMachineLearningCertificateDatastoreSecrets(property.Value, options);
+                    secrets = ModelSerializationExtensions.JsonDeserialize<MachineLearningCertificateDatastoreSecrets>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("credentialsType"u8))

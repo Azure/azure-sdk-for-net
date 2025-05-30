@@ -45,7 +45,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    location = LatLongPair.DeserializeLatLongPair(property.Value);
+                    location = ModelSerializationExtensions.JsonDeserialize<LatLongPair>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("maxWindGust"u8))
@@ -54,7 +54,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    maxWindGust = WeatherValue.DeserializeWeatherValue(property.Value);
+                    maxWindGust = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sustainedWind"u8))
@@ -63,7 +63,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    sustainedWind = WeatherValue.DeserializeWeatherValue(property.Value);
+                    sustainedWind = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -77,7 +77,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    window = WeatherWindow.DeserializeWeatherWindow(property.Value);
+                    window = ModelSerializationExtensions.JsonDeserialize<WeatherWindow>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("windRadiiSummary"u8))

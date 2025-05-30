@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Deinterlace))
             {
                 writer.WritePropertyName("deinterlace"u8);
-                writer.WriteObjectValue(Deinterlace, options);
+                ((IJsonModel<DeinterlaceSettings>)Deinterlace).Write(writer, options);
             }
             if (Optional.IsDefined(Rotation))
             {
@@ -47,17 +47,17 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Crop))
             {
                 writer.WritePropertyName("crop"u8);
-                writer.WriteObjectValue(Crop, options);
+                ((IJsonModel<RectangularWindow>)Crop).Write(writer, options);
             }
             if (Optional.IsDefined(FadeIn))
             {
                 writer.WritePropertyName("fadeIn"u8);
-                writer.WriteObjectValue(FadeIn, options);
+                ((IJsonModel<FadeOptions>)FadeIn).Write(writer, options);
             }
             if (Optional.IsDefined(FadeOut))
             {
                 writer.WritePropertyName("fadeOut"u8);
-                writer.WriteObjectValue(FadeOut, options);
+                ((IJsonModel<FadeOptions>)FadeOut).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Overlays))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Overlays)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MediaOverlayBase>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    deinterlace = DeinterlaceSettings.DeserializeDeinterlaceSettings(property.Value, options);
+                    deinterlace = ModelSerializationExtensions.JsonDeserialize<DeinterlaceSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rotation"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    crop = RectangularWindow.DeserializeRectangularWindow(property.Value, options);
+                    crop = ModelSerializationExtensions.JsonDeserialize<RectangularWindow>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("fadeIn"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    fadeIn = FadeOptions.DeserializeFadeOptions(property.Value, options);
+                    fadeIn = ModelSerializationExtensions.JsonDeserialize<FadeOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("fadeOut"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    fadeOut = FadeOptions.DeserializeFadeOptions(property.Value, options);
+                    fadeOut = ModelSerializationExtensions.JsonDeserialize<FadeOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("overlays"u8))

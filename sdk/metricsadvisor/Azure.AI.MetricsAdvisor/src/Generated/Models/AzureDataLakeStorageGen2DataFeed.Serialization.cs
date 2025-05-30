@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataSourceParameter"u8);
-            writer.WriteObjectValue(DataSourceParameter);
+            JsonSerializer.Serialize(writer, DataSourceParameter);
             writer.WritePropertyName("dataSourceType"u8);
             writer.WriteStringValue(DataSourceType.ToString());
             writer.WritePropertyName("dataFeedName"u8);
@@ -46,7 +46,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartArray();
             foreach (var item in Metrics)
             {
-                writer.WriteObjectValue(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Dimension))
@@ -55,7 +55,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WriteStartArray();
                 foreach (var item in Dimension)
                 {
-                    writer.WriteObjectValue<DataFeedDimension>(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -205,7 +205,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (property.NameEquals("dataSourceParameter"u8))
                 {
-                    dataSourceParameter = AzureDataLakeStorageGen2Parameter.DeserializeAzureDataLakeStorageGen2Parameter(property.Value);
+                    dataSourceParameter = ModelSerializationExtensions.JsonDeserialize<AzureDataLakeStorageGen2Parameter>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataSourceType"u8))

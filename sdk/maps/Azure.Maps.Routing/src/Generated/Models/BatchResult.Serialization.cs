@@ -27,7 +27,7 @@ namespace Azure.Maps.Routing.Models
                     {
                         continue;
                     }
-                    summary = BatchResultSummary.DeserializeBatchResultSummary(property.Value);
+                    summary = ModelSerializationExtensions.JsonDeserialize<BatchResultSummary>(property.Value);
                     continue;
                 }
             }

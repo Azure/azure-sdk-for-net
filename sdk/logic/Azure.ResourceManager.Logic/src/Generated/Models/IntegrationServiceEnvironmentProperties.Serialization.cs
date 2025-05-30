@@ -52,17 +52,17 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(EndpointsConfiguration))
             {
                 writer.WritePropertyName("endpointsConfiguration"u8);
-                writer.WriteObjectValue(EndpointsConfiguration, options);
+                ((IJsonModel<FlowEndpointsConfiguration>)EndpointsConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
-                writer.WriteObjectValue(NetworkConfiguration, options);
+                ((IJsonModel<IntegrationServiceNetworkConfiguration>)NetworkConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptionConfiguration))
             {
                 writer.WritePropertyName("encryptionConfiguration"u8);
-                writer.WriteObjectValue(EncryptionConfiguration, options);
+                ((IJsonModel<IntegrationServiceEnvironmenEncryptionConfiguration>)EncryptionConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    endpointsConfiguration = FlowEndpointsConfiguration.DeserializeFlowEndpointsConfiguration(property.Value, options);
+                    endpointsConfiguration = ModelSerializationExtensions.JsonDeserialize<FlowEndpointsConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("networkConfiguration"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    networkConfiguration = IntegrationServiceNetworkConfiguration.DeserializeIntegrationServiceNetworkConfiguration(property.Value, options);
+                    networkConfiguration = ModelSerializationExtensions.JsonDeserialize<IntegrationServiceNetworkConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("encryptionConfiguration"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    encryptionConfiguration = IntegrationServiceEnvironmenEncryptionConfiguration.DeserializeIntegrationServiceEnvironmenEncryptionConfiguration(property.Value, options);
+                    encryptionConfiguration = ModelSerializationExtensions.JsonDeserialize<IntegrationServiceEnvironmenEncryptionConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

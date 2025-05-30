@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         checkpointModel = null;
                         continue;
                     }
-                    checkpointModel = MachineLearningFlowModelJobInput.DeserializeMachineLearningFlowModelJobInput(property.Value, options);
+                    checkpointModel = ModelSerializationExtensions.JsonDeserialize<MachineLearningFlowModelJobInput>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("distributed"u8))

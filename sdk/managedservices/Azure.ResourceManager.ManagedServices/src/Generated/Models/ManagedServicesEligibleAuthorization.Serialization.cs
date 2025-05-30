@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             if (Optional.IsDefined(JustInTimeAccessPolicy))
             {
                 writer.WritePropertyName("justInTimeAccessPolicy"u8);
-                writer.WriteObjectValue(JustInTimeAccessPolicy, options);
+                ((IJsonModel<ManagedServicesJustInTimeAccessPolicy>)JustInTimeAccessPolicy).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     {
                         continue;
                     }
-                    justInTimeAccessPolicy = ManagedServicesJustInTimeAccessPolicy.DeserializeManagedServicesJustInTimeAccessPolicy(property.Value, options);
+                    justInTimeAccessPolicy = ModelSerializationExtensions.JsonDeserialize<ManagedServicesJustInTimeAccessPolicy>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

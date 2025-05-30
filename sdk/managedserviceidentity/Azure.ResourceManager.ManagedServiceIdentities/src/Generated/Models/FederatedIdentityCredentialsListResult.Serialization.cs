@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FederatedIdentityCredentialData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

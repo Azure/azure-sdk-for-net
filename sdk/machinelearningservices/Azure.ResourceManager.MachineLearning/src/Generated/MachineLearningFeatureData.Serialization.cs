@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<MachineLearningFeatureProperties>)Properties).Write(writer, options);
         }
 
         MachineLearningFeatureData IJsonModel<MachineLearningFeatureData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = MachineLearningFeatureProperties.DeserializeMachineLearningFeatureProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<MachineLearningFeatureProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

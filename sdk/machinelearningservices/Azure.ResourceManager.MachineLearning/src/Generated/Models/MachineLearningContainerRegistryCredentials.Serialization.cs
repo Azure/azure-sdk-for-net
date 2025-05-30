@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in Passwords)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MachineLearningPasswordDetail>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

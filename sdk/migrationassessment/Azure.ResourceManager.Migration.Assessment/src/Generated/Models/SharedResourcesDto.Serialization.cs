@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 writer.WriteStartArray();
                 foreach (var item in SharedDataDisks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AssessmentManagedDiskSkuDto>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 writer.WriteStartArray();
                 foreach (var item in SharedLogDisks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AssessmentManagedDiskSkuDto>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 writer.WriteStartArray();
                 foreach (var item in SharedTempDBDisks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AssessmentManagedDiskSkuDto>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
             if (options.Format != "W" && Optional.IsDefined(QuorumWitness))
             {
                 writer.WritePropertyName("quorumWitness"u8);
-                writer.WriteObjectValue(QuorumWitness, options);
+                ((IJsonModel<QuorumWitnessDto>)QuorumWitness).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                     {
                         continue;
                     }
-                    quorumWitness = QuorumWitnessDto.DeserializeQuorumWitnessDto(property.Value, options);
+                    quorumWitness = ModelSerializationExtensions.JsonDeserialize<QuorumWitnessDto>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -35,26 +35,26 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WritePropertyName("validationSettings"u8);
-            writer.WriteObjectValue(ValidationSettings, options);
+            ((IJsonModel<X12ValidationSettings>)ValidationSettings).Write(writer, options);
             writer.WritePropertyName("framingSettings"u8);
-            writer.WriteObjectValue(FramingSettings, options);
+            ((IJsonModel<X12FramingSettings>)FramingSettings).Write(writer, options);
             writer.WritePropertyName("envelopeSettings"u8);
-            writer.WriteObjectValue(EnvelopeSettings, options);
+            ((IJsonModel<X12EnvelopeSettings>)EnvelopeSettings).Write(writer, options);
             writer.WritePropertyName("acknowledgementSettings"u8);
-            writer.WriteObjectValue(AcknowledgementSettings, options);
+            ((IJsonModel<X12AcknowledgementSettings>)AcknowledgementSettings).Write(writer, options);
             writer.WritePropertyName("messageFilter"u8);
-            writer.WriteObjectValue(MessageFilter, options);
+            ((IJsonModel<X12MessageFilter>)MessageFilter).Write(writer, options);
             writer.WritePropertyName("securitySettings"u8);
-            writer.WriteObjectValue(SecuritySettings, options);
+            ((IJsonModel<X12SecuritySettings>)SecuritySettings).Write(writer, options);
             writer.WritePropertyName("processingSettings"u8);
-            writer.WriteObjectValue(ProcessingSettings, options);
+            ((IJsonModel<X12ProcessingSettings>)ProcessingSettings).Write(writer, options);
             if (Optional.IsCollectionDefined(EnvelopeOverrides))
             {
                 writer.WritePropertyName("envelopeOverrides"u8);
                 writer.WriteStartArray();
                 foreach (var item in EnvelopeOverrides)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<X12EnvelopeOverride>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationOverrides)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<X12ValidationOverride>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in MessageFilterList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<X12MessageIdentifier>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartArray();
             foreach (var item in SchemaReferences)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<X12SchemaReference>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(X12DelimiterOverrides))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in X12DelimiterOverrides)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<X12DelimiterOverrides>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -150,37 +150,37 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 if (property.NameEquals("validationSettings"u8))
                 {
-                    validationSettings = X12ValidationSettings.DeserializeX12ValidationSettings(property.Value, options);
+                    validationSettings = ModelSerializationExtensions.JsonDeserialize<X12ValidationSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("framingSettings"u8))
                 {
-                    framingSettings = X12FramingSettings.DeserializeX12FramingSettings(property.Value, options);
+                    framingSettings = ModelSerializationExtensions.JsonDeserialize<X12FramingSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("envelopeSettings"u8))
                 {
-                    envelopeSettings = X12EnvelopeSettings.DeserializeX12EnvelopeSettings(property.Value, options);
+                    envelopeSettings = ModelSerializationExtensions.JsonDeserialize<X12EnvelopeSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("acknowledgementSettings"u8))
                 {
-                    acknowledgementSettings = X12AcknowledgementSettings.DeserializeX12AcknowledgementSettings(property.Value, options);
+                    acknowledgementSettings = ModelSerializationExtensions.JsonDeserialize<X12AcknowledgementSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("messageFilter"u8))
                 {
-                    messageFilter = X12MessageFilter.DeserializeX12MessageFilter(property.Value, options);
+                    messageFilter = ModelSerializationExtensions.JsonDeserialize<X12MessageFilter>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("securitySettings"u8))
                 {
-                    securitySettings = X12SecuritySettings.DeserializeX12SecuritySettings(property.Value, options);
+                    securitySettings = ModelSerializationExtensions.JsonDeserialize<X12SecuritySettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("processingSettings"u8))
                 {
-                    processingSettings = X12ProcessingSettings.DeserializeX12ProcessingSettings(property.Value, options);
+                    processingSettings = ModelSerializationExtensions.JsonDeserialize<X12ProcessingSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("envelopeOverrides"u8))

@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.ManagedNetwork
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteObjectValue(Scope, options);
+                ((IJsonModel<Scope>)Scope).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Connectivity))
             {
                 writer.WritePropertyName("connectivity"u8);
-                writer.WriteObjectValue(Connectivity, options);
+                ((IJsonModel<ConnectivityCollection>)Connectivity).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                             {
                                 continue;
                             }
-                            scope = Scope.DeserializeScope(property0.Value, options);
+                            scope = ModelSerializationExtensions.JsonDeserialize<Scope>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("connectivity"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                             {
                                 continue;
                             }
-                            connectivity = ConnectivityCollection.DeserializeConnectivityCollection(property0.Value, options);
+                            connectivity = ModelSerializationExtensions.JsonDeserialize<ConnectivityCollection>(property0.Value);
                             continue;
                         }
                     }

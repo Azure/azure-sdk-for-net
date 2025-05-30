@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Scripts))
             {
                 writer.WritePropertyName("scripts"u8);
-                writer.WriteObjectValue(Scripts, options);
+                ((IJsonModel<MachineLearningScriptsToExecute>)Scripts).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    scripts = MachineLearningScriptsToExecute.DeserializeMachineLearningScriptsToExecute(property.Value, options);
+                    scripts = ModelSerializationExtensions.JsonDeserialize<MachineLearningScriptsToExecute>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

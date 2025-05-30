@@ -43,7 +43,7 @@ namespace Azure.Maps.Rendering
                     {
                         continue;
                     }
-                    country = RegionalCopyrightCountry.DeserializeRegionalCopyrightCountry(property.Value);
+                    country = ModelSerializationExtensions.JsonDeserialize<RegionalCopyrightCountry>(property.Value);
                     continue;
                 }
             }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in DelegatedSubnetsUsage)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MySqlFlexibleServerDelegatedSubnetUsage>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         threshold = null;
                         continue;
                     }
-                    threshold = MonitoringThreshold.DeserializeMonitoringThreshold(property.Value, options);
+                    threshold = ModelSerializationExtensions.JsonDeserialize<MonitoringThreshold>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

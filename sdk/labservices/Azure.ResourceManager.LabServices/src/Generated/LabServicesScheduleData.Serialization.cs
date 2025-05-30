@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.LabServices
             if (Optional.IsDefined(RecurrencePattern))
             {
                 writer.WritePropertyName("recurrencePattern"u8);
-                writer.WriteObjectValue(RecurrencePattern, options);
+                ((IJsonModel<LabServicesRecurrencePattern>)RecurrencePattern).Write(writer, options);
             }
             if (Optional.IsDefined(TimeZoneId))
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.LabServices
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.LabServices
                             {
                                 continue;
                             }
-                            recurrencePattern = LabServicesRecurrencePattern.DeserializeLabServicesRecurrencePattern(property0.Value, options);
+                            recurrencePattern = ModelSerializationExtensions.JsonDeserialize<LabServicesRecurrencePattern>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("timeZoneId"u8))

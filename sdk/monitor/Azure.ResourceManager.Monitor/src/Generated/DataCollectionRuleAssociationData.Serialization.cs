@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Monitor
             if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata, options);
+                ((IJsonModel<DataCollectionRuleAssociationMetadata>)Metadata).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            metadata = DataCollectionRuleAssociationMetadata.DeserializeDataCollectionRuleAssociationMetadata(property0.Value, options);
+                            metadata = ModelSerializationExtensions.JsonDeserialize<DataCollectionRuleAssociationMetadata>(property0.Value);
                             continue;
                         }
                     }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in Succeeded)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PrivateStoreCollectionDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in Failed)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PrivateStoreCollectionDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

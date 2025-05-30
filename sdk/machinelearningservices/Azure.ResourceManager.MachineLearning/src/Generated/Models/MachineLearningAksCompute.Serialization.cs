@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<MachineLearningAksComputeProperties>)Properties).Write(writer, options);
             }
         }
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    properties = MachineLearningAksComputeProperties.DeserializeMachineLearningAksComputeProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<MachineLearningAksComputeProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("computeType"u8))

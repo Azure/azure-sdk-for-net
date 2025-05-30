@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (options.Format != "W" && Optional.IsDefined(ContentHash))
             {
                 writer.WritePropertyName("contentHash"u8);
-                writer.WriteObjectValue(ContentHash, options);
+                ((IJsonModel<LogicContentHash>)ContentHash).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    contentHash = LogicContentHash.DeserializeLogicContentHash(property.Value, options);
+                    contentHash = ModelSerializationExtensions.JsonDeserialize<LogicContentHash>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))

@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(OptionBProperties))
             {
                 writer.WritePropertyName("optionBProperties"u8);
-                writer.WriteObjectValue(OptionBProperties, options);
+                ((IJsonModel<OptionBProperties>)OptionBProperties).Write(writer, options);
             }
             if (Optional.IsDefined(OptionAProperties))
             {
                 writer.WritePropertyName("optionAProperties"u8);
-                writer.WriteObjectValue(OptionAProperties, options);
+                ((IJsonModel<VpnConfigurationPatchableOptionAProperties>)OptionAProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    optionBProperties = OptionBProperties.DeserializeOptionBProperties(property.Value, options);
+                    optionBProperties = ModelSerializationExtensions.JsonDeserialize<OptionBProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("optionAProperties"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    optionAProperties = VpnConfigurationPatchableOptionAProperties.DeserializeVpnConfigurationPatchableOptionAProperties(property.Value, options);
+                    optionAProperties = ModelSerializationExtensions.JsonDeserialize<VpnConfigurationPatchableOptionAProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

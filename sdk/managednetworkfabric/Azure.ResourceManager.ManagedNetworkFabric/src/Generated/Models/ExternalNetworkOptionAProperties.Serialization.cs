@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(BfdConfiguration))
             {
                 writer.WritePropertyName("bfdConfiguration"u8);
-                writer.WriteObjectValue(BfdConfiguration, options);
+                ((IJsonModel<BfdConfiguration>)BfdConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(IngressAclId))
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value, options);
+                    bfdConfiguration = ModelSerializationExtensions.JsonDeserialize<BfdConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ingressAclId"u8))

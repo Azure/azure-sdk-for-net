@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<LogicErrorResponse>)Error).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    error = LogicErrorResponse.DeserializeLogicErrorResponse(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<LogicErrorResponse>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

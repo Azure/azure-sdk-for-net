@@ -27,7 +27,7 @@ namespace Azure.Maps.Weather.Models
             {
                 if (property.NameEquals("geometry"u8))
                 {
-                    geometry = GeoJsonGeometry.DeserializeGeoJsonGeometry(property.Value);
+                    geometry = ModelSerializationExtensions.JsonDeserialize<GeoJsonGeometry>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

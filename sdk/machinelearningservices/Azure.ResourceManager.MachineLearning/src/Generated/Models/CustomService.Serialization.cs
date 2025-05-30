@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
-                writer.WriteObjectValue(Image, options);
+                ((IJsonModel<ImageSetting>)Image).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 foreach (var item in EnvironmentVariables)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<EnvironmentVariable>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Docker != null)
                 {
                     writer.WritePropertyName("docker"u8);
-                    writer.WriteObjectValue(Docker, options);
+                    ((IJsonModel<DockerSetting>)Docker).Write(writer, options);
                 }
                 else
                 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerEndpoint>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in Volumes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VolumeDefinition>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    image = ImageSetting.DeserializeImageSetting(property.Value, options);
+                    image = ModelSerializationExtensions.JsonDeserialize<ImageSetting>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("environmentVariables"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         docker = null;
                         continue;
                     }
-                    docker = DockerSetting.DeserializeDockerSetting(property.Value, options);
+                    docker = ModelSerializationExtensions.JsonDeserialize<DockerSetting>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("endpoints"u8))

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MachineLearningFqdnEndpoint>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

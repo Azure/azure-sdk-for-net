@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (SystemCreatedStorageAccount != null)
                 {
                     writer.WritePropertyName("systemCreatedStorageAccount"u8);
-                    writer.WriteObjectValue(SystemCreatedStorageAccount, options);
+                    ((IJsonModel<SystemCreatedStorageAccount>)SystemCreatedStorageAccount).Write(writer, options);
                 }
                 else
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (UserCreatedStorageAccount != null)
                 {
                     writer.WritePropertyName("userCreatedStorageAccount"u8);
-                    writer.WriteObjectValue(UserCreatedStorageAccount, options);
+                    ((IJsonModel<UserCreatedStorageAccount>)UserCreatedStorageAccount).Write(writer, options);
                 }
                 else
                 {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         systemCreatedStorageAccount = null;
                         continue;
                     }
-                    systemCreatedStorageAccount = SystemCreatedStorageAccount.DeserializeSystemCreatedStorageAccount(property.Value, options);
+                    systemCreatedStorageAccount = ModelSerializationExtensions.JsonDeserialize<SystemCreatedStorageAccount>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userCreatedStorageAccount"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         userCreatedStorageAccount = null;
                         continue;
                     }
-                    userCreatedStorageAccount = UserCreatedStorageAccount.DeserializeUserCreatedStorageAccount(property.Value, options);
+                    userCreatedStorageAccount = ModelSerializationExtensions.JsonDeserialize<UserCreatedStorageAccount>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

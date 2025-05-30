@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(AssignedUser))
             {
                 writer.WritePropertyName("assignedUser"u8);
-                writer.WriteObjectValue(AssignedUser, options);
+                ((IJsonModel<MachineLearningComputeInstanceAssignedUser>)AssignedUser).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    assignedUser = MachineLearningComputeInstanceAssignedUser.DeserializeMachineLearningComputeInstanceAssignedUser(property.Value, options);
+                    assignedUser = ModelSerializationExtensions.JsonDeserialize<MachineLearningComputeInstanceAssignedUser>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

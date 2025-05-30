@@ -35,19 +35,19 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WritePropertyName("messageConnectionSettings"u8);
-            writer.WriteObjectValue(MessageConnectionSettings, options);
+            ((IJsonModel<AS2MessageConnectionSettings>)MessageConnectionSettings).Write(writer, options);
             writer.WritePropertyName("acknowledgementConnectionSettings"u8);
-            writer.WriteObjectValue(AcknowledgementConnectionSettings, options);
+            ((IJsonModel<AS2AcknowledgementConnectionSettings>)AcknowledgementConnectionSettings).Write(writer, options);
             writer.WritePropertyName("mdnSettings"u8);
-            writer.WriteObjectValue(MdnSettings, options);
+            ((IJsonModel<AS2MdnSettings>)MdnSettings).Write(writer, options);
             writer.WritePropertyName("securitySettings"u8);
-            writer.WriteObjectValue(SecuritySettings, options);
+            ((IJsonModel<AS2SecuritySettings>)SecuritySettings).Write(writer, options);
             writer.WritePropertyName("validationSettings"u8);
-            writer.WriteObjectValue(ValidationSettings, options);
+            ((IJsonModel<AS2ValidationSettings>)ValidationSettings).Write(writer, options);
             writer.WritePropertyName("envelopeSettings"u8);
-            writer.WriteObjectValue(EnvelopeSettings, options);
+            ((IJsonModel<AS2EnvelopeSettings>)EnvelopeSettings).Write(writer, options);
             writer.WritePropertyName("errorSettings"u8);
-            writer.WriteObjectValue(ErrorSettings, options);
+            ((IJsonModel<AS2ErrorSettings>)ErrorSettings).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -98,37 +98,37 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 if (property.NameEquals("messageConnectionSettings"u8))
                 {
-                    messageConnectionSettings = AS2MessageConnectionSettings.DeserializeAS2MessageConnectionSettings(property.Value, options);
+                    messageConnectionSettings = ModelSerializationExtensions.JsonDeserialize<AS2MessageConnectionSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("acknowledgementConnectionSettings"u8))
                 {
-                    acknowledgementConnectionSettings = AS2AcknowledgementConnectionSettings.DeserializeAS2AcknowledgementConnectionSettings(property.Value, options);
+                    acknowledgementConnectionSettings = ModelSerializationExtensions.JsonDeserialize<AS2AcknowledgementConnectionSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mdnSettings"u8))
                 {
-                    mdnSettings = AS2MdnSettings.DeserializeAS2MdnSettings(property.Value, options);
+                    mdnSettings = ModelSerializationExtensions.JsonDeserialize<AS2MdnSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("securitySettings"u8))
                 {
-                    securitySettings = AS2SecuritySettings.DeserializeAS2SecuritySettings(property.Value, options);
+                    securitySettings = ModelSerializationExtensions.JsonDeserialize<AS2SecuritySettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("validationSettings"u8))
                 {
-                    validationSettings = AS2ValidationSettings.DeserializeAS2ValidationSettings(property.Value, options);
+                    validationSettings = ModelSerializationExtensions.JsonDeserialize<AS2ValidationSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("envelopeSettings"u8))
                 {
-                    envelopeSettings = AS2EnvelopeSettings.DeserializeAS2EnvelopeSettings(property.Value, options);
+                    envelopeSettings = ModelSerializationExtensions.JsonDeserialize<AS2EnvelopeSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("errorSettings"u8))
                 {
-                    errorSettings = AS2ErrorSettings.DeserializeAS2ErrorSettings(property.Value, options);
+                    errorSettings = ModelSerializationExtensions.JsonDeserialize<AS2ErrorSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

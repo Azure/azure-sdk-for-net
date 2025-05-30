@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WritePropertyName("keyVault"u8);
-            writer.WriteObjectValue(KeyVault, options);
+            ((IJsonModel<IntegrationAccountKeyVaultNameReference>)KeyVault).Write(writer, options);
             if (Optional.IsDefined(SkipToken))
             {
                 writer.WritePropertyName("skipToken"u8);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 if (property.NameEquals("keyVault"u8))
                 {
-                    keyVault = IntegrationAccountKeyVaultNameReference.DeserializeIntegrationAccountKeyVaultNameReference(property.Value, options);
+                    keyVault = ModelSerializationExtensions.JsonDeserialize<IntegrationAccountKeyVaultNameReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("skipToken"u8))

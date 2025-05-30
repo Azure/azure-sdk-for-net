@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (TrainingSettings != null)
                 {
                     writer.WritePropertyName("trainingSettings"u8);
-                    writer.WriteObjectValue(TrainingSettings, options);
+                    ((IJsonModel<ClassificationTrainingSettings>)TrainingSettings).Write(writer, options);
                 }
                 else
                 {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (LimitSettings != null)
                 {
                     writer.WritePropertyName("limitSettings"u8);
-                    writer.WriteObjectValue(LimitSettings, options);
+                    ((IJsonModel<TableVerticalLimitSettings>)LimitSettings).Write(writer, options);
                 }
                 else
                 {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (NCrossValidations != null)
                 {
                     writer.WritePropertyName("nCrossValidations"u8);
-                    writer.WriteObjectValue(NCrossValidations, options);
+                    ((IJsonModel<NCrossValidations>)NCrossValidations).Write(writer, options);
                 }
                 else
                 {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ValidationData != null)
                 {
                     writer.WritePropertyName("validationData"u8);
-                    writer.WriteObjectValue(ValidationData, options);
+                    ((IJsonModel<MachineLearningTableJobInput>)ValidationData).Write(writer, options);
                 }
                 else
                 {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (TestData != null)
                 {
                     writer.WritePropertyName("testData"u8);
-                    writer.WriteObjectValue(TestData, options);
+                    ((IJsonModel<MachineLearningTableJobInput>)TestData).Write(writer, options);
                 }
                 else
                 {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (FeaturizationSettings != null)
                 {
                     writer.WritePropertyName("featurizationSettings"u8);
-                    writer.WriteObjectValue(FeaturizationSettings, options);
+                    ((IJsonModel<TableVerticalFeaturizationSettings>)FeaturizationSettings).Write(writer, options);
                 }
                 else
                 {
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         trainingSettings = null;
                         continue;
                     }
-                    trainingSettings = ClassificationTrainingSettings.DeserializeClassificationTrainingSettings(property.Value, options);
+                    trainingSettings = ModelSerializationExtensions.JsonDeserialize<ClassificationTrainingSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("positiveLabel"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         limitSettings = null;
                         continue;
                     }
-                    limitSettings = TableVerticalLimitSettings.DeserializeTableVerticalLimitSettings(property.Value, options);
+                    limitSettings = ModelSerializationExtensions.JsonDeserialize<TableVerticalLimitSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nCrossValidations"u8))
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         nCrossValidations = null;
                         continue;
                     }
-                    nCrossValidations = NCrossValidations.DeserializeNCrossValidations(property.Value, options);
+                    nCrossValidations = ModelSerializationExtensions.JsonDeserialize<NCrossValidations>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("cvSplitColumnNames"u8))
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         validationData = null;
                         continue;
                     }
-                    validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
+                    validationData = ModelSerializationExtensions.JsonDeserialize<MachineLearningTableJobInput>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("testData"u8))
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         testData = null;
                         continue;
                     }
-                    testData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
+                    testData = ModelSerializationExtensions.JsonDeserialize<MachineLearningTableJobInput>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("validationDataSize"u8))
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         featurizationSettings = null;
                         continue;
                     }
-                    featurizationSettings = TableVerticalFeaturizationSettings.DeserializeTableVerticalFeaturizationSettings(property.Value, options);
+                    featurizationSettings = ModelSerializationExtensions.JsonDeserialize<TableVerticalFeaturizationSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("taskType"u8))
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("trainingData"u8))
                 {
-                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
+                    trainingData = ModelSerializationExtensions.JsonDeserialize<MachineLearningTableJobInput>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetColumnName"u8))

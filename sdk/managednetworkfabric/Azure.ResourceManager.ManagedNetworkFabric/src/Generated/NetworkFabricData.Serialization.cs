@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             writer.WritePropertyName("fabricASN"u8);
             writer.WriteNumberValue(FabricAsn);
             writer.WritePropertyName("terminalServerConfiguration"u8);
-            writer.WriteObjectValue(TerminalServerConfiguration, options);
+            ((IJsonModel<TerminalServerConfiguration>)TerminalServerConfiguration).Write(writer, options);
             writer.WritePropertyName("managementNetworkConfiguration"u8);
-            writer.WriteObjectValue(ManagementNetworkConfiguration, options);
+            ((IJsonModel<ManagementNetworkConfigurationProperties>)ManagementNetworkConfiguration).Write(writer, options);
             if (options.Format != "W" && Optional.IsCollectionDefined(Racks))
             {
                 writer.WritePropertyName("racks"u8);
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -296,12 +296,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         }
                         if (property0.NameEquals("terminalServerConfiguration"u8))
                         {
-                            terminalServerConfiguration = TerminalServerConfiguration.DeserializeTerminalServerConfiguration(property0.Value, options);
+                            terminalServerConfiguration = ModelSerializationExtensions.JsonDeserialize<TerminalServerConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("managementNetworkConfiguration"u8))
                         {
-                            managementNetworkConfiguration = ManagementNetworkConfigurationProperties.DeserializeManagementNetworkConfigurationProperties(property0.Value, options);
+                            managementNetworkConfiguration = ModelSerializationExtensions.JsonDeserialize<ManagementNetworkConfigurationProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("racks"u8))

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(JsonArrayMapper))
             {
                 writer.WritePropertyName("jsonArrayMapper"u8);
-                writer.WriteObjectValue(JsonArrayMapper, options);
+                ((IJsonModel<PipelineGroupJsonArrayMapper>)JsonArrayMapper).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    jsonArrayMapper = PipelineGroupJsonArrayMapper.DeserializePipelineGroupJsonArrayMapper(property.Value, options);
+                    jsonArrayMapper = ModelSerializationExtensions.JsonDeserialize<PipelineGroupJsonArrayMapper>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

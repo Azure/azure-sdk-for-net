@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WritePropertyName("infrastructureVpnConfiguration"u8);
-            writer.WriteObjectValue(InfrastructureVpnConfiguration, options);
+            ((IJsonModel<VpnConfigurationProperties>)InfrastructureVpnConfiguration).Write(writer, options);
             writer.WritePropertyName("workloadVpnConfiguration"u8);
-            writer.WriteObjectValue(WorkloadVpnConfiguration, options);
+            ((IJsonModel<VpnConfigurationProperties>)WorkloadVpnConfiguration).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 if (property.NameEquals("infrastructureVpnConfiguration"u8))
                 {
-                    infrastructureVpnConfiguration = VpnConfigurationProperties.DeserializeVpnConfigurationProperties(property.Value, options);
+                    infrastructureVpnConfiguration = ModelSerializationExtensions.JsonDeserialize<VpnConfigurationProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("workloadVpnConfiguration"u8))
                 {
-                    workloadVpnConfiguration = VpnConfigurationProperties.DeserializeVpnConfigurationProperties(property.Value, options);
+                    workloadVpnConfiguration = ModelSerializationExtensions.JsonDeserialize<VpnConfigurationProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

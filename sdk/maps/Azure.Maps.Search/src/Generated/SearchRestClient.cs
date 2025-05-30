@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
@@ -289,7 +290,7 @@ namespace Azure.Maps.Search
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(geocodingBatchRequestBody);
+            ((IJsonModel<GeocodingBatchRequestBody>)geocodingBatchRequestBody).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }
@@ -711,7 +712,7 @@ namespace Azure.Maps.Search
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(reverseGeocodingBatchRequestBody);
+            ((IJsonModel<ReverseGeocodingBatchRequestBody>)reverseGeocodingBatchRequestBody).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
-                writer.WriteObjectValue(Text, options);
+                ((IJsonModel<LogFileSettingsText>)Text).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    text = LogFileSettingsText.DeserializeLogFileSettingsText(property.Value, options);
+                    text = ModelSerializationExtensions.JsonDeserialize<LogFileSettingsText>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

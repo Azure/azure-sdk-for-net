@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ComputeRuntime))
             {
                 writer.WritePropertyName("computeRuntime"u8);
-                writer.WriteObjectValue(ComputeRuntime, options);
+                ((IJsonModel<ComputeRuntimeDto>)ComputeRuntime).Write(writer, options);
             }
             if (Optional.IsDefined(OfflineStoreConnectionName))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    computeRuntime = ComputeRuntimeDto.DeserializeComputeRuntimeDto(property.Value, options);
+                    computeRuntime = ModelSerializationExtensions.JsonDeserialize<ComputeRuntimeDto>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("offlineStoreConnectionName"u8))

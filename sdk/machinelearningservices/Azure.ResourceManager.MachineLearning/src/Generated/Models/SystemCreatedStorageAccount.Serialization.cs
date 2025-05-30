@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ArmResourceIdentifier != null)
                 {
                     writer.WritePropertyName("armResourceId"u8);
-                    writer.WriteObjectValue(ArmResourceIdentifier, options);
+                    ((IJsonModel<ArmResourceId>)ArmResourceIdentifier).Write(writer, options);
                 }
                 else
                 {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         armResourceId = null;
                         continue;
                     }
-                    armResourceId = Models.ArmResourceId.DeserializeArmResourceId(property.Value, options);
+                    armResourceId = ModelSerializationExtensions.JsonDeserialize<ArmResourceId>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storageAccountHnsEnabled"u8))

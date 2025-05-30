@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             if (Optional.IsDefined(ServicePrincipal))
             {
                 writer.WritePropertyName("servicePrincipal"u8);
-                writer.WriteObjectValue(ServicePrincipal, options);
+                ((IJsonModel<ServicePrincipalProperties>)ServicePrincipal).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    servicePrincipal = ServicePrincipalProperties.DeserializeServicePrincipalProperties(property.Value, options);
+                    servicePrincipal = ModelSerializationExtensions.JsonDeserialize<ServicePrincipalProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

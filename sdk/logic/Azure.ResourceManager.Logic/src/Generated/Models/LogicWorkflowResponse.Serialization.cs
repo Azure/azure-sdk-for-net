@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(BodyLink))
             {
                 writer.WritePropertyName("bodyLink"u8);
-                writer.WriteObjectValue(BodyLink, options);
+                ((IJsonModel<LogicContentLink>)BodyLink).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    bodyLink = LogicContentLink.DeserializeLogicContentLink(property.Value, options);
+                    bodyLink = ModelSerializationExtensions.JsonDeserialize<LogicContentLink>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

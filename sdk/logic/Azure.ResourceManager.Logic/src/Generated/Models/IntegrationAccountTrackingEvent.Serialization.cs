@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<IntegrationAccountTrackingEventErrorInfo>)Error).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    error = IntegrationAccountTrackingEventErrorInfo.DeserializeIntegrationAccountTrackingEventErrorInfo(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<IntegrationAccountTrackingEventErrorInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

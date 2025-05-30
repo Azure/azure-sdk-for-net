@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Migration.Assessment
             if (options.Format != "W" && Optional.IsDefined(ProductSupportStatus))
             {
                 writer.WritePropertyName("productSupportStatus"u8);
-                writer.WriteObjectValue(ProductSupportStatus, options);
+                ((IJsonModel<AssessmentProductSupportStatus>)ProductSupportStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DBCount))
             {
@@ -82,17 +82,17 @@ namespace Azure.ResourceManager.Migration.Assessment
             if (options.Format != "W" && Optional.IsDefined(AzureSqlMISuitabilityDetails))
             {
                 writer.WritePropertyName("azureSqlMISuitabilityDetails"u8);
-                writer.WriteObjectValue(AzureSqlMISuitabilityDetails, options);
+                ((IJsonModel<SqlAssessmentV2PaasSuitabilityDetails>)AzureSqlMISuitabilityDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AzureSqlDBSuitabilityDetails))
             {
                 writer.WritePropertyName("azureSqlDBSuitabilityDetails"u8);
-                writer.WriteObjectValue(AzureSqlDBSuitabilityDetails, options);
+                ((IJsonModel<SqlAssessmentV2PaasSuitabilityDetails>)AzureSqlDBSuitabilityDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AzureSqlVmSuitabilityDetails))
             {
                 writer.WritePropertyName("azureSqlVMSuitabilityDetails"u8);
-                writer.WriteObjectValue(AzureSqlVmSuitabilityDetails, options);
+                ((IJsonModel<SqlAssessmentV2IaasSuitabilityDetails>)AzureSqlVmSuitabilityDetails).Write(writer, options);
             }
             if (Optional.IsDefined(AssessedSqlEntityArmId))
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                             {
                                 continue;
                             }
-                            productSupportStatus = AssessmentProductSupportStatus.DeserializeAssessmentProductSupportStatus(property0.Value, options);
+                            productSupportStatus = ModelSerializationExtensions.JsonDeserialize<AssessmentProductSupportStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dbCount"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                             {
                                 continue;
                             }
-                            azureSqlMISuitabilityDetails = SqlAssessmentV2PaasSuitabilityDetails.DeserializeSqlAssessmentV2PaasSuitabilityDetails(property0.Value, options);
+                            azureSqlMISuitabilityDetails = ModelSerializationExtensions.JsonDeserialize<SqlAssessmentV2PaasSuitabilityDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("azureSqlDBSuitabilityDetails"u8))
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                             {
                                 continue;
                             }
-                            azureSqlDBSuitabilityDetails = SqlAssessmentV2PaasSuitabilityDetails.DeserializeSqlAssessmentV2PaasSuitabilityDetails(property0.Value, options);
+                            azureSqlDBSuitabilityDetails = ModelSerializationExtensions.JsonDeserialize<SqlAssessmentV2PaasSuitabilityDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("azureSqlVMSuitabilityDetails"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                             {
                                 continue;
                             }
-                            azureSqlVmSuitabilityDetails = SqlAssessmentV2IaasSuitabilityDetails.DeserializeSqlAssessmentV2IaasSuitabilityDetails(property0.Value, options);
+                            azureSqlVmSuitabilityDetails = ModelSerializationExtensions.JsonDeserialize<SqlAssessmentV2IaasSuitabilityDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("assessedSqlEntityArmId"u8))

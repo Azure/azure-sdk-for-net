@@ -29,7 +29,7 @@ namespace Azure.Monitor.Query.Models
                 writer.WriteEndObject();
             }
             writer.WritePropertyName("body"u8);
-            writer.WriteObjectValue(Body);
+            JsonSerializer.Serialize(writer, Body);
             writer.WritePropertyName("path"u8);
             writer.WriteStringValue(Path);
             writer.WritePropertyName("method"u8);

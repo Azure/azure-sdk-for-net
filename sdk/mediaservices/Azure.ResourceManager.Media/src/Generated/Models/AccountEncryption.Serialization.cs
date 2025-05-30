@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties, options);
+                ((IJsonModel<KeyVaultProperties>)KeyVaultProperties).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ResourceIdentity>)Identity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = KeyVaultProperties.DeserializeKeyVaultProperties(property.Value, options);
+                    keyVaultProperties = ModelSerializationExtensions.JsonDeserialize<KeyVaultProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    identity = ResourceIdentity.DeserializeResourceIdentity(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ResourceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))

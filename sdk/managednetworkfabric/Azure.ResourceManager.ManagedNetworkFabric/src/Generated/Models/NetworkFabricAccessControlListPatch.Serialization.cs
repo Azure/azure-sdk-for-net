@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in MatchConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AccessControlListMatchConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in DynamicMatchConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CommonDynamicMatchConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

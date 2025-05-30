@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Nodes != null)
                 {
                     writer.WritePropertyName("nodes"u8);
-                    writer.WriteObjectValue(Nodes, options);
+                    ((IJsonModel<JobNodes>)Nodes).Write(writer, options);
                 }
                 else
                 {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         nodes = null;
                         continue;
                     }
-                    nodes = JobNodes.DeserializeJobNodes(property.Value, options);
+                    nodes = ModelSerializationExtensions.JsonDeserialize<JobNodes>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

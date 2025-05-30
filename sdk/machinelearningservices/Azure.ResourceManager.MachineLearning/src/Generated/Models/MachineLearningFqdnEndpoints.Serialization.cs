@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<MachineLearningFqdnEndpointsProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    properties = MachineLearningFqdnEndpointsProperties.DeserializeMachineLearningFqdnEndpointsProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<MachineLearningFqdnEndpointsProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

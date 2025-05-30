@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             }
 
             writer.WritePropertyName("marketplace"u8);
-            writer.WriteObjectValue(Marketplace, options);
+            ((IJsonModel<MongoDBAtlasMarketplaceDetails>)Marketplace).Write(writer, options);
             writer.WritePropertyName("user"u8);
-            writer.WriteObjectValue(User, options);
+            ((IJsonModel<MongoDBAtlasUserDetails>)User).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             if (Optional.IsDefined(PartnerProperties))
             {
                 writer.WritePropertyName("partnerProperties"u8);
-                writer.WriteObjectValue(PartnerProperties, options);
+                ((IJsonModel<MongoDBAtlasPartnerProperties>)PartnerProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             {
                 if (property.NameEquals("marketplace"u8))
                 {
-                    marketplace = MongoDBAtlasMarketplaceDetails.DeserializeMongoDBAtlasMarketplaceDetails(property.Value, options);
+                    marketplace = ModelSerializationExtensions.JsonDeserialize<MongoDBAtlasMarketplaceDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("user"u8))
                 {
-                    user = MongoDBAtlasUserDetails.DeserializeMongoDBAtlasUserDetails(property.Value, options);
+                    user = ModelSerializationExtensions.JsonDeserialize<MongoDBAtlasUserDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                     {
                         continue;
                     }
-                    partnerProperties = MongoDBAtlasPartnerProperties.DeserializeMongoDBAtlasPartnerProperties(property.Value, options);
+                    partnerProperties = ModelSerializationExtensions.JsonDeserialize<MongoDBAtlasPartnerProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

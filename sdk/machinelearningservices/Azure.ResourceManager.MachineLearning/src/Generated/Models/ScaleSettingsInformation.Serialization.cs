@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ScaleSettings))
             {
                 writer.WritePropertyName("scaleSettings"u8);
-                writer.WriteObjectValue(ScaleSettings, options);
+                ((IJsonModel<AmlComputeScaleSettings>)ScaleSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    scaleSettings = AmlComputeScaleSettings.DeserializeAmlComputeScaleSettings(property.Value, options);
+                    scaleSettings = ModelSerializationExtensions.JsonDeserialize<AmlComputeScaleSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

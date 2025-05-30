@@ -29,7 +29,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    pastSixHours = PastHoursTemperature.DeserializePastHoursTemperature(property.Value);
+                    pastSixHours = ModelSerializationExtensions.JsonDeserialize<PastHoursTemperature>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("pastTwelveHours"u8))
@@ -38,7 +38,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    pastTwelveHours = PastHoursTemperature.DeserializePastHoursTemperature(property.Value);
+                    pastTwelveHours = ModelSerializationExtensions.JsonDeserialize<PastHoursTemperature>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("pastTwentyFourHours"u8))
@@ -47,7 +47,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    pastTwentyFourHours = PastHoursTemperature.DeserializePastHoursTemperature(property.Value);
+                    pastTwentyFourHours = ModelSerializationExtensions.JsonDeserialize<PastHoursTemperature>(property.Value);
                     continue;
                 }
             }

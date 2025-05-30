@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MonitorDimension>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(FailingPeriods))
             {
                 writer.WritePropertyName("failingPeriods"u8);
-                writer.WriteObjectValue(FailingPeriods, options);
+                ((IJsonModel<ConditionFailingPeriods>)FailingPeriods).Write(writer, options);
             }
             if (Optional.IsDefined(MetricName))
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    failingPeriods = ConditionFailingPeriods.DeserializeConditionFailingPeriods(property.Value, options);
+                    failingPeriods = ModelSerializationExtensions.JsonDeserialize<ConditionFailingPeriods>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metricName"u8))

@@ -71,7 +71,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    temperature = WeatherValue.DeserializeWeatherValue(property.Value);
+                    temperature = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("wind"u8))
@@ -80,7 +80,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    wind = WindDetails.DeserializeWindDetails(property.Value);
+                    wind = ModelSerializationExtensions.JsonDeserialize<WindDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("windGust"u8))
@@ -89,7 +89,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    windGust = WindDetails.DeserializeWindDetails(property.Value);
+                    windGust = ModelSerializationExtensions.JsonDeserialize<WindDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("precipitation"u8))
@@ -98,7 +98,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    precipitation = WeatherAlongRoutePrecipitation.DeserializeWeatherAlongRoutePrecipitation(property.Value);
+                    precipitation = ModelSerializationExtensions.JsonDeserialize<WeatherAlongRoutePrecipitation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lightningCount"u8))
@@ -116,7 +116,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    sunGlare = SunGlare.DeserializeSunGlare(property.Value);
+                    sunGlare = ModelSerializationExtensions.JsonDeserialize<SunGlare>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("hazards"u8))
@@ -125,7 +125,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    hazards = WeatherHazards.DeserializeWeatherHazards(property.Value);
+                    hazards = ModelSerializationExtensions.JsonDeserialize<WeatherHazards>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("notifications"u8))

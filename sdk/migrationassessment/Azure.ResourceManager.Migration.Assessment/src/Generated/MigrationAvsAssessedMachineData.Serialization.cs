@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MigrationAssessmentError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 foreach (var item in Disks)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<AvsAssessedDisk>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 foreach (var item in NetworkAdapters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<AvsAssessedNetworkAdapter>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

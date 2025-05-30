@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartArray();
             foreach (var item in AllOf)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ActivityLogAlertAnyOfOrLeafCondition>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

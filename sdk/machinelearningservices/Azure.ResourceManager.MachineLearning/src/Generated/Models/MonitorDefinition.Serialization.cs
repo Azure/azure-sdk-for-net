@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (MonitoringTarget != null)
                 {
                     writer.WritePropertyName("monitoringTarget"u8);
-                    writer.WriteObjectValue(MonitoringTarget, options);
+                    ((IJsonModel<MonitoringTarget>)MonitoringTarget).Write(writer, options);
                 }
                 else
                 {
@@ -53,17 +53,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             foreach (var item in Signals)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                ((IJsonModel<MonitoringSignalBase>)item.Value).Write(writer, options);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("computeConfiguration"u8);
-            writer.WriteObjectValue(ComputeConfiguration, options);
+            ((IJsonModel<MonitorComputeConfigurationBase>)ComputeConfiguration).Write(writer, options);
             if (Optional.IsDefined(AlertNotificationSettings))
             {
                 if (AlertNotificationSettings != null)
                 {
                     writer.WritePropertyName("alertNotificationSettings"u8);
-                    writer.WriteObjectValue(AlertNotificationSettings, options);
+                    ((IJsonModel<MonitorNotificationSettings>)AlertNotificationSettings).Write(writer, options);
                 }
                 else
                 {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         monitoringTarget = null;
                         continue;
                     }
-                    monitoringTarget = MonitoringTarget.DeserializeMonitoringTarget(property.Value, options);
+                    monitoringTarget = ModelSerializationExtensions.JsonDeserialize<MonitoringTarget>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("signals"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("computeConfiguration"u8))
                 {
-                    computeConfiguration = MonitorComputeConfigurationBase.DeserializeMonitorComputeConfigurationBase(property.Value, options);
+                    computeConfiguration = ModelSerializationExtensions.JsonDeserialize<MonitorComputeConfigurationBase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("alertNotificationSettings"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         alertNotificationSettings = null;
                         continue;
                     }
-                    alertNotificationSettings = MonitorNotificationSettings.DeserializeMonitorNotificationSettings(property.Value, options);
+                    alertNotificationSettings = ModelSerializationExtensions.JsonDeserialize<MonitorNotificationSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

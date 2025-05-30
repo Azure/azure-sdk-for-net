@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule, options);
+                ((IJsonModel<LogicWorkflowRecurrenceSchedule>)Schedule).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    schedule = LogicWorkflowRecurrenceSchedule.DeserializeLogicWorkflowRecurrenceSchedule(property.Value, options);
+                    schedule = ModelSerializationExtensions.JsonDeserialize<LogicWorkflowRecurrenceSchedule>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

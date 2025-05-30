@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Schedule != null)
                 {
                     writer.WritePropertyName("schedule"u8);
-                    writer.WriteObjectValue(Schedule, options);
+                    ((IJsonModel<MachineLearningRecurrenceSchedule>)Schedule).Write(writer, options);
                 }
                 else
                 {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         schedule = null;
                         continue;
                     }
-                    schedule = MachineLearningRecurrenceSchedule.DeserializeMachineLearningRecurrenceSchedule(property.Value, options);
+                    schedule = ModelSerializationExtensions.JsonDeserialize<MachineLearningRecurrenceSchedule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("triggerType"u8))

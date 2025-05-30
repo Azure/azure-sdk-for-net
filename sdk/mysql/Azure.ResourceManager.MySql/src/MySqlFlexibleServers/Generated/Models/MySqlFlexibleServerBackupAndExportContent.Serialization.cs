@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("targetDetails"u8);
-            writer.WriteObjectValue(TargetDetails, options);
+            ((IJsonModel<MySqlFlexibleServerBackupStoreDetails>)TargetDetails).Write(writer, options);
         }
 
         MySqlFlexibleServerBackupAndExportContent IJsonModel<MySqlFlexibleServerBackupAndExportContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 if (property.NameEquals("targetDetails"u8))
                 {
-                    targetDetails = MySqlFlexibleServerBackupStoreDetails.DeserializeMySqlFlexibleServerBackupStoreDetails(property.Value, options);
+                    targetDetails = ModelSerializationExtensions.JsonDeserialize<MySqlFlexibleServerBackupStoreDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("backupSettings"u8))
                 {
-                    backupSettings = MySqlFlexibleServerBackupSettings.DeserializeMySqlFlexibleServerBackupSettings(property.Value, options);
+                    backupSettings = ModelSerializationExtensions.JsonDeserialize<MySqlFlexibleServerBackupSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

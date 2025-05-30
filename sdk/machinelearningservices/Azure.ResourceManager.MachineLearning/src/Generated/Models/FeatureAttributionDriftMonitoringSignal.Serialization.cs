@@ -38,18 +38,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("metricThreshold"u8);
-            writer.WriteObjectValue(MetricThreshold, options);
+            ((IJsonModel<FeatureAttributionMetricThreshold>)MetricThreshold).Write(writer, options);
             writer.WritePropertyName("featureImportanceSettings"u8);
-            writer.WriteObjectValue(FeatureImportanceSettings, options);
+            ((IJsonModel<FeatureImportanceSettings>)FeatureImportanceSettings).Write(writer, options);
             writer.WritePropertyName("productionData"u8);
             writer.WriteStartArray();
             foreach (var item in ProductionData)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<MonitoringInputDataBase>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("referenceData"u8);
-            writer.WriteObjectValue(ReferenceData, options);
+            ((IJsonModel<MonitoringInputDataBase>)ReferenceData).Write(writer, options);
             if (Optional.IsCollectionDefined(FeatureDataTypeOverride))
             {
                 if (FeatureDataTypeOverride != null)
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("metricThreshold"u8))
                 {
-                    metricThreshold = FeatureAttributionMetricThreshold.DeserializeFeatureAttributionMetricThreshold(property.Value, options);
+                    metricThreshold = ModelSerializationExtensions.JsonDeserialize<FeatureAttributionMetricThreshold>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("featureImportanceSettings"u8))
                 {
-                    featureImportanceSettings = FeatureImportanceSettings.DeserializeFeatureImportanceSettings(property.Value, options);
+                    featureImportanceSettings = ModelSerializationExtensions.JsonDeserialize<FeatureImportanceSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("productionData"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("referenceData"u8))
                 {
-                    referenceData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
+                    referenceData = ModelSerializationExtensions.JsonDeserialize<MonitoringInputDataBase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("featureDataTypeOverride"u8))

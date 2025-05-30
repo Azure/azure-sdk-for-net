@@ -43,32 +43,32 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartArray();
             foreach (var item in Receivers)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<PipelineGroupReceiver>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("processors"u8);
             writer.WriteStartArray();
             foreach (var item in Processors)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<PipelineGroupProcessor>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("exporters"u8);
             writer.WriteStartArray();
             foreach (var item in Exporters)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<PipelineGroupExporter>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("service"u8);
-            writer.WriteObjectValue(Service, options);
+            ((IJsonModel<PipelineGroupService>)Service).Write(writer, options);
             if (Optional.IsCollectionDefined(NetworkingConfigurations))
             {
                 writer.WritePropertyName("networkingConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in NetworkingConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PipelineGroupNetworkingConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("service"u8))
                 {
-                    service = PipelineGroupService.DeserializePipelineGroupService(property.Value, options);
+                    service = ModelSerializationExtensions.JsonDeserialize<PipelineGroupService>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("networkingConfigurations"u8))

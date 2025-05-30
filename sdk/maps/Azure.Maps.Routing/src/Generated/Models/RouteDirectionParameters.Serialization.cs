@@ -8,7 +8,6 @@
 using System.Text.Json;
 using Azure.Core;
 using Azure.Maps.Common;
-using Azure.Maps.Routing.Models;
 
 namespace Azure.Maps.Routing
 {
@@ -20,7 +19,7 @@ namespace Azure.Maps.Routing
             if (Common.Optional.IsDefined(_GeoJsonSupportingPoints))
             {
                 writer.WritePropertyName("supportingPoints"u8);
-                writer.WriteObjectValue<GeoJsonGeometryCollection>(_GeoJsonSupportingPoints);
+                JsonSerializer.Serialize(writer, _GeoJsonSupportingPoints);
             }
             if (Common.Optional.IsCollectionDefined(AvoidVignette))
             {
@@ -45,7 +44,7 @@ namespace Azure.Maps.Routing
             if (Common.Optional.IsDefined(_GeoJsonAvoidAreas))
             {
                 writer.WritePropertyName("avoidAreas"u8);
-                writer.WriteObjectValue<GeoJsonMultiPolygon>(_GeoJsonAvoidAreas);
+                JsonSerializer.Serialize(writer, _GeoJsonAvoidAreas);
             }
             writer.WriteEndObject();
         }

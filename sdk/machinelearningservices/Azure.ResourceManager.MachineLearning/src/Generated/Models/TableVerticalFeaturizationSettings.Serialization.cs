@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         writer.WriteStartArray();
                         foreach (var item0 in item.Value)
                         {
-                            writer.WriteObjectValue(item0, options);
+                            ((IJsonModel<ColumnTransformer>)item0).Write(writer, options);
                         }
                         writer.WriteEndArray();
                     }

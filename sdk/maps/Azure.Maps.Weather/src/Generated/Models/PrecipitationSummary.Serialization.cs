@@ -33,7 +33,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    pastHour = WeatherValue.DeserializeWeatherValue(property.Value);
+                    pastHour = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("pastThreeHours"u8))
@@ -42,7 +42,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    pastThreeHours = WeatherValue.DeserializeWeatherValue(property.Value);
+                    pastThreeHours = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("pastSixHours"u8))
@@ -51,7 +51,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    pastSixHours = WeatherValue.DeserializeWeatherValue(property.Value);
+                    pastSixHours = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("pastNineHours"u8))
@@ -60,7 +60,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    pastNineHours = WeatherValue.DeserializeWeatherValue(property.Value);
+                    pastNineHours = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("pastTwelveHours"u8))
@@ -69,7 +69,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    pastTwelveHours = WeatherValue.DeserializeWeatherValue(property.Value);
+                    pastTwelveHours = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("pastEighteenHours"u8))
@@ -78,7 +78,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    pastEighteenHours = WeatherValue.DeserializeWeatherValue(property.Value);
+                    pastEighteenHours = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("pastTwentyFourHours"u8))
@@ -87,7 +87,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    pastTwentyFourHours = WeatherValue.DeserializeWeatherValue(property.Value);
+                    pastTwentyFourHours = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
             }

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MobileNetwork
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<ExtendedUEInfoProperties>)Properties).Write(writer, options);
         }
 
         ExtendedUEInfoData IJsonModel<ExtendedUEInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = ExtendedUEInfoProperties.DeserializeExtendedUEInfoProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ExtendedUEInfoProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

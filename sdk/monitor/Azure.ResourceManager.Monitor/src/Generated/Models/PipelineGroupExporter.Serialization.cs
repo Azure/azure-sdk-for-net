@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(AzureMonitorWorkspaceLogs))
             {
                 writer.WritePropertyName("azureMonitorWorkspaceLogs"u8);
-                writer.WriteObjectValue(AzureMonitorWorkspaceLogs, options);
+                ((IJsonModel<MonitorWorkspaceLogsExporter>)AzureMonitorWorkspaceLogs).Write(writer, options);
             }
             if (Optional.IsDefined(Tcp))
             {
                 writer.WritePropertyName("tcp"u8);
-                writer.WriteObjectValue(Tcp, options);
+                ((IJsonModel<TcpExporter>)Tcp).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    azureMonitorWorkspaceLogs = MonitorWorkspaceLogsExporter.DeserializeMonitorWorkspaceLogsExporter(property.Value, options);
+                    azureMonitorWorkspaceLogs = ModelSerializationExtensions.JsonDeserialize<MonitorWorkspaceLogsExporter>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tcp"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    tcp = TcpExporter.DeserializeTcpExporter(property.Value, options);
+                    tcp = ModelSerializationExtensions.JsonDeserialize<TcpExporter>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

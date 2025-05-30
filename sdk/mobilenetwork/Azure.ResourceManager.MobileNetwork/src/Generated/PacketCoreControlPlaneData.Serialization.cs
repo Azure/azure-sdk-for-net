@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MobileNetwork
             if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(UserAssignedIdentity, options);
+                ((IJsonModel<MobileNetworkManagedServiceIdentity>)UserAssignedIdentity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -55,17 +55,17 @@ namespace Azure.ResourceManager.MobileNetwork
             if (Optional.IsDefined(Installation))
             {
                 writer.WritePropertyName("installation"u8);
-                writer.WriteObjectValue(Installation, options);
+                ((IJsonModel<MobileNetworkInstallation>)Installation).Write(writer, options);
             }
             writer.WritePropertyName("sites"u8);
             writer.WriteStartArray();
             foreach (var item in Sites)
             {
-                JsonSerializer.Serialize(writer, item);
+                ((IJsonModel<WritableSubResource>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("platform"u8);
-            writer.WriteObjectValue(Platform, options);
+            ((IJsonModel<MobileNetworkPlatformConfiguration>)Platform).Write(writer, options);
             if (Optional.IsDefined(CoreNetworkTechnology))
             {
                 writer.WritePropertyName("coreNetworkTechnology"u8);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStringValue(RollbackVersion);
             }
             writer.WritePropertyName("controlPlaneAccessInterface"u8);
-            writer.WriteObjectValue(ControlPlaneAccessInterface, options);
+            ((IJsonModel<MobileNetworkInterfaceProperties>)ControlPlaneAccessInterface).Write(writer, options);
             if (Optional.IsCollectionDefined(ControlPlaneAccessVirtualIPv4Addresses))
             {
                 writer.WritePropertyName("controlPlaneAccessVirtualIpv4Addresses"u8);
@@ -106,21 +106,21 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteNumberValue(UEMtu.Value);
             }
             writer.WritePropertyName("localDiagnosticsAccess"u8);
-            writer.WriteObjectValue(LocalDiagnosticsAccess, options);
+            ((IJsonModel<MobileNetworkLocalDiagnosticsAccessConfiguration>)LocalDiagnosticsAccess).Write(writer, options);
             if (Optional.IsDefined(DiagnosticsUpload))
             {
                 writer.WritePropertyName("diagnosticsUpload"u8);
-                writer.WriteObjectValue(DiagnosticsUpload, options);
+                ((IJsonModel<DiagnosticsUploadConfiguration>)DiagnosticsUpload).Write(writer, options);
             }
             if (Optional.IsDefined(EventHub))
             {
                 writer.WritePropertyName("eventHub"u8);
-                writer.WriteObjectValue(EventHub, options);
+                ((IJsonModel<MobileNetworkEventHubConfiguration>)EventHub).Write(writer, options);
             }
             if (Optional.IsDefined(Signaling))
             {
                 writer.WritePropertyName("signaling"u8);
-                writer.WriteObjectValue(Signaling, options);
+                ((IJsonModel<PacketCoreSignalingConfiguration>)Signaling).Write(writer, options);
             }
             if (Optional.IsDefined(InteropSettings))
             {
@@ -137,12 +137,12 @@ namespace Azure.ResourceManager.MobileNetwork
             if (options.Format != "W" && Optional.IsDefined(HomeNetworkPrivateKeysProvisioning))
             {
                 writer.WritePropertyName("homeNetworkPrivateKeysProvisioning"u8);
-                writer.WriteObjectValue(HomeNetworkPrivateKeysProvisioning, options);
+                ((IJsonModel<HomeNetworkPrivateKeysProvisioning>)HomeNetworkPrivateKeysProvisioning).Write(writer, options);
             }
             if (Optional.IsDefined(UserConsent))
             {
                 writer.WritePropertyName("userConsent"u8);
-                writer.WriteObjectValue(UserConsent, options);
+                ((IJsonModel<UserConsentConfiguration>)UserConsent).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     {
                         continue;
                     }
-                    identity = MobileNetworkManagedServiceIdentity.DeserializeMobileNetworkManagedServiceIdentity(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<MobileNetworkManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            installation = MobileNetworkInstallation.DeserializeMobileNetworkInstallation(property0.Value, options);
+                            installation = ModelSerializationExtensions.JsonDeserialize<MobileNetworkInstallation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sites"u8))
@@ -281,14 +281,14 @@ namespace Azure.ResourceManager.MobileNetwork
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             sites = array;
                             continue;
                         }
                         if (property0.NameEquals("platform"u8))
                         {
-                            platform = MobileNetworkPlatformConfiguration.DeserializeMobileNetworkPlatformConfiguration(property0.Value, options);
+                            platform = ModelSerializationExtensions.JsonDeserialize<MobileNetworkPlatformConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("coreNetworkTechnology"u8))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         }
                         if (property0.NameEquals("controlPlaneAccessInterface"u8))
                         {
-                            controlPlaneAccessInterface = MobileNetworkInterfaceProperties.DeserializeMobileNetworkInterfaceProperties(property0.Value, options);
+                            controlPlaneAccessInterface = ModelSerializationExtensions.JsonDeserialize<MobileNetworkInterfaceProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("controlPlaneAccessVirtualIpv4Addresses"u8))
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         }
                         if (property0.NameEquals("localDiagnosticsAccess"u8))
                         {
-                            localDiagnosticsAccess = MobileNetworkLocalDiagnosticsAccessConfiguration.DeserializeMobileNetworkLocalDiagnosticsAccessConfiguration(property0.Value, options);
+                            localDiagnosticsAccess = ModelSerializationExtensions.JsonDeserialize<MobileNetworkLocalDiagnosticsAccessConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("diagnosticsUpload"u8))
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            diagnosticsUpload = DiagnosticsUploadConfiguration.DeserializeDiagnosticsUploadConfiguration(property0.Value, options);
+                            diagnosticsUpload = ModelSerializationExtensions.JsonDeserialize<DiagnosticsUploadConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("eventHub"u8))
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            eventHub = MobileNetworkEventHubConfiguration.DeserializeMobileNetworkEventHubConfiguration(property0.Value, options);
+                            eventHub = ModelSerializationExtensions.JsonDeserialize<MobileNetworkEventHubConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("signaling"u8))
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            signaling = PacketCoreSignalingConfiguration.DeserializePacketCoreSignalingConfiguration(property0.Value, options);
+                            signaling = ModelSerializationExtensions.JsonDeserialize<PacketCoreSignalingConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("interopSettings"u8))
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            homeNetworkPrivateKeysProvisioning = HomeNetworkPrivateKeysProvisioning.DeserializeHomeNetworkPrivateKeysProvisioning(property0.Value, options);
+                            homeNetworkPrivateKeysProvisioning = ModelSerializationExtensions.JsonDeserialize<HomeNetworkPrivateKeysProvisioning>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("userConsent"u8))
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            userConsent = UserConsentConfiguration.DeserializeUserConsentConfiguration(property0.Value, options);
+                            userConsent = ModelSerializationExtensions.JsonDeserialize<UserConsentConfiguration>(property0.Value);
                             continue;
                         }
                     }

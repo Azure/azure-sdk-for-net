@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Specification != null)
                 {
                     writer.WritePropertyName("specification"u8);
-                    writer.WriteObjectValue(Specification, options);
+                    ((IJsonModel<FeaturesetSpecification>)Specification).Write(writer, options);
                 }
                 else
                 {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (MaterializationSettings != null)
                 {
                     writer.WritePropertyName("materializationSettings"u8);
-                    writer.WriteObjectValue(MaterializationSettings, options);
+                    ((IJsonModel<MaterializationSettings>)MaterializationSettings).Write(writer, options);
                 }
                 else
                 {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         specification = null;
                         continue;
                     }
-                    specification = FeaturesetSpecification.DeserializeFeaturesetSpecification(property.Value, options);
+                    specification = ModelSerializationExtensions.JsonDeserialize<FeaturesetSpecification>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("materializationSettings"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         materializationSettings = null;
                         continue;
                     }
-                    materializationSettings = MaterializationSettings.DeserializeMaterializationSettings(property.Value, options);
+                    materializationSettings = ModelSerializationExtensions.JsonDeserialize<MaterializationSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("stage"u8))

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<MachineLearningBatchEndpointProperties>)Properties).Write(writer, options);
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
@@ -49,13 +49,12 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<MachineLearningSku>)Sku).Write(writer, options);
             }
         }
 
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = MachineLearningBatchEndpointProperties.DeserializeMachineLearningBatchEndpointProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<MachineLearningBatchEndpointProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.MachineLearning
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -119,7 +118,7 @@ namespace Azure.ResourceManager.MachineLearning
                     {
                         continue;
                     }
-                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<MachineLearningSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -162,7 +161,7 @@ namespace Azure.ResourceManager.MachineLearning
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -47,17 +47,17 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue(Input, options);
+                ((IJsonModel<LiveEventInput>)Input).Write(writer, options);
             }
             if (Optional.IsDefined(Preview))
             {
                 writer.WritePropertyName("preview"u8);
-                writer.WriteObjectValue(Preview, options);
+                ((IJsonModel<LiveEventPreview>)Preview).Write(writer, options);
             }
             if (Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
-                writer.WriteObjectValue(Encoding, options);
+                ((IJsonModel<LiveEventEncoding>)Encoding).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Transcriptions))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Media
                 writer.WriteStartArray();
                 foreach (var item in Transcriptions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LiveEventTranscription>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(CrossSiteAccessPolicies))
             {
                 writer.WritePropertyName("crossSiteAccessPolicies"u8);
-                writer.WriteObjectValue(CrossSiteAccessPolicies, options);
+                ((IJsonModel<CrossSiteAccessPolicies>)CrossSiteAccessPolicies).Write(writer, options);
             }
             if (Optional.IsDefined(UseStaticHostname))
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Media
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            input = LiveEventInput.DeserializeLiveEventInput(property0.Value, options);
+                            input = ModelSerializationExtensions.JsonDeserialize<LiveEventInput>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("preview"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            preview = LiveEventPreview.DeserializeLiveEventPreview(property0.Value, options);
+                            preview = ModelSerializationExtensions.JsonDeserialize<LiveEventPreview>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encoding"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            encoding = LiveEventEncoding.DeserializeLiveEventEncoding(property0.Value, options);
+                            encoding = ModelSerializationExtensions.JsonDeserialize<LiveEventEncoding>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("transcriptions"u8))
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            crossSiteAccessPolicies = CrossSiteAccessPolicies.DeserializeCrossSiteAccessPolicies(property0.Value, options);
+                            crossSiteAccessPolicies = ModelSerializationExtensions.JsonDeserialize<CrossSiteAccessPolicies>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("useStaticHostname"u8))

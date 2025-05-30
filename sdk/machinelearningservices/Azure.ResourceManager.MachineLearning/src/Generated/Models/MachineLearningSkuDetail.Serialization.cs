@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Sku != null)
                 {
                     writer.WritePropertyName("sku"u8);
-                    writer.WriteObjectValue(Sku, options);
+                    ((IJsonModel<MachineLearningSkuSetting>)Sku).Write(writer, options);
                 }
                 else
                 {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Capacity != null)
                 {
                     writer.WritePropertyName("capacity"u8);
-                    writer.WriteObjectValue(Capacity, options);
+                    ((IJsonModel<MachineLearningSkuCapacity>)Capacity).Write(writer, options);
                 }
                 else
                 {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         sku = null;
                         continue;
                     }
-                    sku = MachineLearningSkuSetting.DeserializeMachineLearningSkuSetting(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<MachineLearningSkuSetting>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         capacity = null;
                         continue;
                     }
-                    capacity = MachineLearningSkuCapacity.DeserializeMachineLearningSkuCapacity(property.Value, options);
+                    capacity = ModelSerializationExtensions.JsonDeserialize<MachineLearningSkuCapacity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

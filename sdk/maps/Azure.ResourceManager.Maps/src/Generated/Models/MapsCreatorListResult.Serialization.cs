@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Maps.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MapsCreatorData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

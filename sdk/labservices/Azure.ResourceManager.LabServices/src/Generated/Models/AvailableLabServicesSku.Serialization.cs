@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.LabServices.Models
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity, options);
+                ((IJsonModel<AvailableLabServicesSkuCapacity>)Capacity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AvailableLabServicesSkuCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Costs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AvailableLabServicesSkuCost>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Restrictions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AvailableLabServicesSkuRestrictions>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     {
                         continue;
                     }
-                    capacity = AvailableLabServicesSkuCapacity.DeserializeAvailableLabServicesSkuCapacity(property.Value, options);
+                    capacity = ModelSerializationExtensions.JsonDeserialize<AvailableLabServicesSkuCapacity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("capabilities"u8))

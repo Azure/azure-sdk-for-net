@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Media
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MediaServicesStorageAccount>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<AccountEncryption>)Encryption).Write(writer, options);
             }
             if (Optional.IsDefined(KeyDelivery))
             {
                 writer.WritePropertyName("keyDelivery"u8);
-                writer.WriteObjectValue(KeyDelivery, options);
+                ((IJsonModel<MediaKeyDelivery>)KeyDelivery).Write(writer, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Media
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MediaServicesPrivateEndpointConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Media
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Media
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            encryption = AccountEncryption.DeserializeAccountEncryption(property0.Value, options);
+                            encryption = ModelSerializationExtensions.JsonDeserialize<AccountEncryption>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("keyDelivery"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            keyDelivery = MediaKeyDelivery.DeserializeMediaKeyDelivery(property0.Value, options);
+                            keyDelivery = ModelSerializationExtensions.JsonDeserialize<MediaKeyDelivery>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))

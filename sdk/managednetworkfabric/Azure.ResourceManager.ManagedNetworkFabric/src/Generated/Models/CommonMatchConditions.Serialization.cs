@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(VlanMatchCondition))
             {
                 writer.WritePropertyName("vlanMatchCondition"u8);
-                writer.WriteObjectValue(VlanMatchCondition, options);
+                ((IJsonModel<VlanMatchCondition>)VlanMatchCondition).Write(writer, options);
             }
             if (Optional.IsDefined(IPCondition))
             {
                 writer.WritePropertyName("ipCondition"u8);
-                writer.WriteObjectValue(IPCondition, options);
+                ((IJsonModel<IPMatchCondition>)IPCondition).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    vlanMatchCondition = VlanMatchCondition.DeserializeVlanMatchCondition(property.Value, options);
+                    vlanMatchCondition = ModelSerializationExtensions.JsonDeserialize<VlanMatchCondition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ipCondition"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    ipCondition = IPMatchCondition.DeserializeIPMatchCondition(property.Value, options);
+                    ipCondition = ModelSerializationExtensions.JsonDeserialize<IPMatchCondition>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

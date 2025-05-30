@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(IP))
             {
                 writer.WritePropertyName("ip"u8);
-                writer.WriteObjectValue(IP, options);
+                ((IJsonModel<IPAccessControl>)IP).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    ip = IPAccessControl.DeserializeIPAccessControl(property.Value, options);
+                    ip = ModelSerializationExtensions.JsonDeserialize<IPAccessControl>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

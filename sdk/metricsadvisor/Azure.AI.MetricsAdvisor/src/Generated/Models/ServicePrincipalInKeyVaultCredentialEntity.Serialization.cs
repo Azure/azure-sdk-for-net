@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             writer.WriteStartObject();
             writer.WritePropertyName("parameters"u8);
-            writer.WriteObjectValue<ServicePrincipalInKVParam>(Parameters);
+            JsonSerializer.Serialize(writer, Parameters);
             writer.WritePropertyName("dataSourceCredentialType"u8);
             writer.WriteStringValue(CredentialKind.ToString());
             writer.WritePropertyName("dataSourceCredentialName"u8);
@@ -45,7 +45,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = ServicePrincipalInKVParam.DeserializeServicePrincipalInKVParam(property.Value);
+                    parameters = ModelSerializationExtensions.JsonDeserialize<ServicePrincipalInKVParam>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataSourceCredentialType"u8))

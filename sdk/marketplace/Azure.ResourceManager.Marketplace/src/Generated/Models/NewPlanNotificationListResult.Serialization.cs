@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in NewPlansNotifications)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NewPlanNotification>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

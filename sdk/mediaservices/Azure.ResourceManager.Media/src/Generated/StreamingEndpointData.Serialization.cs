@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<StreamingEndpointCurrentSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Media
                 if (AccessControl != null)
                 {
                     writer.WritePropertyName("accessControl"u8);
-                    writer.WriteObjectValue(AccessControl, options);
+                    ((IJsonModel<StreamingEndpointAccessControl>)AccessControl).Write(writer, options);
                 }
                 else
                 {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Media
                 if (CrossSiteAccessPolicies != null)
                 {
                     writer.WritePropertyName("crossSiteAccessPolicies"u8);
-                    writer.WriteObjectValue(CrossSiteAccessPolicies, options);
+                    ((IJsonModel<CrossSiteAccessPolicies>)CrossSiteAccessPolicies).Write(writer, options);
                 }
                 else
                 {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Media
                     {
                         continue;
                     }
-                    sku = StreamingEndpointCurrentSku.DeserializeStreamingEndpointCurrentSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<StreamingEndpointCurrentSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Media
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Media
                                 accessControl = null;
                                 continue;
                             }
-                            accessControl = StreamingEndpointAccessControl.DeserializeStreamingEndpointAccessControl(property0.Value, options);
+                            accessControl = ModelSerializationExtensions.JsonDeserialize<StreamingEndpointAccessControl>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("maxCacheAge"u8))
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Media
                                 crossSiteAccessPolicies = null;
                                 continue;
                             }
-                            crossSiteAccessPolicies = CrossSiteAccessPolicies.DeserializeCrossSiteAccessPolicies(property0.Value, options);
+                            crossSiteAccessPolicies = ModelSerializationExtensions.JsonDeserialize<CrossSiteAccessPolicies>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("freeTrialEndTime"u8))

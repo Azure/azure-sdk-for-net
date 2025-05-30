@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
+                ((IJsonModel<MachineLearningUsageName>)Name).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    name = MachineLearningUsageName.DeserializeMachineLearningUsageName(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<MachineLearningUsageName>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

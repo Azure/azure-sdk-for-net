@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in ContentKeys)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StreamingLocatorContentKey>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
-                writer.WriteObjectValue(Key, options);
+                ((IJsonModel<IntegrationAccountKeyVaultKeyReference>)Key).Write(writer, options);
             }
             if (Optional.IsDefined(PublicCertificate))
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Logic
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            key = IntegrationAccountKeyVaultKeyReference.DeserializeIntegrationAccountKeyVaultKeyReference(property0.Value, options);
+                            key = ModelSerializationExtensions.JsonDeserialize<IntegrationAccountKeyVaultKeyReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicCertificate"u8))

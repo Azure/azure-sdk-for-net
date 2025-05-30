@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.Monitor
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("condition"u8);
-            writer.WriteObjectValue(Condition, options);
+            ((IJsonModel<AlertRuleCondition>)Condition).Write(writer, options);
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteObjectValue(Action, options);
+                ((IJsonModel<AlertRuleAction>)Action).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Actions))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AlertRuleAction>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Monitor
                         }
                         if (property0.NameEquals("condition"u8))
                         {
-                            condition = AlertRuleCondition.DeserializeAlertRuleCondition(property0.Value, options);
+                            condition = ModelSerializationExtensions.JsonDeserialize<AlertRuleCondition>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("action"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            action = AlertRuleAction.DeserializeAlertRuleAction(property0.Value, options);
+                            action = ModelSerializationExtensions.JsonDeserialize<AlertRuleAction>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("actions"u8))

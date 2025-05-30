@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W" && Optional.IsDefined(ContentLink))
             {
                 writer.WritePropertyName("contentLink"u8);
-                writer.WriteObjectValue(ContentLink, options);
+                ((IJsonModel<LogicContentLink>)ContentLink).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Logic
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            contentLink = LogicContentLink.DeserializeLogicContentLink(property0.Value, options);
+                            contentLink = ModelSerializationExtensions.JsonDeserialize<LogicContentLink>(property0.Value);
                             continue;
                         }
                     }

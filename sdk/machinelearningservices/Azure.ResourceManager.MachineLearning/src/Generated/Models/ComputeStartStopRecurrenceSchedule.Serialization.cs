@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule, options);
+                ((IJsonModel<MachineLearningComputeRecurrenceSchedule>)Schedule).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    schedule = MachineLearningComputeRecurrenceSchedule.DeserializeMachineLearningComputeRecurrenceSchedule(property.Value, options);
+                    schedule = ModelSerializationExtensions.JsonDeserialize<MachineLearningComputeRecurrenceSchedule>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

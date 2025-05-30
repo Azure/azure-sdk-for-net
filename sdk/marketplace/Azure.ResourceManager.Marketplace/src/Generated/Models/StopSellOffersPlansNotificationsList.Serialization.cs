@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in StopSellNotifications)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StopSellOffersPlansNotificationsResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

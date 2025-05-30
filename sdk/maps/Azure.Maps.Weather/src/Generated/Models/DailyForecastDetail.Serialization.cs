@@ -64,7 +64,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    localSource = LocalSource.DeserializeLocalSource(property.Value);
+                    localSource = ModelSerializationExtensions.JsonDeserialize<LocalSource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("hasPrecipitation"u8))
@@ -151,7 +151,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    wind = WindDetails.DeserializeWindDetails(property.Value);
+                    wind = ModelSerializationExtensions.JsonDeserialize<WindDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("windGust"u8))
@@ -160,7 +160,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    windGust = WindDetails.DeserializeWindDetails(property.Value);
+                    windGust = ModelSerializationExtensions.JsonDeserialize<WindDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("totalLiquid"u8))
@@ -169,7 +169,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    totalLiquid = WeatherValue.DeserializeWeatherValue(property.Value);
+                    totalLiquid = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rain"u8))
@@ -178,7 +178,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    rain = WeatherValue.DeserializeWeatherValue(property.Value);
+                    rain = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("snow"u8))
@@ -187,7 +187,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    snow = WeatherValue.DeserializeWeatherValue(property.Value);
+                    snow = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ice"u8))
@@ -196,7 +196,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    ice = WeatherValue.DeserializeWeatherValue(property.Value);
+                    ice = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("hoursOfPrecipitation"u8))

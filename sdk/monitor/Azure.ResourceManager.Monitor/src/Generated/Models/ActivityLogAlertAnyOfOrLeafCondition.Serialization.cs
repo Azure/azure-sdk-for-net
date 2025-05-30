@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in AnyOf)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AlertRuleLeafCondition>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

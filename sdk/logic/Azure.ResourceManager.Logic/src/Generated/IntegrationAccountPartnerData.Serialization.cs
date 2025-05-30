@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Logic
 #endif
             }
             writer.WritePropertyName("content"u8);
-            writer.WriteObjectValue(Content, options);
+            ((IJsonModel<IntegrationAccountPartnerContent>)Content).Write(writer, options);
             writer.WriteEndObject();
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Logic
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Logic
                         }
                         if (property0.NameEquals("content"u8))
                         {
-                            content = IntegrationAccountPartnerContent.DeserializeIntegrationAccountPartnerContent(property0.Value, options);
+                            content = ModelSerializationExtensions.JsonDeserialize<IntegrationAccountPartnerContent>(property0.Value);
                             continue;
                         }
                     }

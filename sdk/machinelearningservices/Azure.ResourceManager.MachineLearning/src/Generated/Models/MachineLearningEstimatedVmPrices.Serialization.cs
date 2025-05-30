@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartArray();
             foreach (var item in Values)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<MachineLearningEstimatedVmPrice>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             if (options.Format != "W" && Optional.IsDefined(ServicePrincipalConfiguration))
             {
                 writer.WritePropertyName("servicePrincipalConfiguration"u8);
-                writer.WriteObjectValue(ServicePrincipalConfiguration, options);
+                ((IJsonModel<ServicePrincipalProperties>)ServicePrincipalConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ImagePullSecretName))
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    servicePrincipalConfiguration = ServicePrincipalProperties.DeserializeServicePrincipalProperties(property.Value, options);
+                    servicePrincipalConfiguration = ModelSerializationExtensions.JsonDeserialize<ServicePrincipalProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("imagePullSecretName"u8))

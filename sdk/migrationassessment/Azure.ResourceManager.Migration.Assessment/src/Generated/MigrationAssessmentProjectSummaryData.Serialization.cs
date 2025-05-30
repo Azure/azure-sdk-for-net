@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 writer.WriteStartArray();
                 foreach (var item in ErrorSummaryAffectedEntities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AssessmentErrorSummary>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

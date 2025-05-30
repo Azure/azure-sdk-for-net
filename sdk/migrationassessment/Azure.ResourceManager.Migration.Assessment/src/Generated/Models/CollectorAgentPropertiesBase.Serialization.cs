@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
             if (Optional.IsDefined(SpnDetails))
             {
                 writer.WritePropertyName("spnDetails"u8);
-                writer.WriteObjectValue(SpnDetails, options);
+                ((IJsonModel<CollectorAgentSpnPropertiesBase>)SpnDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                     {
                         continue;
                     }
-                    spnDetails = CollectorAgentSpnPropertiesBase.DeserializeCollectorAgentSpnPropertiesBase(property.Value, options);
+                    spnDetails = ModelSerializationExtensions.JsonDeserialize<CollectorAgentSpnPropertiesBase>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

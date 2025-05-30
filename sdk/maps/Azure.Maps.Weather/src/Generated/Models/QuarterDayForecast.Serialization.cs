@@ -96,7 +96,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    temperature = WeatherValueRange.DeserializeWeatherValueRange(property.Value);
+                    temperature = ModelSerializationExtensions.JsonDeserialize<WeatherValueRange>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("realFeelTemperature"u8))
@@ -105,7 +105,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    realFeelTemperature = WeatherValueRange.DeserializeWeatherValueRange(property.Value);
+                    realFeelTemperature = ModelSerializationExtensions.JsonDeserialize<WeatherValueRange>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dewPoint"u8))
@@ -114,7 +114,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    dewPoint = WeatherValue.DeserializeWeatherValue(property.Value);
+                    dewPoint = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("relativeHumidity"u8))
@@ -132,7 +132,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    wind = WindDetails.DeserializeWindDetails(property.Value);
+                    wind = ModelSerializationExtensions.JsonDeserialize<WindDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("windGust"u8))
@@ -141,7 +141,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    windGust = WindDetails.DeserializeWindDetails(property.Value);
+                    windGust = ModelSerializationExtensions.JsonDeserialize<WindDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("visibility"u8))
@@ -150,7 +150,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    visibility = WeatherValue.DeserializeWeatherValue(property.Value);
+                    visibility = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("cloudCover"u8))
@@ -209,7 +209,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    totalLiquid = WeatherValue.DeserializeWeatherValue(property.Value);
+                    totalLiquid = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rain"u8))
@@ -218,7 +218,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    rain = WeatherValue.DeserializeWeatherValue(property.Value);
+                    rain = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("snow"u8))
@@ -227,7 +227,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    snow = WeatherValue.DeserializeWeatherValue(property.Value);
+                    snow = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ice"u8))
@@ -236,7 +236,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    ice = WeatherValue.DeserializeWeatherValue(property.Value);
+                    ice = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
             }

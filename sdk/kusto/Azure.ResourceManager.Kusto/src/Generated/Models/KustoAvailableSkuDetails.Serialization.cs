@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Kusto.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<KustoSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity, options);
+                ((IJsonModel<KustoCapacity>)Capacity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         continue;
                     }
-                    sku = KustoSku.DeserializeKustoSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<KustoSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         continue;
                     }
-                    capacity = KustoCapacity.DeserializeKustoCapacity(property.Value, options);
+                    capacity = ModelSerializationExtensions.JsonDeserialize<KustoCapacity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

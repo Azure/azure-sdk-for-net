@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(HttpsServerCertificate))
             {
                 writer.WritePropertyName("httpsServerCertificate"u8);
-                writer.WriteObjectValue(HttpsServerCertificate, options);
+                ((IJsonModel<MobileNetworkHttpsServerCertificate>)HttpsServerCertificate).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    httpsServerCertificate = MobileNetworkHttpsServerCertificate.DeserializeMobileNetworkHttpsServerCertificate(property.Value, options);
+                    httpsServerCertificate = ModelSerializationExtensions.JsonDeserialize<MobileNetworkHttpsServerCertificate>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

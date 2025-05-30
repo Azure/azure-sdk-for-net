@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Schedule != null)
                 {
                     writer.WritePropertyName("schedule"u8);
-                    writer.WriteObjectValue(Schedule, options);
+                    ((IJsonModel<MachineLearningRecurrenceTrigger>)Schedule).Write(writer, options);
                 }
                 else
                 {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Notification != null)
                 {
                     writer.WritePropertyName("notification"u8);
-                    writer.WriteObjectValue(Notification, options);
+                    ((IJsonModel<NotificationSetting>)Notification).Write(writer, options);
                 }
                 else
                 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Resource != null)
                 {
                     writer.WritePropertyName("resource"u8);
-                    writer.WriteObjectValue(Resource, options);
+                    ((IJsonModel<MaterializationComputeResource>)Resource).Write(writer, options);
                 }
                 else
                 {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         schedule = null;
                         continue;
                     }
-                    schedule = MachineLearningRecurrenceTrigger.DeserializeMachineLearningRecurrenceTrigger(property.Value, options);
+                    schedule = ModelSerializationExtensions.JsonDeserialize<MachineLearningRecurrenceTrigger>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("notification"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         notification = null;
                         continue;
                     }
-                    notification = NotificationSetting.DeserializeNotificationSetting(property.Value, options);
+                    notification = ModelSerializationExtensions.JsonDeserialize<NotificationSetting>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resource"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         resource = null;
                         continue;
                     }
-                    resource = MaterializationComputeResource.DeserializeMaterializationComputeResource(property.Value, options);
+                    resource = ModelSerializationExtensions.JsonDeserialize<MaterializationComputeResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sparkConfiguration"u8))

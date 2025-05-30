@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in Destinations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetworkTapPatchableParametersDestinationsItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

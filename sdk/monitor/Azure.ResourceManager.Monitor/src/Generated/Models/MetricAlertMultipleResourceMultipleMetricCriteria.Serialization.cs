@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in AllOf)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MultiMetricCriteria>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

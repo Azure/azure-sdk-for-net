@@ -39,24 +39,24 @@ namespace Azure.ResourceManager.LabServices.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultConnectionProfile))
             {
                 writer.WritePropertyName("defaultConnectionProfile"u8);
-                writer.WriteObjectValue(DefaultConnectionProfile, options);
+                ((IJsonModel<LabConnectionProfile>)DefaultConnectionProfile).Write(writer, options);
             }
             if (Optional.IsDefined(DefaultAutoShutdownProfile))
             {
                 writer.WritePropertyName("defaultAutoShutdownProfile"u8);
-                writer.WriteObjectValue(DefaultAutoShutdownProfile, options);
+                ((IJsonModel<LabAutoShutdownProfile>)DefaultAutoShutdownProfile).Write(writer, options);
             }
             if (Optional.IsDefined(DefaultNetworkProfile))
             {
                 writer.WritePropertyName("defaultNetworkProfile"u8);
-                writer.WriteObjectValue(DefaultNetworkProfile, options);
+                ((IJsonModel<LabPlanNetworkProfile>)DefaultNetworkProfile).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AllowedRegions))
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.LabServices.Models
             if (Optional.IsDefined(SupportInfo))
             {
                 writer.WritePropertyName("supportInfo"u8);
-                writer.WriteObjectValue(SupportInfo, options);
+                ((IJsonModel<LabPlanSupportInfo>)SupportInfo).Write(writer, options);
             }
             if (Optional.IsDefined(LinkedLmsInstance))
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            defaultConnectionProfile = LabConnectionProfile.DeserializeLabConnectionProfile(property0.Value, options);
+                            defaultConnectionProfile = ModelSerializationExtensions.JsonDeserialize<LabConnectionProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("defaultAutoShutdownProfile"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            defaultAutoShutdownProfile = LabAutoShutdownProfile.DeserializeLabAutoShutdownProfile(property0.Value, options);
+                            defaultAutoShutdownProfile = ModelSerializationExtensions.JsonDeserialize<LabAutoShutdownProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("defaultNetworkProfile"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            defaultNetworkProfile = LabPlanNetworkProfile.DeserializeLabPlanNetworkProfile(property0.Value, options);
+                            defaultNetworkProfile = ModelSerializationExtensions.JsonDeserialize<LabPlanNetworkProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("allowedRegions"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            supportInfo = LabPlanSupportInfo.DeserializeLabPlanSupportInfo(property0.Value, options);
+                            supportInfo = ModelSerializationExtensions.JsonDeserialize<LabPlanSupportInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("linkedLmsInstance"u8))

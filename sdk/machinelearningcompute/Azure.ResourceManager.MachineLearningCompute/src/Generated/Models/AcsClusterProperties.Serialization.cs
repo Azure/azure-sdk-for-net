@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             if (Optional.IsDefined(OrchestratorProperties))
             {
                 writer.WritePropertyName("orchestratorProperties"u8);
-                writer.WriteObjectValue(OrchestratorProperties, options);
+                ((IJsonModel<KubernetesClusterProperties>)OrchestratorProperties).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(SystemServices))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in SystemServices)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SystemService>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    orchestratorProperties = KubernetesClusterProperties.DeserializeKubernetesClusterProperties(property.Value, options);
+                    orchestratorProperties = ModelSerializationExtensions.JsonDeserialize<KubernetesClusterProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("systemServices"u8))

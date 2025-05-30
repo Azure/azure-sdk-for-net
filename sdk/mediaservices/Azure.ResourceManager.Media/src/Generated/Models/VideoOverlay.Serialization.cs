@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
-                writer.WriteObjectValue(Position, options);
+                ((IJsonModel<RectangularWindow>)Position).Write(writer, options);
             }
             if (Optional.IsDefined(Opacity))
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(CropRectangle))
             {
                 writer.WritePropertyName("cropRectangle"u8);
-                writer.WriteObjectValue(CropRectangle, options);
+                ((IJsonModel<RectangularWindow>)CropRectangle).Write(writer, options);
             }
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    position = RectangularWindow.DeserializeRectangularWindow(property.Value, options);
+                    position = ModelSerializationExtensions.JsonDeserialize<RectangularWindow>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("opacity"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    cropRectangle = RectangularWindow.DeserializeRectangularWindow(property.Value, options);
+                    cropRectangle = ModelSerializationExtensions.JsonDeserialize<RectangularWindow>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Defaults != null)
                 {
                     writer.WritePropertyName("defaults"u8);
-                    writer.WriteObjectValue(Defaults, options);
+                    ((IJsonModel<BatchEndpointDefaults>)Defaults).Write(writer, options);
                 }
                 else
                 {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         defaults = null;
                         continue;
                     }
-                    defaults = BatchEndpointDefaults.DeserializeBatchEndpointDefaults(property.Value, options);
+                    defaults = ModelSerializationExtensions.JsonDeserialize<BatchEndpointDefaults>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         keys = null;
                         continue;
                     }
-                    keys = MachineLearningEndpointAuthKeys.DeserializeMachineLearningEndpointAuthKeys(property.Value, options);
+                    keys = ModelSerializationExtensions.JsonDeserialize<MachineLearningEndpointAuthKeys>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

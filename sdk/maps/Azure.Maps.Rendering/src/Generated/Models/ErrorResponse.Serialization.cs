@@ -27,7 +27,7 @@ namespace Azure.Maps.Rendering
                     {
                         continue;
                     }
-                    error = ErrorDetail.DeserializeErrorDetail(property.Value);
+                    error = ModelSerializationExtensions.JsonDeserialize<ErrorDetail>(property.Value);
                     continue;
                 }
             }

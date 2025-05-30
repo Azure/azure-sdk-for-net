@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(AutoScaleProperties))
             {
                 writer.WritePropertyName("autoScaleProperties"u8);
-                writer.WriteObjectValue(AutoScaleProperties, options);
+                ((IJsonModel<MachineLearningAutoScaleProperties>)AutoScaleProperties).Write(writer, options);
             }
             if (Optional.IsDefined(AutoPauseProperties))
             {
                 writer.WritePropertyName("autoPauseProperties"u8);
-                writer.WriteObjectValue(AutoPauseProperties, options);
+                ((IJsonModel<MachineLearningAutoPauseProperties>)AutoPauseProperties).Write(writer, options);
             }
             if (Optional.IsDefined(SparkVersion))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    autoScaleProperties = MachineLearningAutoScaleProperties.DeserializeMachineLearningAutoScaleProperties(property.Value, options);
+                    autoScaleProperties = ModelSerializationExtensions.JsonDeserialize<MachineLearningAutoScaleProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("autoPauseProperties"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    autoPauseProperties = MachineLearningAutoPauseProperties.DeserializeMachineLearningAutoPauseProperties(property.Value, options);
+                    autoPauseProperties = ModelSerializationExtensions.JsonDeserialize<MachineLearningAutoPauseProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sparkVersion"u8))

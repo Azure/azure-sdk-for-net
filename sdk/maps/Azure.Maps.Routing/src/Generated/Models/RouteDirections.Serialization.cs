@@ -64,7 +64,7 @@ namespace Azure.Maps.Routing.Models
                     {
                         continue;
                     }
-                    report = RouteReport.DeserializeRouteReport(property.Value);
+                    report = ModelSerializationExtensions.JsonDeserialize<RouteReport>(property.Value);
                     continue;
                 }
             }

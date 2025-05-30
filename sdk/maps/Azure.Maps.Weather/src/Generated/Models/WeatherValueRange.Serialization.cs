@@ -28,7 +28,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    minimum = WeatherValue.DeserializeWeatherValue(property.Value);
+                    minimum = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("maximum"u8))
@@ -37,7 +37,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    maximum = WeatherValue.DeserializeWeatherValue(property.Value);
+                    maximum = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
             }

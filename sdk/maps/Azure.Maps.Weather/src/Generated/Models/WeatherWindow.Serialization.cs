@@ -35,7 +35,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    left = LatLongPair.DeserializeLatLongPair(property.Value);
+                    left = ModelSerializationExtensions.JsonDeserialize<LatLongPair>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("right"u8))
@@ -44,7 +44,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    right = LatLongPair.DeserializeLatLongPair(property.Value);
+                    right = ModelSerializationExtensions.JsonDeserialize<LatLongPair>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("beginDateTime"u8))
@@ -81,7 +81,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    geometry = JsonSerializer.Deserialize<GeoObject>(property.Value.GetRawText());
+                    geometry = ModelSerializationExtensions.JsonDeserialize<GeoObject>(property.Value);
                     continue;
                 }
             }

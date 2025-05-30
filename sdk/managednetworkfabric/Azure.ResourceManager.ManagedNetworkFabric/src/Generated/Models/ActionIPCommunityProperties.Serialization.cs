@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
-                writer.WriteObjectValue(Delete, options);
+                ((IJsonModel<IPCommunityIdList>)Delete).Write(writer, options);
             }
             if (Optional.IsDefined(Set))
             {
                 writer.WritePropertyName("set"u8);
-                writer.WriteObjectValue(Set, options);
+                ((IJsonModel<IPCommunityIdList>)Set).Write(writer, options);
             }
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    delete = IPCommunityIdList.DeserializeIPCommunityIdList(property.Value, options);
+                    delete = ModelSerializationExtensions.JsonDeserialize<IPCommunityIdList>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("set"u8))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    @set = IPCommunityIdList.DeserializeIPCommunityIdList(property.Value, options);
+                    @set = ModelSerializationExtensions.JsonDeserialize<IPCommunityIdList>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("add"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    @add = IPCommunityIdList.DeserializeIPCommunityIdList(property.Value, options);
+                    @add = ModelSerializationExtensions.JsonDeserialize<IPCommunityIdList>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

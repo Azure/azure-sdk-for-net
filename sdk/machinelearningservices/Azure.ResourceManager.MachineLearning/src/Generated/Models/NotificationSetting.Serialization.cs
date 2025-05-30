@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Webhooks)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value, options);
+                        ((IJsonModel<MachineLearningWebhook>)item.Value).Write(writer, options);
                     }
                     writer.WriteEndObject();
                 }

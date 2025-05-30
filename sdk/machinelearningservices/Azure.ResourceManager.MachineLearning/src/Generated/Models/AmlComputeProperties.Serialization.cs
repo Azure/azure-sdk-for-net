@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (VirtualMachineImage != null)
                 {
                     writer.WritePropertyName("virtualMachineImage"u8);
-                    writer.WriteObjectValue(VirtualMachineImage, options);
+                    ((IJsonModel<VirtualMachineImage>)VirtualMachineImage).Write(writer, options);
                 }
                 else
                 {
@@ -71,14 +71,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ScaleSettings))
             {
                 writer.WritePropertyName("scaleSettings"u8);
-                writer.WriteObjectValue(ScaleSettings, options);
+                ((IJsonModel<AmlComputeScaleSettings>)ScaleSettings).Write(writer, options);
             }
             if (Optional.IsDefined(UserAccountCredentials))
             {
                 if (UserAccountCredentials != null)
                 {
                     writer.WritePropertyName("userAccountCredentials"u8);
-                    writer.WriteObjectValue(UserAccountCredentials, options);
+                    ((IJsonModel<MachineLearningUserAccountCredentials>)UserAccountCredentials).Write(writer, options);
                 }
                 else
                 {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Subnet != null)
                 {
                     writer.WritePropertyName("subnet"u8);
-                    writer.WriteObjectValue(Subnet, options);
+                    ((IJsonModel<ResourceId>)Subnet).Write(writer, options);
                 }
                 else
                 {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in Errors)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<MachineLearningError>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (NodeStateCounts != null)
                 {
                     writer.WritePropertyName("nodeStateCounts"u8);
-                    writer.WriteObjectValue(NodeStateCounts, options);
+                    ((IJsonModel<MachineLearningNodeStateCounts>)NodeStateCounts).Write(writer, options);
                 }
                 else
                 {
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         virtualMachineImage = null;
                         continue;
                     }
-                    virtualMachineImage = VirtualMachineImage.DeserializeVirtualMachineImage(property.Value, options);
+                    virtualMachineImage = ModelSerializationExtensions.JsonDeserialize<VirtualMachineImage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isolatedNetwork"u8))
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    scaleSettings = AmlComputeScaleSettings.DeserializeAmlComputeScaleSettings(property.Value, options);
+                    scaleSettings = ModelSerializationExtensions.JsonDeserialize<AmlComputeScaleSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userAccountCredentials"u8))
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         userAccountCredentials = null;
                         continue;
                     }
-                    userAccountCredentials = MachineLearningUserAccountCredentials.DeserializeMachineLearningUserAccountCredentials(property.Value, options);
+                    userAccountCredentials = ModelSerializationExtensions.JsonDeserialize<MachineLearningUserAccountCredentials>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("subnet"u8))
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         subnet = null;
                         continue;
                     }
-                    subnet = ResourceId.DeserializeResourceId(property.Value, options);
+                    subnet = ModelSerializationExtensions.JsonDeserialize<ResourceId>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("remoteLoginPortPublicAccess"u8))
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         nodeStateCounts = null;
                         continue;
                     }
-                    nodeStateCounts = MachineLearningNodeStateCounts.DeserializeMachineLearningNodeStateCounts(property.Value, options);
+                    nodeStateCounts = ModelSerializationExtensions.JsonDeserialize<MachineLearningNodeStateCounts>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("enableNodePublicIp"u8))

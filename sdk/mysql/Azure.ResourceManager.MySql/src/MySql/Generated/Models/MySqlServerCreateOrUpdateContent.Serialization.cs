@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.MySql.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<MySqlSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<MySqlServerPropertiesForCreate>)Properties).Write(writer, options);
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             if (Optional.IsCollectionDefined(Tags))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MySql.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -121,12 +121,12 @@ namespace Azure.ResourceManager.MySql.Models
                     {
                         continue;
                     }
-                    sku = MySqlSku.DeserializeMySqlSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<MySqlSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = MySqlServerPropertiesForCreate.DeserializeMySqlServerPropertiesForCreate(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<MySqlServerPropertiesForCreate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"u8))

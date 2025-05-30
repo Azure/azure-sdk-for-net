@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MobileNetwork
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<MobileNetworkManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -52,14 +52,14 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("publicLandMobileNetworkIdentifier"u8);
-            writer.WriteObjectValue(PublicLandMobileNetworkIdentifier, options);
+            ((IJsonModel<MobileNetworkPlmnId>)PublicLandMobileNetworkIdentifier).Write(writer, options);
             if (Optional.IsCollectionDefined(PublicLandMobileNetworks))
             {
                 writer.WritePropertyName("publicLandMobileNetworks"u8);
                 writer.WriteStartArray();
                 foreach (var item in PublicLandMobileNetworks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PublicLandMobileNetwork>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     {
                         continue;
                     }
-                    identity = MobileNetworkManagedServiceIdentity.DeserializeMobileNetworkManagedServiceIdentity(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<MobileNetworkManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         }
                         if (property0.NameEquals("publicLandMobileNetworkIdentifier"u8))
                         {
-                            publicLandMobileNetworkIdentifier = MobileNetworkPlmnId.DeserializeMobileNetworkPlmnId(property0.Value, options);
+                            publicLandMobileNetworkIdentifier = ModelSerializationExtensions.JsonDeserialize<MobileNetworkPlmnId>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicLandMobileNetworks"u8))

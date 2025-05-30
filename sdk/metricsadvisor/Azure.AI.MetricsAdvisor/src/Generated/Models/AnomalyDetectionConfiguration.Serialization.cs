@@ -26,14 +26,14 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WritePropertyName("metricId"u8);
             writer.WriteStringValue(MetricId);
             writer.WritePropertyName("wholeMetricConfiguration"u8);
-            writer.WriteObjectValue<MetricWholeSeriesDetectionCondition>(WholeSeriesDetectionConditions);
+            JsonSerializer.Serialize(writer, WholeSeriesDetectionConditions);
             if (Optional.IsCollectionDefined(SeriesGroupDetectionConditions))
             {
                 writer.WritePropertyName("dimensionGroupOverrideConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in SeriesGroupDetectionConditions)
                 {
-                    writer.WriteObjectValue<MetricSeriesGroupDetectionCondition>(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -43,7 +43,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WriteStartArray();
                 foreach (var item in SeriesDetectionConditions)
                 {
-                    writer.WriteObjectValue<MetricSingleSeriesDetectionCondition>(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -87,7 +87,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("wholeMetricConfiguration"u8))
                 {
-                    wholeMetricConfiguration = MetricWholeSeriesDetectionCondition.DeserializeMetricWholeSeriesDetectionCondition(property.Value);
+                    wholeMetricConfiguration = ModelSerializationExtensions.JsonDeserialize<MetricWholeSeriesDetectionCondition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dimensionGroupOverrideConfigurations"u8))

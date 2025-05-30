@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AmlComputeNodeInformation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

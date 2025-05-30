@@ -52,7 +52,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    description = SevereWeatherAlertDescription.DeserializeSevereWeatherAlertDescription(property.Value);
+                    description = ModelSerializationExtensions.JsonDeserialize<SevereWeatherAlertDescription>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("category"u8))

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(AccessControl))
             {
                 writer.WritePropertyName("accessControl"u8);
-                writer.WriteObjectValue(AccessControl, options);
+                ((IJsonModel<MediaAccessControl>)AccessControl).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    accessControl = MediaAccessControl.DeserializeMediaAccessControl(property.Value, options);
+                    accessControl = ModelSerializationExtensions.JsonDeserialize<MediaAccessControl>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

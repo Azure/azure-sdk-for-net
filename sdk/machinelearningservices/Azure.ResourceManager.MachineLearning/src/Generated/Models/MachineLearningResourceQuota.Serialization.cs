@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
+                ((IJsonModel<MachineLearningResourceName>)Name).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Limit))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    name = MachineLearningResourceName.DeserializeMachineLearningResourceName(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<MachineLearningResourceName>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("limit"u8))

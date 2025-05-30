@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
-                writer.WriteObjectValue(Metrics, options);
+                ((IJsonModel<MonitorWorkspaceMetricProperties>)Metrics).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Monitor.Models
                             {
                                 continue;
                             }
-                            metrics = MonitorWorkspaceMetricProperties.DeserializeMonitorWorkspaceMetricProperties(property0.Value, options);
+                            metrics = ModelSerializationExtensions.JsonDeserialize<MonitorWorkspaceMetricProperties>(property0.Value);
                             continue;
                         }
                     }

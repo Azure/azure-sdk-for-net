@@ -21,7 +21,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WritePropertyName("metricId"u8);
             writer.WriteStringValue(MetricId);
             writer.WritePropertyName("dimensionFilter"u8);
-            writer.WriteObjectValue<FeedbackFilter>(DimensionFilter);
+            JsonSerializer.Serialize(writer, DimensionFilter);
             writer.WriteEndObject();
         }
 
@@ -70,7 +70,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("dimensionFilter"u8))
                 {
-                    dimensionFilter = FeedbackFilter.DeserializeFeedbackFilter(property.Value);
+                    dimensionFilter = ModelSerializationExtensions.JsonDeserialize<FeedbackFilter>(property.Value);
                     continue;
                 }
             }

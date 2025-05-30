@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             if (Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
-                writer.WriteObjectValue(Dimensions, options);
+                ((IJsonModel<LoadTestingQuotaBucketDimensions>)Dimensions).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                             {
                                 continue;
                             }
-                            dimensions = LoadTestingQuotaBucketDimensions.DeserializeLoadTestingQuotaBucketDimensions(property0.Value, options);
+                            dimensions = ModelSerializationExtensions.JsonDeserialize<LoadTestingQuotaBucketDimensions>(property0.Value);
                             continue;
                         }
                     }

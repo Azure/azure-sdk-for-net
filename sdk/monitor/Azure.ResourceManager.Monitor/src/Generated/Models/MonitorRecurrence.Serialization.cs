@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WritePropertyName("frequency"u8);
             writer.WriteStringValue(Frequency.ToSerialString());
             writer.WritePropertyName("schedule"u8);
-            writer.WriteObjectValue(Schedule, options);
+            ((IJsonModel<RecurrentSchedule>)Schedule).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("schedule"u8))
                 {
-                    schedule = RecurrentSchedule.DeserializeRecurrentSchedule(property.Value, options);
+                    schedule = ModelSerializationExtensions.JsonDeserialize<RecurrentSchedule>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

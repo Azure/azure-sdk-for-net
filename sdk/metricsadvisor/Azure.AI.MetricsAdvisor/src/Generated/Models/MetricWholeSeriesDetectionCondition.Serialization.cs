@@ -23,17 +23,17 @@ namespace Azure.AI.MetricsAdvisor.Models
             if (Optional.IsDefined(SmartDetectionCondition))
             {
                 writer.WritePropertyName("smartDetectionCondition"u8);
-                writer.WriteObjectValue<SmartDetectionCondition>(SmartDetectionCondition);
+                JsonSerializer.Serialize(writer, SmartDetectionCondition);
             }
             if (Optional.IsDefined(HardThresholdCondition))
             {
                 writer.WritePropertyName("hardThresholdCondition"u8);
-                writer.WriteObjectValue<HardThresholdCondition>(HardThresholdCondition);
+                JsonSerializer.Serialize(writer, HardThresholdCondition);
             }
             if (Optional.IsDefined(ChangeThresholdCondition))
             {
                 writer.WritePropertyName("changeThresholdCondition"u8);
-                writer.WriteObjectValue<ChangeThresholdCondition>(ChangeThresholdCondition);
+                JsonSerializer.Serialize(writer, ChangeThresholdCondition);
             }
             writer.WriteEndObject();
         }
@@ -65,7 +65,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     {
                         continue;
                     }
-                    smartDetectionCondition = Models.SmartDetectionCondition.DeserializeSmartDetectionCondition(property.Value);
+                    smartDetectionCondition = ModelSerializationExtensions.JsonDeserialize<SmartDetectionCondition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("hardThresholdCondition"u8))
@@ -74,7 +74,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     {
                         continue;
                     }
-                    hardThresholdCondition = Models.HardThresholdCondition.DeserializeHardThresholdCondition(property.Value);
+                    hardThresholdCondition = ModelSerializationExtensions.JsonDeserialize<HardThresholdCondition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("changeThresholdCondition"u8))
@@ -83,7 +83,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     {
                         continue;
                     }
-                    changeThresholdCondition = Models.ChangeThresholdCondition.DeserializeChangeThresholdCondition(property.Value);
+                    changeThresholdCondition = ModelSerializationExtensions.JsonDeserialize<ChangeThresholdCondition>(property.Value);
                     continue;
                 }
             }

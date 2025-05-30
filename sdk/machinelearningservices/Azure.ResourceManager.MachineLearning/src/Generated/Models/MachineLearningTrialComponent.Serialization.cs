@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Distribution != null)
                 {
                     writer.WritePropertyName("distribution"u8);
-                    writer.WriteObjectValue(Distribution, options);
+                    ((IJsonModel<MachineLearningDistributionConfiguration>)Distribution).Write(writer, options);
                 }
                 else
                 {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
-                writer.WriteObjectValue(Resources, options);
+                ((IJsonModel<MachineLearningJobResourceConfiguration>)Resources).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         distribution = null;
                         continue;
                     }
-                    distribution = MachineLearningDistributionConfiguration.DeserializeMachineLearningDistributionConfiguration(property.Value, options);
+                    distribution = ModelSerializationExtensions.JsonDeserialize<MachineLearningDistributionConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resources"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    resources = MachineLearningJobResourceConfiguration.DeserializeMachineLearningJobResourceConfiguration(property.Value, options);
+                    resources = ModelSerializationExtensions.JsonDeserialize<MachineLearningJobResourceConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

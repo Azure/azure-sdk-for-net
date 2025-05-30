@@ -28,7 +28,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    heating = WeatherValue.DeserializeWeatherValue(property.Value);
+                    heating = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("cooling"u8))
@@ -37,7 +37,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    cooling = WeatherValue.DeserializeWeatherValue(property.Value);
+                    cooling = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
             }

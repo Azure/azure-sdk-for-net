@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MySql.Models
             if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<MySqlServerPrivateEndpointConnectionProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MySql.Models
                     {
                         continue;
                     }
-                    properties = MySqlServerPrivateEndpointConnectionProperties.DeserializeMySqlServerPrivateEndpointConnectionProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<MySqlServerPrivateEndpointConnectionProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WritePropertyName("batchGroupName"u8);
             writer.WriteStringValue(BatchGroupName);
             writer.WritePropertyName("releaseCriteria"u8);
-            writer.WriteObjectValue(ReleaseCriteria, options);
+            ((IJsonModel<IntegrationAccountBatchReleaseCriteria>)ReleaseCriteria).Write(writer, options);
         }
 
         IntegrationAccountBatchConfigurationProperties IJsonModel<IntegrationAccountBatchConfigurationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (property.NameEquals("releaseCriteria"u8))
                 {
-                    releaseCriteria = IntegrationAccountBatchReleaseCriteria.DeserializeIntegrationAccountBatchReleaseCriteria(property.Value, options);
+                    releaseCriteria = ModelSerializationExtensions.JsonDeserialize<IntegrationAccountBatchReleaseCriteria>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("createdTime"u8))

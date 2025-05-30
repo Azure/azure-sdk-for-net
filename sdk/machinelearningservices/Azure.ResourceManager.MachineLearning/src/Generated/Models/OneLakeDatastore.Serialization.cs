@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("artifact"u8);
-            writer.WriteObjectValue(Artifact, options);
+            ((IJsonModel<OneLakeArtifact>)Artifact).Write(writer, options);
             writer.WritePropertyName("oneLakeWorkspaceName"u8);
             writer.WriteStringValue(OneLakeWorkspaceName);
             if (Optional.IsDefined(Endpoint))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("artifact"u8))
                 {
-                    artifact = OneLakeArtifact.DeserializeOneLakeArtifact(property.Value, options);
+                    artifact = ModelSerializationExtensions.JsonDeserialize<OneLakeArtifact>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("oneLakeWorkspaceName"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("credentials"u8))
                 {
-                    credentials = MachineLearningDatastoreCredentials.DeserializeMachineLearningDatastoreCredentials(property.Value, options);
+                    credentials = ModelSerializationExtensions.JsonDeserialize<MachineLearningDatastoreCredentials>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))

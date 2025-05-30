@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    azureMonitorMetrics = DestinationsSpecAzureMonitorMetrics.DeserializeDestinationsSpecAzureMonitorMetrics(property.Value, options);
+                    azureMonitorMetrics = ModelSerializationExtensions.JsonDeserialize<DestinationsSpecAzureMonitorMetrics>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eventHubs"u8))

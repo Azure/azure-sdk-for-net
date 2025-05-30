@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(ExportRoutePolicy))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
-                writer.WriteObjectValue(ExportRoutePolicy, options);
+                ((IJsonModel<L3ExportRoutePolicy>)ExportRoutePolicy).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    exportRoutePolicy = L3ExportRoutePolicy.DeserializeL3ExportRoutePolicy(property.Value, options);
+                    exportRoutePolicy = ModelSerializationExtensions.JsonDeserialize<L3ExportRoutePolicy>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

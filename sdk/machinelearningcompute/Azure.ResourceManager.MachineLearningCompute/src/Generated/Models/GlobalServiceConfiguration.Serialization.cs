@@ -42,17 +42,17 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             if (Optional.IsDefined(Ssl))
             {
                 writer.WritePropertyName("ssl"u8);
-                writer.WriteObjectValue(Ssl, options);
+                ((IJsonModel<SslConfiguration>)Ssl).Write(writer, options);
             }
             if (Optional.IsDefined(ServiceAuth))
             {
                 writer.WritePropertyName("serviceAuth"u8);
-                writer.WriteObjectValue(ServiceAuth, options);
+                ((IJsonModel<ServiceAuthConfiguration>)ServiceAuth).Write(writer, options);
             }
             if (Optional.IsDefined(AutoScale))
             {
                 writer.WritePropertyName("autoScale"u8);
-                writer.WriteObjectValue(AutoScale, options);
+                ((IJsonModel<AutoScaleConfiguration>)AutoScale).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    ssl = SslConfiguration.DeserializeSslConfiguration(property.Value, options);
+                    ssl = ModelSerializationExtensions.JsonDeserialize<SslConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("serviceAuth"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    serviceAuth = ServiceAuthConfiguration.DeserializeServiceAuthConfiguration(property.Value, options);
+                    serviceAuth = ModelSerializationExtensions.JsonDeserialize<ServiceAuthConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("autoScale"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    autoScale = AutoScaleConfiguration.DeserializeAutoScaleConfiguration(property.Value, options);
+                    autoScale = ModelSerializationExtensions.JsonDeserialize<AutoScaleConfiguration>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

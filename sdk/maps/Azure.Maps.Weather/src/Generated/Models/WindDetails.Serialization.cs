@@ -28,7 +28,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    direction = WindDirection.DeserializeWindDirection(property.Value);
+                    direction = ModelSerializationExtensions.JsonDeserialize<WindDirection>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("speed"u8))
@@ -37,7 +37,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    speed = WeatherValue.DeserializeWeatherValue(property.Value);
+                    speed = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
             }

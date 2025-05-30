@@ -29,7 +29,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    summary = WeatherAlongRouteSummary.DeserializeWeatherAlongRouteSummary(property.Value);
+                    summary = ModelSerializationExtensions.JsonDeserialize<WeatherAlongRouteSummary>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("waypoints"u8))

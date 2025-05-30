@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WritePropertyName("keyVaultProperties"u8);
-            writer.WriteObjectValue(KeyVaultProperties, options);
+            ((IJsonModel<EncryptionKeyVaultUpdateProperties>)KeyVaultProperties).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("keyVaultProperties"u8))
                 {
-                    keyVaultProperties = EncryptionKeyVaultUpdateProperties.DeserializeEncryptionKeyVaultUpdateProperties(property.Value, options);
+                    keyVaultProperties = ModelSerializationExtensions.JsonDeserialize<EncryptionKeyVaultUpdateProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartArray();
             foreach (var item in Licenses)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ContentKeyPolicyPlayReadyLicense>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(ResponseCustomData))

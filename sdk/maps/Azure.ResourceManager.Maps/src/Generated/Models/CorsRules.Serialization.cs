@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Maps.Models
                 writer.WriteStartArray();
                 foreach (var item in CorsRulesValue)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MapsCorsRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

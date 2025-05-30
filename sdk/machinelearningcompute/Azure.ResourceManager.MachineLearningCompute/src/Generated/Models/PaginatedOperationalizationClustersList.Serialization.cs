@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<OperationalizationClusterData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

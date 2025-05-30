@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
                 writer.WriteStringValue(SubscriptionStatus.Value.ToString());
             }
             writer.WritePropertyName("offerDetails"u8);
-            writer.WriteObjectValue(OfferDetails, options);
+            ((IJsonModel<LambdaTestHyperExecuteOfferDetails>)OfferDetails).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
                 }
                 if (property.NameEquals("offerDetails"u8))
                 {
-                    offerDetails = LambdaTestHyperExecuteOfferDetails.DeserializeLambdaTestHyperExecuteOfferDetails(property.Value, options);
+                    offerDetails = ModelSerializationExtensions.JsonDeserialize<LambdaTestHyperExecuteOfferDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

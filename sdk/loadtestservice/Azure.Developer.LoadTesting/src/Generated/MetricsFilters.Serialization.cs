@@ -40,7 +40,7 @@ namespace Azure.Developer.LoadTesting
                 writer.WriteStartArray();
                 foreach (var item in Filters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DimensionFilter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

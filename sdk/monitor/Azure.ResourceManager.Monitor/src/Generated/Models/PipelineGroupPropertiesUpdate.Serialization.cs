@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Receivers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PipelineGroupReceiver>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Processors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PipelineGroupProcessor>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Exporters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PipelineGroupExporter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Service))
             {
                 writer.WritePropertyName("service"u8);
-                writer.WriteObjectValue(Service, options);
+                ((IJsonModel<PipelineGroupServiceUpdate>)Service).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(NetworkingConfigurations))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkingConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PipelineGroupNetworkingConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    service = PipelineGroupServiceUpdate.DeserializePipelineGroupServiceUpdate(property.Value, options);
+                    service = ModelSerializationExtensions.JsonDeserialize<PipelineGroupServiceUpdate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("networkingConfigurations"u8))

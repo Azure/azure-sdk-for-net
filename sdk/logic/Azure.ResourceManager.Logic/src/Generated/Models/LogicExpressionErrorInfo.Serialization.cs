@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LogicExpressionErrorInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

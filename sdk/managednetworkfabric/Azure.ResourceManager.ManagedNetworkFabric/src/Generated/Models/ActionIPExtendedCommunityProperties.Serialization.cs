@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
-                writer.WriteObjectValue(Delete, options);
+                ((IJsonModel<IPExtendedCommunityIdList>)Delete).Write(writer, options);
             }
             if (Optional.IsDefined(Set))
             {
                 writer.WritePropertyName("set"u8);
-                writer.WriteObjectValue(Set, options);
+                ((IJsonModel<IPExtendedCommunityIdList>)Set).Write(writer, options);
             }
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    delete = IPExtendedCommunityIdList.DeserializeIPExtendedCommunityIdList(property.Value, options);
+                    delete = ModelSerializationExtensions.JsonDeserialize<IPExtendedCommunityIdList>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("set"u8))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    @set = IPExtendedCommunityIdList.DeserializeIPExtendedCommunityIdList(property.Value, options);
+                    @set = ModelSerializationExtensions.JsonDeserialize<IPExtendedCommunityIdList>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("add"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    @add = IPExtendedCommunityIdList.DeserializeIPExtendedCommunityIdList(property.Value, options);
+                    @add = ModelSerializationExtensions.JsonDeserialize<IPExtendedCommunityIdList>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

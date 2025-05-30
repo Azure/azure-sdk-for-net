@@ -40,7 +40,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    temperature = WeatherValueYearMaxMinAvg.DeserializeWeatherValueYearMaxMinAvg(property.Value);
+                    temperature = ModelSerializationExtensions.JsonDeserialize<WeatherValueYearMaxMinAvg>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("precipitation"u8))
@@ -49,7 +49,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    precipitation = WeatherValueYearMax.DeserializeWeatherValueYearMax(property.Value);
+                    precipitation = ModelSerializationExtensions.JsonDeserialize<WeatherValueYearMax>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("snowfall"u8))
@@ -58,7 +58,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    snowfall = WeatherValueYearMax.DeserializeWeatherValueYearMax(property.Value);
+                    snowfall = ModelSerializationExtensions.JsonDeserialize<WeatherValueYearMax>(property.Value);
                     continue;
                 }
             }

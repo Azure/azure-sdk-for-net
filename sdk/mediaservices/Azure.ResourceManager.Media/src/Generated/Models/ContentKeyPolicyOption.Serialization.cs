@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("configuration"u8);
-            writer.WriteObjectValue(Configuration, options);
+            ((IJsonModel<ContentKeyPolicyConfiguration>)Configuration).Write(writer, options);
             writer.WritePropertyName("restriction"u8);
-            writer.WriteObjectValue(Restriction, options);
+            ((IJsonModel<ContentKeyPolicyRestriction>)Restriction).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (property.NameEquals("configuration"u8))
                 {
-                    configuration = ContentKeyPolicyConfiguration.DeserializeContentKeyPolicyConfiguration(property.Value, options);
+                    configuration = ModelSerializationExtensions.JsonDeserialize<ContentKeyPolicyConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("restriction"u8))
                 {
-                    restriction = ContentKeyPolicyRestriction.DeserializeContentKeyPolicyRestriction(property.Value, options);
+                    restriction = ModelSerializationExtensions.JsonDeserialize<ContentKeyPolicyRestriction>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WritePropertyName("dataNetwork"u8);
-            JsonSerializer.Serialize(writer, DataNetwork);
+            ((IJsonModel<WritableSubResource>)DataNetwork).Write(writer, options);
             writer.WritePropertyName("sessionAmbr"u8);
-            writer.WriteObjectValue(SessionAmbr, options);
+            ((IJsonModel<Ambr>)SessionAmbr).Write(writer, options);
             if (Optional.IsDefined(FiveQi))
             {
                 writer.WritePropertyName("5qi"u8);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartArray();
             foreach (var item in AllowedServices)
             {
-                JsonSerializer.Serialize(writer, item);
+                ((IJsonModel<WritableSubResource>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(MaximumNumberOfBufferedPackets))
@@ -141,12 +141,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 if (property.NameEquals("dataNetwork"u8))
                 {
-                    dataNetwork = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    dataNetwork = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sessionAmbr"u8))
                 {
-                    sessionAmbr = Ambr.DeserializeAmbr(property.Value, options);
+                    sessionAmbr = ModelSerializationExtensions.JsonDeserialize<Ambr>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("5qi"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                        array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                     }
                     allowedServices = array;
                     continue;

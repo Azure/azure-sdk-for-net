@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WritePropertyName("senderBusinessIdentity"u8);
-            writer.WriteObjectValue(SenderBusinessIdentity, options);
+            ((IJsonModel<IntegrationAccountBusinessIdentity>)SenderBusinessIdentity).Write(writer, options);
             writer.WritePropertyName("receiverBusinessIdentity"u8);
-            writer.WriteObjectValue(ReceiverBusinessIdentity, options);
+            ((IJsonModel<IntegrationAccountBusinessIdentity>)ReceiverBusinessIdentity).Write(writer, options);
             writer.WritePropertyName("protocolSettings"u8);
-            writer.WriteObjectValue(ProtocolSettings, options);
+            ((IJsonModel<X12ProtocolSettings>)ProtocolSettings).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -86,17 +86,17 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 if (property.NameEquals("senderBusinessIdentity"u8))
                 {
-                    senderBusinessIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property.Value, options);
+                    senderBusinessIdentity = ModelSerializationExtensions.JsonDeserialize<IntegrationAccountBusinessIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("receiverBusinessIdentity"u8))
                 {
-                    receiverBusinessIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property.Value, options);
+                    receiverBusinessIdentity = ModelSerializationExtensions.JsonDeserialize<IntegrationAccountBusinessIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("protocolSettings"u8))
                 {
-                    protocolSettings = X12ProtocolSettings.DeserializeX12ProtocolSettings(property.Value, options);
+                    protocolSettings = ModelSerializationExtensions.JsonDeserialize<X12ProtocolSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

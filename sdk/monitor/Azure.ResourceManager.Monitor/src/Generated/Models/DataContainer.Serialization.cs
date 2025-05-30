@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WritePropertyName("workspace"u8);
-            writer.WriteObjectValue(Workspace, options);
+            ((IJsonModel<DataContainerWorkspace>)Workspace).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (property.NameEquals("workspace"u8))
                 {
-                    workspace = DataContainerWorkspace.DeserializeDataContainerWorkspace(property.Value, options);
+                    workspace = ModelSerializationExtensions.JsonDeserialize<DataContainerWorkspace>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

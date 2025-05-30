@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<PipelineGroupPropertiesUpdate>)Properties).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    properties = PipelineGroupPropertiesUpdate.DeserializePipelineGroupPropertiesUpdate(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<PipelineGroupPropertiesUpdate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

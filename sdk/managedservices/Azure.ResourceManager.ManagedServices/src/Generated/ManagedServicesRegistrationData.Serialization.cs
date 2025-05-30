@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.ManagedServices
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ManagedServicesRegistrationProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                writer.WriteObjectValue(Plan, options);
+                ((IJsonModel<ManagedServicesPlan>)Plan).Write(writer, options);
             }
         }
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ManagedServices
                     {
                         continue;
                     }
-                    properties = ManagedServicesRegistrationProperties.DeserializeManagedServicesRegistrationProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ManagedServicesRegistrationProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("plan"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ManagedServices
                     {
                         continue;
                     }
-                    plan = ManagedServicesPlan.DeserializeManagedServicesPlan(property.Value, options);
+                    plan = ModelSerializationExtensions.JsonDeserialize<ManagedServicesPlan>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ManagedServices
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

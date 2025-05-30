@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 writer.WriteStringValue(SubscriptionStatus.Value.ToString());
             }
             writer.WritePropertyName("offerDetails"u8);
-            writer.WriteObjectValue(OfferDetails, options);
+            ((IJsonModel<MongoDBAtlasOfferDetails>)OfferDetails).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 }
                 if (property.NameEquals("offerDetails"u8))
                 {
-                    offerDetails = MongoDBAtlasOfferDetails.DeserializeMongoDBAtlasOfferDetails(property.Value, options);
+                    offerDetails = ModelSerializationExtensions.JsonDeserialize<MongoDBAtlasOfferDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

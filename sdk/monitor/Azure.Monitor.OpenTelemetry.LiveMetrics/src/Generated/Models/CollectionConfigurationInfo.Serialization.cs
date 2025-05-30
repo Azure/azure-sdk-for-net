@@ -55,7 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     {
                         continue;
                     }
-                    quotaInfo = QuotaConfigurationInfo.DeserializeQuotaConfigurationInfo(property.Value);
+                    quotaInfo = ModelSerializationExtensions.JsonDeserialize<QuotaConfigurationInfo>(property.Value);
                     continue;
                 }
             }

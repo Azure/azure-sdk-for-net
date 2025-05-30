@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataContainer>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

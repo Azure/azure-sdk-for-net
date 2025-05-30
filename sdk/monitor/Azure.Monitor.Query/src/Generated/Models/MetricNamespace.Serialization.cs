@@ -54,7 +54,7 @@ namespace Azure.Monitor.Query.Models
                     {
                         continue;
                     }
-                    properties = MetricNamespaceName.DeserializeMetricNamespaceName(property.Value);
+                    properties = ModelSerializationExtensions.JsonDeserialize<MetricNamespaceName>(property.Value);
                     continue;
                 }
             }

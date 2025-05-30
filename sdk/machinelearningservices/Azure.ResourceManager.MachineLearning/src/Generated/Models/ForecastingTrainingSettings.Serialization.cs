@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         stackEnsembleSettings = null;
                         continue;
                     }
-                    stackEnsembleSettings = MachineLearningStackEnsembleSettings.DeserializeMachineLearningStackEnsembleSettings(property.Value, options);
+                    stackEnsembleSettings = ModelSerializationExtensions.JsonDeserialize<MachineLearningStackEnsembleSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("enableStackEnsemble"u8))

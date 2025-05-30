@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 writer.WriteStartArray();
                 foreach (var item in CostComponents)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AssessmentCostComponent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Migration.Assessment
             if (Optional.IsDefined(VmUptime))
             {
                 writer.WritePropertyName("vmUptime"u8);
-                writer.WriteObjectValue(VmUptime, options);
+                ((IJsonModel<AssessmentVmUptime>)VmUptime).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(GroupType))
             {
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                             {
                                 continue;
                             }
-                            vmUptime = AssessmentVmUptime.DeserializeAssessmentVmUptime(property0.Value, options);
+                            vmUptime = ModelSerializationExtensions.JsonDeserialize<AssessmentVmUptime>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("groupType"u8))

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MySql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MySqlServerData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

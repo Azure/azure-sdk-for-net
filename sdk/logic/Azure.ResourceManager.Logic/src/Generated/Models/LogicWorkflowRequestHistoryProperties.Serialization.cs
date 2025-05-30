@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
-                writer.WriteObjectValue(Request, options);
+                ((IJsonModel<LogicWorkflowRequest>)Request).Write(writer, options);
             }
             if (Optional.IsDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
-                writer.WriteObjectValue(Response, options);
+                ((IJsonModel<LogicWorkflowResponse>)Response).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    request = LogicWorkflowRequest.DeserializeLogicWorkflowRequest(property.Value, options);
+                    request = ModelSerializationExtensions.JsonDeserialize<LogicWorkflowRequest>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("response"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    response = LogicWorkflowResponse.DeserializeLogicWorkflowResponse(property.Value, options);
+                    response = ModelSerializationExtensions.JsonDeserialize<LogicWorkflowResponse>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

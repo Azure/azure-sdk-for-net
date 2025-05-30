@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(EventHub))
             {
                 writer.WritePropertyName("eventHub"u8);
-                writer.WriteObjectValue(EventHub, options);
+                ((IJsonModel<DataImportSourcesEventHub>)EventHub).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    eventHub = DataImportSourcesEventHub.DeserializeDataImportSourcesEventHub(property.Value, options);
+                    eventHub = ModelSerializationExtensions.JsonDeserialize<DataImportSourcesEventHub>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

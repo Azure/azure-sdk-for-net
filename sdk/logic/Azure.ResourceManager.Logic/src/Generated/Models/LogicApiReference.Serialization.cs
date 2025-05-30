@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(IntegrationServiceEnvironment))
             {
                 writer.WritePropertyName("integrationServiceEnvironment"u8);
-                writer.WriteObjectValue(IntegrationServiceEnvironment, options);
+                ((IJsonModel<LogicResourceReference>)IntegrationServiceEnvironment).Write(writer, options);
             }
         }
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    integrationServiceEnvironment = DeserializeLogicResourceReference(property.Value, options);
+                    integrationServiceEnvironment = ModelSerializationExtensions.JsonDeserialize<LogicResourceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

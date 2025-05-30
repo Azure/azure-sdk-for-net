@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(ContentLink))
             {
                 writer.WritePropertyName("contentLink"u8);
-                writer.WriteObjectValue(ContentLink, options);
+                ((IJsonModel<LogicContentLink>)ContentLink).Write(writer, options);
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    contentLink = LogicContentLink.DeserializeLogicContentLink(property.Value, options);
+                    contentLink = ModelSerializationExtensions.JsonDeserialize<LogicContentLink>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("createdTime"u8))

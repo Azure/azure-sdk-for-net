@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ModelSettings != null)
                 {
                     writer.WritePropertyName("modelSettings"u8);
-                    writer.WriteObjectValue(ModelSettings, options);
+                    ((IJsonModel<ModelSettings>)ModelSettings).Write(writer, options);
                 }
                 else
                 {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (InferenceEndpoint != null)
                 {
                     writer.WritePropertyName("inferenceEndpoint"u8);
-                    writer.WriteObjectValue(InferenceEndpoint, options);
+                    ((IJsonModel<ServerlessInferenceEndpoint>)InferenceEndpoint).Write(writer, options);
                 }
                 else
                 {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ContentSafety != null)
                 {
                     writer.WritePropertyName("contentSafety"u8);
-                    writer.WriteObjectValue(ContentSafety, options);
+                    ((IJsonModel<ContentSafety>)ContentSafety).Write(writer, options);
                 }
                 else
                 {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         modelSettings = null;
                         continue;
                     }
-                    modelSettings = ModelSettings.DeserializeModelSettings(property.Value, options);
+                    modelSettings = ModelSerializationExtensions.JsonDeserialize<ModelSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("authMode"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         inferenceEndpoint = null;
                         continue;
                     }
-                    inferenceEndpoint = ServerlessInferenceEndpoint.DeserializeServerlessInferenceEndpoint(property.Value, options);
+                    inferenceEndpoint = ModelSerializationExtensions.JsonDeserialize<ServerlessInferenceEndpoint>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         contentSafety = null;
                         continue;
                     }
-                    contentSafety = ContentSafety.DeserializeContentSafety(property.Value, options);
+                    contentSafety = ModelSerializationExtensions.JsonDeserialize<ContentSafety>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

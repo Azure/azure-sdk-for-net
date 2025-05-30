@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.Logic
             writer.WritePropertyName("guestPartner"u8);
             writer.WriteStringValue(GuestPartner);
             writer.WritePropertyName("hostIdentity"u8);
-            writer.WriteObjectValue(HostIdentity, options);
+            ((IJsonModel<IntegrationAccountBusinessIdentity>)HostIdentity).Write(writer, options);
             writer.WritePropertyName("guestIdentity"u8);
-            writer.WriteObjectValue(GuestIdentity, options);
+            ((IJsonModel<IntegrationAccountBusinessIdentity>)GuestIdentity).Write(writer, options);
             writer.WritePropertyName("content"u8);
-            writer.WriteObjectValue(Content, options);
+            ((IJsonModel<IntegrationAccountAgreementContent>)Content).Write(writer, options);
             writer.WriteEndObject();
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Logic
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -211,17 +211,17 @@ namespace Azure.ResourceManager.Logic
                         }
                         if (property0.NameEquals("hostIdentity"u8))
                         {
-                            hostIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property0.Value, options);
+                            hostIdentity = ModelSerializationExtensions.JsonDeserialize<IntegrationAccountBusinessIdentity>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("guestIdentity"u8))
                         {
-                            guestIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property0.Value, options);
+                            guestIdentity = ModelSerializationExtensions.JsonDeserialize<IntegrationAccountBusinessIdentity>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("content"u8))
                         {
-                            content = IntegrationAccountAgreementContent.DeserializeIntegrationAccountAgreementContent(property0.Value, options);
+                            content = ModelSerializationExtensions.JsonDeserialize<IntegrationAccountAgreementContent>(property0.Value);
                             continue;
                         }
                     }

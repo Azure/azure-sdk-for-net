@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<LoadTestingCmkIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(KeyUri))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     {
                         continue;
                     }
-                    identity = LoadTestingCmkIdentity.DeserializeLoadTestingCmkIdentity(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<LoadTestingCmkIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("keyUrl"u8))

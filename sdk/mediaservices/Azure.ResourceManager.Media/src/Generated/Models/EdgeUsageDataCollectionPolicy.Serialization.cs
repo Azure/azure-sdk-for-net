@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(EventHubDetails))
             {
                 writer.WritePropertyName("eventHubDetails"u8);
-                writer.WriteObjectValue(EventHubDetails, options);
+                ((IJsonModel<EdgeUsageDataEventHub>)EventHubDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    eventHubDetails = EdgeUsageDataEventHub.DeserializeEdgeUsageDataEventHub(property.Value, options);
+                    eventHubDetails = ModelSerializationExtensions.JsonDeserialize<EdgeUsageDataEventHub>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

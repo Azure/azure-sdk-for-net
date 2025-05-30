@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata, options);
+                ((IJsonModel<LogicApiResourceMetadata>)Metadata).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(RuntimeUris))
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W" && Optional.IsDefined(GeneralInformation))
             {
                 writer.WritePropertyName("generalInformation"u8);
-                writer.WriteObjectValue(GeneralInformation, options);
+                ((IJsonModel<LogicApiResourceGeneralInformation>)GeneralInformation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
             {
@@ -105,12 +105,12 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W" && Optional.IsDefined(BackendService))
             {
                 writer.WritePropertyName("backendService"u8);
-                writer.WriteObjectValue(BackendService, options);
+                ((IJsonModel<LogicApiResourceBackendService>)BackendService).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Policies))
             {
                 writer.WritePropertyName("policies"u8);
-                writer.WriteObjectValue(Policies, options);
+                ((IJsonModel<LogicApiResourcePolicies>)Policies).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ApiDefinitionUri))
             {
@@ -120,12 +120,12 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W" && Optional.IsDefined(ApiDefinitions))
             {
                 writer.WritePropertyName("apiDefinitions"u8);
-                writer.WriteObjectValue(ApiDefinitions, options);
+                ((IJsonModel<LogicApiResourceDefinitions>)ApiDefinitions).Write(writer, options);
             }
             if (Optional.IsDefined(IntegrationServiceEnvironment))
             {
                 writer.WritePropertyName("integrationServiceEnvironment"u8);
-                writer.WriteObjectValue(IntegrationServiceEnvironment, options);
+                ((IJsonModel<LogicResourceReference>)IntegrationServiceEnvironment).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(DeploymentParameters))
             {
                 writer.WritePropertyName("deploymentParameters"u8);
-                writer.WriteObjectValue(DeploymentParameters, options);
+                ((IJsonModel<IntegrationServiceEnvironmentManagedApiDeploymentParameters>)DeploymentParameters).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Logic
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            metadata = LogicApiResourceMetadata.DeserializeLogicApiResourceMetadata(property0.Value, options);
+                            metadata = ModelSerializationExtensions.JsonDeserialize<LogicApiResourceMetadata>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("runtimeUrls"u8))
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            generalInformation = LogicApiResourceGeneralInformation.DeserializeLogicApiResourceGeneralInformation(property0.Value, options);
+                            generalInformation = ModelSerializationExtensions.JsonDeserialize<LogicApiResourceGeneralInformation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("capabilities"u8))
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            backendService = LogicApiResourceBackendService.DeserializeLogicApiResourceBackendService(property0.Value, options);
+                            backendService = ModelSerializationExtensions.JsonDeserialize<LogicApiResourceBackendService>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("policies"u8))
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            policies = LogicApiResourcePolicies.DeserializeLogicApiResourcePolicies(property0.Value, options);
+                            policies = ModelSerializationExtensions.JsonDeserialize<LogicApiResourcePolicies>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("apiDefinitionUrl"u8))
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            apiDefinitions = LogicApiResourceDefinitions.DeserializeLogicApiResourceDefinitions(property0.Value, options);
+                            apiDefinitions = ModelSerializationExtensions.JsonDeserialize<LogicApiResourceDefinitions>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("integrationServiceEnvironment"u8))
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            integrationServiceEnvironment = LogicResourceReference.DeserializeLogicResourceReference(property0.Value, options);
+                            integrationServiceEnvironment = ModelSerializationExtensions.JsonDeserialize<LogicResourceReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            deploymentParameters = IntegrationServiceEnvironmentManagedApiDeploymentParameters.DeserializeIntegrationServiceEnvironmentManagedApiDeploymentParameters(property0.Value, options);
+                            deploymentParameters = ModelSerializationExtensions.JsonDeserialize<IntegrationServiceEnvironmentManagedApiDeploymentParameters>(property0.Value);
                             continue;
                         }
                     }

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             foreach (var item in Collections)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                ((IJsonModel<DataCollectionConfiguration>)item.Value).Write(writer, options);
             }
             writer.WriteEndObject();
             if (Optional.IsDefined(RollingRate))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (RequestLogging != null)
                 {
                     writer.WritePropertyName("requestLogging"u8);
-                    writer.WriteObjectValue(RequestLogging, options);
+                    ((IJsonModel<RequestLogging>)RequestLogging).Write(writer, options);
                 }
                 else
                 {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         requestLogging = null;
                         continue;
                     }
-                    requestLogging = RequestLogging.DeserializeRequestLogging(property.Value, options);
+                    requestLogging = ModelSerializationExtensions.JsonDeserialize<RequestLogging>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

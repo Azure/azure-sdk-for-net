@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in ProvisioningErrors)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<MachineLearningError>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }

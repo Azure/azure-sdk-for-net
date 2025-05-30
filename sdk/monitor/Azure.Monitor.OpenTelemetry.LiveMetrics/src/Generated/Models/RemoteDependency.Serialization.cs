@@ -53,7 +53,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 writer.WriteStartArray();
                 foreach (var item in Properties)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }

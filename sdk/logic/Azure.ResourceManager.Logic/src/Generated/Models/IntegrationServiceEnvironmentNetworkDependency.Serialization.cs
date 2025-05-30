@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IntegrationServiceEnvironmentNetworkEndpoint>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

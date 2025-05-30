@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataCollectionRuleBcdrLocationSpec>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

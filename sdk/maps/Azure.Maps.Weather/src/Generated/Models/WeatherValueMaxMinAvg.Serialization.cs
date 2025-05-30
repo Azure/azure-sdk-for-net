@@ -29,7 +29,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    maximum = WeatherValue.DeserializeWeatherValue(property.Value);
+                    maximum = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("minimum"u8))
@@ -38,7 +38,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    minimum = WeatherValue.DeserializeWeatherValue(property.Value);
+                    minimum = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("average"u8))
@@ -47,7 +47,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    average = WeatherValue.DeserializeWeatherValue(property.Value);
+                    average = ModelSerializationExtensions.JsonDeserialize<WeatherValue>(property.Value);
                     continue;
                 }
             }

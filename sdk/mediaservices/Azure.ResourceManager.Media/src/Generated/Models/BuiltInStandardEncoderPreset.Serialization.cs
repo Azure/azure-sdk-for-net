@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Configurations))
             {
                 writer.WritePropertyName("configurations"u8);
-                writer.WriteObjectValue(Configurations, options);
+                ((IJsonModel<EncoderPresetConfigurations>)Configurations).Write(writer, options);
             }
             writer.WritePropertyName("presetName"u8);
             writer.WriteStringValue(PresetName.ToString());
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    configurations = EncoderPresetConfigurations.DeserializeEncoderPresetConfigurations(property.Value, options);
+                    configurations = ModelSerializationExtensions.JsonDeserialize<EncoderPresetConfigurations>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("presetName"u8))

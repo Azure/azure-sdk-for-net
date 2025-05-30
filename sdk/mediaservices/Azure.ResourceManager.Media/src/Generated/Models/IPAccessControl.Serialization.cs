@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in AllowedIPs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IPRange>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

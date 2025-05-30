@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in ConnectedIPv4Subnets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConnectedSubnet>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in ConnectedIPv6Subnets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConnectedSubnet>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             if (Optional.IsDefined(ImportRoutePolicy))
             {
                 writer.WritePropertyName("importRoutePolicy"u8);
-                writer.WriteObjectValue(ImportRoutePolicy, options);
+                ((IJsonModel<ImportRoutePolicy>)ImportRoutePolicy).Write(writer, options);
             }
             if (Optional.IsDefined(ExportRoutePolicy))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
-                writer.WriteObjectValue(ExportRoutePolicy, options);
+                ((IJsonModel<ExportRoutePolicy>)ExportRoutePolicy).Write(writer, options);
             }
             if (Optional.IsDefined(IngressAclId))
             {
@@ -114,12 +114,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             if (Optional.IsDefined(BgpConfiguration))
             {
                 writer.WritePropertyName("bgpConfiguration"u8);
-                writer.WriteObjectValue(BgpConfiguration, options);
+                ((IJsonModel<InternalNetworkBgpConfiguration>)BgpConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(StaticRouteConfiguration))
             {
                 writer.WritePropertyName("staticRouteConfiguration"u8);
-                writer.WriteObjectValue(StaticRouteConfiguration, options);
+                ((IJsonModel<InternalNetworkStaticRouteConfiguration>)StaticRouteConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            importRoutePolicy = ImportRoutePolicy.DeserializeImportRoutePolicy(property0.Value, options);
+                            importRoutePolicy = ModelSerializationExtensions.JsonDeserialize<ImportRoutePolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("exportRoutePolicy"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            exportRoutePolicy = ExportRoutePolicy.DeserializeExportRoutePolicy(property0.Value, options);
+                            exportRoutePolicy = ModelSerializationExtensions.JsonDeserialize<ExportRoutePolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ingressAclId"u8))
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            bgpConfiguration = InternalNetworkBgpConfiguration.DeserializeInternalNetworkBgpConfiguration(property0.Value, options);
+                            bgpConfiguration = ModelSerializationExtensions.JsonDeserialize<InternalNetworkBgpConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("staticRouteConfiguration"u8))
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            staticRouteConfiguration = InternalNetworkStaticRouteConfiguration.DeserializeInternalNetworkStaticRouteConfiguration(property0.Value, options);
+                            staticRouteConfiguration = ModelSerializationExtensions.JsonDeserialize<InternalNetworkStaticRouteConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("configurationState"u8))

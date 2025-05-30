@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedStorageEditions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MySqlFlexibleServerStorageEditionCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedServerVersions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MySqlFlexibleServerServerVersionCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

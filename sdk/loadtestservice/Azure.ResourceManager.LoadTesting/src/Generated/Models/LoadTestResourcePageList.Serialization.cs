@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LoadTestingResourceData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

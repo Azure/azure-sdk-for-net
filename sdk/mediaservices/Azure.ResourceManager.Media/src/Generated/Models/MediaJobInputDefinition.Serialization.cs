@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in IncludedTracks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TrackDescriptor>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

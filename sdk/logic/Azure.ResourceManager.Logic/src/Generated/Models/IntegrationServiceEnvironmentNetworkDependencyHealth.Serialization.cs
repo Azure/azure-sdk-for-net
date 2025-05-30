@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<IntegrationServiceErrorInfo>)Error).Write(writer, options);
             }
             if (Optional.IsDefined(State))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    error = IntegrationServiceErrorInfo.DeserializeIntegrationServiceErrorInfo(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<IntegrationServiceErrorInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("state"u8))

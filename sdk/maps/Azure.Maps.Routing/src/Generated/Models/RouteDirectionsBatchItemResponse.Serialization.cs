@@ -32,7 +32,7 @@ namespace Azure.Maps.Routing.Models
                     {
                         continue;
                     }
-                    error = Models.ErrorDetail.DeserializeErrorDetail(property.Value);
+                    error = ModelSerializationExtensions.JsonDeserialize<ErrorDetail>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("formatVersion"u8))
@@ -74,7 +74,7 @@ namespace Azure.Maps.Routing.Models
                     {
                         continue;
                     }
-                    report = RouteReport.DeserializeRouteReport(property.Value);
+                    report = ModelSerializationExtensions.JsonDeserialize<RouteReport>(property.Value);
                     continue;
                 }
             }

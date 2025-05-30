@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
-                writer.WriteObjectValue(Resources, options);
+                ((IJsonModel<MachineLearningJobResourceConfiguration>)Resources).Write(writer, options);
             }
             if (Optional.IsDefined(EnvironmentId))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("taskDetails"u8);
-            writer.WriteObjectValue(TaskDetails, options);
+            ((IJsonModel<AutoMLVertical>)TaskDetails).Write(writer, options);
             if (Optional.IsCollectionDefined(Outputs))
             {
                 if (Outputs != null)
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Outputs)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value, options);
+                        ((IJsonModel<MachineLearningJobOutput>)item.Value).Write(writer, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (QueueSettings != null)
                 {
                     writer.WritePropertyName("queueSettings"u8);
-                    writer.WriteObjectValue(QueueSettings, options);
+                    ((IJsonModel<JobQueueSettings>)QueueSettings).Write(writer, options);
                 }
                 else
                 {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    resources = MachineLearningJobResourceConfiguration.DeserializeMachineLearningJobResourceConfiguration(property.Value, options);
+                    resources = ModelSerializationExtensions.JsonDeserialize<MachineLearningJobResourceConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("environmentId"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("taskDetails"u8))
                 {
-                    taskDetails = AutoMLVertical.DeserializeAutoMLVertical(property.Value, options);
+                    taskDetails = ModelSerializationExtensions.JsonDeserialize<AutoMLVertical>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("outputs"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         queueSettings = null;
                         continue;
                     }
-                    queueSettings = JobQueueSettings.DeserializeJobQueueSettings(property.Value, options);
+                    queueSettings = ModelSerializationExtensions.JsonDeserialize<JobQueueSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("jobType"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         identity = null;
                         continue;
                     }
-                    identity = MachineLearningIdentityConfiguration.DeserializeMachineLearningIdentityConfiguration(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<MachineLearningIdentityConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("componentId"u8))
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         notificationSetting = null;
                         continue;
                     }
-                    notificationSetting = NotificationSetting.DeserializeNotificationSetting(property.Value, options);
+                    notificationSetting = ModelSerializationExtensions.JsonDeserialize<NotificationSetting>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))

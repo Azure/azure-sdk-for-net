@@ -28,7 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
                 if (property.NameEquals("Filters"u8))
                 {
-                    filters = FilterConjunctionGroupInfo.DeserializeFilterConjunctionGroupInfo(property.Value);
+                    filters = ModelSerializationExtensions.JsonDeserialize<FilterConjunctionGroupInfo>(property.Value);
                     continue;
                 }
             }

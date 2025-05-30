@@ -17,7 +17,7 @@ namespace Azure.Maps.Routing.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("geometry"u8);
-            writer.WriteObjectValue(Geometry);
+            JsonSerializer.Serialize(writer, Geometry);
             if (Common.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);

@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(AS2))
             {
                 writer.WritePropertyName("aS2"u8);
-                writer.WriteObjectValue(AS2, options);
+                ((IJsonModel<AS2AgreementContent>)AS2).Write(writer, options);
             }
             if (Optional.IsDefined(X12))
             {
                 writer.WritePropertyName("x12"u8);
-                writer.WriteObjectValue(X12, options);
+                ((IJsonModel<X12AgreementContent>)X12).Write(writer, options);
             }
             if (Optional.IsDefined(Edifact))
             {
                 writer.WritePropertyName("edifact"u8);
-                writer.WriteObjectValue(Edifact, options);
+                ((IJsonModel<EdifactAgreementContent>)Edifact).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    aS2 = AS2AgreementContent.DeserializeAS2AgreementContent(property.Value, options);
+                    aS2 = ModelSerializationExtensions.JsonDeserialize<AS2AgreementContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("x12"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    x12 = X12AgreementContent.DeserializeX12AgreementContent(property.Value, options);
+                    x12 = ModelSerializationExtensions.JsonDeserialize<X12AgreementContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("edifact"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    edifact = EdifactAgreementContent.DeserializeEdifactAgreementContent(property.Value, options);
+                    edifact = ModelSerializationExtensions.JsonDeserialize<EdifactAgreementContent>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

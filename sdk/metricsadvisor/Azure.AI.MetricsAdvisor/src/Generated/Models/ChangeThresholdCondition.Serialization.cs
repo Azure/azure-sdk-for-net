@@ -24,7 +24,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WritePropertyName("anomalyDetectorDirection"u8);
             writer.WriteStringValue(AnomalyDetectorDirection.ToString());
             writer.WritePropertyName("suppressCondition"u8);
-            writer.WriteObjectValue<SuppressCondition>(SuppressCondition);
+            JsonSerializer.Serialize(writer, SuppressCondition);
             writer.WriteEndObject();
         }
 
@@ -63,7 +63,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("suppressCondition"u8))
                 {
-                    suppressCondition = Models.SuppressCondition.DeserializeSuppressCondition(property.Value);
+                    suppressCondition = ModelSerializationExtensions.JsonDeserialize<SuppressCondition>(property.Value);
                     continue;
                 }
             }

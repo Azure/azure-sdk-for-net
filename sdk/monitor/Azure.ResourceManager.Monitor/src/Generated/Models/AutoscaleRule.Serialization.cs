@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WritePropertyName("metricTrigger"u8);
-            writer.WriteObjectValue(MetricTrigger, options);
+            ((IJsonModel<MetricTrigger>)MetricTrigger).Write(writer, options);
             writer.WritePropertyName("scaleAction"u8);
-            writer.WriteObjectValue(ScaleAction, options);
+            ((IJsonModel<MonitorScaleAction>)ScaleAction).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (property.NameEquals("metricTrigger"u8))
                 {
-                    metricTrigger = MetricTrigger.DeserializeMetricTrigger(property.Value, options);
+                    metricTrigger = ModelSerializationExtensions.JsonDeserialize<MetricTrigger>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scaleAction"u8))
                 {
-                    scaleAction = MonitorScaleAction.DeserializeMonitorScaleAction(property.Value, options);
+                    scaleAction = ModelSerializationExtensions.JsonDeserialize<MonitorScaleAction>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

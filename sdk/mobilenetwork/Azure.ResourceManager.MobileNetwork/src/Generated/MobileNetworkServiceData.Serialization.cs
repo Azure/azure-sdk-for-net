@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.MobileNetwork
             if (Optional.IsDefined(ServiceQosPolicy))
             {
                 writer.WritePropertyName("serviceQosPolicy"u8);
-                writer.WriteObjectValue(ServiceQosPolicy, options);
+                ((IJsonModel<MobileNetworkQosPolicy>)ServiceQosPolicy).Write(writer, options);
             }
             writer.WritePropertyName("pccRules"u8);
             writer.WriteStartArray();
             foreach (var item in PccRules)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<PccRuleConfiguration>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            serviceQosPolicy = MobileNetworkQosPolicy.DeserializeMobileNetworkQosPolicy(property0.Value, options);
+                            serviceQosPolicy = ModelSerializationExtensions.JsonDeserialize<MobileNetworkQosPolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("pccRules"u8))

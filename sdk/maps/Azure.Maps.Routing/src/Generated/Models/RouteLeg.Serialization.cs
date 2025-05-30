@@ -29,7 +29,7 @@ namespace Azure.Maps.Routing.Models
                     {
                         continue;
                     }
-                    summary = RouteLegSummary.DeserializeRouteLegSummary(property.Value);
+                    summary = ModelSerializationExtensions.JsonDeserialize<RouteLegSummary>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("points"u8))

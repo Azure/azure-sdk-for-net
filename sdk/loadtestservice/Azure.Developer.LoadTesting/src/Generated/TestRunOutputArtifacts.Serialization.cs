@@ -37,22 +37,22 @@ namespace Azure.Developer.LoadTesting
             if (Optional.IsDefined(ResultFileInfo))
             {
                 writer.WritePropertyName("resultFileInfo"u8);
-                writer.WriteObjectValue(ResultFileInfo, options);
+                ((IJsonModel<TestRunFileInfo>)ResultFileInfo).Write(writer, options);
             }
             if (Optional.IsDefined(LogsFileInfo))
             {
                 writer.WritePropertyName("logsFileInfo"u8);
-                writer.WriteObjectValue(LogsFileInfo, options);
+                ((IJsonModel<TestRunFileInfo>)LogsFileInfo).Write(writer, options);
             }
             if (Optional.IsDefined(ArtifactsContainerInfo))
             {
                 writer.WritePropertyName("artifactsContainerInfo"u8);
-                writer.WriteObjectValue(ArtifactsContainerInfo, options);
+                ((IJsonModel<ArtifactsContainerInfo>)ArtifactsContainerInfo).Write(writer, options);
             }
             if (Optional.IsDefined(ReportFileInfo))
             {
                 writer.WritePropertyName("reportFileInfo"u8);
-                writer.WriteObjectValue(ReportFileInfo, options);
+                ((IJsonModel<TestRunFileInfo>)ReportFileInfo).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,7 +105,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    resultFileInfo = TestRunFileInfo.DeserializeTestRunFileInfo(property.Value, options);
+                    resultFileInfo = ModelSerializationExtensions.JsonDeserialize<TestRunFileInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("logsFileInfo"u8))
@@ -114,7 +114,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    logsFileInfo = TestRunFileInfo.DeserializeTestRunFileInfo(property.Value, options);
+                    logsFileInfo = ModelSerializationExtensions.JsonDeserialize<TestRunFileInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("artifactsContainerInfo"u8))
@@ -123,7 +123,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    artifactsContainerInfo = ArtifactsContainerInfo.DeserializeArtifactsContainerInfo(property.Value, options);
+                    artifactsContainerInfo = ModelSerializationExtensions.JsonDeserialize<ArtifactsContainerInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("reportFileInfo"u8))
@@ -132,7 +132,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    reportFileInfo = TestRunFileInfo.DeserializeTestRunFileInfo(property.Value, options);
+                    reportFileInfo = ModelSerializationExtensions.JsonDeserialize<TestRunFileInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

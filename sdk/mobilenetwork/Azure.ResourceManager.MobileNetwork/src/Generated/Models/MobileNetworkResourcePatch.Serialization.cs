@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(UserAssignedIdentity, options);
+                ((IJsonModel<MobileNetworkManagedServiceIdentity>)UserAssignedIdentity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    identity = MobileNetworkManagedServiceIdentity.DeserializeMobileNetworkManagedServiceIdentity(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<MobileNetworkManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

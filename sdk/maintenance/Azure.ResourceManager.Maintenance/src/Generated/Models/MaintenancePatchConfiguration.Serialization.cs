@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Maintenance.Models
             if (Optional.IsDefined(WindowsParameters))
             {
                 writer.WritePropertyName("windowsParameters"u8);
-                writer.WriteObjectValue(WindowsParameters, options);
+                ((IJsonModel<MaintenanceWindowsPatchSettings>)WindowsParameters).Write(writer, options);
             }
             if (Optional.IsDefined(LinuxParameters))
             {
                 writer.WritePropertyName("linuxParameters"u8);
-                writer.WriteObjectValue(LinuxParameters, options);
+                ((IJsonModel<MaintenanceLinuxPatchSettings>)LinuxParameters).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    windowsParameters = MaintenanceWindowsPatchSettings.DeserializeMaintenanceWindowsPatchSettings(property.Value, options);
+                    windowsParameters = ModelSerializationExtensions.JsonDeserialize<MaintenanceWindowsPatchSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("linuxParameters"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    linuxParameters = MaintenanceLinuxPatchSettings.DeserializeMaintenanceLinuxPatchSettings(property.Value, options);
+                    linuxParameters = ModelSerializationExtensions.JsonDeserialize<MaintenanceLinuxPatchSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

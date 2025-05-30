@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in ProfileA)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HomeNetworkPublicKey>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in ProfileB)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HomeNetworkPublicKey>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -70,17 +70,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Bind))
             {
                 writer.WritePropertyName("bind"u8);
-                writer.WriteObjectValue(Bind, options);
+                ((IJsonModel<MountBindOptions>)Bind).Write(writer, options);
             }
             if (Optional.IsDefined(Volume))
             {
                 writer.WritePropertyName("volume"u8);
-                writer.WriteObjectValue(Volume, options);
+                ((IJsonModel<VolumeOptions>)Volume).Write(writer, options);
             }
             if (Optional.IsDefined(Tmpfs))
             {
                 writer.WritePropertyName("tmpfs"u8);
-                writer.WriteObjectValue(Tmpfs, options);
+                ((IJsonModel<TmpfsOptions>)Tmpfs).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    bind = MountBindOptions.DeserializeMountBindOptions(property.Value, options);
+                    bind = ModelSerializationExtensions.JsonDeserialize<MountBindOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("volume"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    volume = VolumeOptions.DeserializeVolumeOptions(property.Value, options);
+                    volume = ModelSerializationExtensions.JsonDeserialize<VolumeOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tmpfs"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    tmpfs = TmpfsOptions.DeserializeTmpfsOptions(property.Value, options);
+                    tmpfs = ModelSerializationExtensions.JsonDeserialize<TmpfsOptions>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

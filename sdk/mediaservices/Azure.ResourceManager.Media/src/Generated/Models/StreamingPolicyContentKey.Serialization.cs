@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Tracks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MediaTrackSelection>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

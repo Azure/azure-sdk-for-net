@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -77,27 +77,27 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(EndpointsConfiguration))
             {
                 writer.WritePropertyName("endpointsConfiguration"u8);
-                writer.WriteObjectValue(EndpointsConfiguration, options);
+                ((IJsonModel<FlowEndpointsConfiguration>)EndpointsConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(AccessControl))
             {
                 writer.WritePropertyName("accessControl"u8);
-                writer.WriteObjectValue(AccessControl, options);
+                ((IJsonModel<FlowAccessControlConfiguration>)AccessControl).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<LogicSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(IntegrationAccount))
             {
                 writer.WritePropertyName("integrationAccount"u8);
-                writer.WriteObjectValue(IntegrationAccount, options);
+                ((IJsonModel<LogicResourceReference>)IntegrationAccount).Write(writer, options);
             }
             if (Optional.IsDefined(IntegrationServiceEnvironment))
             {
                 writer.WritePropertyName("integrationServiceEnvironment"u8);
-                writer.WriteObjectValue(IntegrationServiceEnvironment, options);
+                ((IJsonModel<LogicResourceReference>)IntegrationServiceEnvironment).Write(writer, options);
             }
             if (Optional.IsDefined(Definition))
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Logic
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<LogicWorkflowParameterInfo>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Logic
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Logic
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            endpointsConfiguration = FlowEndpointsConfiguration.DeserializeFlowEndpointsConfiguration(property0.Value, options);
+                            endpointsConfiguration = ModelSerializationExtensions.JsonDeserialize<FlowEndpointsConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("accessControl"u8))
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            accessControl = FlowAccessControlConfiguration.DeserializeFlowAccessControlConfiguration(property0.Value, options);
+                            accessControl = ModelSerializationExtensions.JsonDeserialize<FlowAccessControlConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sku"u8))
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            sku = LogicSku.DeserializeLogicSku(property0.Value, options);
+                            sku = ModelSerializationExtensions.JsonDeserialize<LogicSku>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("integrationAccount"u8))
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            integrationAccount = LogicResourceReference.DeserializeLogicResourceReference(property0.Value, options);
+                            integrationAccount = ModelSerializationExtensions.JsonDeserialize<LogicResourceReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("integrationServiceEnvironment"u8))
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            integrationServiceEnvironment = LogicResourceReference.DeserializeLogicResourceReference(property0.Value, options);
+                            integrationServiceEnvironment = ModelSerializationExtensions.JsonDeserialize<LogicResourceReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("definition"u8))

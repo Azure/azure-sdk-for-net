@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("jobDefinition"u8);
-            writer.WriteObjectValue(JobDefinition, options);
+            ((IJsonModel<MachineLearningJobProperties>)JobDefinition).Write(writer, options);
         }
 
         MachineLearningJobScheduleAction IJsonModel<MachineLearningJobScheduleAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("jobDefinition"u8))
                 {
-                    jobDefinition = MachineLearningJobProperties.DeserializeMachineLearningJobProperties(property.Value, options);
+                    jobDefinition = ModelSerializationExtensions.JsonDeserialize<MachineLearningJobProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("actionType"u8))

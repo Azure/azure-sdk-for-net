@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ContainerResourceRequirements != null)
                 {
                     writer.WritePropertyName("containerResourceRequirements"u8);
-                    writer.WriteObjectValue(ContainerResourceRequirements, options);
+                    ((IJsonModel<MachineLearningContainerResourceRequirements>)ContainerResourceRequirements).Write(writer, options);
                 }
                 else
                 {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         containerResourceRequirements = null;
                         continue;
                     }
-                    containerResourceRequirements = MachineLearningContainerResourceRequirements.DeserializeMachineLearningContainerResourceRequirements(property.Value, options);
+                    containerResourceRequirements = ModelSerializationExtensions.JsonDeserialize<MachineLearningContainerResourceRequirements>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("endpointComputeType"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         scaleSettings = null;
                         continue;
                     }
-                    scaleSettings = MachineLearningOnlineScaleSettings.DeserializeMachineLearningOnlineScaleSettings(property.Value, options);
+                    scaleSettings = ModelSerializationExtensions.JsonDeserialize<MachineLearningOnlineScaleSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("requestSettings"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         requestSettings = null;
                         continue;
                     }
-                    requestSettings = MachineLearningOnlineRequestSettings.DeserializeMachineLearningOnlineRequestSettings(property.Value, options);
+                    requestSettings = ModelSerializationExtensions.JsonDeserialize<MachineLearningOnlineRequestSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("modelMountPath"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         livenessProbe = null;
                         continue;
                     }
-                    livenessProbe = MachineLearningProbeSettings.DeserializeMachineLearningProbeSettings(property.Value, options);
+                    livenessProbe = ModelSerializationExtensions.JsonDeserialize<MachineLearningProbeSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("readinessProbe"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         readinessProbe = null;
                         continue;
                     }
-                    readinessProbe = MachineLearningProbeSettings.DeserializeMachineLearningProbeSettings(property.Value, options);
+                    readinessProbe = ModelSerializationExtensions.JsonDeserialize<MachineLearningProbeSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         dataCollector = null;
                         continue;
                     }
-                    dataCollector = DataCollector.DeserializeDataCollector(property.Value, options);
+                    dataCollector = ModelSerializationExtensions.JsonDeserialize<DataCollector>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         codeConfiguration = null;
                         continue;
                     }
-                    codeConfiguration = MachineLearningCodeConfiguration.DeserializeMachineLearningCodeConfiguration(property.Value, options);
+                    codeConfiguration = ModelSerializationExtensions.JsonDeserialize<MachineLearningCodeConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("environmentId"u8))

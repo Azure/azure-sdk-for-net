@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MixedReality.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SpatialAnchorsAccountData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

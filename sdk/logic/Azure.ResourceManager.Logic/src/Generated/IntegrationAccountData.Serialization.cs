@@ -40,14 +40,14 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<IntegrationAccountSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IntegrationServiceEnvironment))
             {
                 writer.WritePropertyName("integrationServiceEnvironment"u8);
-                writer.WriteObjectValue(IntegrationServiceEnvironment, options);
+                ((IJsonModel<LogicResourceReference>)IntegrationServiceEnvironment).Write(writer, options);
             }
             if (Optional.IsDefined(State))
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Logic
                     {
                         continue;
                     }
-                    sku = IntegrationAccountSku.DeserializeIntegrationAccountSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<IntegrationAccountSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Logic
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            integrationServiceEnvironment = LogicResourceReference.DeserializeLogicResourceReference(property0.Value, options);
+                            integrationServiceEnvironment = ModelSerializationExtensions.JsonDeserialize<LogicResourceReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("state"u8))

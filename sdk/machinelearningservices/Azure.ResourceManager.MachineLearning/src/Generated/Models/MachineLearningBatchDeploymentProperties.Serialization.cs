@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (DeploymentConfiguration != null)
                 {
                     writer.WritePropertyName("deploymentConfiguration"u8);
-                    writer.WriteObjectValue(DeploymentConfiguration, options);
+                    ((IJsonModel<BatchDeploymentConfiguration>)DeploymentConfiguration).Write(writer, options);
                 }
                 else
                 {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (RetrySettings != null)
                 {
                     writer.WritePropertyName("retrySettings"u8);
-                    writer.WriteObjectValue(RetrySettings, options);
+                    ((IJsonModel<MachineLearningBatchRetrySettings>)RetrySettings).Write(writer, options);
                 }
                 else
                 {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Model != null)
                 {
                     writer.WritePropertyName("model"u8);
-                    writer.WriteObjectValue(Model, options);
+                    ((IJsonModel<MachineLearningAssetReferenceBase>)Model).Write(writer, options);
                 }
                 else
                 {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Resources != null)
                 {
                     writer.WritePropertyName("resources"u8);
-                    writer.WriteObjectValue(Resources, options);
+                    ((IJsonModel<MachineLearningDeploymentResourceConfiguration>)Resources).Write(writer, options);
                 }
                 else
                 {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         deploymentConfiguration = null;
                         continue;
                     }
-                    deploymentConfiguration = BatchDeploymentConfiguration.DeserializeBatchDeploymentConfiguration(property.Value, options);
+                    deploymentConfiguration = ModelSerializationExtensions.JsonDeserialize<BatchDeploymentConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("errorThreshold"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         retrySettings = null;
                         continue;
                     }
-                    retrySettings = MachineLearningBatchRetrySettings.DeserializeMachineLearningBatchRetrySettings(property.Value, options);
+                    retrySettings = ModelSerializationExtensions.JsonDeserialize<MachineLearningBatchRetrySettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("miniBatchSize"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         model = null;
                         continue;
                     }
-                    model = MachineLearningAssetReferenceBase.DeserializeMachineLearningAssetReferenceBase(property.Value, options);
+                    model = ModelSerializationExtensions.JsonDeserialize<MachineLearningAssetReferenceBase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("maxConcurrencyPerInstance"u8))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         resources = null;
                         continue;
                     }
-                    resources = MachineLearningDeploymentResourceConfiguration.DeserializeMachineLearningDeploymentResourceConfiguration(property.Value, options);
+                    resources = ModelSerializationExtensions.JsonDeserialize<MachineLearningDeploymentResourceConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         codeConfiguration = null;
                         continue;
                     }
-                    codeConfiguration = MachineLearningCodeConfiguration.DeserializeMachineLearningCodeConfiguration(property.Value, options);
+                    codeConfiguration = ModelSerializationExtensions.JsonDeserialize<MachineLearningCodeConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("environmentId"u8))

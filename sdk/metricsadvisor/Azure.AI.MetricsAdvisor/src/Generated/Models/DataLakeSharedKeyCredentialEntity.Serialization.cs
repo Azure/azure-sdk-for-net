@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             writer.WriteStartObject();
             writer.WritePropertyName("parameters"u8);
-            writer.WriteObjectValue<DataLakeGen2SharedKeyParam>(Parameters);
+            JsonSerializer.Serialize(writer, Parameters);
             writer.WritePropertyName("dataSourceCredentialType"u8);
             writer.WriteStringValue(CredentialKind.ToString());
             writer.WritePropertyName("dataSourceCredentialName"u8);
@@ -45,7 +45,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = DataLakeGen2SharedKeyParam.DeserializeDataLakeGen2SharedKeyParam(property.Value);
+                    parameters = ModelSerializationExtensions.JsonDeserialize<DataLakeGen2SharedKeyParam>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataSourceCredentialType"u8))

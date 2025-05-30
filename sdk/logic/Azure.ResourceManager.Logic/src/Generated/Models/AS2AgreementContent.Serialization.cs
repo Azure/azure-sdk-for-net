@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WritePropertyName("receiveAgreement"u8);
-            writer.WriteObjectValue(ReceiveAgreement, options);
+            ((IJsonModel<AS2OneWayAgreement>)ReceiveAgreement).Write(writer, options);
             writer.WritePropertyName("sendAgreement"u8);
-            writer.WriteObjectValue(SendAgreement, options);
+            ((IJsonModel<AS2OneWayAgreement>)SendAgreement).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 if (property.NameEquals("receiveAgreement"u8))
                 {
-                    receiveAgreement = AS2OneWayAgreement.DeserializeAS2OneWayAgreement(property.Value, options);
+                    receiveAgreement = ModelSerializationExtensions.JsonDeserialize<AS2OneWayAgreement>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sendAgreement"u8))
                 {
-                    sendAgreement = AS2OneWayAgreement.DeserializeAS2OneWayAgreement(property.Value, options);
+                    sendAgreement = ModelSerializationExtensions.JsonDeserialize<AS2OneWayAgreement>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

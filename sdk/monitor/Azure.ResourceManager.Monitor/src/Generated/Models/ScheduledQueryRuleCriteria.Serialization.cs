@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in AllOf)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ScheduledQueryRuleCondition>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

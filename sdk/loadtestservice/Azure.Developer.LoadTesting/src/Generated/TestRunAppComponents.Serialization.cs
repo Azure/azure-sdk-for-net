@@ -39,7 +39,7 @@ namespace Azure.Developer.LoadTesting
             foreach (var item in Components)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                ((IJsonModel<LoadTestingAppComponent>)item.Value).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && Optional.IsDefined(TestRunId))

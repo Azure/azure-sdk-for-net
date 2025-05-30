@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(Correlation))
             {
                 writer.WritePropertyName("correlation"u8);
-                writer.WriteObjectValue(Correlation, options);
+                ((IJsonModel<LogicWorkflowRunActionCorrelation>)Correlation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(InputsLink))
             {
                 writer.WritePropertyName("inputsLink"u8);
-                writer.WriteObjectValue(InputsLink, options);
+                ((IJsonModel<LogicContentLink>)InputsLink).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OutputsLink))
             {
                 writer.WritePropertyName("outputsLink"u8);
-                writer.WriteObjectValue(OutputsLink, options);
+                ((IJsonModel<LogicContentLink>)OutputsLink).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TrackedProperties))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Logic
                 writer.WriteStartArray();
                 foreach (var item in RetryHistory)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LogicWorkRetryHistory>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Logic
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            correlation = LogicWorkflowRunActionCorrelation.DeserializeLogicWorkflowRunActionCorrelation(property0.Value, options);
+                            correlation = ModelSerializationExtensions.JsonDeserialize<LogicWorkflowRunActionCorrelation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("inputsLink"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            inputsLink = LogicContentLink.DeserializeLogicContentLink(property0.Value, options);
+                            inputsLink = ModelSerializationExtensions.JsonDeserialize<LogicContentLink>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("outputsLink"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            outputsLink = LogicContentLink.DeserializeLogicContentLink(property0.Value, options);
+                            outputsLink = ModelSerializationExtensions.JsonDeserialize<LogicContentLink>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("trackedProperties"u8))

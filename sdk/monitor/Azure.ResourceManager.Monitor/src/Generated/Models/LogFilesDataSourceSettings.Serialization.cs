@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    text = LogFileSettingsText.DeserializeLogFileSettingsText(property.Value, options);
+                    text = ModelSerializationExtensions.JsonDeserialize<LogFileSettingsText>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

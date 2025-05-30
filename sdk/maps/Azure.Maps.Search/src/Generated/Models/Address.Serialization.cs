@@ -71,7 +71,7 @@ namespace Azure.Maps.Search.Models
                     {
                         continue;
                     }
-                    countryRegion = AddressCountryRegion.DeserializeAddressCountryRegion(property.Value);
+                    countryRegion = ModelSerializationExtensions.JsonDeserialize<AddressCountryRegion>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("formattedAddress"u8))
@@ -95,7 +95,7 @@ namespace Azure.Maps.Search.Models
                     {
                         continue;
                     }
-                    intersection = Intersection.DeserializeIntersection(property.Value);
+                    intersection = ModelSerializationExtensions.JsonDeserialize<Intersection>(property.Value);
                     continue;
                 }
             }

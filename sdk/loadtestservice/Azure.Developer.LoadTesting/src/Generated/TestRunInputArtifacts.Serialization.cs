@@ -37,27 +37,27 @@ namespace Azure.Developer.LoadTesting
             if (Optional.IsDefined(ConfigFileInfo))
             {
                 writer.WritePropertyName("configFileInfo"u8);
-                writer.WriteObjectValue(ConfigFileInfo, options);
+                ((IJsonModel<TestRunFileInfo>)ConfigFileInfo).Write(writer, options);
             }
             if (Optional.IsDefined(TestScriptFileInfo))
             {
                 writer.WritePropertyName("testScriptFileInfo"u8);
-                writer.WriteObjectValue(TestScriptFileInfo, options);
+                ((IJsonModel<TestRunFileInfo>)TestScriptFileInfo).Write(writer, options);
             }
             if (Optional.IsDefined(UserPropertyFileInfo))
             {
                 writer.WritePropertyName("userPropFileInfo"u8);
-                writer.WriteObjectValue(UserPropertyFileInfo, options);
+                ((IJsonModel<TestRunFileInfo>)UserPropertyFileInfo).Write(writer, options);
             }
             if (Optional.IsDefined(InputArtifactsZipFileInfo))
             {
                 writer.WritePropertyName("inputArtifactsZipFileInfo"u8);
-                writer.WriteObjectValue(InputArtifactsZipFileInfo, options);
+                ((IJsonModel<TestRunFileInfo>)InputArtifactsZipFileInfo).Write(writer, options);
             }
             if (Optional.IsDefined(UrlTestConfigFileInfo))
             {
                 writer.WritePropertyName("urlTestConfigFileInfo"u8);
-                writer.WriteObjectValue(UrlTestConfigFileInfo, options);
+                ((IJsonModel<TestRunFileInfo>)UrlTestConfigFileInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalFileInfo))
             {
@@ -65,7 +65,7 @@ namespace Azure.Developer.LoadTesting
                 writer.WriteStartArray();
                 foreach (var item in AdditionalFileInfo)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TestRunFileInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +122,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    configFileInfo = TestRunFileInfo.DeserializeTestRunFileInfo(property.Value, options);
+                    configFileInfo = ModelSerializationExtensions.JsonDeserialize<TestRunFileInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("testScriptFileInfo"u8))
@@ -131,7 +131,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    testScriptFileInfo = TestRunFileInfo.DeserializeTestRunFileInfo(property.Value, options);
+                    testScriptFileInfo = ModelSerializationExtensions.JsonDeserialize<TestRunFileInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userPropFileInfo"u8))
@@ -140,7 +140,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    userPropFileInfo = TestRunFileInfo.DeserializeTestRunFileInfo(property.Value, options);
+                    userPropFileInfo = ModelSerializationExtensions.JsonDeserialize<TestRunFileInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("inputArtifactsZipFileInfo"u8))
@@ -149,7 +149,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    inputArtifactsZipFileInfo = TestRunFileInfo.DeserializeTestRunFileInfo(property.Value, options);
+                    inputArtifactsZipFileInfo = ModelSerializationExtensions.JsonDeserialize<TestRunFileInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("urlTestConfigFileInfo"u8))
@@ -158,7 +158,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    urlTestConfigFileInfo = TestRunFileInfo.DeserializeTestRunFileInfo(property.Value, options);
+                    urlTestConfigFileInfo = ModelSerializationExtensions.JsonDeserialize<TestRunFileInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("additionalFileInfo"u8))

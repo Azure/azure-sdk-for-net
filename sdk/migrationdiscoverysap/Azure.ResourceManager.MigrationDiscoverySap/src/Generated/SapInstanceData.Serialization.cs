@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
-                writer.WriteObjectValue(Errors, options);
+                ((IJsonModel<SapMigrateError>)Errors).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                             {
                                 continue;
                             }
-                            errors = SapMigrateError.DeserializeSapMigrateError(property0.Value, options);
+                            errors = ModelSerializationExtensions.JsonDeserialize<SapMigrateError>(property0.Value);
                             continue;
                         }
                     }

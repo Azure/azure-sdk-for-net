@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination, options);
+                ((IJsonModel<ServiceTagDestination>)Destination).Write(writer, options);
             }
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    destination = ServiceTagDestination.DeserializeServiceTagDestination(property.Value, options);
+                    destination = ModelSerializationExtensions.JsonDeserialize<ServiceTagDestination>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("category"u8))

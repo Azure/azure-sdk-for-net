@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(SourceField))
             {
                 writer.WritePropertyName("sourceField"u8);
-                writer.WriteObjectValue(SourceField, options);
+                ((IJsonModel<PipelineGroupJsonMapperSourceField>)SourceField).Write(writer, options);
             }
             if (Optional.IsDefined(DestinationField))
             {
                 writer.WritePropertyName("destinationField"u8);
-                writer.WriteObjectValue(DestinationField, options);
+                ((IJsonModel<PipelineGroupJsonMapperDestinationField>)DestinationField).Write(writer, options);
             }
             writer.WritePropertyName("keys"u8);
             writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    sourceField = PipelineGroupJsonMapperSourceField.DeserializePipelineGroupJsonMapperSourceField(property.Value, options);
+                    sourceField = ModelSerializationExtensions.JsonDeserialize<PipelineGroupJsonMapperSourceField>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("destinationField"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    destinationField = PipelineGroupJsonMapperDestinationField.DeserializePipelineGroupJsonMapperDestinationField(property.Value, options);
+                    destinationField = ModelSerializationExtensions.JsonDeserialize<PipelineGroupJsonMapperDestinationField>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("keys"u8))

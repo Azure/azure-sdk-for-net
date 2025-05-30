@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(NasReroute))
             {
                 writer.WritePropertyName("nasReroute"u8);
-                writer.WriteObjectValue(NasReroute, options);
+                ((IJsonModel<NASRerouteConfiguration>)NasReroute).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(NasEncryption))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    nasReroute = NASRerouteConfiguration.DeserializeNASRerouteConfiguration(property.Value, options);
+                    nasReroute = ModelSerializationExtensions.JsonDeserialize<NASRerouteConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nasEncryption"u8))

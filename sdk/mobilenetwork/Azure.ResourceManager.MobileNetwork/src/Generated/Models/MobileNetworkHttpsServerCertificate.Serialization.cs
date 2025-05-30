@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (options.Format != "W" && Optional.IsDefined(Provisioning))
             {
                 writer.WritePropertyName("provisioning"u8);
-                writer.WriteObjectValue(Provisioning, options);
+                ((IJsonModel<MobileNetworkCertificateProvisioning>)Provisioning).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    provisioning = MobileNetworkCertificateProvisioning.DeserializeMobileNetworkCertificateProvisioning(property.Value, options);
+                    provisioning = ModelSerializationExtensions.JsonDeserialize<MobileNetworkCertificateProvisioning>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

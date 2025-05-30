@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Credential != null)
                 {
                     writer.WritePropertyName("credential"u8);
-                    writer.WriteObjectValue(Credential, options);
+                    ((IJsonModel<DataReferenceCredential>)Credential).Write(writer, options);
                 }
                 else
                 {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         credential = null;
                         continue;
                     }
-                    credential = DataReferenceCredential.DeserializeDataReferenceCredential(property.Value, options);
+                    credential = ModelSerializationExtensions.JsonDeserialize<DataReferenceCredential>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

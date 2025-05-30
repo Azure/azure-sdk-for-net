@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Batch))
             {
                 writer.WritePropertyName("batch"u8);
-                writer.WriteObjectValue(Batch, options);
+                ((IJsonModel<BatchProcessor>)Batch).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    batch = BatchProcessor.DeserializeBatchProcessor(property.Value, options);
+                    batch = ModelSerializationExtensions.JsonDeserialize<BatchProcessor>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

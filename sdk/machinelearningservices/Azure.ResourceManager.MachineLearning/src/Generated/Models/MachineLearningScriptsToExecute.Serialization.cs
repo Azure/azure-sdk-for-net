@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(StartupScript))
             {
                 writer.WritePropertyName("startupScript"u8);
-                writer.WriteObjectValue(StartupScript, options);
+                ((IJsonModel<MachineLearningScriptReference>)StartupScript).Write(writer, options);
             }
             if (Optional.IsDefined(CreationScript))
             {
                 writer.WritePropertyName("creationScript"u8);
-                writer.WriteObjectValue(CreationScript, options);
+                ((IJsonModel<MachineLearningScriptReference>)CreationScript).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    startupScript = MachineLearningScriptReference.DeserializeMachineLearningScriptReference(property.Value, options);
+                    startupScript = ModelSerializationExtensions.JsonDeserialize<MachineLearningScriptReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("creationScript"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    creationScript = MachineLearningScriptReference.DeserializeMachineLearningScriptReference(property.Value, options);
+                    creationScript = ModelSerializationExtensions.JsonDeserialize<MachineLearningScriptReference>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

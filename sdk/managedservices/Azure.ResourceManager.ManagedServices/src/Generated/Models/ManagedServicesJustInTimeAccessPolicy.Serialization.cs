@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 writer.WriteStartArray();
                 foreach (var item in ManagedByTenantApprovers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedServicesEligibleApprover>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

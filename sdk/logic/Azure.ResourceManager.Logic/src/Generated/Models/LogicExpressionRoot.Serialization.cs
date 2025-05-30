@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    error = LogicExpressionErrorInfo.DeserializeLogicExpressionErrorInfo(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<LogicExpressionErrorInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
-                writer.WriteObjectValue(Condition, options);
+                ((IJsonModel<AlertRuleAllOfCondition>)Condition).Write(writer, options);
             }
             if (Optional.IsDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
-                writer.WriteObjectValue(Actions, options);
+                ((IJsonModel<ActionList>)Actions).Write(writer, options);
             }
             if (Optional.IsDefined(IsEnabled))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            condition = AlertRuleAllOfCondition.DeserializeAlertRuleAllOfCondition(property0.Value, options);
+                            condition = ModelSerializationExtensions.JsonDeserialize<AlertRuleAllOfCondition>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("actions"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            actions = ActionList.DeserializeActionList(property0.Value, options);
+                            actions = ModelSerializationExtensions.JsonDeserialize<ActionList>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enabled"u8))

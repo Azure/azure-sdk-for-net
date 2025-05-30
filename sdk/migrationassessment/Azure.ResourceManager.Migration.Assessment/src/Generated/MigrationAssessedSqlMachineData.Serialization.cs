@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 writer.WriteStartArray();
                 foreach (var item in SqlInstances)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AssessedSqlInstanceSummary>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Migration.Assessment
             if (options.Format != "W" && Optional.IsDefined(ProductSupportStatus))
             {
                 writer.WritePropertyName("productSupportStatus"u8);
-                writer.WriteObjectValue(ProductSupportStatus, options);
+                ((IJsonModel<AssessmentProductSupportStatus>)ProductSupportStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RecommendedVmSizeNumberOfCores))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 foreach (var item in Disks)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<MigrationAssessedDataDisk>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 foreach (var item in NetworkAdapters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<SqlAssessedNetworkAdapter>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 writer.WriteStartArray();
                 foreach (var item in CostComponents)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AssessmentCostComponent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 writer.WriteStartArray();
                 foreach (var item in MigrationGuidelines)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SqlMigrationGuideline>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                             {
                                 continue;
                             }
-                            productSupportStatus = AssessmentProductSupportStatus.DeserializeAssessmentProductSupportStatus(property0.Value, options);
+                            productSupportStatus = ModelSerializationExtensions.JsonDeserialize<AssessmentProductSupportStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("recommendedVmSizeNumberOfCores"u8))

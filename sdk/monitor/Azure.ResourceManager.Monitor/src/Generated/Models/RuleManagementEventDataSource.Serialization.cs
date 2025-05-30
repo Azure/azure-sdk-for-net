@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Claims))
             {
                 writer.WritePropertyName("claims"u8);
-                writer.WriteObjectValue(Claims, options);
+                ((IJsonModel<RuleManagementEventClaimsDataSource>)Claims).Write(writer, options);
             }
         }
 
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    claims = RuleManagementEventClaimsDataSource.DeserializeRuleManagementEventClaimsDataSource(property.Value, options);
+                    claims = ModelSerializationExtensions.JsonDeserialize<RuleManagementEventClaimsDataSource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("odata.type"u8))

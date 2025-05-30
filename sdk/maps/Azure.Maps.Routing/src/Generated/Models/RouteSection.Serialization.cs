@@ -107,7 +107,7 @@ namespace Azure.Maps.Routing.Models
                     {
                         continue;
                     }
-                    tec = RouteSectionTec.DeserializeRouteSectionTec(property.Value);
+                    tec = ModelSerializationExtensions.JsonDeserialize<RouteSectionTec>(property.Value);
                     continue;
                 }
             }

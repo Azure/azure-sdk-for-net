@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in NextHops)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MobileNetworkIPv4RouteNextHop>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

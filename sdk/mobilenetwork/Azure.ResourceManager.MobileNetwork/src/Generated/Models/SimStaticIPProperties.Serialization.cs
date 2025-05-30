@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(AttachedDataNetwork))
             {
                 writer.WritePropertyName("attachedDataNetwork"u8);
-                JsonSerializer.Serialize(writer, AttachedDataNetwork);
+                ((IJsonModel<WritableSubResource>)AttachedDataNetwork).Write(writer, options);
             }
             if (Optional.IsDefined(Slice))
             {
                 writer.WritePropertyName("slice"u8);
-                JsonSerializer.Serialize(writer, Slice);
+                ((IJsonModel<WritableSubResource>)Slice).Write(writer, options);
             }
             if (Optional.IsDefined(StaticIP))
             {
                 writer.WritePropertyName("staticIp"u8);
-                writer.WriteObjectValue(StaticIP, options);
+                ((IJsonModel<SimStaticIPPropertiesStaticIP>)StaticIP).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    attachedDataNetwork = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    attachedDataNetwork = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("slice"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    slice = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    slice = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("staticIp"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    staticIP = SimStaticIPPropertiesStaticIP.DeserializeSimStaticIPPropertiesStaticIP(property.Value, options);
+                    staticIP = ModelSerializationExtensions.JsonDeserialize<SimStaticIPPropertiesStaticIP>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

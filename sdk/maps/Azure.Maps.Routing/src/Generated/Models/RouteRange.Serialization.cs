@@ -29,7 +29,7 @@ namespace Azure.Maps.Routing.Models
                     {
                         continue;
                     }
-                    center = LatLongPair.DeserializeLatLongPair(property.Value);
+                    center = ModelSerializationExtensions.JsonDeserialize<LatLongPair>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("boundary"u8))

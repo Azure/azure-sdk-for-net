@@ -41,7 +41,7 @@ namespace Azure.Developer.LoadTesting
                 foreach (var item in PassFailMetrics)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<PassFailMetric>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -52,7 +52,7 @@ namespace Azure.Developer.LoadTesting
                 foreach (var item in PassFailServerMetrics)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<PassFailServerMetric>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
