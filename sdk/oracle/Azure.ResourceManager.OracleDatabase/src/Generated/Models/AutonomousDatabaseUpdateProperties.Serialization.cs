@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("licenseModel"u8);
                 writer.WriteStringValue(LicenseModel.Value.ToString());
             }
-            if (Optional.IsDefined(ScheduledOperations))
+            if (Optional.IsDefined(AutonomousDatabaseScheduledOperations))
             {
                 writer.WritePropertyName("scheduledOperations"u8);
-                writer.WriteObjectValue(ScheduledOperations, options);
+                writer.WriteObjectValue<ScheduledOperationsType>(AutonomousDatabaseScheduledOperations, options);
             }
             if (Optional.IsDefined(DatabaseEdition))
             {
@@ -206,11 +206,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string displayName = default;
             bool? isAutoScalingEnabled = default;
             bool? isAutoScalingForStorageEnabled = default;
-            string peerDBId = default;
+            string peerDbId = default;
             bool? isLocalDataGuardEnabled = default;
             bool? isMtlsConnectionRequired = default;
             OracleLicenseModel? licenseModel = default;
-            ScheduledOperationsTypeUpdate scheduledOperations = default;
+            ScheduledOperationsType scheduledOperations = default;
             OracleDatabaseEditionType? databaseEdition = default;
             LongTermBackUpScheduleDetails longTermBackupSchedule = default;
             int? localAdgAutoFailoverMaxDataLossLimit = default;
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("peerDbId"u8))
                 {
-                    peerDBId = property.Value.GetString();
+                    peerDbId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("isLocalDataGuardEnabled"u8))
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    scheduledOperations = ScheduledOperationsTypeUpdate.DeserializeScheduledOperationsTypeUpdate(property.Value, options);
+                    scheduledOperations = ScheduledOperationsType.DeserializeScheduledOperationsType(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("databaseEdition"u8))
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 displayName,
                 isAutoScalingEnabled,
                 isAutoScalingForStorageEnabled,
-                peerDBId,
+                peerDbId,
                 isLocalDataGuardEnabled,
                 isMtlsConnectionRequired,
                 licenseModel,

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            int? estimatedDBServerPatchingTime = default;
+            int? estimatedDbServerPatchingTime = default;
             int? estimatedNetworkSwitchesPatchingTime = default;
             int? estimatedStorageServerPatchingTime = default;
             int? totalEstimatedPatchingTime = default;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    estimatedDBServerPatchingTime = property.Value.GetInt32();
+                    estimatedDbServerPatchingTime = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("estimatedNetworkSwitchesPatchingTime"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EstimatedPatchingTime(estimatedDBServerPatchingTime, estimatedNetworkSwitchesPatchingTime, estimatedStorageServerPatchingTime, totalEstimatedPatchingTime, serializedAdditionalRawData);
+            return new EstimatedPatchingTime(estimatedDbServerPatchingTime, estimatedNetworkSwitchesPatchingTime, estimatedStorageServerPatchingTime, totalEstimatedPatchingTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EstimatedPatchingTime>.Write(ModelReaderWriterOptions options)
