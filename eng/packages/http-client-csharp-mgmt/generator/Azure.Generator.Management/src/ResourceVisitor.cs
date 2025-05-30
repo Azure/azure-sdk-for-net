@@ -23,7 +23,7 @@ namespace Azure.Generator.Management
         {
             foreach (var parameter in method.Signature.Parameters)
             {
-                if (ManagementClientGenerator.Instance.InputLibrary.IsResourceModelType(parameter.Type))
+                if (ManagementClientGenerator.Instance.OutputLibrary.IsResourceModelType(parameter.Type))
                 {
                     parameter.Update("data");
                 }
