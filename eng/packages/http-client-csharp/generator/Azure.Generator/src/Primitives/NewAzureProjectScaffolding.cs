@@ -51,23 +51,35 @@ namespace Azure.Generator.Primitives
                 TraverseInput(client, ref hasOperation, ref hasLongRunningOperation);
             }
 
+            var sharedFiles = new List<string>(_additionalSharedFiles);
+
             if (hasOperation)
             {
-                foreach (var file in _operationSharedFiles)
-                {
-                    builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude(file, pathSegmentCount), SharedSourceLinkBase));
-                }
+                sharedFiles.AddRange(_operationSharedFiles);
             }
 
             if (hasLongRunningOperation)
             {
-                foreach (var file in _lroSharedFiles)
-                {
-                    builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude(file, pathSegmentCount), SharedSourceLinkBase));
-                }
+                sharedFiles.AddRange(_lroSharedFiles);
+            }
+
+            foreach (var file in sharedFiles.Distinct().OrderBy(filename => filename))
+            {
+                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude(file, pathSegmentCount), SharedSourceLinkBase));
             }
 
             return builder.Write();
+        }
+
+        private readonly IList<string> _additionalSharedFiles = new List<string>();
+
+        /// <summary>
+        /// Add more shared files to the project scaffolding.
+        /// </summary>
+        /// <param name="filename"></param>
+        protected void AddSharedFiles(string filename)
+        {
+            _additionalSharedFiles.Add(filename);
         }
 
         private static readonly IReadOnlyList<string> _operationSharedFiles =
