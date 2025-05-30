@@ -9,12 +9,6 @@
 - Integration of ConnectAPI for seamless streaming and transcription
 - Improved media streaming with bidirectional functionality, allowing audio formats in both directions, currently supporting sample rates of 24kHz and 16kHz
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.5.0-beta.1 (2025-05-16)
 
 ### Features Added
