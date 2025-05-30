@@ -61,6 +61,13 @@ namespace Azure.Generator.Providers
                     "configuration",
                     $"The configuration to use for the client.",
                     tConfiguration);
+                var methodName = $"Add{client.Name}";
+                FormattableString methodDescription =
+                    $"Registers a <see cref=\"{client.Name}\"/> client with the specified <see cref=\"IAzureClientBuilder\"/>.";
+                var methodModifiers = MethodSignatureModifiers.Public | MethodSignatureModifiers.Static |
+                                      MethodSignatureModifiers.Extension;
+                var methodReturnType = new CSharpType(typeof(IAzureClientBuilder<,>), client.Type,
+                    client.ClientOptionsParameter.Type);
 
                 foreach (var constructor in client.Constructors)
                 {
@@ -81,11 +88,10 @@ namespace Azure.Generator.Providers
                     parameters.AddRange(isTokenCredential ? constructor.Signature.Parameters.SkipLast(1) : constructor.Signature.Parameters);
                     var method = new MethodProvider(
                         new MethodSignature(
-                            $"Add{client.Name}",
-                            $"Registers a <see cref=\"{client.Name}\"/> client with the specified <see cref=\"IAzureClientBuilder\"/>.",
-                            MethodSignatureModifiers.Public | MethodSignatureModifiers.Static |
-                            MethodSignatureModifiers.Extension,
-                            new CSharpType(typeof(IAzureClientBuilder<,>), client.Type, client.ClientOptionsParameter.Type),
+                            methodName,
+                            methodDescription,
+                            methodModifiers,
+                            methodReturnType,
                             null,
                             parameters,
                             GenericArguments: [tBuilder],
@@ -104,11 +110,10 @@ namespace Azure.Generator.Providers
                 // Add the configuration overload
                 methods.Add(new MethodProvider(
                     new MethodSignature(
-                        $"Add{client.Name}",
-                        $"Registers a <see cref=\"{client.Name}\"/> client with the specified <see cref=\"IAzureClientBuilder\"/>.",
-                        MethodSignatureModifiers.Public | MethodSignatureModifiers.Static |
-                        MethodSignatureModifiers.Extension,
-                        new CSharpType(typeof(IAzureClientBuilder<,>), client.Type, client.ClientOptionsParameter.Type),
+                        methodName,
+                        methodDescription,
+                        methodModifiers,
+                        methodReturnType,
                         null,
                         [builderParameter, configurationParameter],
                         Attributes:
