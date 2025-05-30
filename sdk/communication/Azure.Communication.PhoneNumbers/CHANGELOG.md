@@ -5,7 +5,8 @@
 ### Features Added
 
 - GA release of the reservations functionality.
-- API version `2025-04-01` is the default.
+- GA support for automated purchases of phone numbers from countries requiring a do not resell agreement.
+  - For more information, refer to: https://learn.microsoft.com/azure/communication-services/concepts/numbers/sub-eligibility-number-capability
 
 ## 1.4.0-beta.1 (2025-05-21)
 
