@@ -13,26 +13,26 @@ namespace Azure.Storage.Queues.Models
     public static partial class QueuesModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Models.UserDelegationKey"/>. </summary>
-        /// <param name="signedOid"> The Azure Active Directory object ID in GUID format. </param>
-        /// <param name="signedTid"> The Azure Active Directory tenant ID in GUID format. </param>
-        /// <param name="signedStart"> The date-time the key is active. </param>
-        /// <param name="signedExpiry"> The date-time the key expires. </param>
+        /// <param name="signedObjectId"> The Azure Active Directory object ID in GUID format. </param>
+        /// <param name="signedTenantId"> The Azure Active Directory tenant ID in GUID format. </param>
+        /// <param name="signedStartsOn"> The date-time the key is active. </param>
+        /// <param name="signedExpiresOn"> The date-time the key expires. </param>
         /// <param name="signedService"> Abbreviation of the Azure Storage service that accepts the key. </param>
         /// <param name="signedVersion"> The service version that created the key. </param>
         /// <param name="value"> The key as a base64 string. </param>
-        /// <param name="signedDelegatedUserTid"> String, return if DelegatedUserTid is specified. The delegated user tenant ID in Entra ID. </param>
+        /// <param name="signedDelegatedUserTenantId"> String, return if DelegatedUserTid is specified. The delegated user tenant ID in Entra ID. </param>
         /// <returns> A new <see cref="Models.UserDelegationKey"/> instance for mocking. </returns>
-        public static UserDelegationKey UserDelegationKey(string signedOid = null, string signedTid = null, DateTimeOffset signedStart = default, DateTimeOffset signedExpiry = default, string signedService = null, string signedVersion = null, string value = null, string signedDelegatedUserTid = null)
+        public static UserDelegationKey UserDelegationKey(string signedObjectId = null, string signedTenantId = null, DateTimeOffset signedStartsOn = default, DateTimeOffset signedExpiresOn = default, string signedService = null, string signedVersion = null, string value = null, string signedDelegatedUserTenantId = null)
         {
             return new UserDelegationKey(
-                signedOid,
-                signedTid,
-                signedStart,
-                signedExpiry,
+                signedObjectId,
+                signedTenantId,
+                signedStartsOn,
+                signedExpiresOn,
                 signedService,
                 signedVersion,
                 value,
-                signedDelegatedUserTid);
+                signedDelegatedUserTenantId);
         }
     }
 }
