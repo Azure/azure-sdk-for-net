@@ -139,6 +139,7 @@ trigger:
     - sdk/mixedreality/Azure.ResourceManager.MixedReality
     - sdk/mobilenetwork/Azure.ResourceManager.MobileNetwork
     - sdk/mongocluster/Azure.ResourceManager.MongoCluster
+    - sdk/mongodbatlas/Azure.ResourceManager.MongoDBAtlas
     - sdk/monitor/Azure.ResourceManager.Monitor
     - sdk/mysql/Azure.ResourceManager.MySql
     - sdk/neonpostgres/Azure.ResourceManager.NeonPostgres
@@ -362,6 +363,7 @@ pr:
     - sdk/mixedreality/Azure.ResourceManager.MixedReality
     - sdk/mobilenetwork/Azure.ResourceManager.MobileNetwork
     - sdk/mongocluster/Azure.ResourceManager.MongoCluster
+    - sdk/mongodbatlas/Azure.ResourceManager.MongoDBAtlas
     - sdk/monitor/Azure.ResourceManager.Monitor
     - sdk/mysql/Azure.ResourceManager.MySql
     - sdk/neonpostgres/Azure.ResourceManager.NeonPostgres
