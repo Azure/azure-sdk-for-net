@@ -1942,6 +1942,7 @@ namespace Microsoft.Extensions.Azure
     public static partial class AnalyticsDefenderEasmClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Defender.Easm.EasmClient, Azure.Analytics.Defender.Easm.EasmClientOptions> AddEasmClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Defender.Easm.EasmClient, Azure.Analytics.Defender.Easm.EasmClientOptions> AddEasmClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

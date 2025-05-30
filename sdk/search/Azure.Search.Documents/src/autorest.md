@@ -59,6 +59,16 @@ directive:
     $["discriminator"] = "@odata.type";
 ```
 
+### Remove nullable annotations
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SearchIndexerDataSource.properties.indexerPermissionOptions
+  transform: >
+    delete $["x-nullable"]
+```
+
 ### Move KnowledgeAgent models to Azure.Search.Documents.Agents.Models
 
 Models in knowledgeagent.json should be moved to Azure.Search.Documents.Agents.Models.
