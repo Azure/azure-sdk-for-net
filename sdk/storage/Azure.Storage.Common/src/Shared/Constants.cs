@@ -627,6 +627,7 @@ namespace Azure.Storage
                 public const string File = "f";
                 public const string Share = "s";
                 public const string Directory = "d";
+                public const string Queue = "q";
             }
 
             internal static class AccountServices
