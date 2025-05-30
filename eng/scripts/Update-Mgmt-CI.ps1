@@ -4,4 +4,3 @@ $packagesPath = "$PSScriptRoot/../../sdk"
 
 #add path for each mgmt library into Azure.ResourceManager
 RegisterMgmtSDKToMgmtCoreClient -packagesPath $packagesPath
-
