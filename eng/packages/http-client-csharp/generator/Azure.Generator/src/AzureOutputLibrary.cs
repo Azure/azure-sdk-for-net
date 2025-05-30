@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Linq;
 using Azure.Generator.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
@@ -15,12 +16,13 @@ namespace Azure.Generator
         /// <inheritdoc/>
         protected override TypeProvider[] BuildTypeProviders()
         {
-            var typeProviders = base.BuildTypeProviders();
+            var types = base.BuildTypeProviders();
+            var clients = types.OfType<ClientProvider>().ToList();
             return
             [
-                .. typeProviders,
+                .. types,
                 new RequestContextExtensionsDefinition(),
-                new ClientBuilderExtensionsDefinition(typeProviders.OfType<ClientProvider>())
+                .. clients.Count > 0 ? [new ClientBuilderExtensionsDefinition(clients)] : Array.Empty<TypeProvider>()
             ];
         }
     }
