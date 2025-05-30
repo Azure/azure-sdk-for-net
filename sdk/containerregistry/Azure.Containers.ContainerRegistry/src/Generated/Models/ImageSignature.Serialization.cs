@@ -28,7 +28,7 @@ namespace Azure.Containers.ContainerRegistry
                     {
                         continue;
                     }
-                    header = JWK.DeserializeJWK(property.Value);
+                    header = ModelSerializationExtensions.JsonDeserialize<JWK>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("signature"u8))

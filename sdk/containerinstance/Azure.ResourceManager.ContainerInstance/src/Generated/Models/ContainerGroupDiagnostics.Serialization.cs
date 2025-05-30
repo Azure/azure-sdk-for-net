@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(LogAnalytics))
             {
                 writer.WritePropertyName("logAnalytics"u8);
-                writer.WriteObjectValue(LogAnalytics, options);
+                ((IJsonModel<ContainerGroupLogAnalytics>)LogAnalytics).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    logAnalytics = ContainerGroupLogAnalytics.DeserializeContainerGroupLogAnalytics(property.Value, options);
+                    logAnalytics = ModelSerializationExtensions.JsonDeserialize<ContainerGroupLogAnalytics>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

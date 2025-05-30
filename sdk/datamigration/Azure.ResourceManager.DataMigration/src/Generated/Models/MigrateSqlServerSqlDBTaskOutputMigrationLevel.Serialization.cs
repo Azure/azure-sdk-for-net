@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(MigrationValidationResult))
             {
                 writer.WritePropertyName("migrationValidationResult"u8);
-                writer.WriteObjectValue(MigrationValidationResult, options);
+                ((IJsonModel<MigrationValidationResult>)MigrationValidationResult).Write(writer, options);
             }
             if (Optional.IsDefined(MigrationReportResult))
             {
                 writer.WritePropertyName("migrationReportResult"u8);
-                writer.WriteObjectValue(MigrationReportResult, options);
+                ((IJsonModel<MigrationReportResult>)MigrationReportResult).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SourceServerVersion))
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ExceptionsAndWarnings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ReportableException>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    migrationValidationResult = MigrationValidationResult.DeserializeMigrationValidationResult(property.Value, options);
+                    migrationValidationResult = ModelSerializationExtensions.JsonDeserialize<MigrationValidationResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("migrationReportResult"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    migrationReportResult = MigrationReportResult.DeserializeMigrationReportResult(property.Value, options);
+                    migrationReportResult = ModelSerializationExtensions.JsonDeserialize<MigrationReportResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sourceServerVersion"u8))

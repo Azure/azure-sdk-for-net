@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Columns)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CassandraColumn>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in PartitionKeys)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CassandraPartitionKey>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in ClusterKeys)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CassandraClusterKey>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(KeyWrapMetadata))
             {
                 writer.WritePropertyName("keyWrapMetadata"u8);
-                writer.WriteObjectValue(KeyWrapMetadata, options);
+                ((IJsonModel<CosmosDBKeyWrapMetadata>)KeyWrapMetadata).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    keyWrapMetadata = CosmosDBKeyWrapMetadata.DeserializeCosmosDBKeyWrapMetadata(property.Value, options);
+                    keyWrapMetadata = ModelSerializationExtensions.JsonDeserialize<CosmosDBKeyWrapMetadata>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

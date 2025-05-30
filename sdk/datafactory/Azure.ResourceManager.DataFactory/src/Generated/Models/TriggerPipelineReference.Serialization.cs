@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PipelineReference))
             {
                 writer.WritePropertyName("pipelineReference"u8);
-                writer.WriteObjectValue(PipelineReference, options);
+                ((IJsonModel<DataFactoryPipelineReference>)PipelineReference).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    pipelineReference = DataFactoryPipelineReference.DeserializeDataFactoryPipelineReference(property.Value, options);
+                    pipelineReference = ModelSerializationExtensions.JsonDeserialize<DataFactoryPipelineReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))

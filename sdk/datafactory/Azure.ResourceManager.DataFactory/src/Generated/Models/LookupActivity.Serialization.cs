@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source, options);
+            ((IJsonModel<CopyActivitySource>)Source).Write(writer, options);
             writer.WritePropertyName("dataset"u8);
-            writer.WriteObjectValue(Dataset, options);
+            ((IJsonModel<DatasetReference>)Dataset).Write(writer, options);
             if (Optional.IsDefined(FirstRowOnly))
             {
                 writer.WritePropertyName("firstRowOnly"u8);
-                JsonSerializer.Serialize(writer, FirstRowOnly);
+                ((IJsonModel<DataFactoryElement<T>>)FirstRowOnly).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
+                    policy = ModelSerializationExtensions.JsonDeserialize<PipelineActivityPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -188,12 +188,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("source"u8))
                         {
-                            source = CopyActivitySource.DeserializeCopyActivitySource(property0.Value, options);
+                            source = ModelSerializationExtensions.JsonDeserialize<CopyActivitySource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dataset"u8))
                         {
-                            dataset = DatasetReference.DeserializeDatasetReference(property0.Value, options);
+                            dataset = ModelSerializationExtensions.JsonDeserialize<DatasetReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("firstRowOnly"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            firstRowOnly = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            firstRowOnly = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                     }

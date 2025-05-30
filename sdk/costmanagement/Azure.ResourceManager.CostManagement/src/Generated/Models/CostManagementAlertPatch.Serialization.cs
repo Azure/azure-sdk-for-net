@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
-                writer.WriteObjectValue(Definition, options);
+                ((IJsonModel<AlertPropertiesDefinition>)Definition).Write(writer, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue(Details, options);
+                ((IJsonModel<AlertPropertiesDetails>)Details).Write(writer, options);
             }
             if (Optional.IsDefined(CostEntityId))
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             {
                                 continue;
                             }
-                            definition = AlertPropertiesDefinition.DeserializeAlertPropertiesDefinition(property0.Value, options);
+                            definition = ModelSerializationExtensions.JsonDeserialize<AlertPropertiesDefinition>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("description"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             {
                                 continue;
                             }
-                            details = AlertPropertiesDetails.DeserializeAlertPropertiesDetails(property0.Value, options);
+                            details = ModelSerializationExtensions.JsonDeserialize<AlertPropertiesDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("costEntityId"u8))

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -54,7 +55,7 @@ namespace Azure.Communication.Sms
             request.Headers.Add("Content-Type", "application/json");
             var model = new OptOutRequest(@from, recipients.ToList());
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            ((IJsonModel<OptOutRequest>)model).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }
@@ -137,7 +138,7 @@ namespace Azure.Communication.Sms
             request.Headers.Add("Content-Type", "application/json");
             var model = new OptOutRequest(@from, recipients.ToList());
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            ((IJsonModel<OptOutRequest>)model).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }
@@ -220,7 +221,7 @@ namespace Azure.Communication.Sms
             request.Headers.Add("Content-Type", "application/json");
             var model = new OptOutRequest(@from, recipients.ToList());
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            ((IJsonModel<OptOutRequest>)model).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }

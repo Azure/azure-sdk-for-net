@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
-            writer.WriteObjectValue(TypeProperties, options);
+            ((IJsonModel<WebLinkedServiceTypeProperties>)TypeProperties).Write(writer, options);
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("typeProperties"u8))
                 {
-                    typeProperties = WebLinkedServiceTypeProperties.DeserializeWebLinkedServiceTypeProperties(property.Value, options);
+                    typeProperties = ModelSerializationExtensions.JsonDeserialize<WebLinkedServiceTypeProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
+                    connectVia = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))

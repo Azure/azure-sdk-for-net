@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(FileMissing))
             {
                 writer.WritePropertyName("fileMissing"u8);
-                JsonSerializer.Serialize(writer, FileMissing);
+                ((IJsonModel<DataFactoryElement<T>>)FileMissing).Write(writer, options);
             }
             if (Optional.IsDefined(DataInconsistency))
             {
                 writer.WritePropertyName("dataInconsistency"u8);
-                JsonSerializer.Serialize(writer, DataInconsistency);
+                ((IJsonModel<DataFactoryElement<T>>)DataInconsistency).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    fileMissing = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    fileMissing = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataInconsistency"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    dataInconsistency = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    dataInconsistency = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
-                JsonSerializer.Serialize(writer, FolderPath);
+                ((IJsonModel<DataFactoryElement<T>>)FolderPath).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedService = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedService = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("folderPath"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    folderPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    folderPath = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

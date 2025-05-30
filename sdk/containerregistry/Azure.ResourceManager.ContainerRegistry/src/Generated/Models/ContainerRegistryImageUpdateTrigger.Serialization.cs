@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Images)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerRegistryImageDescriptor>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

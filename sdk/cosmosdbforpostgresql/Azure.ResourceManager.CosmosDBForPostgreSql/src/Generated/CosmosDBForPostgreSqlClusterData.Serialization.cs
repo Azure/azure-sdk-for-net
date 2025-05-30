@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
-                writer.WriteObjectValue(MaintenanceWindow, options);
+                ((IJsonModel<CosmosDBForPostgreSqlMaintenanceWindow>)MaintenanceWindow).Write(writer, options);
             }
             if (Optional.IsDefined(PreferredPrimaryZone))
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 writer.WriteStartArray();
                 foreach (var item in ServerNames)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CosmosDBForPostgreSqlServerNameItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                             {
                                 continue;
                             }
-                            maintenanceWindow = CosmosDBForPostgreSqlMaintenanceWindow.DeserializeCosmosDBForPostgreSqlMaintenanceWindow(property0.Value, options);
+                            maintenanceWindow = ModelSerializationExtensions.JsonDeserialize<CosmosDBForPostgreSqlMaintenanceWindow>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("preferredPrimaryZone"u8))

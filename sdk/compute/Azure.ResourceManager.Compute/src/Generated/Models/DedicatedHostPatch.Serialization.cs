@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<ComputeSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualMachines)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView, options);
+                ((IJsonModel<DedicatedHostInstanceView>)InstanceView).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TimeCreated))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    sku = ComputeSku.DeserializeComputeSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<ComputeSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Compute.Models
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<SubResource>(item));
                             }
                             virtualMachines = array;
                             continue;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            instanceView = DedicatedHostInstanceView.DeserializeDedicatedHostInstanceView(property0.Value, options);
+                            instanceView = ModelSerializationExtensions.JsonDeserialize<DedicatedHostInstanceView>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("timeCreated"u8))

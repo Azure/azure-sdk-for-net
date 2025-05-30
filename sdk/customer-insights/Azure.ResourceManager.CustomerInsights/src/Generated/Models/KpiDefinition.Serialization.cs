@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in GroupByMetadata)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<KpiGroupByMetadata>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in ParticipantProfilesMetadata)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<KpiParticipantProfilesMetadata>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             if (Optional.IsDefined(ThresHolds))
             {
                 writer.WritePropertyName("thresHolds"u8);
-                writer.WriteObjectValue(ThresHolds, options);
+                ((IJsonModel<KpiThresholds>)ThresHolds).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Aliases))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Aliases)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<KpiAlias>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Extracts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<KpiExtract>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     {
                         continue;
                     }
-                    thresHolds = KpiThresholds.DeserializeKpiThresholds(property.Value, options);
+                    thresHolds = ModelSerializationExtensions.JsonDeserialize<KpiThresholds>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("aliases"u8))

@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(IsServerVersionAbove32))
             {
                 writer.WritePropertyName("isServerVersionAbove32"u8);
-                JsonSerializer.Serialize(writer, IsServerVersionAbove32);
+                ((IJsonModel<DataFactoryElement<T>>)IsServerVersionAbove32).Write(writer, options);
             }
             writer.WritePropertyName("connectionString"u8);
-            JsonSerializer.Serialize(writer, ConnectionString);
+            ((IJsonModel<DataFactoryElement<T>>)ConnectionString).Write(writer, options);
             writer.WritePropertyName("database"u8);
-            JsonSerializer.Serialize(writer, Database);
+            ((IJsonModel<DataFactoryElement<T>>)Database).Write(writer, options);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
+                    connectVia = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -169,17 +169,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            isServerVersionAbove32 = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            isServerVersionAbove32 = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("connectionString"u8))
                         {
-                            connectionString = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            connectionString = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("database"u8))
                         {
-                            database = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            database = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                     }

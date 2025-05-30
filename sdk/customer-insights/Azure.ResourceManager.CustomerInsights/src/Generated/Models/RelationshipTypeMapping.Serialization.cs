@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStartArray();
             foreach (var item in FieldMappings)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<RelationshipTypeFieldMapping>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

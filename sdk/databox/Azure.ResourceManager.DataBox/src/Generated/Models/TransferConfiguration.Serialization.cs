@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(TransferFilterDetails))
             {
                 writer.WritePropertyName("transferFilterDetails"u8);
-                writer.WriteObjectValue(TransferFilterDetails, options);
+                ((IJsonModel<TransferConfigurationTransferFilterDetails>)TransferFilterDetails).Write(writer, options);
             }
             if (Optional.IsDefined(TransferAllDetails))
             {
                 writer.WritePropertyName("transferAllDetails"u8);
-                writer.WriteObjectValue(TransferAllDetails, options);
+                ((IJsonModel<TransferConfigurationTransferAllDetails>)TransferAllDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    transferFilterDetails = TransferConfigurationTransferFilterDetails.DeserializeTransferConfigurationTransferFilterDetails(property.Value, options);
+                    transferFilterDetails = ModelSerializationExtensions.JsonDeserialize<TransferConfigurationTransferFilterDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("transferAllDetails"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    transferAllDetails = TransferConfigurationTransferAllDetails.DeserializeTransferConfigurationTransferAllDetails(property.Value, options);
+                    transferAllDetails = ModelSerializationExtensions.JsonDeserialize<TransferConfigurationTransferAllDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

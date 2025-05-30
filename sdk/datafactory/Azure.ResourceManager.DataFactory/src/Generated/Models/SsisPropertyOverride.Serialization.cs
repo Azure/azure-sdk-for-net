@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WritePropertyName("value"u8);
-            JsonSerializer.Serialize(writer, Value);
+            ((IJsonModel<DataFactoryElement<T>>)Value).Write(writer, options);
             if (Optional.IsDefined(IsSensitive))
             {
                 writer.WritePropertyName("isSensitive"u8);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    value = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    value = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isSensitive"u8))

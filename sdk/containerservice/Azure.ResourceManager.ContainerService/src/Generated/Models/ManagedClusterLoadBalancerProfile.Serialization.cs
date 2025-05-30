@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(ManagedOutboundIPs))
             {
                 writer.WritePropertyName("managedOutboundIPs"u8);
-                writer.WriteObjectValue(ManagedOutboundIPs, options);
+                ((IJsonModel<ManagedClusterLoadBalancerProfileManagedOutboundIPs>)ManagedOutboundIPs).Write(writer, options);
             }
             if (Optional.IsDefined(OutboundIPPrefixes))
             {
                 writer.WritePropertyName("outboundIPPrefixes"u8);
-                writer.WriteObjectValue(OutboundIPPrefixes, options);
+                ((IJsonModel<ManagedClusterLoadBalancerProfileOutboundIPPrefixes>)OutboundIPPrefixes).Write(writer, options);
             }
             if (Optional.IsDefined(OutboundIPs))
             {
                 writer.WritePropertyName("outboundIPs"u8);
-                writer.WriteObjectValue(OutboundIPs, options);
+                ((IJsonModel<ManagedClusterLoadBalancerProfileOutboundIPs>)OutboundIPs).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(EffectiveOutboundIPs))
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in EffectiveOutboundIPs)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    managedOutboundIPs = ManagedClusterLoadBalancerProfileManagedOutboundIPs.DeserializeManagedClusterLoadBalancerProfileManagedOutboundIPs(property.Value, options);
+                    managedOutboundIPs = ModelSerializationExtensions.JsonDeserialize<ManagedClusterLoadBalancerProfileManagedOutboundIPs>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("outboundIPPrefixes"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    outboundIPPrefixes = ManagedClusterLoadBalancerProfileOutboundIPPrefixes.DeserializeManagedClusterLoadBalancerProfileOutboundIPPrefixes(property.Value, options);
+                    outboundIPPrefixes = ModelSerializationExtensions.JsonDeserialize<ManagedClusterLoadBalancerProfileOutboundIPPrefixes>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("outboundIPs"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    outboundIPs = ManagedClusterLoadBalancerProfileOutboundIPs.DeserializeManagedClusterLoadBalancerProfileOutboundIPs(property.Value, options);
+                    outboundIPs = ModelSerializationExtensions.JsonDeserialize<ManagedClusterLoadBalancerProfileOutboundIPs>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("effectiveOutboundIPs"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                        array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                     }
                     effectiveOutboundIPs = array;
                     continue;

@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("accountName"u8);
-            JsonSerializer.Serialize(writer, AccountName);
+            ((IJsonModel<DataFactoryElement<T>>)AccountName).Write(writer, options);
             if (Optional.IsDefined(AccessKey))
             {
                 writer.WritePropertyName("accessKey"u8);
                 JsonSerializer.Serialize(writer, AccessKey);
             }
             writer.WritePropertyName("batchUri"u8);
-            JsonSerializer.Serialize(writer, BatchUri);
+            ((IJsonModel<DataFactoryElement<T>>)BatchUri).Write(writer, options);
             writer.WritePropertyName("poolName"u8);
-            JsonSerializer.Serialize(writer, PoolName);
+            ((IJsonModel<DataFactoryElement<T>>)PoolName).Write(writer, options);
             writer.WritePropertyName("linkedServiceName"u8);
             JsonSerializer.Serialize(writer, LinkedServiceName);
             if (Optional.IsDefined(EncryptedCredential))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue(Credential, options);
+                ((IJsonModel<DataFactoryCredentialReference>)Credential).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
+                    connectVia = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("accountName"u8))
                         {
-                            accountName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            accountName = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("accessKey"u8))
@@ -192,22 +192,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            accessKey = ModelSerializationExtensions.JsonDeserialize<DataFactorySecret>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("batchUri"u8))
                         {
-                            batchUri = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            batchUri = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("poolName"u8))
                         {
-                            poolName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            poolName = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("linkedServiceName"u8))
                         {
-                            linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
+                            linkedServiceName = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property0.Value, options);
+                            credential = ModelSerializationExtensions.JsonDeserialize<DataFactoryCredentialReference>(property0.Value);
                             continue;
                         }
                     }

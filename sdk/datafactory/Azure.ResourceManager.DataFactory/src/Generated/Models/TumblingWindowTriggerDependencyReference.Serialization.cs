@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("referenceTrigger"u8))
                 {
-                    referenceTrigger = DataFactoryTriggerReference.DeserializeDataFactoryTriggerReference(property.Value, options);
+                    referenceTrigger = ModelSerializationExtensions.JsonDeserialize<DataFactoryTriggerReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

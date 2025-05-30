@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in AttributeMappings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MapperAttributeMapping>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

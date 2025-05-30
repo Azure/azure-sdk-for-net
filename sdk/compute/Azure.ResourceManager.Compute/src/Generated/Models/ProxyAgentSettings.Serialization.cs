@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(WireServer))
             {
                 writer.WritePropertyName("wireServer"u8);
-                writer.WriteObjectValue(WireServer, options);
+                ((IJsonModel<HostEndpointSettings>)WireServer).Write(writer, options);
             }
             if (Optional.IsDefined(Imds))
             {
                 writer.WritePropertyName("imds"u8);
-                writer.WriteObjectValue(Imds, options);
+                ((IJsonModel<HostEndpointSettings>)Imds).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    wireServer = HostEndpointSettings.DeserializeHostEndpointSettings(property.Value, options);
+                    wireServer = ModelSerializationExtensions.JsonDeserialize<HostEndpointSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("imds"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    imds = HostEndpointSettings.DeserializeHostEndpointSettings(property.Value, options);
+                    imds = ModelSerializationExtensions.JsonDeserialize<HostEndpointSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

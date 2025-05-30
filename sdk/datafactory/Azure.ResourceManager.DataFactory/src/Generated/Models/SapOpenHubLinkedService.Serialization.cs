@@ -41,32 +41,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
-                JsonSerializer.Serialize(writer, Server);
+                ((IJsonModel<DataFactoryElement<T>>)Server).Write(writer, options);
             }
             if (Optional.IsDefined(SystemNumber))
             {
                 writer.WritePropertyName("systemNumber"u8);
-                JsonSerializer.Serialize(writer, SystemNumber);
+                ((IJsonModel<DataFactoryElement<T>>)SystemNumber).Write(writer, options);
             }
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-                JsonSerializer.Serialize(writer, ClientId);
+                ((IJsonModel<DataFactoryElement<T>>)ClientId).Write(writer, options);
             }
             if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
-                JsonSerializer.Serialize(writer, Language);
+                ((IJsonModel<DataFactoryElement<T>>)Language).Write(writer, options);
             }
             if (Optional.IsDefined(SystemId))
             {
                 writer.WritePropertyName("systemId"u8);
-                JsonSerializer.Serialize(writer, SystemId);
+                ((IJsonModel<DataFactoryElement<T>>)SystemId).Write(writer, options);
             }
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                JsonSerializer.Serialize(writer, UserName);
+                ((IJsonModel<DataFactoryElement<T>>)UserName).Write(writer, options);
             }
             if (Optional.IsDefined(Password))
             {
@@ -76,17 +76,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(MessageServer))
             {
                 writer.WritePropertyName("messageServer"u8);
-                JsonSerializer.Serialize(writer, MessageServer);
+                ((IJsonModel<DataFactoryElement<T>>)MessageServer).Write(writer, options);
             }
             if (Optional.IsDefined(MessageServerService))
             {
                 writer.WritePropertyName("messageServerService"u8);
-                JsonSerializer.Serialize(writer, MessageServerService);
+                ((IJsonModel<DataFactoryElement<T>>)MessageServerService).Write(writer, options);
             }
             if (Optional.IsDefined(LogonGroup))
             {
                 writer.WritePropertyName("logonGroup"u8);
-                JsonSerializer.Serialize(writer, LogonGroup);
+                ((IJsonModel<DataFactoryElement<T>>)LogonGroup).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
+                    connectVia = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            server = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            server = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("systemNumber"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            systemNumber = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            systemNumber = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clientId"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clientId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            clientId = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("language"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            language = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            language = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("systemId"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            systemId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            systemId = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("userName"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            userName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            userName = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("password"u8))
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            password = ModelSerializationExtensions.JsonDeserialize<DataFactorySecret>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("messageServer"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            messageServer = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            messageServer = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("messageServerService"u8))
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            messageServerService = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            messageServerService = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("logonGroup"u8))
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            logonGroup = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            logonGroup = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

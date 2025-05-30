@@ -52,17 +52,17 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(DeliveryInfo))
             {
                 writer.WritePropertyName("deliveryInfo"u8);
-                writer.WriteObjectValue(DeliveryInfo, options);
+                ((IJsonModel<ExportDeliveryInfo>)DeliveryInfo).Write(writer, options);
             }
             if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
-                writer.WriteObjectValue(Definition, options);
+                ((IJsonModel<ExportDefinition>)Definition).Write(writer, options);
             }
             if (Optional.IsDefined(RunHistory))
             {
                 writer.WritePropertyName("runHistory"u8);
-                writer.WriteObjectValue(RunHistory, options);
+                ((IJsonModel<ExportExecutionListResult>)RunHistory).Write(writer, options);
             }
             if (Optional.IsDefined(PartitionData))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule, options);
+                ((IJsonModel<ExportSchedule>)Schedule).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CostManagement
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            deliveryInfo = ExportDeliveryInfo.DeserializeExportDeliveryInfo(property0.Value, options);
+                            deliveryInfo = ModelSerializationExtensions.JsonDeserialize<ExportDeliveryInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("definition"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            definition = ExportDefinition.DeserializeExportDefinition(property0.Value, options);
+                            definition = ModelSerializationExtensions.JsonDeserialize<ExportDefinition>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("runHistory"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            runHistory = ExportExecutionListResult.DeserializeExportExecutionListResult(property0.Value, options);
+                            runHistory = ModelSerializationExtensions.JsonDeserialize<ExportExecutionListResult>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("partitionData"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            schedule = ExportSchedule.DeserializeExportSchedule(property0.Value, options);
+                            schedule = ModelSerializationExtensions.JsonDeserialize<ExportSchedule>(property0.Value);
                             continue;
                         }
                     }

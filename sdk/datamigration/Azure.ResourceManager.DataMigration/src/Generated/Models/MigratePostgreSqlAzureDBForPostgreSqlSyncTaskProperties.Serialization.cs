@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue(Input, options);
+                ((IJsonModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput>)Input).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Output))
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Output)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    input = MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput.DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput(property.Value, options);
+                    input = ModelSerializationExtensions.JsonDeserialize<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("output"u8))

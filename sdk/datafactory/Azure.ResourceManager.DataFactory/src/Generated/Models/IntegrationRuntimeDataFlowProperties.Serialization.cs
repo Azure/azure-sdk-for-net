@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomProperties)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IntegrationRuntimeDataFlowCustomItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

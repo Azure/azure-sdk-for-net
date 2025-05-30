@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(FileSystem))
             {
                 writer.WritePropertyName("fileSystem"u8);
-                JsonSerializer.Serialize(writer, FileSystem);
+                ((IJsonModel<DataFactoryElement<T>>)FileSystem).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    fileSystem = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    fileSystem = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    folderPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    folderPath = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("fileName"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    fileName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    fileName = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

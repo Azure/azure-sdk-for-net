@@ -39,29 +39,29 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("packageLocation"u8);
-            writer.WriteObjectValue(PackageLocation, options);
+            ((IJsonModel<SsisPackageLocation>)PackageLocation).Write(writer, options);
             if (Optional.IsDefined(Runtime))
             {
                 writer.WritePropertyName("runtime"u8);
-                JsonSerializer.Serialize(writer, Runtime);
+                ((IJsonModel<DataFactoryElement<T>>)Runtime).Write(writer, options);
             }
             if (Optional.IsDefined(LoggingLevel))
             {
                 writer.WritePropertyName("loggingLevel"u8);
-                JsonSerializer.Serialize(writer, LoggingLevel);
+                ((IJsonModel<DataFactoryElement<T>>)LoggingLevel).Write(writer, options);
             }
             if (Optional.IsDefined(EnvironmentPath))
             {
                 writer.WritePropertyName("environmentPath"u8);
-                JsonSerializer.Serialize(writer, EnvironmentPath);
+                ((IJsonModel<DataFactoryElement<T>>)EnvironmentPath).Write(writer, options);
             }
             if (Optional.IsDefined(ExecutionCredential))
             {
                 writer.WritePropertyName("executionCredential"u8);
-                writer.WriteObjectValue(ExecutionCredential, options);
+                ((IJsonModel<SsisExecutionCredential>)ExecutionCredential).Write(writer, options);
             }
             writer.WritePropertyName("connectVia"u8);
-            writer.WriteObjectValue(ConnectVia, options);
+            ((IJsonModel<IntegrationRuntimeReference>)ConnectVia).Write(writer, options);
             if (Optional.IsCollectionDefined(ProjectParameters))
             {
                 writer.WritePropertyName("projectParameters"u8);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in ProjectParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<SsisExecutionParameter>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in PackageParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<SsisExecutionParameter>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     foreach (var item0 in item.Value)
                     {
                         writer.WritePropertyName(item0.Key);
-                        writer.WriteObjectValue(item0.Value, options);
+                        ((IJsonModel<SsisExecutionParameter>)item0.Value).Write(writer, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     foreach (var item0 in item.Value)
                     {
                         writer.WritePropertyName(item0.Key);
-                        writer.WriteObjectValue(item0.Value, options);
+                        ((IJsonModel<SsisExecutionParameter>)item0.Value).Write(writer, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -135,14 +135,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in PropertyOverrides)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<SsisPropertyOverride>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(LogLocation))
             {
                 writer.WritePropertyName("logLocation"u8);
-                writer.WriteObjectValue(LogLocation, options);
+                ((IJsonModel<SsisLogLocation>)LogLocation).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
+                    policy = ModelSerializationExtensions.JsonDeserialize<PipelineActivityPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("packageLocation"u8))
                         {
-                            packageLocation = SsisPackageLocation.DeserializeSsisPackageLocation(property0.Value, options);
+                            packageLocation = ModelSerializationExtensions.JsonDeserialize<SsisPackageLocation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("runtime"u8))
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            runtime = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            runtime = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("loggingLevel"u8))
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            loggingLevel = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            loggingLevel = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("environmentPath"u8))
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            environmentPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            environmentPath = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("executionCredential"u8))
@@ -330,12 +330,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            executionCredential = SsisExecutionCredential.DeserializeSsisExecutionCredential(property0.Value, options);
+                            executionCredential = ModelSerializationExtensions.JsonDeserialize<SsisExecutionCredential>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("connectVia"u8))
                         {
-                            connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property0.Value, options);
+                            connectVia = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("projectParameters"u8))
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            logLocation = SsisLogLocation.DeserializeSsisLogLocation(property0.Value, options);
+                            logLocation = ModelSerializationExtensions.JsonDeserialize<SsisLogLocation>(property0.Value);
                             continue;
                         }
                     }

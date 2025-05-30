@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartArray();
             foreach (var item in FrontendIPConfigurations)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<LoadBalancerFrontendIPConfiguration>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

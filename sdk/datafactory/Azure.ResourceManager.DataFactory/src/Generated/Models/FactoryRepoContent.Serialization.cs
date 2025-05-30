@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RepoConfiguration))
             {
                 writer.WritePropertyName("repoConfiguration"u8);
-                writer.WriteObjectValue(RepoConfiguration, options);
+                ((IJsonModel<FactoryRepoConfiguration>)RepoConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    repoConfiguration = FactoryRepoConfiguration.DeserializeFactoryRepoConfiguration(property.Value, options);
+                    repoConfiguration = ModelSerializationExtensions.JsonDeserialize<FactoryRepoConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

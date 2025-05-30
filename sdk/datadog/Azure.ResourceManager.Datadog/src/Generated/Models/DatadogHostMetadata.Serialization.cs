@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Datadog.Models
             if (Optional.IsDefined(InstallMethod))
             {
                 writer.WritePropertyName("installMethod"u8);
-                writer.WriteObjectValue(InstallMethod, options);
+                ((IJsonModel<DatadogInstallMethod>)InstallMethod).Write(writer, options);
             }
             if (Optional.IsDefined(LogsAgent))
             {
                 writer.WritePropertyName("logsAgent"u8);
-                writer.WriteObjectValue(LogsAgent, options);
+                ((IJsonModel<DatadogLogsAgent>)LogsAgent).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    installMethod = DatadogInstallMethod.DeserializeDatadogInstallMethod(property.Value, options);
+                    installMethod = ModelSerializationExtensions.JsonDeserialize<DatadogInstallMethod>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("logsAgent"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    logsAgent = DatadogLogsAgent.DeserializeDatadogLogsAgent(property.Value, options);
+                    logsAgent = ModelSerializationExtensions.JsonDeserialize<DatadogLogsAgent>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(DriverShare))
             {
                 writer.WritePropertyName("driverShare"u8);
-                writer.WriteObjectValue(DriverShare, options);
+                ((IJsonModel<FileShare>)DriverShare).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    driverShare = FileShare.DeserializeFileShare(property.Value, options);
+                    driverShare = ModelSerializationExtensions.JsonDeserialize<FileShare>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

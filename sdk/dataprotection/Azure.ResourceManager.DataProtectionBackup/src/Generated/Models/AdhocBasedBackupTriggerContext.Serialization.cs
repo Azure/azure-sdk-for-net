@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("taggingCriteria"u8);
-            writer.WriteObjectValue(AdhocBackupRetention, options);
+            ((IJsonModel<AdhocBasedBackupTaggingCriteria>)AdhocBackupRetention).Write(writer, options);
         }
 
         AdhocBasedBackupTriggerContext IJsonModel<AdhocBasedBackupTriggerContext>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 if (property.NameEquals("taggingCriteria"u8))
                 {
-                    taggingCriteria = AdhocBasedBackupTaggingCriteria.DeserializeAdhocBasedBackupTaggingCriteria(property.Value, options);
+                    taggingCriteria = ModelSerializationExtensions.JsonDeserialize<AdhocBasedBackupTaggingCriteria>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))

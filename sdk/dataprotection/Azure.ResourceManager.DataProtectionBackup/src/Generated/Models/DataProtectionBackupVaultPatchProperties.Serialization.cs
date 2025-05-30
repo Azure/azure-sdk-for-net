@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(MonitoringSettings))
             {
                 writer.WritePropertyName("monitoringSettings"u8);
-                writer.WriteObjectValue(MonitoringSettings, options);
+                ((IJsonModel<MonitoringSettings>)MonitoringSettings).Write(writer, options);
             }
             if (Optional.IsDefined(SecuritySettings))
             {
                 writer.WritePropertyName("securitySettings"u8);
-                writer.WriteObjectValue(SecuritySettings, options);
+                ((IJsonModel<BackupVaultSecuritySettings>)SecuritySettings).Write(writer, options);
             }
             if (Optional.IsDefined(FeatureSettings))
             {
                 writer.WritePropertyName("featureSettings"u8);
-                writer.WriteObjectValue(FeatureSettings, options);
+                ((IJsonModel<BackupVaultFeatureSettings>)FeatureSettings).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    monitoringSettings = MonitoringSettings.DeserializeMonitoringSettings(property.Value, options);
+                    monitoringSettings = ModelSerializationExtensions.JsonDeserialize<MonitoringSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("securitySettings"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    securitySettings = BackupVaultSecuritySettings.DeserializeBackupVaultSecuritySettings(property.Value, options);
+                    securitySettings = ModelSerializationExtensions.JsonDeserialize<BackupVaultSecuritySettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("featureSettings"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    featureSettings = BackupVaultFeatureSettings.DeserializeBackupVaultFeatureSettings(property.Value, options);
+                    featureSettings = ModelSerializationExtensions.JsonDeserialize<BackupVaultFeatureSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceGuardOperationRequests"u8))

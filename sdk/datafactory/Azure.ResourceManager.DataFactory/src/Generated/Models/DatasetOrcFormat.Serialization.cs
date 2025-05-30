@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    serializer = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    serializer = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deserializer"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    deserializer = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    deserializer = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

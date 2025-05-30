@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule, options);
+                ((IJsonModel<DataFactoryRecurrenceSchedule>)Schedule).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    schedule = DataFactoryRecurrenceSchedule.DeserializeDataFactoryRecurrenceSchedule(property.Value, options);
+                    schedule = ModelSerializationExtensions.JsonDeserialize<DataFactoryRecurrenceSchedule>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

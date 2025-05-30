@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in ShareCredentialDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ShareCredentialDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

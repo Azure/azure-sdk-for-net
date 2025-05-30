@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(OverrideTaskStepProperties))
             {
                 writer.WritePropertyName("overrideTaskStepProperties"u8);
-                writer.WriteObjectValue(OverrideTaskStepProperties, options);
+                ((IJsonModel<ContainerRegistryOverrideTaskStepProperties>)OverrideTaskStepProperties).Write(writer, options);
             }
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    overrideTaskStepProperties = ContainerRegistryOverrideTaskStepProperties.DeserializeContainerRegistryOverrideTaskStepProperties(property.Value, options);
+                    overrideTaskStepProperties = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryOverrideTaskStepProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

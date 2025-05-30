@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in VmSizes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ComputeSkuProfileVmSize>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

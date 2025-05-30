@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (options.Format != "W" && Optional.IsDefined(CurrentState))
             {
                 writer.WritePropertyName("currentState"u8);
-                writer.WriteObjectValue(CurrentState, options);
+                ((IJsonModel<ContainerState>)CurrentState).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PreviousState))
             {
                 writer.WritePropertyName("previousState"u8);
-                writer.WriteObjectValue(PreviousState, options);
+                ((IJsonModel<ContainerState>)PreviousState).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Events))
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerEvent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    currentState = ContainerState.DeserializeContainerState(property.Value, options);
+                    currentState = ModelSerializationExtensions.JsonDeserialize<ContainerState>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("previousState"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    previousState = ContainerState.DeserializeContainerState(property.Value, options);
+                    previousState = ModelSerializationExtensions.JsonDeserialize<ContainerState>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("events"u8))

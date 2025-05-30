@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in HttpHeaders)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerAppHttpHeaderInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

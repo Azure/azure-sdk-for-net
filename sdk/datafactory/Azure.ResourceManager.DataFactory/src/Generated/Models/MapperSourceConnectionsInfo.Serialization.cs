@@ -40,14 +40,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in SourceEntities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MapperTable>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Connection))
             {
                 writer.WritePropertyName("connection"u8);
-                writer.WriteObjectValue(Connection, options);
+                ((IJsonModel<MapperConnection>)Connection).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connection = MapperConnection.DeserializeMapperConnection(property.Value, options);
+                    connection = ModelSerializationExtensions.JsonDeserialize<MapperConnection>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

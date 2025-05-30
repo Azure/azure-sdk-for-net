@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia, options);
+                ((IJsonModel<IntegrationRuntimeReference>)ConnectVia).Write(writer, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<EntityParameterSpecification>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }

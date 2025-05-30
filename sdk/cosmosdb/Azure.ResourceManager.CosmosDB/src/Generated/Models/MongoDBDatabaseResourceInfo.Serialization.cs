@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(RestoreParameters))
             {
                 writer.WritePropertyName("restoreParameters"u8);
-                writer.WriteObjectValue(RestoreParameters, options);
+                ((IJsonModel<ResourceRestoreParameters>)RestoreParameters).Write(writer, options);
             }
             if (Optional.IsDefined(CreateMode))
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    restoreParameters = ResourceRestoreParameters.DeserializeResourceRestoreParameters(property.Value, options);
+                    restoreParameters = ModelSerializationExtensions.JsonDeserialize<ResourceRestoreParameters>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("createMode"u8))

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (options.Format != "W" && Optional.IsDefined(SourceRecoverPoint))
             {
                 writer.WritePropertyName("sourceRecoverPoint"u8);
-                writer.WriteObjectValue(SourceRecoverPoint, options);
+                ((IJsonModel<RestoreJobRecoveryPointDetails>)SourceRecoverPoint).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SubTasks))
             {
@@ -71,14 +71,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in SubTasks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BackupJobSubTask>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(TargetRecoverPoint))
             {
                 writer.WritePropertyName("targetRecoverPoint"u8);
-                writer.WriteObjectValue(TargetRecoverPoint, options);
+                ((IJsonModel<RestoreJobRecoveryPointDetails>)TargetRecoverPoint).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(WarningDetails))
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in WarningDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UserFacingWarningDetail>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    sourceRecoverPoint = RestoreJobRecoveryPointDetails.DeserializeRestoreJobRecoveryPointDetails(property.Value, options);
+                    sourceRecoverPoint = ModelSerializationExtensions.JsonDeserialize<RestoreJobRecoveryPointDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("subTasks"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    targetRecoverPoint = RestoreJobRecoveryPointDetails.DeserializeRestoreJobRecoveryPointDetails(property.Value, options);
+                    targetRecoverPoint = ModelSerializationExtensions.JsonDeserialize<RestoreJobRecoveryPointDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("warningDetails"u8))

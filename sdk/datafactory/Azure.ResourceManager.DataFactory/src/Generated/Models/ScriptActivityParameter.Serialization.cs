@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                JsonSerializer.Serialize(writer, Name);
+                ((IJsonModel<DataFactoryElement<T>>)Name).Write(writer, options);
             }
             if (Optional.IsDefined(ParameterType))
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                JsonSerializer.Serialize(writer, Value);
+                ((IJsonModel<DataFactoryElement<T>>)Value).Write(writer, options);
             }
             if (Optional.IsDefined(Direction))
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    name = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    name = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    value = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    value = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("direction"u8))

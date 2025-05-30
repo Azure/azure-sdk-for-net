@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(AzureBlobStorage))
             {
                 writer.WritePropertyName("azureBlobStorage"u8);
-                writer.WriteObjectValue(AzureBlobStorage, options);
+                ((IJsonModel<BlobStorageTokenStore>)AzureBlobStorage).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    azureBlobStorage = BlobStorageTokenStore.DeserializeBlobStorageTokenStore(property.Value, options);
+                    azureBlobStorage = ModelSerializationExtensions.JsonDeserialize<BlobStorageTokenStore>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

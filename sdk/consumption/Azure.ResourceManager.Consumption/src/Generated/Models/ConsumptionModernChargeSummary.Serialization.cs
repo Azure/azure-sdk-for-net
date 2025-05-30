@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(AzureCharges))
             {
                 writer.WritePropertyName("azureCharges"u8);
-                writer.WriteObjectValue(AzureCharges, options);
+                ((IJsonModel<ConsumptionAmount>)AzureCharges).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ChargesBilledSeparately))
             {
                 writer.WritePropertyName("chargesBilledSeparately"u8);
-                writer.WriteObjectValue(ChargesBilledSeparately, options);
+                ((IJsonModel<ConsumptionAmount>)ChargesBilledSeparately).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MarketplaceCharges))
             {
                 writer.WritePropertyName("marketplaceCharges"u8);
-                writer.WriteObjectValue(MarketplaceCharges, options);
+                ((IJsonModel<ConsumptionAmount>)MarketplaceCharges).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(BillingAccountId))
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            azureCharges = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
+                            azureCharges = ModelSerializationExtensions.JsonDeserialize<ConsumptionAmount>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("chargesBilledSeparately"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            chargesBilledSeparately = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
+                            chargesBilledSeparately = ModelSerializationExtensions.JsonDeserialize<ConsumptionAmount>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("marketplaceCharges"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            marketplaceCharges = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
+                            marketplaceCharges = ModelSerializationExtensions.JsonDeserialize<ConsumptionAmount>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("billingAccountId"u8))

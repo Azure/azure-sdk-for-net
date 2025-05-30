@@ -53,22 +53,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
-                writer.WriteObjectValue(Target, options);
+                ((IJsonModel<ContainerRegistryWebhookEventTarget>)Target).Write(writer, options);
             }
             if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
-                writer.WriteObjectValue(Request, options);
+                ((IJsonModel<ContainerRegistryWebhookEventRequestContent>)Request).Write(writer, options);
             }
             if (Optional.IsDefined(Actor))
             {
                 writer.WritePropertyName("actor"u8);
-                writer.WriteObjectValue(Actor, options);
+                ((IJsonModel<ContainerRegistryWebhookEventActor>)Actor).Write(writer, options);
             }
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source, options);
+                ((IJsonModel<ContainerRegistryWebhookEventSource>)Source).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    target = ContainerRegistryWebhookEventTarget.DeserializeContainerRegistryWebhookEventTarget(property.Value, options);
+                    target = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryWebhookEventTarget>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("request"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    request = ContainerRegistryWebhookEventRequestContent.DeserializeContainerRegistryWebhookEventRequestContent(property.Value, options);
+                    request = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryWebhookEventRequestContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("actor"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    actor = ContainerRegistryWebhookEventActor.DeserializeContainerRegistryWebhookEventActor(property.Value, options);
+                    actor = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryWebhookEventActor>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("source"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    source = ContainerRegistryWebhookEventSource.DeserializeContainerRegistryWebhookEventSource(property.Value, options);
+                    source = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryWebhookEventSource>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

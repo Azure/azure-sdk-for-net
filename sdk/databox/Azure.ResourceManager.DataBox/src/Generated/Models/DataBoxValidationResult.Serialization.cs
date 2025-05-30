@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in IndividualResponseDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataBoxValidationInputResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

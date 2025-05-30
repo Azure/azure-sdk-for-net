@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W" && Optional.IsDefined(AdapterPosition))
             {
                 writer.WritePropertyName("adapterPosition"u8);
-                writer.WriteObjectValue(AdapterPosition, options);
+                ((IJsonModel<DataBoxEdgeNetworkAdapterPosition>)AdapterPosition).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Index))
             {
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W" && Optional.IsDefined(IPv4Configuration))
             {
                 writer.WritePropertyName("ipv4Configuration"u8);
-                writer.WriteObjectValue(IPv4Configuration, options);
+                ((IJsonModel<DataBoxEdgeIPv4Config>)IPv4Configuration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IPv6Configuration))
             {
                 writer.WritePropertyName("ipv6Configuration"u8);
-                writer.WriteObjectValue(IPv6Configuration, options);
+                ((IJsonModel<DataBoxEdgeIPv6Config>)IPv6Configuration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IPv6LinkLocalAddress))
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    adapterPosition = DataBoxEdgeNetworkAdapterPosition.DeserializeDataBoxEdgeNetworkAdapterPosition(property.Value, options);
+                    adapterPosition = ModelSerializationExtensions.JsonDeserialize<DataBoxEdgeNetworkAdapterPosition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("index"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    ipv4Configuration = DataBoxEdgeIPv4Config.DeserializeDataBoxEdgeIPv4Config(property.Value, options);
+                    ipv4Configuration = ModelSerializationExtensions.JsonDeserialize<DataBoxEdgeIPv4Config>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ipv6Configuration"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    ipv6Configuration = DataBoxEdgeIPv6Config.DeserializeDataBoxEdgeIPv6Config(property.Value, options);
+                    ipv6Configuration = ModelSerializationExtensions.JsonDeserialize<DataBoxEdgeIPv6Config>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ipv6LinkLocalAddress"u8))

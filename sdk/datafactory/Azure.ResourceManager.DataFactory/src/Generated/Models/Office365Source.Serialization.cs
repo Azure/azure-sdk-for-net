@@ -39,32 +39,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AllowedGroups))
             {
                 writer.WritePropertyName("allowedGroups"u8);
-                JsonSerializer.Serialize(writer, AllowedGroups);
+                ((IJsonModel<DataFactoryElement<T>>)AllowedGroups).Write(writer, options);
             }
             if (Optional.IsDefined(UserScopeFilterUri))
             {
                 writer.WritePropertyName("userScopeFilterUri"u8);
-                JsonSerializer.Serialize(writer, UserScopeFilterUri);
+                ((IJsonModel<DataFactoryElement<T>>)UserScopeFilterUri).Write(writer, options);
             }
             if (Optional.IsDefined(DateFilterColumn))
             {
                 writer.WritePropertyName("dateFilterColumn"u8);
-                JsonSerializer.Serialize(writer, DateFilterColumn);
+                ((IJsonModel<DataFactoryElement<T>>)DateFilterColumn).Write(writer, options);
             }
             if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                JsonSerializer.Serialize(writer, StartOn);
+                ((IJsonModel<DataFactoryElement<T>>)StartOn).Write(writer, options);
             }
             if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                JsonSerializer.Serialize(writer, EndOn);
+                ((IJsonModel<DataFactoryElement<T>>)EndOn).Write(writer, options);
             }
             if (Optional.IsDefined(OutputColumns))
             {
                 writer.WritePropertyName("outputColumns"u8);
-                JsonSerializer.Serialize(writer, OutputColumns);
+                ((IJsonModel<DataFactoryElement<T>>)OutputColumns).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    allowedGroups = JsonSerializer.Deserialize<DataFactoryElement<IList<string>>>(property.Value.GetRawText());
+                    allowedGroups = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<IList<string>>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userScopeFilterUri"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    userScopeFilterUri = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    userScopeFilterUri = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dateFilterColumn"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    dateFilterColumn = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    dateFilterColumn = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("startTime"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    startTime = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    startTime = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("endTime"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    endTime = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    endTime = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("outputColumns"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    outputColumns = JsonSerializer.Deserialize<DataFactoryElement<IList<Office365TableOutputColumn>>>(property.Value.GetRawText());
+                    outputColumns = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<IList<Office365TableOutputColumn>>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sourceRetryCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    sourceRetryCount = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sourceRetryWait"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sourceRetryWait = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    sourceRetryWait = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("maxConcurrentConnections"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    maxConcurrentConnections = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("disableMetricsCollection"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    disableMetricsCollection = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

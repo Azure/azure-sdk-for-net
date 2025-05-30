@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    snapshot = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    snapshot = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("managedDisk"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    managedDisk = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    managedDisk = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("blobUri"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    diskEncryptionSet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    diskEncryptionSet = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CloudServiceLoadBalancerConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SwappableCloudService))
             {
                 writer.WritePropertyName("swappableCloudService"u8);
-                JsonSerializer.Serialize(writer, SwappableCloudService);
+                ((IJsonModel<WritableSubResource>)SwappableCloudService).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    swappableCloudService = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    swappableCloudService = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

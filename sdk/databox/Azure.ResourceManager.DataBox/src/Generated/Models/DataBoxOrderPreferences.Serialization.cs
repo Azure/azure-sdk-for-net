@@ -47,17 +47,17 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(TransportPreferences))
             {
                 writer.WritePropertyName("transportPreferences"u8);
-                writer.WriteObjectValue(TransportPreferences, options);
+                ((IJsonModel<TransportPreferences>)TransportPreferences).Write(writer, options);
             }
             if (Optional.IsDefined(ReverseTransportPreferences))
             {
                 writer.WritePropertyName("reverseTransportPreferences"u8);
-                writer.WriteObjectValue(ReverseTransportPreferences, options);
+                ((IJsonModel<TransportPreferences>)ReverseTransportPreferences).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptionPreferences))
             {
                 writer.WritePropertyName("encryptionPreferences"u8);
-                writer.WriteObjectValue(EncryptionPreferences, options);
+                ((IJsonModel<DataBoxEncryptionPreferences>)EncryptionPreferences).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(StorageAccountAccessTierPreferences))
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    transportPreferences = TransportPreferences.DeserializeTransportPreferences(property.Value, options);
+                    transportPreferences = ModelSerializationExtensions.JsonDeserialize<TransportPreferences>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("reverseTransportPreferences"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    reverseTransportPreferences = TransportPreferences.DeserializeTransportPreferences(property.Value, options);
+                    reverseTransportPreferences = ModelSerializationExtensions.JsonDeserialize<TransportPreferences>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("encryptionPreferences"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    encryptionPreferences = DataBoxEncryptionPreferences.DeserializeDataBoxEncryptionPreferences(property.Value, options);
+                    encryptionPreferences = ModelSerializationExtensions.JsonDeserialize<DataBoxEncryptionPreferences>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storageAccountAccessTierPreferences"u8))

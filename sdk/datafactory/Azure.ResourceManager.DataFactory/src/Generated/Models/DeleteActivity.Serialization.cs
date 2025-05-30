@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive"u8);
-                JsonSerializer.Serialize(writer, Recursive);
+                ((IJsonModel<DataFactoryElement<T>>)Recursive).Write(writer, options);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EnableLogging))
             {
                 writer.WritePropertyName("enableLogging"u8);
-                JsonSerializer.Serialize(writer, EnableLogging);
+                ((IJsonModel<DataFactoryElement<T>>)EnableLogging).Write(writer, options);
             }
             if (Optional.IsDefined(LogStorageSettings))
             {
                 writer.WritePropertyName("logStorageSettings"u8);
-                writer.WriteObjectValue(LogStorageSettings, options);
+                ((IJsonModel<LogStorageSettings>)LogStorageSettings).Write(writer, options);
             }
             writer.WritePropertyName("dataset"u8);
-            writer.WriteObjectValue(Dataset, options);
+            ((IJsonModel<DatasetReference>)Dataset).Write(writer, options);
             if (Optional.IsDefined(StoreSettings))
             {
                 writer.WritePropertyName("storeSettings"u8);
-                writer.WriteObjectValue(StoreSettings, options);
+                ((IJsonModel<StoreReadSettings>)StoreSettings).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
+                    policy = ModelSerializationExtensions.JsonDeserialize<PipelineActivityPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            recursive = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            recursive = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("maxConcurrentConnections"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            enableLogging = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            enableLogging = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("logStorageSettings"u8))
@@ -240,12 +240,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            logStorageSettings = LogStorageSettings.DeserializeLogStorageSettings(property0.Value, options);
+                            logStorageSettings = ModelSerializationExtensions.JsonDeserialize<LogStorageSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dataset"u8))
                         {
-                            dataset = DatasetReference.DeserializeDatasetReference(property0.Value, options);
+                            dataset = ModelSerializationExtensions.JsonDeserialize<DatasetReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("storeSettings"u8))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            storeSettings = StoreReadSettings.DeserializeStoreReadSettings(property0.Value, options);
+                            storeSettings = ModelSerializationExtensions.JsonDeserialize<StoreReadSettings>(property0.Value);
                             continue;
                         }
                     }

@@ -48,7 +48,7 @@ namespace Azure.Containers.ContainerRegistry
                     {
                         continue;
                     }
-                    platform = Platform.DeserializePlatform(property.Value);
+                    platform = ModelSerializationExtensions.JsonDeserialize<Platform>(property.Value);
                     continue;
                 }
             }

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (Optional.IsDefined(EncryptedPassword))
             {
                 writer.WritePropertyName("encryptedPassword"u8);
-                writer.WriteObjectValue(EncryptedPassword, options);
+                ((IJsonModel<AsymmetricEncryptedSecret>)EncryptedPassword).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ShareAccessRights))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in ShareAccessRights)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ShareAccessRight>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            encryptedPassword = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property0.Value, options);
+                            encryptedPassword = ModelSerializationExtensions.JsonDeserialize<AsymmetricEncryptedSecret>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("shareAccessRights"u8))

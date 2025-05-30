@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ReplicationStatus))
             {
                 writer.WritePropertyName("replicationStatus"u8);
-                writer.WriteObjectValue(ReplicationStatus, options);
+                ((IJsonModel<DiskRestorePointReplicationStatus>)ReplicationStatus).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    replicationStatus = DiskRestorePointReplicationStatus.DeserializeDiskRestorePointReplicationStatus(property.Value, options);
+                    replicationStatus = ModelSerializationExtensions.JsonDeserialize<DiskRestorePointReplicationStatus>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

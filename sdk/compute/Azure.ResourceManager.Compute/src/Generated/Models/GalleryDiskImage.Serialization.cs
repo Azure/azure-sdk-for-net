@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(GallerySource))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue<GalleryDiskImageSource>(GallerySource, options);
+                ((IJsonModel<GalleryDiskImageSource>)GallerySource).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    source = GalleryDiskImageSource.DeserializeGalleryDiskImageSource(property.Value, options);
+                    source = ModelSerializationExtensions.JsonDeserialize<GalleryDiskImageSource>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

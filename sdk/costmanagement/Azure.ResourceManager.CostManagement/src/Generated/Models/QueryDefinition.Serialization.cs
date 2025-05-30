@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(TimePeriod))
             {
                 writer.WritePropertyName("timePeriod"u8);
-                writer.WriteObjectValue(TimePeriod, options);
+                ((IJsonModel<QueryTimePeriod>)TimePeriod).Write(writer, options);
             }
             writer.WritePropertyName("dataset"u8);
-            writer.WriteObjectValue(Dataset, options);
+            ((IJsonModel<QueryDataset>)Dataset).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    timePeriod = QueryTimePeriod.DeserializeQueryTimePeriod(property.Value, options);
+                    timePeriod = ModelSerializationExtensions.JsonDeserialize<QueryTimePeriod>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataset"u8))
                 {
-                    dataset = QueryDataset.DeserializeQueryDataset(property.Value, options);
+                    dataset = ModelSerializationExtensions.JsonDeserialize<QueryDataset>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

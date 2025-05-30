@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             if (Optional.IsDefined(WindowsConfiguration))
             {
                 writer.WritePropertyName("windowsConfiguration"u8);
-                writer.WriteObjectValue(WindowsConfiguration, options);
+                ((IJsonModel<VMwareVmWindowsConfiguration>)WindowsConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     {
                         continue;
                     }
-                    windowsConfiguration = VMwareVmWindowsConfiguration.DeserializeVMwareVmWindowsConfiguration(property.Value, options);
+                    windowsConfiguration = ModelSerializationExtensions.JsonDeserialize<VMwareVmWindowsConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

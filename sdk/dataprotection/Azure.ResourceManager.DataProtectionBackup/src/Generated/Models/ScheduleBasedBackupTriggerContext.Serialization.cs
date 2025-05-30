@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("schedule"u8);
-            writer.WriteObjectValue(Schedule, options);
+            ((IJsonModel<DataProtectionBackupSchedule>)Schedule).Write(writer, options);
             writer.WritePropertyName("taggingCriteria"u8);
             writer.WriteStartArray();
             foreach (var item in TaggingCriteriaList)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DataProtectionBackupTaggingCriteria>)item).Write(writer, options);
             }
             writer.WriteEndArray();
         }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 if (property.NameEquals("schedule"u8))
                 {
-                    schedule = DataProtectionBackupSchedule.DeserializeDataProtectionBackupSchedule(property.Value, options);
+                    schedule = ModelSerializationExtensions.JsonDeserialize<DataProtectionBackupSchedule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("taggingCriteria"u8))

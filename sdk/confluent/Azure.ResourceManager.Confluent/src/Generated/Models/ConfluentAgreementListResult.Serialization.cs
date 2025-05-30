@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConfluentAgreement>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

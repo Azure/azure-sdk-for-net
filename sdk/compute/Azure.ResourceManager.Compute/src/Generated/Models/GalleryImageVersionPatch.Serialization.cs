@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PublishingProfile))
             {
                 writer.WritePropertyName("publishingProfile"u8);
-                writer.WriteObjectValue(PublishingProfile, options);
+                ((IJsonModel<GalleryImageVersionPublishingProfile>)PublishingProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -62,22 +62,22 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile, options);
+                ((IJsonModel<GalleryImageVersionStorageProfile>)StorageProfile).Write(writer, options);
             }
             if (Optional.IsDefined(SafetyProfile))
             {
                 writer.WritePropertyName("safetyProfile"u8);
-                writer.WriteObjectValue(SafetyProfile, options);
+                ((IJsonModel<GalleryImageVersionSafetyProfile>)SafetyProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReplicationStatus))
             {
                 writer.WritePropertyName("replicationStatus"u8);
-                writer.WriteObjectValue(ReplicationStatus, options);
+                ((IJsonModel<ReplicationStatus>)ReplicationStatus).Write(writer, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile, options);
+                ((IJsonModel<ImageVersionSecurityProfile>)SecurityProfile).Write(writer, options);
             }
             if (Optional.IsDefined(Restore))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(ValidationsProfile))
             {
                 writer.WritePropertyName("validationsProfile"u8);
-                writer.WriteObjectValue(ValidationsProfile, options);
+                ((IJsonModel<GalleryImageValidationsProfile>)ValidationsProfile).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            publishingProfile = GalleryImageVersionPublishingProfile.DeserializeGalleryImageVersionPublishingProfile(property0.Value, options);
+                            publishingProfile = ModelSerializationExtensions.JsonDeserialize<GalleryImageVersionPublishingProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            storageProfile = GalleryImageVersionStorageProfile.DeserializeGalleryImageVersionStorageProfile(property0.Value, options);
+                            storageProfile = ModelSerializationExtensions.JsonDeserialize<GalleryImageVersionStorageProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("safetyProfile"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            safetyProfile = GalleryImageVersionSafetyProfile.DeserializeGalleryImageVersionSafetyProfile(property0.Value, options);
+                            safetyProfile = ModelSerializationExtensions.JsonDeserialize<GalleryImageVersionSafetyProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("replicationStatus"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            replicationStatus = ReplicationStatus.DeserializeReplicationStatus(property0.Value, options);
+                            replicationStatus = ModelSerializationExtensions.JsonDeserialize<ReplicationStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("securityProfile"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            securityProfile = ImageVersionSecurityProfile.DeserializeImageVersionSecurityProfile(property0.Value, options);
+                            securityProfile = ModelSerializationExtensions.JsonDeserialize<ImageVersionSecurityProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("restore"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            validationsProfile = GalleryImageValidationsProfile.DeserializeGalleryImageValidationsProfile(property0.Value, options);
+                            validationsProfile = ModelSerializationExtensions.JsonDeserialize<GalleryImageValidationsProfile>(property0.Value);
                             continue;
                         }
                     }

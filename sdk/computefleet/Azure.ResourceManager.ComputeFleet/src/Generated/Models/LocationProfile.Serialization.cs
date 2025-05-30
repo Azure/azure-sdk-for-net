@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(VirtualMachineProfileOverride))
             {
                 writer.WritePropertyName("virtualMachineProfileOverride"u8);
-                writer.WriteObjectValue(VirtualMachineProfileOverride, options);
+                ((IJsonModel<ComputeFleetVmProfile>)VirtualMachineProfileOverride).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    virtualMachineProfileOverride = ComputeFleetVmProfile.DeserializeComputeFleetVmProfile(property.Value, options);
+                    virtualMachineProfileOverride = ModelSerializationExtensions.JsonDeserialize<ComputeFleetVmProfile>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

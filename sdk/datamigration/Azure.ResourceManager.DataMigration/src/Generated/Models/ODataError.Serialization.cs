@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ODataError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

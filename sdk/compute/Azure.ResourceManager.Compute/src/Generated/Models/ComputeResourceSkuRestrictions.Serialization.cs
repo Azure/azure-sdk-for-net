@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(RestrictionInfo))
             {
                 writer.WritePropertyName("restrictionInfo"u8);
-                writer.WriteObjectValue(RestrictionInfo, options);
+                ((IJsonModel<ComputeResourceSkuRestrictionInfo>)RestrictionInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReasonCode))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    restrictionInfo = ComputeResourceSkuRestrictionInfo.DeserializeComputeResourceSkuRestrictionInfo(property.Value, options);
+                    restrictionInfo = ModelSerializationExtensions.JsonDeserialize<ComputeResourceSkuRestrictionInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("reasonCode"u8))

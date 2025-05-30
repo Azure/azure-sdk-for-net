@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("accountIdentifier"u8);
-            JsonSerializer.Serialize(writer, AccountIdentifier);
+            ((IJsonModel<DataFactoryElement<T>>)AccountIdentifier).Write(writer, options);
             if (Optional.IsDefined(User))
             {
                 writer.WritePropertyName("user"u8);
-                JsonSerializer.Serialize(writer, User);
+                ((IJsonModel<DataFactoryElement<T>>)User).Write(writer, options);
             }
             if (Optional.IsDefined(Password))
             {
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, Password);
             }
             writer.WritePropertyName("database"u8);
-            JsonSerializer.Serialize(writer, Database);
+            ((IJsonModel<DataFactoryElement<T>>)Database).Write(writer, options);
             writer.WritePropertyName("warehouse"u8);
-            JsonSerializer.Serialize(writer, Warehouse);
+            ((IJsonModel<DataFactoryElement<T>>)Warehouse).Write(writer, options);
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-                JsonSerializer.Serialize(writer, ClientId);
+                ((IJsonModel<DataFactoryElement<T>>)ClientId).Write(writer, options);
             }
             if (Optional.IsDefined(ClientSecret))
             {
@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                JsonSerializer.Serialize(writer, TenantId);
+                ((IJsonModel<DataFactoryElement<T>>)TenantId).Write(writer, options);
             }
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                JsonSerializer.Serialize(writer, Scope);
+                ((IJsonModel<DataFactoryElement<T>>)Scope).Write(writer, options);
             }
             if (Optional.IsDefined(PrivateKey))
             {
@@ -92,17 +92,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
-                JsonSerializer.Serialize(writer, Role);
+                ((IJsonModel<DataFactoryElement<T>>)Role).Write(writer, options);
             }
             if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
-                JsonSerializer.Serialize(writer, Host);
+                ((IJsonModel<DataFactoryElement<T>>)Host).Write(writer, options);
             }
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-                JsonSerializer.Serialize(writer, Schema);
+                ((IJsonModel<DataFactoryElement<T>>)Schema).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
+                    connectVia = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("accountIdentifier"u8))
                         {
-                            accountIdentifier = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            accountIdentifier = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("user"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            user = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            user = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("password"u8))
@@ -258,17 +258,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            password = ModelSerializationExtensions.JsonDeserialize<DataFactorySecret>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("database"u8))
                         {
-                            database = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            database = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("warehouse"u8))
                         {
-                            warehouse = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            warehouse = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("authenticationType"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clientId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            clientId = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clientSecret"u8))
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clientSecret = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            clientSecret = ModelSerializationExtensions.JsonDeserialize<DataFactorySecret>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tenantId"u8))
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            tenantId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            tenantId = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("scope"u8))
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            scope = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            scope = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateKey"u8))
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            privateKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            privateKey = ModelSerializationExtensions.JsonDeserialize<DataFactorySecret>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateKeyPassphrase"u8))
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            privateKeyPassphrase = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            privateKeyPassphrase = ModelSerializationExtensions.JsonDeserialize<DataFactorySecret>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("role"u8))
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            role = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            role = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("host"u8))
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            host = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            host = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("schema"u8))
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            schema = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            schema = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

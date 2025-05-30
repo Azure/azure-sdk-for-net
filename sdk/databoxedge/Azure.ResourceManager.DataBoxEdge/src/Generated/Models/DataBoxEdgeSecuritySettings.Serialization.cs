@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("deviceAdminPassword"u8);
-            writer.WriteObjectValue(DeviceAdminPassword, options);
+            ((IJsonModel<AsymmetricEncryptedSecret>)DeviceAdminPassword).Write(writer, options);
             writer.WriteEndObject();
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         if (property0.NameEquals("deviceAdminPassword"u8))
                         {
-                            deviceAdminPassword = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property0.Value, options);
+                            deviceAdminPassword = ModelSerializationExtensions.JsonDeserialize<AsymmetricEncryptedSecret>(property0.Value);
                             continue;
                         }
                     }

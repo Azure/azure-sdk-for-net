@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials, options);
+                ((IJsonModel<ContainerRegistryTokenCredentials>)Credentials).Write(writer, options);
             }
             if (Optional.IsDefined(Status))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            credentials = ContainerRegistryTokenCredentials.DeserializeContainerRegistryTokenCredentials(property0.Value, options);
+                            credentials = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryTokenCredentials>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))

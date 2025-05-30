@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            licenseKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            licenseKey = ModelSerializationExtensions.JsonDeserialize<DataFactorySecret>(property0.Value);
                             continue;
                         }
                     }

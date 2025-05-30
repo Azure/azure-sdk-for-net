@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    autoscaleSettings = AutoscaleSettings.DeserializeAutoscaleSettings(property.Value, options);
+                    autoscaleSettings = ModelSerializationExtensions.JsonDeserialize<AutoscaleSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

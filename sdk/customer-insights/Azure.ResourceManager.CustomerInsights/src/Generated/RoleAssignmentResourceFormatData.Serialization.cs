@@ -87,74 +87,74 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in Principals)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AssignmentPrincipal>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Profiles))
             {
                 writer.WritePropertyName("profiles"u8);
-                writer.WriteObjectValue(Profiles, options);
+                ((IJsonModel<ResourceSetDescription>)Profiles).Write(writer, options);
             }
             if (Optional.IsDefined(Interactions))
             {
                 writer.WritePropertyName("interactions"u8);
-                writer.WriteObjectValue(Interactions, options);
+                ((IJsonModel<ResourceSetDescription>)Interactions).Write(writer, options);
             }
             if (Optional.IsDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
-                writer.WriteObjectValue(Links, options);
+                ((IJsonModel<ResourceSetDescription>)Links).Write(writer, options);
             }
             if (Optional.IsDefined(Kpis))
             {
                 writer.WritePropertyName("kpis"u8);
-                writer.WriteObjectValue(Kpis, options);
+                ((IJsonModel<ResourceSetDescription>)Kpis).Write(writer, options);
             }
             if (Optional.IsDefined(SasPolicies))
             {
                 writer.WritePropertyName("sasPolicies"u8);
-                writer.WriteObjectValue(SasPolicies, options);
+                ((IJsonModel<ResourceSetDescription>)SasPolicies).Write(writer, options);
             }
             if (Optional.IsDefined(Connectors))
             {
                 writer.WritePropertyName("connectors"u8);
-                writer.WriteObjectValue(Connectors, options);
+                ((IJsonModel<ResourceSetDescription>)Connectors).Write(writer, options);
             }
             if (Optional.IsDefined(Views))
             {
                 writer.WritePropertyName("views"u8);
-                writer.WriteObjectValue(Views, options);
+                ((IJsonModel<ResourceSetDescription>)Views).Write(writer, options);
             }
             if (Optional.IsDefined(RelationshipLinks))
             {
                 writer.WritePropertyName("relationshipLinks"u8);
-                writer.WriteObjectValue(RelationshipLinks, options);
+                ((IJsonModel<ResourceSetDescription>)RelationshipLinks).Write(writer, options);
             }
             if (Optional.IsDefined(Relationships))
             {
                 writer.WritePropertyName("relationships"u8);
-                writer.WriteObjectValue(Relationships, options);
+                ((IJsonModel<ResourceSetDescription>)Relationships).Write(writer, options);
             }
             if (Optional.IsDefined(WidgetTypes))
             {
                 writer.WritePropertyName("widgetTypes"u8);
-                writer.WriteObjectValue(WidgetTypes, options);
+                ((IJsonModel<ResourceSetDescription>)WidgetTypes).Write(writer, options);
             }
             if (Optional.IsDefined(RoleAssignments))
             {
                 writer.WritePropertyName("roleAssignments"u8);
-                writer.WriteObjectValue(RoleAssignments, options);
+                ((IJsonModel<ResourceSetDescription>)RoleAssignments).Write(writer, options);
             }
             if (Optional.IsDefined(ConflationPolicies))
             {
                 writer.WritePropertyName("conflationPolicies"u8);
-                writer.WriteObjectValue(ConflationPolicies, options);
+                ((IJsonModel<ResourceSetDescription>)ConflationPolicies).Write(writer, options);
             }
             if (Optional.IsDefined(Segments))
             {
                 writer.WritePropertyName("segments"u8);
-                writer.WriteObjectValue(Segments, options);
+                ((IJsonModel<ResourceSetDescription>)Segments).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.CustomerInsights
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             {
                                 continue;
                             }
-                            profiles = ResourceSetDescription.DeserializeResourceSetDescription(property0.Value, options);
+                            profiles = ModelSerializationExtensions.JsonDeserialize<ResourceSetDescription>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("interactions"u8))
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             {
                                 continue;
                             }
-                            interactions = ResourceSetDescription.DeserializeResourceSetDescription(property0.Value, options);
+                            interactions = ModelSerializationExtensions.JsonDeserialize<ResourceSetDescription>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("links"u8))
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             {
                                 continue;
                             }
-                            links = ResourceSetDescription.DeserializeResourceSetDescription(property0.Value, options);
+                            links = ModelSerializationExtensions.JsonDeserialize<ResourceSetDescription>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("kpis"u8))
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             {
                                 continue;
                             }
-                            kpis = ResourceSetDescription.DeserializeResourceSetDescription(property0.Value, options);
+                            kpis = ModelSerializationExtensions.JsonDeserialize<ResourceSetDescription>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sasPolicies"u8))
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             {
                                 continue;
                             }
-                            sasPolicies = ResourceSetDescription.DeserializeResourceSetDescription(property0.Value, options);
+                            sasPolicies = ModelSerializationExtensions.JsonDeserialize<ResourceSetDescription>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("connectors"u8))
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             {
                                 continue;
                             }
-                            connectors = ResourceSetDescription.DeserializeResourceSetDescription(property0.Value, options);
+                            connectors = ModelSerializationExtensions.JsonDeserialize<ResourceSetDescription>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("views"u8))
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             {
                                 continue;
                             }
-                            views = ResourceSetDescription.DeserializeResourceSetDescription(property0.Value, options);
+                            views = ModelSerializationExtensions.JsonDeserialize<ResourceSetDescription>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("relationshipLinks"u8))
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             {
                                 continue;
                             }
-                            relationshipLinks = ResourceSetDescription.DeserializeResourceSetDescription(property0.Value, options);
+                            relationshipLinks = ModelSerializationExtensions.JsonDeserialize<ResourceSetDescription>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("relationships"u8))
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             {
                                 continue;
                             }
-                            relationships = ResourceSetDescription.DeserializeResourceSetDescription(property0.Value, options);
+                            relationships = ModelSerializationExtensions.JsonDeserialize<ResourceSetDescription>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("widgetTypes"u8))
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             {
                                 continue;
                             }
-                            widgetTypes = ResourceSetDescription.DeserializeResourceSetDescription(property0.Value, options);
+                            widgetTypes = ModelSerializationExtensions.JsonDeserialize<ResourceSetDescription>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("roleAssignments"u8))
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             {
                                 continue;
                             }
-                            roleAssignments = ResourceSetDescription.DeserializeResourceSetDescription(property0.Value, options);
+                            roleAssignments = ModelSerializationExtensions.JsonDeserialize<ResourceSetDescription>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("conflationPolicies"u8))
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             {
                                 continue;
                             }
-                            conflationPolicies = ResourceSetDescription.DeserializeResourceSetDescription(property0.Value, options);
+                            conflationPolicies = ModelSerializationExtensions.JsonDeserialize<ResourceSetDescription>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("segments"u8))
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             {
                                 continue;
                             }
-                            segments = ResourceSetDescription.DeserializeResourceSetDescription(property0.Value, options);
+                            segments = ModelSerializationExtensions.JsonDeserialize<ResourceSetDescription>(property0.Value);
                             continue;
                         }
                     }

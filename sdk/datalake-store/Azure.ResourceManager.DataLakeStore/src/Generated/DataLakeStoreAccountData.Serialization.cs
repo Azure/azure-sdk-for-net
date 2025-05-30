@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataLakeStore
             if (options.Format != "W" && Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataLakeStore
             if (options.Format != "W" && Optional.IsDefined(EncryptionConfig))
             {
                 writer.WritePropertyName("encryptionConfig"u8);
-                writer.WriteObjectValue(EncryptionConfig, options);
+                ((IJsonModel<DataLakeStoreAccountEncryptionConfig>)EncryptionConfig).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EncryptionState))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 writer.WriteStartArray();
                 foreach (var item in FirewallRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataLakeStoreFirewallRuleData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataLakeStoreVirtualNetworkRuleData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 writer.WriteStartArray();
                 foreach (var item in TrustedIdProviders)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataLakeStoreTrustedIdProviderData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataLakeStore
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.DataLakeStore
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.DataLakeStore
                             {
                                 continue;
                             }
-                            encryptionConfig = DataLakeStoreAccountEncryptionConfig.DeserializeDataLakeStoreAccountEncryptionConfig(property0.Value, options);
+                            encryptionConfig = ModelSerializationExtensions.JsonDeserialize<DataLakeStoreAccountEncryptionConfig>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptionState"u8))

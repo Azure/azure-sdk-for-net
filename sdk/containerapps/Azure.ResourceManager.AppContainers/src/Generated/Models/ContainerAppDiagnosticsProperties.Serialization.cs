@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata, options);
+                ((IJsonModel<ContainerAppDiagnosticsMetadata>)Metadata).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Dataset))
             {
@@ -47,19 +47,19 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Dataset)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerAppDiagnosticsDataApiResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<ContainerAppDiagnosticsStatus>)Status).Write(writer, options);
             }
             if (Optional.IsDefined(DataProviderMetadata))
             {
                 writer.WritePropertyName("dataProviderMetadata"u8);
-                writer.WriteObjectValue(DataProviderMetadata, options);
+                ((IJsonModel<ContainerAppDiagnosticDataProviderMetadata>)DataProviderMetadata).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    metadata = ContainerAppDiagnosticsMetadata.DeserializeContainerAppDiagnosticsMetadata(property.Value, options);
+                    metadata = ModelSerializationExtensions.JsonDeserialize<ContainerAppDiagnosticsMetadata>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataset"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    status = ContainerAppDiagnosticsStatus.DeserializeContainerAppDiagnosticsStatus(property.Value, options);
+                    status = ModelSerializationExtensions.JsonDeserialize<ContainerAppDiagnosticsStatus>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataProviderMetadata"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    dataProviderMetadata = ContainerAppDiagnosticDataProviderMetadata.DeserializeContainerAppDiagnosticDataProviderMetadata(property.Value, options);
+                    dataProviderMetadata = ModelSerializationExtensions.JsonDeserialize<ContainerAppDiagnosticDataProviderMetadata>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

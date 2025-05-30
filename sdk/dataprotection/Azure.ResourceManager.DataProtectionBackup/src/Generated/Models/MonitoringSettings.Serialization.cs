@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(AzureMonitorAlertSettings))
             {
                 writer.WritePropertyName("azureMonitorAlertSettings"u8);
-                writer.WriteObjectValue(AzureMonitorAlertSettings, options);
+                ((IJsonModel<AzureMonitorAlertSettings>)AzureMonitorAlertSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    azureMonitorAlertSettings = AzureMonitorAlertSettings.DeserializeAzureMonitorAlertSettings(property.Value, options);
+                    azureMonitorAlertSettings = ModelSerializationExtensions.JsonDeserialize<AzureMonitorAlertSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CommandPayload))
             {
                 writer.WritePropertyName("commandPayload"u8);
-                writer.WriteObjectValue(CommandPayload, options);
+                ((IJsonModel<DataFlowDebugCommandPayload>)CommandPayload).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    commandPayload = DataFlowDebugCommandPayload.DeserializeDataFlowDebugCommandPayload(property.Value, options);
+                    commandPayload = ModelSerializationExtensions.JsonDeserialize<DataFlowDebugCommandPayload>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

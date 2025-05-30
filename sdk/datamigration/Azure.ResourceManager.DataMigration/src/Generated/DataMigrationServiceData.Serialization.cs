@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataMigration
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<ServiceSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataMigration
                     {
                         continue;
                     }
-                    sku = ServiceSku.DeserializeServiceSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<ServiceSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DataMigration
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(VCpus))
             {
                 writer.WritePropertyName("vCPUs"u8);
-                writer.WriteObjectValue(VCpus, options);
+                ((IJsonModel<ResourceRange>)VCpus).Write(writer, options);
             }
             if (Optional.IsDefined(Memory))
             {
                 writer.WritePropertyName("memory"u8);
-                writer.WriteObjectValue(Memory, options);
+                ((IJsonModel<ResourceRange>)Memory).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    vCpus = ResourceRange.DeserializeResourceRange(property.Value, options);
+                    vCpus = ModelSerializationExtensions.JsonDeserialize<ResourceRange>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("memory"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    memory = ResourceRange.DeserializeResourceRange(property.Value, options);
+                    memory = ModelSerializationExtensions.JsonDeserialize<ResourceRange>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

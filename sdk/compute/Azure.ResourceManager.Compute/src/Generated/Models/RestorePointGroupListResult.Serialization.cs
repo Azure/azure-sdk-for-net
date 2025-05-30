@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RestorePointGroupData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

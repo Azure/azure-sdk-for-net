@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataMigrationServiceData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

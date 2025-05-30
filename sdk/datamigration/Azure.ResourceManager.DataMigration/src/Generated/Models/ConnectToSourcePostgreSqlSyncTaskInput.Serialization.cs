@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WritePropertyName("sourceConnectionInfo"u8);
-            writer.WriteObjectValue(SourceConnectionInfo, options);
+            ((IJsonModel<PostgreSqlConnectionInfo>)SourceConnectionInfo).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = PostgreSqlConnectionInfo.DeserializePostgreSqlConnectionInfo(property.Value, options);
+                    sourceConnectionInfo = ModelSerializationExtensions.JsonDeserialize<PostgreSqlConnectionInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

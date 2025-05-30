@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(KeyVaultProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettingsFromKeyVault"u8);
-                writer.WriteObjectValue(KeyVaultProtectedSettings, options);
+                ((IJsonModel<KeyVaultSecretReference>)KeyVaultProtectedSettings).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            protectedSettingsFromKeyVault = KeyVaultSecretReference.DeserializeKeyVaultSecretReference(property0.Value, options);
+                            protectedSettingsFromKeyVault = ModelSerializationExtensions.JsonDeserialize<KeyVaultSecretReference>(property0.Value);
                             continue;
                         }
                     }

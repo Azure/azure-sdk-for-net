@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in SuggestedRelationships)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RelationshipsLookup>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

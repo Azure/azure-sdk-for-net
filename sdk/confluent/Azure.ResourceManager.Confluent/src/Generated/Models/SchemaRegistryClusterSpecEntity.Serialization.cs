@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
-                writer.WriteObjectValue(Region, options);
+                ((IJsonModel<SchemaRegistryClusterEnvironmentRegionEntity>)Region).Write(writer, options);
             }
             if (Optional.IsDefined(Environment))
             {
                 writer.WritePropertyName("environment"u8);
-                writer.WriteObjectValue(Environment, options);
+                ((IJsonModel<SchemaRegistryClusterEnvironmentRegionEntity>)Environment).Write(writer, options);
             }
             if (Optional.IsDefined(Cloud))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     {
                         continue;
                     }
-                    region = SchemaRegistryClusterEnvironmentRegionEntity.DeserializeSchemaRegistryClusterEnvironmentRegionEntity(property.Value, options);
+                    region = ModelSerializationExtensions.JsonDeserialize<SchemaRegistryClusterEnvironmentRegionEntity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("environment"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     {
                         continue;
                     }
-                    environment = SchemaRegistryClusterEnvironmentRegionEntity.DeserializeSchemaRegistryClusterEnvironmentRegionEntity(property.Value, options);
+                    environment = ModelSerializationExtensions.JsonDeserialize<SchemaRegistryClusterEnvironmentRegionEntity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("cloud"u8))

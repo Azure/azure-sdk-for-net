@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
+                ((IJsonModel<WritableSubResource>)PrivateEndpoint).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(GroupIds))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+                ((IJsonModel<CosmosDBForPostgreSqlPrivateLinkServiceConnectionState>)PrivateLinkServiceConnectionState).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                             {
                                 continue;
                             }
-                            privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            privateEndpoint = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("groupIds"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = CosmosDBForPostgreSqlPrivateLinkServiceConnectionState.DeserializeCosmosDBForPostgreSqlPrivateLinkServiceConnectionState(property0.Value, options);
+                            privateLinkServiceConnectionState = ModelSerializationExtensions.JsonDeserialize<CosmosDBForPostgreSqlPrivateLinkServiceConnectionState>(property0.Value);
                             continue;
                         }
                     }

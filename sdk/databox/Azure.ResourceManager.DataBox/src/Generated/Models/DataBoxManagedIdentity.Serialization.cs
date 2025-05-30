@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(UserAssigned))
             {
                 writer.WritePropertyName("userAssigned"u8);
-                writer.WriteObjectValue(UserAssigned, options);
+                ((IJsonModel<DataBoxUserAssignedIdentity>)UserAssigned).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    userAssigned = DataBoxUserAssignedIdentity.DeserializeDataBoxUserAssignedIdentity(property.Value, options);
+                    userAssigned = ModelSerializationExtensions.JsonDeserialize<DataBoxUserAssignedIdentity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

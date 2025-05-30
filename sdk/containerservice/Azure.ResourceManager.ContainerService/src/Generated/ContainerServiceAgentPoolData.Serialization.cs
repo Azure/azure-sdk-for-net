@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ContainerService
             if (Optional.IsDefined(UpgradeSettings))
             {
                 writer.WritePropertyName("upgradeSettings"u8);
-                writer.WriteObjectValue(UpgradeSettings, options);
+                ((IJsonModel<AgentPoolUpgradeSettings>)UpgradeSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerService
             if (Optional.IsDefined(PowerState))
             {
                 writer.WritePropertyName("powerState"u8);
-                writer.WriteObjectValue(PowerState, options);
+                ((IJsonModel<ContainerServicePowerState>)PowerState).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AvailabilityZones))
             {
@@ -231,12 +231,12 @@ namespace Azure.ResourceManager.ContainerService
             if (Optional.IsDefined(KubeletConfig))
             {
                 writer.WritePropertyName("kubeletConfig"u8);
-                writer.WriteObjectValue(KubeletConfig, options);
+                ((IJsonModel<KubeletConfig>)KubeletConfig).Write(writer, options);
             }
             if (Optional.IsDefined(LinuxOSConfig))
             {
                 writer.WritePropertyName("linuxOSConfig"u8);
-                writer.WriteObjectValue(LinuxOSConfig, options);
+                ((IJsonModel<LinuxOSConfig>)LinuxOSConfig).Write(writer, options);
             }
             if (Optional.IsDefined(EnableEncryptionAtHost))
             {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ContainerService
             if (Optional.IsDefined(CreationData))
             {
                 writer.WritePropertyName("creationData"u8);
-                writer.WriteObjectValue(CreationData, options);
+                ((IJsonModel<ContainerServiceCreationData>)CreationData).Write(writer, options);
             }
             if (Optional.IsDefined(CapacityReservationGroupId))
             {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.ContainerService
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile, options);
+                ((IJsonModel<AgentPoolNetworkProfile>)NetworkProfile).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ContainerService
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.ContainerService
                             {
                                 continue;
                             }
-                            upgradeSettings = AgentPoolUpgradeSettings.DeserializeAgentPoolUpgradeSettings(property0.Value, options);
+                            upgradeSettings = ModelSerializationExtensions.JsonDeserialize<AgentPoolUpgradeSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.ContainerService
                             {
                                 continue;
                             }
-                            powerState = ContainerServicePowerState.DeserializeContainerServicePowerState(property0.Value, options);
+                            powerState = ModelSerializationExtensions.JsonDeserialize<ContainerServicePowerState>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("availabilityZones"u8))
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.ContainerService
                             {
                                 continue;
                             }
-                            kubeletConfig = KubeletConfig.DeserializeKubeletConfig(property0.Value, options);
+                            kubeletConfig = ModelSerializationExtensions.JsonDeserialize<KubeletConfig>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("linuxOSConfig"u8))
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.ContainerService
                             {
                                 continue;
                             }
-                            linuxOSConfig = LinuxOSConfig.DeserializeLinuxOSConfig(property0.Value, options);
+                            linuxOSConfig = ModelSerializationExtensions.JsonDeserialize<LinuxOSConfig>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enableEncryptionAtHost"u8))
@@ -742,7 +742,7 @@ namespace Azure.ResourceManager.ContainerService
                             {
                                 continue;
                             }
-                            creationData = ContainerServiceCreationData.DeserializeContainerServiceCreationData(property0.Value, options);
+                            creationData = ModelSerializationExtensions.JsonDeserialize<ContainerServiceCreationData>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("capacityReservationGroupID"u8))
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.ContainerService
                             {
                                 continue;
                             }
-                            networkProfile = AgentPoolNetworkProfile.DeserializeAgentPoolNetworkProfile(property0.Value, options);
+                            networkProfile = ModelSerializationExtensions.JsonDeserialize<AgentPoolNetworkProfile>(property0.Value);
                             continue;
                         }
                     }

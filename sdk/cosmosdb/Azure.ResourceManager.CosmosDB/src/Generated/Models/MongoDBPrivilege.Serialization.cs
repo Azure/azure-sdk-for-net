@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue(Resource, options);
+                ((IJsonModel<MongoDBPrivilegeResourceInfo>)Resource).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Actions))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    resource = MongoDBPrivilegeResourceInfo.DeserializeMongoDBPrivilegeResourceInfo(property.Value, options);
+                    resource = ModelSerializationExtensions.JsonDeserialize<MongoDBPrivilegeResourceInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("actions"u8))

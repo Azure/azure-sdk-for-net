@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in NotificationPreference)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NotificationPreference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

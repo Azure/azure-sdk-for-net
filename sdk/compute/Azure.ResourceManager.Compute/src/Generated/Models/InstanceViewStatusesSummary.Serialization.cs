@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in StatusesSummary)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StatusCodeCount>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

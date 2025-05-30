@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<ManagedClusterPodIdentityProvisioningError>)Error).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    error = ManagedClusterPodIdentityProvisioningError.DeserializeManagedClusterPodIdentityProvisioningError(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<ManagedClusterPodIdentityProvisioningError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

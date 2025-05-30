@@ -39,27 +39,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PreCopyScript))
             {
                 writer.WritePropertyName("preCopyScript"u8);
-                JsonSerializer.Serialize(writer, PreCopyScript);
+                ((IJsonModel<DataFactoryElement<T>>)PreCopyScript).Write(writer, options);
             }
             if (Optional.IsDefined(AllowCopyCommand))
             {
                 writer.WritePropertyName("allowCopyCommand"u8);
-                JsonSerializer.Serialize(writer, AllowCopyCommand);
+                ((IJsonModel<DataFactoryElement<T>>)AllowCopyCommand).Write(writer, options);
             }
             if (Optional.IsDefined(CopyCommandSettings))
             {
                 writer.WritePropertyName("copyCommandSettings"u8);
-                writer.WriteObjectValue(CopyCommandSettings, options);
+                ((IJsonModel<DWCopyCommandSettings>)CopyCommandSettings).Write(writer, options);
             }
             if (Optional.IsDefined(TableOption))
             {
                 writer.WritePropertyName("tableOption"u8);
-                JsonSerializer.Serialize(writer, TableOption);
+                ((IJsonModel<DataFactoryElement<T>>)TableOption).Write(writer, options);
             }
             if (Optional.IsDefined(WriteBehavior))
             {
                 writer.WritePropertyName("writeBehavior"u8);
-                JsonSerializer.Serialize(writer, WriteBehavior);
+                ((IJsonModel<DataFactoryElement<T>>)WriteBehavior).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    preCopyScript = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    preCopyScript = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("allowCopyCommand"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    allowCopyCommand = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    allowCopyCommand = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("copyCommandSettings"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    copyCommandSettings = DWCopyCommandSettings.DeserializeDWCopyCommandSettings(property.Value, options);
+                    copyCommandSettings = ModelSerializationExtensions.JsonDeserialize<DWCopyCommandSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tableOption"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    tableOption = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    tableOption = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("writeBehavior"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    writeBehavior = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    writeBehavior = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    writeBatchSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    writeBatchSize = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("writeBatchTimeout"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    writeBatchTimeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    writeBatchTimeout = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sinkRetryCount"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sinkRetryCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    sinkRetryCount = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sinkRetryWait"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sinkRetryWait = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    sinkRetryWait = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("maxConcurrentConnections"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    maxConcurrentConnections = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("disableMetricsCollection"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    disableMetricsCollection = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

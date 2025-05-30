@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
+                ((IJsonModel<QuotaName>)Name).Write(writer, options);
             }
             if (Optional.IsDefined(Unit))
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    name = QuotaName.DeserializeQuotaName(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<QuotaName>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("unit"u8))

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerAppWritableSecret>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Ingress))
             {
                 writer.WritePropertyName("ingress"u8);
-                writer.WriteObjectValue(Ingress, options);
+                ((IJsonModel<ContainerAppIngressConfiguration>)Ingress).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Registries))
             {
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Registries)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerAppRegistryCredentials>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Dapr))
             {
                 writer.WritePropertyName("dapr"u8);
-                writer.WriteObjectValue(Dapr, options);
+                ((IJsonModel<ContainerAppDaprConfiguration>)Dapr).Write(writer, options);
             }
             if (Optional.IsDefined(Runtime))
             {
                 writer.WritePropertyName("runtime"u8);
-                writer.WriteObjectValue(Runtime, options);
+                ((IJsonModel<Runtime>)Runtime).Write(writer, options);
             }
             if (Optional.IsDefined(MaxInactiveRevisions))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Service))
             {
                 writer.WritePropertyName("service"u8);
-                writer.WriteObjectValue(Service, options);
+                ((IJsonModel<Service>)Service).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(IdentitySettings))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in IdentitySettings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerAppIdentitySettings>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    ingress = ContainerAppIngressConfiguration.DeserializeContainerAppIngressConfiguration(property.Value, options);
+                    ingress = ModelSerializationExtensions.JsonDeserialize<ContainerAppIngressConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("registries"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    dapr = ContainerAppDaprConfiguration.DeserializeContainerAppDaprConfiguration(property.Value, options);
+                    dapr = ModelSerializationExtensions.JsonDeserialize<ContainerAppDaprConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("runtime"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    runtime = Runtime.DeserializeRuntime(property.Value, options);
+                    runtime = ModelSerializationExtensions.JsonDeserialize<Runtime>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("maxInactiveRevisions"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    service = Service.DeserializeService(property.Value, options);
+                    service = ModelSerializationExtensions.JsonDeserialize<Service>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identitySettings"u8))

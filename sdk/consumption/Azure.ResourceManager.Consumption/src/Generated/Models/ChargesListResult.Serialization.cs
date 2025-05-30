@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConsumptionChargeSummary>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

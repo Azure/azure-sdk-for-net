@@ -43,13 +43,12 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation, options);
+                ((IJsonModel<ContainerAppExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(ManagedBy))
             {
@@ -106,12 +105,12 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration, options);
+                ((IJsonModel<ContainerAppConfiguration>)Configuration).Write(writer, options);
             }
             if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
-                writer.WriteObjectValue(Template, options);
+                ((IJsonModel<ContainerAppTemplate>)Template).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(OutboundIPAddressList))
             {
@@ -188,7 +187,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         continue;
                     }
-                    extendedLocation = ContainerAppExtendedLocation.DeserializeContainerAppExtendedLocation(property.Value, options);
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<ContainerAppExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -198,7 +197,7 @@ namespace Azure.ResourceManager.AppContainers
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("managedBy"u8))
@@ -246,7 +245,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -325,7 +324,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            configuration = ContainerAppConfiguration.DeserializeContainerAppConfiguration(property0.Value, options);
+                            configuration = ModelSerializationExtensions.JsonDeserialize<ContainerAppConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("template"u8))
@@ -334,7 +333,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            template = ContainerAppTemplate.DeserializeContainerAppTemplate(property0.Value, options);
+                            template = ModelSerializationExtensions.JsonDeserialize<ContainerAppTemplate>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("outboundIpAddresses"u8))

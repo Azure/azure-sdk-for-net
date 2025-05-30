@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W" && Optional.IsDefined(EtcdInfo))
             {
                 writer.WritePropertyName("etcdInfo"u8);
-                writer.WriteObjectValue(EtcdInfo, options);
+                ((IJsonModel<DataBoxEdgeEtcdInfo>)EtcdInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Nodes))
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EdgeKubernetesNodeInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    etcdInfo = DataBoxEdgeEtcdInfo.DeserializeDataBoxEdgeEtcdInfo(property.Value, options);
+                    etcdInfo = ModelSerializationExtensions.JsonDeserialize<DataBoxEdgeEtcdInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nodes"u8))

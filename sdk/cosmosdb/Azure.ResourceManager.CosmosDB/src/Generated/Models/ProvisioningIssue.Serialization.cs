@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ProvisioningIssueProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    properties = ProvisioningIssueProperties.DeserializeProvisioningIssueProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ProvisioningIssueProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

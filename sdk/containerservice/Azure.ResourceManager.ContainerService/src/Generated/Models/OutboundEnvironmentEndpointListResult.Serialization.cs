@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ContainerServiceOutboundEnvironmentEndpoint>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))

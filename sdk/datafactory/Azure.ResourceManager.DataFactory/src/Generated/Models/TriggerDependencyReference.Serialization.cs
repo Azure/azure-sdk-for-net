@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("referenceTrigger"u8);
-            writer.WriteObjectValue(ReferenceTrigger, options);
+            ((IJsonModel<DataFactoryTriggerReference>)ReferenceTrigger).Write(writer, options);
         }
 
         TriggerDependencyReference IJsonModel<TriggerDependencyReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("referenceTrigger"u8))
                 {
-                    referenceTrigger = DataFactoryTriggerReference.DeserializeDataFactoryTriggerReference(property.Value, options);
+                    referenceTrigger = ModelSerializationExtensions.JsonDeserialize<DataFactoryTriggerReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

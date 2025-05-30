@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(SyncProperties))
             {
                 writer.WritePropertyName("syncProperties"u8);
-                writer.WriteObjectValue(SyncProperties, options);
+                ((IJsonModel<ConnectedRegistrySyncUpdateProperties>)SyncProperties).Write(writer, options);
             }
             if (Optional.IsDefined(Logging))
             {
                 writer.WritePropertyName("logging"u8);
-                writer.WriteObjectValue(Logging, options);
+                ((IJsonModel<ConnectedRegistryLogging>)Logging).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ClientTokenIds))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(GarbageCollection))
             {
                 writer.WritePropertyName("garbageCollection"u8);
-                writer.WriteObjectValue(GarbageCollection, options);
+                ((IJsonModel<GarbageCollectionProperties>)GarbageCollection).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            syncProperties = ConnectedRegistrySyncUpdateProperties.DeserializeConnectedRegistrySyncUpdateProperties(property0.Value, options);
+                            syncProperties = ModelSerializationExtensions.JsonDeserialize<ConnectedRegistrySyncUpdateProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("logging"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            logging = ConnectedRegistryLogging.DeserializeConnectedRegistryLogging(property0.Value, options);
+                            logging = ModelSerializationExtensions.JsonDeserialize<ConnectedRegistryLogging>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clientTokenIds"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            garbageCollection = GarbageCollectionProperties.DeserializeGarbageCollectionProperties(property0.Value, options);
+                            garbageCollection = ModelSerializationExtensions.JsonDeserialize<GarbageCollectionProperties>(property0.Value);
                             continue;
                         }
                     }

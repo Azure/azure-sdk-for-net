@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ComputeFleetVmssIPConfigurationProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    properties = ComputeFleetVmssIPConfigurationProperties.DeserializeComputeFleetVmssIPConfigurationProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ComputeFleetVmssIPConfigurationProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

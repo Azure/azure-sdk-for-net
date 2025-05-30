@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Env)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerAppEnvironmentVariable>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
-                writer.WriteObjectValue(Resources, options);
+                ((IJsonModel<AppContainerResources>)Resources).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(VolumeMounts))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in VolumeMounts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerAppVolumeMount>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    resources = AppContainerResources.DeserializeAppContainerResources(property.Value, options);
+                    resources = ModelSerializationExtensions.JsonDeserialize<AppContainerResources>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("volumeMounts"u8))

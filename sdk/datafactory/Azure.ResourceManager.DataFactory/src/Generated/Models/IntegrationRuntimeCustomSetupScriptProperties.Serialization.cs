@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sasToken = JsonSerializer.Deserialize<DataFactorySecretString>(property.Value.GetRawText());
+                    sasToken = ModelSerializationExtensions.JsonDeserialize<DataFactorySecretString>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

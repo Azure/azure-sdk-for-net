@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Auth)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerAppScaleRuleAuth>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

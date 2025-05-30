@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (Optional.IsDefined(AccountKey))
             {
                 writer.WritePropertyName("accountKey"u8);
-                writer.WriteObjectValue(AccountKey, options);
+                ((IJsonModel<AsymmetricEncryptedSecret>)AccountKey).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectionString))
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            accountKey = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property0.Value, options);
+                            accountKey = ModelSerializationExtensions.JsonDeserialize<AsymmetricEncryptedSecret>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("connectionString"u8))

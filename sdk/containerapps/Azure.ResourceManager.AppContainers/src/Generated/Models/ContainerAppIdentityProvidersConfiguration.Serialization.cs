@@ -39,37 +39,37 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(AzureActiveDirectory))
             {
                 writer.WritePropertyName("azureActiveDirectory"u8);
-                writer.WriteObjectValue(AzureActiveDirectory, options);
+                ((IJsonModel<ContainerAppAzureActiveDirectoryConfiguration>)AzureActiveDirectory).Write(writer, options);
             }
             if (Optional.IsDefined(Facebook))
             {
                 writer.WritePropertyName("facebook"u8);
-                writer.WriteObjectValue(Facebook, options);
+                ((IJsonModel<ContainerAppFacebookConfiguration>)Facebook).Write(writer, options);
             }
             if (Optional.IsDefined(GitHub))
             {
                 writer.WritePropertyName("gitHub"u8);
-                writer.WriteObjectValue(GitHub, options);
+                ((IJsonModel<ContainerAppGitHubConfiguration>)GitHub).Write(writer, options);
             }
             if (Optional.IsDefined(Google))
             {
                 writer.WritePropertyName("google"u8);
-                writer.WriteObjectValue(Google, options);
+                ((IJsonModel<ContainerAppGoogleConfiguration>)Google).Write(writer, options);
             }
             if (Optional.IsDefined(Twitter))
             {
                 writer.WritePropertyName("twitter"u8);
-                writer.WriteObjectValue(Twitter, options);
+                ((IJsonModel<ContainerAppTwitterConfiguration>)Twitter).Write(writer, options);
             }
             if (Optional.IsDefined(Apple))
             {
                 writer.WritePropertyName("apple"u8);
-                writer.WriteObjectValue(Apple, options);
+                ((IJsonModel<ContainerAppAppleConfiguration>)Apple).Write(writer, options);
             }
             if (Optional.IsDefined(AzureStaticWebApps))
             {
                 writer.WritePropertyName("azureStaticWebApps"u8);
-                writer.WriteObjectValue(AzureStaticWebApps, options);
+                ((IJsonModel<ContainerAppAzureStaticWebAppsConfiguration>)AzureStaticWebApps).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(CustomOpenIdConnectProviders))
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 foreach (var item in CustomOpenIdConnectProviders)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<ContainerAppCustomOpenIdConnectProviderConfiguration>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    azureActiveDirectory = ContainerAppAzureActiveDirectoryConfiguration.DeserializeContainerAppAzureActiveDirectoryConfiguration(property.Value, options);
+                    azureActiveDirectory = ModelSerializationExtensions.JsonDeserialize<ContainerAppAzureActiveDirectoryConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("facebook"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    facebook = ContainerAppFacebookConfiguration.DeserializeContainerAppFacebookConfiguration(property.Value, options);
+                    facebook = ModelSerializationExtensions.JsonDeserialize<ContainerAppFacebookConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("gitHub"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    gitHub = ContainerAppGitHubConfiguration.DeserializeContainerAppGitHubConfiguration(property.Value, options);
+                    gitHub = ModelSerializationExtensions.JsonDeserialize<ContainerAppGitHubConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("google"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    google = ContainerAppGoogleConfiguration.DeserializeContainerAppGoogleConfiguration(property.Value, options);
+                    google = ModelSerializationExtensions.JsonDeserialize<ContainerAppGoogleConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("twitter"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    twitter = ContainerAppTwitterConfiguration.DeserializeContainerAppTwitterConfiguration(property.Value, options);
+                    twitter = ModelSerializationExtensions.JsonDeserialize<ContainerAppTwitterConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("apple"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    apple = ContainerAppAppleConfiguration.DeserializeContainerAppAppleConfiguration(property.Value, options);
+                    apple = ModelSerializationExtensions.JsonDeserialize<ContainerAppAppleConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azureStaticWebApps"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    azureStaticWebApps = ContainerAppAzureStaticWebAppsConfiguration.DeserializeContainerAppAzureStaticWebAppsConfiguration(property.Value, options);
+                    azureStaticWebApps = ModelSerializationExtensions.JsonDeserialize<ContainerAppAzureStaticWebAppsConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("customOpenIdConnectProviders"u8))

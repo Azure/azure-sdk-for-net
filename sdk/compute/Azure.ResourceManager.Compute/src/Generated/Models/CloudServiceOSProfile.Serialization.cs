@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CloudServiceVaultSecretGroup>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

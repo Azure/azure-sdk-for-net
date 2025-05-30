@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             if (Optional.IsDefined(IPSettings))
             {
                 writer.WritePropertyName("ipSettings"u8);
-                writer.WriteObjectValue(IPSettings, options);
+                ((IJsonModel<NicIPSettings>)IPSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     {
                         continue;
                     }
-                    ipSettings = NicIPSettings.DeserializeNicIPSettings(property.Value, options);
+                    ipSettings = ModelSerializationExtensions.JsonDeserialize<NicIPSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

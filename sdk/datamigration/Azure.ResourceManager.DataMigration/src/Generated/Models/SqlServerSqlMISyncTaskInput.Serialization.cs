@@ -38,22 +38,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<MigrateSqlServerSqlMIDatabaseInput>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(BackupFileShare))
             {
                 writer.WritePropertyName("backupFileShare"u8);
-                writer.WriteObjectValue(BackupFileShare, options);
+                ((IJsonModel<FileShare>)BackupFileShare).Write(writer, options);
             }
             writer.WritePropertyName("storageResourceId"u8);
             writer.WriteStringValue(StorageResourceId);
             writer.WritePropertyName("sourceConnectionInfo"u8);
-            writer.WriteObjectValue(SourceConnectionInfo, options);
+            ((IJsonModel<SqlConnectionInfo>)SourceConnectionInfo).Write(writer, options);
             writer.WritePropertyName("targetConnectionInfo"u8);
-            writer.WriteObjectValue(TargetConnectionInfo, options);
+            ((IJsonModel<MISqlConnectionInfo>)TargetConnectionInfo).Write(writer, options);
             writer.WritePropertyName("azureApp"u8);
-            writer.WriteObjectValue(AzureApp, options);
+            ((IJsonModel<AzureActiveDirectoryApp>)AzureApp).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    backupFileShare = FileShare.DeserializeFileShare(property.Value, options);
+                    backupFileShare = ModelSerializationExtensions.JsonDeserialize<FileShare>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storageResourceId"u8))
@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
+                    sourceConnectionInfo = ModelSerializationExtensions.JsonDeserialize<SqlConnectionInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = MISqlConnectionInfo.DeserializeMISqlConnectionInfo(property.Value, options);
+                    targetConnectionInfo = ModelSerializationExtensions.JsonDeserialize<MISqlConnectionInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azureApp"u8))
                 {
-                    azureApp = AzureActiveDirectoryApp.DeserializeAzureActiveDirectoryApp(property.Value, options);
+                    azureApp = ModelSerializationExtensions.JsonDeserialize<AzureActiveDirectoryApp>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

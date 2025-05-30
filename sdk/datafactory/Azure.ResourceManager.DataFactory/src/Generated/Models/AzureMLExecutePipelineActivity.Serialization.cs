@@ -41,27 +41,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(MLPipelineId))
             {
                 writer.WritePropertyName("mlPipelineId"u8);
-                JsonSerializer.Serialize(writer, MLPipelineId);
+                ((IJsonModel<DataFactoryElement<T>>)MLPipelineId).Write(writer, options);
             }
             if (Optional.IsDefined(MLPipelineEndpointId))
             {
                 writer.WritePropertyName("mlPipelineEndpointId"u8);
-                JsonSerializer.Serialize(writer, MLPipelineEndpointId);
+                ((IJsonModel<DataFactoryElement<T>>)MLPipelineEndpointId).Write(writer, options);
             }
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
-                JsonSerializer.Serialize(writer, Version);
+                ((IJsonModel<DataFactoryElement<T>>)Version).Write(writer, options);
             }
             if (Optional.IsDefined(ExperimentName))
             {
                 writer.WritePropertyName("experimentName"u8);
-                JsonSerializer.Serialize(writer, ExperimentName);
+                ((IJsonModel<DataFactoryElement<T>>)ExperimentName).Write(writer, options);
             }
             if (Optional.IsDefined(MLPipelineParameters))
             {
                 writer.WritePropertyName("mlPipelineParameters"u8);
-                JsonSerializer.Serialize(writer, MLPipelineParameters);
+                ((IJsonModel<DataFactoryElement<T>>)MLPipelineParameters).Write(writer, options);
             }
             if (Optional.IsDefined(DataPathAssignments))
             {
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(MLParentRunId))
             {
                 writer.WritePropertyName("mlParentRunId"u8);
-                JsonSerializer.Serialize(writer, MLParentRunId);
+                ((IJsonModel<DataFactoryElement<T>>)MLParentRunId).Write(writer, options);
             }
             if (Optional.IsDefined(ContinueOnStepFailure))
             {
                 writer.WritePropertyName("continueOnStepFailure"u8);
-                JsonSerializer.Serialize(writer, ContinueOnStepFailure);
+                ((IJsonModel<DataFactoryElement<T>>)ContinueOnStepFailure).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
+                    policy = ModelSerializationExtensions.JsonDeserialize<PipelineActivityPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            mlPipelineId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            mlPipelineId = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("mlPipelineEndpointId"u8))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            mlPipelineEndpointId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            mlPipelineEndpointId = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("version"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            version = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            version = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("experimentName"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            experimentName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            experimentName = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("mlPipelineParameters"u8))
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            mlPipelineParameters = JsonSerializer.Deserialize<DataFactoryElement<IDictionary<string, string>>>(property0.Value.GetRawText());
+                            mlPipelineParameters = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<IDictionary<string, string>>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dataPathAssignments"u8))
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            mlParentRunId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            mlParentRunId = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("continueOnStepFailure"u8))
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            continueOnStepFailure = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            continueOnStepFailure = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                     }

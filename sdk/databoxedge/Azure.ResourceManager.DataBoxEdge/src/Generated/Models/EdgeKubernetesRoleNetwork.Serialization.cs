@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W" && Optional.IsDefined(CniConfig))
             {
                 writer.WritePropertyName("cniConfig"u8);
-                writer.WriteObjectValue(CniConfig, options);
+                ((IJsonModel<CniConfig>)CniConfig).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LoadBalancerConfig))
             {
                 writer.WritePropertyName("loadBalancerConfig"u8);
-                writer.WriteObjectValue(LoadBalancerConfig, options);
+                ((IJsonModel<DataBoxEdgeLoadBalancerConfig>)LoadBalancerConfig).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    cniConfig = CniConfig.DeserializeCniConfig(property.Value, options);
+                    cniConfig = ModelSerializationExtensions.JsonDeserialize<CniConfig>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("loadBalancerConfig"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    loadBalancerConfig = DataBoxEdgeLoadBalancerConfig.DeserializeDataBoxEdgeLoadBalancerConfig(property.Value, options);
+                    loadBalancerConfig = ModelSerializationExtensions.JsonDeserialize<DataBoxEdgeLoadBalancerConfig>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

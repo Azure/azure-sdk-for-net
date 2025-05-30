@@ -52,7 +52,7 @@ namespace Azure.Containers.ContainerRegistry
                 if (Annotations != null)
                 {
                     writer.WritePropertyName("annotations"u8);
-                    writer.WriteObjectValue(Annotations);
+                    JsonSerializer.Serialize(writer, Annotations);
                 }
                 else
                 {
@@ -122,7 +122,7 @@ namespace Azure.Containers.ContainerRegistry
                         annotations = null;
                         continue;
                     }
-                    annotations = OciAnnotations.DeserializeOciAnnotations(property.Value);
+                    annotations = ModelSerializationExtensions.JsonDeserialize<OciAnnotations>(property.Value);
                     continue;
                 }
             }

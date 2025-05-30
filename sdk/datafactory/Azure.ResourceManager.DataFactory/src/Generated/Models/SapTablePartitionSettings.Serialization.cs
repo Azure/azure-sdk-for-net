@@ -38,22 +38,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PartitionColumnName))
             {
                 writer.WritePropertyName("partitionColumnName"u8);
-                JsonSerializer.Serialize(writer, PartitionColumnName);
+                ((IJsonModel<DataFactoryElement<T>>)PartitionColumnName).Write(writer, options);
             }
             if (Optional.IsDefined(PartitionUpperBound))
             {
                 writer.WritePropertyName("partitionUpperBound"u8);
-                JsonSerializer.Serialize(writer, PartitionUpperBound);
+                ((IJsonModel<DataFactoryElement<T>>)PartitionUpperBound).Write(writer, options);
             }
             if (Optional.IsDefined(PartitionLowerBound))
             {
                 writer.WritePropertyName("partitionLowerBound"u8);
-                JsonSerializer.Serialize(writer, PartitionLowerBound);
+                ((IJsonModel<DataFactoryElement<T>>)PartitionLowerBound).Write(writer, options);
             }
             if (Optional.IsDefined(MaxPartitionsNumber))
             {
                 writer.WritePropertyName("maxPartitionsNumber"u8);
-                JsonSerializer.Serialize(writer, MaxPartitionsNumber);
+                ((IJsonModel<DataFactoryElement<T>>)MaxPartitionsNumber).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionColumnName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    partitionColumnName = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("partitionUpperBound"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionUpperBound = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    partitionUpperBound = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("partitionLowerBound"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionLowerBound = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    partitionLowerBound = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("maxPartitionsNumber"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    maxPartitionsNumber = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    maxPartitionsNumber = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

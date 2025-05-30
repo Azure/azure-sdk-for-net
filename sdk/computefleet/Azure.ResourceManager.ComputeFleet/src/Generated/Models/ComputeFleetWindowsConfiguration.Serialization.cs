@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WriteStartArray();
                 foreach (var item in AdditionalUnattendContent)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WindowsSetupAdditionalInformation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PatchSettings))
             {
                 writer.WritePropertyName("patchSettings"u8);
-                writer.WriteObjectValue(PatchSettings, options);
+                ((IJsonModel<ComputeFleetVmGuestPatchSettings>)PatchSettings).Write(writer, options);
             }
             if (Optional.IsDefined(WinRM))
             {
                 writer.WritePropertyName("winRM"u8);
-                writer.WriteObjectValue(WinRM, options);
+                ((IJsonModel<WinRMConfiguration>)WinRM).Write(writer, options);
             }
             if (Optional.IsDefined(IsVmAgentPlatformUpdatesEnabled))
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    patchSettings = ComputeFleetVmGuestPatchSettings.DeserializeComputeFleetVmGuestPatchSettings(property.Value, options);
+                    patchSettings = ModelSerializationExtensions.JsonDeserialize<ComputeFleetVmGuestPatchSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("winRM"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    winRM = WinRMConfiguration.DeserializeWinRMConfiguration(property.Value, options);
+                    winRM = ModelSerializationExtensions.JsonDeserialize<WinRMConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("enableVMAgentPlatformUpdates"u8))

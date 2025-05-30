@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in PolicyViolations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<GalleryImageVersionPolicyViolation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

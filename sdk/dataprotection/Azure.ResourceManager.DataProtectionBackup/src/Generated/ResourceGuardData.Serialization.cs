@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ResourceGuardProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(ETag))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     {
                         continue;
                     }
-                    properties = ResourceGuardProperties.DeserializeResourceGuardProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ResourceGuardProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eTag"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

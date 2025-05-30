@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in IPConfiguration)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EdgeKubernetesIPConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

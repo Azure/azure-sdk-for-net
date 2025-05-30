@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("targetDetails"u8);
-            writer.WriteObjectValue(TargetDetails, options);
+            ((IJsonModel<RestoreFilesTargetDetails>)TargetDetails).Write(writer, options);
         }
 
         RestoreFilesTargetInfo IJsonModel<RestoreFilesTargetInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 if (property.NameEquals("targetDetails"u8))
                 {
-                    targetDetails = RestoreFilesTargetDetails.DeserializeRestoreFilesTargetDetails(property.Value, options);
+                    targetDetails = ModelSerializationExtensions.JsonDeserialize<RestoreFilesTargetDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))

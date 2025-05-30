@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(DefaultVirtualMachineScaleSetInfo))
             {
                 writer.WritePropertyName("defaultVirtualMachineScaleSetInfo"u8);
-                writer.WriteObjectValue(DefaultVirtualMachineScaleSetInfo, options);
+                ((IJsonModel<DefaultVirtualMachineScaleSetInfo>)DefaultVirtualMachineScaleSetInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MigrateToVirtualMachineScaleSet))
             {
                 writer.WritePropertyName("migrateToVirtualMachineScaleSet"u8);
-                JsonSerializer.Serialize(writer, MigrateToVirtualMachineScaleSet);
+                ((IJsonModel<WritableSubResource>)MigrateToVirtualMachineScaleSet).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    defaultVirtualMachineScaleSetInfo = DefaultVirtualMachineScaleSetInfo.DeserializeDefaultVirtualMachineScaleSetInfo(property.Value, options);
+                    defaultVirtualMachineScaleSetInfo = ModelSerializationExtensions.JsonDeserialize<DefaultVirtualMachineScaleSetInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("migrateToVirtualMachineScaleSet"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    migrateToVirtualMachineScaleSet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    migrateToVirtualMachineScaleSet = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

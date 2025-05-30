@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in GalleryApplications)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VirtualMachineGalleryApplication>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

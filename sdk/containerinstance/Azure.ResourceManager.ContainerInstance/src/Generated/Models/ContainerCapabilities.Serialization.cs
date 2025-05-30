@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (options.Format != "W" && Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
-                writer.WriteObjectValue(Capabilities, options);
+                ((IJsonModel<ContainerSupportedCapabilities>)Capabilities).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    capabilities = ContainerSupportedCapabilities.DeserializeContainerSupportedCapabilities(property.Value, options);
+                    capabilities = ModelSerializationExtensions.JsonDeserialize<ContainerSupportedCapabilities>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

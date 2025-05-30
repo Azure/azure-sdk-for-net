@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(LoadBalancerProfile))
             {
                 writer.WritePropertyName("loadBalancerProfile"u8);
-                writer.WriteObjectValue(LoadBalancerProfile, options);
+                ((IJsonModel<ManagedClusterLoadBalancerProfile>)LoadBalancerProfile).Write(writer, options);
             }
             if (Optional.IsDefined(NatGatewayProfile))
             {
                 writer.WritePropertyName("natGatewayProfile"u8);
-                writer.WriteObjectValue(NatGatewayProfile, options);
+                ((IJsonModel<ManagedClusterNatGatewayProfile>)NatGatewayProfile).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(PodCidrs))
             {
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    loadBalancerProfile = ManagedClusterLoadBalancerProfile.DeserializeManagedClusterLoadBalancerProfile(property.Value, options);
+                    loadBalancerProfile = ModelSerializationExtensions.JsonDeserialize<ManagedClusterLoadBalancerProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("natGatewayProfile"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    natGatewayProfile = ManagedClusterNatGatewayProfile.DeserializeManagedClusterNatGatewayProfile(property.Value, options);
+                    natGatewayProfile = ModelSerializationExtensions.JsonDeserialize<ManagedClusterNatGatewayProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("podCidrs"u8))

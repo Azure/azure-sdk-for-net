@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<ComputeSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                writer.WriteObjectValue(Plan, options);
+                ((IJsonModel<ComputePlan>)Plan).Write(writer, options);
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<VirtualMachineScaleSetProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                JsonSerializer.Serialize(writer, ExtendedLocation);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    sku = ComputeSku.DeserializeComputeSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<ComputeSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("plan"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    plan = ComputePlan.DeserializeComputePlan(property.Value, options);
+                    plan = ModelSerializationExtensions.JsonDeserialize<ComputePlan>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    properties = VirtualMachineScaleSetProperties.DeserializeVirtualMachineScaleSetProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<VirtualMachineScaleSetProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<ExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

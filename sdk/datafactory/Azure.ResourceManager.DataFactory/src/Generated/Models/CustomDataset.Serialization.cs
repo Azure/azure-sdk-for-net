@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    structure = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetDataElement>>>(property.Value.GetRawText());
+                    structure = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<IList<DatasetDataElement>>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("schema"u8))
@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    schema = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetSchemaDataElement>>>(property.Value.GetRawText());
+                    schema = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<IList<DatasetSchemaDataElement>>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    folder = DatasetFolder.DeserializeDatasetFolder(property.Value, options);
+                    folder = ModelSerializationExtensions.JsonDeserialize<DatasetFolder>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

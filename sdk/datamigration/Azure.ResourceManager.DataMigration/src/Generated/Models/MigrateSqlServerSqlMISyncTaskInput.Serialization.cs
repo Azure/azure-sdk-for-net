@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    backupFileShare = FileShare.DeserializeFileShare(property.Value, options);
+                    backupFileShare = ModelSerializationExtensions.JsonDeserialize<FileShare>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storageResourceId"u8))
@@ -108,17 +108,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
+                    sourceConnectionInfo = ModelSerializationExtensions.JsonDeserialize<SqlConnectionInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = MISqlConnectionInfo.DeserializeMISqlConnectionInfo(property.Value, options);
+                    targetConnectionInfo = ModelSerializationExtensions.JsonDeserialize<MISqlConnectionInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azureApp"u8))
                 {
-                    azureApp = AzureActiveDirectoryApp.DeserializeAzureActiveDirectoryApp(property.Value, options);
+                    azureApp = ModelSerializationExtensions.JsonDeserialize<AzureActiveDirectoryApp>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

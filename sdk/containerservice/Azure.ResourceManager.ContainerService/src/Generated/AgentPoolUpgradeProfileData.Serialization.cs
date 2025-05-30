@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WriteStartArray();
                 foreach (var item in Upgrades)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AgentPoolUpgradeProfilePropertiesUpgradesItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerService
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

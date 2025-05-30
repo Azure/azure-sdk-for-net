@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in TimerTriggers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerRegistryTimerTrigger>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,14 +52,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in SourceTriggers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerRegistrySourceTrigger>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(BaseImageTrigger))
             {
                 writer.WritePropertyName("baseImageTrigger"u8);
-                writer.WriteObjectValue(BaseImageTrigger, options);
+                ((IJsonModel<ContainerRegistryBaseImageTrigger>)BaseImageTrigger).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    baseImageTrigger = ContainerRegistryBaseImageTrigger.DeserializeContainerRegistryBaseImageTrigger(property.Value, options);
+                    baseImageTrigger = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryBaseImageTrigger>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

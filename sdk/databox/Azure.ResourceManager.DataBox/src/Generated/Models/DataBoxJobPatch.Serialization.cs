@@ -49,14 +49,14 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue(Details, options);
+                ((IJsonModel<UpdateJobDetails>)Details).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataBox.Models
                             {
                                 continue;
                             }
-                            details = UpdateJobDetails.DeserializeUpdateJobDetails(property0.Value, options);
+                            details = ModelSerializationExtensions.JsonDeserialize<UpdateJobDetails>(property0.Value);
                             continue;
                         }
                     }

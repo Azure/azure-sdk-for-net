@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WritePropertyName("restoreRequestObject"u8);
-            writer.WriteObjectValue(RestoreRequestObject, options);
+            ((IJsonModel<BackupRestoreContent>)RestoreRequestObject).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 if (property.NameEquals("restoreRequestObject"u8))
                 {
-                    restoreRequestObject = BackupRestoreContent.DeserializeBackupRestoreContent(property.Value, options);
+                    restoreRequestObject = ModelSerializationExtensions.JsonDeserialize<BackupRestoreContent>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

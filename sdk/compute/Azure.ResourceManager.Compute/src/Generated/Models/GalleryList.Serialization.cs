@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<GalleryData>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile, options);
+                ((IJsonModel<ImageVersionSecurityProfile>)SecurityProfile).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    securityProfile = ImageVersionSecurityProfile.DeserializeImageVersionSecurityProfile(property.Value, options);
+                    securityProfile = ModelSerializationExtensions.JsonDeserialize<ImageVersionSecurityProfile>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

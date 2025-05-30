@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile, options);
+                ((IJsonModel<OSProfileProvisioningData>)OSProfile).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osProfile = OSProfileProvisioningData.DeserializeOSProfileProvisioningData(property.Value, options);
+                    osProfile = ModelSerializationExtensions.JsonDeserialize<OSProfileProvisioningData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<ReportableException>)Error).Write(writer, options);
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    error = ReportableException.DeserializeReportableException(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<ReportableException>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

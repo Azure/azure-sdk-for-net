@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RejectValue))
             {
                 writer.WritePropertyName("rejectValue"u8);
-                JsonSerializer.Serialize(writer, RejectValue);
+                ((IJsonModel<DataFactoryElement<T>>)RejectValue).Write(writer, options);
             }
             if (Optional.IsDefined(RejectSampleValue))
             {
                 writer.WritePropertyName("rejectSampleValue"u8);
-                JsonSerializer.Serialize(writer, RejectSampleValue);
+                ((IJsonModel<DataFactoryElement<T>>)RejectSampleValue).Write(writer, options);
             }
             if (Optional.IsDefined(UseTypeDefault))
             {
                 writer.WritePropertyName("useTypeDefault"u8);
-                JsonSerializer.Serialize(writer, UseTypeDefault);
+                ((IJsonModel<DataFactoryElement<T>>)UseTypeDefault).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    rejectValue = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    rejectValue = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rejectSampleValue"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    rejectSampleValue = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    rejectSampleValue = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("useTypeDefault"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    useTypeDefault = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    useTypeDefault = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

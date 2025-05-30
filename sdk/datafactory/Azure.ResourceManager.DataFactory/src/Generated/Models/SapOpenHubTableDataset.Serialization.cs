@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("openHubDestinationName"u8);
-            JsonSerializer.Serialize(writer, OpenHubDestinationName);
+            ((IJsonModel<DataFactoryElement<T>>)OpenHubDestinationName).Write(writer, options);
             if (Optional.IsDefined(ExcludeLastRequest))
             {
                 writer.WritePropertyName("excludeLastRequest"u8);
-                JsonSerializer.Serialize(writer, ExcludeLastRequest);
+                ((IJsonModel<DataFactoryElement<T>>)ExcludeLastRequest).Write(writer, options);
             }
             if (Optional.IsDefined(BaseRequestId))
             {
                 writer.WritePropertyName("baseRequestId"u8);
-                JsonSerializer.Serialize(writer, BaseRequestId);
+                ((IJsonModel<DataFactoryElement<T>>)BaseRequestId).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    structure = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetDataElement>>>(property.Value.GetRawText());
+                    structure = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<IList<DatasetDataElement>>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("schema"u8))
@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    schema = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetSchemaDataElement>>>(property.Value.GetRawText());
+                    schema = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<IList<DatasetSchemaDataElement>>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    folder = DatasetFolder.DeserializeDatasetFolder(property.Value, options);
+                    folder = ModelSerializationExtensions.JsonDeserialize<DatasetFolder>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("typeProperties"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("openHubDestinationName"u8))
                         {
-                            openHubDestinationName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            openHubDestinationName = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("excludeLastRequest"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            excludeLastRequest = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            excludeLastRequest = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("baseRequestId"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            baseRequestId = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            baseRequestId = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property0.Value);
                             continue;
                         }
                     }

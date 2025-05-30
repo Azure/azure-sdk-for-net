@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             if (Optional.IsDefined(RetryPolicy))
             {
                 writer.WritePropertyName("retryPolicy"u8);
-                writer.WriteObjectValue(RetryPolicy, options);
+                ((IJsonModel<UserRequestRetryPolicy>)RetryPolicy).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    retryPolicy = UserRequestRetryPolicy.DeserializeUserRequestRetryPolicy(property.Value, options);
+                    retryPolicy = ModelSerializationExtensions.JsonDeserialize<UserRequestRetryPolicy>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

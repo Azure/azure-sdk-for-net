@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Components))
             {
                 writer.WritePropertyName("components"u8);
-                writer.WriteObjectValue(Components, options);
+                ((IJsonModel<IstioComponents>)Components).Write(writer, options);
             }
             if (Optional.IsDefined(CertificateAuthority))
             {
                 writer.WritePropertyName("certificateAuthority"u8);
-                writer.WriteObjectValue(CertificateAuthority, options);
+                ((IJsonModel<IstioCertificateAuthority>)CertificateAuthority).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Revisions))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    components = IstioComponents.DeserializeIstioComponents(property.Value, options);
+                    components = ModelSerializationExtensions.JsonDeserialize<IstioComponents>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("certificateAuthority"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    certificateAuthority = IstioCertificateAuthority.DeserializeIstioCertificateAuthority(property.Value, options);
+                    certificateAuthority = ModelSerializationExtensions.JsonDeserialize<IstioCertificateAuthority>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("revisions"u8))

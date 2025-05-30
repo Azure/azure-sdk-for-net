@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("key"u8))
                 {
-                    key = JsonSerializer.Deserialize<DataFactorySecretString>(property.Value.GetRawText());
+                    key = ModelSerializationExtensions.JsonDeserialize<DataFactorySecretString>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("authorizationType"u8))

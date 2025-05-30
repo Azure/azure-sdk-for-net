@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("command"u8);
-            JsonSerializer.Serialize(writer, Command);
+            ((IJsonModel<DataFactoryElement<T>>)Command).Write(writer, options);
             if (Optional.IsDefined(CommandTimeout))
             {
                 writer.WritePropertyName("commandTimeout"u8);
-                JsonSerializer.Serialize(writer, CommandTimeout);
+                ((IJsonModel<DataFactoryElement<T>>)CommandTimeout).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
+                    policy = ModelSerializationExtensions.JsonDeserialize<PipelineActivityPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("command"u8))
                         {
-                            command = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            command = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("commandTimeout"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            commandTimeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            commandTimeout = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                     }

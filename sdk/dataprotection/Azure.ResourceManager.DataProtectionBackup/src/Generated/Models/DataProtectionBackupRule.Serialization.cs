@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(BackupParameters))
             {
                 writer.WritePropertyName("backupParameters"u8);
-                writer.WriteObjectValue(BackupParameters, options);
+                ((IJsonModel<DataProtectionBackupSettingsBase>)BackupParameters).Write(writer, options);
             }
             writer.WritePropertyName("dataStore"u8);
-            writer.WriteObjectValue(DataStore, options);
+            ((IJsonModel<DataStoreInfoBase>)DataStore).Write(writer, options);
             writer.WritePropertyName("trigger"u8);
-            writer.WriteObjectValue(Trigger, options);
+            ((IJsonModel<DataProtectionBackupTriggerContext>)Trigger).Write(writer, options);
         }
 
         DataProtectionBackupRule IJsonModel<DataProtectionBackupRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -81,17 +81,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    backupParameters = DataProtectionBackupSettingsBase.DeserializeDataProtectionBackupSettingsBase(property.Value, options);
+                    backupParameters = ModelSerializationExtensions.JsonDeserialize<DataProtectionBackupSettingsBase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataStore"u8))
                 {
-                    dataStore = DataStoreInfoBase.DeserializeDataStoreInfoBase(property.Value, options);
+                    dataStore = ModelSerializationExtensions.JsonDeserialize<DataStoreInfoBase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("trigger"u8))
                 {
-                    trigger = DataProtectionBackupTriggerContext.DeserializeDataProtectionBackupTriggerContext(property.Value, options);
+                    trigger = ModelSerializationExtensions.JsonDeserialize<DataProtectionBackupTriggerContext>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

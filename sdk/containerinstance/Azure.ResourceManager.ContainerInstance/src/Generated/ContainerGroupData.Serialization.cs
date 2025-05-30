@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerInstance
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerInstance
             writer.WriteStartArray();
             foreach (var item in Containers)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ContainerInstanceContainer>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(ImageRegistryCredentials))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WriteStartArray();
                 foreach (var item in ImageRegistryCredentials)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerGroupImageRegistryCredential>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ContainerInstance
             if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteObjectValue(IPAddress, options);
+                ((IJsonModel<ContainerGroupIPAddress>)IPAddress).Write(writer, options);
             }
             if (Optional.IsDefined(ContainerGroupOSType))
             {
@@ -97,19 +97,19 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WriteStartArray();
                 foreach (var item in Volumes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerVolume>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView, options);
+                ((IJsonModel<ContainerGroupInstanceView>)InstanceView).Write(writer, options);
             }
             if (Optional.IsDefined(Diagnostics))
             {
                 writer.WritePropertyName("diagnostics"u8);
-                writer.WriteObjectValue(Diagnostics, options);
+                ((IJsonModel<ContainerGroupDiagnostics>)Diagnostics).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(SubnetIds))
             {
@@ -117,14 +117,14 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WriteStartArray();
                 foreach (var item in SubnetIds)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerGroupSubnetId>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DnsConfig))
             {
                 writer.WritePropertyName("dnsConfig"u8);
-                writer.WriteObjectValue(DnsConfig, options);
+                ((IJsonModel<ContainerGroupDnsConfiguration>)DnsConfig).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ContainerInstance
             if (Optional.IsDefined(EncryptionProperties))
             {
                 writer.WritePropertyName("encryptionProperties"u8);
-                writer.WriteObjectValue(EncryptionProperties, options);
+                ((IJsonModel<ContainerGroupEncryptionProperties>)EncryptionProperties).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(InitContainers))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WriteStartArray();
                 foreach (var item in InitContainers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InitContainerDefinitionContent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -152,14 +152,14 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DeploymentExtensionSpec>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ConfidentialComputeProperties))
             {
                 writer.WritePropertyName("confidentialComputeProperties"u8);
-                writer.WriteObjectValue(ConfidentialComputeProperties, options);
+                ((IJsonModel<ConfidentialComputeProperties>)ConfidentialComputeProperties).Write(writer, options);
             }
             if (Optional.IsDefined(Priority))
             {
@@ -169,12 +169,12 @@ namespace Azure.ResourceManager.ContainerInstance
             if (Optional.IsDefined(ContainerGroupProfile))
             {
                 writer.WritePropertyName("containerGroupProfile"u8);
-                writer.WriteObjectValue(ContainerGroupProfile, options);
+                ((IJsonModel<ContainerGroupProfileReferenceDefinition>)ContainerGroupProfile).Write(writer, options);
             }
             if (Optional.IsDefined(StandbyPoolProfile))
             {
                 writer.WritePropertyName("standbyPoolProfile"u8);
-                writer.WriteObjectValue(StandbyPoolProfile, options);
+                ((IJsonModel<StandbyPoolProfileDefinition>)StandbyPoolProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsCreatedFromStandbyPool))
             {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             {
                                 continue;
                             }
-                            ipAddress = ContainerGroupIPAddress.DeserializeContainerGroupIPAddress(property0.Value, options);
+                            ipAddress = ModelSerializationExtensions.JsonDeserialize<ContainerGroupIPAddress>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("osType"u8))
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             {
                                 continue;
                             }
-                            instanceView = ContainerGroupInstanceView.DeserializeContainerGroupInstanceView(property0.Value, options);
+                            instanceView = ModelSerializationExtensions.JsonDeserialize<ContainerGroupInstanceView>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("diagnostics"u8))
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             {
                                 continue;
                             }
-                            diagnostics = ContainerGroupDiagnostics.DeserializeContainerGroupDiagnostics(property0.Value, options);
+                            diagnostics = ModelSerializationExtensions.JsonDeserialize<ContainerGroupDiagnostics>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("subnetIds"u8))
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             {
                                 continue;
                             }
-                            dnsConfig = ContainerGroupDnsConfiguration.DeserializeContainerGroupDnsConfiguration(property0.Value, options);
+                            dnsConfig = ModelSerializationExtensions.JsonDeserialize<ContainerGroupDnsConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sku"u8))
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             {
                                 continue;
                             }
-                            encryptionProperties = ContainerGroupEncryptionProperties.DeserializeContainerGroupEncryptionProperties(property0.Value, options);
+                            encryptionProperties = ModelSerializationExtensions.JsonDeserialize<ContainerGroupEncryptionProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("initContainers"u8))
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             {
                                 continue;
                             }
-                            confidentialComputeProperties = ConfidentialComputeProperties.DeserializeConfidentialComputeProperties(property0.Value, options);
+                            confidentialComputeProperties = ModelSerializationExtensions.JsonDeserialize<ConfidentialComputeProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("priority"u8))
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             {
                                 continue;
                             }
-                            containerGroupProfile = ContainerGroupProfileReferenceDefinition.DeserializeContainerGroupProfileReferenceDefinition(property0.Value, options);
+                            containerGroupProfile = ModelSerializationExtensions.JsonDeserialize<ContainerGroupProfileReferenceDefinition>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("standbyPoolProfile"u8))
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             {
                                 continue;
                             }
-                            standbyPoolProfile = StandbyPoolProfileDefinition.DeserializeStandbyPoolProfileDefinition(property0.Value, options);
+                            standbyPoolProfile = ModelSerializationExtensions.JsonDeserialize<StandbyPoolProfileDefinition>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("isCreatedFromStandbyPool"u8))

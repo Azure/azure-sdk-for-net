@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WritePropertyName("sourceConnectionInfo"u8);
-            writer.WriteObjectValue(SourceConnectionInfo, options);
+            ((IJsonModel<SqlConnectionInfo>)SourceConnectionInfo).Write(writer, options);
             if (Optional.IsDefined(CheckPermissionsGroup))
             {
                 writer.WritePropertyName("checkPermissionsGroup"u8);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
+                    sourceConnectionInfo = ModelSerializationExtensions.JsonDeserialize<SqlConnectionInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("checkPermissionsGroup"u8))

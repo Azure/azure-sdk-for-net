@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in LocationInfo)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataBoxEdgeSkuLocationInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in Costs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataBoxEdgeSkuCost>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataBoxEdgeSkuCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(OverrideSettings))
             {
                 writer.WritePropertyName("overrideSettings"u8);
-                writer.WriteObjectValue(OverrideSettings, options);
+                ((IJsonModel<UpgradeOverrideSettings>)OverrideSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    overrideSettings = UpgradeOverrideSettings.DeserializeUpgradeOverrideSettings(property.Value, options);
+                    overrideSettings = ModelSerializationExtensions.JsonDeserialize<UpgradeOverrideSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

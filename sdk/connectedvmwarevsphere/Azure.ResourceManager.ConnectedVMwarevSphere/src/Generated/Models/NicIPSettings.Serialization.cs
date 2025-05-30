@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WriteStartArray();
                 foreach (var item in IPAddressInfo)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NicIPAddressSettings>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

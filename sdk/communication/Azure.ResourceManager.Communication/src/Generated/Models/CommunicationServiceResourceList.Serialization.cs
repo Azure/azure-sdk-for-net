@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Communication.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CommunicationServiceResourceData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

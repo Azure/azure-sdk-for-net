@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SqlWriterStoredProcedureName))
             {
                 writer.WritePropertyName("sqlWriterStoredProcedureName"u8);
-                JsonSerializer.Serialize(writer, SqlWriterStoredProcedureName);
+                ((IJsonModel<DataFactoryElement<T>>)SqlWriterStoredProcedureName).Write(writer, options);
             }
             if (Optional.IsDefined(SqlWriterTableType))
             {
                 writer.WritePropertyName("sqlWriterTableType"u8);
-                JsonSerializer.Serialize(writer, SqlWriterTableType);
+                ((IJsonModel<DataFactoryElement<T>>)SqlWriterTableType).Write(writer, options);
             }
             if (Optional.IsDefined(PreCopyScript))
             {
                 writer.WritePropertyName("preCopyScript"u8);
-                JsonSerializer.Serialize(writer, PreCopyScript);
+                ((IJsonModel<DataFactoryElement<T>>)PreCopyScript).Write(writer, options);
             }
             if (Optional.IsDefined(StoredProcedureParameters))
             {
@@ -66,17 +66,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(StoredProcedureTableTypeParameterName))
             {
                 writer.WritePropertyName("storedProcedureTableTypeParameterName"u8);
-                JsonSerializer.Serialize(writer, StoredProcedureTableTypeParameterName);
+                ((IJsonModel<DataFactoryElement<T>>)StoredProcedureTableTypeParameterName).Write(writer, options);
             }
             if (Optional.IsDefined(TableOption))
             {
                 writer.WritePropertyName("tableOption"u8);
-                JsonSerializer.Serialize(writer, TableOption);
+                ((IJsonModel<DataFactoryElement<T>>)TableOption).Write(writer, options);
             }
             if (Optional.IsDefined(SqlWriterUseTableLock))
             {
                 writer.WritePropertyName("sqlWriterUseTableLock"u8);
-                JsonSerializer.Serialize(writer, SqlWriterUseTableLock);
+                ((IJsonModel<DataFactoryElement<T>>)SqlWriterUseTableLock).Write(writer, options);
             }
             if (Optional.IsDefined(WriteBehavior))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(UpsertSettings))
             {
                 writer.WritePropertyName("upsertSettings"u8);
-                writer.WriteObjectValue(UpsertSettings, options);
+                ((IJsonModel<SqlUpsertSettings>)UpsertSettings).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sqlWriterStoredProcedureName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    sqlWriterStoredProcedureName = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sqlWriterTableType"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sqlWriterTableType = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    sqlWriterTableType = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("preCopyScript"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    preCopyScript = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    preCopyScript = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storedProcedureParameters"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    storedProcedureTableTypeParameterName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    storedProcedureTableTypeParameterName = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tableOption"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    tableOption = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    tableOption = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sqlWriterUseTableLock"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sqlWriterUseTableLock = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    sqlWriterUseTableLock = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("writeBehavior"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    upsertSettings = SqlUpsertSettings.DeserializeSqlUpsertSettings(property.Value, options);
+                    upsertSettings = ModelSerializationExtensions.JsonDeserialize<SqlUpsertSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    writeBatchSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    writeBatchSize = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("writeBatchTimeout"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    writeBatchTimeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    writeBatchTimeout = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sinkRetryCount"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sinkRetryCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    sinkRetryCount = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sinkRetryWait"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sinkRetryWait = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    sinkRetryWait = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("maxConcurrentConnections"u8))
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    maxConcurrentConnections = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("disableMetricsCollection"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    disableMetricsCollection = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

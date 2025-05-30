@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(IntegrationRuntime))
             {
                 writer.WritePropertyName("integrationRuntime"u8);
-                writer.WriteObjectValue(IntegrationRuntime, options);
+                ((IJsonModel<DataFactoryIntegrationRuntimeDebugInfo>)IntegrationRuntime).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    integrationRuntime = DataFactoryIntegrationRuntimeDebugInfo.DeserializeDataFactoryIntegrationRuntimeDebugInfo(property.Value, options);
+                    integrationRuntime = ModelSerializationExtensions.JsonDeserialize<DataFactoryIntegrationRuntimeDebugInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

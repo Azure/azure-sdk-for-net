@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 foreach (var item in ImportDiskDetails)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<ImportDiskDetails>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 foreach (var item in ExportDiskDetails)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<ExportDiskDetails>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in CopyProgress)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataBoxCustomerDiskCopyProgress>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(DeliverToDataCenterPackageDetails))
             {
                 writer.WritePropertyName("deliverToDcPackageDetails"u8);
-                writer.WriteObjectValue(DeliverToDataCenterPackageDetails, options);
+                ((IJsonModel<PackageCarrierInfo>)DeliverToDataCenterPackageDetails).Write(writer, options);
             }
             writer.WritePropertyName("returnToCustomerPackageDetails"u8);
-            writer.WriteObjectValue(ReturnToCustomerPackageDetails, options);
+            ((IJsonModel<PackageCarrierDetails>)ReturnToCustomerPackageDetails).Write(writer, options);
             if (Optional.IsDefined(EnableManifestBackup))
             {
                 writer.WritePropertyName("enableManifestBackup"u8);
@@ -179,12 +179,12 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    deliverToDcPackageDetails = PackageCarrierInfo.DeserializePackageCarrierInfo(property.Value, options);
+                    deliverToDcPackageDetails = ModelSerializationExtensions.JsonDeserialize<PackageCarrierInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("returnToCustomerPackageDetails"u8))
                 {
-                    returnToCustomerPackageDetails = PackageCarrierDetails.DeserializePackageCarrierDetails(property.Value, options);
+                    returnToCustomerPackageDetails = ModelSerializationExtensions.JsonDeserialize<PackageCarrierDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("enableManifestBackup"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (property.NameEquals("contactDetails"u8))
                 {
-                    contactDetails = DataBoxContactDetails.DeserializeDataBoxContactDetails(property.Value, options);
+                    contactDetails = ModelSerializationExtensions.JsonDeserialize<DataBoxContactDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("shippingAddress"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    shippingAddress = DataBoxShippingAddress.DeserializeDataBoxShippingAddress(property.Value, options);
+                    shippingAddress = ModelSerializationExtensions.JsonDeserialize<DataBoxShippingAddress>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deliveryPackage"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    deliveryPackage = PackageShippingDetails.DeserializePackageShippingDetails(property.Value, options);
+                    deliveryPackage = ModelSerializationExtensions.JsonDeserialize<PackageShippingDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("returnPackage"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    returnPackage = PackageShippingDetails.DeserializePackageShippingDetails(property.Value, options);
+                    returnPackage = ModelSerializationExtensions.JsonDeserialize<PackageShippingDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataImportDetails"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    preferences = DataBoxOrderPreferences.DeserializeDataBoxOrderPreferences(property.Value, options);
+                    preferences = ModelSerializationExtensions.JsonDeserialize<DataBoxOrderPreferences>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("reverseShippingDetails"u8))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    reverseShippingDetails = ReverseShippingDetails.DeserializeReverseShippingDetails(property.Value, options);
+                    reverseShippingDetails = ModelSerializationExtensions.JsonDeserialize<ReverseShippingDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("copyLogDetails"u8))
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    deviceErasureDetails = DeviceErasureDetails.DeserializeDeviceErasureDetails(property.Value, options);
+                    deviceErasureDetails = ModelSerializationExtensions.JsonDeserialize<DeviceErasureDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("keyEncryptionKey"u8))
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    keyEncryptionKey = DataBoxKeyEncryptionKey.DeserializeDataBoxKeyEncryptionKey(property.Value, options);
+                    keyEncryptionKey = ModelSerializationExtensions.JsonDeserialize<DataBoxKeyEncryptionKey>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("expectedDataSizeInTeraBytes"u8))
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    lastMitigationActionOnJob = LastMitigationActionOnJob.DeserializeLastMitigationActionOnJob(property.Value, options);
+                    lastMitigationActionOnJob = ModelSerializationExtensions.JsonDeserialize<LastMitigationActionOnJob>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("datacenterAddress"u8))
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    dataCenterAddress = DataCenterAddressResult.DeserializeDataCenterAddressResult(property.Value, options);
+                    dataCenterAddress = ModelSerializationExtensions.JsonDeserialize<DataCenterAddressResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataCenterCode"u8))

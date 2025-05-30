@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy, options);
+                ((IJsonModel<ExecutePipelineActivityPolicy>)Policy).Write(writer, options);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("pipeline"u8);
-            writer.WriteObjectValue(Pipeline, options);
+            ((IJsonModel<DataFactoryPipelineReference>)Pipeline).Write(writer, options);
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = ExecutePipelineActivityPolicy.DeserializeExecutePipelineActivityPolicy(property.Value, options);
+                    policy = ModelSerializationExtensions.JsonDeserialize<ExecutePipelineActivityPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("pipeline"u8))
                         {
-                            pipeline = DataFactoryPipelineReference.DeserializeDataFactoryPipelineReference(property0.Value, options);
+                            pipeline = ModelSerializationExtensions.JsonDeserialize<DataFactoryPipelineReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("parameters"u8))

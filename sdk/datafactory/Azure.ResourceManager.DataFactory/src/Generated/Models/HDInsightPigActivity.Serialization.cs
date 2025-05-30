@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Arguments))
             {
                 writer.WritePropertyName("arguments"u8);
-                JsonSerializer.Serialize(writer, Arguments);
+                ((IJsonModel<DataFactoryElement<T>>)Arguments).Write(writer, options);
             }
             if (Optional.IsDefined(GetDebugInfo))
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ScriptPath))
             {
                 writer.WritePropertyName("scriptPath"u8);
-                JsonSerializer.Serialize(writer, ScriptPath);
+                ((IJsonModel<DataFactoryElement<T>>)ScriptPath).Write(writer, options);
             }
             if (Optional.IsDefined(ScriptLinkedService))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
+                    policy = ModelSerializationExtensions.JsonDeserialize<PipelineActivityPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(item));
                             }
                             storageLinkedServices = array;
                             continue;
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            arguments = JsonSerializer.Deserialize<DataFactoryElement<IList<string>>>(property0.Value.GetRawText());
+                            arguments = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<IList<string>>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("getDebugInfo"u8))
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            scriptPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            scriptPath = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("scriptLinkedService"u8))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            scriptLinkedService = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
+                            scriptLinkedService = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("defines"u8))

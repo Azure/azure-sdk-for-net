@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WritePropertyName("destination"u8);
-            writer.WriteObjectValue(Destination, options);
+            ((IJsonModel<ExportDeliveryDestination>)Destination).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 if (property.NameEquals("destination"u8))
                 {
-                    destination = ExportDeliveryDestination.DeserializeExportDeliveryDestination(property.Value, options);
+                    destination = ModelSerializationExtensions.JsonDeserialize<ExportDeliveryDestination>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

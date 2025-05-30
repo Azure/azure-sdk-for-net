@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DateFormat))
             {
                 writer.WritePropertyName("dateFormat"u8);
-                JsonSerializer.Serialize(writer, DateFormat);
+                ((IJsonModel<DataFactoryElement<T>>)DateFormat).Write(writer, options);
             }
             if (Optional.IsDefined(TimestampFormat))
             {
                 writer.WritePropertyName("timestampFormat"u8);
-                JsonSerializer.Serialize(writer, TimestampFormat);
+                ((IJsonModel<DataFactoryElement<T>>)TimestampFormat).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    dateFormat = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    dateFormat = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("timestampFormat"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    timestampFormat = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    timestampFormat = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

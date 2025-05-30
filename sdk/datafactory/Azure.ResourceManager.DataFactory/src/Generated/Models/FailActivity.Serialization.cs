@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("message"u8);
-            JsonSerializer.Serialize(writer, Message);
+            ((IJsonModel<DataFactoryElement<T>>)Message).Write(writer, options);
             writer.WritePropertyName("errorCode"u8);
-            JsonSerializer.Serialize(writer, ErrorCode);
+            ((IJsonModel<DataFactoryElement<T>>)ErrorCode).Write(writer, options);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -162,12 +162,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("message"u8))
                         {
-                            message = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            message = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("errorCode"u8))
                         {
-                            errorCode = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            errorCode = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                     }

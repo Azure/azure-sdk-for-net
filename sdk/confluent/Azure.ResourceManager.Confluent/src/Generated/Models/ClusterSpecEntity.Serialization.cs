@@ -77,22 +77,22 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Config))
             {
                 writer.WritePropertyName("config"u8);
-                writer.WriteObjectValue(Config, options);
+                ((IJsonModel<ClusterConfigEntity>)Config).Write(writer, options);
             }
             if (Optional.IsDefined(Environment))
             {
                 writer.WritePropertyName("environment"u8);
-                writer.WriteObjectValue(Environment, options);
+                ((IJsonModel<ClusterEnvironmentEntity>)Environment).Write(writer, options);
             }
             if (Optional.IsDefined(Network))
             {
                 writer.WritePropertyName("network"u8);
-                writer.WriteObjectValue(Network, options);
+                ((IJsonModel<ClusterNetworkEntity>)Network).Write(writer, options);
             }
             if (Optional.IsDefined(Byok))
             {
                 writer.WritePropertyName("byok"u8);
-                writer.WriteObjectValue(Byok, options);
+                ((IJsonModel<ClusterByokEntity>)Byok).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     {
                         continue;
                     }
-                    config = ClusterConfigEntity.DeserializeClusterConfigEntity(property.Value, options);
+                    config = ModelSerializationExtensions.JsonDeserialize<ClusterConfigEntity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("environment"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     {
                         continue;
                     }
-                    environment = ClusterEnvironmentEntity.DeserializeClusterEnvironmentEntity(property.Value, options);
+                    environment = ModelSerializationExtensions.JsonDeserialize<ClusterEnvironmentEntity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("network"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     {
                         continue;
                     }
-                    network = ClusterNetworkEntity.DeserializeClusterNetworkEntity(property.Value, options);
+                    network = ModelSerializationExtensions.JsonDeserialize<ClusterNetworkEntity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("byok"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     {
                         continue;
                     }
-                    byok = ClusterByokEntity.DeserializeClusterByokEntity(property.Value, options);
+                    byok = ModelSerializationExtensions.JsonDeserialize<ClusterByokEntity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(Gpu))
             {
                 writer.WritePropertyName("gpu"u8);
-                writer.WriteObjectValue(Gpu, options);
+                ((IJsonModel<ContainerGpuResourceInfo>)Gpu).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    gpu = ContainerGpuResourceInfo.DeserializeContainerGpuResourceInfo(property.Value, options);
+                    gpu = ModelSerializationExtensions.JsonDeserialize<ContainerGpuResourceInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

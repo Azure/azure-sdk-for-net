@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WritePropertyName("targetConnectionInfo"u8);
-            writer.WriteObjectValue(TargetConnectionInfo, options);
+            ((IJsonModel<SqlConnectionInfo>)TargetConnectionInfo).Write(writer, options);
             if (Optional.IsDefined(CollectLogins))
             {
                 writer.WritePropertyName("collectLogins"u8);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
+                    targetConnectionInfo = ModelSerializationExtensions.JsonDeserialize<SqlConnectionInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("collectLogins"u8))

@@ -59,14 +59,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in EnvironmentVariables)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerEnvironmentVariable>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView, options);
+                ((IJsonModel<InitContainerPropertiesDefinitionInstanceView>)InstanceView).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(VolumeMounts))
             {
@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in VolumeMounts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerVolumeMount>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SecurityContext))
             {
                 writer.WritePropertyName("securityContext"u8);
-                writer.WriteObjectValue(SecurityContext, options);
+                ((IJsonModel<ContainerSecurityContextDefinition>)SecurityContext).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             {
                                 continue;
                             }
-                            instanceView = InitContainerPropertiesDefinitionInstanceView.DeserializeInitContainerPropertiesDefinitionInstanceView(property0.Value, options);
+                            instanceView = ModelSerializationExtensions.JsonDeserialize<InitContainerPropertiesDefinitionInstanceView>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("volumeMounts"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             {
                                 continue;
                             }
-                            securityContext = ContainerSecurityContextDefinition.DeserializeContainerSecurityContextDefinition(property0.Value, options);
+                            securityContext = ModelSerializationExtensions.JsonDeserialize<ContainerSecurityContextDefinition>(property0.Value);
                             continue;
                         }
                     }

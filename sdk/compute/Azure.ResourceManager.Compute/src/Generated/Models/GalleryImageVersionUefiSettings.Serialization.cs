@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(AdditionalSignatures))
             {
                 writer.WritePropertyName("additionalSignatures"u8);
-                writer.WriteObjectValue(AdditionalSignatures, options);
+                ((IJsonModel<UefiKeySignatures>)AdditionalSignatures).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    additionalSignatures = UefiKeySignatures.DeserializeUefiKeySignatures(property.Value, options);
+                    additionalSignatures = ModelSerializationExtensions.JsonDeserialize<UefiKeySignatures>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

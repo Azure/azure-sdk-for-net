@@ -48,8 +48,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(VnetConfiguration))
             {
                 writer.WritePropertyName("vnetConfiguration"u8);
-                writer.WriteObjectValue(VnetConfiguration, options);
+                ((IJsonModel<ContainerAppVnetConfiguration>)VnetConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DeploymentErrors))
             {
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(AppLogsConfiguration))
             {
                 writer.WritePropertyName("appLogsConfiguration"u8);
-                writer.WriteObjectValue(AppLogsConfiguration, options);
+                ((IJsonModel<ContainerAppLogsConfiguration>)AppLogsConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(IsZoneRedundant))
             {
@@ -101,7 +100,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(CustomDomainConfiguration))
             {
                 writer.WritePropertyName("customDomainConfiguration"u8);
-                writer.WriteObjectValue(CustomDomainConfiguration, options);
+                ((IJsonModel<ContainerAppCustomDomainConfiguration>)CustomDomainConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EventStreamEndpoint))
             {
@@ -114,19 +113,19 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WriteStartArray();
                 foreach (var item in WorkloadProfiles)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerAppWorkloadProfile>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(KedaConfiguration))
             {
                 writer.WritePropertyName("kedaConfiguration"u8);
-                writer.WriteObjectValue(KedaConfiguration, options);
+                ((IJsonModel<KedaConfiguration>)KedaConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(DaprConfiguration))
             {
                 writer.WritePropertyName("daprConfiguration"u8);
-                writer.WriteObjectValue(DaprConfiguration, options);
+                ((IJsonModel<DaprConfiguration>)DaprConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(InfrastructureResourceGroup))
             {
@@ -136,12 +135,12 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(PeerAuthentication))
             {
                 writer.WritePropertyName("peerAuthentication"u8);
-                writer.WriteObjectValue(PeerAuthentication, options);
+                ((IJsonModel<ManagedEnvironmentPropertiesPeerAuthentication>)PeerAuthentication).Write(writer, options);
             }
             if (Optional.IsDefined(PeerTrafficConfiguration))
             {
                 writer.WritePropertyName("peerTrafficConfiguration"u8);
-                writer.WriteObjectValue(PeerTrafficConfiguration, options);
+                ((IJsonModel<ManagedEnvironmentPropertiesPeerTrafficConfiguration>)PeerTrafficConfiguration).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -207,7 +206,7 @@ namespace Azure.ResourceManager.AppContainers
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -287,7 +286,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            vnetConfiguration = ContainerAppVnetConfiguration.DeserializeContainerAppVnetConfiguration(property0.Value, options);
+                            vnetConfiguration = ModelSerializationExtensions.JsonDeserialize<ContainerAppVnetConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("deploymentErrors"u8))
@@ -315,7 +314,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            appLogsConfiguration = ContainerAppLogsConfiguration.DeserializeContainerAppLogsConfiguration(property0.Value, options);
+                            appLogsConfiguration = ModelSerializationExtensions.JsonDeserialize<ContainerAppLogsConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("zoneRedundant"u8))
@@ -333,7 +332,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            customDomainConfiguration = ContainerAppCustomDomainConfiguration.DeserializeContainerAppCustomDomainConfiguration(property0.Value, options);
+                            customDomainConfiguration = ModelSerializationExtensions.JsonDeserialize<ContainerAppCustomDomainConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("eventStreamEndpoint"u8))
@@ -361,7 +360,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            kedaConfiguration = KedaConfiguration.DeserializeKedaConfiguration(property0.Value, options);
+                            kedaConfiguration = ModelSerializationExtensions.JsonDeserialize<KedaConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("daprConfiguration"u8))
@@ -370,7 +369,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            daprConfiguration = DaprConfiguration.DeserializeDaprConfiguration(property0.Value, options);
+                            daprConfiguration = ModelSerializationExtensions.JsonDeserialize<DaprConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("infrastructureResourceGroup"u8))
@@ -384,7 +383,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            peerAuthentication = ManagedEnvironmentPropertiesPeerAuthentication.DeserializeManagedEnvironmentPropertiesPeerAuthentication(property0.Value, options);
+                            peerAuthentication = ModelSerializationExtensions.JsonDeserialize<ManagedEnvironmentPropertiesPeerAuthentication>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("peerTrafficConfiguration"u8))
@@ -393,7 +392,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            peerTrafficConfiguration = ManagedEnvironmentPropertiesPeerTrafficConfiguration.DeserializeManagedEnvironmentPropertiesPeerTrafficConfiguration(property0.Value, options);
+                            peerTrafficConfiguration = ModelSerializationExtensions.JsonDeserialize<ManagedEnvironmentPropertiesPeerTrafficConfiguration>(property0.Value);
                             continue;
                         }
                     }

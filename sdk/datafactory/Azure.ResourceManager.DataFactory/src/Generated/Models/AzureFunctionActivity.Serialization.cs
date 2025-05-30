@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("method"u8);
             writer.WriteStringValue(Method.ToString());
             writer.WritePropertyName("functionName"u8);
-            JsonSerializer.Serialize(writer, FunctionName);
+            ((IJsonModel<DataFactoryElement<T>>)FunctionName).Write(writer, options);
             if (Optional.IsCollectionDefined(RequestHeaders))
             {
                 writer.WritePropertyName("headers"u8);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
-                JsonSerializer.Serialize(writer, Body);
+                ((IJsonModel<DataFactoryElement<T>>)Body).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
+                    policy = ModelSerializationExtensions.JsonDeserialize<PipelineActivityPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("functionName"u8))
                         {
-                            functionName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            functionName = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("headers"u8))
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            body = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            body = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                     }

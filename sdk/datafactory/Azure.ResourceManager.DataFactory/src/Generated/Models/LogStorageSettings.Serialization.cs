@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
-                JsonSerializer.Serialize(writer, Path);
+                ((IJsonModel<DataFactoryElement<T>>)Path).Write(writer, options);
             }
             if (Optional.IsDefined(LogLevel))
             {
                 writer.WritePropertyName("logLevel"u8);
-                JsonSerializer.Serialize(writer, LogLevel);
+                ((IJsonModel<DataFactoryElement<T>>)LogLevel).Write(writer, options);
             }
             if (Optional.IsDefined(EnableReliableLogging))
             {
                 writer.WritePropertyName("enableReliableLogging"u8);
-                JsonSerializer.Serialize(writer, EnableReliableLogging);
+                ((IJsonModel<DataFactoryElement<T>>)EnableReliableLogging).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("path"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    path = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    path = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("logLevel"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    logLevel = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    logLevel = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("enableReliableLogging"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    enableReliableLogging = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    enableReliableLogging = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

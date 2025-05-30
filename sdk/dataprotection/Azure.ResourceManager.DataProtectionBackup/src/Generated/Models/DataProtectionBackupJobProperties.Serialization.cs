@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (options.Format != "W" && Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo, options);
+                ((IJsonModel<BackupJobExtendedInfo>)ExtendedInfo).Write(writer, options);
             }
             writer.WritePropertyName("isUserTriggered"u8);
             writer.WriteBooleanValue(IsUserTriggered);
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
+                        array.Add(ModelSerializationExtensions.JsonDeserialize<ResponseError>(item));
                     }
                     errorDetails = array;
                     continue;
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = BackupJobExtendedInfo.DeserializeBackupJobExtendedInfo(property.Value, options);
+                    extendedInfo = ModelSerializationExtensions.JsonDeserialize<BackupJobExtendedInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isUserTriggered"u8))

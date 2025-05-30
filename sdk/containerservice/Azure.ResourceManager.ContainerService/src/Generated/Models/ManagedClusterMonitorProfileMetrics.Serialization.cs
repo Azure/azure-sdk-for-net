@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(KubeStateMetrics))
             {
                 writer.WritePropertyName("kubeStateMetrics"u8);
-                writer.WriteObjectValue(KubeStateMetrics, options);
+                ((IJsonModel<ManagedClusterMonitorProfileKubeStateMetrics>)KubeStateMetrics).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    kubeStateMetrics = ManagedClusterMonitorProfileKubeStateMetrics.DeserializeManagedClusterMonitorProfileKubeStateMetrics(property.Value, options);
+                    kubeStateMetrics = ModelSerializationExtensions.JsonDeserialize<ManagedClusterMonitorProfileKubeStateMetrics>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

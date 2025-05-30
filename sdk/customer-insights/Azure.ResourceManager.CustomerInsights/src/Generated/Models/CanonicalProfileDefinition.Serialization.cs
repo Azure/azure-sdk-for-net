@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Properties)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CanonicalProfileDefinitionPropertiesItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

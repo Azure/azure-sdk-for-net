@@ -39,47 +39,47 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ColumnDelimiter))
             {
                 writer.WritePropertyName("columnDelimiter"u8);
-                JsonSerializer.Serialize(writer, ColumnDelimiter);
+                ((IJsonModel<DataFactoryElement<T>>)ColumnDelimiter).Write(writer, options);
             }
             if (Optional.IsDefined(RowDelimiter))
             {
                 writer.WritePropertyName("rowDelimiter"u8);
-                JsonSerializer.Serialize(writer, RowDelimiter);
+                ((IJsonModel<DataFactoryElement<T>>)RowDelimiter).Write(writer, options);
             }
             if (Optional.IsDefined(EscapeChar))
             {
                 writer.WritePropertyName("escapeChar"u8);
-                JsonSerializer.Serialize(writer, EscapeChar);
+                ((IJsonModel<DataFactoryElement<T>>)EscapeChar).Write(writer, options);
             }
             if (Optional.IsDefined(QuoteChar))
             {
                 writer.WritePropertyName("quoteChar"u8);
-                JsonSerializer.Serialize(writer, QuoteChar);
+                ((IJsonModel<DataFactoryElement<T>>)QuoteChar).Write(writer, options);
             }
             if (Optional.IsDefined(NullValue))
             {
                 writer.WritePropertyName("nullValue"u8);
-                JsonSerializer.Serialize(writer, NullValue);
+                ((IJsonModel<DataFactoryElement<T>>)NullValue).Write(writer, options);
             }
             if (Optional.IsDefined(EncodingName))
             {
                 writer.WritePropertyName("encodingName"u8);
-                JsonSerializer.Serialize(writer, EncodingName);
+                ((IJsonModel<DataFactoryElement<T>>)EncodingName).Write(writer, options);
             }
             if (Optional.IsDefined(TreatEmptyAsNull))
             {
                 writer.WritePropertyName("treatEmptyAsNull"u8);
-                JsonSerializer.Serialize(writer, TreatEmptyAsNull);
+                ((IJsonModel<DataFactoryElement<T>>)TreatEmptyAsNull).Write(writer, options);
             }
             if (Optional.IsDefined(SkipLineCount))
             {
                 writer.WritePropertyName("skipLineCount"u8);
-                JsonSerializer.Serialize(writer, SkipLineCount);
+                ((IJsonModel<DataFactoryElement<T>>)SkipLineCount).Write(writer, options);
             }
             if (Optional.IsDefined(FirstRowAsHeader))
             {
                 writer.WritePropertyName("firstRowAsHeader"u8);
-                JsonSerializer.Serialize(writer, FirstRowAsHeader);
+                ((IJsonModel<DataFactoryElement<T>>)FirstRowAsHeader).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    columnDelimiter = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    columnDelimiter = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rowDelimiter"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    rowDelimiter = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    rowDelimiter = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("escapeChar"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    escapeChar = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    escapeChar = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("quoteChar"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    quoteChar = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    quoteChar = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nullValue"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    nullValue = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    nullValue = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("encodingName"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    encodingName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    encodingName = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("treatEmptyAsNull"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    treatEmptyAsNull = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    treatEmptyAsNull = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("skipLineCount"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    skipLineCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    skipLineCount = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("firstRowAsHeader"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    firstRowAsHeader = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    firstRowAsHeader = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    serializer = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    serializer = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deserializer"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    deserializer = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    deserializer = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

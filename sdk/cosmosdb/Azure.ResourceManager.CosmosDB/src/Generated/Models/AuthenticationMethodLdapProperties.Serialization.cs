@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in ServerCertificates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CassandraCertificate>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(DiffDiskSettings))
             {
                 writer.WritePropertyName("diffDiskSettings"u8);
-                writer.WriteObjectValue(DiffDiskSettings, options);
+                ((IJsonModel<ComputeFleetDiffDiskSettings>)DiffDiskSettings).Write(writer, options);
             }
             if (Optional.IsDefined(DiskSizeGB))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
-                writer.WriteObjectValue(Image, options);
+                ((IJsonModel<ComputeFleetVirtualHardDisk>)Image).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(VhdContainers))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
-                writer.WriteObjectValue(ManagedDisk, options);
+                ((IJsonModel<ComputeFleetVmssManagedDisk>)ManagedDisk).Write(writer, options);
             }
             if (Optional.IsDefined(DeleteOption))
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    diffDiskSettings = ComputeFleetDiffDiskSettings.DeserializeComputeFleetDiffDiskSettings(property.Value, options);
+                    diffDiskSettings = ModelSerializationExtensions.JsonDeserialize<ComputeFleetDiffDiskSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("diskSizeGB"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    image = ComputeFleetVirtualHardDisk.DeserializeComputeFleetVirtualHardDisk(property.Value, options);
+                    image = ModelSerializationExtensions.JsonDeserialize<ComputeFleetVirtualHardDisk>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vhdContainers"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    managedDisk = ComputeFleetVmssManagedDisk.DeserializeComputeFleetVmssManagedDisk(property.Value, options);
+                    managedDisk = ModelSerializationExtensions.JsonDeserialize<ComputeFleetVmssManagedDisk>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deleteOption"u8))

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in DataLakeStoreAccounts)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(StorageAccounts))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in ComputePolicies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in FirewallRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

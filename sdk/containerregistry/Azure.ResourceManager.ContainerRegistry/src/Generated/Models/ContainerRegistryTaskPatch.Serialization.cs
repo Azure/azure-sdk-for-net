@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
-                writer.WriteObjectValue(Platform, options);
+                ((IJsonModel<ContainerRegistryPlatformUpdateContent>)Platform).Write(writer, options);
             }
             if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
-                writer.WriteObjectValue(AgentConfiguration, options);
+                ((IJsonModel<ContainerRegistryAgentProperties>)AgentConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(AgentPoolName))
             {
@@ -81,17 +81,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Step))
             {
                 writer.WritePropertyName("step"u8);
-                writer.WriteObjectValue(Step, options);
+                ((IJsonModel<ContainerRegistryTaskStepUpdateContent>)Step).Write(writer, options);
             }
             if (Optional.IsDefined(Trigger))
             {
                 writer.WritePropertyName("trigger"u8);
-                writer.WriteObjectValue(Trigger, options);
+                ((IJsonModel<ContainerRegistryTriggerUpdateContent>)Trigger).Write(writer, options);
             }
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials, options);
+                ((IJsonModel<ContainerRegistryCredentials>)Credentials).Write(writer, options);
             }
             if (Optional.IsDefined(LogTemplate))
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            platform = ContainerRegistryPlatformUpdateContent.DeserializeContainerRegistryPlatformUpdateContent(property0.Value, options);
+                            platform = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryPlatformUpdateContent>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("agentConfiguration"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            agentConfiguration = ContainerRegistryAgentProperties.DeserializeContainerRegistryAgentProperties(property0.Value, options);
+                            agentConfiguration = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryAgentProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("agentPoolName"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            step = ContainerRegistryTaskStepUpdateContent.DeserializeContainerRegistryTaskStepUpdateContent(property0.Value, options);
+                            step = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryTaskStepUpdateContent>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("trigger"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            trigger = ContainerRegistryTriggerUpdateContent.DeserializeContainerRegistryTriggerUpdateContent(property0.Value, options);
+                            trigger = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryTriggerUpdateContent>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("credentials"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            credentials = ContainerRegistryCredentials.DeserializeContainerRegistryCredentials(property0.Value, options);
+                            credentials = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryCredentials>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("logTemplate"u8))

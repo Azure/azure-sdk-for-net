@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(IngestionMappingName))
             {
                 writer.WritePropertyName("ingestionMappingName"u8);
-                JsonSerializer.Serialize(writer, IngestionMappingName);
+                ((IJsonModel<DataFactoryElement<T>>)IngestionMappingName).Write(writer, options);
             }
             if (Optional.IsDefined(IngestionMappingAsJson))
             {
                 writer.WritePropertyName("ingestionMappingAsJson"u8);
-                JsonSerializer.Serialize(writer, IngestionMappingAsJson);
+                ((IJsonModel<DataFactoryElement<T>>)IngestionMappingAsJson).Write(writer, options);
             }
             if (Optional.IsDefined(FlushImmediately))
             {
                 writer.WritePropertyName("flushImmediately"u8);
-                JsonSerializer.Serialize(writer, FlushImmediately);
+                ((IJsonModel<DataFactoryElement<T>>)FlushImmediately).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    ingestionMappingName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    ingestionMappingName = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ingestionMappingAsJson"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    ingestionMappingAsJson = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    ingestionMappingAsJson = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("flushImmediately"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    flushImmediately = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    flushImmediately = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    writeBatchSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    writeBatchSize = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("writeBatchTimeout"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    writeBatchTimeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    writeBatchTimeout = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sinkRetryCount"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sinkRetryCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    sinkRetryCount = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sinkRetryWait"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sinkRetryWait = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    sinkRetryWait = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("maxConcurrentConnections"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    maxConcurrentConnections = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("disableMetricsCollection"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    disableMetricsCollection = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

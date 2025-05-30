@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Datadog.Models
             if (Optional.IsDefined(LogRules))
             {
                 writer.WritePropertyName("logRules"u8);
-                writer.WriteObjectValue(LogRules, options);
+                ((IJsonModel<LogRules>)LogRules).Write(writer, options);
             }
             if (Optional.IsDefined(MetricRules))
             {
                 writer.WritePropertyName("metricRules"u8);
-                writer.WriteObjectValue(MetricRules, options);
+                ((IJsonModel<MetricRules>)MetricRules).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    logRules = LogRules.DeserializeLogRules(property.Value, options);
+                    logRules = ModelSerializationExtensions.JsonDeserialize<LogRules>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metricRules"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    metricRules = MetricRules.DeserializeMetricRules(property.Value, options);
+                    metricRules = ModelSerializationExtensions.JsonDeserialize<MetricRules>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

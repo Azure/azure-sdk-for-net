@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Traffic)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerAppRevisionTrafficWeight>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomDomains)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerAppCustomDomain>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,14 +92,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in IPSecurityRestrictions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerAppIPSecurityRestrictionRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(StickySessions))
             {
                 writer.WritePropertyName("stickySessions"u8);
-                writer.WriteObjectValue(StickySessions, options);
+                ((IJsonModel<IngressStickySessions>)StickySessions).Write(writer, options);
             }
             if (Optional.IsDefined(ClientCertificateMode))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(CorsPolicy))
             {
                 writer.WritePropertyName("corsPolicy"u8);
-                writer.WriteObjectValue(CorsPolicy, options);
+                ((IJsonModel<ContainerAppCorsPolicy>)CorsPolicy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AdditionalPortMappings))
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in AdditionalPortMappings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IngressPortMapping>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    stickySessions = IngressStickySessions.DeserializeIngressStickySessions(property.Value, options);
+                    stickySessions = ModelSerializationExtensions.JsonDeserialize<IngressStickySessions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("clientCertificateMode"u8))
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    corsPolicy = ContainerAppCorsPolicy.DeserializeContainerAppCorsPolicy(property.Value, options);
+                    corsPolicy = ModelSerializationExtensions.JsonDeserialize<ContainerAppCorsPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("additionalPortMappings"u8))

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataBoxEdgeDeviceData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

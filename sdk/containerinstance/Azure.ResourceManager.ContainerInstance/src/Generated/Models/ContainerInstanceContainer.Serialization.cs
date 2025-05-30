@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in Ports)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerPort>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,19 +69,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in EnvironmentVariables)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerEnvironmentVariable>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView, options);
+                ((IJsonModel<ContainerInstanceView>)InstanceView).Write(writer, options);
             }
             if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
-                writer.WriteObjectValue(Resources, options);
+                ((IJsonModel<ContainerResourceRequirements>)Resources).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(VolumeMounts))
             {
@@ -89,29 +89,29 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in VolumeMounts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerVolumeMount>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(LivenessProbe))
             {
                 writer.WritePropertyName("livenessProbe"u8);
-                writer.WriteObjectValue(LivenessProbe, options);
+                ((IJsonModel<ContainerProbe>)LivenessProbe).Write(writer, options);
             }
             if (Optional.IsDefined(ReadinessProbe))
             {
                 writer.WritePropertyName("readinessProbe"u8);
-                writer.WriteObjectValue(ReadinessProbe, options);
+                ((IJsonModel<ContainerProbe>)ReadinessProbe).Write(writer, options);
             }
             if (Optional.IsDefined(SecurityContext))
             {
                 writer.WritePropertyName("securityContext"u8);
-                writer.WriteObjectValue(SecurityContext, options);
+                ((IJsonModel<ContainerSecurityContextDefinition>)SecurityContext).Write(writer, options);
             }
             if (Optional.IsDefined(ConfigMap))
             {
                 writer.WritePropertyName("configMap"u8);
-                writer.WriteObjectValue(ConfigMap, options);
+                ((IJsonModel<ConfigMap>)ConfigMap).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             {
                                 continue;
                             }
-                            instanceView = ContainerInstanceView.DeserializeContainerInstanceView(property0.Value, options);
+                            instanceView = ModelSerializationExtensions.JsonDeserialize<ContainerInstanceView>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resources"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             {
                                 continue;
                             }
-                            resources = ContainerResourceRequirements.DeserializeContainerResourceRequirements(property0.Value, options);
+                            resources = ModelSerializationExtensions.JsonDeserialize<ContainerResourceRequirements>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("volumeMounts"u8))
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             {
                                 continue;
                             }
-                            livenessProbe = ContainerProbe.DeserializeContainerProbe(property0.Value, options);
+                            livenessProbe = ModelSerializationExtensions.JsonDeserialize<ContainerProbe>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("readinessProbe"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             {
                                 continue;
                             }
-                            readinessProbe = ContainerProbe.DeserializeContainerProbe(property0.Value, options);
+                            readinessProbe = ModelSerializationExtensions.JsonDeserialize<ContainerProbe>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("securityContext"u8))
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             {
                                 continue;
                             }
-                            securityContext = ContainerSecurityContextDefinition.DeserializeContainerSecurityContextDefinition(property0.Value, options);
+                            securityContext = ModelSerializationExtensions.JsonDeserialize<ContainerSecurityContextDefinition>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("configMap"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             {
                                 continue;
                             }
-                            configMap = ConfigMap.DeserializeConfigMap(property0.Value, options);
+                            configMap = ModelSerializationExtensions.JsonDeserialize<ConfigMap>(property0.Value);
                             continue;
                         }
                     }

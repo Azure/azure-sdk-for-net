@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("pipeline"u8);
-            writer.WriteObjectValue(Pipeline, options);
+            ((IJsonModel<TriggerPipelineReference>)Pipeline).Write(writer, options);
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("frequency"u8);
@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Delay))
             {
                 writer.WritePropertyName("delay"u8);
-                JsonSerializer.Serialize(writer, Delay);
+                ((IJsonModel<DataFactoryElement<T>>)Delay).Write(writer, options);
             }
             writer.WritePropertyName("maxConcurrency"u8);
             writer.WriteNumberValue(MaxConcurrency);
             if (Optional.IsDefined(RetryPolicy))
             {
                 writer.WritePropertyName("retryPolicy"u8);
-                writer.WriteObjectValue(RetryPolicy, options);
+                ((IJsonModel<RetryPolicy>)RetryPolicy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DependsOn))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DependencyReference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("pipeline"u8))
                 {
-                    pipeline = TriggerPipelineReference.DeserializeTriggerPipelineReference(property.Value, options);
+                    pipeline = ModelSerializationExtensions.JsonDeserialize<TriggerPipelineReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            delay = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            delay = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("maxConcurrency"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            retryPolicy = RetryPolicy.DeserializeRetryPolicy(property0.Value, options);
+                            retryPolicy = ModelSerializationExtensions.JsonDeserialize<RetryPolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dependsOn"u8))

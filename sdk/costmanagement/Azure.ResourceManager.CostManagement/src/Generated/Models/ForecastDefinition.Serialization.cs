@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(TimePeriod))
             {
                 writer.WritePropertyName("timePeriod"u8);
-                writer.WriteObjectValue(TimePeriod, options);
+                ((IJsonModel<ForecastTimePeriod>)TimePeriod).Write(writer, options);
             }
             writer.WritePropertyName("dataset"u8);
-            writer.WriteObjectValue(Dataset, options);
+            ((IJsonModel<ForecastDataset>)Dataset).Write(writer, options);
             if (Optional.IsDefined(IncludeActualCost))
             {
                 writer.WritePropertyName("includeActualCost"u8);
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    timePeriod = ForecastTimePeriod.DeserializeForecastTimePeriod(property.Value, options);
+                    timePeriod = ModelSerializationExtensions.JsonDeserialize<ForecastTimePeriod>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataset"u8))
                 {
-                    dataset = ForecastDataset.DeserializeForecastDataset(property.Value, options);
+                    dataset = ModelSerializationExtensions.JsonDeserialize<ForecastDataset>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("includeActualCost"u8))

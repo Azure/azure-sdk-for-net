@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in DataStoreParametersList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataStoreSettings>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in BackupDataSourceParametersList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BackupDataSourceSettings>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

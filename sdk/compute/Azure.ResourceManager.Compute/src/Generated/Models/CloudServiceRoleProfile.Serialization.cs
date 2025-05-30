@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Roles)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CloudServiceRoleProfileProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

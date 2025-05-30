@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(AzureFile))
             {
                 writer.WritePropertyName("azureFile"u8);
-                writer.WriteObjectValue(AzureFile, options);
+                ((IJsonModel<ContainerInstanceAzureFileVolume>)AzureFile).Write(writer, options);
             }
             if (Optional.IsDefined(EmptyDir))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(GitRepo))
             {
                 writer.WritePropertyName("gitRepo"u8);
-                writer.WriteObjectValue(GitRepo, options);
+                ((IJsonModel<ContainerInstanceGitRepoVolume>)GitRepo).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    azureFile = ContainerInstanceAzureFileVolume.DeserializeContainerInstanceAzureFileVolume(property.Value, options);
+                    azureFile = ModelSerializationExtensions.JsonDeserialize<ContainerInstanceAzureFileVolume>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("emptyDir"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    gitRepo = ContainerInstanceGitRepoVolume.DeserializeContainerInstanceGitRepoVolume(property.Value, options);
+                    gitRepo = ModelSerializationExtensions.JsonDeserialize<ContainerInstanceGitRepoVolume>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

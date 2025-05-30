@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Pk))
             {
                 writer.WritePropertyName("pk"u8);
-                writer.WriteObjectValue(Pk, options);
+                ((IJsonModel<UefiKey>)Pk).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Kek))
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Kek)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UefiKey>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Db)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UefiKey>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Dbx)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<UefiKey>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    pk = UefiKey.DeserializeUefiKey(property.Value, options);
+                    pk = ModelSerializationExtensions.JsonDeserialize<UefiKey>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kek"u8))

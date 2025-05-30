@@ -50,20 +50,20 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteBooleanValue(HasHeader.Value);
             }
             writer.WritePropertyName("errorManagement"u8);
-            writer.WriteObjectValue(ErrorManagement, options);
+            ((IJsonModel<ConnectorMappingErrorManagement>)ErrorManagement).Write(writer, options);
             writer.WritePropertyName("format"u8);
-            writer.WriteObjectValue(Format, options);
+            ((IJsonModel<ConnectorMappingFormat>)Format).Write(writer, options);
             writer.WritePropertyName("availability"u8);
-            writer.WriteObjectValue(Availability, options);
+            ((IJsonModel<ConnectorMappingAvailability>)Availability).Write(writer, options);
             writer.WritePropertyName("structure"u8);
             writer.WriteStartArray();
             foreach (var item in Structure)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ConnectorMappingStructure>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("completeOperation"u8);
-            writer.WriteObjectValue(CompleteOperation, options);
+            ((IJsonModel<ConnectorMappingCompleteOperation>)CompleteOperation).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -134,17 +134,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 if (property.NameEquals("errorManagement"u8))
                 {
-                    errorManagement = ConnectorMappingErrorManagement.DeserializeConnectorMappingErrorManagement(property.Value, options);
+                    errorManagement = ModelSerializationExtensions.JsonDeserialize<ConnectorMappingErrorManagement>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("format"u8))
                 {
-                    format = ConnectorMappingFormat.DeserializeConnectorMappingFormat(property.Value, options);
+                    format = ModelSerializationExtensions.JsonDeserialize<ConnectorMappingFormat>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("availability"u8))
                 {
-                    availability = ConnectorMappingAvailability.DeserializeConnectorMappingAvailability(property.Value, options);
+                    availability = ModelSerializationExtensions.JsonDeserialize<ConnectorMappingAvailability>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("structure"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 if (property.NameEquals("completeOperation"u8))
                 {
-                    completeOperation = ConnectorMappingCompleteOperation.DeserializeConnectorMappingCompleteOperation(property.Value, options);
+                    completeOperation = ModelSerializationExtensions.JsonDeserialize<ConnectorMappingCompleteOperation>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
-                writer.WriteObjectValue(ImageReference, options);
+                ((IJsonModel<ImageReference>)ImageReference).Write(writer, options);
             }
             if (Optional.IsDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
-                writer.WriteObjectValue(OSDisk, options);
+                ((IJsonModel<VirtualMachineOSDisk>)OSDisk).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DataDisks))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDisks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VirtualMachineDataDisk>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    imageReference = ImageReference.DeserializeImageReference(property.Value, options);
+                    imageReference = ModelSerializationExtensions.JsonDeserialize<ImageReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("osDisk"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osDisk = VirtualMachineOSDisk.DeserializeVirtualMachineOSDisk(property.Value, options);
+                    osDisk = ModelSerializationExtensions.JsonDeserialize<VirtualMachineOSDisk>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataDisks"u8))

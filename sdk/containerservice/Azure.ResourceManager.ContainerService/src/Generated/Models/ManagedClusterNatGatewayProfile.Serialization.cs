@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(ManagedOutboundIPProfile))
             {
                 writer.WritePropertyName("managedOutboundIPProfile"u8);
-                writer.WriteObjectValue(ManagedOutboundIPProfile, options);
+                ((IJsonModel<ManagedClusterManagedOutboundIPProfile>)ManagedOutboundIPProfile).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(EffectiveOutboundIPs))
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in EffectiveOutboundIPs)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    managedOutboundIPProfile = ManagedClusterManagedOutboundIPProfile.DeserializeManagedClusterManagedOutboundIPProfile(property.Value, options);
+                    managedOutboundIPProfile = ModelSerializationExtensions.JsonDeserialize<ManagedClusterManagedOutboundIPProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("effectiveOutboundIPs"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                        array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                     }
                     effectiveOutboundIPs = array;
                     continue;

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in AlternateAddresses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataBoxShippingAddress>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataBox.Models
                             {
                                 continue;
                             }
-                            error = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
+                            error = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("validationStatus"u8))

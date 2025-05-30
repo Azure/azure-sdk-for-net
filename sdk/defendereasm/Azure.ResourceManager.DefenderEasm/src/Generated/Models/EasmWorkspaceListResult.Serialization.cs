@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EasmWorkspaceData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

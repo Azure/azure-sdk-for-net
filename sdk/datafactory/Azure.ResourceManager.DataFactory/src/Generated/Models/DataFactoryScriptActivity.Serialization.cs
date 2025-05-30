@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ScriptBlockExecutionTimeout))
             {
                 writer.WritePropertyName("scriptBlockExecutionTimeout"u8);
-                JsonSerializer.Serialize(writer, ScriptBlockExecutionTimeout);
+                ((IJsonModel<DataFactoryElement<T>>)ScriptBlockExecutionTimeout).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Scripts))
             {
@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Scripts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ScriptActivityScriptBlock>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(LogSettings))
             {
                 writer.WritePropertyName("logSettings"u8);
-                writer.WriteObjectValue(LogSettings, options);
+                ((IJsonModel<ScriptActivityTypeLogSettings>)LogSettings).Write(writer, options);
             }
             if (Optional.IsDefined(ReturnMultistatementResult))
             {
                 writer.WritePropertyName("returnMultistatementResult"u8);
-                JsonSerializer.Serialize(writer, ReturnMultistatementResult);
+                ((IJsonModel<DataFactoryElement<T>>)ReturnMultistatementResult).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
+                    policy = ModelSerializationExtensions.JsonDeserialize<PipelineActivityPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            scriptBlockExecutionTimeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            scriptBlockExecutionTimeout = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("scripts"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            logSettings = ScriptActivityTypeLogSettings.DeserializeScriptActivityTypeLogSettings(property0.Value, options);
+                            logSettings = ModelSerializationExtensions.JsonDeserialize<ScriptActivityTypeLogSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("returnMultistatementResult"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            returnMultistatementResult = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            returnMultistatementResult = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                     }

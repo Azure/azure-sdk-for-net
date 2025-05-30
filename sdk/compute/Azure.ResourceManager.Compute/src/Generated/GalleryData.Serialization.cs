@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
-                writer.WriteObjectValue(Identifier, options);
+                ((IJsonModel<GalleryIdentifier>)Identifier).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -62,17 +62,17 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(SharingProfile))
             {
                 writer.WritePropertyName("sharingProfile"u8);
-                writer.WriteObjectValue(SharingProfile, options);
+                ((IJsonModel<SharingProfile>)SharingProfile).Write(writer, options);
             }
             if (Optional.IsDefined(SoftDeletePolicy))
             {
                 writer.WritePropertyName("softDeletePolicy"u8);
-                writer.WriteObjectValue(SoftDeletePolicy, options);
+                ((IJsonModel<SoftDeletePolicy>)SoftDeletePolicy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SharingStatus))
             {
                 writer.WritePropertyName("sharingStatus"u8);
-                writer.WriteObjectValue(SharingStatus, options);
+                ((IJsonModel<SharingStatus>)SharingStatus).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            identifier = GalleryIdentifier.DeserializeGalleryIdentifier(property0.Value, options);
+                            identifier = ModelSerializationExtensions.JsonDeserialize<GalleryIdentifier>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            sharingProfile = SharingProfile.DeserializeSharingProfile(property0.Value, options);
+                            sharingProfile = ModelSerializationExtensions.JsonDeserialize<SharingProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("softDeletePolicy"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            softDeletePolicy = SoftDeletePolicy.DeserializeSoftDeletePolicy(property0.Value, options);
+                            softDeletePolicy = ModelSerializationExtensions.JsonDeserialize<SoftDeletePolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sharingStatus"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            sharingStatus = SharingStatus.DeserializeSharingStatus(property0.Value, options);
+                            sharingStatus = ModelSerializationExtensions.JsonDeserialize<SharingStatus>(property0.Value);
                             continue;
                         }
                     }

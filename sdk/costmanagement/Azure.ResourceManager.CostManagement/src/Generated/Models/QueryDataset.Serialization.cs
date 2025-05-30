@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration, options);
+                ((IJsonModel<QueryDatasetConfiguration>)Configuration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Aggregation))
             {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 foreach (var item in Aggregation)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<QueryAggregation>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Grouping)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<QueryGrouping>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter, options);
+                ((IJsonModel<QueryFilter>)Filter).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    configuration = QueryDatasetConfiguration.DeserializeQueryDatasetConfiguration(property.Value, options);
+                    configuration = ModelSerializationExtensions.JsonDeserialize<QueryDatasetConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("aggregation"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    filter = QueryFilter.DeserializeQueryFilter(property.Value, options);
+                    filter = ModelSerializationExtensions.JsonDeserialize<QueryFilter>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

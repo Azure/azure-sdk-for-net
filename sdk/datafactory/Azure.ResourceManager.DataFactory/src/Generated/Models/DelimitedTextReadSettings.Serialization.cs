@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SkipLineCount))
             {
                 writer.WritePropertyName("skipLineCount"u8);
-                JsonSerializer.Serialize(writer, SkipLineCount);
+                ((IJsonModel<DataFactoryElement<T>>)SkipLineCount).Write(writer, options);
             }
             if (Optional.IsDefined(CompressionProperties))
             {
                 writer.WritePropertyName("compressionProperties"u8);
-                writer.WriteObjectValue(CompressionProperties, options);
+                ((IJsonModel<CompressionReadSettings>)CompressionProperties).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    skipLineCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    skipLineCount = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("compressionProperties"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    compressionProperties = CompressionReadSettings.DeserializeCompressionReadSettings(property.Value, options);
+                    compressionProperties = ModelSerializationExtensions.JsonDeserialize<CompressionReadSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

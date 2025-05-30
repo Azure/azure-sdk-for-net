@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in DataExportDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataExportDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in DataImportDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataImportDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

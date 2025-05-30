@@ -39,15 +39,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("server"u8);
-            JsonSerializer.Serialize(writer, Server);
+            ((IJsonModel<DataFactoryElement<T>>)Server).Write(writer, options);
             writer.WritePropertyName("systemNumber"u8);
-            JsonSerializer.Serialize(writer, SystemNumber);
+            ((IJsonModel<DataFactoryElement<T>>)SystemNumber).Write(writer, options);
             writer.WritePropertyName("clientId"u8);
-            JsonSerializer.Serialize(writer, ClientId);
+            ((IJsonModel<DataFactoryElement<T>>)ClientId).Write(writer, options);
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                JsonSerializer.Serialize(writer, UserName);
+                ((IJsonModel<DataFactoryElement<T>>)UserName).Write(writer, options);
             }
             if (Optional.IsDefined(Password))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
+                    connectVia = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -180,17 +180,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("server"u8))
                         {
-                            server = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            server = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("systemNumber"u8))
                         {
-                            systemNumber = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            systemNumber = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clientId"u8))
                         {
-                            clientId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            clientId = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("userName"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            userName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            userName = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("password"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            password = ModelSerializationExtensions.JsonDeserialize<DataFactorySecret>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

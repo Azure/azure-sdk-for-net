@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(SecretStoreResource))
             {
                 writer.WritePropertyName("secretStoreResource"u8);
-                writer.WriteObjectValue(SecretStoreResource, options);
+                ((IJsonModel<SecretStoreResourceInfo>)SecretStoreResource).Write(writer, options);
             }
         }
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    secretStoreResource = SecretStoreResourceInfo.DeserializeSecretStoreResourceInfo(property.Value, options);
+                    secretStoreResource = ModelSerializationExtensions.JsonDeserialize<SecretStoreResourceInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))

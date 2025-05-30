@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(ReaperStatus))
             {
                 writer.WritePropertyName("reaperStatus"u8);
-                writer.WriteObjectValue(ReaperStatus, options);
+                ((IJsonModel<CassandraReaperStatus>)ReaperStatus).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ConnectionErrors))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in ConnectionErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CassandraConnectionError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CassandraError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in DataCenters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CassandraClusterPublicStatusDataCentersItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    reaperStatus = CassandraReaperStatus.DeserializeCassandraReaperStatus(property.Value, options);
+                    reaperStatus = ModelSerializationExtensions.JsonDeserialize<CassandraReaperStatus>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("connectionErrors"u8))

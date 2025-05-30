@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Roles)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MongoDBRole>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

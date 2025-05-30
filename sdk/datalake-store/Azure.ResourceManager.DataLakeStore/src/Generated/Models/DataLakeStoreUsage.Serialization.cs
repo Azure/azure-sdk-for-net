@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
+                ((IJsonModel<DataLakeStoreUsageName>)Name).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     {
                         continue;
                     }
-                    name = DataLakeStoreUsageName.DeserializeDataLakeStoreUsageName(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<DataLakeStoreUsageName>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

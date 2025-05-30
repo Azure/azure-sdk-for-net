@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             if (Optional.IsDefined(KeyVaultMetaInfo))
             {
                 writer.WritePropertyName("keyVaultMetaInfo"u8);
-                writer.WriteObjectValue(KeyVaultMetaInfo, options);
+                ((IJsonModel<DataLakeStoreAccountKeyVaultMetaInfo>)KeyVaultMetaInfo).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     {
                         continue;
                     }
-                    keyVaultMetaInfo = DataLakeStoreAccountKeyVaultMetaInfo.DeserializeDataLakeStoreAccountKeyVaultMetaInfo(property.Value, options);
+                    keyVaultMetaInfo = ModelSerializationExtensions.JsonDeserialize<DataLakeStoreAccountKeyVaultMetaInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

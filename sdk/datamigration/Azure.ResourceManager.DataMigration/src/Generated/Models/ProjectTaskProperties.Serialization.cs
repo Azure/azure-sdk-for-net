@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ODataError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Commands)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CommandProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<LogAnalyticsOutput>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    properties = Models.LogAnalyticsOutput.DeserializeLogAnalyticsOutput(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<LogAnalyticsOutput>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("waitTimeInSeconds"u8);
-            JsonSerializer.Serialize(writer, WaitTimeInSeconds);
+            ((IJsonModel<DataFactoryElement<T>>)WaitTimeInSeconds).Write(writer, options);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("waitTimeInSeconds"u8))
                         {
-                            waitTimeInSeconds = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            waitTimeInSeconds = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property0.Value);
                             continue;
                         }
                     }

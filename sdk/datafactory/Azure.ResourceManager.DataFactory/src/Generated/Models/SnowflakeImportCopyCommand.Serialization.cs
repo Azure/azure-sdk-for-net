@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(StorageIntegration))
             {
                 writer.WritePropertyName("storageIntegration"u8);
-                JsonSerializer.Serialize(writer, StorageIntegration);
+                ((IJsonModel<DataFactoryElement<T>>)StorageIntegration).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    storageIntegration = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    storageIntegration = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

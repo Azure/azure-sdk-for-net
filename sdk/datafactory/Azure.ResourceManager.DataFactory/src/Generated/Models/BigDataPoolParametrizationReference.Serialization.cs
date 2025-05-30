@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ReferenceType.ToString());
             writer.WritePropertyName("referenceName"u8);
-            JsonSerializer.Serialize(writer, ReferenceName);
+            ((IJsonModel<DataFactoryElement<T>>)ReferenceName).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("referenceName"u8))
                 {
-                    referenceName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    referenceName = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

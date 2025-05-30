@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("targetName"u8);
-            JsonSerializer.Serialize(writer, TargetName);
+            ((IJsonModel<DataFactoryElement<T>>)TargetName).Write(writer, options);
             writer.WritePropertyName("userName"u8);
-            JsonSerializer.Serialize(writer, UserName);
+            ((IJsonModel<DataFactoryElement<T>>)UserName).Write(writer, options);
             writer.WritePropertyName("password"u8);
             JsonSerializer.Serialize(writer, Password);
             writer.WriteEndObject();
@@ -91,17 +91,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("targetName"u8))
                         {
-                            targetName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            targetName = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("userName"u8))
                         {
-                            userName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            userName = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("password"u8))
                         {
-                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            password = ModelSerializationExtensions.JsonDeserialize<DataFactorySecret>(property0.Value);
                             continue;
                         }
                     }

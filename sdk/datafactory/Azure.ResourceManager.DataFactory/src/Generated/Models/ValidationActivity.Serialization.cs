@@ -41,25 +41,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
-                JsonSerializer.Serialize(writer, Timeout);
+                ((IJsonModel<DataFactoryElement<T>>)Timeout).Write(writer, options);
             }
             if (Optional.IsDefined(Sleep))
             {
                 writer.WritePropertyName("sleep"u8);
-                JsonSerializer.Serialize(writer, Sleep);
+                ((IJsonModel<DataFactoryElement<T>>)Sleep).Write(writer, options);
             }
             if (Optional.IsDefined(MinimumSize))
             {
                 writer.WritePropertyName("minimumSize"u8);
-                JsonSerializer.Serialize(writer, MinimumSize);
+                ((IJsonModel<DataFactoryElement<T>>)MinimumSize).Write(writer, options);
             }
             if (Optional.IsDefined(ChildItems))
             {
                 writer.WritePropertyName("childItems"u8);
-                JsonSerializer.Serialize(writer, ChildItems);
+                ((IJsonModel<DataFactoryElement<T>>)ChildItems).Write(writer, options);
             }
             writer.WritePropertyName("dataset"u8);
-            writer.WriteObjectValue(Dataset, options);
+            ((IJsonModel<DatasetReference>)Dataset).Write(writer, options);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            timeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            timeout = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sleep"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            sleep = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            sleep = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("minimumSize"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            minimumSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            minimumSize = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("childItems"u8))
@@ -214,12 +214,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            childItems = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            childItems = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dataset"u8))
                         {
-                            dataset = DatasetReference.DeserializeDatasetReference(property0.Value, options);
+                            dataset = ModelSerializationExtensions.JsonDeserialize<DatasetReference>(property0.Value);
                             continue;
                         }
                     }

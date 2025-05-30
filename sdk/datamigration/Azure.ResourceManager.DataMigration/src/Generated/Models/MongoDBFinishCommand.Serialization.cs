@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue(Input, options);
+                ((IJsonModel<MongoDBFinishCommandInput>)Input).Write(writer, options);
             }
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    input = MongoDBFinishCommandInput.DeserializeMongoDBFinishCommandInput(property.Value, options);
+                    input = ModelSerializationExtensions.JsonDeserialize<MongoDBFinishCommandInput>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("commandType"u8))

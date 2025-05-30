@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder, options);
+                ((IJsonModel<ChangeDataCaptureFolder>)Folder).Write(writer, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -58,18 +58,18 @@ namespace Azure.ResourceManager.DataFactory
             writer.WriteStartArray();
             foreach (var item in SourceConnectionsInfo)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<MapperSourceConnectionsInfo>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("targetConnectionsInfo"u8);
             writer.WriteStartArray();
             foreach (var item in TargetConnectionsInfo)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<MapperTargetConnectionsInfo>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("policy"u8);
-            writer.WriteObjectValue(Policy, options);
+            ((IJsonModel<MapperPolicy>)Policy).Write(writer, options);
             if (Optional.IsDefined(AllowVnetOverride))
             {
                 writer.WritePropertyName("allowVNetOverride"u8);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DataFactory
                             {
                                 continue;
                             }
-                            folder = ChangeDataCaptureFolder.DeserializeChangeDataCaptureFolder(property0.Value, options);
+                            folder = ModelSerializationExtensions.JsonDeserialize<ChangeDataCaptureFolder>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("description"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DataFactory
                         }
                         if (property0.NameEquals("policy"u8))
                         {
-                            policy = MapperPolicy.DeserializeMapperPolicy(property0.Value, options);
+                            policy = ModelSerializationExtensions.JsonDeserialize<MapperPolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("allowVNetOverride"u8))

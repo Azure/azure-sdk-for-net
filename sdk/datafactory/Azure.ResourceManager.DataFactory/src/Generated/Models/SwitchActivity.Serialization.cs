@@ -38,14 +38,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("on"u8);
-            writer.WriteObjectValue(On, options);
+            ((IJsonModel<DataFactoryExpression>)On).Write(writer, options);
             if (Optional.IsCollectionDefined(Cases))
             {
                 writer.WritePropertyName("cases"u8);
                 writer.WriteStartArray();
                 foreach (var item in Cases)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SwitchCaseActivity>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DefaultActivities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PipelineActivity>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("on"u8))
                         {
-                            @on = DataFactoryExpression.DeserializeDataFactoryExpression(property0.Value, options);
+                            @on = ModelSerializationExtensions.JsonDeserialize<DataFactoryExpression>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cases"u8))

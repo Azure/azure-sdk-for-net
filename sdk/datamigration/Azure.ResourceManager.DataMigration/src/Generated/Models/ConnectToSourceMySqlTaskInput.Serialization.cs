@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WritePropertyName("sourceConnectionInfo"u8);
-            writer.WriteObjectValue(SourceConnectionInfo, options);
+            ((IJsonModel<MySqlConnectionInfo>)SourceConnectionInfo).Write(writer, options);
             if (Optional.IsDefined(TargetPlatform))
             {
                 writer.WritePropertyName("targetPlatform"u8);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value, options);
+                    sourceConnectionInfo = ModelSerializationExtensions.JsonDeserialize<MySqlConnectionInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetPlatform"u8))

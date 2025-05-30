@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IntegrationRuntimeNodeMonitoringData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

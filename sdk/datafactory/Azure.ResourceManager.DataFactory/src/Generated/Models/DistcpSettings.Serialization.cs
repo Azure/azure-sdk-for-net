@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WritePropertyName("resourceManagerEndpoint"u8);
-            JsonSerializer.Serialize(writer, ResourceManagerEndpoint);
+            ((IJsonModel<DataFactoryElement<T>>)ResourceManagerEndpoint).Write(writer, options);
             writer.WritePropertyName("tempScriptPath"u8);
-            JsonSerializer.Serialize(writer, TempScriptPath);
+            ((IJsonModel<DataFactoryElement<T>>)TempScriptPath).Write(writer, options);
             if (Optional.IsDefined(DistcpOptions))
             {
                 writer.WritePropertyName("distcpOptions"u8);
-                JsonSerializer.Serialize(writer, DistcpOptions);
+                ((IJsonModel<DataFactoryElement<T>>)DistcpOptions).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("resourceManagerEndpoint"u8))
                 {
-                    resourceManagerEndpoint = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    resourceManagerEndpoint = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tempScriptPath"u8))
                 {
-                    tempScriptPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    tempScriptPath = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("distcpOptions"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    distcpOptions = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    distcpOptions = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

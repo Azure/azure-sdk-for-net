@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WritePropertyName("accountDetails"u8);
-            writer.WriteObjectValue(AccountDetails, options);
+            ((IJsonModel<DataAccountDetails>)AccountDetails).Write(writer, options);
             if (Optional.IsDefined(LogCollectionLevel))
             {
                 writer.WritePropertyName("logCollectionLevel"u8);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 if (property.NameEquals("accountDetails"u8))
                 {
-                    accountDetails = DataAccountDetails.DeserializeDataAccountDetails(property.Value, options);
+                    accountDetails = ModelSerializationExtensions.JsonDeserialize<DataAccountDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("logCollectionLevel"u8))

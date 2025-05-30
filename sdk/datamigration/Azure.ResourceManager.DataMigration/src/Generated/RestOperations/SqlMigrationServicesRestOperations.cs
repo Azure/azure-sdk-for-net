@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.DataMigration
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            ((IJsonModel<SqlMigrationServiceData>)data).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -341,7 +342,7 @@ namespace Azure.ResourceManager.DataMigration
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            ((IJsonModel<SqlMigrationServicePatch>)patch).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -615,7 +616,7 @@ namespace Azure.ResourceManager.DataMigration
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(regenAuthKeys, ModelSerializationExtensions.WireOptions);
+            ((IJsonModel<RegenAuthKeys>)regenAuthKeys).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -717,7 +718,7 @@ namespace Azure.ResourceManager.DataMigration
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(deleteNode, ModelSerializationExtensions.WireOptions);
+            ((IJsonModel<DeleteNode>)deleteNode).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;

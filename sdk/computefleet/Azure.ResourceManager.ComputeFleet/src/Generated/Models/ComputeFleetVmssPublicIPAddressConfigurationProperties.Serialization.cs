@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
-                writer.WriteObjectValue(DnsSettings, options);
+                ((IJsonModel<ComputeFleetVmssPublicIPAddressDnsSettings>)DnsSettings).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(IPTags))
             {
@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WriteStartArray();
                 foreach (var item in IPTags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ComputeFleetVmssIPTag>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PublicIPPrefix))
             {
                 writer.WritePropertyName("publicIPPrefix"u8);
-                JsonSerializer.Serialize(writer, PublicIPPrefix);
+                ((IJsonModel<WritableSubResource>)PublicIPPrefix).Write(writer, options);
             }
             if (Optional.IsDefined(PublicIPAddressVersion))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    dnsSettings = ComputeFleetVmssPublicIPAddressDnsSettings.DeserializeComputeFleetVmssPublicIPAddressDnsSettings(property.Value, options);
+                    dnsSettings = ModelSerializationExtensions.JsonDeserialize<ComputeFleetVmssPublicIPAddressDnsSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ipTags"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    publicIPPrefix = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    publicIPPrefix = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("publicIPAddressVersion"u8))

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Location))
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(RunRequest))
             {
                 writer.WritePropertyName("runRequest"u8);
-                writer.WriteObjectValue(RunRequest, options);
+                ((IJsonModel<ContainerRegistryRunContent>)RunRequest).Write(writer, options);
             }
             if (Optional.IsDefined(ForceUpdateTag))
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            runRequest = ContainerRegistryRunContent.DeserializeContainerRegistryRunContent(property0.Value, options);
+                            runRequest = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryRunContent>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("forceUpdateTag"u8))

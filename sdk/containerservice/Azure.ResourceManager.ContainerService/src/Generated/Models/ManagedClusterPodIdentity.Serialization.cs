@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStringValue(BindingSelector);
             }
             writer.WritePropertyName("identity"u8);
-            writer.WriteObjectValue(Identity, options);
+            ((IJsonModel<ContainerServiceUserAssignedIdentity>)Identity).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (options.Format != "W" && Optional.IsDefined(ProvisioningInfo))
             {
                 writer.WritePropertyName("provisioningInfo"u8);
-                writer.WriteObjectValue(ProvisioningInfo, options);
+                ((IJsonModel<ManagedClusterPodIdentityProvisioningInfo>)ProvisioningInfo).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (property.NameEquals("identity"u8))
                 {
-                    identity = ContainerServiceUserAssignedIdentity.DeserializeContainerServiceUserAssignedIdentity(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ContainerServiceUserAssignedIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    provisioningInfo = ManagedClusterPodIdentityProvisioningInfo.DeserializeManagedClusterPodIdentityProvisioningInfo(property.Value, options);
+                    provisioningInfo = ModelSerializationExtensions.JsonDeserialize<ManagedClusterPodIdentityProvisioningInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

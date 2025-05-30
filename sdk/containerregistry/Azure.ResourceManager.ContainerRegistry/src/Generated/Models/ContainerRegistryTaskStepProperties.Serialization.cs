@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in BaseImageDependencies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerRegistryBaseImageDependency>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

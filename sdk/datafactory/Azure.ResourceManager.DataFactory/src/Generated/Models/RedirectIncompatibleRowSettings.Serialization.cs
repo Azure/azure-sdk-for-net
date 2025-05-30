@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WritePropertyName("linkedServiceName"u8);
-            JsonSerializer.Serialize(writer, LinkedServiceName);
+            ((IJsonModel<DataFactoryElement<T>>)LinkedServiceName).Write(writer, options);
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
-                JsonSerializer.Serialize(writer, Path);
+                ((IJsonModel<DataFactoryElement<T>>)Path).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    linkedServiceName = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("path"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    path = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    path = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

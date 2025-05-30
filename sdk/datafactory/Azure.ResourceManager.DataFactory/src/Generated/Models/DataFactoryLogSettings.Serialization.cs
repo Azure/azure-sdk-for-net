@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EnableCopyActivityLog))
             {
                 writer.WritePropertyName("enableCopyActivityLog"u8);
-                JsonSerializer.Serialize(writer, EnableCopyActivityLog);
+                ((IJsonModel<DataFactoryElement<T>>)EnableCopyActivityLog).Write(writer, options);
             }
             if (Optional.IsDefined(CopyActivityLogSettings))
             {
                 writer.WritePropertyName("copyActivityLogSettings"u8);
-                writer.WriteObjectValue(CopyActivityLogSettings, options);
+                ((IJsonModel<CopyActivityLogSettings>)CopyActivityLogSettings).Write(writer, options);
             }
             writer.WritePropertyName("logLocationSettings"u8);
-            writer.WriteObjectValue(LogLocationSettings, options);
+            ((IJsonModel<LogLocationSettings>)LogLocationSettings).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    enableCopyActivityLog = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    enableCopyActivityLog = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("copyActivityLogSettings"u8))
@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    copyActivityLogSettings = CopyActivityLogSettings.DeserializeCopyActivityLogSettings(property.Value, options);
+                    copyActivityLogSettings = ModelSerializationExtensions.JsonDeserialize<CopyActivityLogSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("logLocationSettings"u8))
                 {
-                    logLocationSettings = LogLocationSettings.DeserializeLogLocationSettings(property.Value, options);
+                    logLocationSettings = ModelSerializationExtensions.JsonDeserialize<LogLocationSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

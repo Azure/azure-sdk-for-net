@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    autoscaleSettings = AutoscaleSettingsResourceInfo.DeserializeAutoscaleSettingsResourceInfo(property.Value, options);
+                    autoscaleSettings = ModelSerializationExtensions.JsonDeserialize<AutoscaleSettingsResourceInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("minimumThroughput"u8))

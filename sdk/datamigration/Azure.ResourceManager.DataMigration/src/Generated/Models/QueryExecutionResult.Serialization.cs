@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(SourceResult))
             {
                 writer.WritePropertyName("sourceResult"u8);
-                writer.WriteObjectValue(SourceResult, options);
+                ((IJsonModel<ExecutionStatistics>)SourceResult).Write(writer, options);
             }
             if (Optional.IsDefined(TargetResult))
             {
                 writer.WritePropertyName("targetResult"u8);
-                writer.WriteObjectValue(TargetResult, options);
+                ((IJsonModel<ExecutionStatistics>)TargetResult).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    sourceResult = ExecutionStatistics.DeserializeExecutionStatistics(property.Value, options);
+                    sourceResult = ModelSerializationExtensions.JsonDeserialize<ExecutionStatistics>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetResult"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    targetResult = ExecutionStatistics.DeserializeExecutionStatistics(property.Value, options);
+                    targetResult = ModelSerializationExtensions.JsonDeserialize<ExecutionStatistics>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

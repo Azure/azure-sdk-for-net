@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
-                writer.WriteObjectValue(EncryptionSettings, options);
+                ((IJsonModel<DiskEncryptionSettings>)EncryptionSettings).Write(writer, options);
             }
             if (Optional.IsDefined(Name))
             {
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Vhd))
             {
                 writer.WritePropertyName("vhd"u8);
-                writer.WriteObjectValue(Vhd, options);
+                ((IJsonModel<VirtualHardDisk>)Vhd).Write(writer, options);
             }
             if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
-                writer.WriteObjectValue(Image, options);
+                ((IJsonModel<VirtualHardDisk>)Image).Write(writer, options);
             }
             if (Optional.IsDefined(Caching))
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(DiffDiskSettings))
             {
                 writer.WritePropertyName("diffDiskSettings"u8);
-                writer.WriteObjectValue(DiffDiskSettings, options);
+                ((IJsonModel<DiffDiskSettings>)DiffDiskSettings).Write(writer, options);
             }
             writer.WritePropertyName("createOption"u8);
             writer.WriteStringValue(CreateOption.ToString());
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
-                writer.WriteObjectValue(ManagedDisk, options);
+                ((IJsonModel<VirtualMachineManagedDisk>)ManagedDisk).Write(writer, options);
             }
             if (Optional.IsDefined(DeleteOption))
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryptionSettings = DiskEncryptionSettings.DeserializeDiskEncryptionSettings(property.Value, options);
+                    encryptionSettings = ModelSerializationExtensions.JsonDeserialize<DiskEncryptionSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    vhd = VirtualHardDisk.DeserializeVirtualHardDisk(property.Value, options);
+                    vhd = ModelSerializationExtensions.JsonDeserialize<VirtualHardDisk>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("image"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    image = VirtualHardDisk.DeserializeVirtualHardDisk(property.Value, options);
+                    image = ModelSerializationExtensions.JsonDeserialize<VirtualHardDisk>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("caching"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    diffDiskSettings = DiffDiskSettings.DeserializeDiffDiskSettings(property.Value, options);
+                    diffDiskSettings = ModelSerializationExtensions.JsonDeserialize<DiffDiskSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("createOption"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    managedDisk = VirtualMachineManagedDisk.DeserializeVirtualMachineManagedDisk(property.Value, options);
+                    managedDisk = ModelSerializationExtensions.JsonDeserialize<VirtualMachineManagedDisk>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deleteOption"u8))

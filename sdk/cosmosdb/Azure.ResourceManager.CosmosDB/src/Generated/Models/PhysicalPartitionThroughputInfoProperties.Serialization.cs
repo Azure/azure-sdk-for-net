@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in PhysicalPartitionThroughputInfo)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PhysicalPartitionThroughputInfoResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

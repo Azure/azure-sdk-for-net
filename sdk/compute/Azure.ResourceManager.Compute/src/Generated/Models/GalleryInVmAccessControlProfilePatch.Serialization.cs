@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<GalleryInVmAccessControlProfileProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    properties = GalleryInVmAccessControlProfileProperties.DeserializeGalleryInVmAccessControlProfileProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<GalleryInVmAccessControlProfileProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

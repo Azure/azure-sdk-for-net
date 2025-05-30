@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(DiffDiskSettings))
             {
                 writer.WritePropertyName("diffDiskSettings"u8);
-                writer.WriteObjectValue(DiffDiskSettings, options);
+                ((IJsonModel<DiffDiskSettings>)DiffDiskSettings).Write(writer, options);
             }
             if (Optional.IsDefined(DiskSizeGB))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
-                writer.WriteObjectValue(Image, options);
+                ((IJsonModel<VirtualHardDisk>)Image).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(VhdContainers))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
-                writer.WriteObjectValue(ManagedDisk, options);
+                ((IJsonModel<VirtualMachineScaleSetManagedDisk>)ManagedDisk).Write(writer, options);
             }
             if (Optional.IsDefined(DeleteOption))
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    diffDiskSettings = DiffDiskSettings.DeserializeDiffDiskSettings(property.Value, options);
+                    diffDiskSettings = ModelSerializationExtensions.JsonDeserialize<DiffDiskSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("diskSizeGB"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    image = VirtualHardDisk.DeserializeVirtualHardDisk(property.Value, options);
+                    image = ModelSerializationExtensions.JsonDeserialize<VirtualHardDisk>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vhdContainers"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    managedDisk = VirtualMachineScaleSetManagedDisk.DeserializeVirtualMachineScaleSetManagedDisk(property.Value, options);
+                    managedDisk = ModelSerializationExtensions.JsonDeserialize<VirtualMachineScaleSetManagedDisk>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deleteOption"u8))

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (options.Format != "W" && Optional.IsDefined(DeletionInfo))
             {
                 writer.WritePropertyName("deletionInfo"u8);
-                writer.WriteObjectValue(DeletionInfo, options);
+                ((IJsonModel<BackupInstanceDeletionInfo>)DeletionInfo).Write(writer, options);
             }
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    deletionInfo = BackupInstanceDeletionInfo.DeserializeBackupInstanceDeletionInfo(property.Value, options);
+                    deletionInfo = ModelSerializationExtensions.JsonDeserialize<BackupInstanceDeletionInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("friendlyName"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (property.NameEquals("dataSourceInfo"u8))
                 {
-                    dataSourceInfo = DataSourceInfo.DeserializeDataSourceInfo(property.Value, options);
+                    dataSourceInfo = ModelSerializationExtensions.JsonDeserialize<DataSourceInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataSourceSetInfo"u8))
@@ -105,12 +105,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    dataSourceSetInfo = DataSourceSetInfo.DeserializeDataSourceSetInfo(property.Value, options);
+                    dataSourceSetInfo = ModelSerializationExtensions.JsonDeserialize<DataSourceSetInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policyInfo"u8))
                 {
-                    policyInfo = BackupInstancePolicyInfo.DeserializeBackupInstancePolicyInfo(property.Value, options);
+                    policyInfo = ModelSerializationExtensions.JsonDeserialize<BackupInstancePolicyInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceGuardOperationRequests"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    protectionStatus = BackupInstanceProtectionStatusDetails.DeserializeBackupInstanceProtectionStatusDetails(property.Value, options);
+                    protectionStatus = ModelSerializationExtensions.JsonDeserialize<BackupInstanceProtectionStatusDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("currentProtectionState"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    protectionErrorDetails = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    protectionErrorDetails = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    datasourceAuthCredentials = DataProtectionBackupAuthCredentials.DeserializeDataProtectionBackupAuthCredentials(property.Value, options);
+                    datasourceAuthCredentials = ModelSerializationExtensions.JsonDeserialize<DataProtectionBackupAuthCredentials>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("validationType"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    identityDetails = DataProtectionIdentityDetails.DeserializeDataProtectionIdentityDetails(property.Value, options);
+                    identityDetails = ModelSerializationExtensions.JsonDeserialize<DataProtectionIdentityDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))

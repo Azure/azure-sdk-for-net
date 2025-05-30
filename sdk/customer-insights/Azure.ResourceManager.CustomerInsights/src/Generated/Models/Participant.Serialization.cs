@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStartArray();
             foreach (var item in ParticipantPropertyReferences)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ParticipantPropertyReference>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("participantName"u8);

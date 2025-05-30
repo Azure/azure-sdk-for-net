@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<DataProtectionBackupInstanceProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     {
                         continue;
                     }
-                    properties = DataProtectionBackupInstanceProperties.DeserializeDataProtectionBackupInstanceProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<DataProtectionBackupInstanceProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

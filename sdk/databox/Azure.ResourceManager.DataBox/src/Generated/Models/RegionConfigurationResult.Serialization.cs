@@ -37,22 +37,22 @@ namespace Azure.ResourceManager.DataBox.Models
             if (options.Format != "W" && Optional.IsDefined(ScheduleAvailabilityResponse))
             {
                 writer.WritePropertyName("scheduleAvailabilityResponse"u8);
-                writer.WriteObjectValue(ScheduleAvailabilityResponse, options);
+                ((IJsonModel<ScheduleAvailabilityResponse>)ScheduleAvailabilityResponse).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TransportAvailabilityResponse))
             {
                 writer.WritePropertyName("transportAvailabilityResponse"u8);
-                writer.WriteObjectValue(TransportAvailabilityResponse, options);
+                ((IJsonModel<TransportAvailabilityResponse>)TransportAvailabilityResponse).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DataCenterAddressResponse))
             {
                 writer.WritePropertyName("datacenterAddressResponse"u8);
-                writer.WriteObjectValue(DataCenterAddressResponse, options);
+                ((IJsonModel<DataCenterAddressResult>)DataCenterAddressResponse).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DeviceCapabilityResponse))
             {
                 writer.WritePropertyName("deviceCapabilityResponse"u8);
-                writer.WriteObjectValue(DeviceCapabilityResponse, options);
+                ((IJsonModel<DeviceCapabilityResponse>)DeviceCapabilityResponse).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    scheduleAvailabilityResponse = ScheduleAvailabilityResponse.DeserializeScheduleAvailabilityResponse(property.Value, options);
+                    scheduleAvailabilityResponse = ModelSerializationExtensions.JsonDeserialize<ScheduleAvailabilityResponse>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("transportAvailabilityResponse"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    transportAvailabilityResponse = TransportAvailabilityResponse.DeserializeTransportAvailabilityResponse(property.Value, options);
+                    transportAvailabilityResponse = ModelSerializationExtensions.JsonDeserialize<TransportAvailabilityResponse>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("datacenterAddressResponse"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    dataCenterAddressResponse = DataCenterAddressResult.DeserializeDataCenterAddressResult(property.Value, options);
+                    dataCenterAddressResponse = ModelSerializationExtensions.JsonDeserialize<DataCenterAddressResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deviceCapabilityResponse"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    deviceCapabilityResponse = DeviceCapabilityResponse.DeserializeDeviceCapabilityResponse(property.Value, options);
+                    deviceCapabilityResponse = ModelSerializationExtensions.JsonDeserialize<DeviceCapabilityResponse>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

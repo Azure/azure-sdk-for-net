@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Mtls))
             {
                 writer.WritePropertyName("mtls"u8);
-                writer.WriteObjectValue(Mtls, options);
+                ((IJsonModel<Mtls>)Mtls).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    mtls = Mtls.DeserializeMtls(property.Value, options);
+                    mtls = ModelSerializationExtensions.JsonDeserialize<Mtls>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

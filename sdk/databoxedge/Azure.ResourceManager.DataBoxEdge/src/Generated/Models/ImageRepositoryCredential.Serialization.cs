@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password, options);
+                ((IJsonModel<AsymmetricEncryptedSecret>)Password).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    password = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property.Value, options);
+                    password = ModelSerializationExtensions.JsonDeserialize<AsymmetricEncryptedSecret>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(FullBackupSetInfo))
             {
                 writer.WritePropertyName("fullBackupSetInfo"u8);
-                writer.WriteObjectValue(FullBackupSetInfo, options);
+                ((IJsonModel<SqlBackupSetInfo>)FullBackupSetInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastRestoredBackupSetInfo))
             {
                 writer.WritePropertyName("lastRestoredBackupSetInfo"u8);
-                writer.WriteObjectValue(LastRestoredBackupSetInfo, options);
+                ((IJsonModel<SqlBackupSetInfo>)LastRestoredBackupSetInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ActiveBackupSets))
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ActiveBackupSets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SqlBackupSetInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    fullBackupSetInfo = SqlBackupSetInfo.DeserializeSqlBackupSetInfo(property.Value, options);
+                    fullBackupSetInfo = ModelSerializationExtensions.JsonDeserialize<SqlBackupSetInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lastRestoredBackupSetInfo"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    lastRestoredBackupSetInfo = SqlBackupSetInfo.DeserializeSqlBackupSetInfo(property.Value, options);
+                    lastRestoredBackupSetInfo = ModelSerializationExtensions.JsonDeserialize<SqlBackupSetInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("activeBackupSets"u8))

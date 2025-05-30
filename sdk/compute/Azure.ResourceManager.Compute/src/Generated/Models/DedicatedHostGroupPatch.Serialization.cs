@@ -59,14 +59,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Hosts)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView, options);
+                ((IJsonModel<DedicatedHostGroupInstanceView>)InstanceView).Write(writer, options);
             }
             if (Optional.IsDefined(SupportAutomaticPlacement))
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
-                writer.WriteObjectValue(AdditionalCapabilities, options);
+                ((IJsonModel<DedicatedHostGroupPropertiesAdditionalCapabilities>)AdditionalCapabilities).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute.Models
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<SubResource>(item));
                             }
                             hosts = array;
                             continue;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            instanceView = DedicatedHostGroupInstanceView.DeserializeDedicatedHostGroupInstanceView(property0.Value, options);
+                            instanceView = ModelSerializationExtensions.JsonDeserialize<DedicatedHostGroupInstanceView>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("supportAutomaticPlacement"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            additionalCapabilities = DedicatedHostGroupPropertiesAdditionalCapabilities.DeserializeDedicatedHostGroupPropertiesAdditionalCapabilities(property0.Value, options);
+                            additionalCapabilities = ModelSerializationExtensions.JsonDeserialize<DedicatedHostGroupPropertiesAdditionalCapabilities>(property0.Value);
                             continue;
                         }
                     }

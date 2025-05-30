@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(VmSizeProperties))
             {
                 writer.WritePropertyName("vmSizeProperties"u8);
-                writer.WriteObjectValue(VmSizeProperties, options);
+                ((IJsonModel<ComputeFleetVmSizeProperties>)VmSizeProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    vmSizeProperties = ComputeFleetVmSizeProperties.DeserializeComputeFleetVmSizeProperties(property.Value, options);
+                    vmSizeProperties = ModelSerializationExtensions.JsonDeserialize<ComputeFleetVmSizeProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

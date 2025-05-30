@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 writer.WriteStartArray();
                 foreach (var item in OperationErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<OperationErrorDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

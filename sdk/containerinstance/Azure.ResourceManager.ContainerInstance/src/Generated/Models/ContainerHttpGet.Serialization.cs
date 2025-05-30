@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in HttpHeaders)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerHttpHeader>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

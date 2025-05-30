@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(RollbackError))
             {
                 writer.WritePropertyName("rollbackError"u8);
-                writer.WriteObjectValue(RollbackError, options);
+                ((IJsonModel<ComputeApiError>)RollbackError).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    rollbackError = ComputeApiError.DeserializeComputeApiError(property.Value, options);
+                    rollbackError = ModelSerializationExtensions.JsonDeserialize<ComputeApiError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

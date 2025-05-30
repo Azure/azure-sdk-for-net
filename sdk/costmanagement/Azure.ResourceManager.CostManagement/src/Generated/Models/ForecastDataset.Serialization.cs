@@ -42,20 +42,20 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration, options);
+                ((IJsonModel<ForecastDatasetConfiguration>)Configuration).Write(writer, options);
             }
             writer.WritePropertyName("aggregation"u8);
             writer.WriteStartObject();
             foreach (var item in Aggregation)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                ((IJsonModel<ForecastAggregation>)item.Value).Write(writer, options);
             }
             writer.WriteEndObject();
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter, options);
+                ((IJsonModel<ForecastFilter>)Filter).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    configuration = ForecastDatasetConfiguration.DeserializeForecastDatasetConfiguration(property.Value, options);
+                    configuration = ModelSerializationExtensions.JsonDeserialize<ForecastDatasetConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("aggregation"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    filter = ForecastFilter.DeserializeForecastFilter(property.Value, options);
+                    filter = ModelSerializationExtensions.JsonDeserialize<ForecastFilter>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

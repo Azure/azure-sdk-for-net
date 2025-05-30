@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in UserAssignedIdentities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedClusterPodIdentity>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in UserAssignedIdentityExceptions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedClusterPodIdentityException>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

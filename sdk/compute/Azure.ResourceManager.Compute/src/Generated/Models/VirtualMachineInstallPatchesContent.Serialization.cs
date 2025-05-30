@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(WindowsParameters))
             {
                 writer.WritePropertyName("windowsParameters"u8);
-                writer.WriteObjectValue(WindowsParameters, options);
+                ((IJsonModel<WindowsParameters>)WindowsParameters).Write(writer, options);
             }
             if (Optional.IsDefined(LinuxParameters))
             {
                 writer.WritePropertyName("linuxParameters"u8);
-                writer.WriteObjectValue(LinuxParameters, options);
+                ((IJsonModel<LinuxParameters>)LinuxParameters).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    windowsParameters = WindowsParameters.DeserializeWindowsParameters(property.Value, options);
+                    windowsParameters = ModelSerializationExtensions.JsonDeserialize<WindowsParameters>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("linuxParameters"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    linuxParameters = LinuxParameters.DeserializeLinuxParameters(property.Value, options);
+                    linuxParameters = ModelSerializationExtensions.JsonDeserialize<LinuxParameters>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

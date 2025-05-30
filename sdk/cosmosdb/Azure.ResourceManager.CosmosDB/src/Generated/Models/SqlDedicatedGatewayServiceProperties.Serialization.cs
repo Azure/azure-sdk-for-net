@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SqlDedicatedGatewayRegionalService>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

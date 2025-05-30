@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CatalogInfo))
             {
                 writer.WritePropertyName("catalogInfo"u8);
-                writer.WriteObjectValue(CatalogInfo, options);
+                ((IJsonModel<IntegrationRuntimeSsisCatalogInfo>)CatalogInfo).Write(writer, options);
             }
             if (Optional.IsDefined(LicenseType))
             {
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CustomSetupScriptProperties))
             {
                 writer.WritePropertyName("customSetupScriptProperties"u8);
-                writer.WriteObjectValue(CustomSetupScriptProperties, options);
+                ((IJsonModel<IntegrationRuntimeCustomSetupScriptProperties>)CustomSetupScriptProperties).Write(writer, options);
             }
             if (Optional.IsDefined(DataProxyProperties))
             {
                 writer.WritePropertyName("dataProxyProperties"u8);
-                writer.WriteObjectValue(DataProxyProperties, options);
+                ((IJsonModel<IntegrationRuntimeDataProxyProperties>)DataProxyProperties).Write(writer, options);
             }
             if (Optional.IsDefined(Edition))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in ExpressCustomSetupProperties)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CustomSetupBase>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,14 +75,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in PackageStores)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataFactoryPackageStore>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue(Credential, options);
+                ((IJsonModel<DataFactoryCredentialReference>)Credential).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    catalogInfo = IntegrationRuntimeSsisCatalogInfo.DeserializeIntegrationRuntimeSsisCatalogInfo(property.Value, options);
+                    catalogInfo = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeSsisCatalogInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("licenseType"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    customSetupScriptProperties = IntegrationRuntimeCustomSetupScriptProperties.DeserializeIntegrationRuntimeCustomSetupScriptProperties(property.Value, options);
+                    customSetupScriptProperties = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeCustomSetupScriptProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataProxyProperties"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    dataProxyProperties = IntegrationRuntimeDataProxyProperties.DeserializeIntegrationRuntimeDataProxyProperties(property.Value, options);
+                    dataProxyProperties = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeDataProxyProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("edition"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property.Value, options);
+                    credential = ModelSerializationExtensions.JsonDeserialize<DataFactoryCredentialReference>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

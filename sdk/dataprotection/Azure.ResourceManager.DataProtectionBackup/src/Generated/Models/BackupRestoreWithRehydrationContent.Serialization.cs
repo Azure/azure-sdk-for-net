@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (property.NameEquals("restoreTargetInfo"u8))
                 {
-                    restoreTargetInfo = RestoreTargetInfoBase.DeserializeRestoreTargetInfoBase(property.Value, options);
+                    restoreTargetInfo = ModelSerializationExtensions.JsonDeserialize<RestoreTargetInfoBase>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sourceDataStoreType"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    identityDetails = DataProtectionIdentityDetails.DeserializeDataProtectionIdentityDetails(property.Value, options);
+                    identityDetails = ModelSerializationExtensions.JsonDeserialize<DataProtectionIdentityDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

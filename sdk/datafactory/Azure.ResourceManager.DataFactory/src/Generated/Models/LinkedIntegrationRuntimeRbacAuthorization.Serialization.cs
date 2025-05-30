@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue(Credential, options);
+                ((IJsonModel<DataFactoryCredentialReference>)Credential).Write(writer, options);
             }
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property.Value, options);
+                    credential = ModelSerializationExtensions.JsonDeserialize<DataFactoryCredentialReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("authorizationType"u8))

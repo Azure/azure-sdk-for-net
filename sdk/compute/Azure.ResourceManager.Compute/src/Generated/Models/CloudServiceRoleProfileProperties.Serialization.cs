@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<CloudServiceRoleSku>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    sku = CloudServiceRoleSku.DeserializeCloudServiceRoleSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<CloudServiceRoleSku>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

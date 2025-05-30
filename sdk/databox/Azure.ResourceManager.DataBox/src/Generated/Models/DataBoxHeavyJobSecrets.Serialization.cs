@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in CabinetPodSecrets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataBoxHeavySecret>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    dcAccessSecurityCode = DataCenterAccessSecurityCode.DeserializeDataCenterAccessSecurityCode(property.Value, options);
+                    dcAccessSecurityCode = ModelSerializationExtensions.JsonDeserialize<DataCenterAccessSecurityCode>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

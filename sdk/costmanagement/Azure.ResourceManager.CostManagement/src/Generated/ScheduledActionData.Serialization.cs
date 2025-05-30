@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(FileDestination))
             {
                 writer.WritePropertyName("fileDestination"u8);
-                writer.WriteObjectValue(FileDestination, options);
+                ((IJsonModel<FileDestination>)FileDestination).Write(writer, options);
             }
             if (Optional.IsDefined(Notification))
             {
                 writer.WritePropertyName("notification"u8);
-                writer.WriteObjectValue(Notification, options);
+                ((IJsonModel<NotificationProperties>)Notification).Write(writer, options);
             }
             if (Optional.IsDefined(NotificationEmail))
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule, options);
+                ((IJsonModel<ScheduleProperties>)Schedule).Write(writer, options);
             }
             if (Optional.IsDefined(Scope))
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CostManagement
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            fileDestination = FileDestination.DeserializeFileDestination(property0.Value, options);
+                            fileDestination = ModelSerializationExtensions.JsonDeserialize<FileDestination>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("notification"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            notification = NotificationProperties.DeserializeNotificationProperties(property0.Value, options);
+                            notification = ModelSerializationExtensions.JsonDeserialize<NotificationProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("notificationEmail"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            schedule = ScheduleProperties.DeserializeScheduleProperties(property0.Value, options);
+                            schedule = ModelSerializationExtensions.JsonDeserialize<ScheduleProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("scope"u8))

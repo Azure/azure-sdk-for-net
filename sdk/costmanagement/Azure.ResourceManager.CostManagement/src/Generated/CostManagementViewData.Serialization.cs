@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CostManagement
                 writer.WriteStartArray();
                 foreach (var item in Kpis)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ViewKpiProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.CostManagement
                 writer.WriteStartArray();
                 foreach (var item in Pivots)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ViewPivotProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -124,12 +124,12 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(TimePeriod))
             {
                 writer.WritePropertyName("timePeriod"u8);
-                writer.WriteObjectValue(TimePeriod, options);
+                ((IJsonModel<ReportConfigTimePeriod>)TimePeriod).Write(writer, options);
             }
             if (Optional.IsDefined(DataSet))
             {
                 writer.WritePropertyName("dataSet"u8);
-                writer.WriteObjectValue(DataSet, options);
+                ((IJsonModel<ReportConfigDataset>)DataSet).Write(writer, options);
             }
             if (Optional.IsDefined(IncludeMonetaryCommitment))
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.CostManagement
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.CostManagement
                                     {
                                         continue;
                                     }
-                                    timePeriod = ReportConfigTimePeriod.DeserializeReportConfigTimePeriod(property1.Value, options);
+                                    timePeriod = ModelSerializationExtensions.JsonDeserialize<ReportConfigTimePeriod>(property1.Value);
                                     continue;
                                 }
                                 if (property1.NameEquals("dataSet"u8))
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.CostManagement
                                     {
                                         continue;
                                     }
-                                    dataSet = ReportConfigDataset.DeserializeReportConfigDataset(property1.Value, options);
+                                    dataSet = ModelSerializationExtensions.JsonDeserialize<ReportConfigDataset>(property1.Value);
                                     continue;
                                 }
                                 if (property1.NameEquals("includeMonetaryCommitment"u8))

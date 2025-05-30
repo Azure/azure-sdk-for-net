@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AdditionalFormatOptions))
             {
                 writer.WritePropertyName("additionalFormatOptions"u8);
-                JsonSerializer.Serialize(writer, AdditionalFormatOptions);
+                ((IJsonModel<DataFactoryElement<T>>)AdditionalFormatOptions).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    additionalFormatOptions = JsonSerializer.Deserialize<DataFactoryElement<IDictionary<string, string>>>(property.Value.GetRawText());
+                    additionalFormatOptions = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<IDictionary<string, string>>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

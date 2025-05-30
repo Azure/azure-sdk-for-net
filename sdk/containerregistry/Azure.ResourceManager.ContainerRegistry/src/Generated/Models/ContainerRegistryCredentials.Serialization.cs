@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(SourceRegistry))
             {
                 writer.WritePropertyName("sourceRegistry"u8);
-                writer.WriteObjectValue(SourceRegistry, options);
+                ((IJsonModel<SourceRegistryCredentials>)SourceRegistry).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(CustomRegistries))
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 foreach (var item in CustomRegistries)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<CustomRegistryCredentials>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    sourceRegistry = SourceRegistryCredentials.DeserializeSourceRegistryCredentials(property.Value, options);
+                    sourceRegistry = ModelSerializationExtensions.JsonDeserialize<SourceRegistryCredentials>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("customRegistries"u8))

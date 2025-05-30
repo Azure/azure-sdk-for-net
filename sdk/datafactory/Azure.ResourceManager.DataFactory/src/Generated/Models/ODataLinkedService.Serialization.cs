@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("url"u8);
-            JsonSerializer.Serialize(writer, Uri);
+            ((IJsonModel<DataFactoryElement<T>>)Uri).Write(writer, options);
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                JsonSerializer.Serialize(writer, UserName);
+                ((IJsonModel<DataFactoryElement<T>>)UserName).Write(writer, options);
             }
             if (Optional.IsDefined(Password))
             {
@@ -58,27 +58,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AuthHeaders))
             {
                 writer.WritePropertyName("authHeaders"u8);
-                JsonSerializer.Serialize(writer, AuthHeaders);
+                ((IJsonModel<DataFactoryElement<T>>)AuthHeaders).Write(writer, options);
             }
             if (Optional.IsDefined(Tenant))
             {
                 writer.WritePropertyName("tenant"u8);
-                JsonSerializer.Serialize(writer, Tenant);
+                ((IJsonModel<DataFactoryElement<T>>)Tenant).Write(writer, options);
             }
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
-                JsonSerializer.Serialize(writer, ServicePrincipalId);
+                ((IJsonModel<DataFactoryElement<T>>)ServicePrincipalId).Write(writer, options);
             }
             if (Optional.IsDefined(AzureCloudType))
             {
                 writer.WritePropertyName("azureCloudType"u8);
-                JsonSerializer.Serialize(writer, AzureCloudType);
+                ((IJsonModel<DataFactoryElement<T>>)AzureCloudType).Write(writer, options);
             }
             if (Optional.IsDefined(AadResourceId))
             {
                 writer.WritePropertyName("aadResourceId"u8);
-                JsonSerializer.Serialize(writer, AadResourceId);
+                ((IJsonModel<DataFactoryElement<T>>)AadResourceId).Write(writer, options);
             }
             if (Optional.IsDefined(AadServicePrincipalCredentialType))
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
+                    connectVia = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("url"u8))
                         {
-                            url = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            url = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("authenticationType"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            userName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            userName = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("password"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            password = ModelSerializationExtensions.JsonDeserialize<DataFactorySecret>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("authHeaders"u8))
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            authHeaders = JsonSerializer.Deserialize<DataFactoryElement<IDictionary<string, string>>>(property0.Value.GetRawText());
+                            authHeaders = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<IDictionary<string, string>>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            tenant = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            tenant = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalId"u8))
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            servicePrincipalId = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("azureCloudType"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            azureCloudType = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            azureCloudType = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("aadResourceId"u8))
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            aadResourceId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            aadResourceId = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("aadServicePrincipalCredentialType"u8))
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            servicePrincipalKey = ModelSerializationExtensions.JsonDeserialize<DataFactorySecret>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalEmbeddedCert"u8))
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalEmbeddedCert = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            servicePrincipalEmbeddedCert = ModelSerializationExtensions.JsonDeserialize<DataFactorySecret>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalEmbeddedCertPassword"u8))
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalEmbeddedCertPassword = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            servicePrincipalEmbeddedCertPassword = ModelSerializationExtensions.JsonDeserialize<DataFactorySecret>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

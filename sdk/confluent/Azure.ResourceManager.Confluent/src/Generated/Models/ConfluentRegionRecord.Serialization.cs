@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata, options);
+                ((IJsonModel<SCMetadataEntity>)Metadata).Write(writer, options);
             }
             if (Optional.IsDefined(Spec))
             {
                 writer.WritePropertyName("spec"u8);
-                writer.WriteObjectValue(Spec, options);
+                ((IJsonModel<RegionSpecEntity>)Spec).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Confluent.Models
                             {
                                 continue;
                             }
-                            metadata = SCMetadataEntity.DeserializeSCMetadataEntity(property0.Value, options);
+                            metadata = ModelSerializationExtensions.JsonDeserialize<SCMetadataEntity>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("spec"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Confluent.Models
                             {
                                 continue;
                             }
-                            spec = RegionSpecEntity.DeserializeRegionSpecEntity(property0.Value, options);
+                            spec = ModelSerializationExtensions.JsonDeserialize<RegionSpecEntity>(property0.Value);
                             continue;
                         }
                     }

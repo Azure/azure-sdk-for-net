@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartArray();
             foreach (var item in ExposureControlRequests)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ExposureControlContent>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

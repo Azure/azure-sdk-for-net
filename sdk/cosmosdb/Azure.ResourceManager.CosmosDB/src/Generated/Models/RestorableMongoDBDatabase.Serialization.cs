@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue(Resource, options);
+                ((IJsonModel<ExtendedRestorableMongoDBDatabaseResourceInfo>)Resource).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 continue;
                             }
-                            resource = ExtendedRestorableMongoDBDatabaseResourceInfo.DeserializeExtendedRestorableMongoDBDatabaseResourceInfo(property0.Value, options);
+                            resource = ModelSerializationExtensions.JsonDeserialize<ExtendedRestorableMongoDBDatabaseResourceInfo>(property0.Value);
                             continue;
                         }
                     }

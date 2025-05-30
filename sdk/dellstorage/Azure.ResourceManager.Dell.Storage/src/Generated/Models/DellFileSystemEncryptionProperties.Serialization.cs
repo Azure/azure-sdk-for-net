@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
             if (Optional.IsDefined(EncryptionIdentityProperties))
             {
                 writer.WritePropertyName("encryptionIdentityProperties"u8);
-                writer.WriteObjectValue(EncryptionIdentityProperties, options);
+                ((IJsonModel<DellFileSystemEncryptionIdentityProperties>)EncryptionIdentityProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
                     {
                         continue;
                     }
-                    encryptionIdentityProperties = DellFileSystemEncryptionIdentityProperties.DeserializeDellFileSystemEncryptionIdentityProperties(property.Value, options);
+                    encryptionIdentityProperties = ModelSerializationExtensions.JsonDeserialize<DellFileSystemEncryptionIdentityProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

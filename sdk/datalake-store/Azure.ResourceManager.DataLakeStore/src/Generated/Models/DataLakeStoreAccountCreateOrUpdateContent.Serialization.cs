@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             if (Optional.IsDefined(EncryptionConfig))
             {
                 writer.WritePropertyName("encryptionConfig"u8);
-                writer.WriteObjectValue(EncryptionConfig, options);
+                ((IJsonModel<DataLakeStoreAccountEncryptionConfig>)EncryptionConfig).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptionState))
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 writer.WriteStartArray();
                 foreach (var item in FirewallRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 writer.WriteStartArray();
                 foreach (var item in TrustedIdProviders)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                             {
                                 continue;
                             }
-                            encryptionConfig = DataLakeStoreAccountEncryptionConfig.DeserializeDataLakeStoreAccountEncryptionConfig(property0.Value, options);
+                            encryptionConfig = ModelSerializationExtensions.JsonDeserialize<DataLakeStoreAccountEncryptionConfig>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptionState"u8))

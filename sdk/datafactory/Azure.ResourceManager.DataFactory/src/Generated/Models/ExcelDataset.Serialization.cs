@@ -41,37 +41,37 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DataLocation))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteObjectValue(DataLocation, options);
+                ((IJsonModel<DatasetLocation>)DataLocation).Write(writer, options);
             }
             if (Optional.IsDefined(SheetName))
             {
                 writer.WritePropertyName("sheetName"u8);
-                JsonSerializer.Serialize(writer, SheetName);
+                ((IJsonModel<DataFactoryElement<T>>)SheetName).Write(writer, options);
             }
             if (Optional.IsDefined(SheetIndex))
             {
                 writer.WritePropertyName("sheetIndex"u8);
-                JsonSerializer.Serialize(writer, SheetIndex);
+                ((IJsonModel<DataFactoryElement<T>>)SheetIndex).Write(writer, options);
             }
             if (Optional.IsDefined(Range))
             {
                 writer.WritePropertyName("range"u8);
-                JsonSerializer.Serialize(writer, Range);
+                ((IJsonModel<DataFactoryElement<T>>)Range).Write(writer, options);
             }
             if (Optional.IsDefined(FirstRowAsHeader))
             {
                 writer.WritePropertyName("firstRowAsHeader"u8);
-                JsonSerializer.Serialize(writer, FirstRowAsHeader);
+                ((IJsonModel<DataFactoryElement<T>>)FirstRowAsHeader).Write(writer, options);
             }
             if (Optional.IsDefined(Compression))
             {
                 writer.WritePropertyName("compression"u8);
-                writer.WriteObjectValue(Compression, options);
+                ((IJsonModel<DatasetCompression>)Compression).Write(writer, options);
             }
             if (Optional.IsDefined(NullValue))
             {
                 writer.WritePropertyName("nullValue"u8);
-                JsonSerializer.Serialize(writer, NullValue);
+                ((IJsonModel<DataFactoryElement<T>>)NullValue).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    structure = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetDataElement>>>(property.Value.GetRawText());
+                    structure = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<IList<DatasetDataElement>>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("schema"u8))
@@ -152,12 +152,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    schema = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetSchemaDataElement>>>(property.Value.GetRawText());
+                    schema = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<IList<DatasetSchemaDataElement>>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    folder = DatasetFolder.DeserializeDatasetFolder(property.Value, options);
+                    folder = ModelSerializationExtensions.JsonDeserialize<DatasetFolder>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("typeProperties"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            location = DatasetLocation.DeserializeDatasetLocation(property0.Value, options);
+                            location = ModelSerializationExtensions.JsonDeserialize<DatasetLocation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sheetName"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            sheetName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            sheetName = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sheetIndex"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            sheetIndex = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            sheetIndex = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("range"u8))
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            range = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            range = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("firstRowAsHeader"u8))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            firstRowAsHeader = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            firstRowAsHeader = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("compression"u8))
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            compression = DatasetCompression.DeserializeDatasetCompression(property0.Value, options);
+                            compression = ModelSerializationExtensions.JsonDeserialize<DatasetCompression>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("nullValue"u8))
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            nullValue = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            nullValue = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                     }

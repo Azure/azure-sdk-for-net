@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(SoftDeleteSettings))
             {
                 writer.WritePropertyName("softDeleteSettings"u8);
-                writer.WriteObjectValue(SoftDeleteSettings, options);
+                ((IJsonModel<BackupVaultSoftDeleteSettings>)SoftDeleteSettings).Write(writer, options);
             }
             if (Optional.IsDefined(ImmutabilitySettings))
             {
                 writer.WritePropertyName("immutabilitySettings"u8);
-                writer.WriteObjectValue(ImmutabilitySettings, options);
+                ((IJsonModel<ImmutabilitySettings>)ImmutabilitySettings).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
-                writer.WriteObjectValue(EncryptionSettings, options);
+                ((IJsonModel<BackupVaultEncryptionSettings>)EncryptionSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    softDeleteSettings = BackupVaultSoftDeleteSettings.DeserializeBackupVaultSoftDeleteSettings(property.Value, options);
+                    softDeleteSettings = ModelSerializationExtensions.JsonDeserialize<BackupVaultSoftDeleteSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("immutabilitySettings"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    immutabilitySettings = ImmutabilitySettings.DeserializeImmutabilitySettings(property.Value, options);
+                    immutabilitySettings = ModelSerializationExtensions.JsonDeserialize<ImmutabilitySettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("encryptionSettings"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    encryptionSettings = BackupVaultEncryptionSettings.DeserializeBackupVaultEncryptionSettings(property.Value, options);
+                    encryptionSettings = ModelSerializationExtensions.JsonDeserialize<BackupVaultEncryptionSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

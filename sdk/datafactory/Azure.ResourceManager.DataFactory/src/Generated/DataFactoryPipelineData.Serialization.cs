@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory
                 writer.WriteStartArray();
                 foreach (var item in Activities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PipelineActivity>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<EntityParameterSpecification>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory
                 foreach (var item in Variables)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<PipelineVariableSpecification>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -134,12 +134,12 @@ namespace Azure.ResourceManager.DataFactory
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder, options);
+                ((IJsonModel<PipelineFolder>)Folder).Write(writer, options);
             }
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy, options);
+                ((IJsonModel<DataFactoryPipelinePolicy>)Policy).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DataFactory
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.DataFactory
                             {
                                 continue;
                             }
-                            folder = PipelineFolder.DeserializePipelineFolder(property0.Value, options);
+                            folder = ModelSerializationExtensions.JsonDeserialize<PipelineFolder>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("policy"u8))
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.DataFactory
                             {
                                 continue;
                             }
-                            policy = DataFactoryPipelinePolicy.DeserializeDataFactoryPipelinePolicy(property0.Value, options);
+                            policy = ModelSerializationExtensions.JsonDeserialize<DataFactoryPipelinePolicy>(property0.Value);
                             continue;
                         }
                     }

@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WritePropertyName("copyAfter"u8);
-            writer.WriteObjectValue(CopyAfter, options);
+            ((IJsonModel<DataProtectionBackupCopySetting>)CopyAfter).Write(writer, options);
             writer.WritePropertyName("dataStore"u8);
-            writer.WriteObjectValue(DataStore, options);
+            ((IJsonModel<DataStoreInfoBase>)DataStore).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 if (property.NameEquals("copyAfter"u8))
                 {
-                    copyAfter = DataProtectionBackupCopySetting.DeserializeDataProtectionBackupCopySetting(property.Value, options);
+                    copyAfter = ModelSerializationExtensions.JsonDeserialize<DataProtectionBackupCopySetting>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataStore"u8))
                 {
-                    dataStore = DataStoreInfoBase.DeserializeDataStoreInfoBase(property.Value, options);
+                    dataStore = ModelSerializationExtensions.JsonDeserialize<DataStoreInfoBase>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

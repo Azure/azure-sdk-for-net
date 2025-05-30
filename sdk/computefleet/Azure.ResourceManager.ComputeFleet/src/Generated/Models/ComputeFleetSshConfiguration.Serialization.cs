@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WriteStartArray();
                 foreach (var item in PublicKeys)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ComputeFleetSshPublicKey>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             if (Optional.IsDefined(TargetVault))
             {
                 writer.WritePropertyName("targetVault"u8);
-                writer.WriteObjectValue(TargetVault, options);
+                ((IJsonModel<TargetAuthenticationVaultSecret>)TargetVault).Write(writer, options);
             }
             writer.WritePropertyName("connectionServerName"u8);
             writer.WriteStringValue(ConnectionServerName);

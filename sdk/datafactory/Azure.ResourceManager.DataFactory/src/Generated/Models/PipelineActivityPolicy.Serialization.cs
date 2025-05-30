@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
-                JsonSerializer.Serialize(writer, Timeout);
+                ((IJsonModel<DataFactoryElement<T>>)Timeout).Write(writer, options);
             }
             if (Optional.IsDefined(Retry))
             {
                 writer.WritePropertyName("retry"u8);
-                JsonSerializer.Serialize(writer, Retry);
+                ((IJsonModel<DataFactoryElement<T>>)Retry).Write(writer, options);
             }
             if (Optional.IsDefined(RetryIntervalInSeconds))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    timeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    timeout = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("retry"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    retry = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    retry = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("retryIntervalInSeconds"u8))

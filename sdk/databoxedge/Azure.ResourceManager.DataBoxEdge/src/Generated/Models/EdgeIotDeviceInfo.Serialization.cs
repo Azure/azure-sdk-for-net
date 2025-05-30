@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication, options);
+                ((IJsonModel<Authentication>)Authentication).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    authentication = Authentication.DeserializeAuthentication(property.Value, options);
+                    authentication = ModelSerializationExtensions.JsonDeserialize<Authentication>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

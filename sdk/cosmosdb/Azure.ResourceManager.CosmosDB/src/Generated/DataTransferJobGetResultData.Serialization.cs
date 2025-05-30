@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.CosmosDB
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source, options);
+                ((IJsonModel<DataTransferDataSourceSink>)Source).Write(writer, options);
             }
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination, options);
+                ((IJsonModel<DataTransferDataSourceSink>)Destination).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CosmosDB
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<CosmosDBErrorResult>)Error).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Duration))
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.CosmosDB
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            source = DataTransferDataSourceSink.DeserializeDataTransferDataSourceSink(property0.Value, options);
+                            source = ModelSerializationExtensions.JsonDeserialize<DataTransferDataSourceSink>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("destination"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            destination = DataTransferDataSourceSink.DeserializeDataTransferDataSourceSink(property0.Value, options);
+                            destination = ModelSerializationExtensions.JsonDeserialize<DataTransferDataSourceSink>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            error = CosmosDBErrorResult.DeserializeCosmosDBErrorResult(property0.Value, options);
+                            error = ModelSerializationExtensions.JsonDeserialize<CosmosDBErrorResult>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("duration"u8))

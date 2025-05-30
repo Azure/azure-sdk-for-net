@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Passwords)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerRegistryPassword>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

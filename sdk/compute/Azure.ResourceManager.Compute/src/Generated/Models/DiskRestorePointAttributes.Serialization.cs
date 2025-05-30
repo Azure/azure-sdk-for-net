@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<RestorePointEncryption>)Encryption).Write(writer, options);
             }
             if (Optional.IsDefined(SourceDiskRestorePoint))
             {
                 writer.WritePropertyName("sourceDiskRestorePoint"u8);
-                JsonSerializer.Serialize(writer, SourceDiskRestorePoint);
+                ((IJsonModel<WritableSubResource>)SourceDiskRestorePoint).Write(writer, options);
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryption = RestorePointEncryption.DeserializeRestorePointEncryption(property.Value, options);
+                    encryption = ModelSerializationExtensions.JsonDeserialize<RestorePointEncryption>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sourceDiskRestorePoint"u8))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    sourceDiskRestorePoint = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    sourceDiskRestorePoint = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

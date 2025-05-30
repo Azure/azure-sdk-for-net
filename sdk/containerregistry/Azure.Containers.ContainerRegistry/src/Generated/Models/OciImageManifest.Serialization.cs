@@ -22,7 +22,7 @@ namespace Azure.Containers.ContainerRegistry
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("config"u8);
-                writer.WriteObjectValue(Configuration);
+                JsonSerializer.Serialize(writer, Configuration);
             }
             if (Optional.IsCollectionDefined(Layers))
             {
@@ -30,7 +30,7 @@ namespace Azure.Containers.ContainerRegistry
                 writer.WriteStartArray();
                 foreach (var item in Layers)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -39,7 +39,7 @@ namespace Azure.Containers.ContainerRegistry
                 if (Annotations != null)
                 {
                     writer.WritePropertyName("annotations"u8);
-                    writer.WriteObjectValue(Annotations);
+                    JsonSerializer.Serialize(writer, Annotations);
                 }
                 else
                 {
@@ -69,7 +69,7 @@ namespace Azure.Containers.ContainerRegistry
                     {
                         continue;
                     }
-                    config = OciDescriptor.DeserializeOciDescriptor(property.Value);
+                    config = ModelSerializationExtensions.JsonDeserialize<OciDescriptor>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("layers"u8))
@@ -93,7 +93,7 @@ namespace Azure.Containers.ContainerRegistry
                         annotations = null;
                         continue;
                     }
-                    annotations = OciAnnotations.DeserializeOciAnnotations(property.Value);
+                    annotations = ModelSerializationExtensions.JsonDeserialize<OciAnnotations>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("schemaVersion"u8))

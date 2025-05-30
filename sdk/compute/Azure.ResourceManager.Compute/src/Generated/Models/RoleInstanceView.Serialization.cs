@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceInstanceViewStatus>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -38,7 +38,7 @@ namespace Azure.Security.CodeTransparency
             writer.WriteStartArray();
             foreach (var item in Keys)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<JsonWebKey>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

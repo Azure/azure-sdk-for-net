@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                JsonSerializer.Serialize(writer, Username);
+                ((IJsonModel<DataFactoryElement<T>>)Username).Write(writer, options);
             }
             if (Optional.IsDefined(Password))
             {
@@ -58,17 +58,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                JsonSerializer.Serialize(writer, Resource);
+                ((IJsonModel<DataFactoryElement<T>>)Resource).Write(writer, options);
             }
             if (Optional.IsDefined(UserTenant))
             {
                 writer.WritePropertyName("userTenant"u8);
-                JsonSerializer.Serialize(writer, UserTenant);
+                ((IJsonModel<DataFactoryElement<T>>)UserTenant).Write(writer, options);
             }
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue(Credential, options);
+                ((IJsonModel<DataFactoryCredentialReference>)Credential).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    pfx = JsonSerializer.Deserialize<DataFactorySecret>(property.Value.GetRawText());
+                    pfx = ModelSerializationExtensions.JsonDeserialize<DataFactorySecret>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("username"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    username = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    username = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("password"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    password = JsonSerializer.Deserialize<DataFactorySecret>(property.Value.GetRawText());
+                    password = ModelSerializationExtensions.JsonDeserialize<DataFactorySecret>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resource"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    resource = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    resource = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userTenant"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    userTenant = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    userTenant = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("credential"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property.Value, options);
+                    credential = ModelSerializationExtensions.JsonDeserialize<DataFactoryCredentialReference>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

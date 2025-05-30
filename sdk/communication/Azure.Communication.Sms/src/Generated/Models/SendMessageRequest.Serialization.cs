@@ -21,7 +21,7 @@ namespace Azure.Communication.Sms.Models
             writer.WriteStartArray();
             foreach (var item in SmsRecipients)
             {
-                writer.WriteObjectValue(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("message"u8);
@@ -29,7 +29,7 @@ namespace Azure.Communication.Sms.Models
             if (Optional.IsDefined(SmsSendOptions))
             {
                 writer.WritePropertyName("smsSendOptions"u8);
-                writer.WriteObjectValue(SmsSendOptions);
+                JsonSerializer.Serialize(writer, SmsSendOptions);
             }
             writer.WriteEndObject();
         }

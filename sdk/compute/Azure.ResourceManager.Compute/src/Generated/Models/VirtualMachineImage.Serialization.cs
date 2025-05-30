@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                writer.WriteObjectValue(Plan, options);
+                ((IJsonModel<PurchasePlan>)Plan).Write(writer, options);
             }
             if (Optional.IsDefined(OSDiskImage))
             {
                 writer.WritePropertyName("osDiskImage"u8);
-                writer.WriteObjectValue(OSDiskImage, options);
+                ((IJsonModel<OSDiskImage>)OSDiskImage).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DataDiskImages))
             {
@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDiskImages)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataDiskImage>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AutomaticOSUpgradeProperties))
             {
                 writer.WritePropertyName("automaticOSUpgradeProperties"u8);
-                writer.WriteObjectValue(AutomaticOSUpgradeProperties, options);
+                ((IJsonModel<AutomaticOSUpgradeProperties>)AutomaticOSUpgradeProperties).Write(writer, options);
             }
             if (Optional.IsDefined(HyperVGeneration))
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Disallowed))
             {
                 writer.WritePropertyName("disallowed"u8);
-                writer.WriteObjectValue(Disallowed, options);
+                ((IJsonModel<DisallowedConfiguration>)Disallowed).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Features))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Features)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VirtualMachineImageFeature>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ImageDeprecationStatus))
             {
                 writer.WritePropertyName("imageDeprecationStatus"u8);
-                writer.WriteObjectValue(ImageDeprecationStatus, options);
+                ((IJsonModel<ImageDeprecationStatus>)ImageDeprecationStatus).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<ExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            plan = PurchasePlan.DeserializePurchasePlan(property0.Value, options);
+                            plan = ModelSerializationExtensions.JsonDeserialize<PurchasePlan>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("osDiskImage"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            osDiskImage = OSDiskImage.DeserializeOSDiskImage(property0.Value, options);
+                            osDiskImage = ModelSerializationExtensions.JsonDeserialize<OSDiskImage>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dataDiskImages"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            automaticOSUpgradeProperties = AutomaticOSUpgradeProperties.DeserializeAutomaticOSUpgradeProperties(property0.Value, options);
+                            automaticOSUpgradeProperties = ModelSerializationExtensions.JsonDeserialize<AutomaticOSUpgradeProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hyperVGeneration"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            disallowed = DisallowedConfiguration.DeserializeDisallowedConfiguration(property0.Value, options);
+                            disallowed = ModelSerializationExtensions.JsonDeserialize<DisallowedConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("features"u8))
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            imageDeprecationStatus = ImageDeprecationStatus.DeserializeImageDeprecationStatus(property0.Value, options);
+                            imageDeprecationStatus = ModelSerializationExtensions.JsonDeserialize<ImageDeprecationStatus>(property0.Value);
                             continue;
                         }
                     }

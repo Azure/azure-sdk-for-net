@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<AvailableServiceSkuSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity, options);
+                ((IJsonModel<AvailableServiceSkuCapacity>)Capacity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    sku = AvailableServiceSkuSku.DeserializeAvailableServiceSkuSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<AvailableServiceSkuSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    capacity = AvailableServiceSkuCapacity.DeserializeAvailableServiceSkuCapacity(property.Value, options);
+                    capacity = ModelSerializationExtensions.JsonDeserialize<AvailableServiceSkuCapacity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

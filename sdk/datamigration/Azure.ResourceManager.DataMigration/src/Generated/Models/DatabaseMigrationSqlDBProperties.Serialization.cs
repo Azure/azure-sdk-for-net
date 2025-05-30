@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(MigrationStatusDetails))
             {
                 writer.WritePropertyName("migrationStatusDetails"u8);
-                writer.WriteObjectValue(MigrationStatusDetails, options);
+                ((IJsonModel<SqlDBMigrationStatusDetails>)MigrationStatusDetails).Write(writer, options);
             }
             if (Optional.IsDefined(TargetSqlConnection))
             {
                 writer.WritePropertyName("targetSqlConnection"u8);
-                writer.WriteObjectValue(TargetSqlConnection, options);
+                ((IJsonModel<SqlConnectionInformation>)TargetSqlConnection).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OfflineConfiguration))
             {
                 writer.WritePropertyName("offlineConfiguration"u8);
-                writer.WriteObjectValue(OfflineConfiguration, options);
+                ((IJsonModel<SqlDBOfflineConfiguration>)OfflineConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(TableList))
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    migrationStatusDetails = SqlDBMigrationStatusDetails.DeserializeSqlDBMigrationStatusDetails(property.Value, options);
+                    migrationStatusDetails = ModelSerializationExtensions.JsonDeserialize<SqlDBMigrationStatusDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetSqlConnection"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    targetSqlConnection = SqlConnectionInformation.DeserializeSqlConnectionInformation(property.Value, options);
+                    targetSqlConnection = ModelSerializationExtensions.JsonDeserialize<SqlConnectionInformation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("offlineConfiguration"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    offlineConfiguration = SqlDBOfflineConfiguration.DeserializeSqlDBOfflineConfiguration(property.Value, options);
+                    offlineConfiguration = ModelSerializationExtensions.JsonDeserialize<SqlDBOfflineConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tableList"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    sourceSqlConnection = SqlConnectionInformation.DeserializeSqlConnectionInformation(property.Value, options);
+                    sourceSqlConnection = ModelSerializationExtensions.JsonDeserialize<SqlConnectionInformation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sourceDatabaseName"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    migrationFailureError = ErrorInfo.DeserializeErrorInfo(property.Value, options);
+                    migrationFailureError = ModelSerializationExtensions.JsonDeserialize<ErrorInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetDatabaseCollation"u8))

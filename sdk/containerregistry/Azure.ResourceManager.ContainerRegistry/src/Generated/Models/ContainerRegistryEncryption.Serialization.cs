@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties, options);
+                ((IJsonModel<ContainerRegistryKeyVaultProperties>)KeyVaultProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = ContainerRegistryKeyVaultProperties.DeserializeContainerRegistryKeyVaultProperties(property.Value, options);
+                    keyVaultProperties = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryKeyVaultProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

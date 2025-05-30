@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in DimensionFilter)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataBoxEdgeMetricDimension>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in AdditionalDimensions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataBoxEdgeMetricDimension>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Probes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerAppProbe>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    resources = AppContainerResources.DeserializeAppContainerResources(property.Value, options);
+                    resources = ModelSerializationExtensions.JsonDeserialize<AppContainerResources>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("volumeMounts"u8))

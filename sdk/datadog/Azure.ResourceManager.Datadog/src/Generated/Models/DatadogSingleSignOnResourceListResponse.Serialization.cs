@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DatadogSingleSignOnResourceData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

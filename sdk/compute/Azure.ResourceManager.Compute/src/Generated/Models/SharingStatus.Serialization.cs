@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Summary)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RegionalSharingStatus>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

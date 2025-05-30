@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(CrossSubscriptionRestoreSettings))
             {
                 writer.WritePropertyName("crossSubscriptionRestoreSettings"u8);
-                writer.WriteObjectValue(CrossSubscriptionRestoreSettings, options);
+                ((IJsonModel<CrossSubscriptionRestoreSettings>)CrossSubscriptionRestoreSettings).Write(writer, options);
             }
             if (Optional.IsDefined(CrossRegionRestoreSettings))
             {
                 writer.WritePropertyName("crossRegionRestoreSettings"u8);
-                writer.WriteObjectValue(CrossRegionRestoreSettings, options);
+                ((IJsonModel<CrossRegionRestoreSettings>)CrossRegionRestoreSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    crossSubscriptionRestoreSettings = CrossSubscriptionRestoreSettings.DeserializeCrossSubscriptionRestoreSettings(property.Value, options);
+                    crossSubscriptionRestoreSettings = ModelSerializationExtensions.JsonDeserialize<CrossSubscriptionRestoreSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("crossRegionRestoreSettings"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    crossRegionRestoreSettings = CrossRegionRestoreSettings.DeserializeCrossRegionRestoreSettings(property.Value, options);
+                    crossRegionRestoreSettings = ModelSerializationExtensions.JsonDeserialize<CrossRegionRestoreSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

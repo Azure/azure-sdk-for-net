@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PipelineActivityDependency>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PipelineActivityUserProperty>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

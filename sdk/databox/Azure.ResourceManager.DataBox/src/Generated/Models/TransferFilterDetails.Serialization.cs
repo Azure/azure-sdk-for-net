@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(BlobFilterDetails))
             {
                 writer.WritePropertyName("blobFilterDetails"u8);
-                writer.WriteObjectValue(BlobFilterDetails, options);
+                ((IJsonModel<BlobFilterDetails>)BlobFilterDetails).Write(writer, options);
             }
             if (Optional.IsDefined(AzureFileFilterDetails))
             {
                 writer.WritePropertyName("azureFileFilterDetails"u8);
-                writer.WriteObjectValue(AzureFileFilterDetails, options);
+                ((IJsonModel<AzureFileFilterDetails>)AzureFileFilterDetails).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(FilterFileDetails))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in FilterFileDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FilterFileDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    blobFilterDetails = BlobFilterDetails.DeserializeBlobFilterDetails(property.Value, options);
+                    blobFilterDetails = ModelSerializationExtensions.JsonDeserialize<BlobFilterDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azureFileFilterDetails"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    azureFileFilterDetails = AzureFileFilterDetails.DeserializeAzureFileFilterDetails(property.Value, options);
+                    azureFileFilterDetails = ModelSerializationExtensions.JsonDeserialize<AzureFileFilterDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("filterFileDetails"u8))

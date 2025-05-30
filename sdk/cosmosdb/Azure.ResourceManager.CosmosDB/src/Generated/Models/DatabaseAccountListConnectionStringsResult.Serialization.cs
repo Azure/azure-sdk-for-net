@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in ConnectionStrings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CosmosDBAccountConnectionString>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

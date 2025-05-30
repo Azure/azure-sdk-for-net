@@ -39,37 +39,37 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RowCount))
             {
                 writer.WritePropertyName("rowCount"u8);
-                JsonSerializer.Serialize(writer, RowCount);
+                ((IJsonModel<DataFactoryElement<T>>)RowCount).Write(writer, options);
             }
             if (Optional.IsDefined(RowSkips))
             {
                 writer.WritePropertyName("rowSkips"u8);
-                JsonSerializer.Serialize(writer, RowSkips);
+                ((IJsonModel<DataFactoryElement<T>>)RowSkips).Write(writer, options);
             }
             if (Optional.IsDefined(RfcTableFields))
             {
                 writer.WritePropertyName("rfcTableFields"u8);
-                JsonSerializer.Serialize(writer, RfcTableFields);
+                ((IJsonModel<DataFactoryElement<T>>)RfcTableFields).Write(writer, options);
             }
             if (Optional.IsDefined(RfcTableOptions))
             {
                 writer.WritePropertyName("rfcTableOptions"u8);
-                JsonSerializer.Serialize(writer, RfcTableOptions);
+                ((IJsonModel<DataFactoryElement<T>>)RfcTableOptions).Write(writer, options);
             }
             if (Optional.IsDefined(BatchSize))
             {
                 writer.WritePropertyName("batchSize"u8);
-                JsonSerializer.Serialize(writer, BatchSize);
+                ((IJsonModel<DataFactoryElement<T>>)BatchSize).Write(writer, options);
             }
             if (Optional.IsDefined(CustomRfcReadTableFunctionModule))
             {
                 writer.WritePropertyName("customRfcReadTableFunctionModule"u8);
-                JsonSerializer.Serialize(writer, CustomRfcReadTableFunctionModule);
+                ((IJsonModel<DataFactoryElement<T>>)CustomRfcReadTableFunctionModule).Write(writer, options);
             }
             if (Optional.IsDefined(SapDataColumnDelimiter))
             {
                 writer.WritePropertyName("sapDataColumnDelimiter"u8);
-                JsonSerializer.Serialize(writer, SapDataColumnDelimiter);
+                ((IJsonModel<DataFactoryElement<T>>)SapDataColumnDelimiter).Write(writer, options);
             }
             if (Optional.IsDefined(PartitionOption))
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
-                writer.WriteObjectValue(PartitionSettings, options);
+                ((IJsonModel<SapTablePartitionSettings>)PartitionSettings).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    rowCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    rowCount = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rowSkips"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    rowSkips = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    rowSkips = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rfcTableFields"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    rfcTableFields = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    rfcTableFields = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rfcTableOptions"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    rfcTableOptions = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    rfcTableOptions = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("batchSize"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    batchSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    batchSize = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("customRfcReadTableFunctionModule"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    customRfcReadTableFunctionModule = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    customRfcReadTableFunctionModule = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sapDataColumnDelimiter"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sapDataColumnDelimiter = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    sapDataColumnDelimiter = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("partitionOption"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionSettings = SapTablePartitionSettings.DeserializeSapTablePartitionSettings(property.Value, options);
+                    partitionSettings = ModelSerializationExtensions.JsonDeserialize<SapTablePartitionSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("queryTimeout"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    queryTimeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    queryTimeout = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("additionalColumns"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sourceRetryCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    sourceRetryCount = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sourceRetryWait"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sourceRetryWait = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    sourceRetryWait = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("maxConcurrentConnections"u8))
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    maxConcurrentConnections = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("disableMetricsCollection"u8))
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    disableMetricsCollection = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

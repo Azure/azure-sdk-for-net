@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -57,7 +58,7 @@ namespace Azure.Communication.Sms
                 SmsSendOptions = smsSendOptions
             };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            ((IJsonModel<SendMessageRequest>)model).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message0;
         }

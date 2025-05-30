@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy, options);
+                ((IJsonModel<SecureInputOutputPolicy>)Policy).Write(writer, options);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                JsonSerializer.Serialize(writer, Value);
+                ((IJsonModel<DataFactoryElement<T>>)Value).Write(writer, options);
             }
             if (Optional.IsDefined(SetSystemVariable))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = SecureInputOutputPolicy.DeserializeSecureInputOutputPolicy(property.Value, options);
+                    policy = ModelSerializationExtensions.JsonDeserialize<SecureInputOutputPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            value = JsonSerializer.Deserialize<DataFactoryElement<BinaryData>>(property0.Value.GetRawText());
+                            value = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<BinaryData>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("setSystemVariable"u8))

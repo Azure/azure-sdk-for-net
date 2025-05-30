@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(ImageIdentifier))
             {
                 writer.WritePropertyName("identifier"u8);
-                writer.WriteObjectValue(ImageIdentifier, options);
+                ((IJsonModel<CommunityGalleryImageIdentifier>)ImageIdentifier).Write(writer, options);
             }
             if (Optional.IsDefined(Recommended))
             {
                 writer.WritePropertyName("recommended"u8);
-                writer.WriteObjectValue(Recommended, options);
+                ((IJsonModel<RecommendedMachineConfiguration>)Recommended).Write(writer, options);
             }
             if (Optional.IsDefined(Disallowed))
             {
                 writer.WritePropertyName("disallowed"u8);
-                writer.WriteObjectValue(Disallowed, options);
+                ((IJsonModel<Disallowed>)Disallowed).Write(writer, options);
             }
             if (Optional.IsDefined(HyperVGeneration))
             {
@@ -79,14 +79,14 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in Features)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<GalleryImageFeature>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
-                writer.WriteObjectValue(PurchasePlan, options);
+                ((IJsonModel<ImagePurchasePlan>)PurchasePlan).Write(writer, options);
             }
             if (Optional.IsDefined(Architecture))
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            identifier = CommunityGalleryImageIdentifier.DeserializeCommunityGalleryImageIdentifier(property0.Value, options);
+                            identifier = ModelSerializationExtensions.JsonDeserialize<CommunityGalleryImageIdentifier>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("recommended"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            recommended = RecommendedMachineConfiguration.DeserializeRecommendedMachineConfiguration(property0.Value, options);
+                            recommended = ModelSerializationExtensions.JsonDeserialize<RecommendedMachineConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("disallowed"u8))
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            disallowed = Disallowed.DeserializeDisallowed(property0.Value, options);
+                            disallowed = ModelSerializationExtensions.JsonDeserialize<Disallowed>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hyperVGeneration"u8))
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            purchasePlan = ImagePurchasePlan.DeserializeImagePurchasePlan(property0.Value, options);
+                            purchasePlan = ModelSerializationExtensions.JsonDeserialize<ImagePurchasePlan>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("architecture"u8))

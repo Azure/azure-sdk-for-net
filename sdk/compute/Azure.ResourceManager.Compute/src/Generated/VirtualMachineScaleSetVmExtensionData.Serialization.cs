@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView, options);
+                ((IJsonModel<VirtualMachineExtensionInstanceView>)InstanceView).Write(writer, options);
             }
             if (Optional.IsDefined(SuppressFailures))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(KeyVaultProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettingsFromKeyVault"u8);
-                writer.WriteObjectValue(KeyVaultProtectedSettings, options);
+                ((IJsonModel<KeyVaultSecretReference>)KeyVaultProtectedSettings).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ProvisionAfterExtensions))
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            instanceView = VirtualMachineExtensionInstanceView.DeserializeVirtualMachineExtensionInstanceView(property0.Value, options);
+                            instanceView = ModelSerializationExtensions.JsonDeserialize<VirtualMachineExtensionInstanceView>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("suppressFailures"u8))
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            protectedSettingsFromKeyVault = KeyVaultSecretReference.DeserializeKeyVaultSecretReference(property0.Value, options);
+                            protectedSettingsFromKeyVault = ModelSerializationExtensions.JsonDeserialize<KeyVaultSecretReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisionAfterExtensions"u8))

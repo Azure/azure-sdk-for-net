@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in WebServiceOutputs)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<AzureMLWebServiceFile>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in WebServiceInputs)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<AzureMLWebServiceFile>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
+                    policy = ModelSerializationExtensions.JsonDeserialize<PipelineActivityPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

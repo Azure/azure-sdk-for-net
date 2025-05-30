@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in RestorableTimeRanges)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RestorableTimeRange>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

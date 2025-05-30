@@ -38,22 +38,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Project))
             {
                 writer.WritePropertyName("project"u8);
-                JsonSerializer.Serialize(writer, Project);
+                ((IJsonModel<DataFactoryElement<T>>)Project).Write(writer, options);
             }
             if (Optional.IsDefined(Sort))
             {
                 writer.WritePropertyName("sort"u8);
-                JsonSerializer.Serialize(writer, Sort);
+                ((IJsonModel<DataFactoryElement<T>>)Sort).Write(writer, options);
             }
             if (Optional.IsDefined(Skip))
             {
                 writer.WritePropertyName("skip"u8);
-                JsonSerializer.Serialize(writer, Skip);
+                ((IJsonModel<DataFactoryElement<T>>)Skip).Write(writer, options);
             }
             if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
-                JsonSerializer.Serialize(writer, Limit);
+                ((IJsonModel<DataFactoryElement<T>>)Limit).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    project = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    project = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sort"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sort = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    sort = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("skip"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    skip = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    skip = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("limit"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    limit = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    limit = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

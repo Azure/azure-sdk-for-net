@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DeletedDataProtectionBackupInstanceData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

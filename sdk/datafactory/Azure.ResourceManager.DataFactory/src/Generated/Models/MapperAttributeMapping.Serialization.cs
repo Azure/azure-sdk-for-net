@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AttributeReference))
             {
                 writer.WritePropertyName("attributeReference"u8);
-                writer.WriteObjectValue(AttributeReference, options);
+                ((IJsonModel<MapperAttributeReference>)AttributeReference).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AttributeReferences))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in AttributeReferences)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MapperAttributeReference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    attributeReference = MapperAttributeReference.DeserializeMapperAttributeReference(property.Value, options);
+                    attributeReference = ModelSerializationExtensions.JsonDeserialize<MapperAttributeReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("attributeReferences"u8))

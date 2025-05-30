@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WritePropertyName("connectionInfo"u8);
-            writer.WriteObjectValue(ConnectionInfo, options);
+            ((IJsonModel<SqlConnectionInfo>)ConnectionInfo).Write(writer, options);
             writer.WritePropertyName("backupFileShare"u8);
-            writer.WriteObjectValue(BackupFileShare, options);
+            ((IJsonModel<FileShare>)BackupFileShare).Write(writer, options);
             writer.WritePropertyName("selectedCertificates"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedCertificates)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<SelectedCertificateInput>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("connectionInfo"u8))
                 {
-                    connectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
+                    connectionInfo = ModelSerializationExtensions.JsonDeserialize<SqlConnectionInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("backupFileShare"u8))
                 {
-                    backupFileShare = FileShare.DeserializeFileShare(property.Value, options);
+                    backupFileShare = ModelSerializationExtensions.JsonDeserialize<FileShare>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("selectedCertificates"u8))

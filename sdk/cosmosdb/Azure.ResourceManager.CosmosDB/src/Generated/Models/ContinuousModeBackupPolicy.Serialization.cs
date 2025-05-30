@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(ContinuousModeProperties))
             {
                 writer.WritePropertyName("continuousModeProperties"u8);
-                writer.WriteObjectValue(ContinuousModeProperties, options);
+                ((IJsonModel<ContinuousModeProperties>)ContinuousModeProperties).Write(writer, options);
             }
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    continuousModeProperties = ContinuousModeProperties.DeserializeContinuousModeProperties(property.Value, options);
+                    continuousModeProperties = ModelSerializationExtensions.JsonDeserialize<ContinuousModeProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    migrationState = BackupPolicyMigrationState.DeserializeBackupPolicyMigrationState(property.Value, options);
+                    migrationState = ModelSerializationExtensions.JsonDeserialize<BackupPolicyMigrationState>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in AdditionalUnattendContent)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AdditionalUnattendContent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PatchSettings))
             {
                 writer.WritePropertyName("patchSettings"u8);
-                writer.WriteObjectValue(PatchSettings, options);
+                ((IJsonModel<PatchSettings>)PatchSettings).Write(writer, options);
             }
             if (Optional.IsDefined(WinRM))
             {
                 writer.WritePropertyName("winRM"u8);
-                writer.WriteObjectValue(WinRM, options);
+                ((IJsonModel<WinRMConfiguration>)WinRM).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsVmAgentPlatformUpdatesEnabled))
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    patchSettings = PatchSettings.DeserializePatchSettings(property.Value, options);
+                    patchSettings = ModelSerializationExtensions.JsonDeserialize<PatchSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("winRM"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    winRM = WinRMConfiguration.DeserializeWinRMConfiguration(property.Value, options);
+                    winRM = ModelSerializationExtensions.JsonDeserialize<WinRMConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("enableVMAgentPlatformUpdates"u8))

@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(QueryResults))
             {
                 writer.WritePropertyName("queryResults"u8);
-                writer.WriteObjectValue(QueryResults, options);
+                ((IJsonModel<QueryExecutionResult>)QueryResults).Write(writer, options);
             }
             if (Optional.IsDefined(ValidationErrors))
             {
                 writer.WritePropertyName("validationErrors"u8);
-                writer.WriteObjectValue(ValidationErrors, options);
+                ((IJsonModel<ValidationError>)ValidationErrors).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    queryResults = QueryExecutionResult.DeserializeQueryExecutionResult(property.Value, options);
+                    queryResults = ModelSerializationExtensions.JsonDeserialize<QueryExecutionResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("validationErrors"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    validationErrors = ValidationError.DeserializeValidationError(property.Value, options);
+                    validationErrors = ModelSerializationExtensions.JsonDeserialize<ValidationError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

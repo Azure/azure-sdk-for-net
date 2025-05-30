@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DataLocation))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteObjectValue(DataLocation, options);
+                ((IJsonModel<DatasetLocation>)DataLocation).Write(writer, options);
             }
             if (Optional.IsDefined(AvroCompressionCodec))
             {
                 writer.WritePropertyName("avroCompressionCodec"u8);
-                JsonSerializer.Serialize(writer, AvroCompressionCodec);
+                ((IJsonModel<DataFactoryElement<T>>)AvroCompressionCodec).Write(writer, options);
             }
             if (Optional.IsDefined(AvroCompressionLevel))
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    structure = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetDataElement>>>(property.Value.GetRawText());
+                    structure = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<IList<DatasetDataElement>>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("schema"u8))
@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    schema = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetSchemaDataElement>>>(property.Value.GetRawText());
+                    schema = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<IList<DatasetSchemaDataElement>>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    folder = DatasetFolder.DeserializeDatasetFolder(property.Value, options);
+                    folder = ModelSerializationExtensions.JsonDeserialize<DatasetFolder>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("typeProperties"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            location = DatasetLocation.DeserializeDatasetLocation(property0.Value, options);
+                            location = ModelSerializationExtensions.JsonDeserialize<DatasetLocation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("avroCompressionCodec"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            avroCompressionCodec = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            avroCompressionCodec = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("avroCompressionLevel"u8))

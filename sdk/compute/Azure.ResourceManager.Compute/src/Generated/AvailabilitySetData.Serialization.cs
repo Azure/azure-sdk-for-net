@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<ComputeSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in VirtualMachines)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ProximityPlacementGroup))
             {
                 writer.WritePropertyName("proximityPlacementGroup"u8);
-                JsonSerializer.Serialize(writer, ProximityPlacementGroup);
+                ((IJsonModel<WritableSubResource>)ProximityPlacementGroup).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
             {
@@ -76,19 +76,19 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InstanceViewStatus>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ScheduledEventsPolicy))
             {
                 writer.WritePropertyName("scheduledEventsPolicy"u8);
-                writer.WriteObjectValue(ScheduledEventsPolicy, options);
+                ((IJsonModel<ScheduledEventsPolicy>)ScheduledEventsPolicy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(VirtualMachineScaleSetMigrationInfo))
             {
                 writer.WritePropertyName("virtualMachineScaleSetMigrationInfo"u8);
-                writer.WriteObjectValue(VirtualMachineScaleSetMigrationInfo, options);
+                ((IJsonModel<VirtualMachineScaleSetMigrationInfo>)VirtualMachineScaleSetMigrationInfo).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    sku = ComputeSku.DeserializeComputeSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<ComputeSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Compute
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item));
                             }
                             virtualMachines = array;
                             continue;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            proximityPlacementGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            proximityPlacementGroup = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("statuses"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            scheduledEventsPolicy = ScheduledEventsPolicy.DeserializeScheduledEventsPolicy(property0.Value, options);
+                            scheduledEventsPolicy = ModelSerializationExtensions.JsonDeserialize<ScheduledEventsPolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("virtualMachineScaleSetMigrationInfo"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            virtualMachineScaleSetMigrationInfo = VirtualMachineScaleSetMigrationInfo.DeserializeVirtualMachineScaleSetMigrationInfo(property0.Value, options);
+                            virtualMachineScaleSetMigrationInfo = ModelSerializationExtensions.JsonDeserialize<VirtualMachineScaleSetMigrationInfo>(property0.Value);
                             continue;
                         }
                     }

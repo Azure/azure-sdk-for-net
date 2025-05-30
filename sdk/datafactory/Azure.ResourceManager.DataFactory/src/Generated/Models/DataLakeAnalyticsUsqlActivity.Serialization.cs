@@ -39,18 +39,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("scriptPath"u8);
-            JsonSerializer.Serialize(writer, ScriptPath);
+            ((IJsonModel<DataFactoryElement<T>>)ScriptPath).Write(writer, options);
             writer.WritePropertyName("scriptLinkedService"u8);
             JsonSerializer.Serialize(writer, ScriptLinkedService);
             if (Optional.IsDefined(DegreeOfParallelism))
             {
                 writer.WritePropertyName("degreeOfParallelism"u8);
-                JsonSerializer.Serialize(writer, DegreeOfParallelism);
+                ((IJsonModel<DataFactoryElement<T>>)DegreeOfParallelism).Write(writer, options);
             }
             if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
-                JsonSerializer.Serialize(writer, Priority);
+                ((IJsonModel<DataFactoryElement<T>>)Priority).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
-                JsonSerializer.Serialize(writer, RuntimeVersion);
+                ((IJsonModel<DataFactoryElement<T>>)RuntimeVersion).Write(writer, options);
             }
             if (Optional.IsDefined(CompilationMode))
             {
                 writer.WritePropertyName("compilationMode"u8);
-                JsonSerializer.Serialize(writer, CompilationMode);
+                ((IJsonModel<DataFactoryElement<T>>)CompilationMode).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
+                    policy = ModelSerializationExtensions.JsonDeserialize<PipelineActivityPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -230,12 +230,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("scriptPath"u8))
                         {
-                            scriptPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            scriptPath = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("scriptLinkedService"u8))
                         {
-                            scriptLinkedService = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
+                            scriptLinkedService = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("degreeOfParallelism"u8))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            degreeOfParallelism = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            degreeOfParallelism = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("priority"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            priority = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            priority = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("parameters"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            runtimeVersion = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            runtimeVersion = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("compilationMode"u8))
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            compilationMode = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            compilationMode = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                     }

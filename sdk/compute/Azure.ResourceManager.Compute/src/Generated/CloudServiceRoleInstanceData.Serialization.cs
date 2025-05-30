@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<InstanceSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile, options);
+                ((IJsonModel<RoleInstanceNetworkProfile>)NetworkProfile).Write(writer, options);
             }
             if (Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView, options);
+                ((IJsonModel<RoleInstanceView>)InstanceView).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    sku = InstanceSku.DeserializeInstanceSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<InstanceSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            networkProfile = RoleInstanceNetworkProfile.DeserializeRoleInstanceNetworkProfile(property0.Value, options);
+                            networkProfile = ModelSerializationExtensions.JsonDeserialize<RoleInstanceNetworkProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("instanceView"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            instanceView = RoleInstanceView.DeserializeRoleInstanceView(property0.Value, options);
+                            instanceView = ModelSerializationExtensions.JsonDeserialize<RoleInstanceView>(property0.Value);
                             continue;
                         }
                     }

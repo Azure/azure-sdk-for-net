@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.Datadog
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<ResourceSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<MonitorProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Datadog
                     {
                         continue;
                     }
-                    sku = ResourceSku.DeserializeResourceSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<ResourceSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Datadog
                     {
                         continue;
                     }
-                    properties = MonitorProperties.DeserializeMonitorProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<MonitorProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Datadog
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Datadog
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

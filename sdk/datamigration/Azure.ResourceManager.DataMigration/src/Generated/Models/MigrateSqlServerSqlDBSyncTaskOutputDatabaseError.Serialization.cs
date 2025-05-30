@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SyncMigrationDatabaseErrorEvent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

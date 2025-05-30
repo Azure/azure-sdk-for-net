@@ -39,27 +39,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CompressionProperties))
             {
                 writer.WritePropertyName("compressionProperties"u8);
-                writer.WriteObjectValue(CompressionProperties, options);
+                ((IJsonModel<CompressionReadSettings>)CompressionProperties).Write(writer, options);
             }
             if (Optional.IsDefined(ValidationMode))
             {
                 writer.WritePropertyName("validationMode"u8);
-                JsonSerializer.Serialize(writer, ValidationMode);
+                ((IJsonModel<DataFactoryElement<T>>)ValidationMode).Write(writer, options);
             }
             if (Optional.IsDefined(DetectDataType))
             {
                 writer.WritePropertyName("detectDataType"u8);
-                JsonSerializer.Serialize(writer, DetectDataType);
+                ((IJsonModel<DataFactoryElement<T>>)DetectDataType).Write(writer, options);
             }
             if (Optional.IsDefined(Namespaces))
             {
                 writer.WritePropertyName("namespaces"u8);
-                JsonSerializer.Serialize(writer, Namespaces);
+                ((IJsonModel<DataFactoryElement<T>>)Namespaces).Write(writer, options);
             }
             if (Optional.IsDefined(NamespacePrefixes))
             {
                 writer.WritePropertyName("namespacePrefixes"u8);
-                JsonSerializer.Serialize(writer, NamespacePrefixes);
+                ((IJsonModel<DataFactoryElement<T>>)NamespacePrefixes).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    compressionProperties = CompressionReadSettings.DeserializeCompressionReadSettings(property.Value, options);
+                    compressionProperties = ModelSerializationExtensions.JsonDeserialize<CompressionReadSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("validationMode"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    validationMode = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    validationMode = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("detectDataType"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    detectDataType = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    detectDataType = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("namespaces"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    namespaces = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    namespaces = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("namespacePrefixes"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    namespacePrefixes = JsonSerializer.Deserialize<DataFactoryElement<IDictionary<string, string>>>(property.Value.GetRawText());
+                    namespacePrefixes = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<IDictionary<string, string>>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

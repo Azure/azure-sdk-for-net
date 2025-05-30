@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetRegions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TargetRegion>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetExtendedLocations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<GalleryTargetExtendedLocation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

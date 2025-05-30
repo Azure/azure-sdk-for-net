@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartArray();
             foreach (var item in Counters)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DataBoxEdgeMetricCounter>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WritePropertyName("targetConnectionInfo"u8);
-            writer.WriteObjectValue(TargetConnectionInfo, options);
+            ((IJsonModel<MISqlConnectionInfo>)TargetConnectionInfo).Write(writer, options);
             writer.WritePropertyName("azureApp"u8);
-            writer.WriteObjectValue(AzureApp, options);
+            ((IJsonModel<AzureActiveDirectoryApp>)AzureApp).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = MISqlConnectionInfo.DeserializeMISqlConnectionInfo(property.Value, options);
+                    targetConnectionInfo = ModelSerializationExtensions.JsonDeserialize<MISqlConnectionInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azureApp"u8))
                 {
-                    azureApp = AzureActiveDirectoryApp.DeserializeAzureActiveDirectoryApp(property.Value, options);
+                    azureApp = ModelSerializationExtensions.JsonDeserialize<AzureActiveDirectoryApp>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

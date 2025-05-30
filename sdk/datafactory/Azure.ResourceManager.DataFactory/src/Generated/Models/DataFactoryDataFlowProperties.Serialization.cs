@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder, options);
+                ((IJsonModel<DataFlowFolder>)Folder).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

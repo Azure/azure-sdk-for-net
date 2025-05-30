@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    migrationState = BackupPolicyMigrationState.DeserializeBackupPolicyMigrationState(property.Value, options);
+                    migrationState = ModelSerializationExtensions.JsonDeserialize<BackupPolicyMigrationState>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

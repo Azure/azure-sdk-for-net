@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(NetworkSecurityGroup))
             {
                 writer.WritePropertyName("networkSecurityGroup"u8);
-                JsonSerializer.Serialize(writer, NetworkSecurityGroup);
+                ((IJsonModel<WritableSubResource>)NetworkSecurityGroup).Write(writer, options);
             }
             if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
-                writer.WriteObjectValue(DnsSettings, options);
+                ((IJsonModel<VirtualMachineNetworkInterfaceDnsSettingsConfiguration>)DnsSettings).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(IPConfigurations))
             {
@@ -85,14 +85,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VirtualMachineNetworkInterfaceIPConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DscpConfiguration))
             {
                 writer.WritePropertyName("dscpConfiguration"u8);
-                JsonSerializer.Serialize(writer, DscpConfiguration);
+                ((IJsonModel<WritableSubResource>)DscpConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(AuxiliaryMode))
             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            networkSecurityGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            networkSecurityGroup = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dnsSettings"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            dnsSettings = VirtualMachineNetworkInterfaceDnsSettingsConfiguration.DeserializeVirtualMachineNetworkInterfaceDnsSettingsConfiguration(property0.Value, options);
+                            dnsSettings = ModelSerializationExtensions.JsonDeserialize<VirtualMachineNetworkInterfaceDnsSettingsConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ipConfigurations"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            dscpConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            dscpConfiguration = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("auxiliaryMode"u8))

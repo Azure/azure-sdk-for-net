@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WritePropertyName("filePath"u8);
-            JsonSerializer.Serialize(writer, FilePath);
+            ((IJsonModel<DataFactoryElement<T>>)FilePath).Write(writer, options);
             writer.WritePropertyName("linkedServiceName"u8);
             JsonSerializer.Serialize(writer, LinkedServiceName);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("filePath"u8))
                 {
-                    filePath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    filePath = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

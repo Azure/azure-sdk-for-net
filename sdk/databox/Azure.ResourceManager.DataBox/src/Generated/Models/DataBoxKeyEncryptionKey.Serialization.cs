@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(ManagedIdentity))
             {
                 writer.WritePropertyName("identityProperties"u8);
-                writer.WriteObjectValue(ManagedIdentity, options);
+                ((IJsonModel<DataBoxManagedIdentity>)ManagedIdentity).Write(writer, options);
             }
             if (Optional.IsDefined(KekUri))
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    identityProperties = DataBoxManagedIdentity.DeserializeDataBoxManagedIdentity(property.Value, options);
+                    identityProperties = ModelSerializationExtensions.JsonDeserialize<DataBoxManagedIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kekUrl"u8))

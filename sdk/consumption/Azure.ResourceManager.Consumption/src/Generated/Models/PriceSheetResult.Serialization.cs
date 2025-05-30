@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in Pricesheets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PriceSheetProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(Download))
             {
                 writer.WritePropertyName("download"u8);
-                writer.WriteObjectValue(Download, options);
+                ((IJsonModel<ConsumptionMeterDetails>)Download).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            download = ConsumptionMeterDetails.DeserializeConsumptionMeterDetails(property0.Value, options);
+                            download = ModelSerializationExtensions.JsonDeserialize<ConsumptionMeterDetails>(property0.Value);
                             continue;
                         }
                     }

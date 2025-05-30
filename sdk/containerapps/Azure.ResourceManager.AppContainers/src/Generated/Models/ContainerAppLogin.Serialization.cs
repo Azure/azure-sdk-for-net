@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
-                writer.WriteObjectValue(Routes, options);
+                ((IJsonModel<LoginRoutes>)Routes).Write(writer, options);
             }
             if (Optional.IsDefined(TokenStore))
             {
                 writer.WritePropertyName("tokenStore"u8);
-                writer.WriteObjectValue(TokenStore, options);
+                ((IJsonModel<ContainerAppTokenStore>)TokenStore).Write(writer, options);
             }
             if (Optional.IsDefined(PreserveUrlFragmentsForLogins))
             {
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(CookieExpiration))
             {
                 writer.WritePropertyName("cookieExpiration"u8);
-                writer.WriteObjectValue(CookieExpiration, options);
+                ((IJsonModel<ContainerAppCookieExpiration>)CookieExpiration).Write(writer, options);
             }
             if (Optional.IsDefined(Nonce))
             {
                 writer.WritePropertyName("nonce"u8);
-                writer.WriteObjectValue(Nonce, options);
+                ((IJsonModel<ContainerAppLoginNonce>)Nonce).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    routes = LoginRoutes.DeserializeLoginRoutes(property.Value, options);
+                    routes = ModelSerializationExtensions.JsonDeserialize<LoginRoutes>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tokenStore"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    tokenStore = ContainerAppTokenStore.DeserializeContainerAppTokenStore(property.Value, options);
+                    tokenStore = ModelSerializationExtensions.JsonDeserialize<ContainerAppTokenStore>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("preserveUrlFragmentsForLogins"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    cookieExpiration = ContainerAppCookieExpiration.DeserializeContainerAppCookieExpiration(property.Value, options);
+                    cookieExpiration = ModelSerializationExtensions.JsonDeserialize<ContainerAppCookieExpiration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nonce"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    nonce = ContainerAppLoginNonce.DeserializeContainerAppLoginNonce(property.Value, options);
+                    nonce = ModelSerializationExtensions.JsonDeserialize<ContainerAppLoginNonce>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

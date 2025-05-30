@@ -38,32 +38,32 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile, options);
+                ((IJsonModel<ComputeFleetVmssOSProfile>)OSProfile).Write(writer, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile, options);
+                ((IJsonModel<ComputeFleetVmssStorageProfile>)StorageProfile).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile, options);
+                ((IJsonModel<ComputeFleetVmssNetworkProfile>)NetworkProfile).Write(writer, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile, options);
+                ((IJsonModel<ComputeFleetSecurityProfile>)SecurityProfile).Write(writer, options);
             }
             if (Optional.IsDefined(DiagnosticsProfile))
             {
                 writer.WritePropertyName("diagnosticsProfile"u8);
-                writer.WriteObjectValue(DiagnosticsProfile, options);
+                ((IJsonModel<ComputeFleetDiagnosticsProfile>)DiagnosticsProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ExtensionProfile))
             {
                 writer.WritePropertyName("extensionProfile"u8);
-                writer.WriteObjectValue(ExtensionProfile, options);
+                ((IJsonModel<ComputeFleetVmssExtensionProfile>)ExtensionProfile).Write(writer, options);
             }
             if (Optional.IsDefined(LicenseType))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(ScheduledEventsProfile))
             {
                 writer.WritePropertyName("scheduledEventsProfile"u8);
-                writer.WriteObjectValue(ScheduledEventsProfile, options);
+                ((IJsonModel<ComputeFleetScheduledEventsProfile>)ScheduledEventsProfile).Write(writer, options);
             }
             if (Optional.IsDefined(UserData))
             {
@@ -83,27 +83,27 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(CapacityReservation))
             {
                 writer.WritePropertyName("capacityReservation"u8);
-                writer.WriteObjectValue(CapacityReservation, options);
+                ((IJsonModel<CapacityReservationProfile>)CapacityReservation).Write(writer, options);
             }
             if (Optional.IsDefined(ApplicationProfile))
             {
                 writer.WritePropertyName("applicationProfile"u8);
-                writer.WriteObjectValue(ApplicationProfile, options);
+                ((IJsonModel<ComputeFleetApplicationProfile>)ApplicationProfile).Write(writer, options);
             }
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile, options);
+                ((IJsonModel<ComputeFleetVmssHardwareProfile>)HardwareProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ServiceArtifactReference))
             {
                 writer.WritePropertyName("serviceArtifactReference"u8);
-                JsonSerializer.Serialize(writer, ServiceArtifactReference);
+                ((IJsonModel<WritableSubResource>)ServiceArtifactReference).Write(writer, options);
             }
             if (Optional.IsDefined(SecurityPostureReference))
             {
                 writer.WritePropertyName("securityPostureReference"u8);
-                writer.WriteObjectValue(SecurityPostureReference, options);
+                ((IJsonModel<ComputeFleetSecurityPostureReference>)SecurityPostureReference).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    osProfile = ComputeFleetVmssOSProfile.DeserializeComputeFleetVmssOSProfile(property.Value, options);
+                    osProfile = ModelSerializationExtensions.JsonDeserialize<ComputeFleetVmssOSProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storageProfile"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    storageProfile = ComputeFleetVmssStorageProfile.DeserializeComputeFleetVmssStorageProfile(property.Value, options);
+                    storageProfile = ModelSerializationExtensions.JsonDeserialize<ComputeFleetVmssStorageProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("networkProfile"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    networkProfile = ComputeFleetVmssNetworkProfile.DeserializeComputeFleetVmssNetworkProfile(property.Value, options);
+                    networkProfile = ModelSerializationExtensions.JsonDeserialize<ComputeFleetVmssNetworkProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("securityProfile"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    securityProfile = ComputeFleetSecurityProfile.DeserializeComputeFleetSecurityProfile(property.Value, options);
+                    securityProfile = ModelSerializationExtensions.JsonDeserialize<ComputeFleetSecurityProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("diagnosticsProfile"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    diagnosticsProfile = ComputeFleetDiagnosticsProfile.DeserializeComputeFleetDiagnosticsProfile(property.Value, options);
+                    diagnosticsProfile = ModelSerializationExtensions.JsonDeserialize<ComputeFleetDiagnosticsProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extensionProfile"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    extensionProfile = ComputeFleetVmssExtensionProfile.DeserializeComputeFleetVmssExtensionProfile(property.Value, options);
+                    extensionProfile = ModelSerializationExtensions.JsonDeserialize<ComputeFleetVmssExtensionProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("licenseType"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    scheduledEventsProfile = ComputeFleetScheduledEventsProfile.DeserializeComputeFleetScheduledEventsProfile(property.Value, options);
+                    scheduledEventsProfile = ModelSerializationExtensions.JsonDeserialize<ComputeFleetScheduledEventsProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userData"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    capacityReservation = CapacityReservationProfile.DeserializeCapacityReservationProfile(property.Value, options);
+                    capacityReservation = ModelSerializationExtensions.JsonDeserialize<CapacityReservationProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("applicationProfile"u8))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    applicationProfile = ComputeFleetApplicationProfile.DeserializeComputeFleetApplicationProfile(property.Value, options);
+                    applicationProfile = ModelSerializationExtensions.JsonDeserialize<ComputeFleetApplicationProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("hardwareProfile"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    hardwareProfile = ComputeFleetVmssHardwareProfile.DeserializeComputeFleetVmssHardwareProfile(property.Value, options);
+                    hardwareProfile = ModelSerializationExtensions.JsonDeserialize<ComputeFleetVmssHardwareProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("serviceArtifactReference"u8))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    serviceArtifactReference = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    serviceArtifactReference = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("securityPostureReference"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    securityPostureReference = ComputeFleetSecurityPostureReference.DeserializeComputeFleetSecurityPostureReference(property.Value, options);
+                    securityPostureReference = ModelSerializationExtensions.JsonDeserialize<ComputeFleetSecurityPostureReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("timeCreated"u8))

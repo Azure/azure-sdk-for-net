@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Columns)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerAppDiagnosticDataColumn>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

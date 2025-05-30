@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
-                JsonSerializer.Serialize(writer, ServicePrincipalId);
+                ((IJsonModel<DataFactoryElement<T>>)ServicePrincipalId).Write(writer, options);
             }
             if (Optional.IsDefined(ServicePrincipalKey))
             {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Tenant))
             {
                 writer.WritePropertyName("tenant"u8);
-                JsonSerializer.Serialize(writer, Tenant);
+                ((IJsonModel<DataFactoryElement<T>>)Tenant).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            servicePrincipalId = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalKey"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalKey = JsonSerializer.Deserialize<DataFactoryKeyVaultSecret>(property0.Value.GetRawText());
+                            servicePrincipalKey = ModelSerializationExtensions.JsonDeserialize<DataFactoryKeyVaultSecret>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            tenant = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            tenant = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                     }

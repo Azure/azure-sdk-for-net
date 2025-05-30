@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ElapsedTimeMetric))
             {
                 writer.WritePropertyName("elapsedTimeMetric"u8);
-                writer.WriteObjectValue(ElapsedTimeMetric, options);
+                ((IJsonModel<PipelineElapsedTimeMetricPolicy>)ElapsedTimeMetric).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    elapsedTimeMetric = PipelineElapsedTimeMetricPolicy.DeserializePipelineElapsedTimeMetricPolicy(property.Value, options);
+                    elapsedTimeMetric = ModelSerializationExtensions.JsonDeserialize<PipelineElapsedTimeMetricPolicy>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

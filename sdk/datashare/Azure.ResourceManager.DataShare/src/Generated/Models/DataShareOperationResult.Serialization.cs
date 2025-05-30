@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("startTime"u8))

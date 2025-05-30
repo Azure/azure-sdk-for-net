@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(MonitoringSettings))
             {
                 writer.WritePropertyName("monitoringSettings"u8);
-                writer.WriteObjectValue(MonitoringSettings, options);
+                ((IJsonModel<MonitoringSettings>)MonitoringSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -52,18 +52,18 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceMoveDetails))
             {
                 writer.WritePropertyName("resourceMoveDetails"u8);
-                writer.WriteObjectValue(ResourceMoveDetails, options);
+                ((IJsonModel<BackupVaultResourceMoveDetails>)ResourceMoveDetails).Write(writer, options);
             }
             if (Optional.IsDefined(SecuritySettings))
             {
                 writer.WritePropertyName("securitySettings"u8);
-                writer.WriteObjectValue(SecuritySettings, options);
+                ((IJsonModel<BackupVaultSecuritySettings>)SecuritySettings).Write(writer, options);
             }
             writer.WritePropertyName("storageSettings"u8);
             writer.WriteStartArray();
             foreach (var item in StorageSettings)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DataProtectionBackupStorageSetting>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(IsVaultProtectedByResourceGuard))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(FeatureSettings))
             {
                 writer.WritePropertyName("featureSettings"u8);
-                writer.WriteObjectValue(FeatureSettings, options);
+                ((IJsonModel<BackupVaultFeatureSettings>)FeatureSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SecureScore))
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    monitoringSettings = MonitoringSettings.DeserializeMonitoringSettings(property.Value, options);
+                    monitoringSettings = ModelSerializationExtensions.JsonDeserialize<MonitoringSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    resourceMoveDetails = BackupVaultResourceMoveDetails.DeserializeBackupVaultResourceMoveDetails(property.Value, options);
+                    resourceMoveDetails = ModelSerializationExtensions.JsonDeserialize<BackupVaultResourceMoveDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("securitySettings"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    securitySettings = BackupVaultSecuritySettings.DeserializeBackupVaultSecuritySettings(property.Value, options);
+                    securitySettings = ModelSerializationExtensions.JsonDeserialize<BackupVaultSecuritySettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storageSettings"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    featureSettings = BackupVaultFeatureSettings.DeserializeBackupVaultFeatureSettings(property.Value, options);
+                    featureSettings = ModelSerializationExtensions.JsonDeserialize<BackupVaultFeatureSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("secureScore"u8))

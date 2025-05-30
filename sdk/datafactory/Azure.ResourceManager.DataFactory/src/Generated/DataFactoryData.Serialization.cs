@@ -40,8 +40,7 @@ namespace Azure.ResourceManager.DataFactory
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -68,12 +67,12 @@ namespace Azure.ResourceManager.DataFactory
             if (Optional.IsDefined(PurviewConfiguration))
             {
                 writer.WritePropertyName("purviewConfiguration"u8);
-                writer.WriteObjectValue(PurviewConfiguration, options);
+                ((IJsonModel<DataFactoryPurviewConfiguration>)PurviewConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(RepoConfiguration))
             {
                 writer.WritePropertyName("repoConfiguration"u8);
-                writer.WriteObjectValue(RepoConfiguration, options);
+                ((IJsonModel<FactoryRepoConfiguration>)RepoConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(GlobalParameters))
             {
@@ -82,14 +81,14 @@ namespace Azure.ResourceManager.DataFactory
                 foreach (var item in GlobalParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<DataFactoryGlobalParameterProperties>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<DataFactoryEncryptionConfiguration>)Encryption).Write(writer, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -158,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eTag"u8))
@@ -210,7 +209,7 @@ namespace Azure.ResourceManager.DataFactory
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -247,7 +246,7 @@ namespace Azure.ResourceManager.DataFactory
                             {
                                 continue;
                             }
-                            purviewConfiguration = DataFactoryPurviewConfiguration.DeserializeDataFactoryPurviewConfiguration(property0.Value, options);
+                            purviewConfiguration = ModelSerializationExtensions.JsonDeserialize<DataFactoryPurviewConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("repoConfiguration"u8))
@@ -256,7 +255,7 @@ namespace Azure.ResourceManager.DataFactory
                             {
                                 continue;
                             }
-                            repoConfiguration = FactoryRepoConfiguration.DeserializeFactoryRepoConfiguration(property0.Value, options);
+                            repoConfiguration = ModelSerializationExtensions.JsonDeserialize<FactoryRepoConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("globalParameters"u8))
@@ -279,7 +278,7 @@ namespace Azure.ResourceManager.DataFactory
                             {
                                 continue;
                             }
-                            encryption = DataFactoryEncryptionConfiguration.DeserializeDataFactoryEncryptionConfiguration(property0.Value, options);
+                            encryption = ModelSerializationExtensions.JsonDeserialize<DataFactoryEncryptionConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))

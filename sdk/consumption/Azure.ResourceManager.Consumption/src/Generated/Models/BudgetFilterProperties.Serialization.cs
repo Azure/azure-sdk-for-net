@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Consumption.Models
             if (Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
-                writer.WriteObjectValue(Dimensions, options);
+                ((IJsonModel<BudgetComparisonExpression>)Dimensions).Write(writer, options);
             }
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
-                writer.WriteObjectValue(Tags, options);
+                ((IJsonModel<BudgetComparisonExpression>)Tags).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    dimensions = BudgetComparisonExpression.DeserializeBudgetComparisonExpression(property.Value, options);
+                    dimensions = ModelSerializationExtensions.JsonDeserialize<BudgetComparisonExpression>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    tags = BudgetComparisonExpression.DeserializeBudgetComparisonExpression(property.Value, options);
+                    tags = ModelSerializationExtensions.JsonDeserialize<BudgetComparisonExpression>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

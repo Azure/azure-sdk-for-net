@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in ExecutedValidations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<GalleryImageExecutedValidation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in PlatformAttributes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ComputeGalleryPlatformAttribute>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

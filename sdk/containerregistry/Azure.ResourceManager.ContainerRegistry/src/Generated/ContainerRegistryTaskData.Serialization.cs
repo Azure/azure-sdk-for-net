@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
-                writer.WriteObjectValue(Platform, options);
+                ((IJsonModel<ContainerRegistryPlatformProperties>)Platform).Write(writer, options);
             }
             if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
-                writer.WriteObjectValue(AgentConfiguration, options);
+                ((IJsonModel<ContainerRegistryAgentProperties>)AgentConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(AgentPoolName))
             {
@@ -84,17 +84,17 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(Step))
             {
                 writer.WritePropertyName("step"u8);
-                writer.WriteObjectValue(Step, options);
+                ((IJsonModel<ContainerRegistryTaskStepProperties>)Step).Write(writer, options);
             }
             if (Optional.IsDefined(Trigger))
             {
                 writer.WritePropertyName("trigger"u8);
-                writer.WriteObjectValue(Trigger, options);
+                ((IJsonModel<ContainerRegistryTriggerProperties>)Trigger).Write(writer, options);
             }
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials, options);
+                ((IJsonModel<ContainerRegistryCredentials>)Credentials).Write(writer, options);
             }
             if (Optional.IsDefined(LogTemplate))
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            platform = ContainerRegistryPlatformProperties.DeserializeContainerRegistryPlatformProperties(property0.Value, options);
+                            platform = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryPlatformProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("agentConfiguration"u8))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            agentConfiguration = ContainerRegistryAgentProperties.DeserializeContainerRegistryAgentProperties(property0.Value, options);
+                            agentConfiguration = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryAgentProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("agentPoolName"u8))
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            step = ContainerRegistryTaskStepProperties.DeserializeContainerRegistryTaskStepProperties(property0.Value, options);
+                            step = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryTaskStepProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("trigger"u8))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            trigger = ContainerRegistryTriggerProperties.DeserializeContainerRegistryTriggerProperties(property0.Value, options);
+                            trigger = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryTriggerProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("credentials"u8))
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            credentials = ContainerRegistryCredentials.DeserializeContainerRegistryCredentials(property0.Value, options);
+                            credentials = ModelSerializationExtensions.JsonDeserialize<ContainerRegistryCredentials>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("logTemplate"u8))

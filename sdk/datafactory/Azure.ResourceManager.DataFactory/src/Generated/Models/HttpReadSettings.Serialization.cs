@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod"u8);
-                JsonSerializer.Serialize(writer, RequestMethod);
+                ((IJsonModel<DataFactoryElement<T>>)RequestMethod).Write(writer, options);
             }
             if (Optional.IsDefined(RequestBody))
             {
                 writer.WritePropertyName("requestBody"u8);
-                JsonSerializer.Serialize(writer, RequestBody);
+                ((IJsonModel<DataFactoryElement<T>>)RequestBody).Write(writer, options);
             }
             if (Optional.IsDefined(AdditionalHeaders))
             {
                 writer.WritePropertyName("additionalHeaders"u8);
-                JsonSerializer.Serialize(writer, AdditionalHeaders);
+                ((IJsonModel<DataFactoryElement<T>>)AdditionalHeaders).Write(writer, options);
             }
             if (Optional.IsDefined(RequestTimeout))
             {
                 writer.WritePropertyName("requestTimeout"u8);
-                JsonSerializer.Serialize(writer, RequestTimeout);
+                ((IJsonModel<DataFactoryElement<T>>)RequestTimeout).Write(writer, options);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    requestMethod = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    requestMethod = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("requestBody"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    requestBody = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    requestBody = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("additionalHeaders"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    additionalHeaders = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    additionalHeaders = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("requestTimeout"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    requestTimeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    requestTimeout = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("additionalColumns"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    maxConcurrentConnections = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("disableMetricsCollection"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    disableMetricsCollection = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

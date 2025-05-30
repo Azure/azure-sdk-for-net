@@ -36,16 +36,16 @@ namespace Azure.ResourceManager.Compute.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source, options);
+            ((IJsonModel<UserArtifactSource>)Source).Write(writer, options);
             if (Optional.IsDefined(ManageActions))
             {
                 writer.WritePropertyName("manageActions"u8);
-                writer.WriteObjectValue(ManageActions, options);
+                ((IJsonModel<UserArtifactManagement>)ManageActions).Write(writer, options);
             }
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
-                writer.WriteObjectValue(Settings, options);
+                ((IJsonModel<UserArtifactSettings>)Settings).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AdvancedSettings))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomActions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<GalleryApplicationCustomAction>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("source"u8))
                 {
-                    source = UserArtifactSource.DeserializeUserArtifactSource(property.Value, options);
+                    source = ModelSerializationExtensions.JsonDeserialize<UserArtifactSource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("manageActions"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    manageActions = UserArtifactManagement.DeserializeUserArtifactManagement(property.Value, options);
+                    manageActions = ModelSerializationExtensions.JsonDeserialize<UserArtifactManagement>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("settings"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    settings = UserArtifactSettings.DeserializeUserArtifactSettings(property.Value, options);
+                    settings = ModelSerializationExtensions.JsonDeserialize<UserArtifactSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("advancedSettings"u8))

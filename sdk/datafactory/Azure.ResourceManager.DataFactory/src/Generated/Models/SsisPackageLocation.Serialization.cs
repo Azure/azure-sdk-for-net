@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PackagePath))
             {
                 writer.WritePropertyName("packagePath"u8);
-                JsonSerializer.Serialize(writer, PackagePath);
+                ((IJsonModel<DataFactoryElement<T>>)PackagePath).Write(writer, options);
             }
             if (Optional.IsDefined(LocationType))
             {
@@ -55,17 +55,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AccessCredential))
             {
                 writer.WritePropertyName("accessCredential"u8);
-                writer.WriteObjectValue(AccessCredential, options);
+                ((IJsonModel<SsisAccessCredential>)AccessCredential).Write(writer, options);
             }
             if (Optional.IsDefined(ConfigurationPath))
             {
                 writer.WritePropertyName("configurationPath"u8);
-                JsonSerializer.Serialize(writer, ConfigurationPath);
+                ((IJsonModel<DataFactoryElement<T>>)ConfigurationPath).Write(writer, options);
             }
             if (Optional.IsDefined(ConfigurationAccessCredential))
             {
                 writer.WritePropertyName("configurationAccessCredential"u8);
-                writer.WriteObjectValue(ConfigurationAccessCredential, options);
+                ((IJsonModel<SsisAccessCredential>)ConfigurationAccessCredential).Write(writer, options);
             }
             if (Optional.IsDefined(PackageName))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PackageContent))
             {
                 writer.WritePropertyName("packageContent"u8);
-                JsonSerializer.Serialize(writer, PackageContent);
+                ((IJsonModel<DataFactoryElement<T>>)PackageContent).Write(writer, options);
             }
             if (Optional.IsDefined(PackageLastModifiedDate))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in ChildPackages)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SsisChildPackage>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    packagePath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    packagePath = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            packagePassword = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            packagePassword = ModelSerializationExtensions.JsonDeserialize<DataFactorySecret>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("accessCredential"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value, options);
+                            accessCredential = ModelSerializationExtensions.JsonDeserialize<SsisAccessCredential>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("configurationPath"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            configurationPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            configurationPath = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("configurationAccessCredential"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            configurationAccessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value, options);
+                            configurationAccessCredential = ModelSerializationExtensions.JsonDeserialize<SsisAccessCredential>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("packageName"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            packageContent = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            packageContent = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("packageLastModifiedDate"u8))

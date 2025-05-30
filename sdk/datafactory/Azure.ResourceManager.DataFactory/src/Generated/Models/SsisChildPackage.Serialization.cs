@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WritePropertyName("packagePath"u8);
-            JsonSerializer.Serialize(writer, PackagePath);
+            ((IJsonModel<DataFactoryElement<T>>)PackagePath).Write(writer, options);
             if (Optional.IsDefined(PackageName))
             {
                 writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
             }
             writer.WritePropertyName("packageContent"u8);
-            JsonSerializer.Serialize(writer, PackageContent);
+            ((IJsonModel<DataFactoryElement<T>>)PackageContent).Write(writer, options);
             if (Optional.IsDefined(PackageLastModifiedDate))
             {
                 writer.WritePropertyName("packageLastModifiedDate"u8);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("packagePath"u8))
                 {
-                    packagePath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    packagePath = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("packageName"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("packageContent"u8))
                 {
-                    packageContent = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    packageContent = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("packageLastModifiedDate"u8))

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartArray();
             foreach (var item in FailoverPolicies)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<CosmosDBFailoverPolicy>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

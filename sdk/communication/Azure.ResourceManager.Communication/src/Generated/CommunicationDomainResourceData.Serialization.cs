@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.Communication
             if (options.Format != "W" && Optional.IsDefined(VerificationStates))
             {
                 writer.WritePropertyName("verificationStates"u8);
-                writer.WriteObjectValue(VerificationStates, options);
+                ((IJsonModel<DomainPropertiesVerificationStates>)VerificationStates).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(VerificationRecords))
             {
                 writer.WritePropertyName("verificationRecords"u8);
-                writer.WriteObjectValue(VerificationRecords, options);
+                ((IJsonModel<DomainPropertiesVerificationRecords>)VerificationRecords).Write(writer, options);
             }
             if (Optional.IsDefined(UserEngagementTracking))
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Communication
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Communication
                             {
                                 continue;
                             }
-                            verificationStates = DomainPropertiesVerificationStates.DeserializeDomainPropertiesVerificationStates(property0.Value, options);
+                            verificationStates = ModelSerializationExtensions.JsonDeserialize<DomainPropertiesVerificationStates>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("verificationRecords"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Communication
                             {
                                 continue;
                             }
-                            verificationRecords = DomainPropertiesVerificationRecords.DeserializeDomainPropertiesVerificationRecords(property0.Value, options);
+                            verificationRecords = ModelSerializationExtensions.JsonDeserialize<DomainPropertiesVerificationRecords>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("userEngagementTracking"u8))

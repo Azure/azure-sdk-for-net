@@ -38,7 +38,7 @@ namespace Azure.AI.ContentSafety
             writer.WriteStartArray();
             foreach (var item in CategoriesAnalysis)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ImageCategoriesAnalysis>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

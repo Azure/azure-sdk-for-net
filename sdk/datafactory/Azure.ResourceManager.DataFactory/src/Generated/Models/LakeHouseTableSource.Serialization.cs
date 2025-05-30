@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TimestampAsOf))
             {
                 writer.WritePropertyName("timestampAsOf"u8);
-                JsonSerializer.Serialize(writer, TimestampAsOf);
+                ((IJsonModel<DataFactoryElement<T>>)TimestampAsOf).Write(writer, options);
             }
             if (Optional.IsDefined(VersionAsOf))
             {
                 writer.WritePropertyName("versionAsOf"u8);
-                JsonSerializer.Serialize(writer, VersionAsOf);
+                ((IJsonModel<DataFactoryElement<T>>)VersionAsOf).Write(writer, options);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    timestampAsOf = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    timestampAsOf = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("versionAsOf"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    versionAsOf = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    versionAsOf = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("additionalColumns"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sourceRetryCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    sourceRetryCount = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sourceRetryWait"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sourceRetryWait = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    sourceRetryWait = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("maxConcurrentConnections"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    maxConcurrentConnections = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("disableMetricsCollection"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    disableMetricsCollection = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

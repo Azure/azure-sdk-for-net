@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PowerQuerySource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value, options);
+                    folder = ModelSerializationExtensions.JsonDeserialize<DataFlowFolder>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("typeProperties"u8))

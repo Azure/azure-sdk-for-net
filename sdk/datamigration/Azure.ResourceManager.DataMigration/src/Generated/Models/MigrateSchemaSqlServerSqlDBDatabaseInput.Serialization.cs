@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(SchemaSetting))
             {
                 writer.WritePropertyName("schemaSetting"u8);
-                writer.WriteObjectValue(SchemaSetting, options);
+                ((IJsonModel<SchemaMigrationSetting>)SchemaSetting).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    schemaSetting = SchemaMigrationSetting.DeserializeSchemaMigrationSetting(property.Value, options);
+                    schemaSetting = ModelSerializationExtensions.JsonDeserialize<SchemaMigrationSetting>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

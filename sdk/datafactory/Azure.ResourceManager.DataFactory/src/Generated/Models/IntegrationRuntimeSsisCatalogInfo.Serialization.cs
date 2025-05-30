@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    catalogAdminPassword = JsonSerializer.Deserialize<DataFactorySecretString>(property.Value.GetRawText());
+                    catalogAdminPassword = ModelSerializationExtensions.JsonDeserialize<DataFactorySecretString>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("catalogPricingTier"u8))

@@ -43,22 +43,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(AzureQueue))
             {
                 writer.WritePropertyName("azureQueue"u8);
-                writer.WriteObjectValue(AzureQueue, options);
+                ((IJsonModel<ContainerAppQueueScaleRule>)AzureQueue).Write(writer, options);
             }
             if (Optional.IsDefined(Custom))
             {
                 writer.WritePropertyName("custom"u8);
-                writer.WriteObjectValue(Custom, options);
+                ((IJsonModel<ContainerAppCustomScaleRule>)Custom).Write(writer, options);
             }
             if (Optional.IsDefined(Http))
             {
                 writer.WritePropertyName("http"u8);
-                writer.WriteObjectValue(Http, options);
+                ((IJsonModel<ContainerAppHttpScaleRule>)Http).Write(writer, options);
             }
             if (Optional.IsDefined(Tcp))
             {
                 writer.WritePropertyName("tcp"u8);
-                writer.WriteObjectValue(Tcp, options);
+                ((IJsonModel<ContainerAppTcpScaleRule>)Tcp).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    azureQueue = ContainerAppQueueScaleRule.DeserializeContainerAppQueueScaleRule(property.Value, options);
+                    azureQueue = ModelSerializationExtensions.JsonDeserialize<ContainerAppQueueScaleRule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("custom"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    custom = ContainerAppCustomScaleRule.DeserializeContainerAppCustomScaleRule(property.Value, options);
+                    custom = ModelSerializationExtensions.JsonDeserialize<ContainerAppCustomScaleRule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("http"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    http = ContainerAppHttpScaleRule.DeserializeContainerAppHttpScaleRule(property.Value, options);
+                    http = ModelSerializationExtensions.JsonDeserialize<ContainerAppHttpScaleRule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tcp"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    tcp = ContainerAppTcpScaleRule.DeserializeContainerAppTcpScaleRule(property.Value, options);
+                    tcp = ModelSerializationExtensions.JsonDeserialize<ContainerAppTcpScaleRule>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

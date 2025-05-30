@@ -38,27 +38,27 @@ namespace Azure.ResourceManager.Communication.Models
             if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("Domain"u8);
-                writer.WriteObjectValue(Domain, options);
+                ((IJsonModel<DomainVerificationStatusRecord>)Domain).Write(writer, options);
             }
             if (Optional.IsDefined(Spf))
             {
                 writer.WritePropertyName("SPF"u8);
-                writer.WriteObjectValue(Spf, options);
+                ((IJsonModel<DomainVerificationStatusRecord>)Spf).Write(writer, options);
             }
             if (Optional.IsDefined(Dkim))
             {
                 writer.WritePropertyName("DKIM"u8);
-                writer.WriteObjectValue(Dkim, options);
+                ((IJsonModel<DomainVerificationStatusRecord>)Dkim).Write(writer, options);
             }
             if (Optional.IsDefined(Dkim2))
             {
                 writer.WritePropertyName("DKIM2"u8);
-                writer.WriteObjectValue(Dkim2, options);
+                ((IJsonModel<DomainVerificationStatusRecord>)Dkim2).Write(writer, options);
             }
             if (Optional.IsDefined(Dmarc))
             {
                 writer.WritePropertyName("DMARC"u8);
-                writer.WriteObjectValue(Dmarc, options);
+                ((IJsonModel<DomainVerificationStatusRecord>)Dmarc).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Communication.Models
                     {
                         continue;
                     }
-                    domain = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value, options);
+                    domain = ModelSerializationExtensions.JsonDeserialize<DomainVerificationStatusRecord>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("SPF"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Communication.Models
                     {
                         continue;
                     }
-                    spf = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value, options);
+                    spf = ModelSerializationExtensions.JsonDeserialize<DomainVerificationStatusRecord>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("DKIM"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Communication.Models
                     {
                         continue;
                     }
-                    dkim = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value, options);
+                    dkim = ModelSerializationExtensions.JsonDeserialize<DomainVerificationStatusRecord>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("DKIM2"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Communication.Models
                     {
                         continue;
                     }
-                    dkiM2 = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value, options);
+                    dkiM2 = ModelSerializationExtensions.JsonDeserialize<DomainVerificationStatusRecord>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("DMARC"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Communication.Models
                     {
                         continue;
                     }
-                    dmarc = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value, options);
+                    dmarc = ModelSerializationExtensions.JsonDeserialize<DomainVerificationStatusRecord>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

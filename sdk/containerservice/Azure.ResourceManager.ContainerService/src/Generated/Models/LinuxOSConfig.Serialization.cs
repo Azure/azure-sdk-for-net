@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Sysctls))
             {
                 writer.WritePropertyName("sysctls"u8);
-                writer.WriteObjectValue(Sysctls, options);
+                ((IJsonModel<SysctlConfig>)Sysctls).Write(writer, options);
             }
             if (Optional.IsDefined(TransparentHugePageEnabled))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    sysctls = SysctlConfig.DeserializeSysctlConfig(property.Value, options);
+                    sysctls = ModelSerializationExtensions.JsonDeserialize<SysctlConfig>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("transparentHugePageEnabled"u8))

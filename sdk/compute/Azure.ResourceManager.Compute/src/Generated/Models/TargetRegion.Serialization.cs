@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<EncryptionImages>)Encryption).Write(writer, options);
             }
             if (Optional.IsDefined(IsExcludedFromLatest))
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in AdditionalReplicaSets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AdditionalReplicaSet>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryption = EncryptionImages.DeserializeEncryptionImages(property.Value, options);
+                    encryption = ModelSerializationExtensions.JsonDeserialize<EncryptionImages>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("excludeFromLatest"u8))

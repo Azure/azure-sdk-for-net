@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataBox.Models
             if (options.Format != "W" && Optional.IsDefined(JobSecrets))
             {
                 writer.WritePropertyName("jobSecrets"u8);
-                writer.WriteObjectValue(JobSecrets, options);
+                ((IJsonModel<JobSecrets>)JobSecrets).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    jobSecrets = JobSecrets.DeserializeJobSecrets(property.Value, options);
+                    jobSecrets = ModelSerializationExtensions.JsonDeserialize<JobSecrets>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

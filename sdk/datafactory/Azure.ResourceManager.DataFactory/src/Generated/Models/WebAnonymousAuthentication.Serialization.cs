@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("url"u8))
                 {
-                    url = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    url = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("authenticationType"u8))

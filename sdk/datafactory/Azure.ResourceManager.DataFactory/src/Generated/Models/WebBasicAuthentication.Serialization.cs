@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("username"u8);
-            JsonSerializer.Serialize(writer, Username);
+            ((IJsonModel<DataFactoryElement<T>>)Username).Write(writer, options);
             writer.WritePropertyName("password"u8);
             JsonSerializer.Serialize(writer, Password);
         }
@@ -72,17 +72,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("username"u8))
                 {
-                    username = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    username = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("password"u8))
                 {
-                    password = JsonSerializer.Deserialize<DataFactorySecret>(property.Value.GetRawText());
+                    password = ModelSerializationExtensions.JsonDeserialize<DataFactorySecret>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("url"u8))
                 {
-                    url = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    url = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("authenticationType"u8))

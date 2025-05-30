@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(SymmetricKey))
             {
                 writer.WritePropertyName("symmetricKey"u8);
-                writer.WriteObjectValue(SymmetricKey, options);
+                ((IJsonModel<DataBoxEdgeSymmetricKey>)SymmetricKey).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    symmetricKey = DataBoxEdgeSymmetricKey.DeserializeDataBoxEdgeSymmetricKey(property.Value, options);
+                    symmetricKey = ModelSerializationExtensions.JsonDeserialize<DataBoxEdgeSymmetricKey>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(ActiveKey))
             {
                 writer.WritePropertyName("activeKey"u8);
-                writer.WriteObjectValue(ActiveKey, options);
+                ((IJsonModel<KeyForDiskEncryptionSet>)ActiveKey).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PreviousKeys))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in PreviousKeys)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<KeyForDiskEncryptionSet>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Compute
             if (options.Format != "W" && Optional.IsDefined(AutoKeyRotationError))
             {
                 writer.WritePropertyName("autoKeyRotationError"u8);
-                writer.WriteObjectValue(AutoKeyRotationError, options);
+                ((IJsonModel<ComputeApiError>)AutoKeyRotationError).Write(writer, options);
             }
             if (Optional.IsDefined(FederatedClientId))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            activeKey = KeyForDiskEncryptionSet.DeserializeKeyForDiskEncryptionSet(property0.Value, options);
+                            activeKey = ModelSerializationExtensions.JsonDeserialize<KeyForDiskEncryptionSet>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("previousKeys"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            autoKeyRotationError = ComputeApiError.DeserializeComputeApiError(property0.Value, options);
+                            autoKeyRotationError = ModelSerializationExtensions.JsonDeserialize<ComputeApiError>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("federatedClientId"u8))

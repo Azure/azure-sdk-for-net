@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(DiskEncryptionKey))
             {
                 writer.WritePropertyName("diskEncryptionKey"u8);
-                writer.WriteObjectValue(DiskEncryptionKey, options);
+                ((IJsonModel<KeyVaultAndSecretReference>)DiskEncryptionKey).Write(writer, options);
             }
             if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
-                writer.WriteObjectValue(KeyEncryptionKey, options);
+                ((IJsonModel<KeyVaultAndKeyReference>)KeyEncryptionKey).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    diskEncryptionKey = KeyVaultAndSecretReference.DeserializeKeyVaultAndSecretReference(property.Value, options);
+                    diskEncryptionKey = ModelSerializationExtensions.JsonDeserialize<KeyVaultAndSecretReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("keyEncryptionKey"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    keyEncryptionKey = KeyVaultAndKeyReference.DeserializeKeyVaultAndKeyReference(property.Value, options);
+                    keyEncryptionKey = ModelSerializationExtensions.JsonDeserialize<KeyVaultAndKeyReference>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(NetworkSecurityGroup))
             {
                 writer.WritePropertyName("networkSecurityGroup"u8);
-                JsonSerializer.Serialize(writer, NetworkSecurityGroup);
+                ((IJsonModel<WritableSubResource>)NetworkSecurityGroup).Write(writer, options);
             }
             if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
-                writer.WriteObjectValue(DnsSettings, options);
+                ((IJsonModel<VirtualMachineScaleSetNetworkConfigurationDnsSettings>)DnsSettings).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(IPConfigurations))
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VirtualMachineScaleSetIPConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            networkSecurityGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            networkSecurityGroup = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dnsSettings"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            dnsSettings = VirtualMachineScaleSetNetworkConfigurationDnsSettings.DeserializeVirtualMachineScaleSetNetworkConfigurationDnsSettings(property0.Value, options);
+                            dnsSettings = ModelSerializationExtensions.JsonDeserialize<VirtualMachineScaleSetNetworkConfigurationDnsSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ipConfigurations"u8))

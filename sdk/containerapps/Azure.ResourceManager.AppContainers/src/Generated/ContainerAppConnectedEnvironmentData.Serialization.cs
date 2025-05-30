@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation, options);
+                ((IJsonModel<ContainerAppExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(CustomDomainConfiguration))
             {
                 writer.WritePropertyName("customDomainConfiguration"u8);
-                writer.WriteObjectValue(CustomDomainConfiguration, options);
+                ((IJsonModel<ContainerAppCustomDomainConfiguration>)CustomDomainConfiguration).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         continue;
                     }
-                    extendedLocation = ContainerAppExtendedLocation.DeserializeContainerAppExtendedLocation(property.Value, options);
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<ContainerAppExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            customDomainConfiguration = ContainerAppCustomDomainConfiguration.DeserializeContainerAppCustomDomainConfiguration(property0.Value, options);
+                            customDomainConfiguration = ModelSerializationExtensions.JsonDeserialize<ContainerAppCustomDomainConfiguration>(property0.Value);
                             continue;
                         }
                     }

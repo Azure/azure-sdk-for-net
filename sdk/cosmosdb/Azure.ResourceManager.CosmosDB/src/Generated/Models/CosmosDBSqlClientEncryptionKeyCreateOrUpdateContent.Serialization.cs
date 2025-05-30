@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("resource"u8);
-            writer.WriteObjectValue(Resource, options);
+            ((IJsonModel<CosmosDBSqlClientEncryptionKeyResourceInfo>)Resource).Write(writer, options);
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         if (property0.NameEquals("resource"u8))
                         {
-                            resource = CosmosDBSqlClientEncryptionKeyResourceInfo.DeserializeCosmosDBSqlClientEncryptionKeyResourceInfo(property0.Value, options);
+                            resource = ModelSerializationExtensions.JsonDeserialize<CosmosDBSqlClientEncryptionKeyResourceInfo>(property0.Value);
                             continue;
                         }
                     }

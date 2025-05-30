@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in InitContainers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerAppInitContainer>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Containers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerAppContainer>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Scale))
             {
                 writer.WritePropertyName("scale"u8);
-                writer.WriteObjectValue(Scale, options);
+                ((IJsonModel<ContainerAppScale>)Scale).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Volumes))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Volumes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerAppVolume>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceBinds)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerAppServiceBind>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    scale = ContainerAppScale.DeserializeContainerAppScale(property.Value, options);
+                    scale = ModelSerializationExtensions.JsonDeserialize<ContainerAppScale>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("volumes"u8))

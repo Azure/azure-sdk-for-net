@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Istio))
             {
                 writer.WritePropertyName("istio"u8);
-                writer.WriteObjectValue(Istio, options);
+                ((IJsonModel<IstioServiceMesh>)Istio).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    istio = IstioServiceMesh.DeserializeIstioServiceMesh(property.Value, options);
+                    istio = ModelSerializationExtensions.JsonDeserialize<IstioServiceMesh>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

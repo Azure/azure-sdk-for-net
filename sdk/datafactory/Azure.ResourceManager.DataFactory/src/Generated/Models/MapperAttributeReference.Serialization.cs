@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EntityConnectionReference))
             {
                 writer.WritePropertyName("entityConnectionReference"u8);
-                writer.WriteObjectValue(EntityConnectionReference, options);
+                ((IJsonModel<MapperConnectionReference>)EntityConnectionReference).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    entityConnectionReference = MapperConnectionReference.DeserializeMapperConnectionReference(property.Value, options);
+                    entityConnectionReference = ModelSerializationExtensions.JsonDeserialize<MapperConnectionReference>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

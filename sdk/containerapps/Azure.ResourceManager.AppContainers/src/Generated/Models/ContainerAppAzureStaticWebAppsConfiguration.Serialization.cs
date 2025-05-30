@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
-                writer.WriteObjectValue(Registration, options);
+                ((IJsonModel<AzureStaticWebAppsRegistration>)Registration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    registration = AzureStaticWebAppsRegistration.DeserializeAzureStaticWebAppsRegistration(property.Value, options);
+                    registration = ModelSerializationExtensions.JsonDeserialize<AzureStaticWebAppsRegistration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

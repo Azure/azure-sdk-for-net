@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ListOfCopyProgressDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CopyProgressDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

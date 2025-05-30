@@ -40,13 +40,13 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStringValue(Format.Value.ToString());
             }
             writer.WritePropertyName("deliveryInfo"u8);
-            writer.WriteObjectValue(DeliveryInfo, options);
+            ((IJsonModel<ExportDeliveryInfo>)DeliveryInfo).Write(writer, options);
             writer.WritePropertyName("definition"u8);
-            writer.WriteObjectValue(Definition, options);
+            ((IJsonModel<ExportDefinition>)Definition).Write(writer, options);
             if (Optional.IsDefined(RunHistory))
             {
                 writer.WritePropertyName("runHistory"u8);
-                writer.WriteObjectValue(RunHistory, options);
+                ((IJsonModel<ExportExecutionListResult>)RunHistory).Write(writer, options);
             }
             if (Optional.IsDefined(PartitionData))
             {
@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 if (property.NameEquals("deliveryInfo"u8))
                 {
-                    deliveryInfo = ExportDeliveryInfo.DeserializeExportDeliveryInfo(property.Value, options);
+                    deliveryInfo = ModelSerializationExtensions.JsonDeserialize<ExportDeliveryInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("definition"u8))
                 {
-                    definition = ExportDefinition.DeserializeExportDefinition(property.Value, options);
+                    definition = ModelSerializationExtensions.JsonDeserialize<ExportDefinition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("runHistory"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    runHistory = ExportExecutionListResult.DeserializeExportExecutionListResult(property.Value, options);
+                    runHistory = ModelSerializationExtensions.JsonDeserialize<ExportExecutionListResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("partitionData"u8))

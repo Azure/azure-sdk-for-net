@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(AutoUpgradePolicy))
             {
                 writer.WritePropertyName("autoUpgradePolicy"u8);
-                writer.WriteObjectValue(AutoUpgradePolicy, options);
+                ((IJsonModel<AutoUpgradePolicyResourceInfo>)AutoUpgradePolicy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TargetMaxThroughput))
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    autoUpgradePolicy = AutoUpgradePolicyResourceInfo.DeserializeAutoUpgradePolicyResourceInfo(property.Value, options);
+                    autoUpgradePolicy = ModelSerializationExtensions.JsonDeserialize<AutoUpgradePolicyResourceInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetMaxThroughput"u8))

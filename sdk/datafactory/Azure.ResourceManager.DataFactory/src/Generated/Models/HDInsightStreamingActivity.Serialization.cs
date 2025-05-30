@@ -76,13 +76,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStringValue(GetDebugInfo.Value.ToString());
             }
             writer.WritePropertyName("mapper"u8);
-            JsonSerializer.Serialize(writer, Mapper);
+            ((IJsonModel<DataFactoryElement<T>>)Mapper).Write(writer, options);
             writer.WritePropertyName("reducer"u8);
-            JsonSerializer.Serialize(writer, Reducer);
+            ((IJsonModel<DataFactoryElement<T>>)Reducer).Write(writer, options);
             writer.WritePropertyName("input"u8);
-            JsonSerializer.Serialize(writer, Input);
+            ((IJsonModel<DataFactoryElement<T>>)Input).Write(writer, options);
             writer.WritePropertyName("output"u8);
-            JsonSerializer.Serialize(writer, Output);
+            ((IJsonModel<DataFactoryElement<T>>)Output).Write(writer, options);
             writer.WritePropertyName("filePaths"u8);
             writer.WriteStartArray();
             foreach (var item in FilePaths)
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Combiner))
             {
                 writer.WritePropertyName("combiner"u8);
-                JsonSerializer.Serialize(writer, Combiner);
+                ((IJsonModel<DataFactoryElement<T>>)Combiner).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(CommandEnvironment))
             {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
+                    policy = ModelSerializationExtensions.JsonDeserialize<PipelineActivityPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(item));
                             }
                             storageLinkedServices = array;
                             continue;
@@ -351,22 +351,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("mapper"u8))
                         {
-                            mapper = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            mapper = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("reducer"u8))
                         {
-                            reducer = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            reducer = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("input"u8))
                         {
-                            input = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            input = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("output"u8))
                         {
-                            output = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            output = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("filePaths"u8))
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            fileLinkedService = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
+                            fileLinkedService = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("combiner"u8))
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            combiner = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            combiner = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("commandEnvironment"u8))

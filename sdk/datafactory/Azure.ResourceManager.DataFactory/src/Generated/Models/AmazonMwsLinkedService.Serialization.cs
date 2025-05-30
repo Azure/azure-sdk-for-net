@@ -39,18 +39,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
-            JsonSerializer.Serialize(writer, Endpoint);
+            ((IJsonModel<DataFactoryElement<T>>)Endpoint).Write(writer, options);
             writer.WritePropertyName("marketplaceID"u8);
-            JsonSerializer.Serialize(writer, MarketplaceId);
+            ((IJsonModel<DataFactoryElement<T>>)MarketplaceId).Write(writer, options);
             writer.WritePropertyName("sellerID"u8);
-            JsonSerializer.Serialize(writer, SellerId);
+            ((IJsonModel<DataFactoryElement<T>>)SellerId).Write(writer, options);
             if (Optional.IsDefined(MwsAuthToken))
             {
                 writer.WritePropertyName("mwsAuthToken"u8);
                 JsonSerializer.Serialize(writer, MwsAuthToken);
             }
             writer.WritePropertyName("accessKeyId"u8);
-            JsonSerializer.Serialize(writer, AccessKeyId);
+            ((IJsonModel<DataFactoryElement<T>>)AccessKeyId).Write(writer, options);
             if (Optional.IsDefined(SecretKey))
             {
                 writer.WritePropertyName("secretKey"u8);
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
-                JsonSerializer.Serialize(writer, UseEncryptedEndpoints);
+                ((IJsonModel<DataFactoryElement<T>>)UseEncryptedEndpoints).Write(writer, options);
             }
             if (Optional.IsDefined(UseHostVerification))
             {
                 writer.WritePropertyName("useHostVerification"u8);
-                JsonSerializer.Serialize(writer, UseHostVerification);
+                ((IJsonModel<DataFactoryElement<T>>)UseHostVerification).Write(writer, options);
             }
             if (Optional.IsDefined(UsePeerVerification))
             {
                 writer.WritePropertyName("usePeerVerification"u8);
-                JsonSerializer.Serialize(writer, UsePeerVerification);
+                ((IJsonModel<DataFactoryElement<T>>)UsePeerVerification).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
+                    connectVia = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -201,17 +201,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("endpoint"u8))
                         {
-                            endpoint = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            endpoint = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("marketplaceID"u8))
                         {
-                            marketplaceId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            marketplaceId = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sellerID"u8))
                         {
-                            sellerId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            sellerId = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("mwsAuthToken"u8))
@@ -220,12 +220,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            mwsAuthToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            mwsAuthToken = ModelSerializationExtensions.JsonDeserialize<DataFactorySecret>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("accessKeyId"u8))
                         {
-                            accessKeyId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            accessKeyId = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("secretKey"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            secretKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            secretKey = ModelSerializationExtensions.JsonDeserialize<DataFactorySecret>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("useEncryptedEndpoints"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            useEncryptedEndpoints = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            useEncryptedEndpoints = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("useHostVerification"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            useHostVerification = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            useHostVerification = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("usePeerVerification"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            usePeerVerification = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            usePeerVerification = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

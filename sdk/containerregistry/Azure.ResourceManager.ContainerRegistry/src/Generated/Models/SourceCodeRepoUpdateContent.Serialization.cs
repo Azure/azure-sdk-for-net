@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(SourceControlAuthProperties))
             {
                 writer.WritePropertyName("sourceControlAuthProperties"u8);
-                writer.WriteObjectValue(SourceControlAuthProperties, options);
+                ((IJsonModel<SourceCodeRepoAuthInfoUpdateContent>)SourceControlAuthProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    sourceControlAuthProperties = SourceCodeRepoAuthInfoUpdateContent.DeserializeSourceCodeRepoAuthInfoUpdateContent(property.Value, options);
+                    sourceControlAuthProperties = ModelSerializationExtensions.JsonDeserialize<SourceCodeRepoAuthInfoUpdateContent>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

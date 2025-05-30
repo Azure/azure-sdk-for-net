@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Keda))
             {
                 writer.WritePropertyName("keda"u8);
-                writer.WriteObjectValue(Keda, options);
+                ((IJsonModel<ManagedClusterWorkloadAutoScalerProfileKeda>)Keda).Write(writer, options);
             }
             if (Optional.IsDefined(VerticalPodAutoscaler))
             {
                 writer.WritePropertyName("verticalPodAutoscaler"u8);
-                writer.WriteObjectValue(VerticalPodAutoscaler, options);
+                ((IJsonModel<ManagedClusterVerticalPodAutoscaler>)VerticalPodAutoscaler).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    keda = ManagedClusterWorkloadAutoScalerProfileKeda.DeserializeManagedClusterWorkloadAutoScalerProfileKeda(property.Value, options);
+                    keda = ModelSerializationExtensions.JsonDeserialize<ManagedClusterWorkloadAutoScalerProfileKeda>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("verticalPodAutoscaler"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    verticalPodAutoscaler = ManagedClusterVerticalPodAutoscaler.DeserializeManagedClusterVerticalPodAutoscaler(property.Value, options);
+                    verticalPodAutoscaler = ModelSerializationExtensions.JsonDeserialize<ManagedClusterVerticalPodAutoscaler>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

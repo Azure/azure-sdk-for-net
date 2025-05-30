@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value, options);
+                    folder = ModelSerializationExtensions.JsonDeserialize<DataFlowFolder>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

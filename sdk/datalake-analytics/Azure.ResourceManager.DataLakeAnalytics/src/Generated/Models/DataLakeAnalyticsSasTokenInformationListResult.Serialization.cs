@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataLakeAnalyticsSasTokenInformation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

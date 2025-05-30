@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
+                ((IJsonModel<ContainerInstanceUsageName>)Name).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    name = ContainerInstanceUsageName.DeserializeContainerInstanceUsageName(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<ContainerInstanceUsageName>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

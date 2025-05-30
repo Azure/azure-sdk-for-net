@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("sourceInfo"u8);
-            writer.WriteObjectValue(SourceInfo, options);
+            ((IJsonModel<PeriodicTimerSourceInfo>)SourceInfo).Write(writer, options);
             writer.WritePropertyName("sinkInfo"u8);
-            writer.WriteObjectValue(SinkInfo, options);
+            ((IJsonModel<DataBoxEdgeRoleSinkInfo>)SinkInfo).Write(writer, options);
             if (Optional.IsDefined(CustomContextTag))
             {
                 writer.WritePropertyName("customContextTag"u8);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         if (property0.NameEquals("sourceInfo"u8))
                         {
-                            sourceInfo = PeriodicTimerSourceInfo.DeserializePeriodicTimerSourceInfo(property0.Value, options);
+                            sourceInfo = ModelSerializationExtensions.JsonDeserialize<PeriodicTimerSourceInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sinkInfo"u8))
                         {
-                            sinkInfo = DataBoxEdgeRoleSinkInfo.DeserializeDataBoxEdgeRoleSinkInfo(property0.Value, options);
+                            sinkInfo = ModelSerializationExtensions.JsonDeserialize<DataBoxEdgeRoleSinkInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("customContextTag"u8))

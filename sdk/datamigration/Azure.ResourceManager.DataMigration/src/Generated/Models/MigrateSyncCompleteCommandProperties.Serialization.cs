@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue(Input, options);
+                ((IJsonModel<MigrateSyncCompleteCommandInput>)Input).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
-                writer.WriteObjectValue(Output, options);
+                ((IJsonModel<MigrateSyncCompleteCommandOutput>)Output).Write(writer, options);
             }
             if (Optional.IsDefined(CommandId))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    input = MigrateSyncCompleteCommandInput.DeserializeMigrateSyncCompleteCommandInput(property.Value, options);
+                    input = ModelSerializationExtensions.JsonDeserialize<MigrateSyncCompleteCommandInput>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("output"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    output = MigrateSyncCompleteCommandOutput.DeserializeMigrateSyncCompleteCommandOutput(property.Value, options);
+                    output = ModelSerializationExtensions.JsonDeserialize<MigrateSyncCompleteCommandOutput>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("commandId"u8))

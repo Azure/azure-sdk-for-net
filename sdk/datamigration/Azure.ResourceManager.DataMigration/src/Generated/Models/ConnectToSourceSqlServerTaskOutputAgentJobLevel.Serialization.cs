@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ReportableException>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(MigrationEligibility))
             {
                 writer.WritePropertyName("migrationEligibility"u8);
-                writer.WriteObjectValue(MigrationEligibility, options);
+                ((IJsonModel<MigrationEligibilityInfo>)MigrationEligibility).Write(writer, options);
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    migrationEligibility = MigrationEligibilityInfo.DeserializeMigrationEligibilityInfo(property.Value, options);
+                    migrationEligibility = ModelSerializationExtensions.JsonDeserialize<MigrationEligibilityInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

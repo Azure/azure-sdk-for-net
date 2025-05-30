@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 foreach (var item in DeviceSecrets)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<DataBoxEdgeDeviceSecret>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

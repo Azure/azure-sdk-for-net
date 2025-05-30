@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(UefiSettings))
             {
                 writer.WritePropertyName("uefiSettings"u8);
-                writer.WriteObjectValue(UefiSettings, options);
+                ((IJsonModel<UefiSettings>)UefiSettings).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptionAtHost))
             {
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(EncryptionIdentity))
             {
                 writer.WritePropertyName("encryptionIdentity"u8);
-                writer.WriteObjectValue(EncryptionIdentity, options);
+                ((IJsonModel<EncryptionIdentity>)EncryptionIdentity).Write(writer, options);
             }
             if (Optional.IsDefined(ProxyAgentSettings))
             {
                 writer.WritePropertyName("proxyAgentSettings"u8);
-                writer.WriteObjectValue(ProxyAgentSettings, options);
+                ((IJsonModel<ProxyAgentSettings>)ProxyAgentSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    uefiSettings = UefiSettings.DeserializeUefiSettings(property.Value, options);
+                    uefiSettings = ModelSerializationExtensions.JsonDeserialize<UefiSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("encryptionAtHost"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryptionIdentity = EncryptionIdentity.DeserializeEncryptionIdentity(property.Value, options);
+                    encryptionIdentity = ModelSerializationExtensions.JsonDeserialize<EncryptionIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("proxyAgentSettings"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    proxyAgentSettings = ProxyAgentSettings.DeserializeProxyAgentSettings(property.Value, options);
+                    proxyAgentSettings = ModelSerializationExtensions.JsonDeserialize<ProxyAgentSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

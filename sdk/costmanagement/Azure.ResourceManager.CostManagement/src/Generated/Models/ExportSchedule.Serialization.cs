@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(RecurrencePeriod))
             {
                 writer.WritePropertyName("recurrencePeriod"u8);
-                writer.WriteObjectValue(RecurrencePeriod, options);
+                ((IJsonModel<ExportRecurrencePeriod>)RecurrencePeriod).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    recurrencePeriod = ExportRecurrencePeriod.DeserializeExportRecurrencePeriod(property.Value, options);
+                    recurrencePeriod = ModelSerializationExtensions.JsonDeserialize<ExportRecurrencePeriod>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

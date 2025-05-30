@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<ComputeSku>)Sku).Write(writer, options);
             if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in VirtualMachinesAssociated)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Compute
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView, options);
+                ((IJsonModel<CapacityReservationInstanceView>)InstanceView).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TimeCreated))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = ComputeSku.DeserializeComputeSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<ComputeSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Compute
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<SubResource>(item));
                             }
                             virtualMachinesAssociated = array;
                             continue;
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            instanceView = CapacityReservationInstanceView.DeserializeCapacityReservationInstanceView(property0.Value, options);
+                            instanceView = ModelSerializationExtensions.JsonDeserialize<CapacityReservationInstanceView>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("timeCreated"u8))

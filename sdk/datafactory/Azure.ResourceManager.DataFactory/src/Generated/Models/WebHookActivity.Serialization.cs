@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy, options);
+                ((IJsonModel<SecureInputOutputPolicy>)Policy).Write(writer, options);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("method"u8);
             writer.WriteStringValue(Method.ToString());
             writer.WritePropertyName("url"u8);
-            JsonSerializer.Serialize(writer, Uri);
+            ((IJsonModel<DataFactoryElement<T>>)Uri).Write(writer, options);
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
-                JsonSerializer.Serialize(writer, Body);
+                ((IJsonModel<DataFactoryElement<T>>)Body).Write(writer, options);
             }
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication, options);
+                ((IJsonModel<WebActivityAuthentication>)Authentication).Write(writer, options);
             }
             if (Optional.IsDefined(ReportStatusOnCallBack))
             {
                 writer.WritePropertyName("reportStatusOnCallBack"u8);
-                JsonSerializer.Serialize(writer, ReportStatusOnCallBack);
+                ((IJsonModel<DataFactoryElement<T>>)ReportStatusOnCallBack).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = SecureInputOutputPolicy.DeserializeSecureInputOutputPolicy(property.Value, options);
+                    policy = ModelSerializationExtensions.JsonDeserialize<SecureInputOutputPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("url"u8))
                         {
-                            url = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            url = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("timeout"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            body = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            body = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("authentication"u8))
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            authentication = WebActivityAuthentication.DeserializeWebActivityAuthentication(property0.Value, options);
+                            authentication = ModelSerializationExtensions.JsonDeserialize<WebActivityAuthentication>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("reportStatusOnCallBack"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            reportStatusOnCallBack = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            reportStatusOnCallBack = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                     }

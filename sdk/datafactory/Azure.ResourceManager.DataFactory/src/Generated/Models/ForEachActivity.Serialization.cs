@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteNumberValue(BatchCount.Value);
             }
             writer.WritePropertyName("items"u8);
-            writer.WriteObjectValue(Items, options);
+            ((IJsonModel<DataFactoryExpression>)Items).Write(writer, options);
             writer.WritePropertyName("activities"u8);
             writer.WriteStartArray();
             foreach (var item in Activities)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<PipelineActivity>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("items"u8))
                         {
-                            items = DataFactoryExpression.DeserializeDataFactoryExpression(property0.Value, options);
+                            items = ModelSerializationExtensions.JsonDeserialize<DataFactoryExpression>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("activities"u8))

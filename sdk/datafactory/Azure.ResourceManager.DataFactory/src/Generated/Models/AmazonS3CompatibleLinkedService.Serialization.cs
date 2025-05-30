@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AccessKeyId))
             {
                 writer.WritePropertyName("accessKeyId"u8);
-                JsonSerializer.Serialize(writer, AccessKeyId);
+                ((IJsonModel<DataFactoryElement<T>>)AccessKeyId).Write(writer, options);
             }
             if (Optional.IsDefined(SecretAccessKey))
             {
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUrl"u8);
-                JsonSerializer.Serialize(writer, ServiceUri);
+                ((IJsonModel<DataFactoryElement<T>>)ServiceUri).Write(writer, options);
             }
             if (Optional.IsDefined(ForcePathStyle))
             {
                 writer.WritePropertyName("forcePathStyle"u8);
-                JsonSerializer.Serialize(writer, ForcePathStyle);
+                ((IJsonModel<DataFactoryElement<T>>)ForcePathStyle).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
+                    connectVia = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessKeyId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            accessKeyId = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("secretAccessKey"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            secretAccessKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            secretAccessKey = ModelSerializationExtensions.JsonDeserialize<DataFactorySecret>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("serviceUrl"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            serviceUrl = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            serviceUrl = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("forcePathStyle"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            forcePathStyle = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            forcePathStyle = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
 
             writer.WritePropertyName("vCpuCount"u8);
-            writer.WriteObjectValue(VCpuCount, options);
+            ((IJsonModel<ComputeFleetVmAttributeMinMaxInteger>)VCpuCount).Write(writer, options);
             writer.WritePropertyName("memoryInGiB"u8);
-            writer.WriteObjectValue(MemoryInGiB, options);
+            ((IJsonModel<ComputeFleetVmAttributeMinMaxDouble>)MemoryInGiB).Write(writer, options);
             if (Optional.IsDefined(MemoryInGiBPerVCpu))
             {
                 writer.WritePropertyName("memoryInGiBPerVCpu"u8);
-                writer.WriteObjectValue(MemoryInGiBPerVCpu, options);
+                ((IJsonModel<ComputeFleetVmAttributeMinMaxDouble>)MemoryInGiBPerVCpu).Write(writer, options);
             }
             if (Optional.IsDefined(LocalStorageSupport))
             {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(LocalStorageInGiB))
             {
                 writer.WritePropertyName("localStorageInGiB"u8);
-                writer.WriteObjectValue(LocalStorageInGiB, options);
+                ((IJsonModel<ComputeFleetVmAttributeMinMaxDouble>)LocalStorageInGiB).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(LocalStorageDiskTypes))
             {
@@ -66,17 +66,17 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(DataDiskCount))
             {
                 writer.WritePropertyName("dataDiskCount"u8);
-                writer.WriteObjectValue(DataDiskCount, options);
+                ((IJsonModel<ComputeFleetVmAttributeMinMaxInteger>)DataDiskCount).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkInterfaceCount))
             {
                 writer.WritePropertyName("networkInterfaceCount"u8);
-                writer.WriteObjectValue(NetworkInterfaceCount, options);
+                ((IJsonModel<ComputeFleetVmAttributeMinMaxInteger>)NetworkInterfaceCount).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkBandwidthInMbps))
             {
                 writer.WritePropertyName("networkBandwidthInMbps"u8);
-                writer.WriteObjectValue(NetworkBandwidthInMbps, options);
+                ((IJsonModel<ComputeFleetVmAttributeMinMaxDouble>)NetworkBandwidthInMbps).Write(writer, options);
             }
             if (Optional.IsDefined(RdmaSupport))
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(RdmaNetworkInterfaceCount))
             {
                 writer.WritePropertyName("rdmaNetworkInterfaceCount"u8);
-                writer.WriteObjectValue(RdmaNetworkInterfaceCount, options);
+                ((IJsonModel<ComputeFleetVmAttributeMinMaxInteger>)RdmaNetworkInterfaceCount).Write(writer, options);
             }
             if (Optional.IsDefined(AcceleratorSupport))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(AcceleratorCount))
             {
                 writer.WritePropertyName("acceleratorCount"u8);
-                writer.WriteObjectValue(AcceleratorCount, options);
+                ((IJsonModel<ComputeFleetVmAttributeMinMaxInteger>)AcceleratorCount).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(VmCategories))
             {
@@ -226,12 +226,12 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 if (property.NameEquals("vCpuCount"u8))
                 {
-                    vCpuCount = ComputeFleetVmAttributeMinMaxInteger.DeserializeComputeFleetVmAttributeMinMaxInteger(property.Value, options);
+                    vCpuCount = ModelSerializationExtensions.JsonDeserialize<ComputeFleetVmAttributeMinMaxInteger>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("memoryInGiB"u8))
                 {
-                    memoryInGiB = ComputeFleetVmAttributeMinMaxDouble.DeserializeComputeFleetVmAttributeMinMaxDouble(property.Value, options);
+                    memoryInGiB = ModelSerializationExtensions.JsonDeserialize<ComputeFleetVmAttributeMinMaxDouble>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("memoryInGiBPerVCpu"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    memoryInGiBPerVCpu = ComputeFleetVmAttributeMinMaxDouble.DeserializeComputeFleetVmAttributeMinMaxDouble(property.Value, options);
+                    memoryInGiBPerVCpu = ModelSerializationExtensions.JsonDeserialize<ComputeFleetVmAttributeMinMaxDouble>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("localStorageSupport"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    localStorageInGiB = ComputeFleetVmAttributeMinMaxDouble.DeserializeComputeFleetVmAttributeMinMaxDouble(property.Value, options);
+                    localStorageInGiB = ModelSerializationExtensions.JsonDeserialize<ComputeFleetVmAttributeMinMaxDouble>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("localStorageDiskTypes"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    dataDiskCount = ComputeFleetVmAttributeMinMaxInteger.DeserializeComputeFleetVmAttributeMinMaxInteger(property.Value, options);
+                    dataDiskCount = ModelSerializationExtensions.JsonDeserialize<ComputeFleetVmAttributeMinMaxInteger>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("networkInterfaceCount"u8))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    networkInterfaceCount = ComputeFleetVmAttributeMinMaxInteger.DeserializeComputeFleetVmAttributeMinMaxInteger(property.Value, options);
+                    networkInterfaceCount = ModelSerializationExtensions.JsonDeserialize<ComputeFleetVmAttributeMinMaxInteger>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("networkBandwidthInMbps"u8))
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    networkBandwidthInMbps = ComputeFleetVmAttributeMinMaxDouble.DeserializeComputeFleetVmAttributeMinMaxDouble(property.Value, options);
+                    networkBandwidthInMbps = ModelSerializationExtensions.JsonDeserialize<ComputeFleetVmAttributeMinMaxDouble>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rdmaSupport"u8))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    rdmaNetworkInterfaceCount = ComputeFleetVmAttributeMinMaxInteger.DeserializeComputeFleetVmAttributeMinMaxInteger(property.Value, options);
+                    rdmaNetworkInterfaceCount = ModelSerializationExtensions.JsonDeserialize<ComputeFleetVmAttributeMinMaxInteger>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("acceleratorSupport"u8))
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    acceleratorCount = ComputeFleetVmAttributeMinMaxInteger.DeserializeComputeFleetVmAttributeMinMaxInteger(property.Value, options);
+                    acceleratorCount = ModelSerializationExtensions.JsonDeserialize<ComputeFleetVmAttributeMinMaxInteger>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vmCategories"u8))

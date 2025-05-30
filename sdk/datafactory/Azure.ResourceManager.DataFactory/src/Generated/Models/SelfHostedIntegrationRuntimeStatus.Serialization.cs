@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SelfHostedIntegrationRuntimeNode>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LinkedIntegrationRuntime>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(RegistryInfo))
             {
                 writer.WritePropertyName("registryInfo"u8);
-                writer.WriteObjectValue(RegistryInfo, options);
+                ((IJsonModel<ContainerAppRegistryInfo>)RegistryInfo).Write(writer, options);
             }
             if (Optional.IsDefined(AzureCredentials))
             {
                 writer.WritePropertyName("azureCredentials"u8);
-                writer.WriteObjectValue(AzureCredentials, options);
+                ((IJsonModel<ContainerAppCredentials>)AzureCredentials).Write(writer, options);
             }
             if (Optional.IsDefined(ContextPath))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    registryInfo = ContainerAppRegistryInfo.DeserializeContainerAppRegistryInfo(property.Value, options);
+                    registryInfo = ModelSerializationExtensions.JsonDeserialize<ContainerAppRegistryInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azureCredentials"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    azureCredentials = ContainerAppCredentials.DeserializeContainerAppCredentials(property.Value, options);
+                    azureCredentials = ModelSerializationExtensions.JsonDeserialize<ContainerAppCredentials>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("contextPath"u8))

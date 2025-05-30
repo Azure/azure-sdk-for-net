@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ManagedVirtualNetwork))
             {
                 writer.WritePropertyName("managedVirtualNetwork"u8);
-                writer.WriteObjectValue(ManagedVirtualNetwork, options);
+                ((IJsonModel<ManagedVirtualNetworkReference>)ManagedVirtualNetwork).Write(writer, options);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ComputeProperties))
             {
                 writer.WritePropertyName("computeProperties"u8);
-                writer.WriteObjectValue(ComputeProperties, options);
+                ((IJsonModel<IntegrationRuntimeComputeProperties>)ComputeProperties).Write(writer, options);
             }
             if (Optional.IsDefined(SsisProperties))
             {
                 writer.WritePropertyName("ssisProperties"u8);
-                writer.WriteObjectValue(SsisProperties, options);
+                ((IJsonModel<IntegrationRuntimeSsisProperties>)SsisProperties).Write(writer, options);
             }
             if (Optional.IsDefined(CustomerVirtualNetwork))
             {
                 writer.WritePropertyName("customerVirtualNetwork"u8);
-                writer.WriteObjectValue(CustomerVirtualNetwork, options);
+                ((IJsonModel<IntegrationRuntimeCustomerVirtualNetwork>)CustomerVirtualNetwork).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    managedVirtualNetwork = ManagedVirtualNetworkReference.DeserializeManagedVirtualNetworkReference(property.Value, options);
+                    managedVirtualNetwork = ModelSerializationExtensions.JsonDeserialize<ManagedVirtualNetworkReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            computeProperties = IntegrationRuntimeComputeProperties.DeserializeIntegrationRuntimeComputeProperties(property0.Value, options);
+                            computeProperties = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeComputeProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ssisProperties"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            ssisProperties = IntegrationRuntimeSsisProperties.DeserializeIntegrationRuntimeSsisProperties(property0.Value, options);
+                            ssisProperties = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeSsisProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("customerVirtualNetwork"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            customerVirtualNetwork = IntegrationRuntimeCustomerVirtualNetwork.DeserializeIntegrationRuntimeCustomerVirtualNetwork(property0.Value, options);
+                            customerVirtualNetwork = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeCustomerVirtualNetwork>(property0.Value);
                             continue;
                         }
                     }

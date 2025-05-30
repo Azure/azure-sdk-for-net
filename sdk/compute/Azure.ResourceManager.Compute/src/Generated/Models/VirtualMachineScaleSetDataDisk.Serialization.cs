@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
-                writer.WriteObjectValue(ManagedDisk, options);
+                ((IJsonModel<VirtualMachineScaleSetManagedDisk>)ManagedDisk).Write(writer, options);
             }
             if (Optional.IsDefined(DiskIopsReadWrite))
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    managedDisk = VirtualMachineScaleSetManagedDisk.DeserializeVirtualMachineScaleSetManagedDisk(property.Value, options);
+                    managedDisk = ModelSerializationExtensions.JsonDeserialize<VirtualMachineScaleSetManagedDisk>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("diskIOPSReadWrite"u8))

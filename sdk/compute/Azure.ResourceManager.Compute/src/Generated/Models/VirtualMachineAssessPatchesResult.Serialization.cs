@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in AvailablePatches)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VirtualMachineSoftwarePatchProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<ComputeApiError>)Error).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    error = ComputeApiError.DeserializeComputeApiError(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<ComputeApiError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

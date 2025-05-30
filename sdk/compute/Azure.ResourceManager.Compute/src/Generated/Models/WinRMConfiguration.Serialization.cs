@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Listeners)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WinRMListener>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

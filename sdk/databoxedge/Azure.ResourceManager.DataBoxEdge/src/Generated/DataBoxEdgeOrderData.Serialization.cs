@@ -52,17 +52,17 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (Optional.IsDefined(ContactInformation))
             {
                 writer.WritePropertyName("contactInformation"u8);
-                writer.WriteObjectValue(ContactInformation, options);
+                ((IJsonModel<DataBoxEdgeContactDetails>)ContactInformation).Write(writer, options);
             }
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress, options);
+                ((IJsonModel<DataBoxEdgeShippingAddress>)ShippingAddress).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CurrentStatus))
             {
                 writer.WritePropertyName("currentStatus"u8);
-                writer.WriteObjectValue(CurrentStatus, options);
+                ((IJsonModel<DataBoxEdgeOrderStatus>)CurrentStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(OrderHistory))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in OrderHistory)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataBoxEdgeOrderStatus>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in DeliveryTrackingInfo)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataBoxEdgeTrackingInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in ReturnTrackingInfo)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataBoxEdgeTrackingInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            contactInformation = DataBoxEdgeContactDetails.DeserializeDataBoxEdgeContactDetails(property0.Value, options);
+                            contactInformation = ModelSerializationExtensions.JsonDeserialize<DataBoxEdgeContactDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("shippingAddress"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            shippingAddress = DataBoxEdgeShippingAddress.DeserializeDataBoxEdgeShippingAddress(property0.Value, options);
+                            shippingAddress = ModelSerializationExtensions.JsonDeserialize<DataBoxEdgeShippingAddress>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("currentStatus"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            currentStatus = DataBoxEdgeOrderStatus.DeserializeDataBoxEdgeOrderStatus(property0.Value, options);
+                            currentStatus = ModelSerializationExtensions.JsonDeserialize<DataBoxEdgeOrderStatus>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("orderHistory"u8))

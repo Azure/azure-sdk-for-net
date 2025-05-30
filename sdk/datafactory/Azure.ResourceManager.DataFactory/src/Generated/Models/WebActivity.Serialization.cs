@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("method"u8);
             writer.WriteStringValue(Method.ToString());
             writer.WritePropertyName("url"u8);
-            JsonSerializer.Serialize(writer, Uri);
+            ((IJsonModel<DataFactoryElement<T>>)Uri).Write(writer, options);
             if (Optional.IsCollectionDefined(RequestHeaders))
             {
                 writer.WritePropertyName("headers"u8);
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
-                JsonSerializer.Serialize(writer, Body);
+                ((IJsonModel<DataFactoryElement<T>>)Body).Write(writer, options);
             }
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication, options);
+                ((IJsonModel<WebActivityAuthentication>)Authentication).Write(writer, options);
             }
             if (Optional.IsDefined(DisableCertValidation))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(HttpRequestTimeout))
             {
                 writer.WritePropertyName("httpRequestTimeout"u8);
-                JsonSerializer.Serialize(writer, HttpRequestTimeout);
+                ((IJsonModel<DataFactoryElement<T>>)HttpRequestTimeout).Write(writer, options);
             }
             if (Optional.IsDefined(TurnOffAsync))
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Datasets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DatasetReference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia, options);
+                ((IJsonModel<IntegrationRuntimeReference>)ConnectVia).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
+                    policy = ModelSerializationExtensions.JsonDeserialize<PipelineActivityPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("url"u8))
                         {
-                            url = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            url = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("headers"u8))
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            body = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            body = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("authentication"u8))
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            authentication = WebActivityAuthentication.DeserializeWebActivityAuthentication(property0.Value, options);
+                            authentication = ModelSerializationExtensions.JsonDeserialize<WebActivityAuthentication>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("disableCertValidation"u8))
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            httpRequestTimeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            httpRequestTimeout = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("turnOffAsync"u8))
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<DataFactoryLinkedServiceReference>(item));
                             }
                             linkedServices = array;
                             continue;
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property0.Value, options);
+                            connectVia = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeReference>(property0.Value);
                             continue;
                         }
                     }

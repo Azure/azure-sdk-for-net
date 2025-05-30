@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(FilePattern))
             {
                 writer.WritePropertyName("filePattern"u8);
-                JsonSerializer.Serialize(writer, FilePattern);
+                ((IJsonModel<DataFactoryElement<T>>)FilePattern).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    filePattern = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    filePattern = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

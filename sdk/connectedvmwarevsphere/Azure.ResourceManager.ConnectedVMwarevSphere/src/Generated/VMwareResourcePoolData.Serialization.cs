@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                JsonSerializer.Serialize(writer, ExtendedLocation);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VMwareResourceStatus>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     {
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<ExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

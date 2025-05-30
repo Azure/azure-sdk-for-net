@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStringValue(JobName);
             }
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source, options);
+            ((IJsonModel<DataTransferDataSourceSink>)Source).Write(writer, options);
             writer.WritePropertyName("destination"u8);
-            writer.WriteObjectValue(Destination, options);
+            ((IJsonModel<DataTransferDataSourceSink>)Destination).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<CosmosDBErrorResult>)Error).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Duration))
             {
@@ -143,12 +143,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("source"u8))
                 {
-                    source = DataTransferDataSourceSink.DeserializeDataTransferDataSourceSink(property.Value, options);
+                    source = ModelSerializationExtensions.JsonDeserialize<DataTransferDataSourceSink>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("destination"u8))
                 {
-                    destination = DataTransferDataSourceSink.DeserializeDataTransferDataSourceSink(property.Value, options);
+                    destination = ModelSerializationExtensions.JsonDeserialize<DataTransferDataSourceSink>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    error = CosmosDBErrorResult.DeserializeCosmosDBErrorResult(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<CosmosDBErrorResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("duration"u8))

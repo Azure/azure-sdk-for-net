@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in Fields)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PropertyDefinition>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in LookupMappings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RelationshipTypeMapping>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.CustomerInsights
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

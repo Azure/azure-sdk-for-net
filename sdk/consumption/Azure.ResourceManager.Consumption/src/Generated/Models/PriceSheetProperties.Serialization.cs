@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(MeterDetails))
             {
                 writer.WritePropertyName("meterDetails"u8);
-                writer.WriteObjectValue(MeterDetails, options);
+                ((IJsonModel<ConsumptionMeterDetails>)MeterDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(UnitOfMeasure))
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    meterDetails = ConsumptionMeterDetails.DeserializeConsumptionMeterDetails(property.Value, options);
+                    meterDetails = ModelSerializationExtensions.JsonDeserialize<ConsumptionMeterDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("unitOfMeasure"u8))

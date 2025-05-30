@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Privileges)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MongoDBPrivilege>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Roles)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MongoDBRole>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

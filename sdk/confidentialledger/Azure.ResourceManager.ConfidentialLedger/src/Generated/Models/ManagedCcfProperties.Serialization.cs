@@ -55,14 +55,14 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 writer.WriteStartArray();
                 foreach (var item in MemberIdentityCertificates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConfidentialLedgerMemberIdentityCertificate>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DeploymentType))
             {
                 writer.WritePropertyName("deploymentType"u8);
-                writer.WriteObjectValue(DeploymentType, options);
+                ((IJsonModel<ConfidentialLedgerDeploymentType>)DeploymentType).Write(writer, options);
             }
             if (Optional.IsDefined(RunningState))
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     {
                         continue;
                     }
-                    deploymentType = ConfidentialLedgerDeploymentType.DeserializeConfidentialLedgerDeploymentType(property.Value, options);
+                    deploymentType = ModelSerializationExtensions.JsonDeserialize<ConfidentialLedgerDeploymentType>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("runningState"u8))

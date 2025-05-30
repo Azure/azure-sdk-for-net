@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -39,22 +40,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
-                JsonSerializer.Serialize(writer, SourceRetryCount);
+                ((IJsonModel<DataFactoryElement<T>>)SourceRetryCount).Write(writer, options);
             }
             if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
-                JsonSerializer.Serialize(writer, SourceRetryWait);
+                ((IJsonModel<DataFactoryElement<T>>)SourceRetryWait).Write(writer, options);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                JsonSerializer.Serialize(writer, MaxConcurrentConnections);
+                ((IJsonModel<DataFactoryElement<T>>)MaxConcurrentConnections).Write(writer, options);
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
-                JsonSerializer.Serialize(writer, DisableMetricsCollection);
+                ((IJsonModel<DataFactoryElement<T>>)DisableMetricsCollection).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

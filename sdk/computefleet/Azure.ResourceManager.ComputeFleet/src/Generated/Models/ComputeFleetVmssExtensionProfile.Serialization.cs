@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ComputeFleetVmssExtension>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ProtectedSettingsFromKeyVault))
             {
                 writer.WritePropertyName("protectedSettingsFromKeyVault"u8);
-                writer.WriteObjectValue(ProtectedSettingsFromKeyVault, options);
+                ((IJsonModel<CloudServiceVaultAndSecretReference>)ProtectedSettingsFromKeyVault).Write(writer, options);
             }
             if (Optional.IsDefined(ForceUpdateTag))
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            protectedSettingsFromKeyVault = CloudServiceVaultAndSecretReference.DeserializeCloudServiceVaultAndSecretReference(property0.Value, options);
+                            protectedSettingsFromKeyVault = ModelSerializationExtensions.JsonDeserialize<CloudServiceVaultAndSecretReference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("forceUpdateTag"u8))

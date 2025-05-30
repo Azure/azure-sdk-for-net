@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(ShardKey))
             {
                 writer.WritePropertyName("shardKey"u8);
-                writer.WriteObjectValue(ShardKey, options);
+                ((IJsonModel<MongoDBShardKeyInfo>)ShardKey).Write(writer, options);
             }
             writer.WritePropertyName("supportsSharding"u8);
             writer.WriteBooleanValue(SupportsSharding);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    shardKey = MongoDBShardKeyInfo.DeserializeMongoDBShardKeyInfo(property.Value, options);
+                    shardKey = ModelSerializationExtensions.JsonDeserialize<MongoDBShardKeyInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("supportsSharding"u8))

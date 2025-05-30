@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(Include))
             {
                 writer.WritePropertyName("include"u8);
-                writer.WriteObjectValue(Include, options);
+                ((IJsonModel<TransferFilterDetails>)Include).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    include = TransferFilterDetails.DeserializeTransferFilterDetails(property.Value, options);
+                    include = ModelSerializationExtensions.JsonDeserialize<TransferFilterDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

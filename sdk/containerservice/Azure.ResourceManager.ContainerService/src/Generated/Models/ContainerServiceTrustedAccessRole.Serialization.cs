@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerServiceTrustedAccessRoleRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    indexingPolicy = CosmosDBIndexingPolicy.DeserializeCosmosDBIndexingPolicy(property.Value, options);
+                    indexingPolicy = ModelSerializationExtensions.JsonDeserialize<CosmosDBIndexingPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("partitionKey"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    partitionKey = CosmosDBContainerPartitionKey.DeserializeCosmosDBContainerPartitionKey(property.Value, options);
+                    partitionKey = ModelSerializationExtensions.JsonDeserialize<CosmosDBContainerPartitionKey>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("defaultTtl"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    uniqueKeyPolicy = CosmosDBUniqueKeyPolicy.DeserializeCosmosDBUniqueKeyPolicy(property.Value, options);
+                    uniqueKeyPolicy = ModelSerializationExtensions.JsonDeserialize<CosmosDBUniqueKeyPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("conflictResolutionPolicy"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    conflictResolutionPolicy = ConflictResolutionPolicy.DeserializeConflictResolutionPolicy(property.Value, options);
+                    conflictResolutionPolicy = ModelSerializationExtensions.JsonDeserialize<ConflictResolutionPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("analyticalStorageTtl"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    restoreParameters = ResourceRestoreParameters.DeserializeResourceRestoreParameters(property.Value, options);
+                    restoreParameters = ModelSerializationExtensions.JsonDeserialize<ResourceRestoreParameters>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("createMode"u8))

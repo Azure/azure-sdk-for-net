@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata, options);
+                ((IJsonModel<MetadataEntity>)Metadata).Write(writer, options);
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Spec))
             {
                 writer.WritePropertyName("spec"u8);
-                writer.WriteObjectValue(Spec, options);
+                ((IJsonModel<ClusterSpecEntity>)Spec).Write(writer, options);
             }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<ClusterStatusEntity>)Status).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     {
                         continue;
                     }
-                    metadata = MetadataEntity.DeserializeMetadataEntity(property.Value, options);
+                    metadata = ModelSerializationExtensions.JsonDeserialize<MetadataEntity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("display_name"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     {
                         continue;
                     }
-                    spec = ClusterSpecEntity.DeserializeClusterSpecEntity(property.Value, options);
+                    spec = ModelSerializationExtensions.JsonDeserialize<ClusterSpecEntity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     {
                         continue;
                     }
-                    status = ClusterStatusEntity.DeserializeClusterStatusEntity(property.Value, options);
+                    status = ModelSerializationExtensions.JsonDeserialize<ClusterStatusEntity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

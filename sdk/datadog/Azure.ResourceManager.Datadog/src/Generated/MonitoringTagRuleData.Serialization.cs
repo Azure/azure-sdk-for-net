@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Datadog
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<MonitoringTagRulesProperties>)Properties).Write(writer, options);
             }
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Datadog
                     {
                         continue;
                     }
-                    properties = MonitoringTagRulesProperties.DeserializeMonitoringTagRulesProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<MonitoringTagRulesProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Datadog
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

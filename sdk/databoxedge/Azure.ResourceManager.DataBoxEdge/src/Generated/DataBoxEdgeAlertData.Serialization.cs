@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
-                writer.WriteObjectValue(ErrorDetails, options);
+                ((IJsonModel<DataBoxEdgeAlertErrorDetails>)ErrorDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(DetailedInformation))
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            errorDetails = DataBoxEdgeAlertErrorDetails.DeserializeDataBoxEdgeAlertErrorDetails(property0.Value, options);
+                            errorDetails = ModelSerializationExtensions.JsonDeserialize<DataBoxEdgeAlertErrorDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("detailedInformation"u8))

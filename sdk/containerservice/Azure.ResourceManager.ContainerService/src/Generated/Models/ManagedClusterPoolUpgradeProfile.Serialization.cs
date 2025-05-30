@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in Upgrades)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedClusterPoolUpgradeProfileUpgradesItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

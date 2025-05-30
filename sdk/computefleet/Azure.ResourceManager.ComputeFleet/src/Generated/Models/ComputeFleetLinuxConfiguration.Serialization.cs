@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(Ssh))
             {
                 writer.WritePropertyName("ssh"u8);
-                writer.WriteObjectValue(Ssh, options);
+                ((IJsonModel<ComputeFleetSshConfiguration>)Ssh).Write(writer, options);
             }
             if (Optional.IsDefined(IsVmAgentProvisioned))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(PatchSettings))
             {
                 writer.WritePropertyName("patchSettings"u8);
-                writer.WriteObjectValue(PatchSettings, options);
+                ((IJsonModel<ComputeFleetLinuxPatchSettings>)PatchSettings).Write(writer, options);
             }
             if (Optional.IsDefined(IsVmAgentPlatformUpdatesEnabled))
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    ssh = ComputeFleetSshConfiguration.DeserializeComputeFleetSshConfiguration(property.Value, options);
+                    ssh = ModelSerializationExtensions.JsonDeserialize<ComputeFleetSshConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisionVMAgent"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    patchSettings = ComputeFleetLinuxPatchSettings.DeserializeComputeFleetLinuxPatchSettings(property.Value, options);
+                    patchSettings = ModelSerializationExtensions.JsonDeserialize<ComputeFleetLinuxPatchSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("enableVMAgentPlatformUpdates"u8))

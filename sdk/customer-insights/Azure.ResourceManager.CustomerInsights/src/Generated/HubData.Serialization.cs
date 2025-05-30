@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CustomerInsights
             if (Optional.IsDefined(HubBillingInfo))
             {
                 writer.WritePropertyName("hubBillingInfo"u8);
-                writer.WriteObjectValue(HubBillingInfo, options);
+                ((IJsonModel<HubBillingInfoFormat>)HubBillingInfo).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CustomerInsights
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             {
                                 continue;
                             }
-                            hubBillingInfo = HubBillingInfoFormat.DeserializeHubBillingInfoFormat(property0.Value, options);
+                            hubBillingInfo = ModelSerializationExtensions.JsonDeserialize<HubBillingInfoFormat>(property0.Value);
                             continue;
                         }
                     }

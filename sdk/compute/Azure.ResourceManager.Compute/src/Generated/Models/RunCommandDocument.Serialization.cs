@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RunCommandParameterDefinition>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

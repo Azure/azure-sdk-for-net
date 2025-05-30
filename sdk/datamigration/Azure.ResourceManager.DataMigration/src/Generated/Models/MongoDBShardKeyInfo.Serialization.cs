@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartArray();
             foreach (var item in Fields)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<MongoDBShardKeyField>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("isUnique"u8);

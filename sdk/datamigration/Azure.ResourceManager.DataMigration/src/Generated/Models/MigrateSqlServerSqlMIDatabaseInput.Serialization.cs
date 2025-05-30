@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(BackupFileShare))
             {
                 writer.WritePropertyName("backupFileShare"u8);
-                writer.WriteObjectValue(BackupFileShare, options);
+                ((IJsonModel<FileShare>)BackupFileShare).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(BackupFilePaths))
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    backupFileShare = FileShare.DeserializeFileShare(property.Value, options);
+                    backupFileShare = ModelSerializationExtensions.JsonDeserialize<FileShare>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("backupFilePaths"u8))

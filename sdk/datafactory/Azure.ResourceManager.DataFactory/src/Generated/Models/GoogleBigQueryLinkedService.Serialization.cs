@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("project"u8);
-            JsonSerializer.Serialize(writer, Project);
+            ((IJsonModel<DataFactoryElement<T>>)Project).Write(writer, options);
             if (Optional.IsDefined(AdditionalProjects))
             {
                 writer.WritePropertyName("additionalProjects"u8);
-                JsonSerializer.Serialize(writer, AdditionalProjects);
+                ((IJsonModel<DataFactoryElement<T>>)AdditionalProjects).Write(writer, options);
             }
             if (Optional.IsDefined(RequestGoogleDriveScope))
             {
                 writer.WritePropertyName("requestGoogleDriveScope"u8);
-                JsonSerializer.Serialize(writer, RequestGoogleDriveScope);
+                ((IJsonModel<DataFactoryElement<T>>)RequestGoogleDriveScope).Write(writer, options);
             }
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-                JsonSerializer.Serialize(writer, ClientId);
+                ((IJsonModel<DataFactoryElement<T>>)ClientId).Write(writer, options);
             }
             if (Optional.IsDefined(ClientSecret))
             {
@@ -70,22 +70,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
-                JsonSerializer.Serialize(writer, Email);
+                ((IJsonModel<DataFactoryElement<T>>)Email).Write(writer, options);
             }
             if (Optional.IsDefined(KeyFilePath))
             {
                 writer.WritePropertyName("keyFilePath"u8);
-                JsonSerializer.Serialize(writer, KeyFilePath);
+                ((IJsonModel<DataFactoryElement<T>>)KeyFilePath).Write(writer, options);
             }
             if (Optional.IsDefined(TrustedCertPath))
             {
                 writer.WritePropertyName("trustedCertPath"u8);
-                JsonSerializer.Serialize(writer, TrustedCertPath);
+                ((IJsonModel<DataFactoryElement<T>>)TrustedCertPath).Write(writer, options);
             }
             if (Optional.IsDefined(UseSystemTrustStore))
             {
                 writer.WritePropertyName("useSystemTrustStore"u8);
-                JsonSerializer.Serialize(writer, UseSystemTrustStore);
+                ((IJsonModel<DataFactoryElement<T>>)UseSystemTrustStore).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
+                    connectVia = ModelSerializationExtensions.JsonDeserialize<IntegrationRuntimeReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("project"u8))
                         {
-                            project = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            project = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("additionalProjects"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            additionalProjects = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            additionalProjects = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("requestGoogleDriveScope"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            requestGoogleDriveScope = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            requestGoogleDriveScope = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("authenticationType"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            refreshToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            refreshToken = ModelSerializationExtensions.JsonDeserialize<DataFactorySecret>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clientId"u8))
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clientId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            clientId = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clientSecret"u8))
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clientSecret = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            clientSecret = ModelSerializationExtensions.JsonDeserialize<DataFactorySecret>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("email"u8))
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            email = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            email = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("keyFilePath"u8))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            keyFilePath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            keyFilePath = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("trustedCertPath"u8))
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            trustedCertPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            trustedCertPath = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("useSystemTrustStore"u8))
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            useSystemTrustStore = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            useSystemTrustStore = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

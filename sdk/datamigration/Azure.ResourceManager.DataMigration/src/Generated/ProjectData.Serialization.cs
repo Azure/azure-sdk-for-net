@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataMigration
             if (Optional.IsDefined(AzureAuthenticationInfo))
             {
                 writer.WritePropertyName("azureAuthenticationInfo"u8);
-                writer.WriteObjectValue(AzureAuthenticationInfo, options);
+                ((IJsonModel<AzureActiveDirectoryApp>)AzureAuthenticationInfo).Write(writer, options);
             }
             if (Optional.IsDefined(TargetPlatform))
             {
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.DataMigration
             if (Optional.IsDefined(SourceConnectionInfo))
             {
                 writer.WritePropertyName("sourceConnectionInfo"u8);
-                writer.WriteObjectValue(SourceConnectionInfo, options);
+                ((IJsonModel<ConnectionInfo>)SourceConnectionInfo).Write(writer, options);
             }
             if (Optional.IsDefined(TargetConnectionInfo))
             {
                 writer.WritePropertyName("targetConnectionInfo"u8);
-                writer.WriteObjectValue(TargetConnectionInfo, options);
+                ((IJsonModel<ConnectionInfo>)TargetConnectionInfo).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DatabasesInfo))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataMigration
                 writer.WriteStartArray();
                 foreach (var item in DatabasesInfo)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DatabaseInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DataMigration
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.DataMigration
                             {
                                 continue;
                             }
-                            azureAuthenticationInfo = AzureActiveDirectoryApp.DeserializeAzureActiveDirectoryApp(property0.Value, options);
+                            azureAuthenticationInfo = ModelSerializationExtensions.JsonDeserialize<AzureActiveDirectoryApp>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("targetPlatform"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DataMigration
                             {
                                 continue;
                             }
-                            sourceConnectionInfo = ConnectionInfo.DeserializeConnectionInfo(property0.Value, options);
+                            sourceConnectionInfo = ModelSerializationExtensions.JsonDeserialize<ConnectionInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("targetConnectionInfo"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.DataMigration
                             {
                                 continue;
                             }
-                            targetConnectionInfo = ConnectionInfo.DeserializeConnectionInfo(property0.Value, options);
+                            targetConnectionInfo = ModelSerializationExtensions.JsonDeserialize<ConnectionInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("databasesInfo"u8))

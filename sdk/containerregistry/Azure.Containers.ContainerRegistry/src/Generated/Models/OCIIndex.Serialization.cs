@@ -44,7 +44,7 @@ namespace Azure.Containers.ContainerRegistry
                         annotations = null;
                         continue;
                     }
-                    annotations = OciAnnotations.DeserializeOciAnnotations(property.Value);
+                    annotations = ModelSerializationExtensions.JsonDeserialize<OciAnnotations>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("schemaVersion"u8))

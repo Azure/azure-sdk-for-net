@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in EnumValidValues)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ProfileEnumValidValuesFormat>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in DataSourcePrecedenceRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DataSourcePrecedence>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

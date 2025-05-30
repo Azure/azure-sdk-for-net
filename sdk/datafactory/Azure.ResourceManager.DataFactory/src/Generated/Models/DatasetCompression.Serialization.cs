@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WritePropertyName("type"u8);
-            JsonSerializer.Serialize(writer, DatasetCompressionType);
+            ((IJsonModel<DataFactoryElement<T>>)DatasetCompressionType).Write(writer, options);
             if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
-                JsonSerializer.Serialize(writer, Level);
+                ((IJsonModel<DataFactoryElement<T>>)Level).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    type = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("level"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    level = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    level = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue(Input, options);
+                ((IJsonModel<ConnectToTargetAzureDBForMySqlTaskInput>)Input).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Output))
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Output)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConnectToTargetAzureDBForMySqlTaskOutput>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    input = ConnectToTargetAzureDBForMySqlTaskInput.DeserializeConnectToTargetAzureDBForMySqlTaskInput(property.Value, options);
+                    input = ModelSerializationExtensions.JsonDeserialize<ConnectToTargetAzureDBForMySqlTaskInput>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("output"u8))

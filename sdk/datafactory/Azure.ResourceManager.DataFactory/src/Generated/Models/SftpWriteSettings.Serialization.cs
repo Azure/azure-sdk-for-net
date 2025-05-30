@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(OperationTimeout))
             {
                 writer.WritePropertyName("operationTimeout"u8);
-                JsonSerializer.Serialize(writer, OperationTimeout);
+                ((IJsonModel<DataFactoryElement<T>>)OperationTimeout).Write(writer, options);
             }
             if (Optional.IsDefined(UseTempFileRename))
             {
                 writer.WritePropertyName("useTempFileRename"u8);
-                JsonSerializer.Serialize(writer, UseTempFileRename);
+                ((IJsonModel<DataFactoryElement<T>>)UseTempFileRename).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    operationTimeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    operationTimeout = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("useTempFileRename"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    useTempFileRename = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    useTempFileRename = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    maxConcurrentConnections = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<int>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("disableMetricsCollection"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    disableMetricsCollection = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<bool>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("copyBehavior"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    copyBehavior = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    copyBehavior = ModelSerializationExtensions.JsonDeserialize<DataFactoryElement<string>>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))

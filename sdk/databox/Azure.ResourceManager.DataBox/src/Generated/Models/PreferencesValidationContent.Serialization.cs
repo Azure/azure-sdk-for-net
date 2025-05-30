@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(Preference))
             {
                 writer.WritePropertyName("preference"u8);
-                writer.WriteObjectValue(Preference, options);
+                ((IJsonModel<DataBoxOrderPreferences>)Preference).Write(writer, options);
             }
             writer.WritePropertyName("deviceType"u8);
             writer.WriteStringValue(DeviceType.ToSerialString());
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    preference = DataBoxOrderPreferences.DeserializeDataBoxOrderPreferences(property.Value, options);
+                    preference = ModelSerializationExtensions.JsonDeserialize<DataBoxOrderPreferences>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deviceType"u8))

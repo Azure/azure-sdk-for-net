@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("items"u8);
-            writer.WriteObjectValue(Items, options);
+            ((IJsonModel<DataFactoryExpression>)Items).Write(writer, options);
             writer.WritePropertyName("condition"u8);
-            writer.WriteObjectValue(Condition, options);
+            ((IJsonModel<DataFactoryExpression>)Condition).Write(writer, options);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -161,12 +161,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("items"u8))
                         {
-                            items = DataFactoryExpression.DeserializeDataFactoryExpression(property0.Value, options);
+                            items = ModelSerializationExtensions.JsonDeserialize<DataFactoryExpression>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("condition"u8))
                         {
-                            condition = DataFactoryExpression.DeserializeDataFactoryExpression(property0.Value, options);
+                            condition = ModelSerializationExtensions.JsonDeserialize<DataFactoryExpression>(property0.Value);
                             continue;
                         }
                     }

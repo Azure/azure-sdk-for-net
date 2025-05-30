@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataBox.Models
             if (options.Format != "W" && Optional.IsDefined(DataCenterAccessSecurityCode))
             {
                 writer.WritePropertyName("dcAccessSecurityCode"u8);
-                writer.WriteObjectValue(DataCenterAccessSecurityCode, options);
+                ((IJsonModel<DataCenterAccessSecurityCode>)DataCenterAccessSecurityCode).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
