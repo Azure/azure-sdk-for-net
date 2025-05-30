@@ -54,7 +54,7 @@ namespace Azure.Compute.Batch
         /// <param name="osType"> The type of operating system (e.g. Windows or Linux) of the Image. </param>
         /// <param name="verificationType"> Whether the Azure Batch service actively verifies that the Image is compatible with the associated Compute Node agent SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nodeAgentSkuId"/> or <paramref name="imageReference"/> is null. </exception>
-        internal BatchSupportedImage(string nodeAgentSkuId, ImageReference imageReference, OSType osType, ImageVerificationType verificationType)
+        internal BatchSupportedImage(string nodeAgentSkuId, BatchVmImageReference imageReference, OSType osType, ImageVerificationType verificationType)
         {
             Argument.AssertNotNull(nodeAgentSkuId, nameof(nodeAgentSkuId));
             Argument.AssertNotNull(imageReference, nameof(imageReference));
@@ -74,7 +74,7 @@ namespace Azure.Compute.Batch
         /// <param name="batchSupportEndOfLife"> The time when the Azure Batch service will stop accepting create Pool requests for the Image. </param>
         /// <param name="verificationType"> Whether the Azure Batch service actively verifies that the Image is compatible with the associated Compute Node agent SKU. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchSupportedImage(string nodeAgentSkuId, ImageReference imageReference, OSType osType, IReadOnlyList<string> capabilities, DateTimeOffset? batchSupportEndOfLife, ImageVerificationType verificationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchSupportedImage(string nodeAgentSkuId, BatchVmImageReference imageReference, OSType osType, IReadOnlyList<string> capabilities, DateTimeOffset? batchSupportEndOfLife, ImageVerificationType verificationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NodeAgentSkuId = nodeAgentSkuId;
             ImageReference = imageReference;
@@ -93,7 +93,7 @@ namespace Azure.Compute.Batch
         /// <summary> The ID of the Compute Node agent SKU which the Image supports. </summary>
         public string NodeAgentSkuId { get; }
         /// <summary> The reference to the Azure Virtual Machine's Marketplace Image. </summary>
-        public ImageReference ImageReference { get; }
+        public BatchVmImageReference ImageReference { get; }
         /// <summary> The type of operating system (e.g. Windows or Linux) of the Image. </summary>
         public OSType OsType { get; }
         /// <summary> The capabilities or features which the Image supports. Not every capability of the Image is listed. Capabilities in this list are considered of special interest and are generally related to integration with other features in the Azure Batch service. </summary>

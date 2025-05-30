@@ -39,10 +39,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Url))
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Url);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(IsDirectory))
             {
@@ -92,7 +92,7 @@ namespace Azure.Compute.Batch
                 return null;
             }
             string name = default;
-            string url = default;
+            Uri url = default;
             bool? isDirectory = default;
             FileProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -106,7 +106,11 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("url"u8))
                 {
-                    url = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    url = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isDirectory"u8))
