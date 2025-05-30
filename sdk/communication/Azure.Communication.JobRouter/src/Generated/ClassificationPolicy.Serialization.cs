@@ -60,14 +60,14 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStartArray();
                 foreach (var item in QueueSelectorAttachments)
                 {
-                    writer.WriteObjectValue<QueueSelectorAttachment>(item, options);
+                    ((IJsonModel<QueueSelectorAttachment>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PrioritizationRule))
             {
                 writer.WritePropertyName("prioritizationRule"u8);
-                writer.WriteObjectValue<RouterRule>(PrioritizationRule, options);
+                ((IJsonModel<RouterRule>)PrioritizationRule).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(WorkerSelectorAttachments))
             {
@@ -75,7 +75,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStartArray();
                 foreach (var item in WorkerSelectorAttachments)
                 {
-                    writer.WriteObjectValue<WorkerSelectorAttachment>(item, options);
+                    ((IJsonModel<WorkerSelectorAttachment>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -167,7 +167,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    prioritizationRule = RouterRule.DeserializeRouterRule(property.Value, options);
+                    prioritizationRule = ModelSerializationExtensions.JsonDeserialize<RouterRule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("workerSelectorAttachments"u8))

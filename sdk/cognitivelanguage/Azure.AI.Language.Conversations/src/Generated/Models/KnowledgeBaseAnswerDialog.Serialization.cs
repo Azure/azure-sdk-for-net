@@ -45,7 +45,7 @@ namespace Azure.AI.Language.Conversations.Models
                 writer.WriteStartArray();
                 foreach (var item in Prompts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<KnowledgeBaseAnswerPrompt>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

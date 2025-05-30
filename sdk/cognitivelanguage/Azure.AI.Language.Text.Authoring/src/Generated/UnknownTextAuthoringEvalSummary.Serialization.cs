@@ -70,7 +70,7 @@ namespace Azure.AI.Language.Text.Authoring
                 }
                 if (property.NameEquals("evaluationOptions"u8))
                 {
-                    evaluationOptions = TextAuthoringEvaluationDetails.DeserializeTextAuthoringEvaluationDetails(property.Value, options);
+                    evaluationOptions = ModelSerializationExtensions.JsonDeserialize<TextAuthoringEvaluationDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -47,12 +47,12 @@ namespace Azure.Communication.PhoneNumbers
                     {
                         continue;
                     }
-                    availableCapabilities = PhoneNumberCapabilities.DeserializePhoneNumberCapabilities(property.Value);
+                    availableCapabilities = ModelSerializationExtensions.JsonDeserialize<PhoneNumberCapabilities>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("cost"u8))
                 {
-                    cost = PhoneNumberCost.DeserializePhoneNumberCost(property.Value);
+                    cost = ModelSerializationExtensions.JsonDeserialize<PhoneNumberCost>(property.Value);
                     continue;
                 }
             }

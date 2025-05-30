@@ -32,7 +32,7 @@ namespace Azure.Communication.PhoneNumbers
                     {
                         continue;
                     }
-                    administrativeDivision = PhoneNumberAdministrativeDivision.DeserializePhoneNumberAdministrativeDivision(property.Value);
+                    administrativeDivision = ModelSerializationExtensions.JsonDeserialize<PhoneNumberAdministrativeDivision>(property.Value);
                     continue;
                 }
             }

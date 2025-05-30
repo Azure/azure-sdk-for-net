@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(RestrictionInfo))
             {
                 writer.WritePropertyName("restrictionInfo"u8);
-                writer.WriteObjectValue(RestrictionInfo, options);
+                ((IJsonModel<CognitiveServicesSkuRestrictionInfo>)RestrictionInfo).Write(writer, options);
             }
             if (Optional.IsDefined(ReasonCode))
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    restrictionInfo = CognitiveServicesSkuRestrictionInfo.DeserializeCognitiveServicesSkuRestrictionInfo(property.Value, options);
+                    restrictionInfo = ModelSerializationExtensions.JsonDeserialize<CognitiveServicesSkuRestrictionInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("reasonCode"u8))

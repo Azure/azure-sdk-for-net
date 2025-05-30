@@ -41,7 +41,7 @@ namespace Azure.Communication.Messages
             writer.WriteStartArray();
             foreach (var item in Groups)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ActionGroup>)item).Write(writer, options);
             }
             writer.WriteEndArray();
         }

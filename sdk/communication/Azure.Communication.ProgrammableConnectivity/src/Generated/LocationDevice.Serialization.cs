@@ -47,12 +47,12 @@ namespace Azure.Communication.ProgrammableConnectivity
             if (Optional.IsDefined(Ipv4Address))
             {
                 writer.WritePropertyName("ipv4Address"u8);
-                writer.WriteObjectValue(Ipv4Address, options);
+                ((IJsonModel<Ipv4Address>)Ipv4Address).Write(writer, options);
             }
             if (Optional.IsDefined(Ipv6Address))
             {
                 writer.WritePropertyName("ipv6Address"u8);
-                writer.WriteObjectValue(Ipv6Address, options);
+                ((IJsonModel<Ipv6Address>)Ipv6Address).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -115,7 +115,7 @@ namespace Azure.Communication.ProgrammableConnectivity
                     {
                         continue;
                     }
-                    ipv4Address = Ipv4Address.DeserializeIpv4Address(property.Value, options);
+                    ipv4Address = ModelSerializationExtensions.JsonDeserialize<Ipv4Address>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ipv6Address"u8))
@@ -124,7 +124,7 @@ namespace Azure.Communication.ProgrammableConnectivity
                     {
                         continue;
                     }
-                    ipv6Address = Ipv6Address.DeserializeIpv6Address(property.Value, options);
+                    ipv6Address = ModelSerializationExtensions.JsonDeserialize<Ipv6Address>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

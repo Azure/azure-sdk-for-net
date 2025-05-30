@@ -45,7 +45,7 @@ namespace Azure.Communication.ProgrammableConnectivity
                 writer.WriteNumberValue(MaxAgeHours.Value);
             }
             writer.WritePropertyName("networkIdentifier"u8);
-            writer.WriteObjectValue(NetworkIdentifier, options);
+            ((IJsonModel<NetworkIdentifier>)NetworkIdentifier).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -106,7 +106,7 @@ namespace Azure.Communication.ProgrammableConnectivity
                 }
                 if (property.NameEquals("networkIdentifier"u8))
                 {
-                    networkIdentifier = NetworkIdentifier.DeserializeNetworkIdentifier(property.Value, options);
+                    networkIdentifier = ModelSerializationExtensions.JsonDeserialize<NetworkIdentifier>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

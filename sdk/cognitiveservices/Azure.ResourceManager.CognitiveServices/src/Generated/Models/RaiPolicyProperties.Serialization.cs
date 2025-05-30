@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in ContentFilters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RaiPolicyContentFilter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomBlocklists)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CustomBlocklistConfig>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

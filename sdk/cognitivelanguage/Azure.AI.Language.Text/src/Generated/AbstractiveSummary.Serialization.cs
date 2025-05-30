@@ -42,7 +42,7 @@ namespace Azure.AI.Language.Text
                 writer.WriteStartArray();
                 foreach (var item in Contexts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SummaryContext>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

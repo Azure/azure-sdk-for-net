@@ -39,7 +39,7 @@ namespace Azure.Communication.Messages
             writer.WriteStartArray();
             foreach (var item in Buttons)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ButtonContent>)item).Write(writer, options);
             }
             writer.WriteEndArray();
         }

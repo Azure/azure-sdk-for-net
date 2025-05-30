@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CognitiveServices
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<CognitiveServicesSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CognitiveServices
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<CommitmentPlanProperties>)Properties).Write(writer, options);
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         continue;
                     }
-                    sku = CognitiveServicesSku.DeserializeCognitiveServicesSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<CognitiveServicesSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         continue;
                     }
-                    properties = CommitmentPlanProperties.DeserializeCommitmentPlanProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<CommitmentPlanProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

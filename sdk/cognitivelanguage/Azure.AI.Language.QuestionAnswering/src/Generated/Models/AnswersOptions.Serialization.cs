@@ -43,7 +43,7 @@ namespace Azure.AI.Language.QuestionAnswering
             if (Optional.IsDefined(AnswerContext))
             {
                 writer.WritePropertyName("context"u8);
-                writer.WriteObjectValue(AnswerContext);
+                JsonSerializer.Serialize(writer, AnswerContext);
             }
             if (Optional.IsDefined(RankerKind))
             {
@@ -53,12 +53,12 @@ namespace Azure.AI.Language.QuestionAnswering
             if (Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
-                writer.WriteObjectValue(Filters);
+                JsonSerializer.Serialize(writer, Filters);
             }
             if (Optional.IsDefined(ShortAnswerOptions))
             {
                 writer.WritePropertyName("answerSpanRequest"u8);
-                writer.WriteObjectValue(ShortAnswerOptions);
+                JsonSerializer.Serialize(writer, ShortAnswerOptions);
             }
             if (Optional.IsDefined(IncludeUnstructuredSources))
             {

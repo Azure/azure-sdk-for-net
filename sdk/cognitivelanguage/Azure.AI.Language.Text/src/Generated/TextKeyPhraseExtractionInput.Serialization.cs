@@ -38,12 +38,12 @@ namespace Azure.AI.Language.Text
             if (Optional.IsDefined(TextInput))
             {
                 writer.WritePropertyName("analysisInput"u8);
-                writer.WriteObjectValue(TextInput, options);
+                ((IJsonModel<MultiLanguageTextInput>)TextInput).Write(writer, options);
             }
             if (Optional.IsDefined(ActionContent))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(ActionContent, options);
+                ((IJsonModel<KeyPhraseActionContent>)ActionContent).Write(writer, options);
             }
         }
 
@@ -80,7 +80,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    analysisInput = MultiLanguageTextInput.DeserializeMultiLanguageTextInput(property.Value, options);
+                    analysisInput = ModelSerializationExtensions.JsonDeserialize<MultiLanguageTextInput>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
@@ -89,7 +89,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    parameters = KeyPhraseActionContent.DeserializeKeyPhraseActionContent(property.Value, options);
+                    parameters = ModelSerializationExtensions.JsonDeserialize<KeyPhraseActionContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

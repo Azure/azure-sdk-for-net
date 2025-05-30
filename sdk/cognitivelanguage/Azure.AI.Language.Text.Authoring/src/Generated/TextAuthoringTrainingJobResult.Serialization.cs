@@ -39,11 +39,11 @@ namespace Azure.AI.Language.Text.Authoring
             writer.WritePropertyName("trainingConfigVersion"u8);
             writer.WriteStringValue(TrainingConfigVersion);
             writer.WritePropertyName("trainingStatus"u8);
-            writer.WriteObjectValue(TrainingStatus, options);
+            ((IJsonModel<TextAuthoringSubTrainingState>)TrainingStatus).Write(writer, options);
             if (Optional.IsDefined(EvaluationStatus))
             {
                 writer.WritePropertyName("evaluationStatus"u8);
-                writer.WriteObjectValue(EvaluationStatus, options);
+                ((IJsonModel<TextAuthoringSubTrainingState>)EvaluationStatus).Write(writer, options);
             }
             if (Optional.IsDefined(EstimatedEndOn))
             {
@@ -108,7 +108,7 @@ namespace Azure.AI.Language.Text.Authoring
                 }
                 if (property.NameEquals("trainingStatus"u8))
                 {
-                    trainingStatus = TextAuthoringSubTrainingState.DeserializeTextAuthoringSubTrainingState(property.Value, options);
+                    trainingStatus = ModelSerializationExtensions.JsonDeserialize<TextAuthoringSubTrainingState>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("evaluationStatus"u8))
@@ -117,7 +117,7 @@ namespace Azure.AI.Language.Text.Authoring
                     {
                         continue;
                     }
-                    evaluationStatus = TextAuthoringSubTrainingState.DeserializeTextAuthoringSubTrainingState(property.Value, options);
+                    evaluationStatus = ModelSerializationExtensions.JsonDeserialize<TextAuthoringSubTrainingState>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("estimatedEndDateTime"u8))

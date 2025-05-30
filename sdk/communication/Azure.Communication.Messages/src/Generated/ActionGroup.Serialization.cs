@@ -40,7 +40,7 @@ namespace Azure.Communication.Messages
             writer.WriteStartArray();
             foreach (var item in Items)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ActionGroupItem>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

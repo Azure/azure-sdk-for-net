@@ -90,7 +90,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStartArray();
                 foreach (var item in RequestedWorkerSelectors)
                 {
-                    writer.WriteObjectValue<RouterWorkerSelector>(item, options);
+                    ((IJsonModel<RouterWorkerSelector>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +100,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStartArray();
                 foreach (var item in AttachedWorkerSelectors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RouterWorkerSelector>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -134,7 +134,7 @@ namespace Azure.Communication.JobRouter
                 foreach (var item in Assignments)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<RouterJobAssignment>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -167,7 +167,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStartArray();
                 foreach (var item in Notes)
                 {
-                    writer.WriteObjectValue<RouterJobNote>(item, options);
+                    ((IJsonModel<RouterJobNote>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -179,7 +179,7 @@ namespace Azure.Communication.JobRouter
             if (Optional.IsDefined(MatchingMode))
             {
                 writer.WritePropertyName("matchingMode"u8);
-                writer.WriteObjectValue<JobMatchingMode>(MatchingMode, options);
+                ((IJsonModel<JobMatchingMode>)MatchingMode).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -415,7 +415,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    matchingMode = JobMatchingMode.DeserializeJobMatchingMode(property.Value, options);
+                    matchingMode = ModelSerializationExtensions.JsonDeserialize<JobMatchingMode>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

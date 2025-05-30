@@ -60,7 +60,7 @@ namespace Azure.Communication.Chat
                     {
                         continue;
                     }
-                    innererror = DeserializeChatError(property.Value);
+                    innererror = ModelSerializationExtensions.JsonDeserialize<ChatError>(property.Value);
                     continue;
                 }
             }

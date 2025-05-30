@@ -18,13 +18,13 @@ namespace Azure.Communication.CallingServer
             if (Optional.IsDefined(SourceCallerId))
             {
                 writer.WritePropertyName("sourceCallerId"u8);
-                writer.WriteObjectValue(SourceCallerId);
+                JsonSerializer.Serialize(writer, SourceCallerId);
             }
             writer.WritePropertyName("participantsToAdd"u8);
             writer.WriteStartArray();
             foreach (var item in ParticipantsToAdd)
             {
-                writer.WriteObjectValue(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(InvitationTimeoutInSeconds))

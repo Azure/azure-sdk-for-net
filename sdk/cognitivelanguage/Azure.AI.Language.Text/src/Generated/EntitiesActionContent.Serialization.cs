@@ -72,12 +72,12 @@ namespace Azure.AI.Language.Text
             if (Optional.IsDefined(OverlapPolicy))
             {
                 writer.WritePropertyName("overlapPolicy"u8);
-                writer.WriteObjectValue(OverlapPolicy, options);
+                ((IJsonModel<EntityOverlapPolicy>)OverlapPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(InferenceOptions))
             {
                 writer.WritePropertyName("inferenceOptions"u8);
-                writer.WriteObjectValue(InferenceOptions, options);
+                ((IJsonModel<EntityInferenceConfig>)InferenceOptions).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -184,7 +184,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    overlapPolicy = EntityOverlapPolicy.DeserializeEntityOverlapPolicy(property.Value, options);
+                    overlapPolicy = ModelSerializationExtensions.JsonDeserialize<EntityOverlapPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("inferenceOptions"u8))
@@ -193,7 +193,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    inferenceOptions = EntityInferenceConfig.DeserializeEntityInferenceConfig(property.Value, options);
+                    inferenceOptions = ModelSerializationExtensions.JsonDeserialize<EntityInferenceConfig>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

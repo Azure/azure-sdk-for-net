@@ -45,7 +45,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
+                    resultInformation = ModelSerializationExtensions.JsonDeserialize<ResultInformation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("operationContext"u8))

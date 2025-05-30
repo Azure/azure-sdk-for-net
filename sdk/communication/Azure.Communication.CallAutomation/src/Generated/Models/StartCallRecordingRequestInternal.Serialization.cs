@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(CallLocator))
             {
                 writer.WritePropertyName("callLocator"u8);
-                writer.WriteObjectValue(CallLocator);
+                JsonSerializer.Serialize(writer, CallLocator);
             }
             if (Optional.IsDefined(CallConnectionId))
             {
@@ -51,7 +51,7 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStartArray();
                 foreach (var item in AudioChannelParticipantOrdering)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -61,7 +61,7 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStartArray();
                 foreach (var item in ChannelAffinity)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -73,12 +73,12 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(ExternalStorage))
             {
                 writer.WritePropertyName("externalStorage"u8);
-                writer.WriteObjectValue(ExternalStorage);
+                JsonSerializer.Serialize(writer, ExternalStorage);
             }
             if (Optional.IsDefined(PostProcessingOptions))
             {
                 writer.WritePropertyName("postProcessingOptions"u8);
-                writer.WriteObjectValue(PostProcessingOptions);
+                JsonSerializer.Serialize(writer, PostProcessingOptions);
             }
             writer.WriteEndObject();
         }

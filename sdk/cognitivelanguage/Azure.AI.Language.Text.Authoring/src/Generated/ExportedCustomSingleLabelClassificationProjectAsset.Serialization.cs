@@ -41,7 +41,7 @@ namespace Azure.AI.Language.Text.Authoring
                 writer.WriteStartArray();
                 foreach (var item in Classes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TextAuthoringExportedClass>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -51,7 +51,7 @@ namespace Azure.AI.Language.Text.Authoring
                 writer.WriteStartArray();
                 foreach (var item in Documents)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExportedCustomSingleLabelClassificationDocument>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

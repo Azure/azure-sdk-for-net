@@ -33,7 +33,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    to = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    to = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("from"u8))
@@ -42,7 +42,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    @from = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    @from = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("callerDisplayName"u8))
@@ -61,7 +61,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    customContext = CustomCallingContextInternal.DeserializeCustomCallingContextInternal(property.Value);
+                    customContext = ModelSerializationExtensions.JsonDeserialize<CustomCallingContextInternal>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("incomingCallContext"u8))
@@ -75,7 +75,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    onBehalfOfCallee = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    onBehalfOfCallee = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("correlationId"u8))

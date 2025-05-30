@@ -65,7 +65,7 @@ namespace Azure.AI.Language.Conversations.Models
                 foreach (var item in TargetProjectParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<AnalysisConfig>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }

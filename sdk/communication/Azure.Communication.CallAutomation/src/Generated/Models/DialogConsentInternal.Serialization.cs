@@ -42,7 +42,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    userConsent = UserConsent.DeserializeUserConsent(property.Value);
+                    userConsent = ModelSerializationExtensions.JsonDeserialize<UserConsent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dialogId"u8))
@@ -76,7 +76,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
+                    resultInformation = ModelSerializationExtensions.JsonDeserialize<ResultInformation>(property.Value);
                     continue;
                 }
             }

@@ -33,7 +33,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    dialog = BaseDialog.DeserializeBaseDialog(property.Value);
+                    dialog = ModelSerializationExtensions.JsonDeserialize<BaseDialog>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("operationContext"u8))

@@ -43,7 +43,7 @@ namespace Azure.Communication.JobRouter
             if (Optional.IsDefined(ClientCredential))
             {
                 writer.WritePropertyName("clientCredential"u8);
-                writer.WriteObjectValue(ClientCredential, options);
+                ((IJsonModel<OAuth2WebhookClientCredential>)ClientCredential).Write(writer, options);
             }
             if (Optional.IsDefined(WebhookUri))
             {
@@ -95,7 +95,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    clientCredential = OAuth2WebhookClientCredential.DeserializeOAuth2WebhookClientCredential(property.Value, options);
+                    clientCredential = ModelSerializationExtensions.JsonDeserialize<OAuth2WebhookClientCredential>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("webhookUri"u8))

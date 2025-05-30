@@ -35,7 +35,7 @@ namespace Azure.Communication.ProgrammableConnectivity
             }
 
             writer.WritePropertyName("networkIdentifier"u8);
-            writer.WriteObjectValue(NetworkIdentifier, options);
+            ((IJsonModel<NetworkIdentifier>)NetworkIdentifier).Write(writer, options);
             writer.WritePropertyName("latitude"u8);
             writer.WriteNumberValue(Latitude);
             writer.WritePropertyName("longitude"u8);
@@ -43,7 +43,7 @@ namespace Azure.Communication.ProgrammableConnectivity
             writer.WritePropertyName("accuracy"u8);
             writer.WriteNumberValue(Accuracy);
             writer.WritePropertyName("device"u8);
-            writer.WriteObjectValue(Device, options);
+            ((IJsonModel<LocationDevice>)Device).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -92,7 +92,7 @@ namespace Azure.Communication.ProgrammableConnectivity
             {
                 if (property.NameEquals("networkIdentifier"u8))
                 {
-                    networkIdentifier = NetworkIdentifier.DeserializeNetworkIdentifier(property.Value, options);
+                    networkIdentifier = ModelSerializationExtensions.JsonDeserialize<NetworkIdentifier>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("latitude"u8))
@@ -112,7 +112,7 @@ namespace Azure.Communication.ProgrammableConnectivity
                 }
                 if (property.NameEquals("device"u8))
                 {
-                    device = LocationDevice.DeserializeLocationDevice(property.Value, options);
+                    device = ModelSerializationExtensions.JsonDeserialize<LocationDevice>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

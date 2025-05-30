@@ -46,7 +46,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             if (Optional.IsDefined(EvaluationOptions))
             {
                 writer.WritePropertyName("evaluationOptions"u8);
-                writer.WriteObjectValue(EvaluationOptions, options);
+                ((IJsonModel<ConversationAuthoringEvaluationDetails>)EvaluationOptions).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -114,7 +114,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                     {
                         continue;
                     }
-                    evaluationOptions = ConversationAuthoringEvaluationDetails.DeserializeConversationAuthoringEvaluationDetails(property.Value, options);
+                    evaluationOptions = ModelSerializationExtensions.JsonDeserialize<ConversationAuthoringEvaluationDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

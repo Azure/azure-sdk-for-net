@@ -41,7 +41,7 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(TeamsPhoneCallDetails))
             {
                 writer.WritePropertyName("teamsPhoneCallDetails"u8);
-                writer.WriteObjectValue(TeamsPhoneCallDetails);
+                JsonSerializer.Serialize(writer, TeamsPhoneCallDetails);
             }
             writer.WriteEndObject();
         }
@@ -91,7 +91,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    teamsPhoneCallDetails = TeamsPhoneCallDetailsInternal.DeserializeTeamsPhoneCallDetailsInternal(property.Value);
+                    teamsPhoneCallDetails = ModelSerializationExtensions.JsonDeserialize<TeamsPhoneCallDetailsInternal>(property.Value);
                     continue;
                 }
             }

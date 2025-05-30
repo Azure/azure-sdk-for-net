@@ -40,7 +40,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 writer.WriteStartArray();
                 foreach (var item in Sublists)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConversationAuthoringExportedEntitySublist>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

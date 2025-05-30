@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RaiBlocklistItemData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

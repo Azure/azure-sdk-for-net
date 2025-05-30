@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<CognitiveServicesSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity, options);
+                ((IJsonModel<CognitiveServicesCapacityConfig>)Capacity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    sku = CognitiveServicesSku.DeserializeCognitiveServicesSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<CognitiveServicesSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    capacity = CognitiveServicesCapacityConfig.DeserializeCognitiveServicesCapacityConfig(property.Value, options);
+                    capacity = ModelSerializationExtensions.JsonDeserialize<CognitiveServicesCapacityConfig>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

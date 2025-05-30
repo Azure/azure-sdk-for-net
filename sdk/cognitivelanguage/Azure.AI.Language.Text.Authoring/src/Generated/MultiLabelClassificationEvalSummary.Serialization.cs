@@ -39,7 +39,7 @@ namespace Azure.AI.Language.Text.Authoring
             foreach (var item in Classes)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                ((IJsonModel<MultiLabelClassEvalSummary>)item.Value).Write(writer, options);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("microF1"u8);

@@ -37,12 +37,12 @@ namespace Azure.AI.Language.Conversations.Models
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("redactedContent"u8);
-            writer.WriteObjectValue(RedactedContent, options);
+            ((IJsonModel<RedactedTranscriptContent>)RedactedContent).Write(writer, options);
             writer.WritePropertyName("entities"u8);
             writer.WriteStartArray();
             foreach (var item in Entities)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<NamedEntity>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -96,7 +96,7 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (property.NameEquals("redactedContent"u8))
                 {
-                    redactedContent = RedactedTranscriptContent.DeserializeRedactedTranscriptContent(property.Value, options);
+                    redactedContent = ModelSerializationExtensions.JsonDeserialize<RedactedTranscriptContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("entities"u8))

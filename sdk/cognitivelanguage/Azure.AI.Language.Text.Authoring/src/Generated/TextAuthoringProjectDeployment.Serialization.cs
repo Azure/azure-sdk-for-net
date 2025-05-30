@@ -53,7 +53,7 @@ namespace Azure.AI.Language.Text.Authoring
             writer.WriteStartArray();
             foreach (var item in AssignedResources)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<TextAuthoringDeploymentResource>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

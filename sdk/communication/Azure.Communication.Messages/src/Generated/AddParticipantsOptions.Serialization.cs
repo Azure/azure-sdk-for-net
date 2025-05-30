@@ -38,7 +38,7 @@ namespace Azure.Communication.Messages
             writer.WriteStartArray();
             foreach (var item in Participants)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ConversationParticipant>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

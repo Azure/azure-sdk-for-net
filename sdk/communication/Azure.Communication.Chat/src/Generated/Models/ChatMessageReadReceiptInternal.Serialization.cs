@@ -25,7 +25,7 @@ namespace Azure.Communication.Chat
             {
                 if (property.NameEquals("senderCommunicationIdentifier"u8))
                 {
-                    senderCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    senderCommunicationIdentifier = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("chatMessageId"u8))

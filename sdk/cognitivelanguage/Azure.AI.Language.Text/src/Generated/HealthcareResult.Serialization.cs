@@ -38,13 +38,13 @@ namespace Azure.AI.Language.Text
             writer.WriteStartArray();
             foreach (var item in Errors)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DocumentError>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics, options);
+                ((IJsonModel<RequestStatistics>)Statistics).Write(writer, options);
             }
             writer.WritePropertyName("modelVersion"u8);
             writer.WriteStringValue(ModelVersion);
@@ -52,7 +52,7 @@ namespace Azure.AI.Language.Text
             writer.WriteStartArray();
             foreach (var item in Documents)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<HealthcareActionResult>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -116,7 +116,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    statistics = RequestStatistics.DeserializeRequestStatistics(property.Value, options);
+                    statistics = ModelSerializationExtensions.JsonDeserialize<RequestStatistics>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("modelVersion"u8))

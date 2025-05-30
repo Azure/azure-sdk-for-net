@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
+                ((IJsonModel<ServiceAccountUsageMetricName>)Name).Write(writer, options);
             }
             if (Optional.IsDefined(QuotaPeriod))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    name = ServiceAccountUsageMetricName.DeserializeServiceAccountUsageMetricName(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<ServiceAccountUsageMetricName>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("quotaPeriod"u8))

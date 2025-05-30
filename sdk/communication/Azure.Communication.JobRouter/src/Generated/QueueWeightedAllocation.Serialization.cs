@@ -40,7 +40,7 @@ namespace Azure.Communication.JobRouter
             writer.WriteStartArray();
             foreach (var item in QueueSelectors)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<RouterQueueSelector>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -40,12 +40,12 @@ namespace Azure.AI.Language.Conversations.Models
                 writer.WriteStringValue(DisplayName);
             }
             writer.WritePropertyName("analysisInput"u8);
-            writer.WriteObjectValue(ConversationInput, options);
+            ((IJsonModel<MultiLanguageConversationInput>)ConversationInput).Write(writer, options);
             writer.WritePropertyName("tasks"u8);
             writer.WriteStartArray();
             foreach (var item in Actions)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<AnalyzeConversationOperationAction>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -99,7 +99,7 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (property.NameEquals("analysisInput"u8))
                 {
-                    analysisInput = MultiLanguageConversationInput.DeserializeMultiLanguageConversationInput(property.Value, options);
+                    analysisInput = ModelSerializationExtensions.JsonDeserialize<MultiLanguageConversationInput>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tasks"u8))

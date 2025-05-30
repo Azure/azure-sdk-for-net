@@ -60,7 +60,7 @@ namespace Azure.AI.Language.QuestionAnswering
                     {
                         continue;
                     }
-                    innererror = DeserializeInnerErrorModel(property.Value);
+                    innererror = ModelSerializationExtensions.JsonDeserialize<InnerErrorModel>(property.Value);
                     continue;
                 }
             }

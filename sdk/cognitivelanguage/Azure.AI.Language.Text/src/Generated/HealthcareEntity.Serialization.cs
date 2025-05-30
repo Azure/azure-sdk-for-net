@@ -52,7 +52,7 @@ namespace Azure.AI.Language.Text
             if (Optional.IsDefined(Assertion))
             {
                 writer.WritePropertyName("assertion"u8);
-                writer.WriteObjectValue(Assertion, options);
+                ((IJsonModel<HealthcareAssertion>)Assertion).Write(writer, options);
             }
             if (Optional.IsDefined(Name))
             {
@@ -65,7 +65,7 @@ namespace Azure.AI.Language.Text
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HealthcareEntityLink>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -155,7 +155,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    assertion = HealthcareAssertion.DeserializeHealthcareAssertion(property.Value, options);
+                    assertion = ModelSerializationExtensions.JsonDeserialize<HealthcareAssertion>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

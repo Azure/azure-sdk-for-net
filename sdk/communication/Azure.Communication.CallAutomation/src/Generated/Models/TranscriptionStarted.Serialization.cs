@@ -31,7 +31,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    transcriptionUpdate = TranscriptionUpdate.DeserializeTranscriptionUpdate(property.Value);
+                    transcriptionUpdate = ModelSerializationExtensions.JsonDeserialize<TranscriptionUpdate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("callConnectionId"u8))
@@ -60,7 +60,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
+                    resultInformation = ModelSerializationExtensions.JsonDeserialize<ResultInformation>(property.Value);
                     continue;
                 }
             }

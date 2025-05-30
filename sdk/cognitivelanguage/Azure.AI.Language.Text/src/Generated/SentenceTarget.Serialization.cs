@@ -37,7 +37,7 @@ namespace Azure.AI.Language.Text
             writer.WritePropertyName("sentiment"u8);
             writer.WriteStringValue(Sentiment.ToSerialString());
             writer.WritePropertyName("confidenceScores"u8);
-            writer.WriteObjectValue(ConfidenceScores, options);
+            ((IJsonModel<TargetConfidenceScoreLabel>)ConfidenceScores).Write(writer, options);
             writer.WritePropertyName("offset"u8);
             writer.WriteNumberValue(Offset);
             writer.WritePropertyName("length"u8);
@@ -48,7 +48,7 @@ namespace Azure.AI.Language.Text
             writer.WriteStartArray();
             foreach (var item in Relations)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<TargetRelation>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -105,7 +105,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("confidenceScores"u8))
                 {
-                    confidenceScores = TargetConfidenceScoreLabel.DeserializeTargetConfidenceScoreLabel(property.Value, options);
+                    confidenceScores = ModelSerializationExtensions.JsonDeserialize<TargetConfidenceScoreLabel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("offset"u8))

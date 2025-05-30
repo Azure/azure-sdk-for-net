@@ -38,14 +38,14 @@ namespace Azure.AI.Language.Text.Authoring
             writer.WriteStartArray();
             foreach (var item in ExpectedSentimentSpans)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DocumentSentimentLabelEvalResult>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("predictedSentimentSpans"u8);
             writer.WriteStartArray();
             foreach (var item in PredictedSentimentSpans)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DocumentSentimentLabelEvalResult>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

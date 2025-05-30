@@ -41,7 +41,7 @@ namespace Azure.AI.Language.Text
                 writer.WriteStartArray();
                 foreach (var item in SpanValues)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TemporalSpanValues>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

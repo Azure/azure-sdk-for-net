@@ -38,13 +38,13 @@ namespace Azure.AI.Language.Text
             writer.WriteStartArray();
             foreach (var item in Errors)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DocumentError>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics, options);
+                ((IJsonModel<RequestStatistics>)Statistics).Write(writer, options);
             }
             writer.WritePropertyName("projectName"u8);
             writer.WriteStringValue(ProjectName);
@@ -54,7 +54,7 @@ namespace Azure.AI.Language.Text
             writer.WriteStartArray();
             foreach (var item in Documents)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<CustomEntityActionResult>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -119,7 +119,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    statistics = RequestStatistics.DeserializeRequestStatistics(property.Value, options);
+                    statistics = ModelSerializationExtensions.JsonDeserialize<RequestStatistics>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("projectName"u8))

@@ -50,7 +50,7 @@ namespace Azure.Communication.PhoneNumbers
                 }
                 if (property.NameEquals("capabilities"u8))
                 {
-                    capabilities = PhoneNumberCapabilities.DeserializePhoneNumberCapabilities(property.Value);
+                    capabilities = ModelSerializationExtensions.JsonDeserialize<PhoneNumberCapabilities>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("assignmentType"u8))
@@ -65,7 +65,7 @@ namespace Azure.Communication.PhoneNumbers
                 }
                 if (property.NameEquals("cost"u8))
                 {
-                    cost = PhoneNumberCost.DeserializePhoneNumberCost(property.Value);
+                    cost = ModelSerializationExtensions.JsonDeserialize<PhoneNumberCost>(property.Value);
                     continue;
                 }
             }

@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Text
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("results"u8);
-            writer.WriteObjectValue(Results, options);
+            ((IJsonModel<EntitiesResult>)Results).Write(writer, options);
         }
 
         EntityRecognitionOperationResult IJsonModel<EntityRecognitionOperationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -70,7 +70,7 @@ namespace Azure.AI.Language.Text
             {
                 if (property.NameEquals("results"u8))
                 {
-                    results = EntitiesResult.DeserializeEntitiesResult(property.Value, options);
+                    results = ModelSerializationExtensions.JsonDeserialize<EntitiesResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lastUpdateDateTime"u8))

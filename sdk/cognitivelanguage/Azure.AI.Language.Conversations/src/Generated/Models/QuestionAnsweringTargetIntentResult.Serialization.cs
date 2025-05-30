@@ -38,7 +38,7 @@ namespace Azure.AI.Language.Conversations.Models
             if (Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
-                writer.WriteObjectValue(Result, options);
+                ((IJsonModel<AnswersResult>)Result).Write(writer, options);
             }
         }
 
@@ -76,7 +76,7 @@ namespace Azure.AI.Language.Conversations.Models
                     {
                         continue;
                     }
-                    result = AnswersResult.DeserializeAnswersResult(property.Value, options);
+                    result = ModelSerializationExtensions.JsonDeserialize<AnswersResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetProjectKind"u8))

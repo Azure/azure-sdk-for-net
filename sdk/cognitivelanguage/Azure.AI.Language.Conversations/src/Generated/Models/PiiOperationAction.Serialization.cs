@@ -38,7 +38,7 @@ namespace Azure.AI.Language.Conversations.Models
             if (Optional.IsDefined(ActionContent))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(ActionContent, options);
+                ((IJsonModel<ConversationPiiActionContent>)ActionContent).Write(writer, options);
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.AI.Language.Conversations.Models
                     {
                         continue;
                     }
-                    parameters = ConversationPiiActionContent.DeserializeConversationPiiActionContent(property.Value, options);
+                    parameters = ModelSerializationExtensions.JsonDeserialize<ConversationPiiActionContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("taskName"u8))

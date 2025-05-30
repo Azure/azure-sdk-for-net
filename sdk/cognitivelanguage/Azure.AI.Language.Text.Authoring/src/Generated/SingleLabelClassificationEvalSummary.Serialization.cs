@@ -39,7 +39,7 @@ namespace Azure.AI.Language.Text.Authoring
             foreach (var item in ConfusionMatrix)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                ((IJsonModel<TextAuthoringConfusionMatrixRow>)item.Value).Write(writer, options);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("classes"u8);
@@ -47,7 +47,7 @@ namespace Azure.AI.Language.Text.Authoring
             foreach (var item in Classes)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                ((IJsonModel<SingleLabelClassEvalSummary>)item.Value).Write(writer, options);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("microF1"u8);

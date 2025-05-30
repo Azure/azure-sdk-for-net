@@ -41,7 +41,7 @@ namespace Azure.AI.Language.Text.Authoring
                 writer.WriteStartArray();
                 foreach (var item in Documents)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExportedCustomAbstractiveSummarizationDocument>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

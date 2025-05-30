@@ -50,7 +50,7 @@ namespace Azure.AI.Language.Conversations.Models
                 writer.WriteStartArray();
                 foreach (var item in Resolutions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResolutionBase>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +60,7 @@ namespace Azure.AI.Language.Conversations.Models
                 writer.WriteStartArray();
                 foreach (var item in ExtraInformation)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConversationEntityExtraInformation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

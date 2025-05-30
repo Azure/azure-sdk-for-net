@@ -44,7 +44,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             if (Optional.IsDefined(Entities))
             {
                 writer.WritePropertyName("entities"u8);
-                writer.WriteObjectValue(Entities, options);
+                ((IJsonModel<ConversationAuthoringExportedEntityList>)Entities).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Prebuilts))
             {
@@ -52,14 +52,14 @@ namespace Azure.AI.Language.Conversations.Authoring
                 writer.WriteStartArray();
                 foreach (var item in Prebuilts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConversationAuthoringExportedPrebuiltEntity>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Regex))
             {
                 writer.WritePropertyName("regex"u8);
-                writer.WriteObjectValue(Regex, options);
+                ((IJsonModel<ExportedEntityRegex>)Regex).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(RequiredComponents))
             {
@@ -138,7 +138,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                     {
                         continue;
                     }
-                    entities = ConversationAuthoringExportedEntityList.DeserializeConversationAuthoringExportedEntityList(property.Value, options);
+                    entities = ModelSerializationExtensions.JsonDeserialize<ConversationAuthoringExportedEntityList>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("prebuilts"u8))
@@ -161,7 +161,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                     {
                         continue;
                     }
-                    regex = ExportedEntityRegex.DeserializeExportedEntityRegex(property.Value, options);
+                    regex = ModelSerializationExtensions.JsonDeserialize<ExportedEntityRegex>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("requiredComponents"u8))

@@ -40,7 +40,7 @@ namespace Azure.AI.Language.Text.Authoring
                 writer.WriteStartArray();
                 foreach (var item in Classes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ExportedDocumentClass>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

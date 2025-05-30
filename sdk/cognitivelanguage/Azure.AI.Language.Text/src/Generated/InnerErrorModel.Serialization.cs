@@ -57,7 +57,7 @@ namespace Azure.AI.Language.Text
             if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(Innererror, options);
+                ((IJsonModel<InnerErrorModel>)Innererror).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -140,7 +140,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    innererror = DeserializeInnerErrorModel(property.Value, options);
+                    innererror = ModelSerializationExtensions.JsonDeserialize<InnerErrorModel>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

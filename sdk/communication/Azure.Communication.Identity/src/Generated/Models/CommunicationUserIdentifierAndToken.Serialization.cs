@@ -24,7 +24,7 @@ namespace Azure.Communication.Identity
             {
                 if (property.NameEquals("identity"u8))
                 {
-                    identity = CommunicationIdentity.DeserializeCommunicationIdentity(property.Value);
+                    identity = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("accessToken"u8))
@@ -33,7 +33,7 @@ namespace Azure.Communication.Identity
                     {
                         continue;
                     }
-                    accessToken = CommunicationIdentityAccessToken.DeserializeCommunicationIdentityAccessToken(property.Value);
+                    accessToken = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentityAccessToken>(property.Value);
                     continue;
                 }
             }

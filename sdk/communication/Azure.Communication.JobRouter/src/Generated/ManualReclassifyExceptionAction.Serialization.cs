@@ -51,7 +51,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStartArray();
                 foreach (var item in WorkerSelectors)
                 {
-                    writer.WriteObjectValue<RouterWorkerSelector>(item, options);
+                    ((IJsonModel<RouterWorkerSelector>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

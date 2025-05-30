@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Restrictions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CognitiveServicesSkuRestrictions>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

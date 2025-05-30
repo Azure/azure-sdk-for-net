@@ -79,7 +79,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    sourceCallerIdNumber = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
+                    sourceCallerIdNumber = ModelSerializationExtensions.JsonDeserialize<PhoneNumberIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sourceDisplayName"u8))
@@ -93,7 +93,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    source = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    source = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("correlationId"u8))
@@ -107,7 +107,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    answeredBy = CommunicationUserIdentifierModel.DeserializeCommunicationUserIdentifierModel(property.Value);
+                    answeredBy = ModelSerializationExtensions.JsonDeserialize<CommunicationUserIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mediaSubscriptionId"u8))
@@ -126,7 +126,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    mediaStreamingSubscription = MediaStreamingSubscriptionInternal.DeserializeMediaStreamingSubscriptionInternal(property.Value);
+                    mediaStreamingSubscription = ModelSerializationExtensions.JsonDeserialize<MediaStreamingSubscriptionInternal>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("transcriptionSubscription"u8))
@@ -135,7 +135,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    transcriptionSubscription = TranscriptionSubscriptionInternal.DeserializeTranscriptionSubscriptionInternal(property.Value);
+                    transcriptionSubscription = ModelSerializationExtensions.JsonDeserialize<TranscriptionSubscriptionInternal>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("answeredFor"u8))
@@ -144,7 +144,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    answeredFor = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
+                    answeredFor = ModelSerializationExtensions.JsonDeserialize<PhoneNumberIdentifierModel>(property.Value);
                     continue;
                 }
             }

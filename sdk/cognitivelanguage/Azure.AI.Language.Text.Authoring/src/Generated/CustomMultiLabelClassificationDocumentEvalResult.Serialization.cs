@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Text.Authoring
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("customMultiLabelClassificationResult"u8);
-            writer.WriteObjectValue(CustomMultiLabelClassificationResult, options);
+            ((IJsonModel<DocumentMultiLabelClassificationEvalResult>)CustomMultiLabelClassificationResult).Write(writer, options);
         }
 
         CustomMultiLabelClassificationDocumentEvalResult IJsonModel<CustomMultiLabelClassificationDocumentEvalResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -69,7 +69,7 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 if (property.NameEquals("customMultiLabelClassificationResult"u8))
                 {
-                    customMultiLabelClassificationResult = DocumentMultiLabelClassificationEvalResult.DeserializeDocumentMultiLabelClassificationEvalResult(property.Value, options);
+                    customMultiLabelClassificationResult = ModelSerializationExtensions.JsonDeserialize<DocumentMultiLabelClassificationEvalResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("projectKind"u8))

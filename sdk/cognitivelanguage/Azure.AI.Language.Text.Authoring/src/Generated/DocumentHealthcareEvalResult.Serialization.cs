@@ -38,7 +38,7 @@ namespace Azure.AI.Language.Text.Authoring
             writer.WriteStartArray();
             foreach (var item in Entities)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DocumentEntityRegionEvalResult>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

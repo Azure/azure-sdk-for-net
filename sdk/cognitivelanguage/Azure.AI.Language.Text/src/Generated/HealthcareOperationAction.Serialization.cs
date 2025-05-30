@@ -38,7 +38,7 @@ namespace Azure.AI.Language.Text
             if (Optional.IsDefined(ActionContent))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(ActionContent, options);
+                ((IJsonModel<HealthcareActionContent>)ActionContent).Write(writer, options);
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    parameters = HealthcareActionContent.DeserializeHealthcareActionContent(property.Value, options);
+                    parameters = ModelSerializationExtensions.JsonDeserialize<HealthcareActionContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("taskName"u8))

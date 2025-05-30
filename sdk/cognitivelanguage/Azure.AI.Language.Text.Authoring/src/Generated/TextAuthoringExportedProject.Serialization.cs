@@ -39,11 +39,11 @@ namespace Azure.AI.Language.Text.Authoring
             writer.WritePropertyName("stringIndexType"u8);
             writer.WriteStringValue(StringIndexType.ToString());
             writer.WritePropertyName("metadata"u8);
-            writer.WriteObjectValue(Metadata, options);
+            ((IJsonModel<TextAuthoringCreateProjectDetails>)Metadata).Write(writer, options);
             if (Optional.IsDefined(Assets))
             {
                 writer.WritePropertyName("assets"u8);
-                writer.WriteObjectValue(Assets, options);
+                ((IJsonModel<TextAuthoringExportedProjectAsset>)Assets).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -102,7 +102,7 @@ namespace Azure.AI.Language.Text.Authoring
                 }
                 if (property.NameEquals("metadata"u8))
                 {
-                    metadata = TextAuthoringCreateProjectDetails.DeserializeTextAuthoringCreateProjectDetails(property.Value, options);
+                    metadata = ModelSerializationExtensions.JsonDeserialize<TextAuthoringCreateProjectDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("assets"u8))
@@ -111,7 +111,7 @@ namespace Azure.AI.Language.Text.Authoring
                     {
                         continue;
                     }
-                    assets = TextAuthoringExportedProjectAsset.DeserializeTextAuthoringExportedProjectAsset(property.Value, options);
+                    assets = ModelSerializationExtensions.JsonDeserialize<TextAuthoringExportedProjectAsset>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -36,7 +36,7 @@ namespace Azure.Communication.JobRouter
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("queueSelector"u8);
-            writer.WriteObjectValue(QueueSelector, options);
+            ((IJsonModel<RouterQueueSelector>)QueueSelector).Write(writer, options);
         }
 
         StaticQueueSelectorAttachment IJsonModel<StaticQueueSelectorAttachment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.Communication.JobRouter
             {
                 if (property.NameEquals("queueSelector"u8))
                 {
-                    queueSelector = RouterQueueSelector.DeserializeRouterQueueSelector(property.Value, options);
+                    queueSelector = ModelSerializationExtensions.JsonDeserialize<RouterQueueSelector>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

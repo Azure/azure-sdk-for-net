@@ -38,20 +38,20 @@ namespace Azure.AI.Language.Conversations.Models
             writer.WriteStartArray();
             foreach (var item in Conversations)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ConversationsSummaryResult>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("errors"u8);
             writer.WriteStartArray();
             foreach (var item in Errors)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DocumentError>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics, options);
+                ((IJsonModel<RequestStatistics>)Statistics).Write(writer, options);
             }
             writer.WritePropertyName("modelVersion"u8);
             writer.WriteStringValue(ModelVersion);
@@ -126,7 +126,7 @@ namespace Azure.AI.Language.Conversations.Models
                     {
                         continue;
                     }
-                    statistics = RequestStatistics.DeserializeRequestStatistics(property.Value, options);
+                    statistics = ModelSerializationExtensions.JsonDeserialize<RequestStatistics>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("modelVersion"u8))

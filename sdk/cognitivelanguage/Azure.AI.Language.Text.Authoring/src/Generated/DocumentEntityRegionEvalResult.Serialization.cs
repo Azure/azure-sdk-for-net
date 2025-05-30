@@ -38,14 +38,14 @@ namespace Azure.AI.Language.Text.Authoring
             writer.WriteStartArray();
             foreach (var item in ExpectedEntities)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DocumentEntityLabelEvalResult>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("predictedEntities"u8);
             writer.WriteStartArray();
             foreach (var item in PredictedEntities)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<DocumentEntityLabelEvalResult>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("regionOffset"u8);

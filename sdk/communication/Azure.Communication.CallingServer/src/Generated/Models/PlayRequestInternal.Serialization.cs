@@ -16,21 +16,21 @@ namespace Azure.Communication.CallingServer
         {
             writer.WriteStartObject();
             writer.WritePropertyName("playSourceInfo"u8);
-            writer.WriteObjectValue(PlaySourceInfo);
+            JsonSerializer.Serialize(writer, PlaySourceInfo);
             if (Optional.IsCollectionDefined(PlayTo))
             {
                 writer.WritePropertyName("playTo"u8);
                 writer.WriteStartArray();
                 foreach (var item in PlayTo)
                 {
-                    writer.WriteObjectValue<CommunicationIdentifierModel>(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PlayOptions))
             {
                 writer.WritePropertyName("playOptions"u8);
-                writer.WriteObjectValue(PlayOptions);
+                JsonSerializer.Serialize(writer, PlayOptions);
             }
             if (Optional.IsDefined(OperationContext))
             {

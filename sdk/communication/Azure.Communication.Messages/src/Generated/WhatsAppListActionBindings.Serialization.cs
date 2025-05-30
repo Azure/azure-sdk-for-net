@@ -36,7 +36,7 @@ namespace Azure.Communication.Messages.Models.Channels
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("content"u8);
-            writer.WriteObjectValue(Content, options);
+            ((IJsonModel<ActionGroupContent>)Content).Write(writer, options);
         }
 
         WhatsAppListActionBindings IJsonModel<WhatsAppListActionBindings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.Communication.Messages.Models.Channels
             {
                 if (property.NameEquals("content"u8))
                 {
-                    content = ActionGroupContent.DeserializeActionGroupContent(property.Value, options);
+                    content = ModelSerializationExtensions.JsonDeserialize<ActionGroupContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

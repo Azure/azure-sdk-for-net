@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Text.Authoring
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("customSingleLabelClassificationResult"u8);
-            writer.WriteObjectValue(CustomSingleLabelClassificationResult, options);
+            ((IJsonModel<DocumentSingleLabelClassificationEvalResult>)CustomSingleLabelClassificationResult).Write(writer, options);
         }
 
         CustomSingleLabelClassificationDocumentEvalResult IJsonModel<CustomSingleLabelClassificationDocumentEvalResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -69,7 +69,7 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 if (property.NameEquals("customSingleLabelClassificationResult"u8))
                 {
-                    customSingleLabelClassificationResult = DocumentSingleLabelClassificationEvalResult.DeserializeDocumentSingleLabelClassificationEvalResult(property.Value, options);
+                    customSingleLabelClassificationResult = ModelSerializationExtensions.JsonDeserialize<DocumentSingleLabelClassificationEvalResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("projectKind"u8))

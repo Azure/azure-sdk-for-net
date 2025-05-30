@@ -37,7 +37,7 @@ namespace Azure.AI.Language.Conversations.Models
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("error"u8);
-            writer.WriteObjectValue(Error, options);
+            ((IJsonModel<ConversationError>)Error).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,7 +88,7 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (property.NameEquals("error"u8))
                 {
-                    error = ConversationError.DeserializeConversationError(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<ConversationError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

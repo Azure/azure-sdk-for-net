@@ -36,7 +36,7 @@ namespace Azure.Communication.JobRouter
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("workerSelector"u8);
-            writer.WriteObjectValue(WorkerSelector, options);
+            ((IJsonModel<RouterWorkerSelector>)WorkerSelector).Write(writer, options);
         }
 
         StaticWorkerSelectorAttachment IJsonModel<StaticWorkerSelectorAttachment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.Communication.JobRouter
             {
                 if (property.NameEquals("workerSelector"u8))
                 {
-                    workerSelector = RouterWorkerSelector.DeserializeRouterWorkerSelector(property.Value, options);
+                    workerSelector = ModelSerializationExtensions.JsonDeserialize<RouterWorkerSelector>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

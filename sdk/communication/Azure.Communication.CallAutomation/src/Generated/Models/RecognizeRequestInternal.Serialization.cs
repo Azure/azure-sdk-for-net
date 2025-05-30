@@ -20,7 +20,7 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(PlayPrompt))
             {
                 writer.WritePropertyName("playPrompt"u8);
-                writer.WriteObjectValue(PlayPrompt);
+                JsonSerializer.Serialize(writer, PlayPrompt);
             }
             if (Optional.IsCollectionDefined(PlayPrompts))
             {
@@ -28,7 +28,7 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStartArray();
                 foreach (var item in PlayPrompts)
                 {
-                    writer.WriteObjectValue<PlaySourceInternal>(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -38,7 +38,7 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteBooleanValue(InterruptCallMediaOperation.Value);
             }
             writer.WritePropertyName("recognizeOptions"u8);
-            writer.WriteObjectValue(RecognizeOptions);
+            JsonSerializer.Serialize(writer, RecognizeOptions);
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);

@@ -69,7 +69,7 @@ namespace Azure.Communication.Chat
                     {
                         continue;
                     }
-                    initiatorCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    initiatorCommunicationIdentifier = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
             }

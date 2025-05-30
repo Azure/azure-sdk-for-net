@@ -35,7 +35,7 @@ namespace Azure.Communication.Messages
             }
 
             writer.WritePropertyName("request"u8);
-            writer.WriteObjectValue(Request, options);
+            ((IJsonModel<ConversationMessageContent>)Request).Write(writer, options);
             if (Optional.IsDefined(OutboundDeliveryStrategy))
             {
                 writer.WritePropertyName("outboundDeliveryStrategy"u8);
@@ -86,7 +86,7 @@ namespace Azure.Communication.Messages
             {
                 if (property.NameEquals("request"u8))
                 {
-                    request = ConversationMessageContent.DeserializeConversationMessageContent(property.Value, options);
+                    request = ModelSerializationExtensions.JsonDeserialize<ConversationMessageContent>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("outboundDeliveryStrategy"u8))

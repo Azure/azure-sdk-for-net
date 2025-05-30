@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -242,7 +243,7 @@ namespace Azure.Communication.CallingServer
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(transferToParticipantRequestInternal);
+            ((IJsonModel<TransferToParticipantRequestInternal>)transferToParticipantRequestInternal).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }
@@ -398,7 +399,7 @@ namespace Azure.Communication.CallingServer
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(addParticipantsRequestInternal);
+            ((IJsonModel<AddParticipantsRequestInternal>)addParticipantsRequestInternal).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }
@@ -484,7 +485,7 @@ namespace Azure.Communication.CallingServer
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(removeParticipantsRequestInternal);
+            ((IJsonModel<RemoveParticipantsRequestInternal>)removeParticipantsRequestInternal).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }

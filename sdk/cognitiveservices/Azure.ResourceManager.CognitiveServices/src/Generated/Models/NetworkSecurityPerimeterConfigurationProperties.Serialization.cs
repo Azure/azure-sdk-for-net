@@ -47,24 +47,24 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in ProvisioningIssues)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NetworkSecurityPerimeterProvisioningIssue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(NetworkSecurityPerimeter))
             {
                 writer.WritePropertyName("networkSecurityPerimeter"u8);
-                writer.WriteObjectValue(NetworkSecurityPerimeter, options);
+                ((IJsonModel<CognitiveServicesNetworkSecurityPerimeter>)NetworkSecurityPerimeter).Write(writer, options);
             }
             if (Optional.IsDefined(ResourceAssociation))
             {
                 writer.WritePropertyName("resourceAssociation"u8);
-                writer.WriteObjectValue(ResourceAssociation, options);
+                ((IJsonModel<NetworkSecurityPerimeterConfigurationAssociationInfo>)ResourceAssociation).Write(writer, options);
             }
             if (Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
-                writer.WriteObjectValue(Profile, options);
+                ((IJsonModel<NetworkSecurityPerimeterProfileInfo>)Profile).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    networkSecurityPerimeter = CognitiveServicesNetworkSecurityPerimeter.DeserializeCognitiveServicesNetworkSecurityPerimeter(property.Value, options);
+                    networkSecurityPerimeter = ModelSerializationExtensions.JsonDeserialize<CognitiveServicesNetworkSecurityPerimeter>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceAssociation"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    resourceAssociation = NetworkSecurityPerimeterConfigurationAssociationInfo.DeserializeNetworkSecurityPerimeterConfigurationAssociationInfo(property.Value, options);
+                    resourceAssociation = ModelSerializationExtensions.JsonDeserialize<NetworkSecurityPerimeterConfigurationAssociationInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("profile"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    profile = NetworkSecurityPerimeterProfileInfo.DeserializeNetworkSecurityPerimeterProfileInfo(property.Value, options);
+                    profile = ModelSerializationExtensions.JsonDeserialize<NetworkSecurityPerimeterProfileInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

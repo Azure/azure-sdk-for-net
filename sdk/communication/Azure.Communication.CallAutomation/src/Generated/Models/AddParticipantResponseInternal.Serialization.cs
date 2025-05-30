@@ -28,7 +28,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    participant = CallParticipantInternal.DeserializeCallParticipantInternal(property.Value);
+                    participant = ModelSerializationExtensions.JsonDeserialize<CallParticipantInternal>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("operationContext"u8))

@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Text.Authoring
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("customTextSentimentResult"u8);
-            writer.WriteObjectValue(CustomTextSentimentResult, options);
+            ((IJsonModel<DocumentTextSentimentEvalResult>)CustomTextSentimentResult).Write(writer, options);
         }
 
         CustomTextSentimentDocumentEvalResult IJsonModel<CustomTextSentimentDocumentEvalResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -69,7 +69,7 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 if (property.NameEquals("customTextSentimentResult"u8))
                 {
-                    customTextSentimentResult = DocumentTextSentimentEvalResult.DeserializeDocumentTextSentimentEvalResult(property.Value, options);
+                    customTextSentimentResult = ModelSerializationExtensions.JsonDeserialize<DocumentTextSentimentEvalResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("projectKind"u8))

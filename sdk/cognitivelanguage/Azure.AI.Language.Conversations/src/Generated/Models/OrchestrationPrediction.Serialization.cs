@@ -40,7 +40,7 @@ namespace Azure.AI.Language.Conversations.Models
             foreach (var item in Intents)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                ((IJsonModel<TargetIntentResult>)item.Value).Write(writer, options);
             }
             writer.WriteEndObject();
         }

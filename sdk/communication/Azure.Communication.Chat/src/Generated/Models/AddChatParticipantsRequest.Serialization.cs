@@ -19,7 +19,7 @@ namespace Azure.Communication.Chat
             writer.WriteStartArray();
             foreach (var item in Participants)
             {
-                writer.WriteObjectValue(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

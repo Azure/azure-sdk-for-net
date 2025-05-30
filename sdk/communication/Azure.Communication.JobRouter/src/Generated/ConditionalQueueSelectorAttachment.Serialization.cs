@@ -36,12 +36,12 @@ namespace Azure.Communication.JobRouter
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("condition"u8);
-            writer.WriteObjectValue(Condition, options);
+            ((IJsonModel<RouterRule>)Condition).Write(writer, options);
             writer.WritePropertyName("queueSelectors"u8);
             writer.WriteStartArray();
             foreach (var item in QueueSelectors)
             {
-                writer.WriteObjectValue<RouterQueueSelector>(item, options);
+                ((IJsonModel<RouterQueueSelector>)item).Write(writer, options);
             }
             writer.WriteEndArray();
         }
@@ -75,7 +75,7 @@ namespace Azure.Communication.JobRouter
             {
                 if (property.NameEquals("condition"u8))
                 {
-                    condition = RouterRule.DeserializeRouterRule(property.Value, options);
+                    condition = ModelSerializationExtensions.JsonDeserialize<RouterRule>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("queueSelectors"u8))

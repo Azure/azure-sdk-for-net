@@ -60,7 +60,7 @@ namespace Azure.Communication.Identity.Models
                     {
                         continue;
                     }
-                    innererror = DeserializeCommunicationError(property.Value);
+                    innererror = ModelSerializationExtensions.JsonDeserialize<CommunicationError>(property.Value);
                     continue;
                 }
             }

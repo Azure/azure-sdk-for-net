@@ -35,7 +35,7 @@ namespace Azure.AI.Language.Text.Authoring
             }
 
             writer.WritePropertyName("evaluationOptions"u8);
-            writer.WriteObjectValue(EvaluationOptions, options);
+            ((IJsonModel<TextAuthoringEvaluationDetails>)EvaluationOptions).Write(writer, options);
             writer.WritePropertyName("modelLabel"u8);
             writer.WriteStringValue(ModelLabel);
             writer.WritePropertyName("trainingConfigVersion"u8);
@@ -89,7 +89,7 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 if (property.NameEquals("evaluationOptions"u8))
                 {
-                    evaluationOptions = TextAuthoringEvaluationDetails.DeserializeTextAuthoringEvaluationDetails(property.Value, options);
+                    evaluationOptions = ModelSerializationExtensions.JsonDeserialize<TextAuthoringEvaluationDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("modelLabel"u8))

@@ -90,7 +90,7 @@ namespace Azure.AI.Language.QuestionAnswering
                     {
                         continue;
                     }
-                    dialog = KnowledgeBaseAnswerDialog.DeserializeKnowledgeBaseAnswerDialog(property.Value);
+                    dialog = ModelSerializationExtensions.JsonDeserialize<KnowledgeBaseAnswerDialog>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("answerSpan"u8))
@@ -99,7 +99,7 @@ namespace Azure.AI.Language.QuestionAnswering
                     {
                         continue;
                     }
-                    answerSpan = AnswerSpan.DeserializeAnswerSpan(property.Value);
+                    answerSpan = ModelSerializationExtensions.JsonDeserialize<AnswerSpan>(property.Value);
                     continue;
                 }
             }

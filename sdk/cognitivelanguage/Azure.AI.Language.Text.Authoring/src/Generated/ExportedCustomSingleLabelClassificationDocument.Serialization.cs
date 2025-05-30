@@ -37,7 +37,7 @@ namespace Azure.AI.Language.Text.Authoring
             if (Optional.IsDefined(Class))
             {
                 writer.WritePropertyName("class"u8);
-                writer.WriteObjectValue(Class, options);
+                ((IJsonModel<ExportedDocumentClass>)Class).Write(writer, options);
             }
             if (Optional.IsDefined(Location))
             {
@@ -105,7 +105,7 @@ namespace Azure.AI.Language.Text.Authoring
                     {
                         continue;
                     }
-                    @class = ExportedDocumentClass.DeserializeExportedDocumentClass(property.Value, options);
+                    @class = ModelSerializationExtensions.JsonDeserialize<ExportedDocumentClass>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"u8))

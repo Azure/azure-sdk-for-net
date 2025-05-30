@@ -27,7 +27,7 @@ namespace Azure.Communication.CallingServer
                     {
                         continue;
                     }
-                    identifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    identifier = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isMuted"u8))

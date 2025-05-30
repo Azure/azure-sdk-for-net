@@ -55,7 +55,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStartArray();
                 foreach (var item in ExceptionRules)
                 {
-                    writer.WriteObjectValue<ExceptionRule>(item, options);
+                    ((IJsonModel<ExceptionRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

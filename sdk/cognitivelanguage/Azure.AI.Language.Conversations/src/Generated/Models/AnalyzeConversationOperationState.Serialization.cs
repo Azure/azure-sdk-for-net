@@ -61,7 +61,7 @@ namespace Azure.AI.Language.Conversations.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConversationError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -71,11 +71,11 @@ namespace Azure.AI.Language.Conversations.Models
                 writer.WriteStringValue(NextLink);
             }
             writer.WritePropertyName("tasks"u8);
-            writer.WriteObjectValue(Actions, options);
+            ((IJsonModel<ConversationActions>)Actions).Write(writer, options);
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics, options);
+                ((IJsonModel<ConversationRequestStatistics>)Statistics).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -183,7 +183,7 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (property.NameEquals("tasks"u8))
                 {
-                    tasks = ConversationActions.DeserializeConversationActions(property.Value, options);
+                    tasks = ModelSerializationExtensions.JsonDeserialize<ConversationActions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("statistics"u8))
@@ -192,7 +192,7 @@ namespace Azure.AI.Language.Conversations.Models
                     {
                         continue;
                     }
-                    statistics = ConversationRequestStatistics.DeserializeConversationRequestStatistics(property.Value, options);
+                    statistics = ModelSerializationExtensions.JsonDeserialize<ConversationRequestStatistics>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

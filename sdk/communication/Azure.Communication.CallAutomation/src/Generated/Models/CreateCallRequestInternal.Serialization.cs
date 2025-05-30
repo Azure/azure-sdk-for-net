@@ -19,13 +19,13 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartArray();
             foreach (var item in Targets)
             {
-                writer.WriteObjectValue(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(SourceCallerIdNumber))
             {
                 writer.WritePropertyName("sourceCallerIdNumber"u8);
-                writer.WriteObjectValue(SourceCallerIdNumber);
+                JsonSerializer.Serialize(writer, SourceCallerIdNumber);
             }
             if (Optional.IsDefined(SourceDisplayName))
             {
@@ -35,7 +35,7 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                JsonSerializer.Serialize(writer, Source);
             }
             if (Optional.IsDefined(OperationContext))
             {
@@ -47,27 +47,27 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(CallIntelligenceOptions))
             {
                 writer.WritePropertyName("callIntelligenceOptions"u8);
-                writer.WriteObjectValue(CallIntelligenceOptions);
+                JsonSerializer.Serialize(writer, CallIntelligenceOptions);
             }
             if (Optional.IsDefined(TeamsAppSource))
             {
                 writer.WritePropertyName("teamsAppSource"u8);
-                writer.WriteObjectValue(TeamsAppSource);
+                JsonSerializer.Serialize(writer, TeamsAppSource);
             }
             if (Optional.IsDefined(CustomCallingContext))
             {
                 writer.WritePropertyName("customCallingContext"u8);
-                writer.WriteObjectValue(CustomCallingContext);
+                JsonSerializer.Serialize(writer, CustomCallingContext);
             }
             if (Optional.IsDefined(MediaStreamingOptions))
             {
                 writer.WritePropertyName("mediaStreamingOptions"u8);
-                writer.WriteObjectValue(MediaStreamingOptions);
+                JsonSerializer.Serialize(writer, MediaStreamingOptions);
             }
             if (Optional.IsDefined(TranscriptionOptions))
             {
                 writer.WritePropertyName("transcriptionOptions"u8);
-                writer.WriteObjectValue(TranscriptionOptions);
+                JsonSerializer.Serialize(writer, TranscriptionOptions);
             }
             writer.WriteEndObject();
         }

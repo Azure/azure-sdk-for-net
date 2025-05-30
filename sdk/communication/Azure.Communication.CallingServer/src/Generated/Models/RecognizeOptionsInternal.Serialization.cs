@@ -26,11 +26,11 @@ namespace Azure.Communication.CallingServer
                 writer.WriteNumberValue(InitialSilenceTimeoutInSeconds.Value);
             }
             writer.WritePropertyName("targetParticipant"u8);
-            writer.WriteObjectValue(TargetParticipant);
+            JsonSerializer.Serialize(writer, TargetParticipant);
             if (Optional.IsDefined(DtmfOptions))
             {
                 writer.WritePropertyName("dtmfOptions"u8);
-                writer.WriteObjectValue(DtmfOptions);
+                JsonSerializer.Serialize(writer, DtmfOptions);
             }
             writer.WriteEndObject();
         }

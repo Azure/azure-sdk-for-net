@@ -39,7 +39,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
-                writer.WriteObjectValue(Settings, options);
+                ((IJsonModel<ConversationAuthoringProjectSettings>)Settings).Write(writer, options);
             }
             if (Optional.IsDefined(StorageInputContainerName))
             {
@@ -119,7 +119,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                     {
                         continue;
                     }
-                    settings = ConversationAuthoringProjectSettings.DeserializeConversationAuthoringProjectSettings(property.Value, options);
+                    settings = ModelSerializationExtensions.JsonDeserialize<ConversationAuthoringProjectSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storageInputContainerName"u8))

@@ -28,7 +28,7 @@ namespace Azure.Communication.Chat
                     {
                         continue;
                     }
-                    chatThread = ChatThreadPropertiesInternal.DeserializeChatThreadPropertiesInternal(property.Value);
+                    chatThread = ModelSerializationExtensions.JsonDeserialize<ChatThreadPropertiesInternal>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("invalidParticipants"u8))

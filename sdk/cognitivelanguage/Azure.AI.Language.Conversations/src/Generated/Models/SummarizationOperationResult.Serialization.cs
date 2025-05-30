@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Conversations.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("results"u8);
-            writer.WriteObjectValue(Results, options);
+            ((IJsonModel<SummaryResult>)Results).Write(writer, options);
         }
 
         SummarizationOperationResult IJsonModel<SummarizationOperationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -70,7 +70,7 @@ namespace Azure.AI.Language.Conversations.Models
             {
                 if (property.NameEquals("results"u8))
                 {
-                    results = SummaryResult.DeserializeSummaryResult(property.Value, options);
+                    results = ModelSerializationExtensions.JsonDeserialize<SummaryResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lastUpdateDateTime"u8))

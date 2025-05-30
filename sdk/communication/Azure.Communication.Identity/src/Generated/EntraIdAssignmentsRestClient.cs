@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
@@ -56,7 +57,7 @@ namespace Azure.Communication.Identity
             foreach (var item in body)
             {
                 content.JsonWriter.WritePropertyName(item.Key);
-                content.JsonWriter.WriteObjectValue(item.Value);
+                ((IJsonModel<EntraAssignmentCreateOrUpdateRequest>)item.Value).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             }
             content.JsonWriter.WriteEndObject();
             request.Content = content;

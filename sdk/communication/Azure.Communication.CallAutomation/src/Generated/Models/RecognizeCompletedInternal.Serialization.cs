@@ -54,7 +54,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
+                    resultInformation = ModelSerializationExtensions.JsonDeserialize<ResultInformation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("recognitionType"u8))
@@ -72,7 +72,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    dtmfResult = DtmfResult.DeserializeDtmfResult(property.Value);
+                    dtmfResult = ModelSerializationExtensions.JsonDeserialize<DtmfResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("choiceResult"u8))
@@ -81,7 +81,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    choiceResult = ChoiceResult.DeserializeChoiceResult(property.Value);
+                    choiceResult = ModelSerializationExtensions.JsonDeserialize<ChoiceResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("speechResult"u8))
@@ -90,7 +90,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    speechResult = SpeechResult.DeserializeSpeechResult(property.Value);
+                    speechResult = ModelSerializationExtensions.JsonDeserialize<SpeechResult>(property.Value);
                     continue;
                 }
             }

@@ -40,19 +40,19 @@ namespace Azure.AI.Language.Conversations.Models
             writer.WriteStartArray();
             foreach (var item in Warnings)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<InputWarning>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics, options);
+                ((IJsonModel<ConversationStatistics>)Statistics).Write(writer, options);
             }
             writer.WritePropertyName("conversationItems"u8);
             writer.WriteStartArray();
             foreach (var item in ConversationItems)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ConversationPiiItemResult>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -121,7 +121,7 @@ namespace Azure.AI.Language.Conversations.Models
                     {
                         continue;
                     }
-                    statistics = ConversationStatistics.DeserializeConversationStatistics(property.Value, options);
+                    statistics = ModelSerializationExtensions.JsonDeserialize<ConversationStatistics>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("conversationItems"u8))

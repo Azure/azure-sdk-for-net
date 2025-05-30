@@ -40,7 +40,7 @@ namespace Azure.AI.Language.Text
             writer.WriteStartArray();
             foreach (var item in Entities)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<HealthcareRelationEntity>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(ConfidenceScore))

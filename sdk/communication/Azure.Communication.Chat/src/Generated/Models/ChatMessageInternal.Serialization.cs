@@ -58,7 +58,7 @@ namespace Azure.Communication.Chat
                     {
                         continue;
                     }
-                    content = ChatMessageContentInternal.DeserializeChatMessageContentInternal(property.Value);
+                    content = ModelSerializationExtensions.JsonDeserialize<ChatMessageContentInternal>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("senderDisplayName"u8))
@@ -77,7 +77,7 @@ namespace Azure.Communication.Chat
                     {
                         continue;
                     }
-                    senderCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    senderCommunicationIdentifier = ModelSerializationExtensions.JsonDeserialize<CommunicationIdentifierModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deletedOn"u8))

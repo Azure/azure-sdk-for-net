@@ -44,11 +44,11 @@ namespace Azure.AI.Language.Conversations.Authoring
                 writer.WriteStringValue(TrainingMode.Value.ToString());
             }
             writer.WritePropertyName("trainingStatus"u8);
-            writer.WriteObjectValue(TrainingStatus, options);
+            ((IJsonModel<ConversationAuthoringSubTrainingState>)TrainingStatus).Write(writer, options);
             if (Optional.IsDefined(EvaluationStatus))
             {
                 writer.WritePropertyName("evaluationStatus"u8);
-                writer.WriteObjectValue(EvaluationStatus, options);
+                ((IJsonModel<ConversationAuthoringSubTrainingState>)EvaluationStatus).Write(writer, options);
             }
             if (Optional.IsDefined(EstimatedEndOn))
             {
@@ -123,7 +123,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
                 if (property.NameEquals("trainingStatus"u8))
                 {
-                    trainingStatus = ConversationAuthoringSubTrainingState.DeserializeConversationAuthoringSubTrainingState(property.Value, options);
+                    trainingStatus = ModelSerializationExtensions.JsonDeserialize<ConversationAuthoringSubTrainingState>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("evaluationStatus"u8))
@@ -132,7 +132,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                     {
                         continue;
                     }
-                    evaluationStatus = ConversationAuthoringSubTrainingState.DeserializeConversationAuthoringSubTrainingState(property.Value, options);
+                    evaluationStatus = ModelSerializationExtensions.JsonDeserialize<ConversationAuthoringSubTrainingState>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("estimatedEndDateTime"u8))

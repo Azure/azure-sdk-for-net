@@ -31,7 +31,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    mediaStreamingUpdate = MediaStreamingUpdate.DeserializeMediaStreamingUpdate(property.Value);
+                    mediaStreamingUpdate = ModelSerializationExtensions.JsonDeserialize<MediaStreamingUpdate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("callConnectionId"u8))
@@ -60,7 +60,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
+                    resultInformation = ModelSerializationExtensions.JsonDeserialize<ResultInformation>(property.Value);
                     continue;
                 }
             }

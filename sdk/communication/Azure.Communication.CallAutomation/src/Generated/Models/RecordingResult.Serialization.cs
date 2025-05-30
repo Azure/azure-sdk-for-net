@@ -39,7 +39,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    recordingStorageInfo = RecordingStorageInfo.DeserializeRecordingStorageInfo(property.Value);
+                    recordingStorageInfo = ModelSerializationExtensions.JsonDeserialize<RecordingStorageInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("errors"u8))

@@ -38,7 +38,7 @@ namespace Azure.Communication.Messages
             writer.WriteStartArray();
             foreach (var item in InvalidParticipants)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<UpdateParticipantsResult>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

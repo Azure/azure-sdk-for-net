@@ -39,7 +39,7 @@ namespace Azure.Communication.JobRouter
             writer.WriteStartArray();
             foreach (var item in Allocations)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<WorkerWeightedAllocation>)item).Write(writer, options);
             }
             writer.WriteEndArray();
         }

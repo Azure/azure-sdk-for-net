@@ -46,7 +46,7 @@ namespace Azure.AI.Language.Conversations.Models
                 writer.WriteStartArray();
                 foreach (var item in Tags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EntityTag>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

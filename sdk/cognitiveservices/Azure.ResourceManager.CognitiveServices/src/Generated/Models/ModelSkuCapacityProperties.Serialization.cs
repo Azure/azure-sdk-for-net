@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
-                writer.WriteObjectValue(Model, options);
+                ((IJsonModel<CognitiveServicesAccountDeploymentModel>)Model).Write(writer, options);
             }
             if (Optional.IsDefined(SkuName))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    model = CognitiveServicesAccountDeploymentModel.DeserializeCognitiveServicesAccountDeploymentModel(property.Value, options);
+                    model = ModelSerializationExtensions.JsonDeserialize<CognitiveServicesAccountDeploymentModel>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("skuName"u8))

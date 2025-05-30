@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("luisOrchestration"u8);
-            writer.WriteObjectValue(LuisOrchestration, options);
+            ((IJsonModel<ExportedLuisOrchestration>)LuisOrchestration).Write(writer, options);
         }
 
         ExportedLuisOrchestrationDetails IJsonModel<ExportedLuisOrchestrationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +67,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             {
                 if (property.NameEquals("luisOrchestration"u8))
                 {
-                    luisOrchestration = ExportedLuisOrchestration.DeserializeExportedLuisOrchestration(property.Value, options);
+                    luisOrchestration = ModelSerializationExtensions.JsonDeserialize<ExportedLuisOrchestration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetProjectKind"u8))

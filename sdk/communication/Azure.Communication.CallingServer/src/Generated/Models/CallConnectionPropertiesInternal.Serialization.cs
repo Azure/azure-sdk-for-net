@@ -44,7 +44,7 @@ namespace Azure.Communication.CallingServer
                     {
                         continue;
                     }
-                    source = CallSourceInternal.DeserializeCallSourceInternal(property.Value);
+                    source = ModelSerializationExtensions.JsonDeserialize<CallSourceInternal>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targets"u8))
