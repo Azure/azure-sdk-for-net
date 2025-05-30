@@ -27,6 +27,16 @@ namespace Azure.Messaging.ServiceBus
     public abstract class ServiceBusRetryPolicy
     {
         /// <summary>
+        ///   Calculates the number of retry attempts remaining.
+        /// </summary>
+        ///
+        /// <param name="currentTryCount">The current try count.</param>
+        ///
+        /// <returns>The number of retry attempts remaining.</returns>
+        ///
+        protected abstract int CalculateRemainingRetries(int currentTryCount);
+
+        /// <summary>
         /// Represents a state flag that is used to make sure the server busy value can be observed with
         /// reasonable fresh values without having to acquire a lock.
         /// </summary>
@@ -80,16 +90,6 @@ namespace Azure.Messaging.ServiceBus
         public abstract TimeSpan? CalculateRetryDelay(
             Exception lastException,
             int attemptCount);
-
-        /// <summary>
-        ///   Calculates the number of retry attempts remaining.
-        /// </summary>
-        ///
-        /// <param name="currentTryCount">The current try count.</param>
-        ///
-        /// <returns>The number of retry attempts remaining.</returns>
-        ///
-        protected abstract int CalculateRemainingRetries(int currentTryCount);
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
