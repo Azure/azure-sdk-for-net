@@ -14,14 +14,14 @@ namespace Azure.Communication.Sms
         /// <summary>
         /// The latest version of the Sms service.
         /// </summary>
-        private const ServiceVersion LatestSmsApiVersion = ServiceVersion.V2025_05_29_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2025_05_29_Preview;
 
         internal string ApiVersion { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SmsClientOptions"/>.
         /// </summary>
-        public SmsClientOptions(ServiceVersion version = LatestSmsApiVersion)
+        public SmsClientOptions(ServiceVersion version = LatestVersion)
         {
             ApiVersion = version switch
             {
@@ -44,7 +44,7 @@ namespace Azure.Communication.Sms
             /// <summary>
             /// The "2025-05-29-preview" of the Sms service.
             /// </summary>
-            V2025_05_29_Preview = 3
+            V2025_05_29_Preview = 2
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }
