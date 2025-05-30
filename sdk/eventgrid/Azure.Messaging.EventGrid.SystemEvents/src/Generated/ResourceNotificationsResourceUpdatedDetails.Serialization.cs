@@ -39,17 +39,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(ResourceType);
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(ResourceTags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
-                foreach (var item in Tags)
+                foreach (var item in ResourceTags)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteStringValue(item.Value);

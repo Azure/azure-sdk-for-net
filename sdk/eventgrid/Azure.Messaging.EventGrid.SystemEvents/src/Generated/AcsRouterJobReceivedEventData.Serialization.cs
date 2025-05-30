@@ -35,10 +35,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(JobStatus))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("jobStatus"u8);
-                writer.WriteStringValue(JobStatus.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(ClassificationPolicyId))
             {

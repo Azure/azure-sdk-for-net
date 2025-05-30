@@ -37,7 +37,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("etag"u8);
-            writer.WriteStringValue(Etag);
+            writer.WriteStringValue(ETag);
             writer.WritePropertyName("syncToken"u8);
             writer.WriteStringValue(SyncToken);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

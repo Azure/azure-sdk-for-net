@@ -39,10 +39,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (Optional.IsDefined(LabelOperator))
+            if (Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("labelOperator"u8);
-                writer.WriteStringValue(LabelOperator.Value.ToString());
+                writer.WriteStringValue(Operator.Value.ToString());
             }
             writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER

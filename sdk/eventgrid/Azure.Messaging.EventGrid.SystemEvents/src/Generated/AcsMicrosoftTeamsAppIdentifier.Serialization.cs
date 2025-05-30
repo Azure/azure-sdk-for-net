@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    internal partial class AcsMessageChannelEventError : IUtf8JsonSerializable, IJsonModel<AcsMessageChannelEventError>
+    public partial class AcsMicrosoftTeamsAppIdentifier : IUtf8JsonSerializable, IJsonModel<AcsMicrosoftTeamsAppIdentifier>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsMessageChannelEventError>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsMicrosoftTeamsAppIdentifier>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AcsMessageChannelEventError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AcsMicrosoftTeamsAppIdentifier>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,21 +28,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsMessageChannelEventError>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AcsMicrosoftTeamsAppIdentifier>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AcsMessageChannelEventError)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AcsMicrosoftTeamsAppIdentifier)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(ChannelCode))
+            writer.WritePropertyName("appId"u8);
+            writer.WriteStringValue(AppId);
+            if (Optional.IsDefined(Cloud))
             {
-                writer.WritePropertyName("channelCode"u8);
-                writer.WriteStringValue(ChannelCode);
-            }
-            if (Optional.IsDefined(ChannelMessage))
-            {
-                writer.WritePropertyName("channelMessage"u8);
-                writer.WriteStringValue(ChannelMessage);
+                writer.WritePropertyName("cloud"u8);
+                writer.WriteStringValue(Cloud.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -61,19 +58,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        AcsMessageChannelEventError IJsonModel<AcsMessageChannelEventError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AcsMicrosoftTeamsAppIdentifier IJsonModel<AcsMicrosoftTeamsAppIdentifier>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsMessageChannelEventError>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AcsMicrosoftTeamsAppIdentifier>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AcsMessageChannelEventError)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AcsMicrosoftTeamsAppIdentifier)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAcsMessageChannelEventError(document.RootElement, options);
+            return DeserializeAcsMicrosoftTeamsAppIdentifier(document.RootElement, options);
         }
 
-        internal static AcsMessageChannelEventError DeserializeAcsMessageChannelEventError(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AcsMicrosoftTeamsAppIdentifier DeserializeAcsMicrosoftTeamsAppIdentifier(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,20 +78,24 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            string channelCode = default;
-            string channelMessage = default;
+            string appId = default;
+            CommunicationCloudEnvironmentModel? cloud = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("channelCode"u8))
+                if (property.NameEquals("appId"u8))
                 {
-                    channelCode = property.Value.GetString();
+                    appId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("channelMessage"u8))
+                if (property.NameEquals("cloud"u8))
                 {
-                    channelMessage = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cloud = new CommunicationCloudEnvironmentModel(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -103,46 +104,46 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AcsMessageChannelEventError(channelCode, channelMessage, serializedAdditionalRawData);
+            return new AcsMicrosoftTeamsAppIdentifier(appId, cloud, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AcsMessageChannelEventError>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AcsMicrosoftTeamsAppIdentifier>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsMessageChannelEventError>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AcsMicrosoftTeamsAppIdentifier>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AcsMessageChannelEventError)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AcsMicrosoftTeamsAppIdentifier)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AcsMessageChannelEventError IPersistableModel<AcsMessageChannelEventError>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AcsMicrosoftTeamsAppIdentifier IPersistableModel<AcsMicrosoftTeamsAppIdentifier>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsMessageChannelEventError>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AcsMicrosoftTeamsAppIdentifier>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAcsMessageChannelEventError(document.RootElement, options);
+                        return DeserializeAcsMicrosoftTeamsAppIdentifier(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AcsMessageChannelEventError)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AcsMicrosoftTeamsAppIdentifier)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AcsMessageChannelEventError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AcsMicrosoftTeamsAppIdentifier>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AcsMessageChannelEventError FromResponse(Response response)
+        internal static AcsMicrosoftTeamsAppIdentifier FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAcsMessageChannelEventError(document.RootElement);
+            return DeserializeAcsMicrosoftTeamsAppIdentifier(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

@@ -44,9 +44,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
-                foreach (var item in Errors)
+                foreach (var item in ErrorsInternal)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<AcsRouterCommunicationError>(item, options);
                 }
                 writer.WriteEndArray();
             }

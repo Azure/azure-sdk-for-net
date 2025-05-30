@@ -54,10 +54,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url);
             }
-            if (Optional.IsDefined(Recursive))
+            if (Optional.IsDefined(RecursiveString))
             {
                 writer.WritePropertyName("recursive"u8);
-                writer.WriteStringValue(Recursive);
+                writer.WriteStringValue(RecursiveString);
             }
             if (Optional.IsDefined(Sequencer))
             {

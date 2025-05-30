@@ -43,10 +43,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("receivedTimeStamp"u8);
                 writer.WriteStringValue(ReceivedTimestamp.Value, "O");
             }
-            if (Optional.IsDefined(Error))
+            if (Optional.IsDefined(ErrorInternal))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                writer.WriteObjectValue<AcsMessageChannelEventError>(ErrorInternal, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

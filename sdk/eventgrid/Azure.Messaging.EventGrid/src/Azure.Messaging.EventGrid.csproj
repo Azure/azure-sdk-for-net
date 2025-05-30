@@ -22,6 +22,7 @@
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Azure.Messaging.EventGrid.SystemEvents\src\Azure.Messaging.EventGrid.SystemEvents.csproj" />
     <ProjectReference Include="..\EventGridSourceGenerator\src\Azure.Messaging.EventGrid.SourceGeneration.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 </Project>

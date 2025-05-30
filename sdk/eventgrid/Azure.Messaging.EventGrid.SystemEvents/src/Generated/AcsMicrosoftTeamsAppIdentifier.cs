@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Message Channel Event Error. </summary>
-    internal partial class AcsMessageChannelEventError
+    /// <summary> A Microsoft Teams application. </summary>
+    public partial class AcsMicrosoftTeamsAppIdentifier
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,35 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AcsMessageChannelEventError"/>. </summary>
-        internal AcsMessageChannelEventError()
+        /// <summary> Initializes a new instance of <see cref="AcsMicrosoftTeamsAppIdentifier"/>. </summary>
+        /// <param name="appId"> The Id of the Microsoft Teams application. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="appId"/> is null. </exception>
+        internal AcsMicrosoftTeamsAppIdentifier(string appId)
         {
+            Argument.AssertNotNull(appId, nameof(appId));
+
+            AppId = appId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsMessageChannelEventError"/>. </summary>
-        /// <param name="channelCode"> The channel error code. </param>
-        /// <param name="channelMessage"> The channel error message. </param>
+        /// <summary> Initializes a new instance of <see cref="AcsMicrosoftTeamsAppIdentifier"/>. </summary>
+        /// <param name="appId"> The Id of the Microsoft Teams application. </param>
+        /// <param name="cloud"> The cloud that the Microsoft Teams application belongs to. By default 'public' if missing. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AcsMessageChannelEventError(string channelCode, string channelMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AcsMicrosoftTeamsAppIdentifier(string appId, CommunicationCloudEnvironmentModel? cloud, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ChannelCode = channelCode;
-            ChannelMessage = channelMessage;
+            AppId = appId;
+            Cloud = cloud;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The channel error code. </summary>
-        public string ChannelCode { get; }
-        /// <summary> The channel error message. </summary>
-        public string ChannelMessage { get; }
+        /// <summary> Initializes a new instance of <see cref="AcsMicrosoftTeamsAppIdentifier"/> for deserialization. </summary>
+        internal AcsMicrosoftTeamsAppIdentifier()
+        {
+        }
+
+        /// <summary> The Id of the Microsoft Teams application. </summary>
+        public string AppId { get; }
+        /// <summary> The cloud that the Microsoft Teams application belongs to. By default 'public' if missing. </summary>
+        public CommunicationCloudEnvironmentModel? Cloud { get; }
     }
 }

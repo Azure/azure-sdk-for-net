@@ -124,7 +124,7 @@ namespace Azure.Messaging.EventGrid
             try
             {
                 JsonDocument requestDocument = JsonDocument.Parse(Data.ToMemory());
-                eventData = SystemEventExtensions.AsSystemEventData(EventType, requestDocument.RootElement);
+                eventData = null; //SystemEventExtensions.AsSystemEventData(EventType, requestDocument.RootElement);
                 return eventData != null;
             }
             catch

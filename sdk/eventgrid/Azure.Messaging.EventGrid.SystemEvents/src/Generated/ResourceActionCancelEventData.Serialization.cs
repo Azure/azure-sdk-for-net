@@ -70,22 +70,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStringValue(Status);
             }
             writer.WritePropertyName("authorization"u8);
-            writer.WriteObjectValue(Authorization, options);
+            AuthorizationJson.WriteTo(writer);
             writer.WritePropertyName("claims"u8);
-            writer.WriteStartObject();
-            foreach (var item in Claims)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
-            }
-            writer.WriteEndObject();
+            ClaimsJson.WriteTo(writer);
             if (Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
             }
             writer.WritePropertyName("httpRequest"u8);
-            writer.WriteObjectValue(HttpRequest, options);
+            HttpRequestJson.WriteTo(writer);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -130,10 +124,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string resourceUri = default;
             string operationName = default;
             string status = default;
-            ResourceAuthorization authorization = default;
-            IReadOnlyDictionary<string, string> claims = default;
+            JsonElement authorization = default;
+            JsonElement claims = default;
             string correlationId = default;
-            ResourceHttpRequest httpRequest = default;
+            JsonElement httpRequest = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,17 +169,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("authorization"u8))
                 {
-                    authorization = ResourceAuthorization.DeserializeResourceAuthorization(property.Value, options);
+                    authorization = property.Value.Clone();
                     continue;
                 }
                 if (property.NameEquals("claims"u8))
                 {
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    claims = dictionary;
+                    claims = property.Value.Clone();
                     continue;
                 }
                 if (property.NameEquals("correlationId"u8))
@@ -195,7 +184,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("httpRequest"u8))
                 {
-                    httpRequest = ResourceHttpRequest.DeserializeResourceHttpRequest(property.Value, options);
+                    httpRequest = property.Value.Clone();
                     continue;
                 }
                 if (options.Format != "W")

@@ -46,20 +46,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("recordingDurationMs"u8);
                 writer.WriteNumberValue(RecordingDurationMs.Value);
             }
-            if (Optional.IsDefined(RecordingContentType))
+            if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("recordingContentType"u8);
-                writer.WriteStringValue(RecordingContentType.Value.ToString());
+                writer.WriteStringValue(ContentType.Value.ToString());
             }
-            if (Optional.IsDefined(RecordingChannelKind))
+            if (Optional.IsDefined(ChannelType))
             {
                 writer.WritePropertyName("recordingChannelType"u8);
-                writer.WriteStringValue(RecordingChannelKind.Value.ToString());
+                writer.WriteStringValue(ChannelType.Value.ToString());
             }
-            if (Optional.IsDefined(RecordingFormatType))
+            if (Optional.IsDefined(FormatType))
             {
                 writer.WritePropertyName("recordingFormatType"u8);
-                writer.WriteStringValue(RecordingFormatType.Value.ToString());
+                writer.WriteStringValue(FormatType.Value.ToString());
             }
             if (Optional.IsDefined(SessionEndReason))
             {

@@ -51,36 +51,36 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceUpdatedDetails"/>. </summary>
         /// <param name="id"> id of the resource for which the event is being emitted. </param>
         /// <param name="name"> name of the resource for which the event is being emitted. </param>
-        /// <param name="type"> the type of the resource for which the event is being emitted. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="name"/> or <paramref name="type"/> is null. </exception>
-        internal ResourceNotificationsResourceUpdatedDetails(string id, string name, string type)
+        /// <param name="resourceType"> the type of the resource for which the event is being emitted. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="name"/> or <paramref name="resourceType"/> is null. </exception>
+        internal ResourceNotificationsResourceUpdatedDetails(string id, string name, string resourceType)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(type, nameof(type));
+            Argument.AssertNotNull(resourceType, nameof(resourceType));
 
             Id = id;
             Name = name;
-            Type = type;
-            Tags = new ChangeTrackingDictionary<string, string>();
+            ResourceType = resourceType;
+            ResourceTags = new ChangeTrackingDictionary<string, string>();
             Properties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceUpdatedDetails"/>. </summary>
         /// <param name="id"> id of the resource for which the event is being emitted. </param>
         /// <param name="name"> name of the resource for which the event is being emitted. </param>
-        /// <param name="type"> the type of the resource for which the event is being emitted. </param>
+        /// <param name="resourceType"> the type of the resource for which the event is being emitted. </param>
         /// <param name="location"> the location of the resource for which the event is being emitted. </param>
-        /// <param name="tags"> the tags on the resource for which the event is being emitted. </param>
+        /// <param name="resourceTags"> the tags on the resource for which the event is being emitted. </param>
         /// <param name="properties"> properties in the payload of the resource for which the event is being emitted. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceNotificationsResourceUpdatedDetails(string id, string name, string type, string location, IReadOnlyDictionary<string, string> tags, IReadOnlyDictionary<string, BinaryData> properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceNotificationsResourceUpdatedDetails(string id, string name, string resourceType, string location, IReadOnlyDictionary<string, string> resourceTags, IReadOnlyDictionary<string, BinaryData> properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
-            Type = type;
+            ResourceType = resourceType;
             Location = location;
-            Tags = tags;
+            ResourceTags = resourceTags;
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -89,17 +89,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         internal ResourceNotificationsResourceUpdatedDetails()
         {
         }
-
-        /// <summary> id of the resource for which the event is being emitted. </summary>
-        public string Id { get; }
-        /// <summary> name of the resource for which the event is being emitted. </summary>
-        public string Name { get; }
-        /// <summary> the type of the resource for which the event is being emitted. </summary>
-        public string Type { get; }
-        /// <summary> the location of the resource for which the event is being emitted. </summary>
-        public string Location { get; }
-        /// <summary> the tags on the resource for which the event is being emitted. </summary>
-        public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary>
         /// properties in the payload of the resource for which the event is being emitted
         /// <para>
