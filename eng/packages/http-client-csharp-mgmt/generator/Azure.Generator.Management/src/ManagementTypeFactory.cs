@@ -10,6 +10,7 @@ using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
@@ -38,7 +39,7 @@ namespace Azure.Generator.Management
             const string armNamespacePrefix = "Azure.ResourceManager.";
             if (PrimaryNamespace.StartsWith(armNamespacePrefix))
             {
-                return PrimaryNamespace[(armNamespacePrefix.Length + 1)..]; // TODO -- we need to call ToCleanName here to trim off invalid characters
+                return PrimaryNamespace[(armNamespacePrefix.Length + 1)..].ToIdentifierName();
             }
             return PrimaryNamespace;
         }
