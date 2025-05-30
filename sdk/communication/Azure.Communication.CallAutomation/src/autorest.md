@@ -7,10 +7,10 @@ From Folder that contains autorest.md, Run `dotnet msbuild /t:GenerateCode` to g
 
 ```yaml
 model-namespace: false
-tag: package-2025-05-15
+tag: package-2025-06-15
 
 require:
-    - https://github.com/Azure/azure-rest-api-specs/blob/150dc9528229b0e239a256a7c3b6c4c3afb1b6ff/specification/communication/data-plane/CallAutomation/readme.md
+    - https://github.com/Azure/azure-rest-api-specs/blob/6d7d3fc4315bbb2c446a9add65f8d47f20a85426/specification/communication/data-plane/CallAutomation/readme.md
 
 
 title: Azure Communication Services
