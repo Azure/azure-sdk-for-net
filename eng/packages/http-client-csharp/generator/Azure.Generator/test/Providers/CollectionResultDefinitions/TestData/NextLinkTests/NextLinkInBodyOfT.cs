@@ -24,7 +24,7 @@ namespace Samples
         /// <param name="client"> The CatClient client used to send requests. </param>
         /// <param name="nextPage"> The url of the next page of responses. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public CatClientGetCatsCollectionResultOfT(global::Samples.CatClient client, global::System.Uri nextPage, global::Azure.RequestContext context)
+        public CatClientGetCatsCollectionResultOfT(global::Samples.CatClient client, global::System.Uri nextPage, global::Azure.RequestContext context) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _nextPage = nextPage;
@@ -37,31 +37,32 @@ namespace Samples
         /// <returns> The pages of CatClientGetCatsCollectionResultOfT as an enumerable collection. </returns>
         public override global::System.Collections.Generic.IEnumerable<global::Azure.Page<global::Samples.Models.Cat>> AsPages(string continuationToken, int? pageSizeHint)
         {
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : _nextPage;
             do
             {
-                global::Azure.Response response = this.GetNextResponse(pageSizeHint, continuationToken);
+                global::Azure.Response response = this.GetNextResponse(pageSizeHint, nextPage);
                 if ((response is null))
                 {
                     yield break;
                 }
                 global::Samples.Models.Page responseWithType = ((global::Samples.Models.Page)response);
-                continuationToken = responseWithType.NextCat.AbsoluteUri;
-                yield return global::Azure.Page<global::Samples.Models.Cat>.FromValues(((global::System.Collections.Generic.IReadOnlyList<global::Samples.Models.Cat>)responseWithType.Cats), continuationToken, response);
+                nextPage = responseWithType.NextCat;
+                yield return global::Azure.Page<global::Samples.Models.Cat>.FromValues(((global::System.Collections.Generic.IReadOnlyList<global::Samples.Models.Cat>)responseWithType.Cats), nextPage?.AbsoluteUri, response);
             }
-            while (!string.IsNullOrEmpty(continuationToken));
+            while ((nextPage != null));
         }
 
-        /// <summary> Get response from next link. </summary>
+        /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
-        private global::Azure.Response GetNextResponse(int? pageSizeHint, string continuationToken)
+        /// <param name="nextLink"> The next link to use for the next page of results. </param>
+        private global::Azure.Response GetNextResponse(int? pageSizeHint, global::System.Uri nextLink)
         {
-            global::Azure.Core.HttpMessage message = _client.CreateGetCatsRequest(_nextPage, _context);
+            global::Azure.Core.HttpMessage message = _client.CreateGetCatsRequest(nextLink, _context);
             using global::Azure.Core.Pipeline.DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CatClient.GetCats");
             scope.Start();
             try
             {
-                _client.Pipeline.Send(message, _context.CancellationToken);
+                _client.Pipeline.Send(message, this.CancellationToken);
                 if ((message.Response.IsError && (_context.ErrorOptions != global::Azure.ErrorOptions.NoThrow)))
                 {
                     throw new global::Azure.RequestFailedException(message.Response);

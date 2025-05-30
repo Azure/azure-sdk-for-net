@@ -23,7 +23,7 @@ namespace BasicTypeSpec
         /// <param name="client"> The BasicTypeSpecClient client used to send requests. </param>
         /// <param name="token"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BasicTypeSpecClientListWithContinuationTokenCollectionResultOfT(BasicTypeSpecClient client, string token, RequestContext context)
+        public BasicTypeSpecClientListWithContinuationTokenCollectionResultOfT(BasicTypeSpecClient client, string token, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _token = token;
@@ -36,21 +36,22 @@ namespace BasicTypeSpec
         /// <returns> The pages of BasicTypeSpecClientListWithContinuationTokenCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ThingModel>> AsPages(string continuationToken, int? pageSizeHint)
         {
+            string nextPage = continuationToken ?? _token;
             do
             {
-                Response response = GetNextResponse(pageSizeHint, continuationToken);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
                 }
                 ListWithContinuationTokenResponse responseWithType = (ListWithContinuationTokenResponse)response;
-                continuationToken = responseWithType.NextToken;
-                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)responseWithType.Things, continuationToken, response);
+                nextPage = responseWithType.NextToken;
+                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)responseWithType.Things, nextPage, response);
             }
-            while (!string.IsNullOrEmpty(continuationToken));
+            while (!string.IsNullOrEmpty(nextPage));
         }
 
-        /// <summary> Get response from next link. </summary>
+        /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         private Response GetNextResponse(int? pageSizeHint, string continuationToken)
@@ -60,7 +61,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                _client.Pipeline.Send(message, _context.CancellationToken);
+                _client.Pipeline.Send(message, CancellationToken);
                 if (message.Response.IsError && _context.ErrorOptions != ErrorOptions.NoThrow)
                 {
                     throw new RequestFailedException(message.Response);

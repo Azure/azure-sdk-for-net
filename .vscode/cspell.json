@@ -120,6 +120,7 @@
     "kusto",
     "Kustomization",
     "Kustomizations",
+    "Liftr",
     "listsas",
     "lucene",
     "Magento",
@@ -935,7 +936,8 @@
         "Apac",
         "Latam",
         "Fips",
-        "Diffie"
+        "Diffie",
+        "Reimage"
       ]
     },
     {
