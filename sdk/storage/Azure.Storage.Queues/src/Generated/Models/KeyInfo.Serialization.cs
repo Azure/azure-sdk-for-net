@@ -11,7 +11,7 @@ using Azure.Storage.Common;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class KeyInfo : IXmlSerializable
+    internal partial class KeyInfo : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {

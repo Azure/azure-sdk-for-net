@@ -11,7 +11,7 @@ using Azure.Storage.Common;
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> Key information. </summary>
-    public partial class KeyInfo
+    internal partial class KeyInfo
     {
         /// <summary> Initializes a new instance of <see cref="KeyInfo"/>. </summary>
         /// <param name="expiry"> The date-time the key expires in ISO 8601 UTC time. </param>
