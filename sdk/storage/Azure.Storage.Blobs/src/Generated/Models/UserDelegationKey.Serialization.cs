@@ -22,6 +22,7 @@ namespace Azure.Storage.Blobs.Models
             string signedService = default;
             string signedVersion = default;
             string value = default;
+            string signedDelegatedUserTenantId = default;
             if (element.Element("SignedOid") is XElement signedOidElement)
             {
                 signedObjectId = (string)signedOidElement;
@@ -50,6 +51,10 @@ namespace Azure.Storage.Blobs.Models
             {
                 value = (string)valueElement;
             }
+            if (element.Element("SignedDelegatedUserTid") is XElement signedDelegatedUserTidElement)
+            {
+                signedDelegatedUserTenantId = (string)signedDelegatedUserTidElement;
+            }
             return new UserDelegationKey(
                 signedObjectId,
                 signedTenantId,
@@ -57,7 +62,8 @@ namespace Azure.Storage.Blobs.Models
                 signedExpiresOn,
                 signedService,
                 signedVersion,
-                value);
+                value,
+                signedDelegatedUserTenantId);
         }
     }
 }

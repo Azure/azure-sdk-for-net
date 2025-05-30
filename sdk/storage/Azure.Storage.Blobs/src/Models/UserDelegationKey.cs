@@ -51,6 +51,12 @@ namespace Azure.Storage.Blobs.Models
         public string Value { get; internal set; }
 
         /// <summary>
+        /// The date-time the key is active.
+        /// </summary>
+        [CodeGenMember("SignedDelegatedUserTid")]
+        public string SignedDelegatedUserTenantId { get; internal set; }
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         internal UserDelegationKey() { }
