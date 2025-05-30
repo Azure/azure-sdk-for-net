@@ -50,7 +50,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="enableSummarization"></param>
         public void setSummarizationSettings(bool enableSummarization)
         {
-            this.Summarization = new SummarizationSettings(enableSummarization);
+            this.SummarizationSettings = new SummarizationSettings(enableSummarization);
         }
     }
 }
