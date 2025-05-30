@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in GroupBy)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FrontDoorWebApplicationFirewallPolicyGroupByVariable>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStartArray();
             foreach (var item in MatchConditions)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<WebApplicationRuleMatchCondition>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("action"u8);

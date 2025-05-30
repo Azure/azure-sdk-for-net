@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(ImageArtifactProfile))
             {
                 writer.WritePropertyName("imageArtifactProfile"u8);
-                writer.WriteObjectValue(ImageArtifactProfile, options);
+                ((IJsonModel<ImageArtifactProfile>)ImageArtifactProfile).Write(writer, options);
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    imageArtifactProfile = ImageArtifactProfile.DeserializeImageArtifactProfile(property.Value, options);
+                    imageArtifactProfile = ModelSerializationExtensions.JsonDeserialize<ImageArtifactProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("artifactStore"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    artifactStore = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    artifactStore = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

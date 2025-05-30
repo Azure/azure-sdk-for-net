@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<HybridContainerServiceNetworkOperationError>)Error).Write(writer, options);
             }
             if (Optional.IsDefined(OperationId))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    error = HybridContainerServiceNetworkOperationError.DeserializeHybridContainerServiceNetworkOperationError(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<HybridContainerServiceNetworkOperationError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("operationId"u8))

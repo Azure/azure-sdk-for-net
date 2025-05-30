@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in Upgrades)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ProvisionedClusterPoolUpgradeProfileProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

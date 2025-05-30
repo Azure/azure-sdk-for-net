@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HealthcareApis
             writer.WritePropertyName("fhirServiceResourceId"u8);
             writer.WriteStringValue(FhirServiceResourceId);
             writer.WritePropertyName("fhirMapping"u8);
-            writer.WriteObjectValue(FhirMapping, options);
+            ((IJsonModel<HealthcareApisIotMappingProperties>)FhirMapping).Write(writer, options);
             writer.WriteEndObject();
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.HealthcareApis
                         }
                         if (property0.NameEquals("fhirMapping"u8))
                         {
-                            fhirMapping = HealthcareApisIotMappingProperties.DeserializeHealthcareApisIotMappingProperties(property0.Value, options);
+                            fhirMapping = ModelSerializationExtensions.JsonDeserialize<HealthcareApisIotMappingProperties>(property0.Value);
                             continue;
                         }
                     }

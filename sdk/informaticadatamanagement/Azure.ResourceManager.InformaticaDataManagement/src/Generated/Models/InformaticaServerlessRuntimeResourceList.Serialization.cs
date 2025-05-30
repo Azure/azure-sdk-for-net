@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             writer.WriteStartArray();
             foreach (var item in InformaticaRuntimeResources)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<InformaticaRuntimeResourceFetchMetadata>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

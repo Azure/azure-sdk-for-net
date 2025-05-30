@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WriteStartArray();
                 foreach (var item in ConfigurationParameters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<GuestConfigurationParameter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WriteStartArray();
                 foreach (var item in ConfigurationProtectedParameters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<GuestConfigurationParameter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 if (ConfigurationSetting != null)
                 {
                     writer.WritePropertyName("configurationSetting"u8);
-                    writer.WriteObjectValue(ConfigurationSetting, options);
+                    ((IJsonModel<LcmConfigurationSetting>)ConfigurationSetting).Write(writer, options);
                 }
                 else
                 {
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         configurationSetting = null;
                         continue;
                     }
-                    configurationSetting = LcmConfigurationSetting.DeserializeLcmConfigurationSetting(property.Value, options);
+                    configurationSetting = ModelSerializationExtensions.JsonDeserialize<LcmConfigurationSetting>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

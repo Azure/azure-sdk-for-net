@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Fabric.Models
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<FabricSku>)Sku).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Fabric.Models
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = FabricSku.DeserializeFabricSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<FabricSku>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

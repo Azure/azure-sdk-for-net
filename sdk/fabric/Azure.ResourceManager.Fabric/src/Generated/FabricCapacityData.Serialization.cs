@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Fabric
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<FabricCapacityProperties>)Properties).Write(writer, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<FabricSku>)Sku).Write(writer, options);
         }
 
         FabricCapacityData IJsonModel<FabricCapacityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.Fabric
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = FabricCapacityProperties.DeserializeFabricCapacityProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<FabricCapacityProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = FabricSku.DeserializeFabricSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<FabricSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Fabric
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

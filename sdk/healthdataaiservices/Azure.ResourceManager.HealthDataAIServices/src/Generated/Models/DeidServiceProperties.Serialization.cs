@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HealthDataAIServicesPrivateEndpointConnection>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

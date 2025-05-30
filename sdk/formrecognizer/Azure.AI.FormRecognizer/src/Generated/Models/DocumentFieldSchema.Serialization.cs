@@ -46,7 +46,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     {
                         continue;
                     }
-                    items = DeserializeDocumentFieldSchema(property.Value);
+                    items = ModelSerializationExtensions.JsonDeserialize<DocumentFieldSchema>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

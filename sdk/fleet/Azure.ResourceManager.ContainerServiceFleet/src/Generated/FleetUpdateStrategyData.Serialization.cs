@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             if (Optional.IsDefined(Strategy))
             {
                 writer.WritePropertyName("strategy"u8);
-                writer.WriteObjectValue(Strategy, options);
+                ((IJsonModel<ContainerServiceFleetUpdateRunStrategy>)Strategy).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                             {
                                 continue;
                             }
-                            strategy = ContainerServiceFleetUpdateRunStrategy.DeserializeContainerServiceFleetUpdateRunStrategy(property0.Value, options);
+                            strategy = ModelSerializationExtensions.JsonDeserialize<ContainerServiceFleetUpdateRunStrategy>(property0.Value);
                             continue;
                         }
                     }

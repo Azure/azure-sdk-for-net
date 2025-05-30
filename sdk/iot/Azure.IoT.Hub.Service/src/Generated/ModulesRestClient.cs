@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
@@ -140,7 +141,7 @@ namespace Azure.IoT.Hub.Service
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(deviceTwinInfo);
+            ((IJsonModel<TwinData>)deviceTwinInfo).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }
@@ -241,7 +242,7 @@ namespace Azure.IoT.Hub.Service
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(deviceTwinInfo);
+            ((IJsonModel<TwinData>)deviceTwinInfo).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }
@@ -503,7 +504,7 @@ namespace Azure.IoT.Hub.Service
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(moduleIdentity);
+            ((IJsonModel<ModuleIdentity>)moduleIdentity).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }
@@ -679,7 +680,7 @@ namespace Azure.IoT.Hub.Service
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(directMethodRequest);
+            ((IJsonModel<CloudToDeviceMethodRequest>)directMethodRequest).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }

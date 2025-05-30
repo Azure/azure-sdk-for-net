@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (GitRepository != null)
                 {
                     writer.WritePropertyName("gitRepository"u8);
-                    writer.WriteObjectValue(GitRepository, options);
+                    ((IJsonModel<KubernetesGitRepositoryUpdateContent>)GitRepository).Write(writer, options);
                 }
                 else
                 {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (Bucket != null)
                 {
                     writer.WritePropertyName("bucket"u8);
-                    writer.WriteObjectValue(Bucket, options);
+                    ((IJsonModel<KubernetesBucketUpdateContent>)Bucket).Write(writer, options);
                 }
                 else
                 {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (AzureBlob != null)
                 {
                     writer.WritePropertyName("azureBlob"u8);
-                    writer.WriteObjectValue(AzureBlob, options);
+                    ((IJsonModel<KubernetesAzureBlobUpdateContent>)AzureBlob).Write(writer, options);
                 }
                 else
                 {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     foreach (var item in Kustomizations)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value, options);
+                        ((IJsonModel<KustomizationUpdateContent>)item.Value).Write(writer, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                                 gitRepository = null;
                                 continue;
                             }
-                            gitRepository = KubernetesGitRepositoryUpdateContent.DeserializeKubernetesGitRepositoryUpdateContent(property0.Value, options);
+                            gitRepository = ModelSerializationExtensions.JsonDeserialize<KubernetesGitRepositoryUpdateContent>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("bucket"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                                 bucket = null;
                                 continue;
                             }
-                            bucket = KubernetesBucketUpdateContent.DeserializeKubernetesBucketUpdateContent(property0.Value, options);
+                            bucket = ModelSerializationExtensions.JsonDeserialize<KubernetesBucketUpdateContent>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("azureBlob"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                                 azureBlob = null;
                                 continue;
                             }
-                            azureBlob = KubernetesAzureBlobUpdateContent.DeserializeKubernetesAzureBlobUpdateContent(property0.Value, options);
+                            azureBlob = ModelSerializationExtensions.JsonDeserialize<KubernetesAzureBlobUpdateContent>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("kustomizations"u8))

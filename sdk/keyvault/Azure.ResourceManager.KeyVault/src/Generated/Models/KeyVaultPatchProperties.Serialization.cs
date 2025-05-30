@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<KeyVaultSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AccessPolicies))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in AccessPolicies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<KeyVaultAccessPolicy>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkRuleSet, options);
+                ((IJsonModel<KeyVaultNetworkRuleSet>)NetworkRuleSet).Write(writer, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    sku = KeyVaultSku.DeserializeKeyVaultSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<KeyVaultSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("accessPolicies"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    networkAcls = KeyVaultNetworkRuleSet.DeserializeKeyVaultNetworkRuleSet(property.Value, options);
+                    networkAcls = ModelSerializationExtensions.JsonDeserialize<KeyVaultNetworkRuleSet>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("publicNetworkAccess"u8))

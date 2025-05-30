@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 foreach (var item in ConfigurationGroupSchemaReferences)
                 {
                     writer.WritePropertyName(item.Key);
-                    JsonSerializer.Serialize(writer, item.Value);
+                    ((IJsonModel<WritableSubResource>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 foreach (var item in NfvisFromSite)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<NfviDetails>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceElementTemplates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceElementTemplate>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     Dictionary<string, WritableSubResource> dictionary = new Dictionary<string, WritableSubResource>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText()));
+                        dictionary.Add(property0.Name, ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value));
                     }
                     configurationGroupSchemaReferences = dictionary;
                     continue;

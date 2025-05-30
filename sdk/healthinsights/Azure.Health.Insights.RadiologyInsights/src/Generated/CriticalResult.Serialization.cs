@@ -39,7 +39,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Finding))
             {
                 writer.WritePropertyName("finding"u8);
-                writer.WriteObjectValue(Finding, options);
+                ((IJsonModel<FhirR4Observation>)Finding).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -95,7 +95,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    finding = FhirR4Observation.DeserializeFhirR4Observation(property.Value, options);
+                    finding = ModelSerializationExtensions.JsonDeserialize<FhirR4Observation>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

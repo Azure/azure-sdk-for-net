@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<ClusterInstanceViewProperties>)Properties).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = ClusterInstanceViewProperties.DeserializeClusterInstanceViewProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ClusterInstanceViewProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

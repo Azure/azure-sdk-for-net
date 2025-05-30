@@ -37,17 +37,17 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Low))
             {
                 writer.WritePropertyName("low"u8);
-                writer.WriteObjectValue(Low, options);
+                ((IJsonModel<FhirR4Quantity>)Low).Write(writer, options);
             }
             if (Optional.IsDefined(High))
             {
                 writer.WritePropertyName("high"u8);
-                writer.WriteObjectValue(High, options);
+                ((IJsonModel<FhirR4Quantity>)High).Write(writer, options);
             }
             if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteObjectValue(Type, options);
+                ((IJsonModel<FhirR4CodeableConcept>)Type).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AppliesTo))
             {
@@ -55,14 +55,14 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in AppliesTo)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FhirR4CodeableConcept>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Age))
             {
                 writer.WritePropertyName("age"u8);
-                writer.WriteObjectValue(Age, options);
+                ((IJsonModel<FhirR4Range>)Age).Write(writer, options);
             }
             if (Optional.IsDefined(Text))
             {
@@ -122,7 +122,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    low = FhirR4Quantity.DeserializeFhirR4Quantity(property.Value, options);
+                    low = ModelSerializationExtensions.JsonDeserialize<FhirR4Quantity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("high"u8))
@@ -131,7 +131,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    high = FhirR4Quantity.DeserializeFhirR4Quantity(property.Value, options);
+                    high = ModelSerializationExtensions.JsonDeserialize<FhirR4Quantity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -140,7 +140,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    type = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
+                    type = ModelSerializationExtensions.JsonDeserialize<FhirR4CodeableConcept>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("appliesTo"u8))
@@ -163,7 +163,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    age = FhirR4Range.DeserializeFhirR4Range(property.Value, options);
+                    age = ModelSerializationExtensions.JsonDeserialize<FhirR4Range>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("text"u8))

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             if (Optional.IsDefined(AwsCloudProfile))
             {
                 writer.WritePropertyName("awsCloudProfile"u8);
-                writer.WriteObjectValue(AwsCloudProfile, options);
+                ((IJsonModel<AwsCloudProfileUpdate>)AwsCloudProfile).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     {
                         continue;
                     }
-                    awsCloudProfile = AwsCloudProfileUpdate.DeserializeAwsCloudProfileUpdate(property.Value, options);
+                    awsCloudProfile = ModelSerializationExtensions.JsonDeserialize<AwsCloudProfileUpdate>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

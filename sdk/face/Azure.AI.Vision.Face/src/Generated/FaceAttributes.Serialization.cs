@@ -47,7 +47,7 @@ namespace Azure.AI.Vision.Face
             if (Optional.IsDefined(FacialHair))
             {
                 writer.WritePropertyName("facialHair"u8);
-                writer.WriteObjectValue(FacialHair, options);
+                ((IJsonModel<FacialHair>)FacialHair).Write(writer, options);
             }
             if (Optional.IsDefined(Glasses))
             {
@@ -57,17 +57,17 @@ namespace Azure.AI.Vision.Face
             if (Optional.IsDefined(HeadPose))
             {
                 writer.WritePropertyName("headPose"u8);
-                writer.WriteObjectValue(HeadPose, options);
+                ((IJsonModel<HeadPose>)HeadPose).Write(writer, options);
             }
             if (Optional.IsDefined(Hair))
             {
                 writer.WritePropertyName("hair"u8);
-                writer.WriteObjectValue(Hair, options);
+                ((IJsonModel<HairProperties>)Hair).Write(writer, options);
             }
             if (Optional.IsDefined(Occlusion))
             {
                 writer.WritePropertyName("occlusion"u8);
-                writer.WriteObjectValue(Occlusion, options);
+                ((IJsonModel<OcclusionProperties>)Occlusion).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Accessories))
             {
@@ -75,29 +75,29 @@ namespace Azure.AI.Vision.Face
                 writer.WriteStartArray();
                 foreach (var item in Accessories)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AccessoryItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Blur))
             {
                 writer.WritePropertyName("blur"u8);
-                writer.WriteObjectValue(Blur, options);
+                ((IJsonModel<BlurProperties>)Blur).Write(writer, options);
             }
             if (Optional.IsDefined(Exposure))
             {
                 writer.WritePropertyName("exposure"u8);
-                writer.WriteObjectValue(Exposure, options);
+                ((IJsonModel<ExposureProperties>)Exposure).Write(writer, options);
             }
             if (Optional.IsDefined(Noise))
             {
                 writer.WritePropertyName("noise"u8);
-                writer.WriteObjectValue(Noise, options);
+                ((IJsonModel<NoiseProperties>)Noise).Write(writer, options);
             }
             if (Optional.IsDefined(Mask))
             {
                 writer.WritePropertyName("mask"u8);
-                writer.WriteObjectValue(Mask, options);
+                ((IJsonModel<MaskProperties>)Mask).Write(writer, options);
             }
             if (Optional.IsDefined(QualityForRecognition))
             {
@@ -182,7 +182,7 @@ namespace Azure.AI.Vision.Face
                     {
                         continue;
                     }
-                    facialHair = FacialHair.DeserializeFacialHair(property.Value, options);
+                    facialHair = ModelSerializationExtensions.JsonDeserialize<FacialHair>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("glasses"u8))
@@ -200,7 +200,7 @@ namespace Azure.AI.Vision.Face
                     {
                         continue;
                     }
-                    headPose = HeadPose.DeserializeHeadPose(property.Value, options);
+                    headPose = ModelSerializationExtensions.JsonDeserialize<HeadPose>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("hair"u8))
@@ -209,7 +209,7 @@ namespace Azure.AI.Vision.Face
                     {
                         continue;
                     }
-                    hair = HairProperties.DeserializeHairProperties(property.Value, options);
+                    hair = ModelSerializationExtensions.JsonDeserialize<HairProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("occlusion"u8))
@@ -218,7 +218,7 @@ namespace Azure.AI.Vision.Face
                     {
                         continue;
                     }
-                    occlusion = OcclusionProperties.DeserializeOcclusionProperties(property.Value, options);
+                    occlusion = ModelSerializationExtensions.JsonDeserialize<OcclusionProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("accessories"u8))
@@ -241,7 +241,7 @@ namespace Azure.AI.Vision.Face
                     {
                         continue;
                     }
-                    blur = BlurProperties.DeserializeBlurProperties(property.Value, options);
+                    blur = ModelSerializationExtensions.JsonDeserialize<BlurProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("exposure"u8))
@@ -250,7 +250,7 @@ namespace Azure.AI.Vision.Face
                     {
                         continue;
                     }
-                    exposure = ExposureProperties.DeserializeExposureProperties(property.Value, options);
+                    exposure = ModelSerializationExtensions.JsonDeserialize<ExposureProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("noise"u8))
@@ -259,7 +259,7 @@ namespace Azure.AI.Vision.Face
                     {
                         continue;
                     }
-                    noise = NoiseProperties.DeserializeNoiseProperties(property.Value, options);
+                    noise = ModelSerializationExtensions.JsonDeserialize<NoiseProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mask"u8))
@@ -268,7 +268,7 @@ namespace Azure.AI.Vision.Face
                     {
                         continue;
                     }
-                    mask = MaskProperties.DeserializeMaskProperties(property.Value, options);
+                    mask = ModelSerializationExtensions.JsonDeserialize<MaskProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("qualityForRecognition"u8))

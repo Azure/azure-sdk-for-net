@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             writer.WritePropertyName("statusMessage"u8);
             writer.WriteStringValue(StatusMessage);
             writer.WritePropertyName("serverlessConfigProperties"u8);
-            writer.WriteObjectValue(ServerlessConfigProperties, options);
+            ((IJsonModel<InformaticaServerlessFetchConfigProperties>)ServerlessConfigProperties).Write(writer, options);
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 }
                 if (property.NameEquals("serverlessConfigProperties"u8))
                 {
-                    serverlessConfigProperties = InformaticaServerlessFetchConfigProperties.DeserializeInformaticaServerlessFetchConfigProperties(property.Value, options);
+                    serverlessConfigProperties = ModelSerializationExtensions.JsonDeserialize<InformaticaServerlessFetchConfigProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))

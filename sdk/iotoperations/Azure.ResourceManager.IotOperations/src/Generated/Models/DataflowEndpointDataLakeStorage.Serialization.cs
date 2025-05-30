@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
 
             writer.WritePropertyName("authentication"u8);
-            writer.WriteObjectValue(Authentication, options);
+            ((IJsonModel<DataflowEndpointDataLakeStorageAuthentication>)Authentication).Write(writer, options);
             writer.WritePropertyName("host"u8);
             writer.WriteStringValue(Host);
             if (Optional.IsDefined(Batching))
             {
                 writer.WritePropertyName("batching"u8);
-                writer.WriteObjectValue(Batching, options);
+                ((IJsonModel<IotOperationsBatchingConfig>)Batching).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 if (property.NameEquals("authentication"u8))
                 {
-                    authentication = DataflowEndpointDataLakeStorageAuthentication.DeserializeDataflowEndpointDataLakeStorageAuthentication(property.Value, options);
+                    authentication = ModelSerializationExtensions.JsonDeserialize<DataflowEndpointDataLakeStorageAuthentication>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("host"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    batching = IotOperationsBatchingConfig.DeserializeIotOperationsBatchingConfig(property.Value, options);
+                    batching = ModelSerializationExtensions.JsonDeserialize<IotOperationsBatchingConfig>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

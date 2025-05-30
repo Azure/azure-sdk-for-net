@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStartArray();
             foreach (var item in IPRules)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<IotHubNetworkRuleSetIPRule>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(AksClusterAgentPoolIdentityProfile))
             {
                 writer.WritePropertyName("aksClusterAgentPoolIdentityProfile"u8);
-                writer.WriteObjectValue(AksClusterAgentPoolIdentityProfile, options);
+                ((IJsonModel<HDInsightIdentityProfile>)AksClusterAgentPoolIdentityProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AksVersion))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    aksClusterAgentPoolIdentityProfile = HDInsightIdentityProfile.DeserializeHDInsightIdentityProfile(property.Value, options);
+                    aksClusterAgentPoolIdentityProfile = ModelSerializationExtensions.JsonDeserialize<HDInsightIdentityProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("aksVersion"u8))

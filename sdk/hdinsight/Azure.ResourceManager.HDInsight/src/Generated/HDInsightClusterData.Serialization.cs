@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.HDInsight
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<HDInsightClusterProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HDInsight
                     {
                         continue;
                     }
-                    properties = HDInsightClusterProperties.DeserializeHDInsightClusterProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<HDInsightClusterProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.HDInsight
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.HDInsight
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

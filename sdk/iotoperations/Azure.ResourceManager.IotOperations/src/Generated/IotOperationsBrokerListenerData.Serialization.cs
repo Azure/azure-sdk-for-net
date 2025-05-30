@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.IotOperations
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<IotOperationsBrokerListenerProperties>)Properties).Write(writer, options);
             }
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation, options);
+            ((IJsonModel<IotOperationsExtendedLocation>)ExtendedLocation).Write(writer, options);
         }
 
         IotOperationsBrokerListenerData IJsonModel<IotOperationsBrokerListenerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.IotOperations
                     {
                         continue;
                     }
-                    properties = IotOperationsBrokerListenerProperties.DeserializeIotOperationsBrokerListenerProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<IotOperationsBrokerListenerProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = IotOperationsExtendedLocation.DeserializeIotOperationsExtendedLocation(property.Value, options);
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<IotOperationsExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.IotOperations
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

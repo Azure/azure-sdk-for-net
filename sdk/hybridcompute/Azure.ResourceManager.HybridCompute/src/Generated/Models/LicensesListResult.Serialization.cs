@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<HybridComputeLicenseData>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))

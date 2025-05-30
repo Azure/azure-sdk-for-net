@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in IPAddresses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HybridComputeIPAddress>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

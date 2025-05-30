@@ -35,7 +35,7 @@ namespace Azure.AI.Vision.Face
             }
 
             writer.WritePropertyName("verifyImage"u8);
-            writer.WriteObjectValue(VerifyImage, options);
+            ((IJsonModel<LivenessWithVerifyImage>)VerifyImage).Write(writer, options);
             writer.WritePropertyName("matchConfidence"u8);
             writer.WriteNumberValue(MatchConfidence);
             writer.WritePropertyName("isIdentical"u8);
@@ -86,7 +86,7 @@ namespace Azure.AI.Vision.Face
             {
                 if (property.NameEquals("verifyImage"u8))
                 {
-                    verifyImage = LivenessWithVerifyImage.DeserializeLivenessWithVerifyImage(property.Value, options);
+                    verifyImage = ModelSerializationExtensions.JsonDeserialize<LivenessWithVerifyImage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("matchConfidence"u8))

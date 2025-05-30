@@ -58,24 +58,24 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(ClusterPoolProfile))
             {
                 writer.WritePropertyName("clusterPoolProfile"u8);
-                writer.WriteObjectValue(ClusterPoolProfile, options);
+                ((IJsonModel<ClusterPoolProfile>)ClusterPoolProfile).Write(writer, options);
             }
             writer.WritePropertyName("computeProfile"u8);
-            writer.WriteObjectValue(ComputeProfile, options);
+            ((IJsonModel<ClusterPoolComputeProfile>)ComputeProfile).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(AksClusterProfile))
             {
                 writer.WritePropertyName("aksClusterProfile"u8);
-                writer.WriteObjectValue(AksClusterProfile, options);
+                ((IJsonModel<AksClusterProfile>)AksClusterProfile).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile, options);
+                ((IJsonModel<ClusterPoolNetworkProfile>)NetworkProfile).Write(writer, options);
             }
             if (Optional.IsDefined(LogAnalyticsProfile))
             {
                 writer.WritePropertyName("logAnalyticsProfile"u8);
-                writer.WriteObjectValue(LogAnalyticsProfile, options);
+                ((IJsonModel<ClusterPoolLogAnalyticsProfile>)LogAnalyticsProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -163,12 +163,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    clusterPoolProfile = ClusterPoolProfile.DeserializeClusterPoolProfile(property.Value, options);
+                    clusterPoolProfile = ModelSerializationExtensions.JsonDeserialize<ClusterPoolProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("computeProfile"u8))
                 {
-                    computeProfile = ClusterPoolComputeProfile.DeserializeClusterPoolComputeProfile(property.Value, options);
+                    computeProfile = ModelSerializationExtensions.JsonDeserialize<ClusterPoolComputeProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("aksClusterProfile"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    aksClusterProfile = AksClusterProfile.DeserializeAksClusterProfile(property.Value, options);
+                    aksClusterProfile = ModelSerializationExtensions.JsonDeserialize<AksClusterProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("networkProfile"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    networkProfile = ClusterPoolNetworkProfile.DeserializeClusterPoolNetworkProfile(property.Value, options);
+                    networkProfile = ModelSerializationExtensions.JsonDeserialize<ClusterPoolNetworkProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("logAnalyticsProfile"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    logAnalyticsProfile = ClusterPoolLogAnalyticsProfile.DeserializeClusterPoolLogAnalyticsProfile(property.Value, options);
+                    logAnalyticsProfile = ModelSerializationExtensions.JsonDeserialize<ClusterPoolLogAnalyticsProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))

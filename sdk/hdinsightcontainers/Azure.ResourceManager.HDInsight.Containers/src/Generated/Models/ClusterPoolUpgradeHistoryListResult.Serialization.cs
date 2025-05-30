@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ClusterPoolUpgradeHistory>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))

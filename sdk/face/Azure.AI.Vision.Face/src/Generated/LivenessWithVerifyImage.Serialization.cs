@@ -35,7 +35,7 @@ namespace Azure.AI.Vision.Face
             }
 
             writer.WritePropertyName("faceRectangle"u8);
-            writer.WriteObjectValue(FaceRectangle, options);
+            ((IJsonModel<FaceRectangle>)FaceRectangle).Write(writer, options);
             writer.WritePropertyName("qualityForRecognition"u8);
             writer.WriteStringValue(QualityForRecognition.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -83,7 +83,7 @@ namespace Azure.AI.Vision.Face
             {
                 if (property.NameEquals("faceRectangle"u8))
                 {
-                    faceRectangle = FaceRectangle.DeserializeFaceRectangle(property.Value, options);
+                    faceRectangle = ModelSerializationExtensions.JsonDeserialize<FaceRectangle>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("qualityForRecognition"u8))

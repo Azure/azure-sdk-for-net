@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             if (Optional.IsDefined(SubscriberQueueLimit))
             {
                 writer.WritePropertyName("subscriberQueueLimit"u8);
-                writer.WriteObjectValue(SubscriberQueueLimit, options);
+                ((IJsonModel<SubscriberQueueLimit>)SubscriberQueueLimit).Write(writer, options);
             }
             if (Optional.IsDefined(MaxReceiveMaximum))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    subscriberQueueLimit = SubscriberQueueLimit.DeserializeSubscriberQueueLimit(property.Value, options);
+                    subscriberQueueLimit = ModelSerializationExtensions.JsonDeserialize<SubscriberQueueLimit>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("maxReceiveMaximum"u8))

@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(WindowsParameters))
             {
                 writer.WritePropertyName("windowsParameters"u8);
-                writer.WriteObjectValue(WindowsParameters, options);
+                ((IJsonModel<HybridComputeWindowsParameters>)WindowsParameters).Write(writer, options);
             }
             if (Optional.IsDefined(LinuxParameters))
             {
                 writer.WritePropertyName("linuxParameters"u8);
-                writer.WriteObjectValue(LinuxParameters, options);
+                ((IJsonModel<HybridComputeLinuxParameters>)LinuxParameters).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    windowsParameters = HybridComputeWindowsParameters.DeserializeHybridComputeWindowsParameters(property.Value, options);
+                    windowsParameters = ModelSerializationExtensions.JsonDeserialize<HybridComputeWindowsParameters>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("linuxParameters"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    linuxParameters = HybridComputeLinuxParameters.DeserializeHybridComputeLinuxParameters(property.Value, options);
+                    linuxParameters = ModelSerializationExtensions.JsonDeserialize<HybridComputeLinuxParameters>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

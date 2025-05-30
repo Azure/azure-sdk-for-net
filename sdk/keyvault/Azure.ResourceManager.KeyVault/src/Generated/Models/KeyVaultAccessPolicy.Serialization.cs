@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStringValue(ApplicationId.Value);
             }
             writer.WritePropertyName("permissions"u8);
-            writer.WriteObjectValue(Permissions, options);
+            ((IJsonModel<IdentityAccessPermissions>)Permissions).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("permissions"u8))
                 {
-                    permissions = IdentityAccessPermissions.DeserializeIdentityAccessPermissions(property.Value, options);
+                    permissions = ModelSerializationExtensions.JsonDeserialize<IdentityAccessPermissions>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

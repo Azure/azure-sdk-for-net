@@ -39,7 +39,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Period))
             {
                 writer.WritePropertyName("period"u8);
-                writer.WriteObjectValue(Period, options);
+                ((IJsonModel<TimePeriod>)Period).Write(writer, options);
             }
             if (Optional.IsDefined(Class))
             {
@@ -101,7 +101,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    period = TimePeriod.DeserializeTimePeriod(property.Value, options);
+                    period = ModelSerializationExtensions.JsonDeserialize<TimePeriod>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("class"u8))

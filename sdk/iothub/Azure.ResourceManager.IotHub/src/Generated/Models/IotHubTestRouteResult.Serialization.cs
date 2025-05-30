@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue(Details, options);
+                ((IJsonModel<IotHubTestRouteResultDetails>)Details).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    details = IotHubTestRouteResultDetails.DeserializeIotHubTestRouteResultDetails(property.Value, options);
+                    details = ModelSerializationExtensions.JsonDeserialize<IotHubTestRouteResultDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<IotHubCertificatePropertiesWithNonce>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    properties = IotHubCertificatePropertiesWithNonce.DeserializeIotHubCertificatePropertiesWithNonce(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<IotHubCertificatePropertiesWithNonce>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

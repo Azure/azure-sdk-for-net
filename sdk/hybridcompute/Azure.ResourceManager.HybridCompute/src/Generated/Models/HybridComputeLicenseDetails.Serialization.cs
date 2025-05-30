@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in VolumeLicenseDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VolumeLicenseDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -40,7 +40,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteStartArray();
             foreach (var item in Inferences)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<RadiologyInsightsInference>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

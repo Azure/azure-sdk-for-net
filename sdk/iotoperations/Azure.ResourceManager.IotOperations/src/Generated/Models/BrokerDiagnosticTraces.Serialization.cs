@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             if (Optional.IsDefined(SelfTracing))
             {
                 writer.WritePropertyName("selfTracing"u8);
-                writer.WriteObjectValue(SelfTracing, options);
+                ((IJsonModel<DiagnosticSelfTracing>)SelfTracing).Write(writer, options);
             }
             if (Optional.IsDefined(SpanChannelCapacity))
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    selfTracing = DiagnosticSelfTracing.DeserializeDiagnosticSelfTracing(property.Value, options);
+                    selfTracing = ModelSerializationExtensions.JsonDeserialize<DiagnosticSelfTracing>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("spanChannelCapacity"u8))

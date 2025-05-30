@@ -130,7 +130,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in FacilityLocations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<GeographicLocation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -140,7 +140,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in FacilityAreas)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<GeographicArea>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

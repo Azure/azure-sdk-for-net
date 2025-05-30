@@ -40,7 +40,7 @@ namespace Azure.AI.Vision.Face
             writer.WriteStartArray();
             foreach (var item in Candidates)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<FaceIdentificationCandidate>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

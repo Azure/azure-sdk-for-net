@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (options.Format != "W" && Optional.IsDefined(DeploymentStatus))
             {
                 writer.WritePropertyName("deploymentStatus"u8);
-                writer.WriteObjectValue(DeploymentStatus, options);
+                ((IJsonModel<DeploymentStatusProperties>)DeploymentStatus).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    deploymentStatus = DeploymentStatusProperties.DeserializeDeploymentStatusProperties(property.Value, options);
+                    deploymentStatus = ModelSerializationExtensions.JsonDeserialize<DeploymentStatusProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

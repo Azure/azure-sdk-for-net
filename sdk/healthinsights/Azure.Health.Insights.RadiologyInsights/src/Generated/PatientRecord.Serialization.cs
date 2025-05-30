@@ -39,7 +39,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue(Details, options);
+                ((IJsonModel<PatientDetails>)Details).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Encounters))
             {
@@ -47,7 +47,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Encounters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PatientEncounter>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in PatientDocuments)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PatientDocument>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -117,7 +117,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    details = PatientDetails.DeserializePatientDetails(property.Value, options);
+                    details = ModelSerializationExtensions.JsonDeserialize<PatientDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("encounters"u8))

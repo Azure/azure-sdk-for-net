@@ -46,24 +46,24 @@ namespace Azure.ResourceManager.FrontDoor
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<FrontDoorSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PolicySettings))
             {
                 writer.WritePropertyName("policySettings"u8);
-                writer.WriteObjectValue(PolicySettings, options);
+                ((IJsonModel<FrontDoorWebApplicationFirewallPolicySettings>)PolicySettings).Write(writer, options);
             }
             if (Optional.IsDefined(CustomRuleList))
             {
                 writer.WritePropertyName("customRules"u8);
-                writer.WriteObjectValue(CustomRuleList, options);
+                ((IJsonModel<CustomRuleList>)CustomRuleList).Write(writer, options);
             }
             if (Optional.IsDefined(ManagedRules))
             {
                 writer.WritePropertyName("managedRules"u8);
-                writer.WriteObjectValue(ManagedRules, options);
+                ((IJsonModel<ManagedRuleSetList>)ManagedRules).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(FrontendEndpointLinks))
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in FrontendEndpointLinks)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in RoutingRuleLinks)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in SecurityPolicyLinks)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.FrontDoor
                     {
                         continue;
                     }
-                    sku = FrontDoorSku.DeserializeFrontDoorSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<FrontDoorSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.FrontDoor
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.FrontDoor
                             {
                                 continue;
                             }
-                            policySettings = FrontDoorWebApplicationFirewallPolicySettings.DeserializeFrontDoorWebApplicationFirewallPolicySettings(property0.Value, options);
+                            policySettings = ModelSerializationExtensions.JsonDeserialize<FrontDoorWebApplicationFirewallPolicySettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("customRules"u8))
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.FrontDoor
                             {
                                 continue;
                             }
-                            customRules = CustomRuleList.DeserializeCustomRuleList(property0.Value, options);
+                            customRules = ModelSerializationExtensions.JsonDeserialize<CustomRuleList>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("managedRules"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.FrontDoor
                             {
                                 continue;
                             }
-                            managedRules = ManagedRuleSetList.DeserializeManagedRuleSetList(property0.Value, options);
+                            managedRules = ModelSerializationExtensions.JsonDeserialize<ManagedRuleSetList>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("frontendEndpointLinks"u8))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.FrontDoor
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<SubResource>(item));
                             }
                             frontendEndpointLinks = array;
                             continue;
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.FrontDoor
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<SubResource>(item));
                             }
                             routingRuleLinks = array;
                             continue;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.FrontDoor
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<SubResource>(item));
                             }
                             securityPolicyLinks = array;
                             continue;

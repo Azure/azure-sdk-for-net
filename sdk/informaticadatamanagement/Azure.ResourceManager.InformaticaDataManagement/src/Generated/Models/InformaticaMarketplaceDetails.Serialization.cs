@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 writer.WriteStringValue(MarketplaceSubscriptionId);
             }
             writer.WritePropertyName("offerDetails"u8);
-            writer.WriteObjectValue(OfferDetails, options);
+            ((IJsonModel<InformaticaOfferDetails>)OfferDetails).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 }
                 if (property.NameEquals("offerDetails"u8))
                 {
-                    offerDetails = InformaticaOfferDetails.DeserializeInformaticaOfferDetails(property.Value, options);
+                    offerDetails = ModelSerializationExtensions.JsonDeserialize<InformaticaOfferDetails>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

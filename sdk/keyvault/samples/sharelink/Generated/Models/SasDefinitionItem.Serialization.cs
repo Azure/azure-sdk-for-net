@@ -40,7 +40,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     {
                         continue;
                     }
-                    attributes = SasDefinitionAttributes.DeserializeSasDefinitionAttributes(property.Value);
+                    attributes = ModelSerializationExtensions.JsonDeserialize<SasDefinitionAttributes>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

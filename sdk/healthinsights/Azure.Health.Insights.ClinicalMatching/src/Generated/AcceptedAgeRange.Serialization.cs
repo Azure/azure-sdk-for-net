@@ -37,12 +37,12 @@ namespace Azure.Health.Insights.ClinicalMatching
             if (Optional.IsDefined(MinimumAge))
             {
                 writer.WritePropertyName("minimumAge"u8);
-                writer.WriteObjectValue(MinimumAge, options);
+                ((IJsonModel<AcceptedAge>)MinimumAge).Write(writer, options);
             }
             if (Optional.IsDefined(MaximumAge))
             {
                 writer.WritePropertyName("maximumAge"u8);
-                writer.WriteObjectValue(MaximumAge, options);
+                ((IJsonModel<AcceptedAge>)MaximumAge).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     {
                         continue;
                     }
-                    minimumAge = AcceptedAge.DeserializeAcceptedAge(property.Value, options);
+                    minimumAge = ModelSerializationExtensions.JsonDeserialize<AcceptedAge>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("maximumAge"u8))
@@ -102,7 +102,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     {
                         continue;
                     }
-                    maximumAge = AcceptedAge.DeserializeAcceptedAge(property.Value, options);
+                    maximumAge = ModelSerializationExtensions.JsonDeserialize<AcceptedAge>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -77,7 +77,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in Contacts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContactDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -87,7 +87,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in Facilities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ClinicalTrialResearchFacility>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

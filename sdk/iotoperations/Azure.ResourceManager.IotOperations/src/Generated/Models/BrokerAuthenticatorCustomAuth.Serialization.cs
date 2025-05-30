@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
 
             writer.WritePropertyName("x509"u8);
-            writer.WriteObjectValue(X509, options);
+            ((IJsonModel<X509ManualCertificate>)X509).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 if (property.NameEquals("x509"u8))
                 {
-                    x509 = X509ManualCertificate.DeserializeX509ManualCertificate(property.Value, options);
+                    x509 = ModelSerializationExtensions.JsonDeserialize<X509ManualCertificate>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

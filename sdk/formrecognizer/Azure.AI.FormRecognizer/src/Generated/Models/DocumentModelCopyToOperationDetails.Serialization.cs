@@ -38,7 +38,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     {
                         continue;
                     }
-                    result = DocumentModelDetails.DeserializeDocumentModelDetails(property.Value);
+                    result = ModelSerializationExtensions.JsonDeserialize<DocumentModelDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("operationId"u8))

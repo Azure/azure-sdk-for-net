@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(InfraVnetProfile))
             {
                 writer.WritePropertyName("infraVnetProfile"u8);
-                writer.WriteObjectValue(InfraVnetProfile, options);
+                ((IJsonModel<InfraVnetProfile>)InfraVnetProfile).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(VipPool))
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in VipPool)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<KubernetesVirtualIPItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in VmipPool)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VirtualMachineIPItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<HybridContainerServiceNetworkStatus>)Status).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    infraVnetProfile = InfraVnetProfile.DeserializeInfraVnetProfile(property.Value, options);
+                    infraVnetProfile = ModelSerializationExtensions.JsonDeserialize<InfraVnetProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vipPool"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    status = HybridContainerServiceNetworkStatus.DeserializeHybridContainerServiceNetworkStatus(property.Value, options);
+                    status = ModelSerializationExtensions.JsonDeserialize<HybridContainerServiceNetworkStatus>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

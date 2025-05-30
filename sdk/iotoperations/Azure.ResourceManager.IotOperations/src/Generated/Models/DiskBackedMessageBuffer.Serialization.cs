@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.IotOperations.Models
             if (Optional.IsDefined(EphemeralVolumeClaimSpec))
             {
                 writer.WritePropertyName("ephemeralVolumeClaimSpec"u8);
-                writer.WriteObjectValue(EphemeralVolumeClaimSpec, options);
+                ((IJsonModel<VolumeClaimSpec>)EphemeralVolumeClaimSpec).Write(writer, options);
             }
             if (Optional.IsDefined(PersistentVolumeClaimSpec))
             {
                 writer.WritePropertyName("persistentVolumeClaimSpec"u8);
-                writer.WriteObjectValue(PersistentVolumeClaimSpec, options);
+                ((IJsonModel<VolumeClaimSpec>)PersistentVolumeClaimSpec).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    ephemeralVolumeClaimSpec = VolumeClaimSpec.DeserializeVolumeClaimSpec(property.Value, options);
+                    ephemeralVolumeClaimSpec = ModelSerializationExtensions.JsonDeserialize<VolumeClaimSpec>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("persistentVolumeClaimSpec"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    persistentVolumeClaimSpec = VolumeClaimSpec.DeserializeVolumeClaimSpec(property.Value, options);
+                    persistentVolumeClaimSpec = ModelSerializationExtensions.JsonDeserialize<VolumeClaimSpec>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

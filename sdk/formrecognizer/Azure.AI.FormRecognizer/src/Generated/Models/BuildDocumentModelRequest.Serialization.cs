@@ -27,12 +27,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             if (Optional.IsDefined(AzureBlobSource))
             {
                 writer.WritePropertyName("azureBlobSource"u8);
-                writer.WriteObjectValue(AzureBlobSource);
+                JsonSerializer.Serialize(writer, AzureBlobSource);
             }
             if (Optional.IsDefined(AzureBlobFileListSource))
             {
                 writer.WritePropertyName("azureBlobFileListSource"u8);
-                writer.WriteObjectValue(AzureBlobFileListSource);
+                JsonSerializer.Serialize(writer, AzureBlobFileListSource);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

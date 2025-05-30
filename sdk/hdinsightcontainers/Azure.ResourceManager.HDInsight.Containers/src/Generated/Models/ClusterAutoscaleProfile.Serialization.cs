@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(ScheduleBasedConfig))
             {
                 writer.WritePropertyName("scheduleBasedConfig"u8);
-                writer.WriteObjectValue(ScheduleBasedConfig, options);
+                ((IJsonModel<ScheduleBasedConfig>)ScheduleBasedConfig).Write(writer, options);
             }
             if (Optional.IsDefined(LoadBasedConfig))
             {
                 writer.WritePropertyName("loadBasedConfig"u8);
-                writer.WriteObjectValue(LoadBasedConfig, options);
+                ((IJsonModel<LoadBasedConfig>)LoadBasedConfig).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    scheduleBasedConfig = ScheduleBasedConfig.DeserializeScheduleBasedConfig(property.Value, options);
+                    scheduleBasedConfig = ModelSerializationExtensions.JsonDeserialize<ScheduleBasedConfig>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("loadBasedConfig"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    loadBasedConfig = LoadBasedConfig.DeserializeLoadBasedConfig(property.Value, options);
+                    loadBasedConfig = ModelSerializationExtensions.JsonDeserialize<LoadBasedConfig>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             if (Optional.IsDefined(ServerlessRuntimeNetworkProfile))
             {
                 writer.WritePropertyName("serverlessRuntimeNetworkProfile"u8);
-                writer.WriteObjectValue(ServerlessRuntimeNetworkProfile, options);
+                ((IJsonModel<ServerlessRuntimeNetworkProfile>)ServerlessRuntimeNetworkProfile).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AdvancedCustomProperties))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in AdvancedCustomProperties)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AdvancedCustomProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             if (Optional.IsDefined(ServerlessRuntimeConfig))
             {
                 writer.WritePropertyName("serverlessRuntimeConfig"u8);
-                writer.WriteObjectValue(ServerlessRuntimeConfig, options);
+                ((IJsonModel<ServerlessRuntimeConfigProperties>)ServerlessRuntimeConfig).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ServerlessRuntimeTags))
             {
@@ -97,14 +97,14 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in ServerlessRuntimeTags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ServerlessRuntimeTag>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ServerlessRuntimeUserContextProperties))
             {
                 writer.WritePropertyName("serverlessRuntimeUserContextProperties"u8);
-                writer.WriteObjectValue(ServerlessRuntimeUserContextProperties, options);
+                ((IJsonModel<ServerlessRuntimeUserContextProperties>)ServerlessRuntimeUserContextProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     {
                         continue;
                     }
-                    serverlessRuntimeNetworkProfile = ServerlessRuntimeNetworkProfile.DeserializeServerlessRuntimeNetworkProfile(property.Value, options);
+                    serverlessRuntimeNetworkProfile = ModelSerializationExtensions.JsonDeserialize<ServerlessRuntimeNetworkProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("advancedCustomProperties"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     {
                         continue;
                     }
-                    serverlessRuntimeConfig = ServerlessRuntimeConfigProperties.DeserializeServerlessRuntimeConfigProperties(property.Value, options);
+                    serverlessRuntimeConfig = ModelSerializationExtensions.JsonDeserialize<ServerlessRuntimeConfigProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("serverlessRuntimeTags"u8))
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     {
                         continue;
                     }
-                    serverlessRuntimeUserContextProperties = ServerlessRuntimeUserContextProperties.DeserializeServerlessRuntimeUserContextProperties(property.Value, options);
+                    serverlessRuntimeUserContextProperties = ModelSerializationExtensions.JsonDeserialize<ServerlessRuntimeUserContextProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

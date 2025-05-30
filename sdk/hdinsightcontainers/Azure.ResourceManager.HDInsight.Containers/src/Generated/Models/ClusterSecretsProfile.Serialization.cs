@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ClusterSecretReference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

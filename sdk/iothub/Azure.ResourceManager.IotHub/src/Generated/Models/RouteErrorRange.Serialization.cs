@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Start))
             {
                 writer.WritePropertyName("start"u8);
-                writer.WriteObjectValue(Start, options);
+                ((IJsonModel<RouteErrorPosition>)Start).Write(writer, options);
             }
             if (Optional.IsDefined(End))
             {
                 writer.WritePropertyName("end"u8);
-                writer.WriteObjectValue(End, options);
+                ((IJsonModel<RouteErrorPosition>)End).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    start = RouteErrorPosition.DeserializeRouteErrorPosition(property.Value, options);
+                    start = ModelSerializationExtensions.JsonDeserialize<RouteErrorPosition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("end"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    end = RouteErrorPosition.DeserializeRouteErrorPosition(property.Value, options);
+                    end = ModelSerializationExtensions.JsonDeserialize<RouteErrorPosition>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

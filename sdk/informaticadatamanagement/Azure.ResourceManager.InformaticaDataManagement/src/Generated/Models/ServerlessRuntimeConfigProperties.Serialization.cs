@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in CdiConfigProps)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CdiConfigProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in CdieConfigProps)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CdiConfigProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

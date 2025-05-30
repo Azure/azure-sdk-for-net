@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationErrors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HDInsightClusterValidationErrorInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationWarnings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HDInsightClusterValidationErrorInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in AaddsResourcesDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HDInsightClusterAaddsDetail>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

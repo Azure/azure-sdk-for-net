@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ClusterPatchProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    properties = ClusterPatchProperties.DeserializeClusterPatchProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ClusterPatchProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

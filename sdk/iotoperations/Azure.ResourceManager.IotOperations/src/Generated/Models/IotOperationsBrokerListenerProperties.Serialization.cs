@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             writer.WriteStartArray();
             foreach (var item in Ports)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<BrokerListenerPort>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(ServiceType))

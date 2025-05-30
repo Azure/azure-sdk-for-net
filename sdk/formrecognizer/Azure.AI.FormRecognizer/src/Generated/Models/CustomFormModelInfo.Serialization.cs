@@ -57,7 +57,7 @@ namespace Azure.AI.FormRecognizer.Training
                     {
                         continue;
                     }
-                    attributes = CustomFormModelProperties.DeserializeCustomFormModelProperties(property.Value);
+                    attributes = ModelSerializationExtensions.JsonDeserialize<CustomFormModelProperties>(property.Value);
                     continue;
                 }
             }

@@ -43,7 +43,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteObjectValue(Type, options);
+                ((IJsonModel<FhirR4CodeableConcept>)Type).Write(writer, options);
             }
             if (Optional.IsDefined(System))
             {
@@ -58,12 +58,12 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Period))
             {
                 writer.WritePropertyName("period"u8);
-                writer.WriteObjectValue(Period, options);
+                ((IJsonModel<FhirR4Period>)Period).Write(writer, options);
             }
             if (Optional.IsDefined(Assigner))
             {
                 writer.WritePropertyName("assigner"u8);
-                writer.WriteObjectValue(Assigner, options);
+                ((IJsonModel<FhirR4Reference>)Assigner).Write(writer, options);
             }
         }
 
@@ -110,7 +110,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    type = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
+                    type = ModelSerializationExtensions.JsonDeserialize<FhirR4CodeableConcept>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("system"u8))
@@ -129,7 +129,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    period = FhirR4Period.DeserializeFhirR4Period(property.Value, options);
+                    period = ModelSerializationExtensions.JsonDeserialize<FhirR4Period>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("assigner"u8))
@@ -138,7 +138,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    assigner = FhirR4Reference.DeserializeFhirR4Reference(property.Value, options);
+                    assigner = ModelSerializationExtensions.JsonDeserialize<FhirR4Reference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

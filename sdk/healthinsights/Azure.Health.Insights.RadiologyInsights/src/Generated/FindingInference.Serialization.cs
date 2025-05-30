@@ -36,7 +36,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("finding"u8);
-            writer.WriteObjectValue(Finding, options);
+            ((IJsonModel<FhirR4Observation>)Finding).Write(writer, options);
         }
 
         FindingInference IJsonModel<FindingInference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -68,7 +68,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 if (property.NameEquals("finding"u8))
                 {
-                    finding = FhirR4Observation.DeserializeFhirR4Observation(property.Value, options);
+                    finding = ModelSerializationExtensions.JsonDeserialize<FhirR4Observation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

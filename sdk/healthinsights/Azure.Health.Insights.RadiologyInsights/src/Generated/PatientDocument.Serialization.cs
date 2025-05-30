@@ -59,7 +59,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Authors)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ClinicalDocumentAuthor>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -71,10 +71,10 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(AdministrativeMetadata))
             {
                 writer.WritePropertyName("administrativeMetadata"u8);
-                writer.WriteObjectValue(AdministrativeMetadata, options);
+                ((IJsonModel<DocumentAdministrativeMetadata>)AdministrativeMetadata).Write(writer, options);
             }
             writer.WritePropertyName("content"u8);
-            writer.WriteObjectValue(Content, options);
+            ((IJsonModel<ClinicalDocumentContent>)Content).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -187,12 +187,12 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    administrativeMetadata = DocumentAdministrativeMetadata.DeserializeDocumentAdministrativeMetadata(property.Value, options);
+                    administrativeMetadata = ModelSerializationExtensions.JsonDeserialize<DocumentAdministrativeMetadata>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("content"u8))
                 {
-                    content = ClinicalDocumentContent.DeserializeClinicalDocumentContent(property.Value, options);
+                    content = ModelSerializationExtensions.JsonDeserialize<ClinicalDocumentContent>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

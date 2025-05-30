@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             if (Optional.IsDefined(CustomerManagedKeyEncryption))
             {
                 writer.WritePropertyName("customerManagedKeyEncryption"u8);
-                writer.WriteObjectValue(CustomerManagedKeyEncryption, options);
+                ((IJsonModel<EncryptionCustomerManagedKeyEncryption>)CustomerManagedKeyEncryption).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     {
                         continue;
                     }
-                    customerManagedKeyEncryption = EncryptionCustomerManagedKeyEncryption.DeserializeEncryptionCustomerManagedKeyEncryption(property.Value, options);
+                    customerManagedKeyEncryption = ModelSerializationExtensions.JsonDeserialize<EncryptionCustomerManagedKeyEncryption>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

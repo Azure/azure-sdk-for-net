@@ -63,7 +63,7 @@ namespace Azure.AI.Vision.Face
             if (Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
-                writer.WriteObjectValue(Result, options);
+                ((IJsonModel<LivenessSessionAuditEntry>)Result).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -163,7 +163,7 @@ namespace Azure.AI.Vision.Face
                     {
                         continue;
                     }
-                    result = LivenessSessionAuditEntry.DeserializeLivenessSessionAuditEntry(property.Value, options);
+                    result = ModelSerializationExtensions.JsonDeserialize<LivenessSessionAuditEntry>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

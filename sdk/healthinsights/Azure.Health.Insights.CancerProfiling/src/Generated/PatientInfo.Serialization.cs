@@ -50,7 +50,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 writer.WriteStartArray();
                 foreach (var item in ClinicalInfo)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ClinicalCodedElement>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

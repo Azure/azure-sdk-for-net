@@ -40,8 +40,7 @@ namespace Azure.ResourceManager.HealthcareApis
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(ETag))
             {
@@ -58,12 +57,12 @@ namespace Azure.ResourceManager.HealthcareApis
             if (Optional.IsDefined(IngestionEndpointConfiguration))
             {
                 writer.WritePropertyName("ingestionEndpointConfiguration"u8);
-                writer.WriteObjectValue(IngestionEndpointConfiguration, options);
+                ((IJsonModel<HealthcareApisIotConnectorEventHubIngestionConfiguration>)IngestionEndpointConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(DeviceMapping))
             {
                 writer.WritePropertyName("deviceMapping"u8);
-                writer.WriteObjectValue(DeviceMapping, options);
+                ((IJsonModel<HealthcareApisIotMappingProperties>)DeviceMapping).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.HealthcareApis
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -162,7 +161,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -189,7 +188,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            ingestionEndpointConfiguration = HealthcareApisIotConnectorEventHubIngestionConfiguration.DeserializeHealthcareApisIotConnectorEventHubIngestionConfiguration(property0.Value, options);
+                            ingestionEndpointConfiguration = ModelSerializationExtensions.JsonDeserialize<HealthcareApisIotConnectorEventHubIngestionConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("deviceMapping"u8))
@@ -198,7 +197,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            deviceMapping = HealthcareApisIotMappingProperties.DeserializeHealthcareApisIotMappingProperties(property0.Value, options);
+                            deviceMapping = ModelSerializationExtensions.JsonDeserialize<HealthcareApisIotMappingProperties>(property0.Value);
                             continue;
                         }
                     }

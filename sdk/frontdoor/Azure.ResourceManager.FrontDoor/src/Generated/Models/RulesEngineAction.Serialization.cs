@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in RequestHeaderActions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RulesEngineHeaderAction>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in ResponseHeaderActions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RulesEngineHeaderAction>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 if (RouteConfigurationOverride != null)
                 {
                     writer.WritePropertyName("routeConfigurationOverride"u8);
-                    writer.WriteObjectValue(RouteConfigurationOverride, options);
+                    ((IJsonModel<RouteConfiguration>)RouteConfigurationOverride).Write(writer, options);
                 }
                 else
                 {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         routeConfigurationOverride = null;
                         continue;
                     }
-                    routeConfigurationOverride = RouteConfiguration.DeserializeRouteConfiguration(property.Value, options);
+                    routeConfigurationOverride = ModelSerializationExtensions.JsonDeserialize<RouteConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

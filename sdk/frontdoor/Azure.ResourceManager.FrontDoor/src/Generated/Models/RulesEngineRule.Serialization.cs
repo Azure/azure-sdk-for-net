@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WritePropertyName("priority"u8);
             writer.WriteNumberValue(Priority);
             writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue(Action, options);
+            ((IJsonModel<RulesEngineAction>)Action).Write(writer, options);
             if (Optional.IsCollectionDefined(MatchConditions))
             {
                 if (MatchConditions != null)
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     writer.WriteStartArray();
                     foreach (var item in MatchConditions)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<RulesEngineMatchCondition>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 if (property.NameEquals("action"u8))
                 {
-                    action = RulesEngineAction.DeserializeRulesEngineAction(property.Value, options);
+                    action = ModelSerializationExtensions.JsonDeserialize<RulesEngineAction>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("matchConditions"u8))

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceBusQueues)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RoutingServiceBusQueueEndpointProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceBusTopics)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RoutingServiceBusTopicEndpointProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in EventHubs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RoutingEventHubProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageContainers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RoutingStorageContainerProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in CosmosDBSqlContainers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RoutingCosmosDBSqlApiProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

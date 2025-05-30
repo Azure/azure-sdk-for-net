@@ -44,7 +44,7 @@ namespace Azure.Health.Deidentification
             if (Optional.IsDefined(Customizations))
             {
                 writer.WritePropertyName("customizations"u8);
-                writer.WriteObjectValue(Customizations, options);
+                ((IJsonModel<DeidentificationCustomizationOptions>)Customizations).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -110,7 +110,7 @@ namespace Azure.Health.Deidentification
                     {
                         continue;
                     }
-                    customizations = DeidentificationCustomizationOptions.DeserializeDeidentificationCustomizationOptions(property.Value, options);
+                    customizations = ModelSerializationExtensions.JsonDeserialize<DeidentificationCustomizationOptions>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             if (Optional.IsDefined(Auth))
             {
                 writer.WritePropertyName("auth"u8);
-                writer.WriteObjectValue(Auth, options);
+                ((IJsonModel<BrokerAuthenticatorCustomAuth>)Auth).Write(writer, options);
             }
             if (Optional.IsDefined(CaCertConfigMap))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    auth = BrokerAuthenticatorCustomAuth.DeserializeBrokerAuthenticatorCustomAuth(property.Value, options);
+                    auth = ModelSerializationExtensions.JsonDeserialize<BrokerAuthenticatorCustomAuth>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("caCertConfigMap"u8))

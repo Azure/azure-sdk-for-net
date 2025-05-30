@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<MachineExtensionInstanceViewStatus>)Status).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    status = MachineExtensionInstanceViewStatus.DeserializeMachineExtensionInstanceViewStatus(property.Value, options);
+                    status = ModelSerializationExtensions.JsonDeserialize<MachineExtensionInstanceViewStatus>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

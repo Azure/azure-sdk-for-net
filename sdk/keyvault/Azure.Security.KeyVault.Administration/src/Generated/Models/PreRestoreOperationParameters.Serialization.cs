@@ -18,7 +18,7 @@ namespace Azure.Security.KeyVault.Administration.Models
             if (Optional.IsDefined(SasTokenParameters))
             {
                 writer.WritePropertyName("sasTokenParameters"u8);
-                writer.WriteObjectValue(SasTokenParameters);
+                JsonSerializer.Serialize(writer, SasTokenParameters);
             }
             if (Optional.IsDefined(FolderToRestore))
             {

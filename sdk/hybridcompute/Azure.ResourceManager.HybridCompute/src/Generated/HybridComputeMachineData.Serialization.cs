@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HybridComputeMachineExtensionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -64,52 +64,52 @@ namespace Azure.ResourceManager.HybridCompute
             if (Optional.IsDefined(LocationData))
             {
                 writer.WritePropertyName("locationData"u8);
-                writer.WriteObjectValue(LocationData, options);
+                ((IJsonModel<HybridComputeLocation>)LocationData).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
-                writer.WriteObjectValue(AgentConfiguration, options);
+                ((IJsonModel<AgentConfiguration>)AgentConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ServiceStatuses))
             {
                 writer.WritePropertyName("serviceStatuses"u8);
-                writer.WriteObjectValue(ServiceStatuses, options);
+                ((IJsonModel<HybridComputeServiceStatuses>)ServiceStatuses).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile, options);
+                ((IJsonModel<HybridComputeHardwareProfile>)HardwareProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile, options);
+                ((IJsonModel<StorageProfile>)StorageProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(FirmwareProfile))
             {
                 writer.WritePropertyName("firmwareProfile"u8);
-                writer.WriteObjectValue(FirmwareProfile, options);
+                ((IJsonModel<HybridComputeFirmwareProfile>)FirmwareProfile).Write(writer, options);
             }
             if (Optional.IsDefined(CloudMetadata))
             {
                 writer.WritePropertyName("cloudMetadata"u8);
-                writer.WriteObjectValue(CloudMetadata, options);
+                ((IJsonModel<HybridComputeCloudMetadata>)CloudMetadata).Write(writer, options);
             }
             if (Optional.IsDefined(AgentUpgrade))
             {
                 writer.WritePropertyName("agentUpgrade"u8);
-                writer.WriteObjectValue(AgentUpgrade, options);
+                ((IJsonModel<AgentUpgrade>)AgentUpgrade).Write(writer, options);
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile, options);
+                ((IJsonModel<HybridComputeOSProfile>)OSProfile).Write(writer, options);
             }
             if (Optional.IsDefined(LicenseProfile))
             {
                 writer.WritePropertyName("licenseProfile"u8);
-                writer.WriteObjectValue(LicenseProfile, options);
+                ((IJsonModel<LicenseProfileMachineInstanceView>)LicenseProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MachineExtensionInstanceView>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.HybridCompute
             if (options.Format != "W" && Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile, options);
+                ((IJsonModel<HybridComputeNetworkProfile>)NetworkProfile).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.HybridCompute
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.HybridCompute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            locationData = HybridComputeLocation.DeserializeHybridComputeLocation(property0.Value, options);
+                            locationData = ModelSerializationExtensions.JsonDeserialize<HybridComputeLocation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("agentConfiguration"u8))
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            agentConfiguration = AgentConfiguration.DeserializeAgentConfiguration(property0.Value, options);
+                            agentConfiguration = ModelSerializationExtensions.JsonDeserialize<AgentConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("serviceStatuses"u8))
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            serviceStatuses = HybridComputeServiceStatuses.DeserializeHybridComputeServiceStatuses(property0.Value, options);
+                            serviceStatuses = ModelSerializationExtensions.JsonDeserialize<HybridComputeServiceStatuses>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hardwareProfile"u8))
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            hardwareProfile = HybridComputeHardwareProfile.DeserializeHybridComputeHardwareProfile(property0.Value, options);
+                            hardwareProfile = ModelSerializationExtensions.JsonDeserialize<HybridComputeHardwareProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"u8))
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            storageProfile = StorageProfile.DeserializeStorageProfile(property0.Value, options);
+                            storageProfile = ModelSerializationExtensions.JsonDeserialize<StorageProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("firmwareProfile"u8))
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            firmwareProfile = HybridComputeFirmwareProfile.DeserializeHybridComputeFirmwareProfile(property0.Value, options);
+                            firmwareProfile = ModelSerializationExtensions.JsonDeserialize<HybridComputeFirmwareProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cloudMetadata"u8))
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            cloudMetadata = HybridComputeCloudMetadata.DeserializeHybridComputeCloudMetadata(property0.Value, options);
+                            cloudMetadata = ModelSerializationExtensions.JsonDeserialize<HybridComputeCloudMetadata>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("agentUpgrade"u8))
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            agentUpgrade = AgentUpgrade.DeserializeAgentUpgrade(property0.Value, options);
+                            agentUpgrade = ModelSerializationExtensions.JsonDeserialize<AgentUpgrade>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("osProfile"u8))
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            osProfile = HybridComputeOSProfile.DeserializeHybridComputeOSProfile(property0.Value, options);
+                            osProfile = ModelSerializationExtensions.JsonDeserialize<HybridComputeOSProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("licenseProfile"u8))
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            licenseProfile = LicenseProfileMachineInstanceView.DeserializeLicenseProfileMachineInstanceView(property0.Value, options);
+                            licenseProfile = ModelSerializationExtensions.JsonDeserialize<LicenseProfileMachineInstanceView>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.HybridCompute
                             List<ResponseError> array = new List<ResponseError>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<ResponseError>(item));
                             }
                             errorDetails = array;
                             continue;
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            networkProfile = HybridComputeNetworkProfile.DeserializeHybridComputeNetworkProfile(property0.Value, options);
+                            networkProfile = ModelSerializationExtensions.JsonDeserialize<HybridComputeNetworkProfile>(property0.Value);
                             continue;
                         }
                     }

@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Grafana.Models
             if (Optional.IsDefined(SaasSubscriptionDetails))
             {
                 writer.WritePropertyName("saasSubscriptionDetails"u8);
-                writer.WriteObjectValue(SaasSubscriptionDetails, options);
+                ((IJsonModel<SaasSubscriptionDetails>)SaasSubscriptionDetails).Write(writer, options);
             }
             if (Optional.IsDefined(MarketplaceTrialQuota))
             {
                 writer.WritePropertyName("marketplaceTrialQuota"u8);
-                writer.WriteObjectValue(MarketplaceTrialQuota, options);
+                ((IJsonModel<MarketplaceTrialQuota>)MarketplaceTrialQuota).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    saasSubscriptionDetails = SaasSubscriptionDetails.DeserializeSaasSubscriptionDetails(property.Value, options);
+                    saasSubscriptionDetails = ModelSerializationExtensions.JsonDeserialize<SaasSubscriptionDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("marketplaceTrialQuota"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    marketplaceTrialQuota = MarketplaceTrialQuota.DeserializeMarketplaceTrialQuota(property.Value, options);
+                    marketplaceTrialQuota = ModelSerializationExtensions.JsonDeserialize<MarketplaceTrialQuota>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -50,16 +50,16 @@ namespace Azure.ResourceManager.IotOperations.Models
                 writer.WriteStringValue(RenewBefore);
             }
             writer.WritePropertyName("issuerRef"u8);
-            writer.WriteObjectValue(IssuerRef, options);
+            ((IJsonModel<CertManagerIssuerRef>)IssuerRef).Write(writer, options);
             if (Optional.IsDefined(PrivateKey))
             {
                 writer.WritePropertyName("privateKey"u8);
-                writer.WriteObjectValue(PrivateKey, options);
+                ((IJsonModel<CertManagerPrivateKey>)PrivateKey).Write(writer, options);
             }
             if (Optional.IsDefined(San))
             {
                 writer.WritePropertyName("san"u8);
-                writer.WriteObjectValue(San, options);
+                ((IJsonModel<SanForCert>)San).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 }
                 if (property.NameEquals("issuerRef"u8))
                 {
-                    issuerRef = CertManagerIssuerRef.DeserializeCertManagerIssuerRef(property.Value, options);
+                    issuerRef = ModelSerializationExtensions.JsonDeserialize<CertManagerIssuerRef>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("privateKey"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    privateKey = CertManagerPrivateKey.DeserializeCertManagerPrivateKey(property.Value, options);
+                    privateKey = ModelSerializationExtensions.JsonDeserialize<CertManagerPrivateKey>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("san"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    san = SanForCert.DeserializeSanForCert(property.Value, options);
+                    san = ModelSerializationExtensions.JsonDeserialize<SanForCert>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

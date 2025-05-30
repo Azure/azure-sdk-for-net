@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WritePropertyName("status"u8);
-            writer.WriteObjectValue(Status, options);
+            ((IJsonModel<ClusterInstanceViewStatus>)Status).Write(writer, options);
             writer.WritePropertyName("serviceStatuses"u8);
             writer.WriteStartArray();
             foreach (var item in ServiceStatuses)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<HDInsightServiceStatus>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 if (property.NameEquals("status"u8))
                 {
-                    status = ClusterInstanceViewStatus.DeserializeClusterInstanceViewStatus(property.Value, options);
+                    status = ModelSerializationExtensions.JsonDeserialize<ClusterInstanceViewStatus>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("serviceStatuses"u8))

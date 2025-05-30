@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in ApplicationTypes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InformaticaApplicationTypeMetadata>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in ComputeUnits)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ComputeUnitsMetadata>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Regions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InformaticaRegionsMetadata>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

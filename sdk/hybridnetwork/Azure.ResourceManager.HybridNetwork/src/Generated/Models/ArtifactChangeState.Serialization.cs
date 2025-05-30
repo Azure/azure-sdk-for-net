@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ArtifactChangeStateProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    properties = ArtifactChangeStateProperties.DeserializeArtifactChangeStateProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ArtifactChangeStateProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

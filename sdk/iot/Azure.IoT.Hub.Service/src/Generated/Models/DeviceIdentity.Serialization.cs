@@ -69,12 +69,12 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
+                JsonSerializer.Serialize(writer, Authentication);
             }
             if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
-                writer.WriteObjectValue(Capabilities);
+                JsonSerializer.Serialize(writer, Capabilities);
             }
             if (Optional.IsDefined(DeviceScope))
             {
@@ -185,7 +185,7 @@ namespace Azure.IoT.Hub.Service.Models
                     {
                         continue;
                     }
-                    authentication = AuthenticationMechanism.DeserializeAuthenticationMechanism(property.Value);
+                    authentication = ModelSerializationExtensions.JsonDeserialize<AuthenticationMechanism>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("capabilities"u8))
@@ -194,7 +194,7 @@ namespace Azure.IoT.Hub.Service.Models
                     {
                         continue;
                     }
-                    capabilities = DeviceCapabilities.DeserializeDeviceCapabilities(property.Value);
+                    capabilities = ModelSerializationExtensions.JsonDeserialize<DeviceCapabilities>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deviceScope"u8))

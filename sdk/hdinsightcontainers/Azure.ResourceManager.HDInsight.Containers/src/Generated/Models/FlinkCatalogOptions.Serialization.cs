@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(Hive))
             {
                 writer.WritePropertyName("hive"u8);
-                writer.WriteObjectValue(Hive, options);
+                ((IJsonModel<FlinkHiveCatalogOption>)Hive).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    hive = FlinkHiveCatalogOption.DeserializeFlinkHiveCatalogOption(property.Value, options);
+                    hive = ModelSerializationExtensions.JsonDeserialize<FlinkHiveCatalogOption>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

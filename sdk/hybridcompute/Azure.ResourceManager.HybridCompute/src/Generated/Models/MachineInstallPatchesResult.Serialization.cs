@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    errorDetails = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    errorDetails = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

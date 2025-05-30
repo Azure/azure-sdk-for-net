@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartArray();
             foreach (var item in Schedules)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<AutoscaleSchedule>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

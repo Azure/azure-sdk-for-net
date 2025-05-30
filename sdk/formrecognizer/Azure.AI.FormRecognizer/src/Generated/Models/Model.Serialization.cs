@@ -27,7 +27,7 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 if (property.NameEquals("modelInfo"u8))
                 {
-                    modelInfo = CustomFormModelInfo.DeserializeCustomFormModelInfo(property.Value);
+                    modelInfo = ModelSerializationExtensions.JsonDeserialize<CustomFormModelInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("keys"u8))
@@ -36,7 +36,7 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    keys = KeysResult.DeserializeKeysResult(property.Value);
+                    keys = ModelSerializationExtensions.JsonDeserialize<KeysResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("trainResult"u8))
@@ -45,7 +45,7 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    trainResult = TrainResult.DeserializeTrainResult(property.Value);
+                    trainResult = ModelSerializationExtensions.JsonDeserialize<TrainResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("composedTrainResults"u8))

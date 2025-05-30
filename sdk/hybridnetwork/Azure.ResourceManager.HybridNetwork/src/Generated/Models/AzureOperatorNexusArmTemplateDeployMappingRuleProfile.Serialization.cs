@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(TemplateMappingRuleProfile))
             {
                 writer.WritePropertyName("templateMappingRuleProfile"u8);
-                writer.WriteObjectValue(TemplateMappingRuleProfile, options);
+                ((IJsonModel<ArmTemplateMappingRuleProfile>)TemplateMappingRuleProfile).Write(writer, options);
             }
         }
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    templateMappingRuleProfile = ArmTemplateMappingRuleProfile.DeserializeArmTemplateMappingRuleProfile(property.Value, options);
+                    templateMappingRuleProfile = ModelSerializationExtensions.JsonDeserialize<ArmTemplateMappingRuleProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("applicationEnablement"u8))

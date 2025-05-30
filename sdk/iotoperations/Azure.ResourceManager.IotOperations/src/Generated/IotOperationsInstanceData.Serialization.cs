@@ -40,15 +40,14 @@ namespace Azure.ResourceManager.IotOperations
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<IotOperationsInstanceProperties>)Properties).Write(writer, options);
             }
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation, options);
+            ((IJsonModel<IotOperationsExtendedLocation>)ExtendedLocation).Write(writer, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
         }
 
@@ -91,12 +90,12 @@ namespace Azure.ResourceManager.IotOperations
                     {
                         continue;
                     }
-                    properties = IotOperationsInstanceProperties.DeserializeIotOperationsInstanceProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<IotOperationsInstanceProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = IotOperationsExtendedLocation.DeserializeIotOperationsExtendedLocation(property.Value, options);
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<IotOperationsExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -106,7 +105,7 @@ namespace Azure.ResourceManager.IotOperations
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -149,7 +148,7 @@ namespace Azure.ResourceManager.IotOperations
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

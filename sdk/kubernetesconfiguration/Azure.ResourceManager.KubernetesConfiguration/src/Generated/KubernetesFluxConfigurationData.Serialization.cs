@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 if (GitRepository != null)
                 {
                     writer.WritePropertyName("gitRepository"u8);
-                    writer.WriteObjectValue(GitRepository, options);
+                    ((IJsonModel<KubernetesGitRepository>)GitRepository).Write(writer, options);
                 }
                 else
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 if (Bucket != null)
                 {
                     writer.WritePropertyName("bucket"u8);
-                    writer.WriteObjectValue(Bucket, options);
+                    ((IJsonModel<KubernetesBucket>)Bucket).Write(writer, options);
                 }
                 else
                 {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 if (AzureBlob != null)
                 {
                     writer.WritePropertyName("azureBlob"u8);
-                    writer.WriteObjectValue(AzureBlob, options);
+                    ((IJsonModel<KubernetesAzureBlob>)AzureBlob).Write(writer, options);
                 }
                 else
                 {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     foreach (var item in Kustomizations)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value, options);
+                        ((IJsonModel<Kustomization>)item.Value).Write(writer, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteStartArray();
                     foreach (var item in Statuses)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<KubernetesObjectStatus>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                                 gitRepository = null;
                                 continue;
                             }
-                            gitRepository = KubernetesGitRepository.DeserializeKubernetesGitRepository(property0.Value, options);
+                            gitRepository = ModelSerializationExtensions.JsonDeserialize<KubernetesGitRepository>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("bucket"u8))
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                                 bucket = null;
                                 continue;
                             }
-                            bucket = KubernetesBucket.DeserializeKubernetesBucket(property0.Value, options);
+                            bucket = ModelSerializationExtensions.JsonDeserialize<KubernetesBucket>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("azureBlob"u8))
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                                 azureBlob = null;
                                 continue;
                             }
-                            azureBlob = KubernetesAzureBlob.DeserializeKubernetesAzureBlob(property0.Value, options);
+                            azureBlob = ModelSerializationExtensions.JsonDeserialize<KubernetesAzureBlob>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("kustomizations"u8))

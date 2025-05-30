@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStringValue(DeploymentId);
             }
             writer.WritePropertyName("computeProfile"u8);
-            writer.WriteObjectValue(ComputeProfile, options);
+            ((IJsonModel<ClusterComputeProfile>)ComputeProfile).Write(writer, options);
             writer.WritePropertyName("clusterProfile"u8);
-            writer.WriteObjectValue(ClusterProfile, options);
+            ((IJsonModel<ClusterProfile>)ClusterProfile).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -124,12 +124,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (property.NameEquals("computeProfile"u8))
                 {
-                    computeProfile = ClusterComputeProfile.DeserializeClusterComputeProfile(property.Value, options);
+                    computeProfile = ModelSerializationExtensions.JsonDeserialize<ClusterComputeProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("clusterProfile"u8))
                 {
-                    clusterProfile = ClusterProfile.DeserializeClusterProfile(property.Value, options);
+                    clusterProfile = ModelSerializationExtensions.JsonDeserialize<ClusterProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))

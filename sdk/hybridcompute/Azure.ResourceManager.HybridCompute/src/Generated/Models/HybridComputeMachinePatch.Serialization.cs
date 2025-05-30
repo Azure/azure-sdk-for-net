@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -51,22 +51,22 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(LocationData))
             {
                 writer.WritePropertyName("locationData"u8);
-                writer.WriteObjectValue(LocationData, options);
+                ((IJsonModel<HybridComputeLocation>)LocationData).Write(writer, options);
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile, options);
+                ((IJsonModel<HybridComputeOSProfile>)OSProfile).Write(writer, options);
             }
             if (Optional.IsDefined(CloudMetadata))
             {
                 writer.WritePropertyName("cloudMetadata"u8);
-                writer.WriteObjectValue(CloudMetadata, options);
+                ((IJsonModel<HybridComputeCloudMetadata>)CloudMetadata).Write(writer, options);
             }
             if (Optional.IsDefined(AgentUpgrade))
             {
                 writer.WritePropertyName("agentUpgrade"u8);
-                writer.WriteObjectValue(AgentUpgrade, options);
+                ((IJsonModel<AgentUpgrade>)AgentUpgrade).Write(writer, options);
             }
             if (Optional.IsDefined(ParentClusterResourceId))
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             {
                                 continue;
                             }
-                            locationData = HybridComputeLocation.DeserializeHybridComputeLocation(property0.Value, options);
+                            locationData = ModelSerializationExtensions.JsonDeserialize<HybridComputeLocation>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("osProfile"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             {
                                 continue;
                             }
-                            osProfile = HybridComputeOSProfile.DeserializeHybridComputeOSProfile(property0.Value, options);
+                            osProfile = ModelSerializationExtensions.JsonDeserialize<HybridComputeOSProfile>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cloudMetadata"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             {
                                 continue;
                             }
-                            cloudMetadata = HybridComputeCloudMetadata.DeserializeHybridComputeCloudMetadata(property0.Value, options);
+                            cloudMetadata = ModelSerializationExtensions.JsonDeserialize<HybridComputeCloudMetadata>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("agentUpgrade"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             {
                                 continue;
                             }
-                            agentUpgrade = AgentUpgrade.DeserializeAgentUpgrade(property0.Value, options);
+                            agentUpgrade = ModelSerializationExtensions.JsonDeserialize<AgentUpgrade>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("parentClusterResourceId"u8))

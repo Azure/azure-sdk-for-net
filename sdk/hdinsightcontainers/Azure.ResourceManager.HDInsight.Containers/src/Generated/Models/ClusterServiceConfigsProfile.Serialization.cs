@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartArray();
             foreach (var item in Configs)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ClusterServiceConfig>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

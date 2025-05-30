@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartArray();
             foreach (var item in IPConfigurations)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<HDInsightIPConfiguration>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

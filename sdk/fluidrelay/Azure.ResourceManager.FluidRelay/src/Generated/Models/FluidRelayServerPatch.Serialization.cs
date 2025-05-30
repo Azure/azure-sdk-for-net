@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Location))
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<EncryptionProperties>)Encryption).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                             {
                                 continue;
                             }
-                            encryption = EncryptionProperties.DeserializeEncryptionProperties(property0.Value, options);
+                            encryption = ModelSerializationExtensions.JsonDeserialize<EncryptionProperties>(property0.Value);
                             continue;
                         }
                     }

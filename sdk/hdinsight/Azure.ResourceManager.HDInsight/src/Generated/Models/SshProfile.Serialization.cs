@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in PublicKeys)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HDInsightSshPublicKey>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -40,12 +40,12 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(ValueQuantity))
             {
                 writer.WritePropertyName("valueQuantity"u8);
-                writer.WriteObjectValue(ValueQuantity, options);
+                ((IJsonModel<FhirR4Quantity>)ValueQuantity).Write(writer, options);
             }
             if (Optional.IsDefined(ValueCodeableConcept))
             {
                 writer.WritePropertyName("valueCodeableConcept"u8);
-                writer.WriteObjectValue(ValueCodeableConcept, options);
+                ((IJsonModel<FhirR4CodeableConcept>)ValueCodeableConcept).Write(writer, options);
             }
             if (Optional.IsDefined(ValueString))
             {
@@ -65,17 +65,17 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(ValueRange))
             {
                 writer.WritePropertyName("valueRange"u8);
-                writer.WriteObjectValue(ValueRange, options);
+                ((IJsonModel<FhirR4Range>)ValueRange).Write(writer, options);
             }
             if (Optional.IsDefined(ValueRatio))
             {
                 writer.WritePropertyName("valueRatio"u8);
-                writer.WriteObjectValue(ValueRatio, options);
+                ((IJsonModel<FhirR4Ratio>)ValueRatio).Write(writer, options);
             }
             if (Optional.IsDefined(ValueSampledData))
             {
                 writer.WritePropertyName("valueSampledData"u8);
-                writer.WriteObjectValue(ValueSampledData, options);
+                ((IJsonModel<FhirR4SampledData>)ValueSampledData).Write(writer, options);
             }
             if (Optional.IsDefined(ValueTime))
             {
@@ -90,12 +90,12 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(ValuePeriod))
             {
                 writer.WritePropertyName("valuePeriod"u8);
-                writer.WriteObjectValue(ValuePeriod, options);
+                ((IJsonModel<FhirR4Period>)ValuePeriod).Write(writer, options);
             }
             if (Optional.IsDefined(ValueReference))
             {
                 writer.WritePropertyName("valueReference"u8);
-                writer.WriteObjectValue(ValueReference, options);
+                ((IJsonModel<FhirR4Reference>)ValueReference).Write(writer, options);
             }
         }
 
@@ -149,7 +149,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    valueQuantity = FhirR4Quantity.DeserializeFhirR4Quantity(property.Value, options);
+                    valueQuantity = ModelSerializationExtensions.JsonDeserialize<FhirR4Quantity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("valueCodeableConcept"u8))
@@ -158,7 +158,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    valueCodeableConcept = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
+                    valueCodeableConcept = ModelSerializationExtensions.JsonDeserialize<FhirR4CodeableConcept>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("valueString"u8))
@@ -190,7 +190,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    valueRange = FhirR4Range.DeserializeFhirR4Range(property.Value, options);
+                    valueRange = ModelSerializationExtensions.JsonDeserialize<FhirR4Range>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("valueRatio"u8))
@@ -199,7 +199,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    valueRatio = FhirR4Ratio.DeserializeFhirR4Ratio(property.Value, options);
+                    valueRatio = ModelSerializationExtensions.JsonDeserialize<FhirR4Ratio>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("valueSampledData"u8))
@@ -208,7 +208,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    valueSampledData = FhirR4SampledData.DeserializeFhirR4SampledData(property.Value, options);
+                    valueSampledData = ModelSerializationExtensions.JsonDeserialize<FhirR4SampledData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("valueTime"u8))
@@ -231,7 +231,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    valuePeriod = FhirR4Period.DeserializeFhirR4Period(property.Value, options);
+                    valuePeriod = ModelSerializationExtensions.JsonDeserialize<FhirR4Period>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("valueReference"u8))
@@ -240,7 +240,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    valueReference = FhirR4Reference.DeserializeFhirR4Reference(property.Value, options);
+                    valueReference = ModelSerializationExtensions.JsonDeserialize<FhirR4Reference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

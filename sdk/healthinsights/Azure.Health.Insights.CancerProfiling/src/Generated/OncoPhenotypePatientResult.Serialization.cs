@@ -40,7 +40,7 @@ namespace Azure.Health.Insights.CancerProfiling
             writer.WriteStartArray();
             foreach (var item in Inferences)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<OncoPhenotypeInference>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

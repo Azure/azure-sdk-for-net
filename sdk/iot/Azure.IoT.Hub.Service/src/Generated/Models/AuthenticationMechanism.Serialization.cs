@@ -18,12 +18,12 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(SymmetricKey))
             {
                 writer.WritePropertyName("symmetricKey"u8);
-                writer.WriteObjectValue(SymmetricKey);
+                JsonSerializer.Serialize(writer, SymmetricKey);
             }
             if (Optional.IsDefined(X509Thumbprint))
             {
                 writer.WritePropertyName("x509Thumbprint"u8);
-                writer.WriteObjectValue(X509Thumbprint);
+                JsonSerializer.Serialize(writer, X509Thumbprint);
             }
             if (Optional.IsDefined(Type))
             {
@@ -50,7 +50,7 @@ namespace Azure.IoT.Hub.Service.Models
                     {
                         continue;
                     }
-                    symmetricKey = SymmetricKey.DeserializeSymmetricKey(property.Value);
+                    symmetricKey = ModelSerializationExtensions.JsonDeserialize<SymmetricKey>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("x509Thumbprint"u8))
@@ -59,7 +59,7 @@ namespace Azure.IoT.Hub.Service.Models
                     {
                         continue;
                     }
-                    x509Thumbprint = X509Thumbprint.DeserializeX509Thumbprint(property.Value);
+                    x509Thumbprint = ModelSerializationExtensions.JsonDeserialize<X509Thumbprint>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

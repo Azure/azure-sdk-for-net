@@ -37,22 +37,22 @@ namespace Azure.ResourceManager.IotOperations.Models
             if (Optional.IsDefined(Logs))
             {
                 writer.WritePropertyName("logs"u8);
-                writer.WriteObjectValue(Logs, options);
+                ((IJsonModel<DiagnosticsLogs>)Logs).Write(writer, options);
             }
             if (Optional.IsDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
-                writer.WriteObjectValue(Metrics, options);
+                ((IJsonModel<IotOperationsMetrics>)Metrics).Write(writer, options);
             }
             if (Optional.IsDefined(SelfCheck))
             {
                 writer.WritePropertyName("selfCheck"u8);
-                writer.WriteObjectValue(SelfCheck, options);
+                ((IJsonModel<BrokerDiagnosticSelfCheck>)SelfCheck).Write(writer, options);
             }
             if (Optional.IsDefined(Traces))
             {
                 writer.WritePropertyName("traces"u8);
-                writer.WriteObjectValue(Traces, options);
+                ((IJsonModel<BrokerDiagnosticTraces>)Traces).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    logs = DiagnosticsLogs.DeserializeDiagnosticsLogs(property.Value, options);
+                    logs = ModelSerializationExtensions.JsonDeserialize<DiagnosticsLogs>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metrics"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    metrics = IotOperationsMetrics.DeserializeIotOperationsMetrics(property.Value, options);
+                    metrics = ModelSerializationExtensions.JsonDeserialize<IotOperationsMetrics>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("selfCheck"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    selfCheck = BrokerDiagnosticSelfCheck.DeserializeBrokerDiagnosticSelfCheck(property.Value, options);
+                    selfCheck = ModelSerializationExtensions.JsonDeserialize<BrokerDiagnosticSelfCheck>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("traces"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    traces = BrokerDiagnosticTraces.DeserializeBrokerDiagnosticTraces(property.Value, options);
+                    traces = ModelSerializationExtensions.JsonDeserialize<BrokerDiagnosticTraces>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WriteStartArray();
                 foreach (var item in SelectedNodeImageVersions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<NodeImageVersion>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<RoutingRuleProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    properties = RoutingRuleProperties.DeserializeRoutingRuleProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<RoutingRuleProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

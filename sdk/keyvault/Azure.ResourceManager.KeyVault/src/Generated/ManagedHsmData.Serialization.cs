@@ -42,18 +42,17 @@ namespace Azure.ResourceManager.KeyVault
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ManagedHsmProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<ManagedHsmSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
         }
 
@@ -96,7 +95,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         continue;
                     }
-                    properties = ManagedHsmProperties.DeserializeManagedHsmProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ManagedHsmProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         continue;
                     }
-                    sku = ManagedHsmSku.DeserializeManagedHsmSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<ManagedHsmSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -115,7 +114,7 @@ namespace Azure.ResourceManager.KeyVault
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -158,7 +157,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

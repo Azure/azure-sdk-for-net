@@ -37,12 +37,12 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(JobData))
             {
                 writer.WritePropertyName("jobData"u8);
-                writer.WriteObjectValue(JobData, options);
+                ((IJsonModel<RadiologyInsightsData>)JobData).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
-                writer.WriteObjectValue(Result, options);
+                ((IJsonModel<RadiologyInsightsInferenceResult>)Result).Write(writer, options);
             }
             if (options.Format != "W")
             {
@@ -129,7 +129,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    jobData = RadiologyInsightsData.DeserializeRadiologyInsightsData(property.Value, options);
+                    jobData = ModelSerializationExtensions.JsonDeserialize<RadiologyInsightsData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("result"u8))
@@ -138,7 +138,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    result = RadiologyInsightsInferenceResult.DeserializeRadiologyInsightsInferenceResult(property.Value, options);
+                    result = ModelSerializationExtensions.JsonDeserialize<RadiologyInsightsInferenceResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -184,7 +184,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

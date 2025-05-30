@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    configurationGroupSchemaResourceReference = DeploymentResourceIdReference.DeserializeDeploymentResourceIdReference(property.Value, options);
+                    configurationGroupSchemaResourceReference = ModelSerializationExtensions.JsonDeserialize<DeploymentResourceIdReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("configurationType"u8))

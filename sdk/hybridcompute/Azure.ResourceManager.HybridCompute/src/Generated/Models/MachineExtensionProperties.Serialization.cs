@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView, options);
+                ((IJsonModel<MachineExtensionInstanceView>)InstanceView).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    instanceView = MachineExtensionInstanceView.DeserializeMachineExtensionInstanceView(property.Value, options);
+                    instanceView = ModelSerializationExtensions.JsonDeserialize<MachineExtensionInstanceView>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

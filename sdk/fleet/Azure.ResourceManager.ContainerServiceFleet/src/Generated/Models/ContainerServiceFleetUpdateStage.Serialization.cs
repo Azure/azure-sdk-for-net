@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WriteStartArray();
                 foreach (var item in Groups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerServiceFleetUpdateGroup>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

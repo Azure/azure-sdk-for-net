@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<HybridComputePatchSettingsStatus>)Status).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             {
                                 continue;
                             }
-                            status = HybridComputePatchSettingsStatus.DeserializeHybridComputePatchSettingsStatus(property0.Value, options);
+                            status = ModelSerializationExtensions.JsonDeserialize<HybridComputePatchSettingsStatus>(property0.Value);
                             continue;
                         }
                     }

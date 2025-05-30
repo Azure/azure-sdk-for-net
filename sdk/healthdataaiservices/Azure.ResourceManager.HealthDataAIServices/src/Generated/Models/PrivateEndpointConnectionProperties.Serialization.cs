@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
+                ((IJsonModel<SubResource>)PrivateEndpoint).Write(writer, options);
             }
             writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-            writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+            ((IJsonModel<HealthDataAIServicesPrivateLinkServiceConnectionState>)PrivateLinkServiceConnectionState).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                     {
                         continue;
                     }
-                    privateEndpoint = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
+                    privateEndpoint = ModelSerializationExtensions.JsonDeserialize<SubResource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("privateLinkServiceConnectionState"u8))
                 {
-                    privateLinkServiceConnectionState = HealthDataAIServicesPrivateLinkServiceConnectionState.DeserializeHealthDataAIServicesPrivateLinkServiceConnectionState(property.Value, options);
+                    privateLinkServiceConnectionState = ModelSerializationExtensions.JsonDeserialize<HealthDataAIServicesPrivateLinkServiceConnectionState>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartArray();
             foreach (var item in IdentityList)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<HDInsightManagedIdentitySpec>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

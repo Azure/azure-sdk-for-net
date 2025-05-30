@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in ContainerCredentials)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AzureStorageAccountContainerCredential>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

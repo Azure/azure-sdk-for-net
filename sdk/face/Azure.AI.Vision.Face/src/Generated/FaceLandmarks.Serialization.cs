@@ -35,59 +35,59 @@ namespace Azure.AI.Vision.Face
             }
 
             writer.WritePropertyName("pupilLeft"u8);
-            writer.WriteObjectValue(PupilLeft, options);
+            ((IJsonModel<LandmarkCoordinate>)PupilLeft).Write(writer, options);
             writer.WritePropertyName("pupilRight"u8);
-            writer.WriteObjectValue(PupilRight, options);
+            ((IJsonModel<LandmarkCoordinate>)PupilRight).Write(writer, options);
             writer.WritePropertyName("noseTip"u8);
-            writer.WriteObjectValue(NoseTip, options);
+            ((IJsonModel<LandmarkCoordinate>)NoseTip).Write(writer, options);
             writer.WritePropertyName("mouthLeft"u8);
-            writer.WriteObjectValue(MouthLeft, options);
+            ((IJsonModel<LandmarkCoordinate>)MouthLeft).Write(writer, options);
             writer.WritePropertyName("mouthRight"u8);
-            writer.WriteObjectValue(MouthRight, options);
+            ((IJsonModel<LandmarkCoordinate>)MouthRight).Write(writer, options);
             writer.WritePropertyName("eyebrowLeftOuter"u8);
-            writer.WriteObjectValue(EyebrowLeftOuter, options);
+            ((IJsonModel<LandmarkCoordinate>)EyebrowLeftOuter).Write(writer, options);
             writer.WritePropertyName("eyebrowLeftInner"u8);
-            writer.WriteObjectValue(EyebrowLeftInner, options);
+            ((IJsonModel<LandmarkCoordinate>)EyebrowLeftInner).Write(writer, options);
             writer.WritePropertyName("eyeLeftOuter"u8);
-            writer.WriteObjectValue(EyeLeftOuter, options);
+            ((IJsonModel<LandmarkCoordinate>)EyeLeftOuter).Write(writer, options);
             writer.WritePropertyName("eyeLeftTop"u8);
-            writer.WriteObjectValue(EyeLeftTop, options);
+            ((IJsonModel<LandmarkCoordinate>)EyeLeftTop).Write(writer, options);
             writer.WritePropertyName("eyeLeftBottom"u8);
-            writer.WriteObjectValue(EyeLeftBottom, options);
+            ((IJsonModel<LandmarkCoordinate>)EyeLeftBottom).Write(writer, options);
             writer.WritePropertyName("eyeLeftInner"u8);
-            writer.WriteObjectValue(EyeLeftInner, options);
+            ((IJsonModel<LandmarkCoordinate>)EyeLeftInner).Write(writer, options);
             writer.WritePropertyName("eyebrowRightInner"u8);
-            writer.WriteObjectValue(EyebrowRightInner, options);
+            ((IJsonModel<LandmarkCoordinate>)EyebrowRightInner).Write(writer, options);
             writer.WritePropertyName("eyebrowRightOuter"u8);
-            writer.WriteObjectValue(EyebrowRightOuter, options);
+            ((IJsonModel<LandmarkCoordinate>)EyebrowRightOuter).Write(writer, options);
             writer.WritePropertyName("eyeRightInner"u8);
-            writer.WriteObjectValue(EyeRightInner, options);
+            ((IJsonModel<LandmarkCoordinate>)EyeRightInner).Write(writer, options);
             writer.WritePropertyName("eyeRightTop"u8);
-            writer.WriteObjectValue(EyeRightTop, options);
+            ((IJsonModel<LandmarkCoordinate>)EyeRightTop).Write(writer, options);
             writer.WritePropertyName("eyeRightBottom"u8);
-            writer.WriteObjectValue(EyeRightBottom, options);
+            ((IJsonModel<LandmarkCoordinate>)EyeRightBottom).Write(writer, options);
             writer.WritePropertyName("eyeRightOuter"u8);
-            writer.WriteObjectValue(EyeRightOuter, options);
+            ((IJsonModel<LandmarkCoordinate>)EyeRightOuter).Write(writer, options);
             writer.WritePropertyName("noseRootLeft"u8);
-            writer.WriteObjectValue(NoseRootLeft, options);
+            ((IJsonModel<LandmarkCoordinate>)NoseRootLeft).Write(writer, options);
             writer.WritePropertyName("noseRootRight"u8);
-            writer.WriteObjectValue(NoseRootRight, options);
+            ((IJsonModel<LandmarkCoordinate>)NoseRootRight).Write(writer, options);
             writer.WritePropertyName("noseLeftAlarTop"u8);
-            writer.WriteObjectValue(NoseLeftAlarTop, options);
+            ((IJsonModel<LandmarkCoordinate>)NoseLeftAlarTop).Write(writer, options);
             writer.WritePropertyName("noseRightAlarTop"u8);
-            writer.WriteObjectValue(NoseRightAlarTop, options);
+            ((IJsonModel<LandmarkCoordinate>)NoseRightAlarTop).Write(writer, options);
             writer.WritePropertyName("noseLeftAlarOutTip"u8);
-            writer.WriteObjectValue(NoseLeftAlarOutTip, options);
+            ((IJsonModel<LandmarkCoordinate>)NoseLeftAlarOutTip).Write(writer, options);
             writer.WritePropertyName("noseRightAlarOutTip"u8);
-            writer.WriteObjectValue(NoseRightAlarOutTip, options);
+            ((IJsonModel<LandmarkCoordinate>)NoseRightAlarOutTip).Write(writer, options);
             writer.WritePropertyName("upperLipTop"u8);
-            writer.WriteObjectValue(UpperLipTop, options);
+            ((IJsonModel<LandmarkCoordinate>)UpperLipTop).Write(writer, options);
             writer.WritePropertyName("upperLipBottom"u8);
-            writer.WriteObjectValue(UpperLipBottom, options);
+            ((IJsonModel<LandmarkCoordinate>)UpperLipBottom).Write(writer, options);
             writer.WritePropertyName("underLipTop"u8);
-            writer.WriteObjectValue(UnderLipTop, options);
+            ((IJsonModel<LandmarkCoordinate>)UnderLipTop).Write(writer, options);
             writer.WritePropertyName("underLipBottom"u8);
-            writer.WriteObjectValue(UnderLipBottom, options);
+            ((IJsonModel<LandmarkCoordinate>)UnderLipBottom).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -158,137 +158,137 @@ namespace Azure.AI.Vision.Face
             {
                 if (property.NameEquals("pupilLeft"u8))
                 {
-                    pupilLeft = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    pupilLeft = ModelSerializationExtensions.JsonDeserialize<LandmarkCoordinate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("pupilRight"u8))
                 {
-                    pupilRight = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    pupilRight = ModelSerializationExtensions.JsonDeserialize<LandmarkCoordinate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("noseTip"u8))
                 {
-                    noseTip = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    noseTip = ModelSerializationExtensions.JsonDeserialize<LandmarkCoordinate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mouthLeft"u8))
                 {
-                    mouthLeft = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    mouthLeft = ModelSerializationExtensions.JsonDeserialize<LandmarkCoordinate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mouthRight"u8))
                 {
-                    mouthRight = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    mouthRight = ModelSerializationExtensions.JsonDeserialize<LandmarkCoordinate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eyebrowLeftOuter"u8))
                 {
-                    eyebrowLeftOuter = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    eyebrowLeftOuter = ModelSerializationExtensions.JsonDeserialize<LandmarkCoordinate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eyebrowLeftInner"u8))
                 {
-                    eyebrowLeftInner = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    eyebrowLeftInner = ModelSerializationExtensions.JsonDeserialize<LandmarkCoordinate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eyeLeftOuter"u8))
                 {
-                    eyeLeftOuter = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    eyeLeftOuter = ModelSerializationExtensions.JsonDeserialize<LandmarkCoordinate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eyeLeftTop"u8))
                 {
-                    eyeLeftTop = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    eyeLeftTop = ModelSerializationExtensions.JsonDeserialize<LandmarkCoordinate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eyeLeftBottom"u8))
                 {
-                    eyeLeftBottom = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    eyeLeftBottom = ModelSerializationExtensions.JsonDeserialize<LandmarkCoordinate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eyeLeftInner"u8))
                 {
-                    eyeLeftInner = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    eyeLeftInner = ModelSerializationExtensions.JsonDeserialize<LandmarkCoordinate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eyebrowRightInner"u8))
                 {
-                    eyebrowRightInner = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    eyebrowRightInner = ModelSerializationExtensions.JsonDeserialize<LandmarkCoordinate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eyebrowRightOuter"u8))
                 {
-                    eyebrowRightOuter = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    eyebrowRightOuter = ModelSerializationExtensions.JsonDeserialize<LandmarkCoordinate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eyeRightInner"u8))
                 {
-                    eyeRightInner = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    eyeRightInner = ModelSerializationExtensions.JsonDeserialize<LandmarkCoordinate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eyeRightTop"u8))
                 {
-                    eyeRightTop = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    eyeRightTop = ModelSerializationExtensions.JsonDeserialize<LandmarkCoordinate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eyeRightBottom"u8))
                 {
-                    eyeRightBottom = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    eyeRightBottom = ModelSerializationExtensions.JsonDeserialize<LandmarkCoordinate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eyeRightOuter"u8))
                 {
-                    eyeRightOuter = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    eyeRightOuter = ModelSerializationExtensions.JsonDeserialize<LandmarkCoordinate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("noseRootLeft"u8))
                 {
-                    noseRootLeft = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    noseRootLeft = ModelSerializationExtensions.JsonDeserialize<LandmarkCoordinate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("noseRootRight"u8))
                 {
-                    noseRootRight = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    noseRootRight = ModelSerializationExtensions.JsonDeserialize<LandmarkCoordinate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("noseLeftAlarTop"u8))
                 {
-                    noseLeftAlarTop = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    noseLeftAlarTop = ModelSerializationExtensions.JsonDeserialize<LandmarkCoordinate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("noseRightAlarTop"u8))
                 {
-                    noseRightAlarTop = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    noseRightAlarTop = ModelSerializationExtensions.JsonDeserialize<LandmarkCoordinate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("noseLeftAlarOutTip"u8))
                 {
-                    noseLeftAlarOutTip = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    noseLeftAlarOutTip = ModelSerializationExtensions.JsonDeserialize<LandmarkCoordinate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("noseRightAlarOutTip"u8))
                 {
-                    noseRightAlarOutTip = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    noseRightAlarOutTip = ModelSerializationExtensions.JsonDeserialize<LandmarkCoordinate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("upperLipTop"u8))
                 {
-                    upperLipTop = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    upperLipTop = ModelSerializationExtensions.JsonDeserialize<LandmarkCoordinate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("upperLipBottom"u8))
                 {
-                    upperLipBottom = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    upperLipBottom = ModelSerializationExtensions.JsonDeserialize<LandmarkCoordinate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("underLipTop"u8))
                 {
-                    underLipTop = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    underLipTop = ModelSerializationExtensions.JsonDeserialize<LandmarkCoordinate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("underLipBottom"u8))
                 {
-                    underLipBottom = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    underLipBottom = ModelSerializationExtensions.JsonDeserialize<LandmarkCoordinate>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

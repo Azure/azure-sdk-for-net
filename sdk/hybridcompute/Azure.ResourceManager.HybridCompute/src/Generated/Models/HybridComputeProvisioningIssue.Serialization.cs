@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in SuggestedAccessRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HybridComputeAccessRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

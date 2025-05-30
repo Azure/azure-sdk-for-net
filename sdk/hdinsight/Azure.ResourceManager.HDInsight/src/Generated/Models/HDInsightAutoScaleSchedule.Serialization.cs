@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(TimeAndCapacity))
             {
                 writer.WritePropertyName("timeAndCapacity"u8);
-                writer.WriteObjectValue(TimeAndCapacity, options);
+                ((IJsonModel<HDInsightAutoScaleTimeAndCapacity>)TimeAndCapacity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    timeAndCapacity = HDInsightAutoScaleTimeAndCapacity.DeserializeHDInsightAutoScaleTimeAndCapacity(property.Value, options);
+                    timeAndCapacity = ModelSerializationExtensions.JsonDeserialize<HDInsightAutoScaleTimeAndCapacity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

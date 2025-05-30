@@ -38,27 +38,27 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(CatalogOptions))
             {
                 writer.WritePropertyName("catalogOptions"u8);
-                writer.WriteObjectValue(CatalogOptions, options);
+                ((IJsonModel<CatalogOptions>)CatalogOptions).Write(writer, options);
             }
             if (Optional.IsDefined(Coordinator))
             {
                 writer.WritePropertyName("coordinator"u8);
-                writer.WriteObjectValue(Coordinator, options);
+                ((IJsonModel<TrinoCoordinator>)Coordinator).Write(writer, options);
             }
             if (Optional.IsDefined(UserPluginsSpec))
             {
                 writer.WritePropertyName("userPluginsSpec"u8);
-                writer.WriteObjectValue(UserPluginsSpec, options);
+                ((IJsonModel<TrinoUserPluginListResult>)UserPluginsSpec).Write(writer, options);
             }
             if (Optional.IsDefined(UserTelemetrySpec))
             {
                 writer.WritePropertyName("userTelemetrySpec"u8);
-                writer.WriteObjectValue(UserTelemetrySpec, options);
+                ((IJsonModel<TrinoUserTelemetry>)UserTelemetrySpec).Write(writer, options);
             }
             if (Optional.IsDefined(Worker))
             {
                 writer.WritePropertyName("worker"u8);
-                writer.WriteObjectValue(Worker, options);
+                ((IJsonModel<TrinoWorker>)Worker).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    catalogOptions = CatalogOptions.DeserializeCatalogOptions(property.Value, options);
+                    catalogOptions = ModelSerializationExtensions.JsonDeserialize<CatalogOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("coordinator"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    coordinator = TrinoCoordinator.DeserializeTrinoCoordinator(property.Value, options);
+                    coordinator = ModelSerializationExtensions.JsonDeserialize<TrinoCoordinator>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userPluginsSpec"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    userPluginsSpec = TrinoUserPluginListResult.DeserializeTrinoUserPluginListResult(property.Value, options);
+                    userPluginsSpec = ModelSerializationExtensions.JsonDeserialize<TrinoUserPluginListResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userTelemetrySpec"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    userTelemetrySpec = TrinoUserTelemetry.DeserializeTrinoUserTelemetry(property.Value, options);
+                    userTelemetrySpec = ModelSerializationExtensions.JsonDeserialize<TrinoUserTelemetry>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("worker"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    worker = TrinoWorker.DeserializeTrinoWorker(property.Value, options);
+                    worker = ModelSerializationExtensions.JsonDeserialize<TrinoWorker>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

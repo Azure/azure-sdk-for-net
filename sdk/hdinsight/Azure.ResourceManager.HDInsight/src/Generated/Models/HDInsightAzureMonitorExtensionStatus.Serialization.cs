@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(SelectedConfigurations))
             {
                 writer.WritePropertyName("selectedConfigurations"u8);
-                writer.WriteObjectValue(SelectedConfigurations, options);
+                ((IJsonModel<HDInsightAzureMonitorSelectedConfigurations>)SelectedConfigurations).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    selectedConfigurations = HDInsightAzureMonitorSelectedConfigurations.DeserializeHDInsightAzureMonitorSelectedConfigurations(property.Value, options);
+                    selectedConfigurations = ModelSerializationExtensions.JsonDeserialize<HDInsightAzureMonitorSelectedConfigurations>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

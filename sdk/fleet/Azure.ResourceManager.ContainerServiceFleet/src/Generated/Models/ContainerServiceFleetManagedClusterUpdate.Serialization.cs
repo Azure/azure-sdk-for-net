@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
 
             writer.WritePropertyName("upgrade"u8);
-            writer.WriteObjectValue(Upgrade, options);
+            ((IJsonModel<ContainerServiceFleetManagedClusterUpgradeSpec>)Upgrade).Write(writer, options);
             if (Optional.IsDefined(NodeImageSelection))
             {
                 writer.WritePropertyName("nodeImageSelection"u8);
-                writer.WriteObjectValue(NodeImageSelection, options);
+                ((IJsonModel<NodeImageSelection>)NodeImageSelection).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 if (property.NameEquals("upgrade"u8))
                 {
-                    upgrade = ContainerServiceFleetManagedClusterUpgradeSpec.DeserializeContainerServiceFleetManagedClusterUpgradeSpec(property.Value, options);
+                    upgrade = ModelSerializationExtensions.JsonDeserialize<ContainerServiceFleetManagedClusterUpgradeSpec>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nodeImageSelection"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    nodeImageSelection = NodeImageSelection.DeserializeNodeImageSelection(property.Value, options);
+                    nodeImageSelection = ModelSerializationExtensions.JsonDeserialize<NodeImageSelection>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

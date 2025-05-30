@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 if (property.NameEquals("style"u8))
                 {
-                    style = FormRecognizer.Models.Style.DeserializeStyle(property.Value);
+                    style = ModelSerializationExtensions.JsonDeserialize<Style>(property.Value);
                     continue;
                 }
             }

@@ -57,22 +57,22 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(AutoScaleConfiguration))
             {
                 writer.WritePropertyName("autoscale"u8);
-                writer.WriteObjectValue(AutoScaleConfiguration, options);
+                ((IJsonModel<HDInsightAutoScaleConfiguration>)AutoScaleConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile, options);
+                ((IJsonModel<HardwareProfile>)HardwareProfile).Write(writer, options);
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile, options);
+                ((IJsonModel<OSProfile>)OSProfile).Write(writer, options);
             }
             if (Optional.IsDefined(VirtualNetworkProfile))
             {
                 writer.WritePropertyName("virtualNetworkProfile"u8);
-                writer.WriteObjectValue(VirtualNetworkProfile, options);
+                ((IJsonModel<HDInsightVirtualNetworkProfile>)VirtualNetworkProfile).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DataDisksGroups))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDisksGroups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HDInsightClusterDataDiskGroup>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in ScriptActions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ScriptAction>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    autoScale = HDInsightAutoScaleConfiguration.DeserializeHDInsightAutoScaleConfiguration(property.Value, options);
+                    autoScale = ModelSerializationExtensions.JsonDeserialize<HDInsightAutoScaleConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("hardwareProfile"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    hardwareProfile = HardwareProfile.DeserializeHardwareProfile(property.Value, options);
+                    hardwareProfile = ModelSerializationExtensions.JsonDeserialize<HardwareProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("osProfile"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    osProfile = OSProfile.DeserializeOSProfile(property.Value, options);
+                    osProfile = ModelSerializationExtensions.JsonDeserialize<OSProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("virtualNetworkProfile"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    virtualNetworkProfile = HDInsightVirtualNetworkProfile.DeserializeHDInsightVirtualNetworkProfile(property.Value, options);
+                    virtualNetworkProfile = ModelSerializationExtensions.JsonDeserialize<HDInsightVirtualNetworkProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataDisksGroups"u8))

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<CloudHsmClusterPrivateEndpointConnectionProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(ETag))
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         continue;
                     }
-                    properties = CloudHsmClusterPrivateEndpointConnectionProperties.DeserializeCloudHsmClusterPrivateEndpointConnectionProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<CloudHsmClusterPrivateEndpointConnectionProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

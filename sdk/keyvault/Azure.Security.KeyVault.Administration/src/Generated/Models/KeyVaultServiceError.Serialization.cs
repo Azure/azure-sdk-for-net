@@ -39,7 +39,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                         innererror = null;
                         continue;
                     }
-                    innererror = DeserializeKeyVaultServiceError(property.Value);
+                    innererror = ModelSerializationExtensions.JsonDeserialize<KeyVaultServiceError>(property.Value);
                     continue;
                 }
             }

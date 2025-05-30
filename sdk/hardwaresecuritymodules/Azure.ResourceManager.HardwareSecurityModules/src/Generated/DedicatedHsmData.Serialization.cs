@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<DedicatedHsmSku>)Sku).Write(writer, options);
             if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<DedicatedHsmProperties>)Properties).Write(writer, options);
         }
 
         DedicatedHsmData IJsonModel<DedicatedHsmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = DedicatedHsmSku.DeserializeDedicatedHsmSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<DedicatedHsmSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DedicatedHsmProperties.DeserializeDedicatedHsmProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<DedicatedHsmProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

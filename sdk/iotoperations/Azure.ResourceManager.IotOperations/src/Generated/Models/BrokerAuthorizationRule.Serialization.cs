@@ -38,18 +38,18 @@ namespace Azure.ResourceManager.IotOperations.Models
             writer.WriteStartArray();
             foreach (var item in BrokerResources)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<BrokerResourceRule>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("principals"u8);
-            writer.WriteObjectValue(Principals, options);
+            ((IJsonModel<PrincipalConfig>)Principals).Write(writer, options);
             if (Optional.IsCollectionDefined(StateStoreResources))
             {
                 writer.WritePropertyName("stateStoreResources"u8);
                 writer.WriteStartArray();
                 foreach (var item in StateStoreResources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StateStoreResourceRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 }
                 if (property.NameEquals("principals"u8))
                 {
-                    principals = PrincipalConfig.DeserializePrincipalConfig(property.Value, options);
+                    principals = ModelSerializationExtensions.JsonDeserialize<PrincipalConfig>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("stateStoreResources"u8))

@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     {
                         continue;
                     }
-                    error = Error.DeserializeError(property.Value);
+                    error = ModelSerializationExtensions.JsonDeserialize<Error>(property.Value);
                     continue;
                 }
             }

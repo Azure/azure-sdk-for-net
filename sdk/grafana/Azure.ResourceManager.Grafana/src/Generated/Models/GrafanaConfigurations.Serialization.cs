@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Grafana.Models
             if (Optional.IsDefined(Smtp))
             {
                 writer.WritePropertyName("smtp"u8);
-                writer.WriteObjectValue(Smtp, options);
+                ((IJsonModel<Smtp>)Smtp).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    smtp = Smtp.DeserializeSmtp(property.Value, options);
+                    smtp = ModelSerializationExtensions.JsonDeserialize<Smtp>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

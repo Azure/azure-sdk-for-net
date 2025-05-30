@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in ExtensionsAllowList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HybridComputeConfigurationExtension>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in ExtensionsBlockList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HybridComputeConfigurationExtension>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

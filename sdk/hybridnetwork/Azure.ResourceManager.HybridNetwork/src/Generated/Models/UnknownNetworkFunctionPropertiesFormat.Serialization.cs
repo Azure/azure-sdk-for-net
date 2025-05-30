@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    networkFunctionDefinitionVersionResourceReference = DeploymentResourceIdReference.DeserializeDeploymentResourceIdReference(property.Value, options);
+                    networkFunctionDefinitionVersionResourceReference = ModelSerializationExtensions.JsonDeserialize<DeploymentResourceIdReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nfviType"u8))

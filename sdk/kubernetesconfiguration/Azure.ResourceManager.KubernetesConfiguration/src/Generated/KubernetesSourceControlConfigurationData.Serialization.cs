@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             if (Optional.IsDefined(HelmOperatorProperties))
             {
                 writer.WritePropertyName("helmOperatorProperties"u8);
-                writer.WriteObjectValue(HelmOperatorProperties, options);
+                ((IJsonModel<HelmOperatorProperties>)HelmOperatorProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
             {
                 writer.WritePropertyName("complianceStatus"u8);
-                writer.WriteObjectValue(ComplianceStatus, options);
+                ((IJsonModel<KubernetesConfigurationComplianceStatus>)ComplianceStatus).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                             {
                                 continue;
                             }
-                            helmOperatorProperties = HelmOperatorProperties.DeserializeHelmOperatorProperties(property0.Value, options);
+                            helmOperatorProperties = ModelSerializationExtensions.JsonDeserialize<HelmOperatorProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                             {
                                 continue;
                             }
-                            complianceStatus = KubernetesConfigurationComplianceStatus.DeserializeKubernetesConfigurationComplianceStatus(property0.Value, options);
+                            complianceStatus = ModelSerializationExtensions.JsonDeserialize<KubernetesConfigurationComplianceStatus>(property0.Value);
                             continue;
                         }
                     }

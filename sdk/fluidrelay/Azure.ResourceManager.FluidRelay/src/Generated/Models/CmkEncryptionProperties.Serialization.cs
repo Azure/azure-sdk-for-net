@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             if (Optional.IsDefined(KeyEncryptionKeyIdentity))
             {
                 writer.WritePropertyName("keyEncryptionKeyIdentity"u8);
-                writer.WriteObjectValue(KeyEncryptionKeyIdentity, options);
+                ((IJsonModel<CmkIdentity>)KeyEncryptionKeyIdentity).Write(writer, options);
             }
             if (Optional.IsDefined(KeyEncryptionKeyUri))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                     {
                         continue;
                     }
-                    keyEncryptionKeyIdentity = CmkIdentity.DeserializeCmkIdentity(property.Value, options);
+                    keyEncryptionKeyIdentity = ModelSerializationExtensions.JsonDeserialize<CmkIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("keyEncryptionKeyUrl"u8))

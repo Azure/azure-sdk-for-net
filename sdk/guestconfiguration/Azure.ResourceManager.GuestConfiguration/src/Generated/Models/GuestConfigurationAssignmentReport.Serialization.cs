@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<GuestConfigurationAssignmentReportProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    properties = GuestConfigurationAssignmentReportProperties.DeserializeGuestConfigurationAssignmentReportProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<GuestConfigurationAssignmentReportProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

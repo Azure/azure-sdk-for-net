@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(NetworkFunctionTemplate))
             {
                 writer.WritePropertyName("networkFunctionTemplate"u8);
-                writer.WriteObjectValue(NetworkFunctionTemplate, options);
+                ((IJsonModel<ContainerizedNetworkFunctionTemplate>)NetworkFunctionTemplate).Write(writer, options);
             }
         }
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    networkFunctionTemplate = ContainerizedNetworkFunctionTemplate.DeserializeContainerizedNetworkFunctionTemplate(property.Value, options);
+                    networkFunctionTemplate = ModelSerializationExtensions.JsonDeserialize<ContainerizedNetworkFunctionTemplate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

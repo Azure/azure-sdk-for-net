@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(ClientGroupInfo))
             {
                 writer.WritePropertyName("clientGroupInfo"u8);
-                writer.WriteObjectValue(ClientGroupInfo, options);
+                ((IJsonModel<ClientGroupInfo>)ClientGroupInfo).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ConfigurationOverride))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    clientGroupInfo = ClientGroupInfo.DeserializeClientGroupInfo(property.Value, options);
+                    clientGroupInfo = ModelSerializationExtensions.JsonDeserialize<ClientGroupInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("configurationOverride"u8))

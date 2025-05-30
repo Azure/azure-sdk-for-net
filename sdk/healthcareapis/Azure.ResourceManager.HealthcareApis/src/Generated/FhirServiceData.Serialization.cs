@@ -45,8 +45,7 @@ namespace Azure.ResourceManager.HealthcareApis
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(ETag))
             {
@@ -63,22 +62,22 @@ namespace Azure.ResourceManager.HealthcareApis
             if (Optional.IsDefined(AcrConfiguration))
             {
                 writer.WritePropertyName("acrConfiguration"u8);
-                writer.WriteObjectValue(AcrConfiguration, options);
+                ((IJsonModel<FhirServiceAcrConfiguration>)AcrConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(AuthenticationConfiguration))
             {
                 writer.WritePropertyName("authenticationConfiguration"u8);
-                writer.WriteObjectValue(AuthenticationConfiguration, options);
+                ((IJsonModel<FhirServiceAuthenticationConfiguration>)AuthenticationConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(CorsConfiguration))
             {
                 writer.WritePropertyName("corsConfiguration"u8);
-                writer.WriteObjectValue(CorsConfiguration, options);
+                ((IJsonModel<FhirServiceCorsConfiguration>)CorsConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ExportConfiguration))
             {
                 writer.WritePropertyName("exportConfiguration"u8);
-                writer.WriteObjectValue(ExportConfiguration, options);
+                ((IJsonModel<FhirServiceExportConfiguration>)ExportConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -86,7 +85,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HealthcareApisPrivateEndpointConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -103,22 +102,22 @@ namespace Azure.ResourceManager.HealthcareApis
             if (Optional.IsDefined(ResourceVersionPolicyConfiguration))
             {
                 writer.WritePropertyName("resourceVersionPolicyConfiguration"u8);
-                writer.WriteObjectValue(ResourceVersionPolicyConfiguration, options);
+                ((IJsonModel<FhirServiceResourceVersionPolicyConfiguration>)ResourceVersionPolicyConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ImportConfiguration))
             {
                 writer.WritePropertyName("importConfiguration"u8);
-                writer.WriteObjectValue(ImportConfiguration, options);
+                ((IJsonModel<FhirServiceImportConfiguration>)ImportConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ImplementationGuidesConfiguration))
             {
                 writer.WritePropertyName("implementationGuidesConfiguration"u8);
-                writer.WriteObjectValue(ImplementationGuidesConfiguration, options);
+                ((IJsonModel<ImplementationGuidesConfiguration>)ImplementationGuidesConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<Encryption>)Encryption).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.HealthcareApis
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -236,7 +235,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -263,7 +262,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            acrConfiguration = FhirServiceAcrConfiguration.DeserializeFhirServiceAcrConfiguration(property0.Value, options);
+                            acrConfiguration = ModelSerializationExtensions.JsonDeserialize<FhirServiceAcrConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("authenticationConfiguration"u8))
@@ -272,7 +271,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            authenticationConfiguration = FhirServiceAuthenticationConfiguration.DeserializeFhirServiceAuthenticationConfiguration(property0.Value, options);
+                            authenticationConfiguration = ModelSerializationExtensions.JsonDeserialize<FhirServiceAuthenticationConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("corsConfiguration"u8))
@@ -281,7 +280,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            corsConfiguration = FhirServiceCorsConfiguration.DeserializeFhirServiceCorsConfiguration(property0.Value, options);
+                            corsConfiguration = ModelSerializationExtensions.JsonDeserialize<FhirServiceCorsConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("exportConfiguration"u8))
@@ -290,7 +289,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            exportConfiguration = FhirServiceExportConfiguration.DeserializeFhirServiceExportConfiguration(property0.Value, options);
+                            exportConfiguration = ModelSerializationExtensions.JsonDeserialize<FhirServiceExportConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))
@@ -331,7 +330,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            resourceVersionPolicyConfiguration = FhirServiceResourceVersionPolicyConfiguration.DeserializeFhirServiceResourceVersionPolicyConfiguration(property0.Value, options);
+                            resourceVersionPolicyConfiguration = ModelSerializationExtensions.JsonDeserialize<FhirServiceResourceVersionPolicyConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("importConfiguration"u8))
@@ -340,7 +339,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            importConfiguration = FhirServiceImportConfiguration.DeserializeFhirServiceImportConfiguration(property0.Value, options);
+                            importConfiguration = ModelSerializationExtensions.JsonDeserialize<FhirServiceImportConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("implementationGuidesConfiguration"u8))
@@ -349,7 +348,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            implementationGuidesConfiguration = ImplementationGuidesConfiguration.DeserializeImplementationGuidesConfiguration(property0.Value, options);
+                            implementationGuidesConfiguration = ModelSerializationExtensions.JsonDeserialize<ImplementationGuidesConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -358,7 +357,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            encryption = Encryption.DeserializeEncryption(property0.Value, options);
+                            encryption = ModelSerializationExtensions.JsonDeserialize<Encryption>(property0.Value);
                             continue;
                         }
                     }

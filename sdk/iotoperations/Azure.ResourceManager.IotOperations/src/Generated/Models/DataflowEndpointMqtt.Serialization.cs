@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
 
             writer.WritePropertyName("authentication"u8);
-            writer.WriteObjectValue(Authentication, options);
+            ((IJsonModel<DataflowEndpointMqttAuthentication>)Authentication).Write(writer, options);
             if (Optional.IsDefined(ClientIdPrefix))
             {
                 writer.WritePropertyName("clientIdPrefix"u8);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             if (Optional.IsDefined(Tls))
             {
                 writer.WritePropertyName("tls"u8);
-                writer.WriteObjectValue(Tls, options);
+                ((IJsonModel<IotOperationsTlsProperties>)Tls).Write(writer, options);
             }
             if (Optional.IsDefined(CloudEventAttributes))
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 if (property.NameEquals("authentication"u8))
                 {
-                    authentication = DataflowEndpointMqttAuthentication.DeserializeDataflowEndpointMqttAuthentication(property.Value, options);
+                    authentication = ModelSerializationExtensions.JsonDeserialize<DataflowEndpointMqttAuthentication>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("clientIdPrefix"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    tls = IotOperationsTlsProperties.DeserializeIotOperationsTlsProperties(property.Value, options);
+                    tls = ModelSerializationExtensions.JsonDeserialize<IotOperationsTlsProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("cloudEventAttributes"u8))

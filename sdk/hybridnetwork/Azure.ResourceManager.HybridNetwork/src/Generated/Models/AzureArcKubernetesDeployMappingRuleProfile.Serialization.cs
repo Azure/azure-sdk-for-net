@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(HelmMappingRuleProfile))
             {
                 writer.WritePropertyName("helmMappingRuleProfile"u8);
-                writer.WriteObjectValue(HelmMappingRuleProfile, options);
+                ((IJsonModel<HelmMappingRuleProfile>)HelmMappingRuleProfile).Write(writer, options);
             }
         }
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    helmMappingRuleProfile = HelmMappingRuleProfile.DeserializeHelmMappingRuleProfile(property.Value, options);
+                    helmMappingRuleProfile = ModelSerializationExtensions.JsonDeserialize<HelmMappingRuleProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("applicationEnablement"u8))

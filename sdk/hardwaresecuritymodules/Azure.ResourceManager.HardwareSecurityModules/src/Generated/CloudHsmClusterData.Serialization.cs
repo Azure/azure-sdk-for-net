@@ -42,18 +42,17 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<CloudHsmClusterProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<CloudHsmClusterSku>)Sku).Write(writer, options);
             }
         }
 
@@ -96,7 +95,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         continue;
                     }
-                    properties = CloudHsmClusterProperties.DeserializeCloudHsmClusterProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<CloudHsmClusterProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -106,7 +105,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -115,7 +114,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         continue;
                     }
-                    sku = CloudHsmClusterSku.DeserializeCloudHsmClusterSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<CloudHsmClusterSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -158,7 +157,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -36,25 +36,25 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WritePropertyName("storage"u8);
-            writer.WriteObjectValue(Storage, options);
+            ((IJsonModel<FlinkStorageProfile>)Storage).Write(writer, options);
             if (Optional.IsDefined(NumReplicas))
             {
                 writer.WritePropertyName("numReplicas"u8);
                 writer.WriteNumberValue(NumReplicas.Value);
             }
             writer.WritePropertyName("jobManager"u8);
-            writer.WriteObjectValue(JobManager, options);
+            ((IJsonModel<ComputeResourceRequirement>)JobManager).Write(writer, options);
             if (Optional.IsDefined(HistoryServer))
             {
                 writer.WritePropertyName("historyServer"u8);
-                writer.WriteObjectValue(HistoryServer, options);
+                ((IJsonModel<ComputeResourceRequirement>)HistoryServer).Write(writer, options);
             }
             writer.WritePropertyName("taskManager"u8);
-            writer.WriteObjectValue(TaskManager, options);
+            ((IJsonModel<ComputeResourceRequirement>)TaskManager).Write(writer, options);
             if (Optional.IsDefined(CatalogOptions))
             {
                 writer.WritePropertyName("catalogOptions"u8);
-                writer.WriteObjectValue(CatalogOptions, options);
+                ((IJsonModel<FlinkCatalogOptions>)CatalogOptions).Write(writer, options);
             }
             if (Optional.IsDefined(DeploymentMode))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(JobSpec))
             {
                 writer.WritePropertyName("jobSpec"u8);
-                writer.WriteObjectValue(JobSpec, options);
+                ((IJsonModel<FlinkJobProfile>)JobSpec).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 if (property.NameEquals("storage"u8))
                 {
-                    storage = FlinkStorageProfile.DeserializeFlinkStorageProfile(property.Value, options);
+                    storage = ModelSerializationExtensions.JsonDeserialize<FlinkStorageProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("numReplicas"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (property.NameEquals("jobManager"u8))
                 {
-                    jobManager = ComputeResourceRequirement.DeserializeComputeResourceRequirement(property.Value, options);
+                    jobManager = ModelSerializationExtensions.JsonDeserialize<ComputeResourceRequirement>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("historyServer"u8))
@@ -140,12 +140,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    historyServer = ComputeResourceRequirement.DeserializeComputeResourceRequirement(property.Value, options);
+                    historyServer = ModelSerializationExtensions.JsonDeserialize<ComputeResourceRequirement>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("taskManager"u8))
                 {
-                    taskManager = ComputeResourceRequirement.DeserializeComputeResourceRequirement(property.Value, options);
+                    taskManager = ModelSerializationExtensions.JsonDeserialize<ComputeResourceRequirement>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("catalogOptions"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    catalogOptions = FlinkCatalogOptions.DeserializeFlinkCatalogOptions(property.Value, options);
+                    catalogOptions = ModelSerializationExtensions.JsonDeserialize<FlinkCatalogOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deploymentMode"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    jobSpec = FlinkJobProfile.DeserializeFlinkJobProfile(property.Value, options);
+                    jobSpec = ModelSerializationExtensions.JsonDeserialize<FlinkJobProfile>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

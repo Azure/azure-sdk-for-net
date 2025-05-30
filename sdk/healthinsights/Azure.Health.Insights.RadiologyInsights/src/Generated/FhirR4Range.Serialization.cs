@@ -38,12 +38,12 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Low))
             {
                 writer.WritePropertyName("low"u8);
-                writer.WriteObjectValue(Low, options);
+                ((IJsonModel<FhirR4Quantity>)Low).Write(writer, options);
             }
             if (Optional.IsDefined(High))
             {
                 writer.WritePropertyName("high"u8);
-                writer.WriteObjectValue(High, options);
+                ((IJsonModel<FhirR4Quantity>)High).Write(writer, options);
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    low = FhirR4Quantity.DeserializeFhirR4Quantity(property.Value, options);
+                    low = ModelSerializationExtensions.JsonDeserialize<FhirR4Quantity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("high"u8))
@@ -90,7 +90,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    high = FhirR4Quantity.DeserializeFhirR4Quantity(property.Value, options);
+                    high = ModelSerializationExtensions.JsonDeserialize<FhirR4Quantity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

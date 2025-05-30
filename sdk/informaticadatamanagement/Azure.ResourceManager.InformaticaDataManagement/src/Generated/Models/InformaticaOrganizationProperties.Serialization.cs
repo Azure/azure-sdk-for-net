@@ -42,27 +42,27 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             if (Optional.IsDefined(InformaticaProperties))
             {
                 writer.WritePropertyName("informaticaProperties"u8);
-                writer.WriteObjectValue(InformaticaProperties, options);
+                ((IJsonModel<InformaticaProperties>)InformaticaProperties).Write(writer, options);
             }
             if (Optional.IsDefined(MarketplaceDetails))
             {
                 writer.WritePropertyName("marketplaceDetails"u8);
-                writer.WriteObjectValue(MarketplaceDetails, options);
+                ((IJsonModel<InformaticaMarketplaceDetails>)MarketplaceDetails).Write(writer, options);
             }
             if (Optional.IsDefined(UserDetails))
             {
                 writer.WritePropertyName("userDetails"u8);
-                writer.WriteObjectValue(UserDetails, options);
+                ((IJsonModel<InformaticaUserDetails>)UserDetails).Write(writer, options);
             }
             if (Optional.IsDefined(CompanyDetails))
             {
                 writer.WritePropertyName("companyDetails"u8);
-                writer.WriteObjectValue(CompanyDetails, options);
+                ((IJsonModel<InformaticaCompanyDetails>)CompanyDetails).Write(writer, options);
             }
             if (Optional.IsDefined(LinkOrganization))
             {
                 writer.WritePropertyName("linkOrganization"u8);
-                writer.WriteObjectValue(LinkOrganization, options);
+                ((IJsonModel<LinkOrganization>)LinkOrganization).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     {
                         continue;
                     }
-                    informaticaProperties = InformaticaProperties.DeserializeInformaticaProperties(property.Value, options);
+                    informaticaProperties = ModelSerializationExtensions.JsonDeserialize<InformaticaProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("marketplaceDetails"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     {
                         continue;
                     }
-                    marketplaceDetails = InformaticaMarketplaceDetails.DeserializeInformaticaMarketplaceDetails(property.Value, options);
+                    marketplaceDetails = ModelSerializationExtensions.JsonDeserialize<InformaticaMarketplaceDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userDetails"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     {
                         continue;
                     }
-                    userDetails = InformaticaUserDetails.DeserializeInformaticaUserDetails(property.Value, options);
+                    userDetails = ModelSerializationExtensions.JsonDeserialize<InformaticaUserDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("companyDetails"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     {
                         continue;
                     }
-                    companyDetails = InformaticaCompanyDetails.DeserializeInformaticaCompanyDetails(property.Value, options);
+                    companyDetails = ModelSerializationExtensions.JsonDeserialize<InformaticaCompanyDetails>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("linkOrganization"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     {
                         continue;
                     }
-                    linkOrganization = LinkOrganization.DeserializeLinkOrganization(property.Value, options);
+                    linkOrganization = ModelSerializationExtensions.JsonDeserialize<LinkOrganization>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

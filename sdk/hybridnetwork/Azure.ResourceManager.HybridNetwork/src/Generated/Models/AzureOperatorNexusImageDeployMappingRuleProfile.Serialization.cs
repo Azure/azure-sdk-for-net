@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(ImageMappingRuleProfile))
             {
                 writer.WritePropertyName("imageMappingRuleProfile"u8);
-                writer.WriteObjectValue(ImageMappingRuleProfile, options);
+                ((IJsonModel<ImageMappingRuleProfile>)ImageMappingRuleProfile).Write(writer, options);
             }
         }
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    imageMappingRuleProfile = ImageMappingRuleProfile.DeserializeImageMappingRuleProfile(property.Value, options);
+                    imageMappingRuleProfile = ModelSerializationExtensions.JsonDeserialize<ImageMappingRuleProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("applicationEnablement"u8))

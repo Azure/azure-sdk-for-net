@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("web"u8);
-                writer.WriteObjectValue(Web, options);
+                ((IJsonModel<WebConnectivityEndpoint>)Web).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Ssh))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in Ssh)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SshConnectivityEndpoint>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 if (property.NameEquals("web"u8))
                 {
-                    web = WebConnectivityEndpoint.DeserializeWebConnectivityEndpoint(property.Value, options);
+                    web = ModelSerializationExtensions.JsonDeserialize<WebConnectivityEndpoint>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ssh"u8))

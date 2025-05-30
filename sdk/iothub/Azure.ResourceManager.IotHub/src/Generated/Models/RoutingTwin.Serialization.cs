@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<RoutingTwinProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    properties = RoutingTwinProperties.DeserializeRoutingTwinProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<RoutingTwinProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

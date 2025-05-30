@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HybridCompute
             if (Optional.IsDefined(LicenseDetails))
             {
                 writer.WritePropertyName("licenseDetails"u8);
-                writer.WriteObjectValue(LicenseDetails, options);
+                ((IJsonModel<HybridComputeLicenseDetails>)LicenseDetails).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.HybridCompute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            licenseDetails = HybridComputeLicenseDetails.DeserializeHybridComputeLicenseDetails(property0.Value, options);
+                            licenseDetails = ModelSerializationExtensions.JsonDeserialize<HybridComputeLicenseDetails>(property0.Value);
                             continue;
                         }
                     }

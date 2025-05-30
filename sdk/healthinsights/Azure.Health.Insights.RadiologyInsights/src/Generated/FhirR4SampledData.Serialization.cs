@@ -36,7 +36,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("origin"u8);
-            writer.WriteObjectValue(Origin, options);
+            ((IJsonModel<FhirR4Quantity>)Origin).Write(writer, options);
             writer.WritePropertyName("period"u8);
             writer.WriteNumberValue(Period);
             if (Optional.IsDefined(Factor))
@@ -98,7 +98,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 if (property.NameEquals("origin"u8))
                 {
-                    origin = FhirR4Quantity.DeserializeFhirR4Quantity(property.Value, options);
+                    origin = ModelSerializationExtensions.JsonDeserialize<FhirR4Quantity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("period"u8))

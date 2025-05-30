@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(LoadBalancerProfile))
             {
                 writer.WritePropertyName("loadBalancerProfile"u8);
-                writer.WriteObjectValue(LoadBalancerProfile, options);
+                ((IJsonModel<ProvisionedClusterLoadBalancerProfile>)LoadBalancerProfile).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkPolicy))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    loadBalancerProfile = ProvisionedClusterLoadBalancerProfile.DeserializeProvisionedClusterLoadBalancerProfile(property.Value, options);
+                    loadBalancerProfile = ModelSerializationExtensions.JsonDeserialize<ProvisionedClusterLoadBalancerProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("networkPolicy"u8))

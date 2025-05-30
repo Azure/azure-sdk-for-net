@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
@@ -451,7 +452,7 @@ namespace Azure.Security.KeyVault.Storage
             request.Headers.Add("Content-Type", "application/json");
             var model = new StorageRestoreParameters(storageBundleBackup);
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            ((IJsonModel<StorageRestoreParameters>)model).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }
@@ -677,7 +678,7 @@ namespace Azure.Security.KeyVault.Storage
             }
             var model = storageAccountCreateParameters;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            ((IJsonModel<StorageAccountCreateParameters>)model).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }
@@ -793,7 +794,7 @@ namespace Azure.Security.KeyVault.Storage
             }
             var model = storageAccountUpdateParameters;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            ((IJsonModel<StorageAccountUpdateParameters>)model).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }
@@ -878,7 +879,7 @@ namespace Azure.Security.KeyVault.Storage
             request.Headers.Add("Content-Type", "application/json");
             var model = new StorageAccountRegenerteKeyParameters(keyName);
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            ((IJsonModel<StorageAccountRegenerteKeyParameters>)model).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }
@@ -1458,7 +1459,7 @@ namespace Azure.Security.KeyVault.Storage
             }
             var model = sasDefinitionCreateParameters;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            ((IJsonModel<SasDefinitionCreateParameters>)model).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }
@@ -1584,7 +1585,7 @@ namespace Azure.Security.KeyVault.Storage
             }
             var model = sasDefinitionUpdateParameters;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            ((IJsonModel<SasDefinitionUpdateParameters>)model).Write(content.JsonWriter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }

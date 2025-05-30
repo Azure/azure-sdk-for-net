@@ -45,7 +45,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteBooleanValue(IncludeEvidence.Value);
             }
             writer.WritePropertyName("clinicalTrials"u8);
-            writer.WriteObjectValue(ClinicalTrials, options);
+            ((IJsonModel<ClinicalTrials>)ClinicalTrials).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -110,7 +110,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 if (property.NameEquals("clinicalTrials"u8))
                 {
-                    clinicalTrials = ClinicalTrials.DeserializeClinicalTrials(property.Value, options);
+                    clinicalTrials = ModelSerializationExtensions.JsonDeserialize<ClinicalTrials>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

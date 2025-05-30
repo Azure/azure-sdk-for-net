@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             writer.WritePropertyName("serviceEndpoint"u8);
             writer.WriteStringValue(ServiceEndpoint);
             writer.WritePropertyName("requestMetadata"u8);
-            writer.WriteObjectValue(RequestMetadata, options);
+            ((IJsonModel<RequestMetadata>)RequestMetadata).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 if (property.NameEquals("requestMetadata"u8))
                 {
-                    requestMetadata = RequestMetadata.DeserializeRequestMetadata(property.Value, options);
+                    requestMetadata = ModelSerializationExtensions.JsonDeserialize<RequestMetadata>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

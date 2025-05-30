@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             writer.WriteStartArray();
             foreach (var item in AuthenticationMethods)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<BrokerAuthenticatorMethods>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))

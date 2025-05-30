@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Grafana
             if (options.Format != "W" && Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
-                writer.WriteObjectValue(ConnectionState, options);
+                ((IJsonModel<ManagedPrivateEndpointConnectionState>)ConnectionState).Write(writer, options);
             }
             if (Optional.IsDefined(PrivateLinkServiceUri))
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Grafana
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Grafana
                             {
                                 continue;
                             }
-                            connectionState = ManagedPrivateEndpointConnectionState.DeserializeManagedPrivateEndpointConnectionState(property0.Value, options);
+                            connectionState = ModelSerializationExtensions.JsonDeserialize<ManagedPrivateEndpointConnectionState>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceUrl"u8))

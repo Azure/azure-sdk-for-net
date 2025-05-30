@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
-                writer.WriteObjectValue(Message, options);
+                ((IJsonModel<RoutingMessage>)Message).Write(writer, options);
             }
             if (Optional.IsDefined(Twin))
             {
                 writer.WritePropertyName("twin"u8);
-                writer.WriteObjectValue(Twin, options);
+                ((IJsonModel<RoutingTwin>)Twin).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    message = RoutingMessage.DeserializeRoutingMessage(property.Value, options);
+                    message = ModelSerializationExtensions.JsonDeserialize<RoutingMessage>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("twin"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    twin = RoutingTwin.DeserializeRoutingTwin(property.Value, options);
+                    twin = ModelSerializationExtensions.JsonDeserialize<RoutingTwin>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

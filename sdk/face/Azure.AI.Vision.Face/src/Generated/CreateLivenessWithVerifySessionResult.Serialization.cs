@@ -41,7 +41,7 @@ namespace Azure.AI.Vision.Face
             if (Optional.IsDefined(VerifyImage))
             {
                 writer.WritePropertyName("verifyImage"u8);
-                writer.WriteObjectValue(VerifyImage, options);
+                ((IJsonModel<LivenessWithVerifyImage>)VerifyImage).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -103,7 +103,7 @@ namespace Azure.AI.Vision.Face
                     {
                         continue;
                     }
-                    verifyImage = LivenessWithVerifyImage.DeserializeLivenessWithVerifyImage(property.Value, options);
+                    verifyImage = ModelSerializationExtensions.JsonDeserialize<LivenessWithVerifyImage>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

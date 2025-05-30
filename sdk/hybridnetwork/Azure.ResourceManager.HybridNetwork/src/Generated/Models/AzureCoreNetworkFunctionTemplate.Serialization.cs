@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkFunctionApplications)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AzureCoreNetworkFunctionApplication>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

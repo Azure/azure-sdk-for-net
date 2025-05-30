@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(Hci))
             {
                 writer.WritePropertyName("hci"u8);
-                writer.WriteObjectValue(Hci, options);
+                ((IJsonModel<HciInfraVnetProfile>)Hci).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    hci = HciInfraVnetProfile.DeserializeHciInfraVnetProfile(property.Value, options);
+                    hci = ModelSerializationExtensions.JsonDeserialize<HciInfraVnetProfile>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(ArtifactProfile))
             {
                 writer.WritePropertyName("artifactProfile"u8);
-                writer.WriteObjectValue(ArtifactProfile, options);
+                ((IJsonModel<NSDArtifactProfile>)ArtifactProfile).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    artifactProfile = NSDArtifactProfile.DeserializeNSDArtifactProfile(property.Value, options);
+                    artifactProfile = ModelSerializationExtensions.JsonDeserialize<NSDArtifactProfile>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

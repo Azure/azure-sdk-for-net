@@ -48,7 +48,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
-                writer.WriteObjectValue(Identifier, options);
+                ((IJsonModel<FhirR4Identifier>)Identifier).Write(writer, options);
             }
             if (Optional.IsDefined(Display))
             {
@@ -103,7 +103,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    identifier = FhirR4Identifier.DeserializeFhirR4Identifier(property.Value, options);
+                    identifier = ModelSerializationExtensions.JsonDeserialize<FhirR4Identifier>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("display"u8))

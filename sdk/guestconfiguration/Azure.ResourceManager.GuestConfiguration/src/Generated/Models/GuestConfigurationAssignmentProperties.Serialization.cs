@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             if (Optional.IsDefined(GuestConfiguration))
             {
                 writer.WritePropertyName("guestConfiguration"u8);
-                writer.WriteObjectValue(GuestConfiguration, options);
+                ((IJsonModel<GuestConfigurationNavigation>)GuestConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             if (Optional.IsDefined(LatestAssignmentReport))
             {
                 writer.WritePropertyName("latestAssignmentReport"u8);
-                writer.WriteObjectValue(LatestAssignmentReport, options);
+                ((IJsonModel<GuestConfigurationAssignmentReportInfo>)LatestAssignmentReport).Write(writer, options);
             }
             if (Optional.IsDefined(Context))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteStartArray();
                     foreach (var item in VmssVmList)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<GuestConfigurationVmssVmInfo>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    guestConfiguration = GuestConfigurationNavigation.DeserializeGuestConfigurationNavigation(property.Value, options);
+                    guestConfiguration = ModelSerializationExtensions.JsonDeserialize<GuestConfigurationNavigation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("complianceStatus"u8))
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    latestAssignmentReport = GuestConfigurationAssignmentReportInfo.DeserializeGuestConfigurationAssignmentReportInfo(property.Value, options);
+                    latestAssignmentReport = ModelSerializationExtensions.JsonDeserialize<GuestConfigurationAssignmentReportInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("context"u8))

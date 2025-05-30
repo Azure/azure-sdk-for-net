@@ -29,7 +29,7 @@ namespace Azure.Security.KeyVault.Storage.Models
             if (Optional.IsDefined(StorageAccountAttributes))
             {
                 writer.WritePropertyName("attributes"u8);
-                writer.WriteObjectValue(StorageAccountAttributes);
+                JsonSerializer.Serialize(writer, StorageAccountAttributes);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<HybridContainerServiceCredentialListError>)Error).Write(writer, options);
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ListCredentialResponseProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    error = HybridContainerServiceCredentialListError.DeserializeHybridContainerServiceCredentialListError(property.Value, options);
+                    error = ModelSerializationExtensions.JsonDeserialize<HybridContainerServiceCredentialListError>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    properties = ListCredentialResponseProperties.DeserializeListCredentialResponseProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ListCredentialResponseProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

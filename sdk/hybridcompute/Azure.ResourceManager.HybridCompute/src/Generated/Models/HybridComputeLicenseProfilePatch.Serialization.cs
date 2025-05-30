@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in ProductFeatures)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HybridComputeProductFeatureUpdate>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

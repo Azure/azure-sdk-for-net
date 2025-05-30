@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.IotOperations.Models
             if (Optional.IsDefined(AccessTokenSettings))
             {
                 writer.WritePropertyName("accessTokenSettings"u8);
-                writer.WriteObjectValue(AccessTokenSettings, options);
+                ((IJsonModel<DataflowEndpointAuthenticationAccessToken>)AccessTokenSettings).Write(writer, options);
             }
             if (Optional.IsDefined(SystemAssignedManagedIdentitySettings))
             {
                 writer.WritePropertyName("systemAssignedManagedIdentitySettings"u8);
-                writer.WriteObjectValue(SystemAssignedManagedIdentitySettings, options);
+                ((IJsonModel<DataflowEndpointAuthenticationSystemAssignedManagedIdentity>)SystemAssignedManagedIdentitySettings).Write(writer, options);
             }
             if (Optional.IsDefined(UserAssignedManagedIdentitySettings))
             {
                 writer.WritePropertyName("userAssignedManagedIdentitySettings"u8);
-                writer.WriteObjectValue(UserAssignedManagedIdentitySettings, options);
+                ((IJsonModel<DataflowEndpointAuthenticationUserAssignedManagedIdentity>)UserAssignedManagedIdentitySettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    accessTokenSettings = DataflowEndpointAuthenticationAccessToken.DeserializeDataflowEndpointAuthenticationAccessToken(property.Value, options);
+                    accessTokenSettings = ModelSerializationExtensions.JsonDeserialize<DataflowEndpointAuthenticationAccessToken>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("systemAssignedManagedIdentitySettings"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    systemAssignedManagedIdentitySettings = DataflowEndpointAuthenticationSystemAssignedManagedIdentity.DeserializeDataflowEndpointAuthenticationSystemAssignedManagedIdentity(property.Value, options);
+                    systemAssignedManagedIdentitySettings = ModelSerializationExtensions.JsonDeserialize<DataflowEndpointAuthenticationSystemAssignedManagedIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userAssignedManagedIdentitySettings"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    userAssignedManagedIdentitySettings = DataflowEndpointAuthenticationUserAssignedManagedIdentity.DeserializeDataflowEndpointAuthenticationUserAssignedManagedIdentity(property.Value, options);
+                    userAssignedManagedIdentitySettings = ModelSerializationExtensions.JsonDeserialize<DataflowEndpointAuthenticationUserAssignedManagedIdentity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Feedback))
             {
                 writer.WritePropertyName("feedback"u8);
-                writer.WriteObjectValue(Feedback, options);
+                ((IJsonModel<CloudToDeviceFeedbackQueueProperties>)Feedback).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    feedback = CloudToDeviceFeedbackQueueProperties.DeserializeCloudToDeviceFeedbackQueueProperties(property.Value, options);
+                    feedback = ModelSerializationExtensions.JsonDeserialize<CloudToDeviceFeedbackQueueProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.FrontDoor
             if (Optional.IsDefined(ExperimentEndpointA))
             {
                 writer.WritePropertyName("endpointA"u8);
-                writer.WriteObjectValue(ExperimentEndpointA, options);
+                ((IJsonModel<FrontDoorExperimentEndpointProperties>)ExperimentEndpointA).Write(writer, options);
             }
             if (Optional.IsDefined(ExperimentEndpointB))
             {
                 writer.WritePropertyName("endpointB"u8);
-                writer.WriteObjectValue(ExperimentEndpointB, options);
+                ((IJsonModel<FrontDoorExperimentEndpointProperties>)ExperimentEndpointB).Write(writer, options);
             }
             if (Optional.IsDefined(EnabledState))
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.FrontDoor
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.FrontDoor
                             {
                                 continue;
                             }
-                            endpointA = FrontDoorExperimentEndpointProperties.DeserializeFrontDoorExperimentEndpointProperties(property0.Value, options);
+                            endpointA = ModelSerializationExtensions.JsonDeserialize<FrontDoorExperimentEndpointProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("endpointB"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.FrontDoor
                             {
                                 continue;
                             }
-                            endpointB = FrontDoorExperimentEndpointProperties.DeserializeFrontDoorExperimentEndpointProperties(property0.Value, options);
+                            endpointB = ModelSerializationExtensions.JsonDeserialize<FrontDoorExperimentEndpointProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enabledState"u8))

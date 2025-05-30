@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.KeyVault
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<Models.KeyVaultProperties>)Properties).Write(writer, options);
         }
 
         KeyVaultData IJsonModel<KeyVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = Models.KeyVaultProperties.DeserializeKeyVaultProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<Models.KeyVaultProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

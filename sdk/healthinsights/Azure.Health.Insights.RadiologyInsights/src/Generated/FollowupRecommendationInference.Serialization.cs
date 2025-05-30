@@ -43,7 +43,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(EffectivePeriod))
             {
                 writer.WritePropertyName("effectivePeriod"u8);
-                writer.WriteObjectValue(EffectivePeriod, options);
+                ((IJsonModel<FhirR4Period>)EffectivePeriod).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Findings))
             {
@@ -51,7 +51,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Findings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RecommendationFinding>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WritePropertyName("isHedging"u8);
             writer.WriteBooleanValue(IsHedging);
             writer.WritePropertyName("recommendedProcedure"u8);
-            writer.WriteObjectValue(RecommendedProcedure, options);
+            ((IJsonModel<ProcedureRecommendation>)RecommendedProcedure).Write(writer, options);
         }
 
         FollowupRecommendationInference IJsonModel<FollowupRecommendationInference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    effectivePeriod = FhirR4Period.DeserializeFhirR4Period(property.Value, options);
+                    effectivePeriod = ModelSerializationExtensions.JsonDeserialize<FhirR4Period>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("findings"u8))
@@ -151,7 +151,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 if (property.NameEquals("recommendedProcedure"u8))
                 {
-                    recommendedProcedure = ProcedureRecommendation.DeserializeProcedureRecommendation(property.Value, options);
+                    recommendedProcedure = ModelSerializationExtensions.JsonDeserialize<ProcedureRecommendation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

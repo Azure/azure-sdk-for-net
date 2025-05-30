@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<ContainerServiceFleetUpdateStatus>)Status).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
@@ -50,14 +50,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WriteStartArray();
                 foreach (var item in Groups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerServiceFleetUpdateGroupStatus>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(AfterStageWaitStatus))
             {
                 writer.WritePropertyName("afterStageWaitStatus"u8);
-                writer.WriteObjectValue(AfterStageWaitStatus, options);
+                ((IJsonModel<ContainerServiceFleetWaitStatus>)AfterStageWaitStatus).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    status = ContainerServiceFleetUpdateStatus.DeserializeContainerServiceFleetUpdateStatus(property.Value, options);
+                    status = ModelSerializationExtensions.JsonDeserialize<ContainerServiceFleetUpdateStatus>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    afterStageWaitStatus = ContainerServiceFleetWaitStatus.DeserializeContainerServiceFleetWaitStatus(property.Value, options);
+                    afterStageWaitStatus = ModelSerializationExtensions.JsonDeserialize<ContainerServiceFleetWaitStatus>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

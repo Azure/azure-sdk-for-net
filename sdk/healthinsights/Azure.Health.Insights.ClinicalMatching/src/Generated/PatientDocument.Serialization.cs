@@ -54,7 +54,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStringValue(CreatedDateTime.Value, "O");
             }
             writer.WritePropertyName("content"u8);
-            writer.WriteObjectValue(Content, options);
+            ((IJsonModel<DocumentContent>)Content).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -137,7 +137,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 if (property.NameEquals("content"u8))
                 {
-                    content = DocumentContent.DeserializeDocumentContent(property.Value, options);
+                    content = ModelSerializationExtensions.JsonDeserialize<DocumentContent>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

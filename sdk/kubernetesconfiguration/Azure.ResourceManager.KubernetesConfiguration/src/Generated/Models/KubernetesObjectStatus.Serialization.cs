@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (AppliedBy != null)
                 {
                     writer.WritePropertyName("appliedBy"u8);
-                    writer.WriteObjectValue(AppliedBy, options);
+                    ((IJsonModel<KubernetesObjectReference>)AppliedBy).Write(writer, options);
                 }
                 else
                 {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteStartArray();
                     foreach (var item in StatusConditions)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<KubernetesObjectStatusCondition>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (HelmReleaseProperties != null)
                 {
                     writer.WritePropertyName("helmReleaseProperties"u8);
-                    writer.WriteObjectValue(HelmReleaseProperties, options);
+                    ((IJsonModel<HelmReleaseProperties>)HelmReleaseProperties).Write(writer, options);
                 }
                 else
                 {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         appliedBy = null;
                         continue;
                     }
-                    appliedBy = KubernetesObjectReference.DeserializeKubernetesObjectReference(property.Value, options);
+                    appliedBy = ModelSerializationExtensions.JsonDeserialize<KubernetesObjectReference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("statusConditions"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         helmReleaseProperties = null;
                         continue;
                     }
-                    helmReleaseProperties = HelmReleaseProperties.DeserializeHelmReleaseProperties(property.Value, options);
+                    helmReleaseProperties = ModelSerializationExtensions.JsonDeserialize<HelmReleaseProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -57,7 +57,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Period))
             {
                 writer.WritePropertyName("period"u8);
-                writer.WriteObjectValue(Period, options);
+                ((IJsonModel<FhirR4Period>)Period).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -143,7 +143,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    period = FhirR4Period.DeserializeFhirR4Period(property.Value, options);
+                    period = ModelSerializationExtensions.JsonDeserialize<FhirR4Period>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

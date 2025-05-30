@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             if (Optional.IsDefined(ServerlessConfigProperties))
             {
                 writer.WritePropertyName("serverlessConfigProperties"u8);
-                writer.WriteObjectValue(ServerlessConfigProperties, options);
+                ((IJsonModel<ServerlessConfigProperties>)ServerlessConfigProperties).Write(writer, options);
             }
             if (Optional.IsDefined(ServerlessRuntimeConfigProperties))
             {
                 writer.WritePropertyName("serverlessRuntimeConfigProperties"u8);
-                writer.WriteObjectValue(ServerlessRuntimeConfigProperties, options);
+                ((IJsonModel<ServerlessRuntimeConfigProperties>)ServerlessRuntimeConfigProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     {
                         continue;
                     }
-                    serverlessConfigProperties = ServerlessConfigProperties.DeserializeServerlessConfigProperties(property.Value, options);
+                    serverlessConfigProperties = ModelSerializationExtensions.JsonDeserialize<ServerlessConfigProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("serverlessRuntimeConfigProperties"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     {
                         continue;
                     }
-                    serverlessRuntimeConfigProperties = ServerlessRuntimeConfigProperties.DeserializeServerlessRuntimeConfigProperties(property.Value, options);
+                    serverlessRuntimeConfigProperties = ModelSerializationExtensions.JsonDeserialize<ServerlessRuntimeConfigProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(EsuProfile))
             {
                 writer.WritePropertyName("esuProfile"u8);
-                writer.WriteObjectValue(EsuProfile, options);
+                ((IJsonModel<LicenseProfileMachineInstanceViewEsuProperties>)EsuProfile).Write(writer, options);
             }
             writer.WritePropertyName("productProfile"u8);
             writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in ProductFeatures)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HybridComputeProductFeature>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    esuProfile = LicenseProfileMachineInstanceViewEsuProperties.DeserializeLicenseProfileMachineInstanceViewEsuProperties(property.Value, options);
+                    esuProfile = ModelSerializationExtensions.JsonDeserialize<LicenseProfileMachineInstanceViewEsuProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("productProfile"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             {
                                 continue;
                             }
-                            error = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
+                            error = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("productFeatures"u8))

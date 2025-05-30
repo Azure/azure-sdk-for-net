@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.HybridContainerService
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<ProvisionedClusterProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation, options);
+                ((IJsonModel<HybridContainerServiceExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
         }
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         continue;
                     }
-                    properties = ProvisionedClusterProperties.DeserializeProvisionedClusterProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<ProvisionedClusterProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         continue;
                     }
-                    extendedLocation = HybridContainerServiceExtendedLocation.DeserializeHybridContainerServiceExtendedLocation(property.Value, options);
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<HybridContainerServiceExtendedLocation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

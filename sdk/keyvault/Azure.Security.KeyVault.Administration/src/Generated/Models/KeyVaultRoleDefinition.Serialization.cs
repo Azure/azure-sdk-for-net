@@ -39,7 +39,7 @@ namespace Azure.Security.KeyVault.Administration
                 writer.WriteStartArray();
                 foreach (var item in Permissions)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }

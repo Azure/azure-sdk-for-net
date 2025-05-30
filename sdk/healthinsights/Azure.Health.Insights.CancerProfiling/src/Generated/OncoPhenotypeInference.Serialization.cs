@@ -54,7 +54,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 writer.WriteStartArray();
                 foreach (var item in Evidence)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InferenceEvidence>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

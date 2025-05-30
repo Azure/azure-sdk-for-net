@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 writer.WriteStartArray();
                 foreach (var item in EndpointDetails)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<DedicatedHsmEndpointDetail>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

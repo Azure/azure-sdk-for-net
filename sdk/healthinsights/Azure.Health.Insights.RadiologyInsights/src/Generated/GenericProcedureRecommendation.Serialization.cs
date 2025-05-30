@@ -36,7 +36,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("code"u8);
-            writer.WriteObjectValue(Code, options);
+            ((IJsonModel<FhirR4CodeableConcept>)Code).Write(writer, options);
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -74,7 +74,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 if (property.NameEquals("code"u8))
                 {
-                    code = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
+                    code = ModelSerializationExtensions.JsonDeserialize<FhirR4CodeableConcept>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))

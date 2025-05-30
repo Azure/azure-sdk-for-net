@@ -37,22 +37,22 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             if (Optional.IsDefined(InformaticaOrganizationProperties))
             {
                 writer.WritePropertyName("informaticaOrganizationProperties"u8);
-                writer.WriteObjectValue(InformaticaOrganizationProperties, options);
+                ((IJsonModel<InformaticaOrganizationPatch>)InformaticaOrganizationProperties).Write(writer, options);
             }
             if (Optional.IsDefined(MarketplaceDetails))
             {
                 writer.WritePropertyName("marketplaceDetails"u8);
-                writer.WriteObjectValue(MarketplaceDetails, options);
+                ((IJsonModel<InformaticaMarketplaceDetailsUpdate>)MarketplaceDetails).Write(writer, options);
             }
             if (Optional.IsDefined(UserDetails))
             {
                 writer.WritePropertyName("userDetails"u8);
-                writer.WriteObjectValue(UserDetails, options);
+                ((IJsonModel<InformaticaUserDetailsUpdate>)UserDetails).Write(writer, options);
             }
             if (Optional.IsDefined(CompanyDetails))
             {
                 writer.WritePropertyName("companyDetails"u8);
-                writer.WriteObjectValue(CompanyDetails, options);
+                ((IJsonModel<InformaticaCompanyDetailsUpdate>)CompanyDetails).Write(writer, options);
             }
             if (Optional.IsDefined(ExistingResourceId))
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     {
                         continue;
                     }
-                    informaticaOrganizationProperties = InformaticaOrganizationPatch.DeserializeInformaticaOrganizationPatch(property.Value, options);
+                    informaticaOrganizationProperties = ModelSerializationExtensions.JsonDeserialize<InformaticaOrganizationPatch>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("marketplaceDetails"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     {
                         continue;
                     }
-                    marketplaceDetails = InformaticaMarketplaceDetailsUpdate.DeserializeInformaticaMarketplaceDetailsUpdate(property.Value, options);
+                    marketplaceDetails = ModelSerializationExtensions.JsonDeserialize<InformaticaMarketplaceDetailsUpdate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userDetails"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     {
                         continue;
                     }
-                    userDetails = InformaticaUserDetailsUpdate.DeserializeInformaticaUserDetailsUpdate(property.Value, options);
+                    userDetails = ModelSerializationExtensions.JsonDeserialize<InformaticaUserDetailsUpdate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("companyDetails"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     {
                         continue;
                     }
-                    companyDetails = InformaticaCompanyDetailsUpdate.DeserializeInformaticaCompanyDetailsUpdate(property.Value, options);
+                    companyDetails = ModelSerializationExtensions.JsonDeserialize<InformaticaCompanyDetailsUpdate>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("existingResourceId"u8))

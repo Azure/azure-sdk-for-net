@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 writer.WriteStartArray();
                 foreach (var item in SolutionTypes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PublicCloudConnectorSolutionTypeSettings>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartArray();
             foreach (var item in Nodes)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ClusterComputeNodeProfile>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(AvailabilityZones))

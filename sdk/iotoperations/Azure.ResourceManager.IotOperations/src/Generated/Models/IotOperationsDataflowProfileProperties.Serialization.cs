@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             if (Optional.IsDefined(Diagnostics))
             {
                 writer.WritePropertyName("diagnostics"u8);
-                writer.WriteObjectValue(Diagnostics, options);
+                ((IJsonModel<DataflowProfileDiagnostics>)Diagnostics).Write(writer, options);
             }
             if (Optional.IsDefined(InstanceCount))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    diagnostics = DataflowProfileDiagnostics.DeserializeDataflowProfileDiagnostics(property.Value, options);
+                    diagnostics = ModelSerializationExtensions.JsonDeserialize<DataflowProfileDiagnostics>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("instanceCount"u8))

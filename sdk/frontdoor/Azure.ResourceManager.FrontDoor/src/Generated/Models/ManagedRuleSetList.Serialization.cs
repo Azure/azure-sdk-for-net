@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in ManagedRuleSets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedRuleSet>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

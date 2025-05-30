@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in ScrubbingRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WebApplicationFirewallScrubbingRules>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

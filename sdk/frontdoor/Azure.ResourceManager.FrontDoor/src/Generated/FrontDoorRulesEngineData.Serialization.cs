@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RulesEngineRule>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.FrontDoor
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

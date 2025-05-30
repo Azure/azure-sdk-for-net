@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Fabric.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<FabricSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Fabric.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<FabricCapacityUpdateProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Fabric.Models
                     {
                         continue;
                     }
-                    sku = FabricSku.DeserializeFabricSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<FabricSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Fabric.Models
                     {
                         continue;
                     }
-                    properties = FabricCapacityUpdateProperties.DeserializeFabricCapacityUpdateProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<FabricCapacityUpdateProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

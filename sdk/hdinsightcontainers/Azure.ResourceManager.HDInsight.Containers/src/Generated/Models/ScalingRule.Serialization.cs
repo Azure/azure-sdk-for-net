@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WritePropertyName("scalingMetric"u8);
             writer.WriteStringValue(ScalingMetric);
             writer.WritePropertyName("comparisonRule"u8);
-            writer.WriteObjectValue(ComparisonRule, options);
+            ((IJsonModel<HDInsightComparisonRule>)ComparisonRule).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (property.NameEquals("comparisonRule"u8))
                 {
-                    comparisonRule = HDInsightComparisonRule.DeserializeHDInsightComparisonRule(property.Value, options);
+                    comparisonRule = ModelSerializationExtensions.JsonDeserialize<HDInsightComparisonRule>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<PrivateEndpointConnectionDataModel>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

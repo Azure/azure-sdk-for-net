@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WriteStartArray();
                 foreach (var item in StatusMessages)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FirmwareAnalysisStatusMessage>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

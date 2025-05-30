@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             if (Optional.IsDefined(Clients))
             {
                 writer.WritePropertyName("clients"u8);
-                writer.WriteObjectValue(Clients, options);
+                ((IJsonModel<BrokerClientConfig>)Clients).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptInternalTraffic))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             if (Optional.IsDefined(InternalCerts))
             {
                 writer.WritePropertyName("internalCerts"u8);
-                writer.WriteObjectValue(InternalCerts, options);
+                ((IJsonModel<CertManagerCertConfig>)InternalCerts).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    clients = BrokerClientConfig.DeserializeBrokerClientConfig(property.Value, options);
+                    clients = ModelSerializationExtensions.JsonDeserialize<BrokerClientConfig>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("encryptInternalTraffic"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    internalCerts = CertManagerCertConfig.DeserializeCertManagerCertConfig(property.Value, options);
+                    internalCerts = ModelSerializationExtensions.JsonDeserialize<CertManagerCertConfig>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkRuleSet, options);
+                ((IJsonModel<ManagedHsmNetworkRuleSet>)NetworkRuleSet).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Regions))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in Regions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedHsmGeoReplicatedRegion>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedHsmPrivateEndpointConnectionItemData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             if (options.Format != "W" && Optional.IsDefined(SecurityDomainProperties))
             {
                 writer.WritePropertyName("securityDomainProperties"u8);
-                writer.WriteObjectValue(SecurityDomainProperties, options);
+                ((IJsonModel<ManagedHSMSecurityDomainProperties>)SecurityDomainProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    networkAcls = ManagedHsmNetworkRuleSet.DeserializeManagedHsmNetworkRuleSet(property.Value, options);
+                    networkAcls = ModelSerializationExtensions.JsonDeserialize<ManagedHsmNetworkRuleSet>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("regions"u8))
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    securityDomainProperties = ManagedHSMSecurityDomainProperties.DeserializeManagedHSMSecurityDomainProperties(property.Value, options);
+                    securityDomainProperties = ModelSerializationExtensions.JsonDeserialize<ManagedHSMSecurityDomainProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

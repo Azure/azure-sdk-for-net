@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             if (Optional.IsDefined(Attributes))
             {
                 writer.WritePropertyName("attributes"u8);
-                writer.WriteObjectValue(Attributes, options);
+                ((IJsonModel<SecretAttributes>)Attributes).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    attributes = SecretAttributes.DeserializeSecretAttributes(property.Value, options);
+                    attributes = ModelSerializationExtensions.JsonDeserialize<SecretAttributes>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

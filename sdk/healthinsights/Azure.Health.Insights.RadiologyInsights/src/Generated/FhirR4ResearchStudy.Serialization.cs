@@ -41,7 +41,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Identifier)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FhirR4Identifier>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -56,7 +56,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Protocol)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FhirR4Reference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +66,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in PartOf)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FhirR4Reference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,12 +75,12 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(PrimaryPurposeType))
             {
                 writer.WritePropertyName("primaryPurposeType"u8);
-                writer.WriteObjectValue(PrimaryPurposeType, options);
+                ((IJsonModel<FhirR4CodeableConcept>)PrimaryPurposeType).Write(writer, options);
             }
             if (Optional.IsDefined(Phase))
             {
                 writer.WritePropertyName("phase"u8);
-                writer.WriteObjectValue(Phase, options);
+                ((IJsonModel<FhirR4CodeableConcept>)Phase).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Category))
             {
@@ -88,7 +88,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Category)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FhirR4CodeableConcept>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +98,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Focus)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FhirR4CodeableConcept>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -108,7 +108,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Condition)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FhirR4CodeableConcept>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +118,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Contact)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FhirR4ContactDetail>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -128,7 +128,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Keyword)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FhirR4CodeableConcept>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -138,7 +138,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Location)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FhirR4CodeableConcept>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -153,24 +153,24 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Enrollment)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FhirR4Reference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Period))
             {
                 writer.WritePropertyName("period"u8);
-                writer.WriteObjectValue(Period, options);
+                ((IJsonModel<FhirR4Period>)Period).Write(writer, options);
             }
             if (Optional.IsDefined(Sponsor))
             {
                 writer.WritePropertyName("sponsor"u8);
-                writer.WriteObjectValue(Sponsor, options);
+                ((IJsonModel<FhirR4Reference>)Sponsor).Write(writer, options);
             }
             if (Optional.IsDefined(PrincipalInvestigator))
             {
                 writer.WritePropertyName("principalInvestigator"u8);
-                writer.WriteObjectValue(PrincipalInvestigator, options);
+                ((IJsonModel<FhirR4Reference>)PrincipalInvestigator).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Site))
             {
@@ -178,14 +178,14 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Site)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FhirR4Reference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ReasonStopped))
             {
                 writer.WritePropertyName("reasonStopped"u8);
-                writer.WriteObjectValue(ReasonStopped, options);
+                ((IJsonModel<FhirR4CodeableConcept>)ReasonStopped).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Note))
             {
@@ -193,7 +193,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Note)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<FhirR4Annotation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -203,7 +203,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Arm)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResearchStudyArm>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -213,7 +213,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Objective)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResearchStudyObjective>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -345,7 +345,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    primaryPurposeType = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
+                    primaryPurposeType = ModelSerializationExtensions.JsonDeserialize<FhirR4CodeableConcept>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("phase"u8))
@@ -354,7 +354,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    phase = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
+                    phase = ModelSerializationExtensions.JsonDeserialize<FhirR4CodeableConcept>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("category"u8))
@@ -466,7 +466,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    period = FhirR4Period.DeserializeFhirR4Period(property.Value, options);
+                    period = ModelSerializationExtensions.JsonDeserialize<FhirR4Period>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sponsor"u8))
@@ -475,7 +475,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    sponsor = FhirR4Reference.DeserializeFhirR4Reference(property.Value, options);
+                    sponsor = ModelSerializationExtensions.JsonDeserialize<FhirR4Reference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("principalInvestigator"u8))
@@ -484,7 +484,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    principalInvestigator = FhirR4Reference.DeserializeFhirR4Reference(property.Value, options);
+                    principalInvestigator = ModelSerializationExtensions.JsonDeserialize<FhirR4Reference>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("site"u8))
@@ -507,7 +507,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    reasonStopped = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
+                    reasonStopped = ModelSerializationExtensions.JsonDeserialize<FhirR4CodeableConcept>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("note"u8))
@@ -558,7 +558,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    text = FhirR4Narrative.DeserializeFhirR4Narrative(property.Value, options);
+                    text = ModelSerializationExtensions.JsonDeserialize<FhirR4Narrative>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("contained"u8))
@@ -619,7 +619,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    meta = FhirR4Meta.DeserializeFhirR4Meta(property.Value, options);
+                    meta = ModelSerializationExtensions.JsonDeserialize<FhirR4Meta>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("implicitRules"u8))

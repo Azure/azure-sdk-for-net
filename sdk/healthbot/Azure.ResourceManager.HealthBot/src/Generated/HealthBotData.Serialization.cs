@@ -38,16 +38,16 @@ namespace Azure.ResourceManager.HealthBot
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<HealthBotSku>)Sku).Write(writer, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<HealthBotProperties>)Properties).Write(writer, options);
             }
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HealthBot
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = HealthBotSku.DeserializeHealthBotSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<HealthBotSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HealthBot
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HealthBot
                     {
                         continue;
                     }
-                    properties = HealthBotProperties.DeserializeHealthBotProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<HealthBotProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.HealthBot
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

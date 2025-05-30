@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartArray();
             foreach (var item in Libraries)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ClusterLibrary>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

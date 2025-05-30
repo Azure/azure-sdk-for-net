@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.IotOperations.Models
             if (Optional.IsDefined(SystemAssignedManagedIdentitySettings))
             {
                 writer.WritePropertyName("systemAssignedManagedIdentitySettings"u8);
-                writer.WriteObjectValue(SystemAssignedManagedIdentitySettings, options);
+                ((IJsonModel<DataflowEndpointAuthenticationSystemAssignedManagedIdentity>)SystemAssignedManagedIdentitySettings).Write(writer, options);
             }
             if (Optional.IsDefined(UserAssignedManagedIdentitySettings))
             {
                 writer.WritePropertyName("userAssignedManagedIdentitySettings"u8);
-                writer.WriteObjectValue(UserAssignedManagedIdentitySettings, options);
+                ((IJsonModel<DataflowEndpointAuthenticationUserAssignedManagedIdentity>)UserAssignedManagedIdentitySettings).Write(writer, options);
             }
             if (Optional.IsDefined(SaslSettings))
             {
                 writer.WritePropertyName("saslSettings"u8);
-                writer.WriteObjectValue(SaslSettings, options);
+                ((IJsonModel<DataflowEndpointAuthenticationSasl>)SaslSettings).Write(writer, options);
             }
             if (Optional.IsDefined(X509CertificateSettings))
             {
                 writer.WritePropertyName("x509CertificateSettings"u8);
-                writer.WriteObjectValue(X509CertificateSettings, options);
+                ((IJsonModel<DataflowEndpointAuthenticationX509>)X509CertificateSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    systemAssignedManagedIdentitySettings = DataflowEndpointAuthenticationSystemAssignedManagedIdentity.DeserializeDataflowEndpointAuthenticationSystemAssignedManagedIdentity(property.Value, options);
+                    systemAssignedManagedIdentitySettings = ModelSerializationExtensions.JsonDeserialize<DataflowEndpointAuthenticationSystemAssignedManagedIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userAssignedManagedIdentitySettings"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    userAssignedManagedIdentitySettings = DataflowEndpointAuthenticationUserAssignedManagedIdentity.DeserializeDataflowEndpointAuthenticationUserAssignedManagedIdentity(property.Value, options);
+                    userAssignedManagedIdentitySettings = ModelSerializationExtensions.JsonDeserialize<DataflowEndpointAuthenticationUserAssignedManagedIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("saslSettings"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    saslSettings = DataflowEndpointAuthenticationSasl.DeserializeDataflowEndpointAuthenticationSasl(property.Value, options);
+                    saslSettings = ModelSerializationExtensions.JsonDeserialize<DataflowEndpointAuthenticationSasl>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("x509CertificateSettings"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    x509CertificateSettings = DataflowEndpointAuthenticationX509.DeserializeDataflowEndpointAuthenticationX509(property.Value, options);
+                    x509CertificateSettings = ModelSerializationExtensions.JsonDeserialize<DataflowEndpointAuthenticationX509>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

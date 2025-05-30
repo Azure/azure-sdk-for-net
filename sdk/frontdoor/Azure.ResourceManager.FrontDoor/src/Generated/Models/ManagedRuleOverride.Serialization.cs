@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in Exclusions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedRuleExclusion>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.IotOperations.Models
             if (Optional.IsDefined(CustomSettings))
             {
                 writer.WritePropertyName("customSettings"u8);
-                writer.WriteObjectValue(CustomSettings, options);
+                ((IJsonModel<BrokerAuthenticatorMethodCustom>)CustomSettings).Write(writer, options);
             }
             if (Optional.IsDefined(ServiceAccountTokenSettings))
             {
                 writer.WritePropertyName("serviceAccountTokenSettings"u8);
-                writer.WriteObjectValue(ServiceAccountTokenSettings, options);
+                ((IJsonModel<BrokerAuthenticatorMethodSat>)ServiceAccountTokenSettings).Write(writer, options);
             }
             if (Optional.IsDefined(X509Settings))
             {
                 writer.WritePropertyName("x509Settings"u8);
-                writer.WriteObjectValue(X509Settings, options);
+                ((IJsonModel<BrokerAuthenticatorMethodX509>)X509Settings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    customSettings = BrokerAuthenticatorMethodCustom.DeserializeBrokerAuthenticatorMethodCustom(property.Value, options);
+                    customSettings = ModelSerializationExtensions.JsonDeserialize<BrokerAuthenticatorMethodCustom>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("serviceAccountTokenSettings"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    serviceAccountTokenSettings = BrokerAuthenticatorMethodSat.DeserializeBrokerAuthenticatorMethodSat(property.Value, options);
+                    serviceAccountTokenSettings = ModelSerializationExtensions.JsonDeserialize<BrokerAuthenticatorMethodSat>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("x509Settings"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    x509Settings = BrokerAuthenticatorMethodX509.DeserializeBrokerAuthenticatorMethodX509(property.Value, options);
+                    x509Settings = ModelSerializationExtensions.JsonDeserialize<BrokerAuthenticatorMethodX509>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

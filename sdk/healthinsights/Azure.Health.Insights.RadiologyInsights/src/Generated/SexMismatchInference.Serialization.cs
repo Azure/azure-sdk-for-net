@@ -36,7 +36,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sexIndication"u8);
-            writer.WriteObjectValue(SexIndication, options);
+            ((IJsonModel<FhirR4CodeableConcept>)SexIndication).Write(writer, options);
         }
 
         SexMismatchInference IJsonModel<SexMismatchInference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -68,7 +68,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 if (property.NameEquals("sexIndication"u8))
                 {
-                    sexIndication = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
+                    sexIndication = ModelSerializationExtensions.JsonDeserialize<FhirR4CodeableConcept>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

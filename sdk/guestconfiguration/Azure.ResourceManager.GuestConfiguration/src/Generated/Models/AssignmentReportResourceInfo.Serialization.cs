@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WriteStartArray();
                 foreach (var item in Reasons)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AssignmentReportResourceComplianceReason>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

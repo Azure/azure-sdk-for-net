@@ -38,13 +38,13 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteStartArray();
             foreach (var item in Patients)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<PatientRecord>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration, options);
+                ((IJsonModel<RadiologyInsightsModelConfiguration>)Configuration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,7 +105,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    configuration = RadiologyInsightsModelConfiguration.DeserializeRadiologyInsightsModelConfiguration(property.Value, options);
+                    configuration = ModelSerializationExtensions.JsonDeserialize<RadiologyInsightsModelConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

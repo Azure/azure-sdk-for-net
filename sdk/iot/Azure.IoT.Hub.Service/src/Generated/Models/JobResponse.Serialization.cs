@@ -94,7 +94,7 @@ namespace Azure.IoT.Hub.Service.Models
                     {
                         continue;
                     }
-                    cloudToDeviceMethod = CloudToDeviceMethodRequest.DeserializeCloudToDeviceMethodRequest(property.Value);
+                    cloudToDeviceMethod = ModelSerializationExtensions.JsonDeserialize<CloudToDeviceMethodRequest>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("updateTwin"u8))
@@ -103,7 +103,7 @@ namespace Azure.IoT.Hub.Service.Models
                     {
                         continue;
                     }
-                    updateTwin = TwinData.DeserializeTwinData(property.Value);
+                    updateTwin = ModelSerializationExtensions.JsonDeserialize<TwinData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -131,7 +131,7 @@ namespace Azure.IoT.Hub.Service.Models
                     {
                         continue;
                     }
-                    deviceJobStatistics = DeviceJobStatistics.DeserializeDeviceJobStatistics(property.Value);
+                    deviceJobStatistics = ModelSerializationExtensions.JsonDeserialize<DeviceJobStatistics>(property.Value);
                     continue;
                 }
             }

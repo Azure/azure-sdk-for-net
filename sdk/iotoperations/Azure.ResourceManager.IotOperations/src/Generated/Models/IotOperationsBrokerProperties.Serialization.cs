@@ -37,27 +37,27 @@ namespace Azure.ResourceManager.IotOperations.Models
             if (Optional.IsDefined(Advanced))
             {
                 writer.WritePropertyName("advanced"u8);
-                writer.WriteObjectValue(Advanced, options);
+                ((IJsonModel<BrokerAdvancedSettings>)Advanced).Write(writer, options);
             }
             if (Optional.IsDefined(Cardinality))
             {
                 writer.WritePropertyName("cardinality"u8);
-                writer.WriteObjectValue(Cardinality, options);
+                ((IJsonModel<BrokerCardinality>)Cardinality).Write(writer, options);
             }
             if (Optional.IsDefined(Diagnostics))
             {
                 writer.WritePropertyName("diagnostics"u8);
-                writer.WriteObjectValue(Diagnostics, options);
+                ((IJsonModel<BrokerDiagnostics>)Diagnostics).Write(writer, options);
             }
             if (Optional.IsDefined(DiskBackedMessageBuffer))
             {
                 writer.WritePropertyName("diskBackedMessageBuffer"u8);
-                writer.WriteObjectValue(DiskBackedMessageBuffer, options);
+                ((IJsonModel<DiskBackedMessageBuffer>)DiskBackedMessageBuffer).Write(writer, options);
             }
             if (Optional.IsDefined(GenerateResourceLimits))
             {
                 writer.WritePropertyName("generateResourceLimits"u8);
-                writer.WriteObjectValue(GenerateResourceLimits, options);
+                ((IJsonModel<GenerateResourceLimits>)GenerateResourceLimits).Write(writer, options);
             }
             if (Optional.IsDefined(MemoryProfile))
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    advanced = BrokerAdvancedSettings.DeserializeBrokerAdvancedSettings(property.Value, options);
+                    advanced = ModelSerializationExtensions.JsonDeserialize<BrokerAdvancedSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("cardinality"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    cardinality = BrokerCardinality.DeserializeBrokerCardinality(property.Value, options);
+                    cardinality = ModelSerializationExtensions.JsonDeserialize<BrokerCardinality>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("diagnostics"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    diagnostics = BrokerDiagnostics.DeserializeBrokerDiagnostics(property.Value, options);
+                    diagnostics = ModelSerializationExtensions.JsonDeserialize<BrokerDiagnostics>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("diskBackedMessageBuffer"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    diskBackedMessageBuffer = DiskBackedMessageBuffer.DeserializeDiskBackedMessageBuffer(property.Value, options);
+                    diskBackedMessageBuffer = ModelSerializationExtensions.JsonDeserialize<DiskBackedMessageBuffer>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("generateResourceLimits"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    generateResourceLimits = GenerateResourceLimits.DeserializeGenerateResourceLimits(property.Value, options);
+                    generateResourceLimits = ModelSerializationExtensions.JsonDeserialize<GenerateResourceLimits>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("memoryProfile"u8))

@@ -37,12 +37,12 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(FollowupRecommendationOptions))
             {
                 writer.WritePropertyName("followupRecommendationOptions"u8);
-                writer.WriteObjectValue(FollowupRecommendationOptions, options);
+                ((IJsonModel<FollowupRecommendationOptions>)FollowupRecommendationOptions).Write(writer, options);
             }
             if (Optional.IsDefined(FindingOptions))
             {
                 writer.WritePropertyName("findingOptions"u8);
-                writer.WriteObjectValue(FindingOptions, options);
+                ((IJsonModel<FindingOptions>)FindingOptions).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    followupRecommendationOptions = FollowupRecommendationOptions.DeserializeFollowupRecommendationOptions(property.Value, options);
+                    followupRecommendationOptions = ModelSerializationExtensions.JsonDeserialize<FollowupRecommendationOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("findingOptions"u8))
@@ -102,7 +102,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    findingOptions = FindingOptions.DeserializeFindingOptions(property.Value, options);
+                    findingOptions = ModelSerializationExtensions.JsonDeserialize<FindingOptions>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

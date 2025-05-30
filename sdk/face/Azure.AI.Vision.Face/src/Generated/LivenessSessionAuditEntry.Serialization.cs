@@ -45,9 +45,9 @@ namespace Azure.AI.Vision.Face
             writer.WritePropertyName("receivedDateTime"u8);
             writer.WriteStringValue(ReceivedDateTime, "O");
             writer.WritePropertyName("request"u8);
-            writer.WriteObjectValue(Request, options);
+            ((IJsonModel<AuditRequestInfo>)Request).Write(writer, options);
             writer.WritePropertyName("response"u8);
-            writer.WriteObjectValue(Response, options);
+            ((IJsonModel<AuditLivenessResponseInfo>)Response).Write(writer, options);
             writer.WritePropertyName("digest"u8);
             writer.WriteStringValue(Digest);
             if (Optional.IsDefined(SessionImageId))
@@ -138,12 +138,12 @@ namespace Azure.AI.Vision.Face
                 }
                 if (property.NameEquals("request"u8))
                 {
-                    request = AuditRequestInfo.DeserializeAuditRequestInfo(property.Value, options);
+                    request = ModelSerializationExtensions.JsonDeserialize<AuditRequestInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("response"u8))
                 {
-                    response = AuditLivenessResponseInfo.DeserializeAuditLivenessResponseInfo(property.Value, options);
+                    response = ModelSerializationExtensions.JsonDeserialize<AuditLivenessResponseInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("digest"u8))

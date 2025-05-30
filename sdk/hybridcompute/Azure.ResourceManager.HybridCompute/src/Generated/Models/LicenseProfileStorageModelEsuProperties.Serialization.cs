@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in EsuKeys)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<EsuKey>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

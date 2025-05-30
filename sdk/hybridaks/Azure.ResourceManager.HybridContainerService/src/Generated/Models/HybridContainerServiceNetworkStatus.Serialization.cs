@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(OperationStatus))
             {
                 writer.WritePropertyName("operationStatus"u8);
-                writer.WriteObjectValue(OperationStatus, options);
+                ((IJsonModel<VirtualNetworkPropertiesStatusOperationStatus>)OperationStatus).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    operationStatus = VirtualNetworkPropertiesStatusOperationStatus.DeserializeVirtualNetworkPropertiesStatusOperationStatus(property.Value, options);
+                    operationStatus = ModelSerializationExtensions.JsonDeserialize<VirtualNetworkPropertiesStatusOperationStatus>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

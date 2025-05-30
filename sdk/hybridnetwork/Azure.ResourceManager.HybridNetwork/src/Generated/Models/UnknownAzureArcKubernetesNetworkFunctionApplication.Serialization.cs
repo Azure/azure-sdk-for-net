@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    dependsOnProfile = DependsOnProfile.DeserializeDependsOnProfile(property.Value, options);
+                    dependsOnProfile = ModelSerializationExtensions.JsonDeserialize<DependsOnProfile>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

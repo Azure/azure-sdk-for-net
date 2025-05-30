@@ -38,7 +38,7 @@ namespace Azure.Health.Insights.CancerProfiling
             writer.WriteStartArray();
             foreach (var item in Patients)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<OncoPhenotypePatientResult>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("modelVersion"u8);

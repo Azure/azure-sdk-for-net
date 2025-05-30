@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WritePropertyName("tenantId"u8);
             writer.WriteStringValue(TenantId);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<KeyVaultSku>)Sku).Write(writer, options);
             if (Optional.IsCollectionDefined(AccessPolicies))
             {
                 writer.WritePropertyName("accessPolicies"u8);
                 writer.WriteStartArray();
                 foreach (var item in AccessPolicies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<KeyVaultAccessPolicy>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkRuleSet, options);
+                ((IJsonModel<KeyVaultNetworkRuleSet>)NetworkRuleSet).Write(writer, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<KeyVaultPrivateEndpointConnectionItemData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = KeyVaultSku.DeserializeKeyVaultSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<KeyVaultSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("accessPolicies"u8))
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    networkAcls = KeyVaultNetworkRuleSet.DeserializeKeyVaultNetworkRuleSet(property.Value, options);
+                    networkAcls = ModelSerializationExtensions.JsonDeserialize<KeyVaultNetworkRuleSet>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

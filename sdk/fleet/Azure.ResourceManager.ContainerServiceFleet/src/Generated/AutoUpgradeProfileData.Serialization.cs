@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             if (Optional.IsDefined(NodeImageSelection))
             {
                 writer.WritePropertyName("nodeImageSelection"u8);
-                writer.WriteObjectValue(NodeImageSelection, options);
+                ((IJsonModel<AutoUpgradeNodeImageSelection>)NodeImageSelection).Write(writer, options);
             }
             if (Optional.IsDefined(Disabled))
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             if (Optional.IsDefined(AutoUpgradeProfileStatus))
             {
                 writer.WritePropertyName("autoUpgradeProfileStatus"u8);
-                writer.WriteObjectValue(AutoUpgradeProfileStatus, options);
+                ((IJsonModel<AutoUpgradeProfileStatus>)AutoUpgradeProfileStatus).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                             {
                                 continue;
                             }
-                            nodeImageSelection = AutoUpgradeNodeImageSelection.DeserializeAutoUpgradeNodeImageSelection(property0.Value, options);
+                            nodeImageSelection = ModelSerializationExtensions.JsonDeserialize<AutoUpgradeNodeImageSelection>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("disabled"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                             {
                                 continue;
                             }
-                            autoUpgradeProfileStatus = AutoUpgradeProfileStatus.DeserializeAutoUpgradeProfileStatus(property0.Value, options);
+                            autoUpgradeProfileStatus = ModelSerializationExtensions.JsonDeserialize<AutoUpgradeProfileStatus>(property0.Value);
                             continue;
                         }
                     }

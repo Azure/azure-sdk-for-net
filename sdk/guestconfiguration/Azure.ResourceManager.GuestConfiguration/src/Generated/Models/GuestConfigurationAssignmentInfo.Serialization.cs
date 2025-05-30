@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration, options);
+                ((IJsonModel<GuestConfigurationInfo>)Configuration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    configuration = GuestConfigurationInfo.DeserializeGuestConfigurationInfo(property.Value, options);
+                    configuration = ModelSerializationExtensions.JsonDeserialize<GuestConfigurationInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

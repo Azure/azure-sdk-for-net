@@ -42,7 +42,7 @@ namespace Azure.Health.Deidentification
             if (Optional.IsDefined(TaggerResult))
             {
                 writer.WritePropertyName("taggerResult"u8);
-                writer.WriteObjectValue(TaggerResult, options);
+                ((IJsonModel<PhiTaggerResult>)TaggerResult).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +98,7 @@ namespace Azure.Health.Deidentification
                     {
                         continue;
                     }
-                    taggerResult = PhiTaggerResult.DeserializePhiTaggerResult(property.Value, options);
+                    taggerResult = ModelSerializationExtensions.JsonDeserialize<PhiTaggerResult>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

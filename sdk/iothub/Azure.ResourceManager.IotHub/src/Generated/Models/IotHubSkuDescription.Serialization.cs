@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            ((IJsonModel<IotHubSkuInfo>)Sku).Write(writer, options);
             writer.WritePropertyName("capacity"u8);
-            writer.WriteObjectValue(Capacity, options);
+            ((IJsonModel<IotHubCapacity>)Capacity).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = IotHubSkuInfo.DeserializeIotHubSkuInfo(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<IotHubSkuInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
                 {
-                    capacity = IotHubCapacity.DeserializeIotHubCapacity(property.Value, options);
+                    capacity = ModelSerializationExtensions.JsonDeserialize<IotHubCapacity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

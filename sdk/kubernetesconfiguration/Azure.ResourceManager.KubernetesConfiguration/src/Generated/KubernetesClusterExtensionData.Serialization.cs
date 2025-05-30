@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                JsonSerializer.Serialize(writer, Plan);
+                ((IJsonModel<ArmPlan>)Plan).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteObjectValue(Scope, options);
+                ((IJsonModel<KubernetesClusterExtensionScope>)Scope).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ConfigurationSettings))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteStartArray();
                     foreach (var item in Statuses)
                     {
-                        writer.WriteObjectValue(item, options);
+                        ((IJsonModel<KubernetesClusterExtensionStatus>)item).Write(writer, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             if (Optional.IsDefined(AksAssignedIdentity))
             {
                 writer.WritePropertyName("aksAssignedIdentity"u8);
-                JsonSerializer.Serialize(writer, AksAssignedIdentity);
+                ((IJsonModel<ManagedServiceIdentity>)AksAssignedIdentity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsSystemExtension))
             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("plan"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     {
                         continue;
                     }
-                    plan = JsonSerializer.Deserialize<ArmPlan>(property.Value.GetRawText());
+                    plan = ModelSerializationExtensions.JsonDeserialize<ArmPlan>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                             {
                                 continue;
                             }
-                            scope = KubernetesClusterExtensionScope.DeserializeKubernetesClusterExtensionScope(property0.Value, options);
+                            scope = ModelSerializationExtensions.JsonDeserialize<KubernetesClusterExtensionScope>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("configurationSettings"u8))
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                                 errorInfo = null;
                                 continue;
                             }
-                            errorInfo = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
+                            errorInfo = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("customLocationSettings"u8))
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                             {
                                 continue;
                             }
-                            aksAssignedIdentity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property0.Value.GetRawText());
+                            aksAssignedIdentity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("isSystemExtension"u8))

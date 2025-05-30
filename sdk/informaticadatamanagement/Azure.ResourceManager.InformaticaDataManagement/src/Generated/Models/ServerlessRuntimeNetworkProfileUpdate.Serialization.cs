@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             }
 
             writer.WritePropertyName("networkInterfaceConfiguration"u8);
-            writer.WriteObjectValue(NetworkInterfaceConfiguration, options);
+            ((IJsonModel<InformaticaNetworkInterfaceConfigurationUpdate>)NetworkInterfaceConfiguration).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             {
                 if (property.NameEquals("networkInterfaceConfiguration"u8))
                 {
-                    networkInterfaceConfiguration = InformaticaNetworkInterfaceConfigurationUpdate.DeserializeInformaticaNetworkInterfaceConfigurationUpdate(property.Value, options);
+                    networkInterfaceConfiguration = ModelSerializationExtensions.JsonDeserialize<InformaticaNetworkInterfaceConfigurationUpdate>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

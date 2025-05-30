@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in TableList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<HDInsightAzureMonitorTableConfiguration>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

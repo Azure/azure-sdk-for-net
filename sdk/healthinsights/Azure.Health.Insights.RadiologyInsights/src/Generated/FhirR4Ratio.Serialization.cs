@@ -38,12 +38,12 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Numerator))
             {
                 writer.WritePropertyName("numerator"u8);
-                writer.WriteObjectValue(Numerator, options);
+                ((IJsonModel<FhirR4Quantity>)Numerator).Write(writer, options);
             }
             if (Optional.IsDefined(Denominator))
             {
                 writer.WritePropertyName("denominator"u8);
-                writer.WriteObjectValue(Denominator, options);
+                ((IJsonModel<FhirR4Quantity>)Denominator).Write(writer, options);
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    numerator = FhirR4Quantity.DeserializeFhirR4Quantity(property.Value, options);
+                    numerator = ModelSerializationExtensions.JsonDeserialize<FhirR4Quantity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("denominator"u8))
@@ -90,7 +90,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    denominator = FhirR4Quantity.DeserializeFhirR4Quantity(property.Value, options);
+                    denominator = ModelSerializationExtensions.JsonDeserialize<FhirR4Quantity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
