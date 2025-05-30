@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (ChatCompletionSchemaProperties != null)
                 {
                     writer.WritePropertyName("jsonSchemaProperties"u8);
-                    writer.WriteObjectValue(ChatCompletionSchemaProperties);
+                    JsonSerializer.Serialize(writer, ChatCompletionSchemaProperties);
                 }
                 else
                 {
@@ -62,7 +62,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         jsonSchemaProperties = null;
                         continue;
                     }
-                    jsonSchemaProperties = ChatCompletionResponseFormatJsonSchemaProperties.DeserializeChatCompletionResponseFormatJsonSchemaProperties(property.Value);
+                    jsonSchemaProperties = ModelSerializationExtensions.JsonDeserialize<ChatCompletionResponseFormatJsonSchemaProperties>(property.Value);
                     continue;
                 }
             }

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Parents)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TopologySingleResourceParent>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Children)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TopologySingleResourceChild>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

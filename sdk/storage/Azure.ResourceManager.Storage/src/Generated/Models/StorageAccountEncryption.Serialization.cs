@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(Services))
             {
                 writer.WritePropertyName("services"u8);
-                writer.WriteObjectValue(Services, options);
+                ((IJsonModel<StorageAccountEncryptionServices>)Services).Write(writer, options);
             }
             if (Optional.IsDefined(KeySource))
             {
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyvaultproperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties, options);
+                ((IJsonModel<StorageAccountKeyVaultProperties>)KeyVaultProperties).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptionIdentity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(EncryptionIdentity, options);
+                ((IJsonModel<StorageAccountEncryptionIdentity>)EncryptionIdentity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    services = StorageAccountEncryptionServices.DeserializeStorageAccountEncryptionServices(property.Value, options);
+                    services = ModelSerializationExtensions.JsonDeserialize<StorageAccountEncryptionServices>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("keySource"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    keyvaultproperties = StorageAccountKeyVaultProperties.DeserializeStorageAccountKeyVaultProperties(property.Value, options);
+                    keyvaultproperties = ModelSerializationExtensions.JsonDeserialize<StorageAccountKeyVaultProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    identity = StorageAccountEncryptionIdentity.DeserializeStorageAccountEncryptionIdentity(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<StorageAccountEncryptionIdentity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.SignalR.Models
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<SignalRResourceSku>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity, options);
+                ((IJsonModel<SignalRSkuCapacity>)Capacity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     {
                         continue;
                     }
-                    sku = SignalRResourceSku.DeserializeSignalRResourceSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<SignalRResourceSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     {
                         continue;
                     }
-                    capacity = SignalRSkuCapacity.DeserializeSignalRSkuCapacity(property.Value, options);
+                    capacity = ModelSerializationExtensions.JsonDeserialize<SignalRSkuCapacity>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

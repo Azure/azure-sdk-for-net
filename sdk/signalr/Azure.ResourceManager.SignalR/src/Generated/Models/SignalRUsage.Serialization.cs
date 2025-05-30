@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SignalR.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
+                ((IJsonModel<SignalRUsageName>)Name).Write(writer, options);
             }
             if (Optional.IsDefined(Unit))
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     {
                         continue;
                     }
-                    name = SignalRUsageName.DeserializeSignalRUsageName(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<SignalRUsageName>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("unit"u8))

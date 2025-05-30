@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(MicrosoftEndpoints))
             {
                 writer.WritePropertyName("microsoftEndpoints"u8);
-                writer.WriteObjectValue(MicrosoftEndpoints, options);
+                ((IJsonModel<StorageAccountMicrosoftEndpoints>)MicrosoftEndpoints).Write(writer, options);
             }
             if (Optional.IsDefined(InternetEndpoints))
             {
                 writer.WritePropertyName("internetEndpoints"u8);
-                writer.WriteObjectValue(InternetEndpoints, options);
+                ((IJsonModel<StorageAccountInternetEndpoints>)InternetEndpoints).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    microsoftEndpoints = StorageAccountMicrosoftEndpoints.DeserializeStorageAccountMicrosoftEndpoints(property.Value, options);
+                    microsoftEndpoints = ModelSerializationExtensions.JsonDeserialize<StorageAccountMicrosoftEndpoints>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("internetEndpoints"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    internetEndpoints = StorageAccountInternetEndpoints.DeserializeStorageAccountInternetEndpoints(property.Value, options);
+                    internetEndpoints = ModelSerializationExtensions.JsonDeserialize<StorageAccountInternetEndpoints>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

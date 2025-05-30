@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 foreach (var item in ApplicationHealthPolicies)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<ApplicationHealthPolicy>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }

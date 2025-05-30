@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(Webhook))
             {
                 writer.WritePropertyName("webhook"u8);
-                writer.WriteObjectValue(Webhook, options);
+                ((IJsonModel<SourceControlWebhook>)Webhook).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(GitHubResourceInfo))
             {
                 writer.WritePropertyName("gitHubResourceInfo"u8);
-                writer.WriteObjectValue(GitHubResourceInfo, options);
+                ((IJsonModel<GitHubResourceInfo>)GitHubResourceInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AzureDevOpsResourceInfo))
             {
                 writer.WritePropertyName("azureDevOpsResourceInfo"u8);
-                writer.WriteObjectValue(AzureDevOpsResourceInfo, options);
+                ((IJsonModel<AzureDevOpsResourceInfo>)AzureDevOpsResourceInfo).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    webhook = SourceControlWebhook.DeserializeSourceControlWebhook(property.Value, options);
+                    webhook = ModelSerializationExtensions.JsonDeserialize<SourceControlWebhook>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("gitHubResourceInfo"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    gitHubResourceInfo = GitHubResourceInfo.DeserializeGitHubResourceInfo(property.Value, options);
+                    gitHubResourceInfo = ModelSerializationExtensions.JsonDeserialize<GitHubResourceInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azureDevOpsResourceInfo"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    azureDevOpsResourceInfo = AzureDevOpsResourceInfo.DeserializeAzureDevOpsResourceInfo(property.Value, options);
+                    azureDevOpsResourceInfo = ModelSerializationExtensions.JsonDeserialize<AzureDevOpsResourceInfo>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

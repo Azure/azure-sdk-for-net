@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SignalRLiveTraceCategory>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

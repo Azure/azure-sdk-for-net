@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStartArray();
                 foreach (var item in Keys)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StorageAccountKey>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

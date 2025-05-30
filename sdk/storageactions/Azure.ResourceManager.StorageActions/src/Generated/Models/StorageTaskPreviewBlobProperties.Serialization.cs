@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.StorageActions.Models
                 writer.WriteStartArray();
                 foreach (var item in Properties)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StorageTaskPreviewKeyValueProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StorageActions.Models
                 writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StorageTaskPreviewKeyValueProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.StorageActions.Models
                 writer.WriteStartArray();
                 foreach (var item in Tags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StorageTaskPreviewKeyValueProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

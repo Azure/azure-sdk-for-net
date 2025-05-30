@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SecurityCenterLocationData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

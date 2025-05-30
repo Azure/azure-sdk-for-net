@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(Logs))
             {
                 writer.WritePropertyName("logs"u8);
-                writer.WriteObjectValue(Logs, options);
+                ((IJsonModel<DataConnectorDataTypeCommon>)Logs).Write(writer, options);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                     {
                                         continue;
                                     }
-                                    logs = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property1.Value, options);
+                                    logs = ModelSerializationExtensions.JsonDeserialize<DataConnectorDataTypeCommon>(property1.Value);
                                     continue;
                                 }
                             }

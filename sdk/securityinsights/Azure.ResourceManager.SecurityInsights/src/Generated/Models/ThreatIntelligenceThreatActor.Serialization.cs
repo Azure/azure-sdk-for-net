@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            createdBy = ThreatIntelligenceUserInfo.DeserializeThreatIntelligenceUserInfo(property0.Value, options);
+                            createdBy = ModelSerializationExtensions.JsonDeserialize<ThreatIntelligenceUserInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("source"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            lastModifiedBy = ThreatIntelligenceUserInfo.DeserializeThreatIntelligenceUserInfo(property0.Value, options);
+                            lastModifiedBy = ModelSerializationExtensions.JsonDeserialize<ThreatIntelligenceUserInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("lastUpdatedDateTimeUtc"u8))

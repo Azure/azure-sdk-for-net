@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             if (Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
-                writer.WriteObjectValue(Authorization, options);
+                ((IJsonModel<AuthorizationInfo>)Authorization).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Orgs))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 writer.WriteStartArray();
                 foreach (var item in Orgs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AzureDevOpsOrgMetadata>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     {
                         continue;
                     }
-                    authorization = AuthorizationInfo.DeserializeAuthorizationInfo(property.Value, options);
+                    authorization = ModelSerializationExtensions.JsonDeserialize<AuthorizationInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("orgs"u8))

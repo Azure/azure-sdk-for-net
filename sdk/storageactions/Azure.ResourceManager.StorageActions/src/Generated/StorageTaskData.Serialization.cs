@@ -38,10 +38,9 @@ namespace Azure.ResourceManager.StorageActions
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("identity"u8);
-            var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-            JsonSerializer.Serialize(writer, Identity, serializeOptions);
+            ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            ((IJsonModel<StorageTaskProperties>)Properties).Write(writer, options);
         }
 
         StorageTaskData IJsonModel<StorageTaskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -79,12 +78,12 @@ namespace Azure.ResourceManager.StorageActions
                 if (property.NameEquals("identity"u8))
                 {
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = StorageTaskProperties.DeserializeStorageTaskProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<StorageTaskProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.StorageActions
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

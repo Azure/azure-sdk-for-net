@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(Auth))
             {
                 writer.WritePropertyName("auth"u8);
-                writer.WriteObjectValue(Auth, options);
+                ((IJsonModel<CcpAuthConfig>)Auth).Write(writer, options);
             }
             if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
-                writer.WriteObjectValue(Request, options);
+                ((IJsonModel<RestApiPollerRequestConfig>)Request).Write(writer, options);
             }
             if (Optional.IsDefined(DcrConfig))
             {
                 writer.WritePropertyName("dcrConfig"u8);
-                writer.WriteObjectValue(DcrConfig, options);
+                ((IJsonModel<DcrConfiguration>)DcrConfig).Write(writer, options);
             }
             if (Optional.IsDefined(IsActive))
             {
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
-                writer.WriteObjectValue(Response, options);
+                ((IJsonModel<CcpResponseConfig>)Response).Write(writer, options);
             }
             if (Optional.IsDefined(Paging))
             {
                 writer.WritePropertyName("paging"u8);
-                writer.WriteObjectValue(Paging, options);
+                ((IJsonModel<RestApiPollerRequestPagingConfig>)Paging).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AddOnAttributes))
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            auth = CcpAuthConfig.DeserializeCcpAuthConfig(property0.Value, options);
+                            auth = ModelSerializationExtensions.JsonDeserialize<CcpAuthConfig>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("request"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            request = RestApiPollerRequestConfig.DeserializeRestApiPollerRequestConfig(property0.Value, options);
+                            request = ModelSerializationExtensions.JsonDeserialize<RestApiPollerRequestConfig>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dcrConfig"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            dcrConfig = DcrConfiguration.DeserializeDcrConfiguration(property0.Value, options);
+                            dcrConfig = ModelSerializationExtensions.JsonDeserialize<DcrConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("isActive"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            response = CcpResponseConfig.DeserializeCcpResponseConfig(property0.Value, options);
+                            response = ModelSerializationExtensions.JsonDeserialize<CcpResponseConfig>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("paging"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            paging = RestApiPollerRequestPagingConfig.DeserializeRestApiPollerRequestPagingConfig(property0.Value, options);
+                            paging = ModelSerializationExtensions.JsonDeserialize<RestApiPollerRequestPagingConfig>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("addOnAttributes"u8))

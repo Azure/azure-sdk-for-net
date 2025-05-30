@@ -40,14 +40,14 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 writer.WriteStartArray();
                 foreach (var item in InstanceCountSummary)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ContainerGroupInstanceCountSummary>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<StandbyPoolStatus>)Status).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             if (options.Format != "W" && Optional.IsDefined(Prediction))
             {
                 writer.WritePropertyName("prediction"u8);
-                writer.WriteObjectValue(Prediction, options);
+                ((IJsonModel<StandbyContainerGroupPoolPrediction>)Prediction).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     {
                         continue;
                     }
-                    status = StandbyPoolStatus.DeserializeStandbyPoolStatus(property.Value, options);
+                    status = ModelSerializationExtensions.JsonDeserialize<StandbyPoolStatus>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     {
                         continue;
                     }
-                    prediction = StandbyContainerGroupPoolPrediction.DeserializeStandbyContainerGroupPoolPrediction(property.Value, options);
+                    prediction = ModelSerializationExtensions.JsonDeserialize<StandbyContainerGroupPoolPrediction>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

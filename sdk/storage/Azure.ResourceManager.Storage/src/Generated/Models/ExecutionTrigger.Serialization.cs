@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TriggerType.ToSerialString());
             writer.WritePropertyName("parameters"u8);
-            writer.WriteObjectValue(Parameters, options);
+            ((IJsonModel<ExecutionTriggerParameters>)Parameters).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = ExecutionTriggerParameters.DeserializeExecutionTriggerParameters(property.Value, options);
+                    parameters = ModelSerializationExtensions.JsonDeserialize<ExecutionTriggerParameters>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

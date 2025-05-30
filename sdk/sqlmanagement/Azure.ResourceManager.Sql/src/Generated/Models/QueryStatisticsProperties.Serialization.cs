@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Intervals)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<QueryMetricInterval>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

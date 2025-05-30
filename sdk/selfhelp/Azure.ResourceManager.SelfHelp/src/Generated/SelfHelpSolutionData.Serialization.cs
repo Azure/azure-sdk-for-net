@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SelfHelp
                 writer.WriteStartArray();
                 foreach (var item in TriggerCriteria)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SolutionTriggerCriterion>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SelfHelp
             if (options.Format != "W" && Optional.IsDefined(ReplacementMaps))
             {
                 writer.WritePropertyName("replacementMaps"u8);
-                writer.WriteObjectValue(ReplacementMaps, options);
+                ((IJsonModel<SolutionReplacementMaps>)ReplacementMaps).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Sections))
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SelfHelp
                 writer.WriteStartArray();
                 foreach (var item in Sections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SelfHelpSection>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SelfHelp
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.SelfHelp
                             {
                                 continue;
                             }
-                            replacementMaps = SolutionReplacementMaps.DeserializeSolutionReplacementMaps(property0.Value, options);
+                            replacementMaps = ModelSerializationExtensions.JsonDeserialize<SolutionReplacementMaps>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sections"u8))

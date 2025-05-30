@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Agents.Models
             writer.WriteStartArray();
             foreach (var item in Content)
             {
-                writer.WriteObjectValue(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

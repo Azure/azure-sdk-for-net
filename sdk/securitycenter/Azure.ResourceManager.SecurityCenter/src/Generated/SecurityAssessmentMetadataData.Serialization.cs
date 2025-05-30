@@ -107,12 +107,12 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(PartnerData))
             {
                 writer.WritePropertyName("partnerData"u8);
-                writer.WriteObjectValue(PartnerData, options);
+                ((IJsonModel<SecurityAssessmentMetadataPartner>)PartnerData).Write(writer, options);
             }
             if (Optional.IsDefined(PublishDates))
             {
                 writer.WritePropertyName("publishDates"u8);
-                writer.WriteObjectValue(PublishDates, options);
+                ((IJsonModel<SecurityAssessmentPublishDates>)PublishDates).Write(writer, options);
             }
             if (Optional.IsDefined(PlannedDeprecationDate))
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            partnerData = SecurityAssessmentMetadataPartner.DeserializeSecurityAssessmentMetadataPartner(property0.Value, options);
+                            partnerData = ModelSerializationExtensions.JsonDeserialize<SecurityAssessmentMetadataPartner>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publishDates"u8))
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            publishDates = SecurityAssessmentPublishDates.DeserializeSecurityAssessmentPublishDates(property0.Value, options);
+                            publishDates = ModelSerializationExtensions.JsonDeserialize<SecurityAssessmentPublishDates>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("plannedDeprecationDate"u8))

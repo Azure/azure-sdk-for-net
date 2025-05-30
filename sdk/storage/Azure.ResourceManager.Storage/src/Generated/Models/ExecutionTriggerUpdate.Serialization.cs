@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters, options);
+                ((IJsonModel<ExecutionTriggerParametersUpdate>)Parameters).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    parameters = ExecutionTriggerParametersUpdate.DeserializeExecutionTriggerParametersUpdate(property.Value, options);
+                    parameters = ModelSerializationExtensions.JsonDeserialize<ExecutionTriggerParametersUpdate>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

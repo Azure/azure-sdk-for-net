@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    text = QueryRewritesValuesDebugInfo.DeserializeQueryRewritesValuesDebugInfo(property.Value);
+                    text = ModelSerializationExtensions.JsonDeserialize<QueryRewritesValuesDebugInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vectors"u8))

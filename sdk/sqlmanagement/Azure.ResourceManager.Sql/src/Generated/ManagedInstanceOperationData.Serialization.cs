@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.Sql
             if (options.Format != "W" && Optional.IsDefined(OperationParameters))
             {
                 writer.WritePropertyName("operationParameters"u8);
-                writer.WriteObjectValue(OperationParameters, options);
+                ((IJsonModel<ManagedInstanceOperationParametersPair>)OperationParameters).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OperationSteps))
             {
                 writer.WritePropertyName("operationSteps"u8);
-                writer.WriteObjectValue(OperationSteps, options);
+                ((IJsonModel<ManagedInstanceOperationSteps>)OperationSteps).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            operationParameters = ManagedInstanceOperationParametersPair.DeserializeManagedInstanceOperationParametersPair(property0.Value, options);
+                            operationParameters = ModelSerializationExtensions.JsonDeserialize<ManagedInstanceOperationParametersPair>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("operationSteps"u8))
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            operationSteps = ManagedInstanceOperationSteps.DeserializeManagedInstanceOperationSteps(property0.Value, options);
+                            operationSteps = ModelSerializationExtensions.JsonDeserialize<ManagedInstanceOperationSteps>(property0.Value);
                             continue;
                         }
                     }

@@ -97,7 +97,7 @@ namespace Azure.Search.Documents.Models
                         searchDebug = null;
                         continue;
                     }
-                    searchDebug = DebugInfo.DeserializeDebugInfo(property.Value);
+                    searchDebug = ModelSerializationExtensions.JsonDeserialize<DebugInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@search.nextPageParameters"u8))
@@ -106,7 +106,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    searchNextPageParameters = SearchOptions.DeserializeSearchOptions(property.Value);
+                    searchNextPageParameters = ModelSerializationExtensions.JsonDeserialize<SearchOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("value"u8))

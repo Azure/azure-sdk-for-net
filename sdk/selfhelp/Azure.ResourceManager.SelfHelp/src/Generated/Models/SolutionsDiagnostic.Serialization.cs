@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Insights)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SelfHelpDiagnosticInsight>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             if (Optional.IsDefined(BranchConfiguration))
             {
                 writer.WritePropertyName("branchConfiguration"u8);
-                writer.WriteObjectValue(BranchConfiguration, options);
+                ((IJsonModel<TargetBranchConfiguration>)BranchConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     {
                         continue;
                     }
-                    branchConfiguration = TargetBranchConfiguration.DeserializeTargetBranchConfiguration(property.Value, options);
+                    branchConfiguration = ModelSerializationExtensions.JsonDeserialize<TargetBranchConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(DiscoveryLogs))
             {
                 writer.WritePropertyName("discoveryLogs"u8);
-                writer.WriteObjectValue(DiscoveryLogs, options);
+                ((IJsonModel<DataConnectorDataTypeCommon>)DiscoveryLogs).Write(writer, options);
             }
         }
 
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    discoveryLogs = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value, options);
+                    discoveryLogs = ModelSerializationExtensions.JsonDeserialize<DataConnectorDataTypeCommon>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("alerts"u8))
                 {
-                    alerts = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value, options);
+                    alerts = ModelSerializationExtensions.JsonDeserialize<DataConnectorDataTypeCommon>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

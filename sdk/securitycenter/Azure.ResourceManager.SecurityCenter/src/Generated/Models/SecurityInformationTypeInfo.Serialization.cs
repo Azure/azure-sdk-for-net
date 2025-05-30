@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Keywords)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InformationProtectionKeyword>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

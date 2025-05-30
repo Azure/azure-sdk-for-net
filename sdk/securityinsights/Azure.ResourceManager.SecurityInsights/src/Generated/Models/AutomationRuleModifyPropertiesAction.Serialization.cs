@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(ActionConfiguration))
             {
                 writer.WritePropertyName("actionConfiguration"u8);
-                writer.WriteObjectValue(ActionConfiguration, options);
+                ((IJsonModel<SecurityInsightsIncidentActionConfiguration>)ActionConfiguration).Write(writer, options);
             }
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    actionConfiguration = SecurityInsightsIncidentActionConfiguration.DeserializeSecurityInsightsIncidentActionConfiguration(property.Value, options);
+                    actionConfiguration = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsIncidentActionConfiguration>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("order"u8))

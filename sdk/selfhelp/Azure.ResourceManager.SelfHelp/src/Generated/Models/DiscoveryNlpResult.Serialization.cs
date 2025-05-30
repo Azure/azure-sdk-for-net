@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SolutionNlpMetadata>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

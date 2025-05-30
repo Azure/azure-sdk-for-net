@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in ColumnsDefinitions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in QueriesDefinitions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

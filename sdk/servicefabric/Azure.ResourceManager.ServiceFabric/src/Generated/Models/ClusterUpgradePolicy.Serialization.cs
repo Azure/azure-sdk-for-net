@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WritePropertyName("upgradeDomainTimeout"u8);
             writer.WriteStringValue(UpgradeDomainTimeout, "c");
             writer.WritePropertyName("healthPolicy"u8);
-            writer.WriteObjectValue(HealthPolicy, options);
+            ((IJsonModel<ClusterHealthPolicy>)HealthPolicy).Write(writer, options);
             if (Optional.IsDefined(DeltaHealthPolicy))
             {
                 writer.WritePropertyName("deltaHealthPolicy"u8);
-                writer.WriteObjectValue(DeltaHealthPolicy, options);
+                ((IJsonModel<ClusterUpgradeDeltaHealthPolicy>)DeltaHealthPolicy).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (property.NameEquals("healthPolicy"u8))
                 {
-                    healthPolicy = ClusterHealthPolicy.DeserializeClusterHealthPolicy(property.Value, options);
+                    healthPolicy = ModelSerializationExtensions.JsonDeserialize<ClusterHealthPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deltaHealthPolicy"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    deltaHealthPolicy = ClusterUpgradeDeltaHealthPolicy.DeserializeClusterUpgradeDeltaHealthPolicy(property.Value, options);
+                    deltaHealthPolicy = ModelSerializationExtensions.JsonDeserialize<ClusterUpgradeDeltaHealthPolicy>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

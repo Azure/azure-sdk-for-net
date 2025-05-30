@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (options.Format != "W" && Optional.IsDefined(Warning))
             {
                 writer.WritePropertyName("warning"u8);
-                writer.WriteObjectValue(Warning, options);
+                ((IJsonModel<SourceControlOperationWarningBody>)Warning).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    warning = SourceControlOperationWarningBody.DeserializeSourceControlOperationWarningBody(property.Value, options);
+                    warning = ModelSerializationExtensions.JsonDeserialize<SourceControlOperationWarningBody>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

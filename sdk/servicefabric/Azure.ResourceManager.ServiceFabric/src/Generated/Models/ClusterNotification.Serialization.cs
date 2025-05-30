@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStartArray();
             foreach (var item in NotificationTargets)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ClusterNotificationTarget>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

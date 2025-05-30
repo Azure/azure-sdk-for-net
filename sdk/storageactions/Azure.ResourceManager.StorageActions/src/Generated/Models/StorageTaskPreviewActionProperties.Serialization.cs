@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.StorageActions.Models
             }
 
             writer.WritePropertyName("container"u8);
-            writer.WriteObjectValue(Container, options);
+            ((IJsonModel<StorageTaskPreviewContainerProperties>)Container).Write(writer, options);
             writer.WritePropertyName("blobs"u8);
             writer.WriteStartArray();
             foreach (var item in Blobs)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<StorageTaskPreviewBlobProperties>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue(Action, options);
+            ((IJsonModel<StorageTaskPreviewActionCondition>)Action).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.StorageActions.Models
             {
                 if (property.NameEquals("container"u8))
                 {
-                    container = StorageTaskPreviewContainerProperties.DeserializeStorageTaskPreviewContainerProperties(property.Value, options);
+                    container = ModelSerializationExtensions.JsonDeserialize<StorageTaskPreviewContainerProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("blobs"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.StorageActions.Models
                 }
                 if (property.NameEquals("action"u8))
                 {
-                    action = StorageTaskPreviewActionCondition.DeserializeStorageTaskPreviewActionCondition(property.Value, options);
+                    action = ModelSerializationExtensions.JsonDeserialize<StorageTaskPreviewActionCondition>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

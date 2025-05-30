@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(DataTypes))
             {
                 writer.WritePropertyName("dataTypes"u8);
-                writer.WriteObjectValue(DataTypes, options);
+                ((IJsonModel<McasDataConnectorDataTypes>)DataTypes).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            dataTypes = McasDataConnectorDataTypes.DeserializeMcasDataConnectorDataTypes(property0.Value, options);
+                            dataTypes = ModelSerializationExtensions.JsonDeserialize<McasDataConnectorDataTypes>(property0.Value);
                             continue;
                         }
                     }

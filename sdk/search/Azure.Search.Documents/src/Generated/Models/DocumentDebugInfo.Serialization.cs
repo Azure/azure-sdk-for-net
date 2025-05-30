@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    semantic = SemanticDebugInfo.DeserializeSemanticDebugInfo(property.Value);
+                    semantic = ModelSerializationExtensions.JsonDeserialize<SemanticDebugInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vectors"u8))
@@ -38,7 +38,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    vectors = VectorsDebugInfo.DeserializeVectorsDebugInfo(property.Value);
+                    vectors = ModelSerializationExtensions.JsonDeserialize<VectorsDebugInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("innerHits"u8))

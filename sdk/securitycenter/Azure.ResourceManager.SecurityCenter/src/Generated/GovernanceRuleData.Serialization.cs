@@ -124,17 +124,17 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(OwnerSource))
             {
                 writer.WritePropertyName("ownerSource"u8);
-                writer.WriteObjectValue(OwnerSource, options);
+                ((IJsonModel<GovernanceRuleOwnerSource>)OwnerSource).Write(writer, options);
             }
             if (Optional.IsDefined(GovernanceEmailNotification))
             {
                 writer.WritePropertyName("governanceEmailNotification"u8);
-                writer.WriteObjectValue(GovernanceEmailNotification, options);
+                ((IJsonModel<GovernanceRuleEmailNotification>)GovernanceEmailNotification).Write(writer, options);
             }
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata, options);
+                ((IJsonModel<GovernanceRuleMetadata>)Metadata).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            ownerSource = GovernanceRuleOwnerSource.DeserializeGovernanceRuleOwnerSource(property0.Value, options);
+                            ownerSource = ModelSerializationExtensions.JsonDeserialize<GovernanceRuleOwnerSource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("governanceEmailNotification"u8))
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            governanceEmailNotification = GovernanceRuleEmailNotification.DeserializeGovernanceRuleEmailNotification(property0.Value, options);
+                            governanceEmailNotification = ModelSerializationExtensions.JsonDeserialize<GovernanceRuleEmailNotification>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("metadata"u8))
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            metadata = GovernanceRuleMetadata.DeserializeGovernanceRuleMetadata(property0.Value, options);
+                            metadata = ModelSerializationExtensions.JsonDeserialize<GovernanceRuleMetadata>(property0.Value);
                             continue;
                         }
                     }

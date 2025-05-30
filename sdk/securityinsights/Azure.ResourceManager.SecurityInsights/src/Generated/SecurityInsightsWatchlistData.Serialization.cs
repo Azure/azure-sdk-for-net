@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.SecurityInsights
             if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue(CreatedBy, options);
+                ((IJsonModel<SecurityInsightsUserInfo>)CreatedBy).Write(writer, options);
             }
             if (Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
-                writer.WriteObjectValue(UpdatedBy, options);
+                ((IJsonModel<SecurityInsightsUserInfo>)UpdatedBy).Write(writer, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            createdBy = SecurityInsightsUserInfo.DeserializeSecurityInsightsUserInfo(property0.Value, options);
+                            createdBy = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsUserInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("updatedBy"u8))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            updatedBy = SecurityInsightsUserInfo.DeserializeSecurityInsightsUserInfo(property0.Value, options);
+                            updatedBy = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsUserInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("description"u8))

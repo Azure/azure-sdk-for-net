@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WritePropertyName("exchange"u8);
-            writer.WriteObjectValue(Exchange, options);
+            ((IJsonModel<DataConnectorDataTypeCommon>)Exchange).Write(writer, options);
             writer.WritePropertyName("sharePoint"u8);
-            writer.WriteObjectValue(SharePoint, options);
+            ((IJsonModel<DataConnectorDataTypeCommon>)SharePoint).Write(writer, options);
             writer.WritePropertyName("teams"u8);
-            writer.WriteObjectValue(Teams, options);
+            ((IJsonModel<DataConnectorDataTypeCommon>)Teams).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -87,17 +87,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (property.NameEquals("exchange"u8))
                 {
-                    exchange = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value, options);
+                    exchange = ModelSerializationExtensions.JsonDeserialize<DataConnectorDataTypeCommon>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sharePoint"u8))
                 {
-                    sharePoint = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value, options);
+                    sharePoint = ModelSerializationExtensions.JsonDeserialize<DataConnectorDataTypeCommon>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("teams"u8))
                 {
-                    teams = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value, options);
+                    teams = ModelSerializationExtensions.JsonDeserialize<DataConnectorDataTypeCommon>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

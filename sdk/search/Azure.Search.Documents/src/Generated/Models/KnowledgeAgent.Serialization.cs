@@ -22,20 +22,20 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Models)
             {
-                writer.WriteObjectValue(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("targetIndexes"u8);
             writer.WriteStartArray();
             foreach (var item in TargetIndexes)
             {
-                writer.WriteObjectValue(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(RequestLimits))
             {
                 writer.WritePropertyName("requestLimits"u8);
-                writer.WriteObjectValue(RequestLimits);
+                JsonSerializer.Serialize(writer, RequestLimits);
             }
             if (Optional.IsDefined(_eTag))
             {
@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (EncryptionKey != null)
                 {
                     writer.WritePropertyName("encryptionKey"u8);
-                    writer.WriteObjectValue(EncryptionKey);
+                    JsonSerializer.Serialize(writer, EncryptionKey);
                 }
                 else
                 {
@@ -108,7 +108,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    requestLimits = KnowledgeAgentRequestLimits.DeserializeKnowledgeAgentRequestLimits(property.Value);
+                    requestLimits = ModelSerializationExtensions.JsonDeserialize<KnowledgeAgentRequestLimits>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@odata.etag"u8))
@@ -123,7 +123,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         encryptionKey = null;
                         continue;
                     }
-                    encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(property.Value);
+                    encryptionKey = ModelSerializationExtensions.JsonDeserialize<SearchResourceEncryptionKey>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"u8))

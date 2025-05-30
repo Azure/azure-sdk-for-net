@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(SensitivityLabel))
             {
                 writer.WritePropertyName("sensitivityLabel"u8);
-                writer.WriteObjectValue(SensitivityLabel, options);
+                ((IJsonModel<SensitivityLabelData>)SensitivityLabel).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            sensitivityLabel = SensitivityLabelData.DeserializeSensitivityLabelData(property0.Value, options);
+                            sensitivityLabel = ModelSerializationExtensions.JsonDeserialize<SensitivityLabelData>(property0.Value);
                             continue;
                         }
                     }

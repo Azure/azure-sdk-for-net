@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStartArray();
                 foreach (var item in Tags)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LegalHoldTag>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ProtectedAppendWritesHistory))
             {
                 writer.WritePropertyName("protectedAppendWritesHistory"u8);
-                writer.WriteObjectValue(ProtectedAppendWritesHistory, options);
+                ((IJsonModel<ProtectedAppendWritesHistory>)ProtectedAppendWritesHistory).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    protectedAppendWritesHistory = ProtectedAppendWritesHistory.DeserializeProtectedAppendWritesHistory(property.Value, options);
+                    protectedAppendWritesHistory = ModelSerializationExtensions.JsonDeserialize<ProtectedAppendWritesHistory>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

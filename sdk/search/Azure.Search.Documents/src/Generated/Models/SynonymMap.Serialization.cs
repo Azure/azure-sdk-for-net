@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (EncryptionKey != null)
                 {
                     writer.WritePropertyName("encryptionKey"u8);
-                    writer.WriteObjectValue(EncryptionKey);
+                    JsonSerializer.Serialize(writer, EncryptionKey);
                 }
                 else
                 {
@@ -76,7 +76,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         encryptionKey = null;
                         continue;
                     }
-                    encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(property.Value);
+                    encryptionKey = ModelSerializationExtensions.JsonDeserialize<SearchResourceEncryptionKey>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@odata.etag"u8))

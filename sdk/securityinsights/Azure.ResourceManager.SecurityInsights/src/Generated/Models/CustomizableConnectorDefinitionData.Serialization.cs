@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(ConnectorUiConfig))
             {
                 writer.WritePropertyName("connectorUiConfig"u8);
-                writer.WriteObjectValue(ConnectorUiConfig, options);
+                ((IJsonModel<CustomizableConnectorUiConfig>)ConnectorUiConfig).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectionsConfig))
             {
                 writer.WritePropertyName("connectionsConfig"u8);
-                writer.WriteObjectValue(ConnectionsConfig, options);
+                ((IJsonModel<CustomizableConnectionsConfig>)ConnectionsConfig).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            connectorUiConfig = CustomizableConnectorUiConfig.DeserializeCustomizableConnectorUiConfig(property0.Value, options);
+                            connectorUiConfig = ModelSerializationExtensions.JsonDeserialize<CustomizableConnectorUiConfig>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("connectionsConfig"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            connectionsConfig = CustomizableConnectionsConfig.DeserializeCustomizableConnectionsConfig(property0.Value, options);
+                            connectionsConfig = ModelSerializationExtensions.JsonDeserialize<CustomizableConnectionsConfig>(property0.Value);
                             continue;
                         }
                     }

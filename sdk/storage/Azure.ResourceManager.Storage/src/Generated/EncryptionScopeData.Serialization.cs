@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties, options);
+                ((IJsonModel<EncryptionScopeKeyVaultProperties>)KeyVaultProperties).Write(writer, options);
             }
             if (Optional.IsDefined(RequireInfrastructureEncryption))
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            keyVaultProperties = EncryptionScopeKeyVaultProperties.DeserializeEncryptionScopeKeyVaultProperties(property0.Value, options);
+                            keyVaultProperties = ModelSerializationExtensions.JsonDeserialize<EncryptionScopeKeyVaultProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("requireInfrastructureEncryption"u8))

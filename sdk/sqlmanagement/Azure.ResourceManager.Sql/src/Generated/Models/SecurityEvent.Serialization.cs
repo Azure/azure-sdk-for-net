@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(SecurityEventSqlInjectionAdditionalProperties))
             {
                 writer.WritePropertyName("securityEventSqlInjectionAdditionalProperties"u8);
-                writer.WriteObjectValue(SecurityEventSqlInjectionAdditionalProperties, options);
+                ((IJsonModel<SecurityEventSqlInjectionAdditionalProperties>)SecurityEventSqlInjectionAdditionalProperties).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            securityEventSqlInjectionAdditionalProperties = SecurityEventSqlInjectionAdditionalProperties.DeserializeSecurityEventSqlInjectionAdditionalProperties(property0.Value, options);
+                            securityEventSqlInjectionAdditionalProperties = ModelSerializationExtensions.JsonDeserialize<SecurityEventSqlInjectionAdditionalProperties>(property0.Value);
                             continue;
                         }
                     }

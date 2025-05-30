@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Search.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<SearchSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Limits))
             {
                 writer.WritePropertyName("limits"u8);
-                writer.WriteObjectValue(Limits, options);
+                ((IJsonModel<SearchServiceSkuOfferingLimits>)Limits).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    sku = SearchSku.DeserializeSearchSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<SearchSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("limits"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    limits = SearchServiceSkuOfferingLimits.DeserializeSearchServiceSkuOfferingLimits(property.Value, options);
+                    limits = ModelSerializationExtensions.JsonDeserialize<SearchServiceSkuOfferingLimits>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

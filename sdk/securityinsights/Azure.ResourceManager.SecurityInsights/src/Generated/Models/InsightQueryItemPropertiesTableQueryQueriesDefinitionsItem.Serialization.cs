@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in LinkColumnsDefinitions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InsightQueryItemPropertiesTableQueryQueriesDefinitionsPropertiesItemsItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

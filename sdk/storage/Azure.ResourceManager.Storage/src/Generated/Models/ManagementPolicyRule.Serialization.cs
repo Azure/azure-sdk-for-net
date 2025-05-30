@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RuleType.ToString());
             writer.WritePropertyName("definition"u8);
-            writer.WriteObjectValue(Definition, options);
+            ((IJsonModel<ManagementPolicyDefinition>)Definition).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("definition"u8))
                 {
-                    definition = ManagementPolicyDefinition.DeserializeManagementPolicyDefinition(property.Value, options);
+                    definition = ModelSerializationExtensions.JsonDeserialize<ManagementPolicyDefinition>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

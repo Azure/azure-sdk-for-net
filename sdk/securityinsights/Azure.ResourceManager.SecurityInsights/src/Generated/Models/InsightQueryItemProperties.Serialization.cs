@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(TableQuery))
             {
                 writer.WritePropertyName("tableQuery"u8);
-                writer.WriteObjectValue(TableQuery, options);
+                ((IJsonModel<InsightQueryItemPropertiesTableQuery>)TableQuery).Write(writer, options);
             }
             if (Optional.IsDefined(ChartQuery))
             {
@@ -72,17 +72,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(AdditionalQuery))
             {
                 writer.WritePropertyName("additionalQuery"u8);
-                writer.WriteObjectValue(AdditionalQuery, options);
+                ((IJsonModel<InsightQueryItemPropertiesAdditionalQuery>)AdditionalQuery).Write(writer, options);
             }
             if (Optional.IsDefined(DefaultTimeRange))
             {
                 writer.WritePropertyName("defaultTimeRange"u8);
-                writer.WriteObjectValue(DefaultTimeRange, options);
+                ((IJsonModel<InsightQueryItemPropertiesDefaultTimeRange>)DefaultTimeRange).Write(writer, options);
             }
             if (Optional.IsDefined(ReferenceTimeRange))
             {
                 writer.WritePropertyName("referenceTimeRange"u8);
-                writer.WriteObjectValue(ReferenceTimeRange, options);
+                ((IJsonModel<InsightQueryItemPropertiesReferenceTimeRange>)ReferenceTimeRange).Write(writer, options);
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    tableQuery = InsightQueryItemPropertiesTableQuery.DeserializeInsightQueryItemPropertiesTableQuery(property.Value, options);
+                    tableQuery = ModelSerializationExtensions.JsonDeserialize<InsightQueryItemPropertiesTableQuery>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("chartQuery"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    additionalQuery = InsightQueryItemPropertiesAdditionalQuery.DeserializeInsightQueryItemPropertiesAdditionalQuery(property.Value, options);
+                    additionalQuery = ModelSerializationExtensions.JsonDeserialize<InsightQueryItemPropertiesAdditionalQuery>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("defaultTimeRange"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    defaultTimeRange = InsightQueryItemPropertiesDefaultTimeRange.DeserializeInsightQueryItemPropertiesDefaultTimeRange(property.Value, options);
+                    defaultTimeRange = ModelSerializationExtensions.JsonDeserialize<InsightQueryItemPropertiesDefaultTimeRange>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("referenceTimeRange"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    referenceTimeRange = InsightQueryItemPropertiesReferenceTimeRange.DeserializeInsightQueryItemPropertiesReferenceTimeRange(property.Value, options);
+                    referenceTimeRange = ModelSerializationExtensions.JsonDeserialize<InsightQueryItemPropertiesReferenceTimeRange>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataTypes"u8))

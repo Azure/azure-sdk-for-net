@@ -80,14 +80,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<TroubleshooterStepInput>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AutomatedCheckResults))
             {
                 writer.WritePropertyName("automatedCheckResults"u8);
-                writer.WriteObjectValue(AutomatedCheckResults, options);
+                ((IJsonModel<AutomatedCheckResult>)AutomatedCheckResults).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Insights))
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Insights)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SelfHelpDiagnosticInsight>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    automatedCheckResults = AutomatedCheckResult.DeserializeAutomatedCheckResult(property.Value, options);
+                    automatedCheckResults = ModelSerializationExtensions.JsonDeserialize<AutomatedCheckResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("insights"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

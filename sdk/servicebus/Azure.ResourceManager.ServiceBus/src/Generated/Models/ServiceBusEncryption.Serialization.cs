@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 writer.WriteStartArray();
                 foreach (var item in KeyVaultProperties)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ServiceBusKeyVaultProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

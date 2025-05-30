@@ -20,13 +20,13 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Selectors)
             {
-                writer.WriteObjectValue(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters);
+                JsonSerializer.Serialize(writer, Parameters);
             }
             writer.WriteEndObject();
         }
@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    parameters = SearchIndexerIndexProjectionsParameters.DeserializeSearchIndexerIndexProjectionsParameters(property.Value);
+                    parameters = ModelSerializationExtensions.JsonDeserialize<SearchIndexerIndexProjectionsParameters>(property.Value);
                     continue;
                 }
             }

@@ -51,35 +51,35 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartArray();
             foreach (var item in GraphQueries)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ConnectorGraphQuery>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("dataTypes"u8);
             writer.WriteStartArray();
             foreach (var item in DataTypes)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ConnectorDataType>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("connectivityCriteria"u8);
             writer.WriteStartArray();
             foreach (var item in ConnectivityCriteria)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ConnectorConnectivityCriterion>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Availability))
             {
                 writer.WritePropertyName("availability"u8);
-                writer.WriteObjectValue(Availability, options);
+                ((IJsonModel<ConnectorDefinitionsAvailability>)Availability).Write(writer, options);
             }
             writer.WritePropertyName("permissions"u8);
-            writer.WriteObjectValue(Permissions, options);
+            ((IJsonModel<ConnectorDefinitionsPermissions>)Permissions).Write(writer, options);
             writer.WritePropertyName("instructionSteps"u8);
             writer.WriteStartArray();
             foreach (var item in InstructionSteps)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<InstructionStep>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Logo))
@@ -201,12 +201,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    availability = ConnectorDefinitionsAvailability.DeserializeConnectorDefinitionsAvailability(property.Value, options);
+                    availability = ModelSerializationExtensions.JsonDeserialize<ConnectorDefinitionsAvailability>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("permissions"u8))
                 {
-                    permissions = ConnectorDefinitionsPermissions.DeserializeConnectorDefinitionsPermissions(property.Value, options);
+                    permissions = ModelSerializationExtensions.JsonDeserialize<ConnectorDefinitionsPermissions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("instructionSteps"u8))

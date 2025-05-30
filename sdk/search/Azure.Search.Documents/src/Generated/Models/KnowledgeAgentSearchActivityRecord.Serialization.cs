@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Agents.Models
                     {
                         continue;
                     }
-                    query = KnowledgeAgentSearchActivityRecordQuery.DeserializeKnowledgeAgentSearchActivityRecordQuery(property.Value);
+                    query = ModelSerializationExtensions.JsonDeserialize<KnowledgeAgentSearchActivityRecordQuery>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("queryTime"u8))

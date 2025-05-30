@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
-                writer.WriteObjectValue(State, options);
+                ((IJsonModel<RecommendedActionStateInfo>)State).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsExecutableAction))
             {
@@ -134,12 +134,12 @@ namespace Azure.ResourceManager.Sql
             if (options.Format != "W" && Optional.IsDefined(ImplementationDetails))
             {
                 writer.WritePropertyName("implementationDetails"u8);
-                writer.WriteObjectValue(ImplementationDetails, options);
+                ((IJsonModel<RecommendedActionImplementationInfo>)ImplementationDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
-                writer.WriteObjectValue(ErrorDetails, options);
+                ((IJsonModel<RecommendedActionErrorInfo>)ErrorDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(EstimatedImpact))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in EstimatedImpact)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RecommendedActionImpactRecord>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in ObservedImpact)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RecommendedActionImpactRecord>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in TimeSeries)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<RecommendedActionMetricInfo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            state = RecommendedActionStateInfo.DeserializeRecommendedActionStateInfo(property0.Value, options);
+                            state = ModelSerializationExtensions.JsonDeserialize<RecommendedActionStateInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("isExecutableAction"u8))
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            implementationDetails = RecommendedActionImplementationInfo.DeserializeRecommendedActionImplementationInfo(property0.Value, options);
+                            implementationDetails = ModelSerializationExtensions.JsonDeserialize<RecommendedActionImplementationInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("errorDetails"u8))
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            errorDetails = RecommendedActionErrorInfo.DeserializeRecommendedActionErrorInfo(property0.Value, options);
+                            errorDetails = ModelSerializationExtensions.JsonDeserialize<RecommendedActionErrorInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("estimatedImpact"u8))

@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(MetaData))
             {
                 writer.WritePropertyName("metaData"u8);
-                writer.WriteObjectValue(MetaData, options);
+                ((IJsonModel<ExpansionResultsMetadata>)MetaData).Write(writer, options);
             }
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(Value, options);
+                ((IJsonModel<EntityExpandResponseValue>)Value).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    metaData = ExpansionResultsMetadata.DeserializeExpansionResultsMetadata(property.Value, options);
+                    metaData = ModelSerializationExtensions.JsonDeserialize<ExpansionResultsMetadata>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("value"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    value = EntityExpandResponseValue.DeserializeEntityExpandResponseValue(property.Value, options);
+                    value = ModelSerializationExtensions.JsonDeserialize<EntityExpandResponseValue>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

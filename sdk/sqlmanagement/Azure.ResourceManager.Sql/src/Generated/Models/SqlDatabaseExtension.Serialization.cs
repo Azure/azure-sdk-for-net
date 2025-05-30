@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(NetworkIsolation))
             {
                 writer.WritePropertyName("networkIsolation"u8);
-                writer.WriteObjectValue(NetworkIsolation, options);
+                ((IJsonModel<NetworkIsolationSettings>)NetworkIsolation).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            networkIsolation = NetworkIsolationSettings.DeserializeNetworkIsolationSettings(property0.Value, options);
+                            networkIsolation = ModelSerializationExtensions.JsonDeserialize<NetworkIsolationSettings>(property0.Value);
                             continue;
                         }
                     }

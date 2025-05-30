@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 writer.WriteStartArray();
                 foreach (var item in Frontends)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 writer.WriteStartArray();
                 foreach (var item in Associations)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,14 +76,14 @@ namespace Azure.ResourceManager.ServiceNetworking
                 writer.WriteStartArray();
                 foreach (var item in SecurityPolicies)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SecurityPolicyConfigurations))
             {
                 writer.WritePropertyName("securityPolicyConfigurations"u8);
-                writer.WriteObjectValue(SecurityPolicyConfigurations, options);
+                ((IJsonModel<SecurityPolicyConfigurations>)SecurityPolicyConfigurations).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TrafficControllerProvisioningState))
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<SubResource>(item));
                             }
                             frontends = array;
                             continue;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<SubResource>(item));
                             }
                             associations = array;
                             continue;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<SubResource>(item));
                             }
                             securityPolicies = array;
                             continue;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                             {
                                 continue;
                             }
-                            securityPolicyConfigurations = SecurityPolicyConfigurations.DeserializeSecurityPolicyConfigurations(property0.Value, options);
+                            securityPolicyConfigurations = ModelSerializationExtensions.JsonDeserialize<SecurityPolicyConfigurations>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

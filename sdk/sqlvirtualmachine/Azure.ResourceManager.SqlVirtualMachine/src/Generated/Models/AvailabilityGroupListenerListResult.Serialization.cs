@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<AvailabilityGroupListenerData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

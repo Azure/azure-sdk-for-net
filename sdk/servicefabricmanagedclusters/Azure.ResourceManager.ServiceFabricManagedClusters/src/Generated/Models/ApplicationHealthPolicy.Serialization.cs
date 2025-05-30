@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             if (Optional.IsDefined(DefaultServiceTypeHealthPolicy))
             {
                 writer.WritePropertyName("defaultServiceTypeHealthPolicy"u8);
-                writer.WriteObjectValue(DefaultServiceTypeHealthPolicy, options);
+                ((IJsonModel<ServiceTypeHealthPolicy>)DefaultServiceTypeHealthPolicy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ServiceTypeHealthPolicyMap))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 foreach (var item in ServiceTypeHealthPolicyMap)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<ServiceTypeHealthPolicy>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    defaultServiceTypeHealthPolicy = ServiceTypeHealthPolicy.DeserializeServiceTypeHealthPolicy(property.Value, options);
+                    defaultServiceTypeHealthPolicy = ModelSerializationExtensions.JsonDeserialize<ServiceTypeHealthPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("serviceTypeHealthPolicyMap"u8))

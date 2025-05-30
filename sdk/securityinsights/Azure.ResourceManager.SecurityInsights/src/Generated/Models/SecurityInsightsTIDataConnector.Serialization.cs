@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(Indicators))
             {
                 writer.WritePropertyName("indicators"u8);
-                writer.WriteObjectValue(Indicators, options);
+                ((IJsonModel<TIDataConnectorDataTypesIndicators>)Indicators).Write(writer, options);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                     {
                                         continue;
                                     }
-                                    indicators = TIDataConnectorDataTypesIndicators.DeserializeTIDataConnectorDataTypesIndicators(property1.Value, options);
+                                    indicators = ModelSerializationExtensions.JsonDeserialize<TIDataConnectorDataTypesIndicators>(property1.Value);
                                     continue;
                                 }
                             }

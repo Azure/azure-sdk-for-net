@@ -50,7 +50,7 @@ namespace Azure.Search.Documents.Models
                 if (Schema != null)
                 {
                     writer.WritePropertyName("schema"u8);
-                    writer.WriteObjectValue(Schema);
+                    JsonSerializer.Serialize(writer, Schema);
                 }
                 else
                 {
@@ -108,7 +108,7 @@ namespace Azure.Search.Documents.Models
                         schema = null;
                         continue;
                     }
-                    schema = ChatCompletionSchema.DeserializeChatCompletionSchema(property.Value);
+                    schema = ModelSerializationExtensions.JsonDeserialize<ChatCompletionSchema>(property.Value);
                     continue;
                 }
             }

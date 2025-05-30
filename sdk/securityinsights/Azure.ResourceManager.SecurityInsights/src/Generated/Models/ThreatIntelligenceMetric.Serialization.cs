@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in ThreatTypeMetrics)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ThreatIntelligenceMetricEntity>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in PatternTypeMetrics)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ThreatIntelligenceMetricEntity>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in SourceMetrics)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ThreatIntelligenceMetricEntity>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

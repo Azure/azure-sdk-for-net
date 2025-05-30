@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
-                writer.WriteObjectValue(Condition, options);
+                ((IJsonModel<ThreatIntelligenceQueryCondition>)Condition).Write(writer, options);
             }
             if (Optional.IsDefined(SortBy))
             {
                 writer.WritePropertyName("sortBy"u8);
-                writer.WriteObjectValue(SortBy, options);
+                ((IJsonModel<ThreatIntelligenceQuerySortBy>)SortBy).Write(writer, options);
             }
             if (Optional.IsDefined(MaxPageSize))
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    condition = ThreatIntelligenceQueryCondition.DeserializeThreatIntelligenceQueryCondition(property.Value, options);
+                    condition = ModelSerializationExtensions.JsonDeserialize<ThreatIntelligenceQueryCondition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sortBy"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    sortBy = ThreatIntelligenceQuerySortBy.DeserializeThreatIntelligenceQuerySortBy(property.Value, options);
+                    sortBy = ModelSerializationExtensions.JsonDeserialize<ThreatIntelligenceQuerySortBy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("maxPageSize"u8))

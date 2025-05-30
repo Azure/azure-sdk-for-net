@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.StorageActions.Models
             }
 
             writer.WritePropertyName("if"u8);
-            writer.WriteObjectValue(If, options);
+            ((IJsonModel<StorageTaskPreviewActionIfCondition>)If).Write(writer, options);
             writer.WritePropertyName("elseBlockExists"u8);
             writer.WriteBooleanValue(ElseBlockExists);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.StorageActions.Models
             {
                 if (property.NameEquals("if"u8))
                 {
-                    @if = StorageTaskPreviewActionIfCondition.DeserializeStorageTaskPreviewActionIfCondition(property.Value, options);
+                    @if = ModelSerializationExtensions.JsonDeserialize<StorageTaskPreviewActionIfCondition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("elseBlockExists"u8))

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             if (Optional.IsDefined(ElasticityProfile))
             {
                 writer.WritePropertyName("elasticityProfile"u8);
-                writer.WriteObjectValue(ElasticityProfile, options);
+                ((IJsonModel<StandbyVirtualMachinePoolElasticityProfile>)ElasticityProfile).Write(writer, options);
             }
             if (Optional.IsDefined(VirtualMachineState))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     {
                         continue;
                     }
-                    elasticityProfile = StandbyVirtualMachinePoolElasticityProfile.DeserializeStandbyVirtualMachinePoolElasticityProfile(property.Value, options);
+                    elasticityProfile = ModelSerializationExtensions.JsonDeserialize<StandbyVirtualMachinePoolElasticityProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("virtualMachineState"u8))

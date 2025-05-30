@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 if (property.NameEquals("partitionDescription"u8))
                 {
-                    partitionDescription = ManagedServicePartitionScheme.DeserializeManagedServicePartitionScheme(property.Value, options);
+                    partitionDescription = ModelSerializationExtensions.JsonDeserialize<ManagedServicePartitionScheme>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("servicePackageActivationMode"u8))

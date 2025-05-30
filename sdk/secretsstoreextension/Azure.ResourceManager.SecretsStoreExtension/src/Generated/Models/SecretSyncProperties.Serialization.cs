@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
             writer.WriteStartArray();
             foreach (var item in ObjectSecretMapping)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<KubernetesSecretObjectMapping>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<SecretSyncStatus>)Status).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                     {
                         continue;
                     }
-                    status = SecretSyncStatus.DeserializeSecretSyncStatus(property.Value, options);
+                    status = ModelSerializationExtensions.JsonDeserialize<SecretSyncStatus>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

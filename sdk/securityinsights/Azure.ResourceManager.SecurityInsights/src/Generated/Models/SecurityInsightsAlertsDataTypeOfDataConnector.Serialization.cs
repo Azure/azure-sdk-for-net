@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WritePropertyName("alerts"u8);
-            writer.WriteObjectValue(Alerts, options);
+            ((IJsonModel<DataConnectorDataTypeCommon>)Alerts).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (property.NameEquals("alerts"u8))
                 {
-                    alerts = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value, options);
+                    alerts = ModelSerializationExtensions.JsonDeserialize<DataConnectorDataTypeCommon>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

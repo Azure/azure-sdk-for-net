@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(ResourceDetails))
             {
                 writer.WritePropertyName("resourceDetails"u8);
-                writer.WriteObjectValue(ResourceDetails, options);
+                ((IJsonModel<SecurityCenterResourceDetails>)ResourceDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
@@ -62,22 +62,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (options.Format != "W" && Optional.IsDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
-                writer.WriteObjectValue(Links, options);
+                ((IJsonModel<AssessmentLinks>)Links).Write(writer, options);
             }
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata, options);
+                ((IJsonModel<SecurityAssessmentMetadataProperties>)Metadata).Write(writer, options);
             }
             if (Optional.IsDefined(PartnersData))
             {
                 writer.WritePropertyName("partnersData"u8);
-                writer.WriteObjectValue(PartnersData, options);
+                ((IJsonModel<SecurityAssessmentPartner>)PartnersData).Write(writer, options);
             }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                ((IJsonModel<SecurityAssessmentStatus>)Status).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             {
                                 continue;
                             }
-                            resourceDetails = SecurityCenterResourceDetails.DeserializeSecurityCenterResourceDetails(property0.Value, options);
+                            resourceDetails = ModelSerializationExtensions.JsonDeserialize<SecurityCenterResourceDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("displayName"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             {
                                 continue;
                             }
-                            links = AssessmentLinks.DeserializeAssessmentLinks(property0.Value, options);
+                            links = ModelSerializationExtensions.JsonDeserialize<AssessmentLinks>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("metadata"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             {
                                 continue;
                             }
-                            metadata = SecurityAssessmentMetadataProperties.DeserializeSecurityAssessmentMetadataProperties(property0.Value, options);
+                            metadata = ModelSerializationExtensions.JsonDeserialize<SecurityAssessmentMetadataProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("partnersData"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             {
                                 continue;
                             }
-                            partnersData = SecurityAssessmentPartner.DeserializeSecurityAssessmentPartner(property0.Value, options);
+                            partnersData = ModelSerializationExtensions.JsonDeserialize<SecurityAssessmentPartner>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             {
                                 continue;
                             }
-                            status = SecurityAssessmentStatus.DeserializeSecurityAssessmentStatus(property0.Value, options);
+                            status = ModelSerializationExtensions.JsonDeserialize<SecurityAssessmentStatus>(property0.Value);
                             continue;
                         }
                     }

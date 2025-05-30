@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (options.Format != "W" && Optional.IsDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
-                writer.WriteObjectValue(Metrics, options);
+                ((IJsonModel<IotSeverityMetrics>)Metrics).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(UnhealthyDeviceCount))
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in DevicesMetrics)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IotSecuritySolutionAnalyticsModelDevicesMetrics>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in TopAlertedDevices)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IotSecurityAlertedDevice>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in MostPrevalentDeviceAlerts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IotSecurityDeviceAlert>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in MostPrevalentDeviceRecommendations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<IotSecurityDeviceRecommendation>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            metrics = IotSeverityMetrics.DeserializeIotSeverityMetrics(property0.Value, options);
+                            metrics = ModelSerializationExtensions.JsonDeserialize<IotSeverityMetrics>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("unhealthyDeviceCount"u8))

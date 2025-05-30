@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(RollingUpgradeMonitoringPolicy))
             {
                 writer.WritePropertyName("rollingUpgradeMonitoringPolicy"u8);
-                writer.WriteObjectValue(RollingUpgradeMonitoringPolicy, options);
+                ((IJsonModel<ArmRollingUpgradeMonitoringPolicy>)RollingUpgradeMonitoringPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(ApplicationHealthPolicy))
             {
                 writer.WritePropertyName("applicationHealthPolicy"u8);
-                writer.WriteObjectValue(ApplicationHealthPolicy, options);
+                ((IJsonModel<ArmApplicationHealthPolicy>)ApplicationHealthPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(UpgradeMode))
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    rollingUpgradeMonitoringPolicy = ArmRollingUpgradeMonitoringPolicy.DeserializeArmRollingUpgradeMonitoringPolicy(property.Value, options);
+                    rollingUpgradeMonitoringPolicy = ModelSerializationExtensions.JsonDeserialize<ArmRollingUpgradeMonitoringPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("applicationHealthPolicy"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    applicationHealthPolicy = ArmApplicationHealthPolicy.DeserializeArmApplicationHealthPolicy(property.Value, options);
+                    applicationHealthPolicy = ModelSerializationExtensions.JsonDeserialize<ArmApplicationHealthPolicy>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("upgradeMode"u8))

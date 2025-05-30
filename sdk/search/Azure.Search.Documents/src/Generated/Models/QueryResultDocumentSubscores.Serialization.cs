@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    text = TextResult.DeserializeTextResult(property.Value);
+                    text = ModelSerializationExtensions.JsonDeserialize<TextResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vectors"u8))

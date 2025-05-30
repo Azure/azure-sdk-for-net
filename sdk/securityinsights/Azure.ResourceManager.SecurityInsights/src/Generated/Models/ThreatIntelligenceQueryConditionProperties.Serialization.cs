@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartArray();
             foreach (var item in Clauses)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ThreatIntelligenceQueryConditionClause>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(ConditionConnective))

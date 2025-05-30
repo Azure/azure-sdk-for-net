@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(TransactionManagerCommunicationSettings))
             {
                 writer.WritePropertyName("transactionManagerCommunicationSettings"u8);
-                writer.WriteObjectValue(TransactionManagerCommunicationSettings, options);
+                ((IJsonModel<ManagedInstanceDtcTransactionManagerCommunicationSettings>)TransactionManagerCommunicationSettings).Write(writer, options);
             }
             if (Optional.IsDefined(IsXATransactionsEnabled))
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    transactionManagerCommunicationSettings = ManagedInstanceDtcTransactionManagerCommunicationSettings.DeserializeManagedInstanceDtcTransactionManagerCommunicationSettings(property.Value, options);
+                    transactionManagerCommunicationSettings = ModelSerializationExtensions.JsonDeserialize<ManagedInstanceDtcTransactionManagerCommunicationSettings>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("xaTransactionsEnabled"u8))

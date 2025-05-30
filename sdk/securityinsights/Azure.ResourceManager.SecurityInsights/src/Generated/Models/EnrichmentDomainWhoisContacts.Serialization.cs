@@ -38,22 +38,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(Admin))
             {
                 writer.WritePropertyName("admin"u8);
-                writer.WriteObjectValue(Admin, options);
+                ((IJsonModel<EnrichmentDomainWhoisContact>)Admin).Write(writer, options);
             }
             if (Optional.IsDefined(Billing))
             {
                 writer.WritePropertyName("billing"u8);
-                writer.WriteObjectValue(Billing, options);
+                ((IJsonModel<EnrichmentDomainWhoisContact>)Billing).Write(writer, options);
             }
             if (Optional.IsDefined(Registrant))
             {
                 writer.WritePropertyName("registrant"u8);
-                writer.WriteObjectValue(Registrant, options);
+                ((IJsonModel<EnrichmentDomainWhoisContact>)Registrant).Write(writer, options);
             }
             if (Optional.IsDefined(Tech))
             {
                 writer.WritePropertyName("tech"u8);
-                writer.WriteObjectValue(Tech, options);
+                ((IJsonModel<EnrichmentDomainWhoisContact>)Tech).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    admin = EnrichmentDomainWhoisContact.DeserializeEnrichmentDomainWhoisContact(property.Value, options);
+                    admin = ModelSerializationExtensions.JsonDeserialize<EnrichmentDomainWhoisContact>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("billing"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    billing = EnrichmentDomainWhoisContact.DeserializeEnrichmentDomainWhoisContact(property.Value, options);
+                    billing = ModelSerializationExtensions.JsonDeserialize<EnrichmentDomainWhoisContact>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("registrant"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    registrant = EnrichmentDomainWhoisContact.DeserializeEnrichmentDomainWhoisContact(property.Value, options);
+                    registrant = ModelSerializationExtensions.JsonDeserialize<EnrichmentDomainWhoisContact>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tech"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    tech = EnrichmentDomainWhoisContact.DeserializeEnrichmentDomainWhoisContact(property.Value, options);
+                    tech = ModelSerializationExtensions.JsonDeserialize<EnrichmentDomainWhoisContact>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

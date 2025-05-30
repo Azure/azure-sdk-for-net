@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(NetworkIsolation))
             {
                 writer.WritePropertyName("networkIsolation"u8);
-                writer.WriteObjectValue(NetworkIsolation, options);
+                ((IJsonModel<NetworkIsolationSettings>)NetworkIsolation).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    networkIsolation = NetworkIsolationSettings.DeserializeNetworkIsolationSettings(property.Value, options);
+                    networkIsolation = ModelSerializationExtensions.JsonDeserialize<NetworkIsolationSettings>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

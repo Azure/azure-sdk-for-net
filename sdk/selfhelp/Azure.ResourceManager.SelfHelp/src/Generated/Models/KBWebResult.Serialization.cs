@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in SearchResults)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<KBSearchResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

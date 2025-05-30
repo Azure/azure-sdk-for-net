@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<SqlSku>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Kind))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<DatabaseIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
             if (options.Format != "W" && Optional.IsDefined(CurrentSku))
             {
                 writer.WritePropertyName("currentSku"u8);
-                writer.WriteObjectValue(CurrentSku, options);
+                ((IJsonModel<SqlSku>)CurrentSku).Write(writer, options);
             }
             if (Optional.IsDefined(AutoPauseDelay))
             {
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Sql
                 foreach (var item in Keys)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    ((IJsonModel<SqlDatabaseKey>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    sku = SqlSku.DeserializeSqlSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<SqlSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    identity = DatabaseIdentity.DeserializeDatabaseIdentity(property.Value, options);
+                    identity = ModelSerializationExtensions.JsonDeserialize<DatabaseIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            currentSku = SqlSku.DeserializeSqlSku(property0.Value, options);
+                            currentSku = ModelSerializationExtensions.JsonDeserialize<SqlSku>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("autoPauseDelay"u8))

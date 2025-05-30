@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("scalarQuantizationParameters"u8);
-                writer.WriteObjectValue(Parameters);
+                JsonSerializer.Serialize(writer, Parameters);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(CompressionName);
@@ -53,7 +53,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (RescoringOptions != null)
                 {
                     writer.WritePropertyName("rescoringOptions"u8);
-                    writer.WriteObjectValue(RescoringOptions);
+                    JsonSerializer.Serialize(writer, RescoringOptions);
                 }
                 else
                 {
@@ -96,7 +96,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    scalarQuantizationParameters = ScalarQuantizationParameters.DeserializeScalarQuantizationParameters(property.Value);
+                    scalarQuantizationParameters = ModelSerializationExtensions.JsonDeserialize<ScalarQuantizationParameters>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -136,7 +136,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         rescoringOptions = null;
                         continue;
                     }
-                    rescoringOptions = RescoringOptions.DeserializeRescoringOptions(property.Value);
+                    rescoringOptions = ModelSerializationExtensions.JsonDeserialize<RescoringOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("truncationDimension"u8))

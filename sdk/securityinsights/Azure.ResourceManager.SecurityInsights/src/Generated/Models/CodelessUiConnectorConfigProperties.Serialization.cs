@@ -53,39 +53,39 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartArray();
             foreach (var item in GraphQueries)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ConnectorGraphQueries>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("sampleQueries"u8);
             writer.WriteStartArray();
             foreach (var item in SampleQueries)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<SourceControlSampleQueries>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("dataTypes"u8);
             writer.WriteStartArray();
             foreach (var item in DataTypes)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<LastDataReceivedDataType>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("connectivityCriteria"u8);
             writer.WriteStartArray();
             foreach (var item in ConnectivityCriteria)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<ConnectorConnectivityCriteria>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("availability"u8);
-            writer.WriteObjectValue(Availability, options);
+            ((IJsonModel<ConnectorAvailability>)Availability).Write(writer, options);
             writer.WritePropertyName("permissions"u8);
-            writer.WriteObjectValue(Permissions, options);
+            ((IJsonModel<ConnectorPermissions>)Permissions).Write(writer, options);
             writer.WritePropertyName("instructionSteps"u8);
             writer.WriteStartArray();
             foreach (var item in InstructionSteps)
             {
-                writer.WriteObjectValue(item, options);
+                ((IJsonModel<InstructionSteps>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -208,12 +208,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (property.NameEquals("availability"u8))
                 {
-                    availability = ConnectorAvailability.DeserializeConnectorAvailability(property.Value, options);
+                    availability = ModelSerializationExtensions.JsonDeserialize<ConnectorAvailability>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("permissions"u8))
                 {
-                    permissions = ConnectorPermissions.DeserializeConnectorPermissions(property.Value, options);
+                    permissions = ModelSerializationExtensions.JsonDeserialize<ConnectorPermissions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("instructionSteps"u8))

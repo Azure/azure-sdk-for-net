@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in ResourceIdentifiers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SecurityAlertResourceIdentifier>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Entities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SecurityAlertEntity>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(SupportingEvidence))
             {
                 writer.WritePropertyName("supportingEvidence"u8);
-                writer.WriteObjectValue(SupportingEvidence, options);
+                ((IJsonModel<SecurityAlertSupportingEvidence>)SupportingEvidence).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            supportingEvidence = SecurityAlertSupportingEvidence.DeserializeSecurityAlertSupportingEvidence(property0.Value, options);
+                            supportingEvidence = ModelSerializationExtensions.JsonDeserialize<SecurityAlertSupportingEvidence>(property0.Value);
                             continue;
                         }
                     }

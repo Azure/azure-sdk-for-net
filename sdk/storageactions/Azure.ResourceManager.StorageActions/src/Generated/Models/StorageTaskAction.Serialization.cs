@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.StorageActions.Models
             }
 
             writer.WritePropertyName("if"u8);
-            writer.WriteObjectValue(If, options);
+            ((IJsonModel<StorageTaskIfCondition>)If).Write(writer, options);
             if (Optional.IsDefined(Else))
             {
                 writer.WritePropertyName("else"u8);
-                writer.WriteObjectValue(Else, options);
+                ((IJsonModel<StorageTaskElseCondition>)Else).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.StorageActions.Models
             {
                 if (property.NameEquals("if"u8))
                 {
-                    @if = StorageTaskIfCondition.DeserializeStorageTaskIfCondition(property.Value, options);
+                    @if = ModelSerializationExtensions.JsonDeserialize<StorageTaskIfCondition>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("else"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StorageActions.Models
                     {
                         continue;
                     }
-                    @else = StorageTaskElseCondition.DeserializeStorageTaskElseCondition(property.Value, options);
+                    @else = ModelSerializationExtensions.JsonDeserialize<StorageTaskElseCondition>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

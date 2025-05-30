@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.SecurityInsights
             if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue(CreatedBy, options);
+                ((IJsonModel<SecurityInsightsClientInfo>)CreatedBy).Write(writer, options);
             }
             if (Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
-                writer.WriteObjectValue(LastModifiedBy, options);
+                ((IJsonModel<SecurityInsightsClientInfo>)LastModifiedBy).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            createdBy = SecurityInsightsClientInfo.DeserializeSecurityInsightsClientInfo(property0.Value, options);
+                            createdBy = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsClientInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("lastModifiedBy"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            lastModifiedBy = SecurityInsightsClientInfo.DeserializeSecurityInsightsClientInfo(property0.Value, options);
+                            lastModifiedBy = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsClientInfo>(property0.Value);
                             continue;
                         }
                     }

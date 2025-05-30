@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (AuthenticationIdentity != null)
                 {
                     writer.WritePropertyName("authIdentity"u8);
-                    writer.WriteObjectValue(AuthenticationIdentity);
+                    JsonSerializer.Serialize(writer, AuthenticationIdentity);
                 }
                 else
                 {
@@ -90,7 +90,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         authIdentity = null;
                         continue;
                     }
-                    authIdentity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value);
+                    authIdentity = ModelSerializationExtensions.JsonDeserialize<SearchIndexerDataIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("modelName"u8))

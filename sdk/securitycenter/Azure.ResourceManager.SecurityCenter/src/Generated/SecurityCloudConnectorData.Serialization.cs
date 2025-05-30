@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(HybridComputeSettings))
             {
                 writer.WritePropertyName("hybridComputeSettings"u8);
-                writer.WriteObjectValue(HybridComputeSettings, options);
+                ((IJsonModel<HybridComputeSettingsProperties>)HybridComputeSettings).Write(writer, options);
             }
             if (Optional.IsDefined(AuthenticationDetails))
             {
                 writer.WritePropertyName("authenticationDetails"u8);
-                writer.WriteObjectValue(AuthenticationDetails, options);
+                ((IJsonModel<AuthenticationDetailsProperties>)AuthenticationDetails).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            hybridComputeSettings = HybridComputeSettingsProperties.DeserializeHybridComputeSettingsProperties(property0.Value, options);
+                            hybridComputeSettings = ModelSerializationExtensions.JsonDeserialize<HybridComputeSettingsProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("authenticationDetails"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            authenticationDetails = AuthenticationDetailsProperties.DeserializeAuthenticationDetailsProperties(property0.Value, options);
+                            authenticationDetails = ModelSerializationExtensions.JsonDeserialize<AuthenticationDetailsProperties>(property0.Value);
                             continue;
                         }
                     }

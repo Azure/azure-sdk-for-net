@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in InnerConditions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SecurityInsightsAutomationRuleCondition>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

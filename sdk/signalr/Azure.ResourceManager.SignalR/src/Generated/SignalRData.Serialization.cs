@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SignalR
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<SignalRResourceSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SignalR
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SignalR
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SignalRPrivateEndpointConnectionData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,14 +102,14 @@ namespace Azure.ResourceManager.SignalR
                 writer.WriteStartArray();
                 foreach (var item in SharedPrivateLinkResources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SignalRSharedPrivateLinkResourceData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Tls))
             {
                 writer.WritePropertyName("tls"u8);
-                writer.WriteObjectValue(Tls, options);
+                ((IJsonModel<SignalRTlsSettings>)Tls).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HostNamePrefix))
             {
@@ -122,34 +122,34 @@ namespace Azure.ResourceManager.SignalR
                 writer.WriteStartArray();
                 foreach (var item in Features)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SignalRFeature>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(LiveTraceConfiguration))
             {
                 writer.WritePropertyName("liveTraceConfiguration"u8);
-                writer.WriteObjectValue(LiveTraceConfiguration, options);
+                ((IJsonModel<SignalRLiveTraceConfiguration>)LiveTraceConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ResourceLogConfiguration))
             {
                 writer.WritePropertyName("resourceLogConfiguration"u8);
-                writer.WriteObjectValue(ResourceLogConfiguration, options);
+                ((IJsonModel<SignalRResourceLogCategoryListResult>)ResourceLogConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(Cors))
             {
                 writer.WritePropertyName("cors"u8);
-                writer.WriteObjectValue(Cors, options);
+                ((IJsonModel<SignalRCorsSettings>)Cors).Write(writer, options);
             }
             if (Optional.IsDefined(Upstream))
             {
                 writer.WritePropertyName("upstream"u8);
-                writer.WriteObjectValue(Upstream, options);
+                ((IJsonModel<ServerlessUpstreamSettings>)Upstream).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkACLs))
             {
                 writer.WritePropertyName("networkACLs"u8);
-                writer.WriteObjectValue(NetworkACLs, options);
+                ((IJsonModel<SignalRNetworkAcls>)NetworkACLs).Write(writer, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.SignalR
                     {
                         continue;
                     }
-                    sku = SignalRResourceSku.DeserializeSignalRResourceSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<SignalRResourceSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.SignalR
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.SignalR
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.SignalR
                             {
                                 continue;
                             }
-                            tls = SignalRTlsSettings.DeserializeSignalRTlsSettings(property0.Value, options);
+                            tls = ModelSerializationExtensions.JsonDeserialize<SignalRTlsSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hostNamePrefix"u8))
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.SignalR
                             {
                                 continue;
                             }
-                            liveTraceConfiguration = SignalRLiveTraceConfiguration.DeserializeSignalRLiveTraceConfiguration(property0.Value, options);
+                            liveTraceConfiguration = ModelSerializationExtensions.JsonDeserialize<SignalRLiveTraceConfiguration>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resourceLogConfiguration"u8))
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.SignalR
                             {
                                 continue;
                             }
-                            resourceLogConfiguration = SignalRResourceLogCategoryListResult.DeserializeSignalRResourceLogCategoryListResult(property0.Value, options);
+                            resourceLogConfiguration = ModelSerializationExtensions.JsonDeserialize<SignalRResourceLogCategoryListResult>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cors"u8))
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.SignalR
                             {
                                 continue;
                             }
-                            cors = SignalRCorsSettings.DeserializeSignalRCorsSettings(property0.Value, options);
+                            cors = ModelSerializationExtensions.JsonDeserialize<SignalRCorsSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("upstream"u8))
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.SignalR
                             {
                                 continue;
                             }
-                            upstream = ServerlessUpstreamSettings.DeserializeServerlessUpstreamSettings(property0.Value, options);
+                            upstream = ModelSerializationExtensions.JsonDeserialize<ServerlessUpstreamSettings>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkACLs"u8))
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.SignalR
                             {
                                 continue;
                             }
-                            networkACLs = SignalRNetworkAcls.DeserializeSignalRNetworkAcls(property0.Value, options);
+                            networkACLs = ModelSerializationExtensions.JsonDeserialize<SignalRNetworkAcls>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))

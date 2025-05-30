@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(ProxyServer))
             {
                 writer.WritePropertyName("proxyServer"u8);
-                writer.WriteObjectValue(ProxyServer, options);
+                ((IJsonModel<ProxyServerProperties>)ProxyServer).Write(writer, options);
             }
             if (Optional.IsDefined(ServicePrincipal))
             {
                 writer.WritePropertyName("servicePrincipal"u8);
-                writer.WriteObjectValue(ServicePrincipal, options);
+                ((IJsonModel<ServicePrincipalProperties>)ServicePrincipal).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    proxyServer = ProxyServerProperties.DeserializeProxyServerProperties(property.Value, options);
+                    proxyServer = ModelSerializationExtensions.JsonDeserialize<ProxyServerProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("servicePrincipal"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    servicePrincipal = ServicePrincipalProperties.DeserializeServicePrincipalProperties(property.Value, options);
+                    servicePrincipal = ModelSerializationExtensions.JsonDeserialize<ServicePrincipalProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

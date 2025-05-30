@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStartArray();
                 foreach (var item in SshAuthorizedKeys)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StorageSshPublicKey>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

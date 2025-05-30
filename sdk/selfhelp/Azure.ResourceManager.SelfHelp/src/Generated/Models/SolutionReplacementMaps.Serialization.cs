@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in WebResults)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<KBWebResult>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Diagnostics)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SolutionsDiagnostic>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Troubleshooters)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SolutionsTroubleshooters>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in MetricsBasedCharts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<MetricsBasedChart>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Videos)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SelfHelpVideo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in VideoGroups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VideoGroupDetail>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

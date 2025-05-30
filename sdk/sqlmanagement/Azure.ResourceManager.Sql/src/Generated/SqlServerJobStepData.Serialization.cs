@@ -58,17 +58,17 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteObjectValue(Action, options);
+                ((IJsonModel<JobStepAction>)Action).Write(writer, options);
             }
             if (Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
-                writer.WriteObjectValue(Output, options);
+                ((IJsonModel<JobStepOutput>)Output).Write(writer, options);
             }
             if (Optional.IsDefined(ExecutionOptions))
             {
                 writer.WritePropertyName("executionOptions"u8);
-                writer.WriteObjectValue(ExecutionOptions, options);
+                ((IJsonModel<JobStepExecutionOptions>)ExecutionOptions).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            action = JobStepAction.DeserializeJobStepAction(property0.Value, options);
+                            action = ModelSerializationExtensions.JsonDeserialize<JobStepAction>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("output"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            output = JobStepOutput.DeserializeJobStepOutput(property0.Value, options);
+                            output = ModelSerializationExtensions.JsonDeserialize<JobStepOutput>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("executionOptions"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            executionOptions = JobStepExecutionOptions.DeserializeJobStepExecutionOptions(property0.Value, options);
+                            executionOptions = ModelSerializationExtensions.JsonDeserialize<JobStepExecutionOptions>(property0.Value);
                             continue;
                         }
                     }

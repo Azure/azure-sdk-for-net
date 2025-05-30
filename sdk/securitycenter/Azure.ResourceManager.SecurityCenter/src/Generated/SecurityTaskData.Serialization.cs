@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(SecurityTaskParameters))
             {
                 writer.WritePropertyName("securityTaskParameters"u8);
-                writer.WriteObjectValue(SecurityTaskParameters, options);
+                ((IJsonModel<SecurityTaskProperties>)SecurityTaskParameters).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastStateChangedOn))
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            securityTaskParameters = SecurityTaskProperties.DeserializeSecurityTaskProperties(property0.Value, options);
+                            securityTaskParameters = ModelSerializationExtensions.JsonDeserialize<SecurityTaskProperties>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("lastStateChangeTimeUtc"u8))

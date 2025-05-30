@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in PatternTypeValues)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ThreatIntelligenceParsedPatternTypeValue>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

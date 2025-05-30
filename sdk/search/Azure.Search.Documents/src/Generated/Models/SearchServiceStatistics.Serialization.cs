@@ -23,12 +23,12 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("counters"u8))
                 {
-                    counters = SearchServiceCounters.DeserializeSearchServiceCounters(property.Value);
+                    counters = ModelSerializationExtensions.JsonDeserialize<SearchServiceCounters>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("limits"u8))
                 {
-                    limits = SearchServiceLimits.DeserializeSearchServiceLimits(property.Value);
+                    limits = ModelSerializationExtensions.JsonDeserialize<SearchServiceLimits>(property.Value);
                     continue;
                 }
             }

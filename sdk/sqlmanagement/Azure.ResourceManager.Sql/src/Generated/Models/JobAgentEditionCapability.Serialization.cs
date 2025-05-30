@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedServiceLevelObjectives)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<JobAgentServiceLevelObjectiveCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ServiceBus
             if (options.Format != "W" && Optional.IsDefined(CountDetails))
             {
                 writer.WritePropertyName("countDetails"u8);
-                writer.WriteObjectValue(CountDetails, options);
+                ((IJsonModel<MessageCountDetails>)CountDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ServiceBus
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ServiceBus
                             {
                                 continue;
                             }
-                            countDetails = MessageCountDetails.DeserializeMessageCountDetails(property0.Value, options);
+                            countDetails = ModelSerializationExtensions.JsonDeserialize<MessageCountDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("createdAt"u8))

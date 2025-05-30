@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(DevicesMetrics))
             {
                 writer.WritePropertyName("devicesMetrics"u8);
-                writer.WriteObjectValue(DevicesMetrics, options);
+                ((IJsonModel<IotSeverityMetrics>)DevicesMetrics).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    devicesMetrics = IotSeverityMetrics.DeserializeIotSeverityMetrics(property.Value, options);
+                    devicesMetrics = ModelSerializationExtensions.JsonDeserialize<IotSeverityMetrics>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

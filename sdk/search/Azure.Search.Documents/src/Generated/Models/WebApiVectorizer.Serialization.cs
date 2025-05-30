@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("customWebApiParameters"u8);
-                writer.WriteObjectValue(Parameters);
+                JsonSerializer.Serialize(writer, Parameters);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(VectorizerName);
@@ -44,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    customWebApiParameters = WebApiVectorizerParameters.DeserializeWebApiVectorizerParameters(property.Value);
+                    customWebApiParameters = ModelSerializationExtensions.JsonDeserialize<WebApiVectorizerParameters>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

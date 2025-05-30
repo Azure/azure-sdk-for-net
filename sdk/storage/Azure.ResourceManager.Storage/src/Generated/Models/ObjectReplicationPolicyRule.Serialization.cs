@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
-                writer.WriteObjectValue(Filters, options);
+                ((IJsonModel<ObjectReplicationPolicyFilter>)Filters).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    filters = ObjectReplicationPolicyFilter.DeserializeObjectReplicationPolicyFilter(property.Value, options);
+                    filters = ModelSerializationExtensions.JsonDeserialize<ObjectReplicationPolicyFilter>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

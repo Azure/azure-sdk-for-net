@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceProvider)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ConnectorDefinitionsResourceProvider>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Customs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<CustomPermissionDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

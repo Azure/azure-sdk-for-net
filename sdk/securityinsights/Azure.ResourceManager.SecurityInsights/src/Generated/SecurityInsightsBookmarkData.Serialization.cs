@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityInsights
             if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue(CreatedBy, options);
+                ((IJsonModel<SecurityInsightsUserInfo>)CreatedBy).Write(writer, options);
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityInsights
             if (Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
-                writer.WriteObjectValue(UpdatedBy, options);
+                ((IJsonModel<SecurityInsightsUserInfo>)UpdatedBy).Write(writer, options);
             }
             if (Optional.IsDefined(EventOn))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityInsights
             if (Optional.IsDefined(IncidentInfo))
             {
                 writer.WritePropertyName("incidentInfo"u8);
-                writer.WriteObjectValue(IncidentInfo, options);
+                ((IJsonModel<SecurityInsightsBookmarkIncidentInfo>)IncidentInfo).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(EntityMappings))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WriteStartArray();
                 foreach (var item in EntityMappings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<BookmarkEntityMappings>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            createdBy = SecurityInsightsUserInfo.DeserializeSecurityInsightsUserInfo(property0.Value, options);
+                            createdBy = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsUserInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("displayName"u8))
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            updatedBy = SecurityInsightsUserInfo.DeserializeSecurityInsightsUserInfo(property0.Value, options);
+                            updatedBy = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsUserInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("eventTime"u8))
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            incidentInfo = SecurityInsightsBookmarkIncidentInfo.DeserializeSecurityInsightsBookmarkIncidentInfo(property0.Value, options);
+                            incidentInfo = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsBookmarkIncidentInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("entityMappings"u8))

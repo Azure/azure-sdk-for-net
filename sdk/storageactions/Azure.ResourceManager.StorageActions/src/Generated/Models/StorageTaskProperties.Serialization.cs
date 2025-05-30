@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.StorageActions.Models
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
             writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue(Action, options);
+            ((IJsonModel<StorageTaskAction>)Action).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.StorageActions.Models
                 }
                 if (property.NameEquals("action"u8))
                 {
-                    action = StorageTaskAction.DeserializeStorageTaskAction(property.Value, options);
+                    action = ModelSerializationExtensions.JsonDeserialize<StorageTaskAction>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

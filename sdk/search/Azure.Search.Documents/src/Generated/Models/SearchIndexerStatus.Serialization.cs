@@ -37,7 +37,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         lastResult = null;
                         continue;
                     }
-                    lastResult = IndexerExecutionResult.DeserializeIndexerExecutionResult(property.Value);
+                    lastResult = ModelSerializationExtensions.JsonDeserialize<IndexerExecutionResult>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("executionHistory"u8))
@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("limits"u8))
                 {
-                    limits = SearchIndexerLimits.DeserializeSearchIndexerLimits(property.Value);
+                    limits = ModelSerializationExtensions.JsonDeserialize<SearchIndexerLimits>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("currentState"u8))
@@ -61,7 +61,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    currentState = IndexerState.DeserializeIndexerState(property.Value);
+                    currentState = ModelSerializationExtensions.JsonDeserialize<IndexerState>(property.Value);
                     continue;
                 }
             }

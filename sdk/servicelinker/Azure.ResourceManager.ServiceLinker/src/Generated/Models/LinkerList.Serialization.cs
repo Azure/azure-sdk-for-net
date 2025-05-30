@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<LinkerResourceData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

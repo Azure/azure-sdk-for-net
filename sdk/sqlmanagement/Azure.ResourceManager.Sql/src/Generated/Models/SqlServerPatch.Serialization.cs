@@ -38,8 +38,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SqlServerPrivateEndpointConnection>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +121,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(Administrators))
             {
                 writer.WritePropertyName("administrators"u8);
-                writer.WriteObjectValue(Administrators, options);
+                ((IJsonModel<ServerExternalAdministrator>)Administrators).Write(writer, options);
             }
             if (Optional.IsDefined(RestrictOutboundNetworkAccess))
             {
@@ -206,7 +205,7 @@ namespace Azure.ResourceManager.Sql.Models
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -331,7 +330,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            administrators = ServerExternalAdministrator.DeserializeServerExternalAdministrator(property0.Value, options);
+                            administrators = ModelSerializationExtensions.JsonDeserialize<ServerExternalAdministrator>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("restrictOutboundNetworkAccess"u8))

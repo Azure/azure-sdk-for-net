@@ -49,7 +49,7 @@ namespace Azure.Search.Documents.Models
                 if (RescoringOptions != null)
                 {
                     writer.WritePropertyName("rescoringOptions"u8);
-                    writer.WriteObjectValue(RescoringOptions);
+                    JsonSerializer.Serialize(writer, RescoringOptions);
                 }
                 else
                 {
@@ -122,7 +122,7 @@ namespace Azure.Search.Documents.Models
                         rescoringOptions = null;
                         continue;
                     }
-                    rescoringOptions = RescoringOptions.DeserializeRescoringOptions(property.Value);
+                    rescoringOptions = ModelSerializationExtensions.JsonDeserialize<RescoringOptions>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("truncationDimension"u8))

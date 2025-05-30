@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Queries)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<QueryStatisticsProperties>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

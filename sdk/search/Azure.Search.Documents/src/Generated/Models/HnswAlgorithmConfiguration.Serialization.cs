@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("hnswParameters"u8);
-                writer.WriteObjectValue(Parameters);
+                JsonSerializer.Serialize(writer, Parameters);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -44,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    hnswParameters = HnswParameters.DeserializeHnswParameters(property.Value);
+                    hnswParameters = ModelSerializationExtensions.JsonDeserialize<HnswParameters>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

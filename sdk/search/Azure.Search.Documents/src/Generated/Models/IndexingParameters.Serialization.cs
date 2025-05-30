@@ -54,7 +54,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(IndexingParametersConfiguration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue<IndexingParametersConfiguration>(IndexingParametersConfiguration);
+                JsonSerializer.Serialize(writer, IndexingParametersConfiguration);
             }
             writer.WriteEndObject();
         }
@@ -107,7 +107,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    configuration = Models.IndexingParametersConfiguration.DeserializeIndexingParametersConfiguration(property.Value);
+                    configuration = ModelSerializationExtensions.JsonDeserialize<IndexingParametersConfiguration>(property.Value);
                     continue;
                 }
             }

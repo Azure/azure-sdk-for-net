@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 writer.WriteStartArray();
                 foreach (var item in Conditions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SecretSyncCondition>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(ArcAutoProvisioning))
             {
                 writer.WritePropertyName("arcAutoProvisioning"u8);
-                writer.WriteObjectValue(ArcAutoProvisioning, options);
+                ((IJsonModel<DefenderForDatabasesAwsOfferingArcAutoProvisioning>)ArcAutoProvisioning).Write(writer, options);
             }
             if (Optional.IsDefined(Rds))
             {
                 writer.WritePropertyName("rds"u8);
-                writer.WriteObjectValue(Rds, options);
+                ((IJsonModel<DefenderForDatabasesAwsOfferingRds>)Rds).Write(writer, options);
             }
             if (Optional.IsDefined(DatabasesDspm))
             {
                 writer.WritePropertyName("databasesDspm"u8);
-                writer.WriteObjectValue(DatabasesDspm, options);
+                ((IJsonModel<DefenderFoDatabasesAwsOfferingDatabasesDspm>)DatabasesDspm).Write(writer, options);
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    arcAutoProvisioning = DefenderForDatabasesAwsOfferingArcAutoProvisioning.DeserializeDefenderForDatabasesAwsOfferingArcAutoProvisioning(property.Value, options);
+                    arcAutoProvisioning = ModelSerializationExtensions.JsonDeserialize<DefenderForDatabasesAwsOfferingArcAutoProvisioning>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rds"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    rds = DefenderForDatabasesAwsOfferingRds.DeserializeDefenderForDatabasesAwsOfferingRds(property.Value, options);
+                    rds = ModelSerializationExtensions.JsonDeserialize<DefenderForDatabasesAwsOfferingRds>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("databasesDspm"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    databasesDspm = DefenderFoDatabasesAwsOfferingDatabasesDspm.DeserializeDefenderFoDatabasesAwsOfferingDatabasesDspm(property.Value, options);
+                    databasesDspm = ModelSerializationExtensions.JsonDeserialize<DefenderFoDatabasesAwsOfferingDatabasesDspm>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("offeringType"u8))

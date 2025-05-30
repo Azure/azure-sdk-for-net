@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration, options);
+                ((IJsonModel<DefenderForServersGcpOfferingVmScannersConfiguration>)Configuration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    configuration = DefenderForServersGcpOfferingVmScannersConfiguration.DeserializeDefenderForServersGcpOfferingVmScannersConfiguration(property.Value, options);
+                    configuration = ModelSerializationExtensions.JsonDeserialize<DefenderForServersGcpOfferingVmScannersConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

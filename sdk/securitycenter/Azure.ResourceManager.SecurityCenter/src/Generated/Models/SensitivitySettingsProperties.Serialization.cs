@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(MipInformation))
             {
                 writer.WritePropertyName("mipInformation"u8);
-                writer.WriteObjectValue(MipInformation, options);
+                ((IJsonModel<GetSensitivitySettingsResponsePropertiesMipInformation>)MipInformation).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    mipInformation = GetSensitivitySettingsResponsePropertiesMipInformation.DeserializeGetSensitivitySettingsResponsePropertiesMipInformation(property.Value, options);
+                    mipInformation = ModelSerializationExtensions.JsonDeserialize<GetSensitivitySettingsResponsePropertiesMipInformation>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

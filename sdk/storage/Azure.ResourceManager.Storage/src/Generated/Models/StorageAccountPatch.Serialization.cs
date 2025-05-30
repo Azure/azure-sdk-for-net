@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                ((IJsonModel<StorageSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -54,8 +54,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -67,22 +66,22 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(CustomDomain))
             {
                 writer.WritePropertyName("customDomain"u8);
-                writer.WriteObjectValue(CustomDomain, options);
+                ((IJsonModel<StorageCustomDomain>)CustomDomain).Write(writer, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                ((IJsonModel<StorageAccountEncryption>)Encryption).Write(writer, options);
             }
             if (Optional.IsDefined(SasPolicy))
             {
                 writer.WritePropertyName("sasPolicy"u8);
-                writer.WriteObjectValue(SasPolicy, options);
+                ((IJsonModel<StorageAccountSasPolicy>)SasPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(KeyPolicy))
             {
                 writer.WritePropertyName("keyPolicy"u8);
-                writer.WriteObjectValue(KeyPolicy, options);
+                ((IJsonModel<StorageAccountKeyPolicy>)KeyPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(AccessTier))
             {
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(AzureFilesIdentityBasedAuthentication))
             {
                 writer.WritePropertyName("azureFilesIdentityBasedAuthentication"u8);
-                writer.WriteObjectValue(AzureFilesIdentityBasedAuthentication, options);
+                ((IJsonModel<FilesIdentityBasedAuthentication>)AzureFilesIdentityBasedAuthentication).Write(writer, options);
             }
             if (Optional.IsDefined(EnableHttpsTrafficOnly))
             {
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkRuleSet, options);
+                ((IJsonModel<StorageAccountNetworkRuleSet>)NetworkRuleSet).Write(writer, options);
             }
             if (Optional.IsDefined(LargeFileSharesState))
             {
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(RoutingPreference))
             {
                 writer.WritePropertyName("routingPreference"u8);
-                writer.WriteObjectValue(RoutingPreference, options);
+                ((IJsonModel<StorageRoutingPreference>)RoutingPreference).Write(writer, options);
             }
             if (Optional.IsDefined(AllowBlobPublicAccess))
             {
@@ -162,7 +161,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(ImmutableStorageWithVersioning))
             {
                 writer.WritePropertyName("immutableStorageWithVersioning"u8);
-                writer.WriteObjectValue(ImmutableStorageWithVersioning, options);
+                ((IJsonModel<ImmutableStorageAccount>)ImmutableStorageWithVersioning).Write(writer, options);
             }
             if (Optional.IsDefined(AllowedCopyScope))
             {
@@ -248,7 +247,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    sku = StorageSku.DeserializeStorageSku(property.Value, options);
+                    sku = ModelSerializationExtensions.JsonDeserialize<StorageSku>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -272,7 +271,7 @@ namespace Azure.ResourceManager.Storage.Models
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -299,7 +298,7 @@ namespace Azure.ResourceManager.Storage.Models
                             {
                                 continue;
                             }
-                            customDomain = StorageCustomDomain.DeserializeStorageCustomDomain(property0.Value, options);
+                            customDomain = ModelSerializationExtensions.JsonDeserialize<StorageCustomDomain>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -308,7 +307,7 @@ namespace Azure.ResourceManager.Storage.Models
                             {
                                 continue;
                             }
-                            encryption = StorageAccountEncryption.DeserializeStorageAccountEncryption(property0.Value, options);
+                            encryption = ModelSerializationExtensions.JsonDeserialize<StorageAccountEncryption>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sasPolicy"u8))
@@ -317,7 +316,7 @@ namespace Azure.ResourceManager.Storage.Models
                             {
                                 continue;
                             }
-                            sasPolicy = StorageAccountSasPolicy.DeserializeStorageAccountSasPolicy(property0.Value, options);
+                            sasPolicy = ModelSerializationExtensions.JsonDeserialize<StorageAccountSasPolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("keyPolicy"u8))
@@ -326,7 +325,7 @@ namespace Azure.ResourceManager.Storage.Models
                             {
                                 continue;
                             }
-                            keyPolicy = StorageAccountKeyPolicy.DeserializeStorageAccountKeyPolicy(property0.Value, options);
+                            keyPolicy = ModelSerializationExtensions.JsonDeserialize<StorageAccountKeyPolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("accessTier"u8))
@@ -344,7 +343,7 @@ namespace Azure.ResourceManager.Storage.Models
                             {
                                 continue;
                             }
-                            azureFilesIdentityBasedAuthentication = FilesIdentityBasedAuthentication.DeserializeFilesIdentityBasedAuthentication(property0.Value, options);
+                            azureFilesIdentityBasedAuthentication = ModelSerializationExtensions.JsonDeserialize<FilesIdentityBasedAuthentication>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("supportsHttpsTrafficOnly"u8))
@@ -389,7 +388,7 @@ namespace Azure.ResourceManager.Storage.Models
                             {
                                 continue;
                             }
-                            networkAcls = StorageAccountNetworkRuleSet.DeserializeStorageAccountNetworkRuleSet(property0.Value, options);
+                            networkAcls = ModelSerializationExtensions.JsonDeserialize<StorageAccountNetworkRuleSet>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("largeFileSharesState"u8))
@@ -407,7 +406,7 @@ namespace Azure.ResourceManager.Storage.Models
                             {
                                 continue;
                             }
-                            routingPreference = StorageRoutingPreference.DeserializeStorageRoutingPreference(property0.Value, options);
+                            routingPreference = ModelSerializationExtensions.JsonDeserialize<StorageRoutingPreference>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("allowBlobPublicAccess"u8))
@@ -470,7 +469,7 @@ namespace Azure.ResourceManager.Storage.Models
                             {
                                 continue;
                             }
-                            immutableStorageWithVersioning = ImmutableStorageAccount.DeserializeImmutableStorageAccount(property0.Value, options);
+                            immutableStorageWithVersioning = ModelSerializationExtensions.JsonDeserialize<ImmutableStorageAccount>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("allowedCopyScope"u8))

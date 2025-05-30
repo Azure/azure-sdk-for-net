@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("forecastValues"u8);
-                writer.WriteObjectValue(ForecastValues, options);
+                ((IJsonModel<StandbyContainerGroupPoolForecastValues>)ForecastValues).Write(writer, options);
             }
             if (options.Format != "W")
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 if (property.NameEquals("forecastValues"u8))
                 {
-                    forecastValues = StandbyContainerGroupPoolForecastValues.DeserializeStandbyContainerGroupPoolForecastValues(property.Value, options);
+                    forecastValues = ModelSerializationExtensions.JsonDeserialize<StandbyContainerGroupPoolForecastValues>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("forecastStartTime"u8))

@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.StandbyPool.Models
             }
 
             writer.WritePropertyName("elasticityProfile"u8);
-            writer.WriteObjectValue(ElasticityProfile, options);
+            ((IJsonModel<StandbyContainerGroupPoolElasticityProfile>)ElasticityProfile).Write(writer, options);
             writer.WritePropertyName("containerGroupProperties"u8);
-            writer.WriteObjectValue(ContainerGroupProperties, options);
+            ((IJsonModel<StandbyContainerGroupProperties>)ContainerGroupProperties).Write(writer, options);
             if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 if (property.NameEquals("elasticityProfile"u8))
                 {
-                    elasticityProfile = StandbyContainerGroupPoolElasticityProfile.DeserializeStandbyContainerGroupPoolElasticityProfile(property.Value, options);
+                    elasticityProfile = ModelSerializationExtensions.JsonDeserialize<StandbyContainerGroupPoolElasticityProfile>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("containerGroupProperties"u8))
                 {
-                    containerGroupProperties = StandbyContainerGroupProperties.DeserializeStandbyContainerGroupProperties(property.Value, options);
+                    containerGroupProperties = ModelSerializationExtensions.JsonDeserialize<StandbyContainerGroupProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))

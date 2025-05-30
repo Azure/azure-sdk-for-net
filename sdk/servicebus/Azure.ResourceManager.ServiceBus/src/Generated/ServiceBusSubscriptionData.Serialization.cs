@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ServiceBus
             if (options.Format != "W" && Optional.IsDefined(CountDetails))
             {
                 writer.WritePropertyName("countDetails"u8);
-                writer.WriteObjectValue(CountDetails, options);
+                ((IJsonModel<MessageCountDetails>)CountDetails).Write(writer, options);
             }
             if (Optional.IsDefined(LockDuration))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ServiceBus
             if (Optional.IsDefined(ClientAffineProperties))
             {
                 writer.WritePropertyName("clientAffineProperties"u8);
-                writer.WriteObjectValue(ClientAffineProperties, options);
+                ((IJsonModel<ServiceBusClientAffineProperties>)ClientAffineProperties).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ServiceBus
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.ServiceBus
                             {
                                 continue;
                             }
-                            countDetails = MessageCountDetails.DeserializeMessageCountDetails(property0.Value, options);
+                            countDetails = ModelSerializationExtensions.JsonDeserialize<MessageCountDetails>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("lockDuration"u8))
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.ServiceBus
                             {
                                 continue;
                             }
-                            clientAffineProperties = ServiceBusClientAffineProperties.DeserializeServiceBusClientAffineProperties(property0.Value, options);
+                            clientAffineProperties = ModelSerializationExtensions.JsonDeserialize<ServiceBusClientAffineProperties>(property0.Value);
                             continue;
                         }
                     }

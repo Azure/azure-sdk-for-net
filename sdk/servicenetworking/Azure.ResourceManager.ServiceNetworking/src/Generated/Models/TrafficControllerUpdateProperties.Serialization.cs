@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             if (Optional.IsDefined(SecurityPolicyConfigurations))
             {
                 writer.WritePropertyName("securityPolicyConfigurations"u8);
-                writer.WriteObjectValue(SecurityPolicyConfigurations, options);
+                ((IJsonModel<SecurityPolicyConfigurations>)SecurityPolicyConfigurations).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     {
                         continue;
                     }
-                    securityPolicyConfigurations = SecurityPolicyConfigurations.DeserializeSecurityPolicyConfigurations(property.Value, options);
+                    securityPolicyConfigurations = ModelSerializationExtensions.JsonDeserialize<SecurityPolicyConfigurations>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

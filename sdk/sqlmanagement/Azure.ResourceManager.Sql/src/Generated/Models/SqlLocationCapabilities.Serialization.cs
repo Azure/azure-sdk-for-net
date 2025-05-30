@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedServerVersions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SqlServerVersionCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedManagedInstanceVersions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ManagedInstanceVersionCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedJobAgentVersions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<JobAgentVersionCapability>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

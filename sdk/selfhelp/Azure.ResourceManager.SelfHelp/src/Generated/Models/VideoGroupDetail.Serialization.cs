@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Videos)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<VideoGroupVideo>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

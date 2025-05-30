@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
+                ((IJsonModel<InstancePoolUsageName>)Name).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    name = InstancePoolUsageName.DeserializeInstancePoolUsageName(property.Value, options);
+                    name = ModelSerializationExtensions.JsonDeserialize<InstancePoolUsageName>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

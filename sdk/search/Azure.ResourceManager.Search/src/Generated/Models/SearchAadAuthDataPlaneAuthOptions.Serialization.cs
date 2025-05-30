@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Search.Models
             if (Optional.IsDefined(AadOrApiKey))
             {
                 writer.WritePropertyName("aadOrApiKey"u8);
-                writer.WriteObjectValue(AadOrApiKey, options);
+                ((IJsonModel<DataPlaneAadOrApiKeyAuthOption>)AadOrApiKey).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    aadOrApiKey = DataPlaneAadOrApiKeyAuthOption.DeserializeDataPlaneAadOrApiKeyAuthOption(property.Value, options);
+                    aadOrApiKey = ModelSerializationExtensions.JsonDeserialize<DataPlaneAadOrApiKeyAuthOption>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

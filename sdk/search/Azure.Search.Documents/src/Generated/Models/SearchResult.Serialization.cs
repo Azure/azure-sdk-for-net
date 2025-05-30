@@ -101,7 +101,7 @@ namespace Azure.Search.Documents.Models
                         searchDocumentDebugInfo = null;
                         continue;
                     }
-                    searchDocumentDebugInfo = DocumentDebugInfo.DeserializeDocumentDebugInfo(property.Value);
+                    searchDocumentDebugInfo = ModelSerializationExtensions.JsonDeserialize<DocumentDebugInfo>(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());

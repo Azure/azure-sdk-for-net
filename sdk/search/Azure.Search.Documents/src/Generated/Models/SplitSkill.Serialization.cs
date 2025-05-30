@@ -86,7 +86,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (AzureOpenAITokenizerParameters != null)
                 {
                     writer.WritePropertyName("azureOpenAITokenizerParameters"u8);
-                    writer.WriteObjectValue(AzureOpenAITokenizerParameters);
+                    JsonSerializer.Serialize(writer, AzureOpenAITokenizerParameters);
                 }
                 else
                 {
@@ -114,14 +114,14 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue<InputFieldMappingEntry>(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("outputs"u8);
             writer.WriteStartArray();
             foreach (var item in Outputs)
             {
-                writer.WriteObjectValue<OutputFieldMappingEntry>(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -214,7 +214,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         azureOpenAITokenizerParameters = null;
                         continue;
                     }
-                    azureOpenAITokenizerParameters = AzureOpenAITokenizerParameters.DeserializeAzureOpenAITokenizerParameters(property.Value);
+                    azureOpenAITokenizerParameters = ModelSerializationExtensions.JsonDeserialize<AzureOpenAITokenizerParameters>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))

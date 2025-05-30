@@ -60,24 +60,24 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WriteStartArray();
                 foreach (var item in AvailableClusterVersions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ClusterVersionDetails>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AzureActiveDirectory))
             {
                 writer.WritePropertyName("azureActiveDirectory"u8);
-                writer.WriteObjectValue(AzureActiveDirectory, options);
+                ((IJsonModel<ClusterAadSetting>)AzureActiveDirectory).Write(writer, options);
             }
             if (Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
-                writer.WriteObjectValue(Certificate, options);
+                ((IJsonModel<ClusterCertificateDescription>)Certificate).Write(writer, options);
             }
             if (Optional.IsDefined(CertificateCommonNames))
             {
                 writer.WritePropertyName("certificateCommonNames"u8);
-                writer.WriteObjectValue(CertificateCommonNames, options);
+                ((IJsonModel<ClusterServerCertificateCommonNames>)CertificateCommonNames).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ClientCertificateCommonNames))
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WriteStartArray();
                 foreach (var item in ClientCertificateCommonNames)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ClusterClientCertificateCommonName>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WriteStartArray();
                 foreach (var item in ClientCertificateThumbprints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ClusterClientCertificateThumbprint>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ServiceFabric
             if (Optional.IsDefined(DiagnosticsStorageAccountConfig))
             {
                 writer.WritePropertyName("diagnosticsStorageAccountConfig"u8);
-                writer.WriteObjectValue(DiagnosticsStorageAccountConfig, options);
+                ((IJsonModel<DiagnosticsStorageAccountConfig>)DiagnosticsStorageAccountConfig).Write(writer, options);
             }
             if (Optional.IsDefined(IsEventStoreServiceEnabled))
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WriteStartArray();
                 foreach (var item in FabricSettings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SettingsSectionDescription>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WriteStartArray();
                 foreach (var item in NodeTypes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ClusterNodeTypeDescription>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -167,17 +167,17 @@ namespace Azure.ResourceManager.ServiceFabric
             if (Optional.IsDefined(ReverseProxyCertificate))
             {
                 writer.WritePropertyName("reverseProxyCertificate"u8);
-                writer.WriteObjectValue(ReverseProxyCertificate, options);
+                ((IJsonModel<ClusterCertificateDescription>)ReverseProxyCertificate).Write(writer, options);
             }
             if (Optional.IsDefined(ReverseProxyCertificateCommonNames))
             {
                 writer.WritePropertyName("reverseProxyCertificateCommonNames"u8);
-                writer.WriteObjectValue(ReverseProxyCertificateCommonNames, options);
+                ((IJsonModel<ClusterServerCertificateCommonNames>)ReverseProxyCertificateCommonNames).Write(writer, options);
             }
             if (Optional.IsDefined(UpgradeDescription))
             {
                 writer.WritePropertyName("upgradeDescription"u8);
-                writer.WriteObjectValue(UpgradeDescription, options);
+                ((IJsonModel<ClusterUpgradePolicy>)UpgradeDescription).Write(writer, options);
             }
             if (Optional.IsDefined(UpgradeMode))
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ServiceFabric
             if (Optional.IsDefined(ApplicationTypeVersionsCleanupPolicy))
             {
                 writer.WritePropertyName("applicationTypeVersionsCleanupPolicy"u8);
-                writer.WriteObjectValue(ApplicationTypeVersionsCleanupPolicy, options);
+                ((IJsonModel<ApplicationTypeVersionsCleanupPolicy>)ApplicationTypeVersionsCleanupPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(VmImage))
             {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WriteStartArray();
                 foreach (var item in Notifications)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ClusterNotification>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.ServiceFabric
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.ServiceFabric
                             {
                                 continue;
                             }
-                            azureActiveDirectory = ClusterAadSetting.DeserializeClusterAadSetting(property0.Value, options);
+                            azureActiveDirectory = ModelSerializationExtensions.JsonDeserialize<ClusterAadSetting>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("certificate"u8))
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.ServiceFabric
                             {
                                 continue;
                             }
-                            certificate = ClusterCertificateDescription.DeserializeClusterCertificateDescription(property0.Value, options);
+                            certificate = ModelSerializationExtensions.JsonDeserialize<ClusterCertificateDescription>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("certificateCommonNames"u8))
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.ServiceFabric
                             {
                                 continue;
                             }
-                            certificateCommonNames = ClusterServerCertificateCommonNames.DeserializeClusterServerCertificateCommonNames(property0.Value, options);
+                            certificateCommonNames = ModelSerializationExtensions.JsonDeserialize<ClusterServerCertificateCommonNames>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clientCertificateCommonNames"u8))
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.ServiceFabric
                             {
                                 continue;
                             }
-                            diagnosticsStorageAccountConfig = DiagnosticsStorageAccountConfig.DeserializeDiagnosticsStorageAccountConfig(property0.Value, options);
+                            diagnosticsStorageAccountConfig = ModelSerializationExtensions.JsonDeserialize<DiagnosticsStorageAccountConfig>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("eventStoreServiceEnabled"u8))
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.ServiceFabric
                             {
                                 continue;
                             }
-                            reverseProxyCertificate = ClusterCertificateDescription.DeserializeClusterCertificateDescription(property0.Value, options);
+                            reverseProxyCertificate = ModelSerializationExtensions.JsonDeserialize<ClusterCertificateDescription>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("reverseProxyCertificateCommonNames"u8))
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.ServiceFabric
                             {
                                 continue;
                             }
-                            reverseProxyCertificateCommonNames = ClusterServerCertificateCommonNames.DeserializeClusterServerCertificateCommonNames(property0.Value, options);
+                            reverseProxyCertificateCommonNames = ModelSerializationExtensions.JsonDeserialize<ClusterServerCertificateCommonNames>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("upgradeDescription"u8))
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.ServiceFabric
                             {
                                 continue;
                             }
-                            upgradeDescription = ClusterUpgradePolicy.DeserializeClusterUpgradePolicy(property0.Value, options);
+                            upgradeDescription = ModelSerializationExtensions.JsonDeserialize<ClusterUpgradePolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("upgradeMode"u8))
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.ServiceFabric
                             {
                                 continue;
                             }
-                            applicationTypeVersionsCleanupPolicy = ApplicationTypeVersionsCleanupPolicy.DeserializeApplicationTypeVersionsCleanupPolicy(property0.Value, options);
+                            applicationTypeVersionsCleanupPolicy = ModelSerializationExtensions.JsonDeserialize<ApplicationTypeVersionsCleanupPolicy>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("vmImage"u8))

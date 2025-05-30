@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WriteStartArray();
                 foreach (var item in BaseResourceStatus)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceAzStatus>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

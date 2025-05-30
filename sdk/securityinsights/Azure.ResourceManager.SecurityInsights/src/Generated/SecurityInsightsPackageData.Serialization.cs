@@ -109,22 +109,22 @@ namespace Azure.ResourceManager.SecurityInsights
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source, options);
+                ((IJsonModel<SecurityInsightsMetadataSource>)Source).Write(writer, options);
             }
             if (Optional.IsDefined(Author))
             {
                 writer.WritePropertyName("author"u8);
-                writer.WriteObjectValue(Author, options);
+                ((IJsonModel<SecurityInsightsMetadataAuthor>)Author).Write(writer, options);
             }
             if (Optional.IsDefined(Support))
             {
                 writer.WritePropertyName("support"u8);
-                writer.WriteObjectValue(Support, options);
+                ((IJsonModel<SecurityInsightsMetadataSupport>)Support).Write(writer, options);
             }
             if (Optional.IsDefined(Dependencies))
             {
                 writer.WritePropertyName("dependencies"u8);
-                writer.WriteObjectValue(Dependencies, options);
+                ((IJsonModel<SecurityInsightsMetadataDependencies>)Dependencies).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Providers))
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.SecurityInsights
             if (Optional.IsDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
-                writer.WriteObjectValue(Categories, options);
+                ((IJsonModel<SecurityInsightsMetadataCategories>)Categories).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ThreatAnalysisTactics))
             {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            source = SecurityInsightsMetadataSource.DeserializeSecurityInsightsMetadataSource(property0.Value, options);
+                            source = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsMetadataSource>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("author"u8))
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            author = SecurityInsightsMetadataAuthor.DeserializeSecurityInsightsMetadataAuthor(property0.Value, options);
+                            author = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsMetadataAuthor>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("support"u8))
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            support = SecurityInsightsMetadataSupport.DeserializeSecurityInsightsMetadataSupport(property0.Value, options);
+                            support = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsMetadataSupport>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dependencies"u8))
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            dependencies = SecurityInsightsMetadataDependencies.DeserializeSecurityInsightsMetadataDependencies(property0.Value, options);
+                            dependencies = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsMetadataDependencies>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("providers"u8))
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            categories = SecurityInsightsMetadataCategories.DeserializeSecurityInsightsMetadataCategories(property0.Value, options);
+                            categories = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsMetadataCategories>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("threatAnalysisTactics"u8))

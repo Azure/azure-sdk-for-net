@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SiteManager.Models
             if (Optional.IsDefined(SiteAddress))
             {
                 writer.WritePropertyName("siteAddress"u8);
-                writer.WriteObjectValue(SiteAddress, options);
+                ((IJsonModel<SiteAddressProperties>)SiteAddress).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Labels))
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SiteManager.Models
                     {
                         continue;
                     }
-                    siteAddress = SiteAddressProperties.DeserializeSiteAddressProperties(property.Value, options);
+                    siteAddress = ModelSerializationExtensions.JsonDeserialize<SiteAddressProperties>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("labels"u8))

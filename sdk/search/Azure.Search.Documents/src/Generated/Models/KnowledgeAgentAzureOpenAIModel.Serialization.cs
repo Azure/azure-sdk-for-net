@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("azureOpenAIParameters"u8);
-            writer.WriteObjectValue(AzureOpenAIParameters);
+            JsonSerializer.Serialize(writer, AzureOpenAIParameters);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("azureOpenAIParameters"u8))
                 {
-                    azureOpenAIParameters = AzureOpenAIVectorizerParameters.DeserializeAzureOpenAIVectorizerParameters(property.Value);
+                    azureOpenAIParameters = ModelSerializationExtensions.JsonDeserialize<AzureOpenAIVectorizerParameters>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
-                writer.WriteObjectValue(Owner, options);
+                ((IJsonModel<SecurityInsightsIncidentOwnerInfo>)Owner).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Labels))
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Labels)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SecurityInsightsIncidentLabel>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    owner = SecurityInsightsIncidentOwnerInfo.DeserializeSecurityInsightsIncidentOwnerInfo(property.Value, options);
+                    owner = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsIncidentOwnerInfo>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("labels"u8))

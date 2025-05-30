@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(NativeCloudConnection))
             {
                 writer.WritePropertyName("nativeCloudConnection"u8);
-                writer.WriteObjectValue(NativeCloudConnection, options);
+                ((IJsonModel<CspmMonitorGcpOfferingNativeCloudConnection>)NativeCloudConnection).Write(writer, options);
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    nativeCloudConnection = CspmMonitorGcpOfferingNativeCloudConnection.DeserializeCspmMonitorGcpOfferingNativeCloudConnection(property.Value, options);
+                    nativeCloudConnection = ModelSerializationExtensions.JsonDeserialize<CspmMonitorGcpOfferingNativeCloudConnection>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("offeringType"u8))

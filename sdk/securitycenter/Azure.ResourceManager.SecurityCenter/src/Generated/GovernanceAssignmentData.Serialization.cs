@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(RemediationEta))
             {
                 writer.WritePropertyName("remediationEta"u8);
-                writer.WriteObjectValue(RemediationEta, options);
+                ((IJsonModel<RemediationEta>)RemediationEta).Write(writer, options);
             }
             if (Optional.IsDefined(IsGracePeriod))
             {
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(GovernanceEmailNotification))
             {
                 writer.WritePropertyName("governanceEmailNotification"u8);
-                writer.WriteObjectValue(GovernanceEmailNotification, options);
+                ((IJsonModel<GovernanceEmailNotification>)GovernanceEmailNotification).Write(writer, options);
             }
             if (Optional.IsDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
-                writer.WriteObjectValue(AdditionalData, options);
+                ((IJsonModel<GovernanceAssignmentAdditionalInfo>)AdditionalData).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            remediationEta = RemediationEta.DeserializeRemediationEta(property0.Value, options);
+                            remediationEta = ModelSerializationExtensions.JsonDeserialize<RemediationEta>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("isGracePeriod"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            governanceEmailNotification = GovernanceEmailNotification.DeserializeGovernanceEmailNotification(property0.Value, options);
+                            governanceEmailNotification = ModelSerializationExtensions.JsonDeserialize<GovernanceEmailNotification>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("additionalData"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            additionalData = GovernanceAssignmentAdditionalInfo.DeserializeGovernanceAssignmentAdditionalInfo(property0.Value, options);
+                            additionalData = ModelSerializationExtensions.JsonDeserialize<GovernanceAssignmentAdditionalInfo>(property0.Value);
                             continue;
                         }
                     }

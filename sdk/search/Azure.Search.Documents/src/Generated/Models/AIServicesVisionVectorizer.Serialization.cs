@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(AIServicesVisionParameters))
             {
                 writer.WritePropertyName("aiServicesVisionParameters"u8);
-                writer.WriteObjectValue(AIServicesVisionParameters);
+                JsonSerializer.Serialize(writer, AIServicesVisionParameters);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(VectorizerName);
@@ -44,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    aiServicesVisionParameters = AIServicesVisionParameters.DeserializeAIServicesVisionParameters(property.Value);
+                    aiServicesVisionParameters = ModelSerializationExtensions.JsonDeserialize<AIServicesVisionParameters>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WritePropertyName("actions"u8);
-            writer.WriteObjectValue(Actions, options);
+            ((IJsonModel<ManagementPolicyAction>)Actions).Write(writer, options);
             if (Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
-                writer.WriteObjectValue(Filters, options);
+                ((IJsonModel<ManagementPolicyFilter>)Filters).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (property.NameEquals("actions"u8))
                 {
-                    actions = ManagementPolicyAction.DeserializeManagementPolicyAction(property.Value, options);
+                    actions = ModelSerializationExtensions.JsonDeserialize<ManagementPolicyAction>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("filters"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    filters = ManagementPolicyFilter.DeserializeManagementPolicyFilter(property.Value, options);
+                    filters = ModelSerializationExtensions.JsonDeserialize<ManagementPolicyFilter>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

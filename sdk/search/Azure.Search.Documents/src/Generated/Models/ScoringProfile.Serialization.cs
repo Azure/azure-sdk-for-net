@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (TextWeights != null)
                 {
                     writer.WritePropertyName("text"u8);
-                    writer.WriteObjectValue(TextWeights);
+                    JsonSerializer.Serialize(writer, TextWeights);
                 }
                 else
                 {
@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Functions)
                 {
-                    writer.WriteObjectValue<ScoringFunction>(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         text = null;
                         continue;
                     }
-                    text = TextWeights.DeserializeTextWeights(property.Value);
+                    text = ModelSerializationExtensions.JsonDeserialize<TextWeights>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("functions"u8))

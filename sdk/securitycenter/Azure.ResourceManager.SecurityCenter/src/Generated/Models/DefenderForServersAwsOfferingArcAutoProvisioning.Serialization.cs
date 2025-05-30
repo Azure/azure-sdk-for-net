@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration, options);
+                ((IJsonModel<DefenderForServersAwsOfferingArcAutoProvisioningConfiguration>)Configuration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    configuration = DefenderForServersAwsOfferingArcAutoProvisioningConfiguration.DeserializeDefenderForServersAwsOfferingArcAutoProvisioningConfiguration(property.Value, options);
+                    configuration = ModelSerializationExtensions.JsonDeserialize<DefenderForServersAwsOfferingArcAutoProvisioningConfiguration>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

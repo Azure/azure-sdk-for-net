@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(StorageLimit))
             {
                 writer.WritePropertyName("storageLimit"u8);
-                writer.WriteObjectValue(StorageLimit, options);
+                ((IJsonModel<MaxSizeCapability>)StorageLimit).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    storageLimit = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
+                    storageLimit = ModelSerializationExtensions.JsonDeserialize<MaxSizeCapability>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))

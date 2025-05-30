@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(ApplicationPorts))
             {
                 writer.WritePropertyName("applicationPorts"u8);
-                writer.WriteObjectValue(ApplicationPorts, options);
+                ((IJsonModel<ClusterEndpointRangeDescription>)ApplicationPorts).Write(writer, options);
             }
             if (Optional.IsDefined(EphemeralPorts))
             {
                 writer.WritePropertyName("ephemeralPorts"u8);
-                writer.WriteObjectValue(EphemeralPorts, options);
+                ((IJsonModel<ClusterEndpointRangeDescription>)EphemeralPorts).Write(writer, options);
             }
             writer.WritePropertyName("isPrimary"u8);
             writer.WriteBooleanValue(IsPrimary);
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    applicationPorts = ClusterEndpointRangeDescription.DeserializeClusterEndpointRangeDescription(property.Value, options);
+                    applicationPorts = ModelSerializationExtensions.JsonDeserialize<ClusterEndpointRangeDescription>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ephemeralPorts"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    ephemeralPorts = ClusterEndpointRangeDescription.DeserializeClusterEndpointRangeDescription(property.Value, options);
+                    ephemeralPorts = ModelSerializationExtensions.JsonDeserialize<ClusterEndpointRangeDescription>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isPrimary"u8))

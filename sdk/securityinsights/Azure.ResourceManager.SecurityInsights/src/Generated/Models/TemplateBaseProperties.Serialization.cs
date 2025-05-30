@@ -69,27 +69,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source, options);
+                ((IJsonModel<SecurityInsightsMetadataSource>)Source).Write(writer, options);
             }
             if (Optional.IsDefined(Author))
             {
                 writer.WritePropertyName("author"u8);
-                writer.WriteObjectValue(Author, options);
+                ((IJsonModel<SecurityInsightsMetadataAuthor>)Author).Write(writer, options);
             }
             if (Optional.IsDefined(Support))
             {
                 writer.WritePropertyName("support"u8);
-                writer.WriteObjectValue(Support, options);
+                ((IJsonModel<SecurityInsightsMetadataSupport>)Support).Write(writer, options);
             }
             if (Optional.IsDefined(Dependencies))
             {
                 writer.WritePropertyName("dependencies"u8);
-                writer.WriteObjectValue(Dependencies, options);
+                ((IJsonModel<SecurityInsightsMetadataDependencies>)Dependencies).Write(writer, options);
             }
             if (Optional.IsDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
-                writer.WriteObjectValue(Categories, options);
+                ((IJsonModel<SecurityInsightsMetadataCategories>)Categories).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Providers))
             {
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    source = SecurityInsightsMetadataSource.DeserializeSecurityInsightsMetadataSource(property.Value, options);
+                    source = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsMetadataSource>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("author"u8))
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    author = SecurityInsightsMetadataAuthor.DeserializeSecurityInsightsMetadataAuthor(property.Value, options);
+                    author = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsMetadataAuthor>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("support"u8))
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    support = SecurityInsightsMetadataSupport.DeserializeSecurityInsightsMetadataSupport(property.Value, options);
+                    support = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsMetadataSupport>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dependencies"u8))
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    dependencies = SecurityInsightsMetadataDependencies.DeserializeSecurityInsightsMetadataDependencies(property.Value, options);
+                    dependencies = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsMetadataDependencies>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("categories"u8))
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    categories = SecurityInsightsMetadataCategories.DeserializeSecurityInsightsMetadataCategories(property.Value, options);
+                    categories = ModelSerializationExtensions.JsonDeserialize<SecurityInsightsMetadataCategories>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("providers"u8))

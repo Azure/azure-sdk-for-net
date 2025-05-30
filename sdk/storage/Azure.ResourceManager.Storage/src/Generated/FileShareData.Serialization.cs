@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Storage
                 writer.WriteStartArray();
                 foreach (var item in SignedIdentifiers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<StorageSignedIdentifier>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(FileSharePaidBursting))
             {
                 writer.WritePropertyName("fileSharePaidBursting"u8);
-                writer.WriteObjectValue(FileSharePaidBursting, options);
+                ((IJsonModel<FileSharePropertiesFileSharePaidBursting>)FileSharePaidBursting).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            fileSharePaidBursting = FileSharePropertiesFileSharePaidBursting.DeserializeFileSharePropertiesFileSharePaidBursting(property0.Value, options);
+                            fileSharePaidBursting = ModelSerializationExtensions.JsonDeserialize<FileSharePropertiesFileSharePaidBursting>(property0.Value);
                             continue;
                         }
                     }

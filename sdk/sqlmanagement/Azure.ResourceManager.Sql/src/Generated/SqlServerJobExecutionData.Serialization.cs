@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Sql
             if (options.Format != "W" && Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
-                writer.WriteObjectValue(Target, options);
+                ((IJsonModel<JobExecutionTarget>)Target).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            target = JobExecutionTarget.DeserializeJobExecutionTarget(property0.Value, options);
+                            target = ModelSerializationExtensions.JsonDeserialize<JobExecutionTarget>(property0.Value);
                             continue;
                         }
                     }

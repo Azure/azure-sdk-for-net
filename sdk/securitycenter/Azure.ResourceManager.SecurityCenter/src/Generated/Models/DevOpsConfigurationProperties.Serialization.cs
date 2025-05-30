@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
-                writer.WriteObjectValue(Authorization, options);
+                ((IJsonModel<DevOpsAuthorization>)Authorization).Write(writer, options);
             }
             if (Optional.IsDefined(AutoDiscovery))
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    authorization = DevOpsAuthorization.DeserializeDevOpsAuthorization(property.Value, options);
+                    authorization = ModelSerializationExtensions.JsonDeserialize<DevOpsAuthorization>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("autoDiscovery"u8))

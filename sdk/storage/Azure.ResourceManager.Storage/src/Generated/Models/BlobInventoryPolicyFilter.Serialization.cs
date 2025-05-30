@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(CreationTime))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteObjectValue(CreationTime, options);
+                ((IJsonModel<BlobInventoryCreationTime>)CreationTime).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    creationTime = BlobInventoryCreationTime.DeserializeBlobInventoryCreationTime(property.Value, options);
+                    creationTime = ModelSerializationExtensions.JsonDeserialize<BlobInventoryCreationTime>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

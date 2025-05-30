@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(RequiredPermissions))
             {
                 writer.WritePropertyName("requiredPermissions"u8);
-                writer.WriteObjectValue(RequiredPermissions, options);
+                ((IJsonModel<ConnectorRequiredPermissions>)RequiredPermissions).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    requiredPermissions = ConnectorRequiredPermissions.DeserializeConnectorRequiredPermissions(property.Value, options);
+                    requiredPermissions = ModelSerializationExtensions.JsonDeserialize<ConnectorRequiredPermissions>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

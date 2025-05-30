@@ -38,27 +38,27 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(TierToCool))
             {
                 writer.WritePropertyName("tierToCool"u8);
-                writer.WriteObjectValue(TierToCool, options);
+                ((IJsonModel<DateAfterCreation>)TierToCool).Write(writer, options);
             }
             if (Optional.IsDefined(TierToArchive))
             {
                 writer.WritePropertyName("tierToArchive"u8);
-                writer.WriteObjectValue(TierToArchive, options);
+                ((IJsonModel<DateAfterCreation>)TierToArchive).Write(writer, options);
             }
             if (Optional.IsDefined(TierToCold))
             {
                 writer.WritePropertyName("tierToCold"u8);
-                writer.WriteObjectValue(TierToCold, options);
+                ((IJsonModel<DateAfterCreation>)TierToCold).Write(writer, options);
             }
             if (Optional.IsDefined(TierToHot))
             {
                 writer.WritePropertyName("tierToHot"u8);
-                writer.WriteObjectValue(TierToHot, options);
+                ((IJsonModel<DateAfterCreation>)TierToHot).Write(writer, options);
             }
             if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
-                writer.WriteObjectValue(Delete, options);
+                ((IJsonModel<DateAfterCreation>)Delete).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToCool = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
+                    tierToCool = ModelSerializationExtensions.JsonDeserialize<DateAfterCreation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tierToArchive"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToArchive = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
+                    tierToArchive = ModelSerializationExtensions.JsonDeserialize<DateAfterCreation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tierToCold"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToCold = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
+                    tierToCold = ModelSerializationExtensions.JsonDeserialize<DateAfterCreation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tierToHot"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToHot = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
+                    tierToHot = ModelSerializationExtensions.JsonDeserialize<DateAfterCreation>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("delete"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    delete = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
+                    delete = ModelSerializationExtensions.JsonDeserialize<DateAfterCreation>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

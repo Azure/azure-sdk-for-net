@@ -27,14 +27,14 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(AccessCredentialsInternal))
             {
                 writer.WritePropertyName("accessCredentials"u8);
-                writer.WriteObjectValue<AzureActiveDirectoryApplicationCredentials>(AccessCredentialsInternal);
+                JsonSerializer.Serialize(writer, AccessCredentialsInternal);
             }
             if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity);
+                    JsonSerializer.Serialize(writer, Identity);
                 }
                 else
                 {
@@ -78,7 +78,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    accessCredentials = AzureActiveDirectoryApplicationCredentials.DeserializeAzureActiveDirectoryApplicationCredentials(property.Value);
+                    accessCredentials = ModelSerializationExtensions.JsonDeserialize<AzureActiveDirectoryApplicationCredentials>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -88,7 +88,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         identity = null;
                         continue;
                     }
-                    identity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value);
+                    identity = ModelSerializationExtensions.JsonDeserialize<SearchIndexerDataIdentity>(property.Value);
                     continue;
                 }
             }

@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(CommonModelParameters))
             {
                 writer.WritePropertyName("commonModelParameters"u8);
-                writer.WriteObjectValue(CommonModelParameters);
+                JsonSerializer.Serialize(writer, CommonModelParameters);
             }
             if (Optional.IsCollectionDefined(ExtraParameters))
             {
@@ -58,7 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(ResponseFormat))
             {
                 writer.WritePropertyName("responseFormat"u8);
-                writer.WriteObjectValue(ResponseFormat);
+                JsonSerializer.Serialize(writer, ResponseFormat);
             }
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri);
@@ -138,7 +138,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (AuthIdentity != null)
                 {
                     writer.WritePropertyName("authIdentity"u8);
-                    writer.WriteObjectValue(AuthIdentity);
+                    JsonSerializer.Serialize(writer, AuthIdentity);
                 }
                 else
                 {
@@ -166,14 +166,14 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue<InputFieldMappingEntry>(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("outputs"u8);
             writer.WriteStartArray();
             foreach (var item in Outputs)
             {
-                writer.WriteObjectValue<OutputFieldMappingEntry>(item);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -217,7 +217,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    commonModelParameters = CommonModelParameters.DeserializeCommonModelParameters(property.Value);
+                    commonModelParameters = ModelSerializationExtensions.JsonDeserialize<CommonModelParameters>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extraParameters"u8))
@@ -257,7 +257,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    responseFormat = ChatCompletionResponseFormat.DeserializeChatCompletionResponseFormat(property.Value);
+                    responseFormat = ModelSerializationExtensions.JsonDeserialize<ChatCompletionResponseFormat>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("uri"u8))
@@ -332,7 +332,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         authIdentity = null;
                         continue;
                     }
-                    authIdentity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value);
+                    authIdentity = ModelSerializationExtensions.JsonDeserialize<SearchIndexerDataIdentity>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))

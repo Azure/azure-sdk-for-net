@@ -38,22 +38,22 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(MinValue))
             {
                 writer.WritePropertyName("minValue"u8);
-                writer.WriteObjectValue(MinValue, options);
+                ((IJsonModel<MaxSizeCapability>)MinValue).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MaxValue))
             {
                 writer.WritePropertyName("maxValue"u8);
-                writer.WriteObjectValue(MaxValue, options);
+                ((IJsonModel<MaxSizeCapability>)MaxValue).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ScaleSize))
             {
                 writer.WritePropertyName("scaleSize"u8);
-                writer.WriteObjectValue(ScaleSize, options);
+                ((IJsonModel<MaxSizeCapability>)ScaleSize).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LogSize))
             {
                 writer.WritePropertyName("logSize"u8);
-                writer.WriteObjectValue(LogSize, options);
+                ((IJsonModel<LogSizeCapability>)LogSize).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    minValue = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
+                    minValue = ModelSerializationExtensions.JsonDeserialize<MaxSizeCapability>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("maxValue"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    maxValue = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
+                    maxValue = ModelSerializationExtensions.JsonDeserialize<MaxSizeCapability>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scaleSize"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    scaleSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
+                    scaleSize = ModelSerializationExtensions.JsonDeserialize<MaxSizeCapability>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("logSize"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    logSize = LogSizeCapability.DeserializeLogSizeCapability(property.Value, options);
+                    logSize = ModelSerializationExtensions.JsonDeserialize<LogSizeCapability>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))

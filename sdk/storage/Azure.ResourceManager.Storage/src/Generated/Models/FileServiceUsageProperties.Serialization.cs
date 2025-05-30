@@ -38,27 +38,27 @@ namespace Azure.ResourceManager.Storage.Models
             if (options.Format != "W" && Optional.IsDefined(StorageAccountLimits))
             {
                 writer.WritePropertyName("storageAccountLimits"u8);
-                writer.WriteObjectValue(StorageAccountLimits, options);
+                ((IJsonModel<FileServiceAccountLimits>)StorageAccountLimits).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(FileShareLimits))
             {
                 writer.WritePropertyName("fileShareLimits"u8);
-                writer.WriteObjectValue(FileShareLimits, options);
+                ((IJsonModel<FileShareLimits>)FileShareLimits).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(FileShareRecommendations))
             {
                 writer.WritePropertyName("fileShareRecommendations"u8);
-                writer.WriteObjectValue(FileShareRecommendations, options);
+                ((IJsonModel<FileShareRecommendations>)FileShareRecommendations).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(BurstingConstants))
             {
                 writer.WritePropertyName("burstingConstants"u8);
-                writer.WriteObjectValue(BurstingConstants, options);
+                ((IJsonModel<BurstingConstants>)BurstingConstants).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(StorageAccountUsage))
             {
                 writer.WritePropertyName("storageAccountUsage"u8);
-                writer.WriteObjectValue(StorageAccountUsage, options);
+                ((IJsonModel<FileServiceAccountUsage>)StorageAccountUsage).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    storageAccountLimits = FileServiceAccountLimits.DeserializeFileServiceAccountLimits(property.Value, options);
+                    storageAccountLimits = ModelSerializationExtensions.JsonDeserialize<FileServiceAccountLimits>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("fileShareLimits"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    fileShareLimits = FileShareLimits.DeserializeFileShareLimits(property.Value, options);
+                    fileShareLimits = ModelSerializationExtensions.JsonDeserialize<FileShareLimits>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("fileShareRecommendations"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    fileShareRecommendations = FileShareRecommendations.DeserializeFileShareRecommendations(property.Value, options);
+                    fileShareRecommendations = ModelSerializationExtensions.JsonDeserialize<FileShareRecommendations>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("burstingConstants"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    burstingConstants = BurstingConstants.DeserializeBurstingConstants(property.Value, options);
+                    burstingConstants = ModelSerializationExtensions.JsonDeserialize<BurstingConstants>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storageAccountUsage"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    storageAccountUsage = FileServiceAccountUsage.DeserializeFileServiceAccountUsage(property.Value, options);
+                    storageAccountUsage = ModelSerializationExtensions.JsonDeserialize<FileServiceAccountUsage>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

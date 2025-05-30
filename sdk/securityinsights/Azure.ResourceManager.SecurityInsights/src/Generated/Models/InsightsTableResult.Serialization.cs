@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Columns)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<InsightsTableResultColumnsItem>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

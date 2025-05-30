@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    titleField = QueryResultDocumentSemanticField.DeserializeQueryResultDocumentSemanticField(property.Value);
+                    titleField = ModelSerializationExtensions.JsonDeserialize<QueryResultDocumentSemanticField>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("contentFields"u8))
@@ -67,7 +67,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    rerankerInput = QueryResultDocumentRerankerInput.DeserializeQueryResultDocumentRerankerInput(property.Value);
+                    rerankerInput = ModelSerializationExtensions.JsonDeserialize<QueryResultDocumentRerankerInput>(property.Value);
                     continue;
                 }
             }

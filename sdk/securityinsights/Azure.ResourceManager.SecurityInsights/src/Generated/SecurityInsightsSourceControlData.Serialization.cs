@@ -73,31 +73,31 @@ namespace Azure.ResourceManager.SecurityInsights
             }
             writer.WriteEndArray();
             writer.WritePropertyName("repository"u8);
-            writer.WriteObjectValue(Repository, options);
+            ((IJsonModel<SourceControlRepository>)Repository).Write(writer, options);
             if (Optional.IsDefined(ServicePrincipal))
             {
                 writer.WritePropertyName("servicePrincipal"u8);
-                writer.WriteObjectValue(ServicePrincipal, options);
+                ((IJsonModel<SourceControlServicePrincipal>)ServicePrincipal).Write(writer, options);
             }
             if (Optional.IsDefined(RepositoryAccess))
             {
                 writer.WritePropertyName("repositoryAccess"u8);
-                writer.WriteObjectValue(RepositoryAccess, options);
+                ((IJsonModel<RepositoryAccess>)RepositoryAccess).Write(writer, options);
             }
             if (Optional.IsDefined(RepositoryResourceInfo))
             {
                 writer.WritePropertyName("repositoryResourceInfo"u8);
-                writer.WriteObjectValue(RepositoryResourceInfo, options);
+                ((IJsonModel<RepositoryResourceInfo>)RepositoryResourceInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastDeploymentInfo))
             {
                 writer.WritePropertyName("lastDeploymentInfo"u8);
-                writer.WriteObjectValue(LastDeploymentInfo, options);
+                ((IJsonModel<SourceControlDeploymentInfo>)LastDeploymentInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PullRequest))
             {
                 writer.WritePropertyName("pullRequest"u8);
-                writer.WriteObjectValue(PullRequest, options);
+                ((IJsonModel<PullRequestInfo>)PullRequest).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.SecurityInsights
                         }
                         if (property0.NameEquals("repository"u8))
                         {
-                            repository = SourceControlRepository.DeserializeSourceControlRepository(property0.Value, options);
+                            repository = ModelSerializationExtensions.JsonDeserialize<SourceControlRepository>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipal"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            servicePrincipal = SourceControlServicePrincipal.DeserializeSourceControlServicePrincipal(property0.Value, options);
+                            servicePrincipal = ModelSerializationExtensions.JsonDeserialize<SourceControlServicePrincipal>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("repositoryAccess"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            repositoryAccess = RepositoryAccess.DeserializeRepositoryAccess(property0.Value, options);
+                            repositoryAccess = ModelSerializationExtensions.JsonDeserialize<RepositoryAccess>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("repositoryResourceInfo"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            repositoryResourceInfo = RepositoryResourceInfo.DeserializeRepositoryResourceInfo(property0.Value, options);
+                            repositoryResourceInfo = ModelSerializationExtensions.JsonDeserialize<RepositoryResourceInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("lastDeploymentInfo"u8))
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            lastDeploymentInfo = SourceControlDeploymentInfo.DeserializeSourceControlDeploymentInfo(property0.Value, options);
+                            lastDeploymentInfo = ModelSerializationExtensions.JsonDeserialize<SourceControlDeploymentInfo>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("pullRequest"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            pullRequest = PullRequestInfo.DeserializePullRequestInfo(property0.Value, options);
+                            pullRequest = ModelSerializationExtensions.JsonDeserialize<PullRequestInfo>(property0.Value);
                             continue;
                         }
                     }

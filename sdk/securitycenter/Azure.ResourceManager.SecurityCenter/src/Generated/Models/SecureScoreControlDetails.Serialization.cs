@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
-                writer.WriteObjectValue(Definition, options);
+                ((IJsonModel<SecureScoreControlDefinitionItem>)Definition).Write(writer, options);
             }
             writer.WritePropertyName("score"u8);
             writer.WriteStartObject();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             {
                                 continue;
                             }
-                            definition = SecureScoreControlDefinitionItem.DeserializeSecureScoreControlDefinitionItem(property0.Value, options);
+                            definition = ModelSerializationExtensions.JsonDeserialize<SecureScoreControlDefinitionItem>(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("score"u8))

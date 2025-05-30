@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                ((IJsonModel<SecretSyncUpdateProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                     {
                         continue;
                     }
-                    properties = SecretSyncUpdateProperties.DeserializeSecretSyncUpdateProperties(property.Value, options);
+                    properties = ModelSerializationExtensions.JsonDeserialize<SecretSyncUpdateProperties>(property.Value);
                     continue;
                 }
                 if (options.Format != "W")
