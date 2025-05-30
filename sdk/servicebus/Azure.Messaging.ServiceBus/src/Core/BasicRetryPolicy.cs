@@ -70,6 +70,14 @@ namespace Azure.Messaging.ServiceBus.Core
         public override TimeSpan CalculateTryTimeout(int attemptCount) => Options.TryTimeout;
 
         /// <summary>
+        ///   Gets the maximum number of retry attempts configured for this policy.
+        /// </summary>
+        ///
+        /// <returns>The maximum number of retry attempts.</returns>
+        ///
+        protected override int GetMaxRetries() => Options.MaxRetries;
+
+        /// <summary>
         ///   Calculates the amount of time to wait before another attempt should be made.
         /// </summary>
         ///

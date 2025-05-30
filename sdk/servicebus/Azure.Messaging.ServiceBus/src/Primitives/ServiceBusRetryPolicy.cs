@@ -82,6 +82,14 @@ namespace Azure.Messaging.ServiceBus
             int attemptCount);
 
         /// <summary>
+        ///   Gets the maximum number of retry attempts configured for this policy.
+        /// </summary>
+        ///
+        /// <returns>The maximum number of retry attempts.</returns>
+        ///
+        protected abstract int GetMaxRetries();
+
+        /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
@@ -132,7 +140,7 @@ namespace Azure.Messaging.ServiceBus
             var failedAttemptCount = 0;
 
             TimeSpan tryTimeout = CalculateTryTimeout(0);
-            if (IsServerBusy && tryTimeout < ServerBusyBaseSleepTime)
+            if (IsServerBusy && (tryTimeout * (GetMaxRetries() - failedAttemptCount)) < ServerBusyBaseSleepTime)
             {
                 // We are in a server busy state before we start processing.
                 // Since ServerBusyBaseSleepTime > remaining time for the operation, we don't wait for the entire Sleep time.
