@@ -141,7 +141,7 @@ namespace Azure.Messaging.ServiceBus
       {
             var failedAttemptCount = 0;
 
-            TimeSpan tryTimeout = CalculateTryTimeout(0);
+            var tryTimeout = CalculateTryTimeout(0);
             var remainingRetries = CalculateRemainingRetries(failedAttemptCount);
             if (IsServerBusy && (tryTimeout * remainingRetries) < ServerBusyBaseSleepTime)
             {
