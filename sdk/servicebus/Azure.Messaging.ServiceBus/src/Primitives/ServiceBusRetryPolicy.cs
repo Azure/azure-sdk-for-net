@@ -140,7 +140,6 @@ namespace Azure.Messaging.ServiceBus
             bool logTimeoutRetriesAsVerbose = false)
       {
             var failedAttemptCount = 0;
-
             var tryTimeout = CalculateTryTimeout(0);
             var remainingRetries = CalculateRemainingRetries(failedAttemptCount);
 
