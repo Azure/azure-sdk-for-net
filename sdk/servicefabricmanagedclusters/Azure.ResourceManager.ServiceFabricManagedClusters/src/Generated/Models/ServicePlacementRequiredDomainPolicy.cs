@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Argument.AssertNotNull(domainName, nameof(domainName));
 
             DomainName = domainName;
-            ServicePlacementPolicyType = ServicePlacementPolicyType.RequiredDomain;
+            Type = ServicePlacementPolicyType.RequiredDomain;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServicePlacementRequiredDomainPolicy"/>. </summary>
-        /// <param name="servicePlacementPolicyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
+        /// <param name="type"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="domainName"> The name of the domain that should used for placement as per this policy. </param>
-        internal ServicePlacementRequiredDomainPolicy(ServicePlacementPolicyType servicePlacementPolicyType, IDictionary<string, BinaryData> serializedAdditionalRawData, string domainName) : base(servicePlacementPolicyType, serializedAdditionalRawData)
+        internal ServicePlacementRequiredDomainPolicy(ServicePlacementPolicyType type, IDictionary<string, BinaryData> serializedAdditionalRawData, string domainName) : base(type, serializedAdditionalRawData)
         {
             DomainName = domainName;
-            ServicePlacementPolicyType = servicePlacementPolicyType;
+            Type = type;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServicePlacementRequiredDomainPolicy"/> for deserialization. </summary>
