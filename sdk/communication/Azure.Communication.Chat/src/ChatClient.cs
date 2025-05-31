@@ -62,7 +62,57 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = await _chatRestClient.CreateChatThreadAsync(topic, idempotencyToken, participants.Select(x => x.ToChatParticipantInternal()), cancellationToken).ConfigureAwait(false);
+                var createChatThreadOptions = new CreateChatThreadOptions(topic)
+                {
+                    IdempotencyToken = idempotencyToken,
+                };
+
+                foreach (var value in participants.ToList())
+                {
+                    createChatThreadOptions.Participants.Add(value);
+                }
+
+                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = await _chatRestClient.CreateChatThreadAsync(createChatThreadOptions, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new CreateChatThreadResult(createChatThreadResultInternal.Value), createChatThreadResultInternal.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>Creates a ChatThreadClient asynchronously. <see cref="ChatThreadClient"/>.</summary>
+        /// <param name = "options" > CreateChatThreadOptions </param>
+        /// <param name="cancellationToken">The cancellation token for the task.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<CreateChatThreadResult>> CreateChatThreadAsync(CreateChatThreadOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(CreateChatThread)}");
+            scope.Start();
+            try
+            {
+                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = await _chatRestClient.CreateChatThreadAsync(options, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new CreateChatThreadResult(createChatThreadResultInternal.Value), createChatThreadResultInternal.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>Creates a ChatThreadClient asynchronously. <see cref="ChatThreadClient"/>.</summary>
+        /// <param name = "options" > CreateChatThread Options</param>
+        /// <param name="cancellationToken">The cancellation token for the task.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<CreateChatThreadResult> CreateChatThread(CreateChatThreadOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(CreateChatThread)}");
+            scope.Start();
+            try
+            {
+                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = _chatRestClient.CreateChatThread(options, cancellationToken);
                 return Response.FromValue(new CreateChatThreadResult(createChatThreadResultInternal.Value), createChatThreadResultInternal.GetRawResponse());
             }
             catch (Exception ex)
@@ -84,7 +134,17 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = _chatRestClient.CreateChatThread(topic, idempotencyToken,participants.Select(x => x.ToChatParticipantInternal()), cancellationToken);
+                var createChatThreadOptions = new CreateChatThreadOptions(topic)
+                {
+                    IdempotencyToken = idempotencyToken,
+                };
+
+                foreach (var value in participants.ToList())
+                {
+                    createChatThreadOptions.Participants.Add(value);
+                }
+
+                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = _chatRestClient.CreateChatThread(createChatThreadOptions);
                 return Response.FromValue(new CreateChatThreadResult(createChatThreadResultInternal.Value), createChatThreadResultInternal.GetRawResponse());
             }
             catch (Exception ex)
@@ -193,7 +253,7 @@ namespace Azure.Communication.Chat
                     throw;
                 }
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc,  NextPageFunc);
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Deletes a thread asynchronously. </summary>

@@ -53,25 +53,97 @@ namespace Azure.Communication.Chat.Tests
 
             var topic = "Thread async from C# sdk";
             var displayNameMessage = "DisplayName sender message 1";
+
+            var participant1 = new ChatParticipant(user1) { DisplayName = "user1" };
+            participant1.Metadata.Add("ParticipantMetaKey1", "ParticipantMetaValue1");
+            participant1.Metadata.Add("ParticipantMetaKey2", "ParticipantMetaValue2");
+            ChatClient chatClient = CreateInstrumentedChatClient(token1);
+            ChatClient chatClient3 = CreateInstrumentedChatClient(token3);
+
+            var options = new CreateChatThreadOptions(topic);
+            options.Metadata.Add("MetaKey1", "MetaValue1");
+            options.Metadata.Add("MetaKey2", "MetaValue2");
+            options.IdempotencyToken = repeatabilityRequestId1;
+            options.Participants.Add(participant1);
+            options.Participants.Add(new ChatParticipant(user2) { DisplayName = "user2" });
+            options.Participants.Add(new ChatParticipant(user3) { DisplayName = "user3" });
+            options.RetentionPolicy = new ThreadCreationDateRetentionPolicy(60);
+
+            CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(options);
+
+            //act
+            ChatThreadClient chatThreadClient = GetInstrumentedChatThreadClient(chatClient, createChatThreadResult.ChatThread.Id);
+            var threadId = chatThreadClient.Id;
+
+            Assert.IsNotNull(createChatThreadResult.ChatThread.Metadata);
+            Assert.AreEqual("MetaValue1", createChatThreadResult.ChatThread.Metadata["MetaKey1"]);
+            Assert.AreEqual("MetaValue2", createChatThreadResult.ChatThread.Metadata["MetaKey2"]);
+
+            Assert.IsNotNull(createChatThreadResult.ChatThread.RetentionPolicy);
+            var threadCreationDateRetentionPolicy = createChatThreadResult.ChatThread.RetentionPolicy as ThreadCreationDateRetentionPolicy;
+            Assert.IsNotNull(threadCreationDateRetentionPolicy);
+            Assert.AreEqual(RetentionPolicyKind.ThreadCreationDate, threadCreationDateRetentionPolicy?.Kind);
+            Assert.AreEqual(60, threadCreationDateRetentionPolicy?.DeleteThreadAfterDays);
+
+            var updateOptionsWithSameProperties = new UpdateChatThreadPropertiesOptions();
+            await chatThreadClient.UpdatePropertiesAsync(updateOptionsWithSameProperties);
+
+            var updateResponseWithSameProperties = await chatThreadClient.GetPropertiesAsync();
+            Assert.IsNotNull(updateResponseWithSameProperties.Value.Metadata);
+            Assert.AreEqual("MetaValue1", updateResponseWithSameProperties.Value.Metadata["MetaKey1"]);
+            Assert.AreEqual("MetaValue2", updateResponseWithSameProperties.Value.Metadata["MetaKey2"]);
+
+            var sameDataRetentionPolicy = updateResponseWithSameProperties.Value.RetentionPolicy as ThreadCreationDateRetentionPolicy;
+            Assert.IsNotNull(sameDataRetentionPolicy);
+            Assert.AreEqual(RetentionPolicyKind.ThreadCreationDate, sameDataRetentionPolicy?.Kind);
+            Assert.AreEqual(60, sameDataRetentionPolicy?.DeleteThreadAfterDays);
+
+            var updateOptionsWithNewMetadata = new UpdateChatThreadPropertiesOptions();
+            updateOptionsWithNewMetadata.Metadata.Add("MetaKeyNew1", "MetaValueNew1");
+            updateOptionsWithNewMetadata.Metadata.Add("MetaKeyNew2", "MetaValueNew2");
+
+            await chatThreadClient.UpdatePropertiesAsync(updateOptionsWithNewMetadata);
+            var updateResponseWithNewMetadata = await chatThreadClient.GetPropertiesAsync();
+            Assert.IsNotNull(updateResponseWithNewMetadata.Value.Metadata);
+            Assert.AreEqual("MetaValueNew1", updateResponseWithNewMetadata.Value.Metadata["MetaKeyNew1"]);
+            Assert.AreEqual("MetaValueNew2", updateResponseWithNewMetadata.Value.Metadata["MetaKeyNew2"]);
+
+            var updateOptionsWithNewRetentionPolicy = new UpdateChatThreadPropertiesOptions();
+            updateOptionsWithNewRetentionPolicy.RetentionPolicy = new ThreadCreationDateRetentionPolicy(40);
+
+            await chatThreadClient.UpdatePropertiesAsync(updateOptionsWithNewRetentionPolicy);
+            var updateResponseWithNewRetentionPolicy = await chatThreadClient.GetPropertiesAsync();
+            var newDataRetentionPolicy = updateResponseWithNewRetentionPolicy.Value.RetentionPolicy as ThreadCreationDateRetentionPolicy;
+            Assert.IsNotNull(newDataRetentionPolicy);
+            Assert.AreEqual(RetentionPolicyKind.ThreadCreationDate, newDataRetentionPolicy?.Kind);
+            Assert.AreEqual(40, newDataRetentionPolicy?.DeleteThreadAfterDays);
+
+            var updateOptionsWithNoneRetentionPolicy = new UpdateChatThreadPropertiesOptions();
+            updateOptionsWithNoneRetentionPolicy.RetentionPolicy = new NoneRetentionPolicy();
+
+            await chatThreadClient.UpdatePropertiesAsync(updateOptionsWithNoneRetentionPolicy);
+            var updateResponseWithNoneRetentionPolicy = await chatThreadClient.GetPropertiesAsync();
+            var noneDataRetentionPolicy = updateResponseWithNoneRetentionPolicy.Value.RetentionPolicy as NoneRetentionPolicy;
+            Assert.IsNotNull(noneDataRetentionPolicy);
+            Assert.AreEqual(RetentionPolicyKind.None, noneDataRetentionPolicy?.Kind);
+
             var participants = new List<ChatParticipant>
             {
                 new ChatParticipant(user1) { DisplayName = "user1" },
                 new ChatParticipant(user2) { DisplayName = "user2" },
                 new ChatParticipant(user3) { DisplayName = "user3" }
             };
-            ChatClient chatClient = CreateInstrumentedChatClient(token1);
-            ChatClient chatClient3 = CreateInstrumentedChatClient(token3);
-
-            //act
-            CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic, participants, repeatabilityRequestId1);
-            ChatThreadClient chatThreadClient = GetInstrumentedChatThreadClient(chatClient, createChatThreadResult.ChatThread.Id);
-            var threadId = chatThreadClient.Id;
             CreateChatThreadResult createChatThreadResult2 = await chatClient.CreateChatThreadAsync(topic, participants, repeatabilityRequestId2);
             ChatThreadClient chatThreadClient2 = GetInstrumentedChatThreadClient(chatClient, createChatThreadResult2.ChatThread.Id);
             ChatThreadClient chatThreadClient3 = GetInstrumentedChatThreadClient(chatClient3, threadId);
 
             AsyncPageable<ChatParticipant> chatParticipantsOnCreation = chatThreadClient.GetParticipantsAsync();
-            var chatParticipantsOnCreationCount = chatParticipantsOnCreation.ToEnumerableAsync().Result.Count;
+            var chatParticipantsOnCreationList = chatParticipantsOnCreation.ToEnumerableAsync().Result;
+            var chatParticipantsOnCreationCount = chatParticipantsOnCreationList.Count;
+
+            var chatParticipant1 = chatParticipantsOnCreationList.FirstOrDefault(x => x.User == user1);
+            Assert.AreEqual("ParticipantMetaValue1", chatParticipant1?.Metadata["ParticipantMetaKey1"]);
+            Assert.AreEqual("ParticipantMetaValue2", chatParticipant1?.Metadata["ParticipantMetaKey2"]);
 
             var updatedTopic = "Updated topic - C# sdk";
             await chatThreadClient.UpdateTopicAsync(updatedTopic);
