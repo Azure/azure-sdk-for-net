@@ -143,7 +143,7 @@ namespace Azure.Messaging.ServiceBus
             var tryTimeout = CalculateTryTimeout(0);
             var remainingRetries = CalculateRemainingRetries(failedAttemptCount);
 
-            if (IsServerBusy && (tryTimeout * remainingRetries) < ServerBusyBaseSleepTime)
+            if (IsServerBusy && (tryTimeout.TotalMilliseconds * remainingRetries) < ServerBusyBaseSleepTime.TotalMilliseconds)
             {
                 // We are in a server busy state before we start processing.
                 // Since ServerBusyBaseSleepTime > remaining time for the operation, we don't wait for the entire Sleep time.
