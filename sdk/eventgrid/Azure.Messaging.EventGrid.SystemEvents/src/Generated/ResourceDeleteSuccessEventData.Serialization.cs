@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(ResourceDeleteSuccessEventDataConverter))]
     public partial class ResourceDeleteSuccessEventData : IUtf8JsonSerializable, IJsonModel<ResourceDeleteSuccessEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceDeleteSuccessEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -253,6 +255,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class ResourceDeleteSuccessEventDataConverter : JsonConverter<ResourceDeleteSuccessEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, ResourceDeleteSuccessEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override ResourceDeleteSuccessEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeResourceDeleteSuccessEventData(document.RootElement);
+            }
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
+#nullable disable
 
 using System;
 using System.Globalization;
@@ -10,25 +12,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class MediaLiveEventChannelArchiveHeartbeatEventData
     {
         /// <summary> Initializes a new instance of <see cref="MediaLiveEventChannelArchiveHeartbeatEventData"/>. </summary>
-        /// <param name="channelLatencyMsInternal"> Gets the channel latency in ms. </param>
+        /// <param name="channelLatencyMs"> Gets the channel latency in ms. </param>
         /// <param name="latencyResultCode"> Gets the latency result code. </param>
-        internal MediaLiveEventChannelArchiveHeartbeatEventData(string channelLatencyMsInternal, string latencyResultCode)
+        internal MediaLiveEventChannelArchiveHeartbeatEventData(string channelLatencyMs, string latencyResultCode)
         {
-            ChannelLatencyMsInternal = channelLatencyMsInternal;
+            ChannelLatency = channelLatencyMs == "n/a" ? null : TimeSpan.FromMilliseconds(double.Parse(channelLatencyMs, CultureInfo.InvariantCulture));
             LatencyResultCode = latencyResultCode;
         }
         /// <summary> Gets the latency result code. </summary>
         public string LatencyResultCode { get; }
-        internal string ChannelLatencyMsInternal { get; }
-
-        /// <summary>
-        /// Gets the channel latency.
-        /// </summary>
-        public TimeSpan? ChannelLatency
-            => _channelLatency ??= ChannelLatencyMsInternal == "n/a"
-                ? null
-                : TimeSpan.FromMilliseconds(double.Parse(ChannelLatencyMsInternal, CultureInfo.InvariantCulture));
-
-        private TimeSpan? _channelLatency;
+        /// <summary> Gets the channel latency. </summary>
+        public TimeSpan? ChannelLatency { get; }
     }
 }

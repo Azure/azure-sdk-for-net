@@ -1544,7 +1544,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="formatType"> The recording format type - Mp4, Mp3, Wav. </param>
         /// <param name="sessionEndReason"> The reason for ending recording session. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRecordingFileStatusUpdatedEventData"/> instance for mocking. </returns>
-        public static AcsRecordingFileStatusUpdatedEventData AcsRecordingFileStatusUpdatedEventData(AcsRecordingStorageInfoProperties recordingStorageInfo = null, DateTimeOffset? recordingStartTime = null, long? recordingDurationMs = null, RecordingContentType? contentType = null, RecordingChannelType? channelType = null, RecordingFormatType? formatType = null, string sessionEndReason = null)
+        public static AcsRecordingFileStatusUpdatedEventData AcsRecordingFileStatusUpdatedEventData(AcsRecordingStorageInfoProperties recordingStorageInfo = null, DateTimeOffset? recordingStartTime = null, long? recordingDurationMs = null, AcsRecordingContentType? contentType = null, AcsRecordingChannelType? channelType = null, AcsRecordingFormatType? formatType = null, string sessionEndReason = null)
         {
             return new AcsRecordingFileStatusUpdatedEventData(
                 recordingStorageInfo,

@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(ApiManagementGatewayTokenNearExpiryEventDataConverter))]
     public partial class ApiManagementGatewayTokenNearExpiryEventData : IUtf8JsonSerializable, IJsonModel<ApiManagementGatewayTokenNearExpiryEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementGatewayTokenNearExpiryEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -145,6 +147,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class ApiManagementGatewayTokenNearExpiryEventDataConverter : JsonConverter<ApiManagementGatewayTokenNearExpiryEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, ApiManagementGatewayTokenNearExpiryEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override ApiManagementGatewayTokenNearExpiryEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeApiManagementGatewayTokenNearExpiryEventData(document.RootElement);
+            }
         }
     }
 }

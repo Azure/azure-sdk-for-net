@@ -64,7 +64,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="formatType"> The recording format type - Mp4, Mp3, Wav. </param>
         /// <param name="sessionEndReason"> The reason for ending recording session. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AcsRecordingFileStatusUpdatedEventData(AcsRecordingStorageInfoProperties recordingStorageInfo, DateTimeOffset? recordingStartTime, long? recordingDurationMs, RecordingContentType? contentType, RecordingChannelType? channelType, RecordingFormatType? formatType, string sessionEndReason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AcsRecordingFileStatusUpdatedEventData(AcsRecordingStorageInfoProperties recordingStorageInfo, DateTimeOffset? recordingStartTime, long? recordingDurationMs, AcsRecordingContentType? contentType, AcsRecordingChannelType? channelType, AcsRecordingFormatType? formatType, string sessionEndReason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RecordingStorageInfo = recordingStorageInfo;
             RecordingStartTime = recordingStartTime;
@@ -88,11 +88,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The recording duration in milliseconds. </summary>
         public long? RecordingDurationMs { get; }
         /// <summary> The recording content type- AudioVideo, or Audio. </summary>
-        public RecordingContentType? ContentType { get; }
+        public AcsRecordingContentType? ContentType { get; }
         /// <summary> The recording  channel type - Mixed, Unmixed. </summary>
-        public RecordingChannelType? ChannelType { get; }
+        public AcsRecordingChannelType? ChannelType { get; }
         /// <summary> The recording format type - Mp4, Mp3, Wav. </summary>
-        public RecordingFormatType? FormatType { get; }
+        public AcsRecordingFormatType? FormatType { get; }
         /// <summary> The reason for ending recording session. </summary>
         public string SessionEndReason { get; }
     }

@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(KeyVaultAccessPolicyChangedEventDataConverter))]
     public partial class KeyVaultAccessPolicyChangedEventData : IUtf8JsonSerializable, IJsonModel<KeyVaultAccessPolicyChangedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultAccessPolicyChangedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -207,6 +209,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class KeyVaultAccessPolicyChangedEventDataConverter : JsonConverter<KeyVaultAccessPolicyChangedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, KeyVaultAccessPolicyChangedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override KeyVaultAccessPolicyChangedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeKeyVaultAccessPolicyChangedEventData(document.RootElement);
+            }
         }
     }
 }

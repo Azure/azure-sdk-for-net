@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(ResourceWriteSuccessEventDataConverter))]
     public partial class ResourceWriteSuccessEventData : IUtf8JsonSerializable, IJsonModel<ResourceWriteSuccessEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceWriteSuccessEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -253,6 +255,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class ResourceWriteSuccessEventDataConverter : JsonConverter<ResourceWriteSuccessEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, ResourceWriteSuccessEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override ResourceWriteSuccessEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeResourceWriteSuccessEventData(document.RootElement);
+            }
         }
     }
 }
