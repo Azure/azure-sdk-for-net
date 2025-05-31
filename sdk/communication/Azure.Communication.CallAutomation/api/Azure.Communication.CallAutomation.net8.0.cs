@@ -1415,7 +1415,7 @@ namespace Azure.Communication.CallAutomation
         public PostProcessingOptions(Azure.Communication.CallAutomation.TranscriptionSettings transcription) { }
         public string CognitiveServicesEndpoint { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.SummarizationSettings Summarization { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.TranscriptionSettings Transcription { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.TranscriptionSettings Transcription { get { throw null; } }
     }
     public partial class PowerVirtualAgentsDialog : Azure.Communication.CallAutomation.BaseDialog
     {
