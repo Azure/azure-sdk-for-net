@@ -23,12 +23,12 @@ namespace Azure.Generator.Providers
     /// </summary>
     internal class ClientBuilderExtensionsDefinition : TypeProvider
     {
-        private readonly IReadOnlyList<ClientProvider> _clients;
+        private readonly IEnumerable<ClientProvider> _clients;
         private readonly string _resourceProviderName;
 
         public ClientBuilderExtensionsDefinition(IEnumerable<ClientProvider> clients)
         {
-            _clients = clients.ToList();
+            _clients = clients;
             _resourceProviderName = TypeNameUtilities.GetResourceProviderName();
             AzureClientGenerator.Instance.AddTypeToKeep(this);
         }
