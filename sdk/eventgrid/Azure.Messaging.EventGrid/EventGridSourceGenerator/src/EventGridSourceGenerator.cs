@@ -155,7 +155,6 @@ namespace Azure.EventGrid.Messaging.SourceGeneration
 
         private static string ConstructSystemEventNames(List<SystemEventNode> systemEvents, bool isSystemEventsLibrary)
         {
-            string ns = isSystemEventsLibrary ? "Azure.Messaging.EventGrid.SystemEvents" : "Azure.Messaging.EventGrid";
             var sourceBuilder = new StringBuilder(
 $@"// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
@@ -164,7 +163,7 @@ $@"// Copyright (c) Microsoft Corporation. All rights reserved.
 
 using Azure.Messaging.EventGrid.SystemEvents;
 
-namespace {ns}
+namespace Azure.Messaging.EventGrid
 {{
     /// <summary>
     ///  Represents the names of the various event types for the system events published to

@@ -324,4 +324,7 @@ using Azure.Messaging.EventGrid.SystemEvents;
 [assembly: TypeForwardedTo(typeof(WebSlotSwapStartedEventData))]
 [assembly: TypeForwardedTo(typeof(WebSlotSwapWithPreviewCancelledEventData))]
 [assembly: TypeForwardedTo(typeof(WebSlotSwapWithPreviewStartedEventData))]
+
+[assembly: TypeForwardedTo(typeof(EventGridModelFactory))]
 [assembly: TypeForwardedTo(typeof(EventGridExtensions))]
+[assembly: TypeForwardedTo(typeof(SystemEventNames))]
