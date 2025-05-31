@@ -177,7 +177,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 return null;
             }
 
-            protected override int CalculateRemainingRetries(int currentTryCount)
+            public override int CalculateRemainingRetries(int currentTryCount)
             {
                 return MaxRetriesValue - currentTryCount;
             }

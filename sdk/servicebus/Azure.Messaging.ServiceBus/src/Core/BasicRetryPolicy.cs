@@ -66,7 +66,7 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <returns>The number of retry attempts remaining.</returns>
         ///
-        protected override int CalculateRemainingRetries(int currentTryCount) => Options.MaxRetries - currentTryCount;
+        public override int CalculateRemainingRetries(int currentTryCount) => Options.MaxRetries - currentTryCount;
 
         /// <summary>
         ///   Calculates the amount of time to allow the current attempt for an operation to

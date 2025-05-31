@@ -417,7 +417,7 @@ namespace Azure.Messaging.ServiceBus
         public abstract System.TimeSpan CalculateTryTimeout(int attemptCount);
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        protected abstract int CalculateRemainingRetries(int currentTryCount);
+        public abstract int CalculateRemainingRetries(int currentTryCount);
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
