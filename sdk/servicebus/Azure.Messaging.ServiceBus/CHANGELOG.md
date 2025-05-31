@@ -10,6 +10,8 @@
 
 - Fixed a bug where the custom port associated with a local emulator endpoint was reset by the `ServiceBusAdministrationClient`.
 
+- Updated ServiceBusRetryPolicy ServerBusy exit logic to consider retry attempts when calculating total available time. The policy now checks if `tryTimeout * CalculateRemainingRetries(failedAttemptCount) < ServerBusyBaseSleepTime` instead of just `tryTimeout < ServerBusyBaseSleepTime`, allowing operations with multiple short retries to proceed when the total time across all attempts exceeds the ServerBusy sleep time.
+
 ### Other Changes
 
 ## 7.19.0 (2025-04-08)

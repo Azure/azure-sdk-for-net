@@ -58,6 +58,16 @@ namespace Azure.Messaging.ServiceBus
         internal ServiceBusEventSource Logger { get; set; } = ServiceBusEventSource.Log;
 
         /// <summary>
+        ///   Calculates the number of retry attempts remaining.
+        /// </summary>
+        ///
+        /// <param name="currentTryCount">The current try count.</param>
+        ///
+        /// <returns>The number of retry attempts remaining.</returns>
+        ///
+        public abstract int CalculateRemainingRetries(int currentTryCount);
+
+        /// <summary>
         ///   Calculates the amount of time to allow the current attempt for an operation to
         ///   complete before considering it to be timed out.
         /// </summary>
@@ -130,9 +140,10 @@ namespace Azure.Messaging.ServiceBus
             bool logTimeoutRetriesAsVerbose = false)
       {
             var failedAttemptCount = 0;
+            var tryTimeout = CalculateTryTimeout(0);
+            var remainingRetries = CalculateRemainingRetries(failedAttemptCount);
 
-            TimeSpan tryTimeout = CalculateTryTimeout(0);
-            if (IsServerBusy && tryTimeout < ServerBusyBaseSleepTime)
+            if (IsServerBusy && (tryTimeout * remainingRetries) < ServerBusyBaseSleepTime)
             {
                 // We are in a server busy state before we start processing.
                 // Since ServerBusyBaseSleepTime > remaining time for the operation, we don't wait for the entire Sleep time.
