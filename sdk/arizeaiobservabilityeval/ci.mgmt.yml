@@ -1,6 +1,7 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
 trigger: none
+
 pr:
   branches:
     include:
@@ -10,13 +11,14 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/arizeaiobservabilityeval/ci.mgmt.yml
-    - sdk/arizeaiobservabilityeval/Azure.ResourceManager.ArizeAIObservabilityEval/
+    - sdk/liftrarize/ci.mgmt.yml
+    - sdk/liftrarize/Azure.ResourceManager.ArizeAIObservabilityEval/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: arizeaiobservabilityeval
+    ServiceDirectory: liftrarize
     LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.ArizeAIObservabilityEval
