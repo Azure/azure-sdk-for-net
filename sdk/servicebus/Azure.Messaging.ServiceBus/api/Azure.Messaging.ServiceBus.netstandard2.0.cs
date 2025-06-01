@@ -413,11 +413,11 @@ namespace Azure.Messaging.ServiceBus
     public abstract partial class ServiceBusRetryPolicy
     {
         protected ServiceBusRetryPolicy() { }
+        public abstract int CalculateRemainingRetries(int currentTryCount);
         public abstract System.TimeSpan? CalculateRetryDelay(System.Exception lastException, int attemptCount);
         public abstract System.TimeSpan CalculateTryTimeout(int attemptCount);
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        public abstract int CalculateRemainingRetries(int currentTryCount);
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
