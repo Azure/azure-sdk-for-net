@@ -85,7 +85,6 @@ trigger:
     - sdk/durabletask/Azure.ResourceManager.DurableTask
     - sdk/dynatrace/Azure.ResourceManager.Dynatrace
     - sdk/edgeorder/Azure.ResourceManager.EdgeOrder
-    - sdk/secretsstoreextension/Azure.ResourceManager.SecretsStoreExtension
     - sdk/edgezones/Azure.ResourceManager.EdgeZones
     - sdk/elastic/Azure.ResourceManager.Elastic
     - sdk/elasticsan/Azure.ResourceManager.ElasticSan
@@ -184,6 +183,7 @@ trigger:
     - sdk/resourcemover/Azure.ResourceManager.ResourceMover
     - sdk/resources/Azure.ResourceManager.Resources
     - sdk/search/Azure.ResourceManager.Search
+    - sdk/secretsstoreextension/Azure.ResourceManager.SecretsStoreExtension
     - sdk/securitycenter/Azure.ResourceManager.SecurityCenter
     - sdk/securitydevops/Azure.ResourceManager.SecurityDevOps
     - sdk/securityinsights/Azure.ResourceManager.SecurityInsights
@@ -220,6 +220,7 @@ trigger:
     - sdk/workloadmonitor/Azure.ResourceManager.WorkloadMonitor
     - sdk/workloads/Azure.ResourceManager.Workloads
     - sdk/workloadssapvirtualinstance/Azure.ResourceManager.WorkloadsSapVirtualInstance
+    - sdk/workloadsvirtualinstance/Azure.ResourceManager.WorkloadsVirtualInstance
 
 pr:
   branches:
@@ -307,7 +308,6 @@ pr:
     - sdk/durabletask/Azure.ResourceManager.DurableTask
     - sdk/dynatrace/Azure.ResourceManager.Dynatrace
     - sdk/edgeorder/Azure.ResourceManager.EdgeOrder
-    - sdk/secretsstoreextension/Azure.ResourceManager.SecretsStoreExtension
     - sdk/edgezones/Azure.ResourceManager.EdgeZones
     - sdk/elastic/Azure.ResourceManager.Elastic
     - sdk/elasticsan/Azure.ResourceManager.ElasticSan
@@ -406,6 +406,7 @@ pr:
     - sdk/resourcemover/Azure.ResourceManager.ResourceMover
     - sdk/resources/Azure.ResourceManager.Resources
     - sdk/search/Azure.ResourceManager.Search
+    - sdk/secretsstoreextension/Azure.ResourceManager.SecretsStoreExtension
     - sdk/securitycenter/Azure.ResourceManager.SecurityCenter
     - sdk/securitydevops/Azure.ResourceManager.SecurityDevOps
     - sdk/securityinsights/Azure.ResourceManager.SecurityInsights
@@ -442,6 +443,7 @@ pr:
     - sdk/workloadmonitor/Azure.ResourceManager.WorkloadMonitor
     - sdk/workloads/Azure.ResourceManager.Workloads
     - sdk/workloadssapvirtualinstance/Azure.ResourceManager.WorkloadsSapVirtualInstance
+    - sdk/workloadsvirtualinstance/Azure.ResourceManager.WorkloadsVirtualInstance
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

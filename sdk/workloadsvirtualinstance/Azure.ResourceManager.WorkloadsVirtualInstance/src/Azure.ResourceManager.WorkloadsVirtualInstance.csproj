@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.0.1-privatepreview</Version>
+    <PackageId>Azure.ResourceManager.WorkloadsVirtualInstance</PackageId>
+    <Description>Azure Resource Manager client SDK for Azure resource provider WorkloadsVirtualInstance.</Description>
+    <PackageTags>azure;management;arm;resource manager;workloadsvirtualinstance</PackageTags>
+  </PropertyGroup>
+</Project>
