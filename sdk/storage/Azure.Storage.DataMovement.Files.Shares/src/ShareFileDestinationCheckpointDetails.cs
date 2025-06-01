@@ -90,6 +90,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public bool IsDirectoryMetadataSet;
         private byte[] _directoryMetadataBytes;
 
+        /// <summary>
+        /// Share Protocol for destination files/directories.
+        /// </summary>
+        public ShareProtocol ShareProtocol;
+
         public override int Length => CalculateLength();
 
         public ShareFileDestinationCheckpointDetails(
@@ -115,7 +120,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
             bool isFileMetadataSet,
             Metadata fileMetadata,
             bool isDirectoryMetadataSet,
-            Metadata directoryMetadata)
+            Metadata directoryMetadata,
+            ShareProtocol shareProtocol)
         {
             Version = DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion;
             CacheControl = cacheControl;
@@ -162,6 +168,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
             DirectoryMetadata = directoryMetadata;
             IsDirectoryMetadataSet = isDirectoryMetadataSet;
             _directoryMetadataBytes = directoryMetadata != default ? Encoding.UTF8.GetBytes(directoryMetadata.DictionaryToString()) : Array.Empty<byte>();
+
+            ShareProtocol = shareProtocol;
         }
 
         protected override void Serialize(Stream stream)
@@ -191,6 +199,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
             // Metadata
             writer.WritePreservablePropertyOffset(IsFileMetadataSet, _fileMetadataBytes.Length, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(IsDirectoryMetadataSet, _directoryMetadataBytes.Length, ref currentVariableLengthIndex);
+
+            // ShareProtocol
+            writer.Write((byte)ShareProtocol);
 
             // Variable length info
             if (IsFileAttributesSet)
@@ -254,7 +265,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
             // Version
             int version = reader.ReadInt32();
-            if (version != DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion)
+            if (version < DataMovementShareConstants.DestinationCheckpointDetails.MinValidSchemaVersion
+                || version > DataMovementShareConstants.DestinationCheckpointDetails.MaxValidSchemaVersion)
             {
                 throw Storage.Errors.UnsupportedJobSchemaVersionHeader(version);
             }
@@ -276,6 +288,14 @@ namespace Azure.Storage.DataMovement.Files.Shares
             // Metadata
             (bool isFileMetadataSet, int fileMetadataOffset, int fileMetadataLength) = reader.ReadVariableLengthFieldInfo();
             (bool isDirectoryMetadataSet, int directoryMetadataOffset, int directoryMetadataLength) = reader.ReadVariableLengthFieldInfo();
+
+            // ShareProtocol
+            ShareProtocol shareProtocol = ShareProtocol.Smb;
+            bool shareProtocolSupport = version >= DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion_4;
+            if (shareProtocolSupport)
+            {
+                shareProtocol = (ShareProtocol)(reader.ReadByte());
+            }
 
             // NtfsFileAttributes
             NtfsFileAttributes? ntfsFileAttributes = null;
@@ -366,6 +386,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 directoryMetadataString = Encoding.UTF8.GetString(reader.ReadBytes(directoryMetadataLength));
             }
 
+            // When deserializing, the version of the new CheckpointDetails is always the latest version.
             return new(
                 isContentTypeSet: isContentTypeSet,
                 contentType: contentType,
@@ -389,7 +410,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 isFileMetadataSet: isFileMetadataSet,
                 fileMetadata: fileMetadataString?.ToDictionary(nameof(fileMetadataString)),
                 isDirectoryMetadataSet: isDirectoryMetadataSet,
-                directoryMetadata: directoryMetadataString?.ToDictionary(nameof(directoryMetadataString)));
+                directoryMetadata: directoryMetadataString?.ToDictionary(nameof(directoryMetadataString)),
+                shareProtocol: shareProtocol);
         }
 
         private int CalculateLength()

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     public partial class NetworkCloudRackSkuResource : IJsonModel<NetworkCloudRackSkuData>
     {
+        private static NetworkCloudRackSkuData s_dataDeserializationInstance;
+        private static NetworkCloudRackSkuData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkCloudRackSkuData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudRackSkuData>)Data).Write(writer, options);
 
-        NetworkCloudRackSkuData IJsonModel<NetworkCloudRackSkuData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudRackSkuData>)Data).Create(ref reader, options);
+        NetworkCloudRackSkuData IJsonModel<NetworkCloudRackSkuData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudRackSkuData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NetworkCloudRackSkuData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkCloudRackSkuData>(Data, options, AzureResourceManagerNetworkCloudContext.Default);
 
         NetworkCloudRackSkuData IPersistableModel<NetworkCloudRackSkuData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudRackSkuData>(data, options, AzureResourceManagerNetworkCloudContext.Default);
 
-        string IPersistableModel<NetworkCloudRackSkuData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudRackSkuData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkCloudRackSkuData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudRackSkuData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

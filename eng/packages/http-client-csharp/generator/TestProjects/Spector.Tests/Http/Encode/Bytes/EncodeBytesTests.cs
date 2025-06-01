@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Azure;
 using Encode.Bytes;
 using NUnit.Framework;
 
@@ -18,7 +19,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Bytes
         {
             BinaryData data = BinaryData.FromString("test");
 
-            Azure.Response result = await new BytesClient(host, null).GetQueryClient().DefaultAsync(data);
+            Response result = await new BytesClient(host, null).GetQueryClient().DefaultAsync(data);
             Assert.AreEqual(204, result.Status);
         });
 
@@ -26,7 +27,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Bytes
         public Task QueryBase64() => Test(async (host) =>
         {
             BinaryData data = BinaryData.FromString("test");
-            Azure.Response result = await new BytesClient(host, null).GetQueryClient().Base64Async(data);
+            Response result = await new BytesClient(host, null).GetQueryClient().Base64Async(data);
             Assert.AreEqual(204, result.Status);
         });
 
@@ -34,7 +35,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Bytes
         public Task QueryBase64url() => Test(async (host) =>
         {
             BinaryData data = BinaryData.FromString("test");
-            Azure.Response result = await new BytesClient(host, null).GetQueryClient().Base64urlAsync(data);
+            Response result = await new BytesClient(host, null).GetQueryClient().Base64urlAsync(data);
             Assert.AreEqual(204, result.Status);
         });
 
@@ -43,7 +44,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Bytes
         {
             BinaryData data1 = BinaryData.FromString("test");
             BinaryData data2 = BinaryData.FromString("test");
-            Azure.Response result = await new BytesClient(host, null).GetQueryClient().Base64urlArrayAsync(new[] { data1, data2 });
+            Response result = await new BytesClient(host, null).GetQueryClient().Base64urlArrayAsync(new[] { data1, data2 });
             Assert.AreEqual(204, result.Status);
         });
 
@@ -90,16 +91,15 @@ namespace TestProjects.Spector.Tests.Http.Encode.Bytes
         {
             BinaryData data = BinaryData.FromString("test");
 
-            Azure.Response result = await new BytesClient(host, null).GetHeaderClient().DefaultAsync(data);
+            Response result = await new BytesClient(host, null).GetHeaderClient().DefaultAsync(data);
             Assert.AreEqual(204, result.Status);
         });
 
         [SpectorTest]
         public Task HeaderBase64() => Test(async (host) =>
         {
-
             BinaryData data = BinaryData.FromString("test");
-            Azure.Response result = await new BytesClient(host, null).GetHeaderClient().Base64Async(data);
+            Response result = await new BytesClient(host, null).GetHeaderClient().Base64Async(data);
             Assert.AreEqual(204, result.Status);
         });
 
@@ -107,7 +107,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Bytes
         public Task HeaderBase64url() => Test(async (host) =>
         {
             BinaryData data = BinaryData.FromString("test");
-            Azure.Response result = await new BytesClient(host, null).GetHeaderClient().Base64urlAsync(data);
+            Response result = await new BytesClient(host, null).GetHeaderClient().Base64urlAsync(data);
             Assert.AreEqual(204, result.Status);
         });
 
@@ -116,7 +116,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Bytes
         {
             BinaryData data1 = BinaryData.FromString("test");
             BinaryData data2 = BinaryData.FromString("test");
-            Azure.Response result = await new BytesClient(host, null).GetHeaderClient().Base64urlArrayAsync(new[] { data1, data2 });
+            Response result = await new BytesClient(host, null).GetHeaderClient().Base64urlArrayAsync(new[] { data1, data2 });
             Assert.AreEqual(204, result.Status);
         });
 
@@ -124,7 +124,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Bytes
         public Task RequestBodyDefault() => Test(async (host) =>
         {
             BinaryData data = new BinaryData(File.ReadAllBytes(SamplePngPath));
-            Azure.Response result = await new BytesClient(host, null).GetRequestBodyClient().DefaultAsync(data);
+            Response result = await new BytesClient(host, null).GetRequestBodyClient().DefaultAsync(data);
             Assert.AreEqual(204, result.Status);
         });
 
@@ -132,7 +132,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Bytes
         public Task RequestBodyOctetStream() => Test(async (host) =>
         {
             BinaryData data = new BinaryData(File.ReadAllBytes(SamplePngPath));
-            Azure.Response result = await new BytesClient(host, null).GetRequestBodyClient().OctetStreamAsync(data);
+            Response result = await new BytesClient(host, null).GetRequestBodyClient().OctetStreamAsync(data);
             Assert.AreEqual(204, result.Status);
         });
 
@@ -140,7 +140,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Bytes
         public Task RequestBodyCustomContentType() => Test(async (host) =>
         {
             BinaryData data = new BinaryData(File.ReadAllBytes(SamplePngPath));
-            Azure.Response result = await new BytesClient(host, null).GetRequestBodyClient().CustomContentTypeAsync(data);
+            Response result = await new BytesClient(host, null).GetRequestBodyClient().CustomContentTypeAsync(data);
             Assert.AreEqual(204, result.Status);
         });
 
@@ -148,7 +148,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Bytes
         public Task RequestBodyBase64() => Test(async (host) =>
         {
             BinaryData data = new BinaryData($"\"{Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes("test"))}\"");
-            Azure.Response result = await new BytesClient(host, null).GetRequestBodyClient().Base64Async(data);
+            Response result = await new BytesClient(host, null).GetRequestBodyClient().Base64Async(data);
             Assert.AreEqual(204, result.Status);
         });
 
@@ -156,7 +156,7 @@ namespace TestProjects.Spector.Tests.Http.Encode.Bytes
         public Task RequestBodyBase64url() => Test(async (host) =>
         {
             BinaryData data = new BinaryData($"\"{Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes("test")).Replace('+', '-').Replace('/', '_').Replace("=", "")}\"");
-            Azure.Response result = await new BytesClient(host, null).GetRequestBodyClient().Base64urlAsync(data);
+            Response result = await new BytesClient(host, null).GetRequestBodyClient().Base64urlAsync(data);
             Assert.AreEqual(204, result.Status);
         });
 

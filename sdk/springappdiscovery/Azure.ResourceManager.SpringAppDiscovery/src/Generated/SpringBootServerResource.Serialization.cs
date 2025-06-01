@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SpringAppDiscovery
 {
     public partial class SpringBootServerResource : IJsonModel<SpringBootServerData>
     {
+        private static SpringBootServerData s_dataDeserializationInstance;
+        private static SpringBootServerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SpringBootServerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SpringBootServerData>)Data).Write(writer, options);
 
-        SpringBootServerData IJsonModel<SpringBootServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SpringBootServerData>)Data).Create(ref reader, options);
+        SpringBootServerData IJsonModel<SpringBootServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SpringBootServerData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SpringBootServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SpringBootServerData>(Data, options, AzureResourceManagerSpringAppDiscoveryContext.Default);
 
         SpringBootServerData IPersistableModel<SpringBootServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SpringBootServerData>(data, options, AzureResourceManagerSpringAppDiscoveryContext.Default);
 
-        string IPersistableModel<SpringBootServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SpringBootServerData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SpringBootServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SpringBootServerData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

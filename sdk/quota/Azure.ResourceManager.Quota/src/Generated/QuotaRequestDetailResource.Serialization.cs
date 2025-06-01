@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Quota
 {
     public partial class QuotaRequestDetailResource : IJsonModel<QuotaRequestDetailData>
     {
+        private static QuotaRequestDetailData s_dataDeserializationInstance;
+        private static QuotaRequestDetailData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<QuotaRequestDetailData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<QuotaRequestDetailData>)Data).Write(writer, options);
 
-        QuotaRequestDetailData IJsonModel<QuotaRequestDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<QuotaRequestDetailData>)Data).Create(ref reader, options);
+        QuotaRequestDetailData IJsonModel<QuotaRequestDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<QuotaRequestDetailData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<QuotaRequestDetailData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<QuotaRequestDetailData>(Data, options, AzureResourceManagerQuotaContext.Default);
 
         QuotaRequestDetailData IPersistableModel<QuotaRequestDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<QuotaRequestDetailData>(data, options, AzureResourceManagerQuotaContext.Default);
 
-        string IPersistableModel<QuotaRequestDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<QuotaRequestDetailData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<QuotaRequestDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<QuotaRequestDetailData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

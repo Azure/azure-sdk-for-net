@@ -4,15 +4,15 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-require: https://github.com/Azure/azure-rest-api-specs/blob/b26a190235f162b15d77dad889d104d06871fb4f/specification/dnsresolver/resource-manager/readme.md
-#tag: package-preview-2023-07
+require: https://github.com/Azure/azure-rest-api-specs/blob/8600539fa5ba6c774b4454a401d9cd3cf01a36a7/specification/dnsresolver/resource-manager/readme.md
+# tag: package-2025-05 - Commented to default to latest
 library-name: dnsresolver
 namespace: Azure.ResourceManager.DnsResolver
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  sample: false #true
-  output-folder: $(this-folder)/../samples/Generated
+  sample: false # Current issue with virtual network dns resolver resouce autogen that is being addressed in autorest repo https://github.com/Azure/autorest.csharp/issues/5134
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -59,6 +59,9 @@ acronym-mapping:
   Etag: ETag|etag
   DnsForwardingRulesetName: rulesetName
 
+# mgmt-debug:
+#   show-serialized-names: true
+
 rename-mapping:
   ProvisioningState: DnsResolverProvisioningState
   ForwardingRule: DnsForwardingRule
@@ -71,10 +74,6 @@ rename-mapping:
   OutboundEndpoint: DnsResolverOutboundEndpoint
   VirtualNetworkLink: DnsForwardingRulesetVirtualNetworkLink
   ActionType: DnsSecurityRuleActionType
-
-directive:
-  - from: dnsresolver.json
-    where: $.definitions
-    transform: >
-      $.VirtualNetworkDnsForwardingRuleset.properties.id['x-ms-format'] = 'arm-id';
+  Action: DnsResolverDomainListBulkAction
+  VirtualNetworkDnsForwardingRuleset.id: -|arm-id
 ```

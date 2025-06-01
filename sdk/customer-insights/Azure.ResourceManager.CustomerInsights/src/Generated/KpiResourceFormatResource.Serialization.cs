@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     public partial class KpiResourceFormatResource : IJsonModel<KpiResourceFormatData>
     {
+        private static KpiResourceFormatData s_dataDeserializationInstance;
+        private static KpiResourceFormatData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<KpiResourceFormatData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KpiResourceFormatData>)Data).Write(writer, options);
 
-        KpiResourceFormatData IJsonModel<KpiResourceFormatData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KpiResourceFormatData>)Data).Create(ref reader, options);
+        KpiResourceFormatData IJsonModel<KpiResourceFormatData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KpiResourceFormatData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<KpiResourceFormatData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KpiResourceFormatData>(Data, options, AzureResourceManagerCustomerInsightsContext.Default);
 
         KpiResourceFormatData IPersistableModel<KpiResourceFormatData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KpiResourceFormatData>(data, options, AzureResourceManagerCustomerInsightsContext.Default);
 
-        string IPersistableModel<KpiResourceFormatData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KpiResourceFormatData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<KpiResourceFormatData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KpiResourceFormatData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

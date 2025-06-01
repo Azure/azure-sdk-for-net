@@ -244,7 +244,6 @@ namespace Azure.Storage.DataMovement.Blobs
             // The properties could be populated during construction (from enumeration)
             if (ResourceProperties != default)
             {
-                ResourceProperties.Uri = Uri;
                 return ResourceProperties;
             }
             else
@@ -253,7 +252,6 @@ namespace Azure.Storage.DataMovement.Blobs
                 StorageResourceItemProperties resourceProperties = blobProperties.ToStorageResourceProperties();
 
                 ResourceProperties = resourceProperties;
-                ResourceProperties.Uri = Uri;
                 return ResourceProperties;
             }
         }

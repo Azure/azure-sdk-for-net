@@ -23,6 +23,26 @@ namespace Azure.AI.Agents.Persistent
             return new AzureFunctionBinding(type, storageQueue, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Persistent.AISearchIndexResource"/>. </summary>
+        /// <param name="indexConnectionId"> An index connection id in an IndexResource attached to this agent. </param>
+        /// <param name="indexName"> The name of an index in an IndexResource attached to this agent. </param>
+        /// <param name="queryType"> Type of query in an AIIndexResource attached to this agent. </param>
+        /// <param name="topK"> Number of documents to retrieve from search and present to the model. </param>
+        /// <param name="filter"> filter string for search resource. </param>
+        /// <param name="indexAssetId"> Index asset id for search resource. </param>
+        /// <returns> A new <see cref="Persistent.AISearchIndexResource"/> instance for mocking. </returns>
+        public static AISearchIndexResource AISearchIndexResource(string indexConnectionId = null, string indexName = null, AzureAISearchQueryType? queryType = null, int? topK = null, string filter = null, string indexAssetId = null)
+        {
+            return new AISearchIndexResource(
+                indexConnectionId,
+                indexName,
+                queryType,
+                topK,
+                filter,
+                indexAssetId,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Persistent.ResponseFormatJsonSchemaType"/>. </summary>
         /// <param name="type"> Type. </param>
         /// <param name="jsonSchema"> The JSON schema, describing response format. </param>

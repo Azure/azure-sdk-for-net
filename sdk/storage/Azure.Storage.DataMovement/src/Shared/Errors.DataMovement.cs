@@ -51,6 +51,9 @@ namespace Azure.Storage
         public static ArgumentException CollisionJobPart(string transferId, int jobPart)
             => throw new ArgumentException($"Job Part Collision Checkpointer: The job part {jobPart} for transfer id {transferId}, already exists in the checkpointer.");
 
+        public static ArgumentException CollisionJobPlanFile(string transferId)
+            => throw new ArgumentException($"Job Plan File collision checkpointer: The job {transferId}, already exists in the checkpointer.");
+
         public static ArgumentException MissingCheckpointerPath(string directoryPath)
             => throw new ArgumentException($"Could not initialize the LocalTransferCheckpointer because the folderPath passed does not exist. Please create the {directoryPath}, folder path first.");
 

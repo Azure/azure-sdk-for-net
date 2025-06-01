@@ -206,11 +206,17 @@ namespace MgmtTypeSpec
 
         /// <summary> List Foo resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        public virtual AsyncPageable<FooResource> GetAllAsync(CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        public virtual AsyncPageable<FooResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary> List Foo resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        public virtual Pageable<FooResource> GetAll(CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        public virtual Pageable<FooResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="fooName"> The name of the Foo. </param>
@@ -292,7 +298,7 @@ namespace MgmtTypeSpec
                 Response<FooData> response = Response.FromValue((FooData)result, result);
                 if (response.Value == null)
                 {
-                    throw new RequestFailedException(response.GetRawResponse());
+                    return new NoValueResponse<FooResource>(response.GetRawResponse());
                 }
                 return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
             }
@@ -325,7 +331,7 @@ namespace MgmtTypeSpec
                 Response<FooData> response = Response.FromValue((FooData)result, result);
                 if (response.Value == null)
                 {
-                    throw new RequestFailedException(response.GetRawResponse());
+                    return new NoValueResponse<FooResource>(response.GetRawResponse());
                 }
                 return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
             }

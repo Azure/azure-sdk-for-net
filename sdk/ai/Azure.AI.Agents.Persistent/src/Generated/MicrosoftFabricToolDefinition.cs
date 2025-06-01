@@ -14,9 +14,9 @@ namespace Azure.AI.Agents.Persistent
     public partial class MicrosoftFabricToolDefinition : ToolDefinition
     {
         /// <summary> Initializes a new instance of <see cref="MicrosoftFabricToolDefinition"/>. </summary>
-        /// <param name="fabricDataagent"> The list of connections used by the Microsoft Fabric tool. </param>
+        /// <param name="fabricDataagent"> The fabric data agent tool parameters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fabricDataagent"/> is null. </exception>
-        public MicrosoftFabricToolDefinition(ToolConnectionList fabricDataagent)
+        public MicrosoftFabricToolDefinition(FabricDataAgentToolParameters fabricDataagent)
         {
             Argument.AssertNotNull(fabricDataagent, nameof(fabricDataagent));
 
@@ -27,8 +27,8 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Initializes a new instance of <see cref="MicrosoftFabricToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="fabricDataagent"> The list of connections used by the Microsoft Fabric tool. </param>
-        internal MicrosoftFabricToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, ToolConnectionList fabricDataagent) : base(type, serializedAdditionalRawData)
+        /// <param name="fabricDataagent"> The fabric data agent tool parameters. </param>
+        internal MicrosoftFabricToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, FabricDataAgentToolParameters fabricDataagent) : base(type, serializedAdditionalRawData)
         {
             FabricDataagent = fabricDataagent;
         }
@@ -38,7 +38,7 @@ namespace Azure.AI.Agents.Persistent
         {
         }
 
-        /// <summary> The list of connections used by the Microsoft Fabric tool. </summary>
-        public ToolConnectionList FabricDataagent { get; set; }
+        /// <summary> The fabric data agent tool parameters. </summary>
+        public FabricDataAgentToolParameters FabricDataagent { get; set; }
     }
 }

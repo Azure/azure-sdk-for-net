@@ -208,20 +208,19 @@ namespace Azure.AI.Agents.Persistent.Tests
             PersistentAgentsClient client = GetClient();
             PersistentAgent agent = await GetAgent(client, AGENT_NAME);
             AsyncPageable<PersistentAgentThread> pgThreads = client.Threads.GetThreadsAsync(limit: 2);
-            int cntBefore = (await pgThreads.ToListAsync()).Count;
             // This test may take a long time if the number of threads is big.
             // The code below may e used to clean up the threads.
-            // AsyncPageable<PersistentAgentThread> pgThreads = client.Threads.GetThreadsAsync(limit: 100);
-            // List<PersistentAgentThread> del = await pgThreads.ToListAsync();
-            // int iter = 0;
-            // foreach (PersistentAgentThread thr in del)
-            // {
+            //pgThreads = client.Threads.GetThreadsAsync(limit: 100);
+            //List<PersistentAgentThread> del = await pgThreads.ToListAsync();
+            //foreach (PersistentAgentThread thr in del)
+            //{
             //    await client.Threads.DeleteThreadAsync(thr.Id);
             //    await Delay(5);
-            // }
-            // pgThreads = client.Threads.GetThreadsAsync(limit: 100);
-            // int cntBefore = (await pgThreads.ToListAsync()).Count;
+            //}
+            //pgThreads = client.Threads.GetThreadsAsync(limit: 100);
+            //Assert.AreEqual(0, (await pgThreads.ToListAsync()).Count);
             // End of cleanup code.
+            int cntBefore = (await pgThreads.ToListAsync()).Count;
             PersistentAgentThread thr1 = await client.Threads.CreateThreadAsync();
             PersistentAgentThread thr2 = await client.Threads.CreateThreadAsync();
             PersistentAgentThread thr3 = await client.Threads.CreateThreadAsync();
@@ -490,10 +489,10 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.AreEqual(MessageRole.Agent, messages[0].Role);
             Assert.AreEqual(MessageRole.User, messages[1].Role);
             // Get Run steps
-            AsyncPageable<RunStep> steps = client.ThreadRunSteps.GetRunStepsAsync(result);
+            AsyncPageable<RunStep> steps = client.Runs.GetRunStepsAsync(result);
             List<RunStep> stepsList = await steps.ToListAsync();
             Assert.GreaterOrEqual(stepsList.Count, 1);
-            RunStep step = await client.ThreadRunSteps.GetRunStepAsync(result.ThreadId, result.Id, stepsList[0].Id);
+            RunStep step = await client.Runs.GetRunStepAsync(result.ThreadId, result.Id, stepsList[0].Id);
             Assert.AreEqual(stepsList[0].Id, step.Id);
         }
 
@@ -769,7 +768,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 );
                 if (testType == VecrorStoreTestType.Batch)
                 {
-                    await client.VectorStoreFileBatches.CreateVectorStoreFileBatchAsync(
+                    await client.VectorStores.CreateVectorStoreFileBatchAsync(
                         vectorStoreId: vectorStore.Id,
                         dataSources: vectorStoreConf?.DataSources,
                         fileIds: fileIds
@@ -777,7 +776,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 }
                 else
                 {
-                    await client.VectorStoreFiles.CreateVectorStoreFileAsync(
+                    await client.VectorStores.CreateVectorStoreFileAsync(
                         vectorStoreId: vectorStore.Id,
                         dataSource: vectorStoreConf?.DataSources[0],
                         fileId: fileDataSource?.Id
@@ -1081,13 +1080,13 @@ namespace Azure.AI.Agents.Persistent.Tests
                 Assert.GreaterOrEqual(messages.Count, 1);
             }
             // TODO: Implement include in streaming scenario, see task 3801146.
-            List<RunStep> steps = await client.ThreadRunSteps.GetRunStepsAsync(
+            List<RunStep> steps = await client.Runs.GetRunStepsAsync(
                 threadId: fileSearchRun.ThreadId,
                 runId: fileSearchRun.Id
             //    include: include
             ).ToListAsync();
             Assert.GreaterOrEqual(steps.Count, 2);
-            RunStep step = await client.ThreadRunSteps.GetRunStepAsync(fileSearchRun.ThreadId, fileSearchRun.Id, steps[1].Id, include: include);
+            RunStep step = await client.Runs.GetRunStepAsync(fileSearchRun.ThreadId, fileSearchRun.Id, steps[1].Id, include: include);
 
             Assert.That(step.StepDetails is RunStepToolCallDetails);
             RunStepToolCallDetails toolCallDetails = step.StepDetails as RunStepToolCallDetails;
@@ -1533,16 +1532,15 @@ namespace Azure.AI.Agents.Persistent.Tests
 
         private ToolResources GetAISearchToolResource(AzureAISearchQueryTypeEnum queryType)
         {
-            AISearchIndexResource indexList = new(TestEnvironment.AI_SEARCH_CONNECTION_ID, "sample_index")
-            {
-                QueryType = SearchQueryTypes[queryType]
-            };
             return new ToolResources()
             {
-                AzureAISearch = new AzureAISearchResource
-                {
-                    IndexList = { indexList }
-                }
+                AzureAISearch = new AzureAISearchToolResource(
+                    indexConnectionId: TestEnvironment.AI_SEARCH_CONNECTION_ID,
+                    indexName: "sample_index",
+                    queryType: SearchQueryTypes[queryType],
+                    filter: null,
+                    topK: 5
+                )
             };
         }
 

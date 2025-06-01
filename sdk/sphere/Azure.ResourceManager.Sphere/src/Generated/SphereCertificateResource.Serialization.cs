@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sphere
 {
     public partial class SphereCertificateResource : IJsonModel<SphereCertificateData>
     {
+        private static SphereCertificateData s_dataDeserializationInstance;
+        private static SphereCertificateData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SphereCertificateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SphereCertificateData>)Data).Write(writer, options);
 
-        SphereCertificateData IJsonModel<SphereCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SphereCertificateData>)Data).Create(ref reader, options);
+        SphereCertificateData IJsonModel<SphereCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SphereCertificateData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SphereCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SphereCertificateData>(Data, options, AzureResourceManagerSphereContext.Default);
 
         SphereCertificateData IPersistableModel<SphereCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SphereCertificateData>(data, options, AzureResourceManagerSphereContext.Default);
 
-        string IPersistableModel<SphereCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SphereCertificateData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SphereCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SphereCertificateData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -117,6 +117,7 @@
     "kusto",
     "Kustomization",
     "Kustomizations",
+    "Liftr",
     "listsas",
     "lucene",
     "mgmt",
@@ -200,7 +201,15 @@
     {
       "filename": "**/sdk/ai/**/*.cs",
       "words": [
-        "Ubinary"
+        "Ubinary",
+        "Ansii",
+        "Atbash",
+        "Bleu",
+        "azureai",
+        "bleu",
+        "azureai",
+        "Gleu",
+        "gleu"
       ]
     },
     {
@@ -918,7 +927,8 @@
         "Apac",
         "Latam",
         "Fips",
-        "Diffie"
+        "Diffie",
+        "Reimage"
       ]
     },
     {

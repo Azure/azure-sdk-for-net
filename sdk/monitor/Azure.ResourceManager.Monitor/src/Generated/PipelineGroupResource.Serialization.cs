@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Monitor
 {
     public partial class PipelineGroupResource : IJsonModel<PipelineGroupData>
     {
+        private static PipelineGroupData s_dataDeserializationInstance;
+        private static PipelineGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PipelineGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PipelineGroupData>)Data).Write(writer, options);
 
-        PipelineGroupData IJsonModel<PipelineGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PipelineGroupData>)Data).Create(ref reader, options);
+        PipelineGroupData IJsonModel<PipelineGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PipelineGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PipelineGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PipelineGroupData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
         PipelineGroupData IPersistableModel<PipelineGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PipelineGroupData>(data, options, AzureResourceManagerMonitorContext.Default);
 
-        string IPersistableModel<PipelineGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PipelineGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PipelineGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PipelineGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

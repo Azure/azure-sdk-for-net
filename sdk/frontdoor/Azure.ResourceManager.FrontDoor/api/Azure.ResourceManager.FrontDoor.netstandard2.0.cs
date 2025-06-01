@@ -1283,6 +1283,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public partial class FrontDoorWebApplicationFirewallPolicySettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicySettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicySettings>
     {
         public FrontDoorWebApplicationFirewallPolicySettings() { }
+        public int? CaptchaExpirationInMinutes { get { throw null; } set { } }
         public string CustomBlockResponseBody { get { throw null; } set { } }
         public int? CustomBlockResponseStatusCode { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.PolicyEnabledState? EnabledState { get { throw null; } set { } }
@@ -1759,6 +1760,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType Allow { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType AnomalyScoring { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType Block { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType Captcha { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType JSChallenge { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType Log { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType Redirect { get { throw null; } }

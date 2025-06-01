@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Migration.Assessment
 {
     public partial class MigrationSqlAssessmentV2Resource : IJsonModel<MigrationSqlAssessmentV2Data>
     {
+        private static MigrationSqlAssessmentV2Data s_dataDeserializationInstance;
+        private static MigrationSqlAssessmentV2Data DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MigrationSqlAssessmentV2Data>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MigrationSqlAssessmentV2Data>)Data).Write(writer, options);
 
-        MigrationSqlAssessmentV2Data IJsonModel<MigrationSqlAssessmentV2Data>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationSqlAssessmentV2Data>)Data).Create(ref reader, options);
+        MigrationSqlAssessmentV2Data IJsonModel<MigrationSqlAssessmentV2Data>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationSqlAssessmentV2Data>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MigrationSqlAssessmentV2Data>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MigrationSqlAssessmentV2Data>(Data, options, AzureResourceManagerMigrationAssessmentContext.Default);
 
         MigrationSqlAssessmentV2Data IPersistableModel<MigrationSqlAssessmentV2Data>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrationSqlAssessmentV2Data>(data, options, AzureResourceManagerMigrationAssessmentContext.Default);
 
-        string IPersistableModel<MigrationSqlAssessmentV2Data>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationSqlAssessmentV2Data>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MigrationSqlAssessmentV2Data>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationSqlAssessmentV2Data>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

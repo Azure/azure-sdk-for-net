@@ -14,8 +14,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatThreadEventInThreadBaseProperties : AcsChatEventInThreadBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadEventInThreadBaseProperties"/>. </summary>
-        internal AcsChatThreadEventInThreadBaseProperties()
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
+        internal AcsChatThreadEventInThreadBaseProperties(string threadId) : base(threadId)
         {
+            Argument.AssertNotNull(threadId, nameof(threadId));
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadEventInThreadBaseProperties"/>. </summary>
@@ -28,6 +31,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
             CreateTime = createTime;
             Version = version;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AcsChatThreadEventInThreadBaseProperties"/> for deserialization. </summary>
+        internal AcsChatThreadEventInThreadBaseProperties()
+        {
         }
 
         /// <summary> The original creation time of the thread. </summary>

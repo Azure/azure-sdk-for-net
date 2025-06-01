@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes the action that shall be taken when the certificate is removed from Key Vault. </summary>
+    /// <summary>
+    /// Describes the action that shall be taken when the certificate is removed from Key Vault.
+    /// Serialized Name: DeleteRule
+    /// </summary>
     public readonly partial struct CertificateDeleteAction : IEquatable<CertificateDeleteAction>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string NoActionValue = "NoAction";
 
-        /// <summary> NoAction. </summary>
+        /// <summary>
+        /// NoAction
+        /// Serialized Name: DeleteRule.NoAction
+        /// </summary>
         public static CertificateDeleteAction NoAction { get; } = new CertificateDeleteAction(NoActionValue);
         /// <summary> Determines if two <see cref="CertificateDeleteAction"/> values are the same. </summary>
         public static bool operator ==(CertificateDeleteAction left, CertificateDeleteAction right) => left.Equals(right);

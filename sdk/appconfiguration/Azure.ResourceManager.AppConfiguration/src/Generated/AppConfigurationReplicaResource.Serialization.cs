@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppConfiguration
 {
     public partial class AppConfigurationReplicaResource : IJsonModel<AppConfigurationReplicaData>
     {
+        private static AppConfigurationReplicaData s_dataDeserializationInstance;
+        private static AppConfigurationReplicaData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AppConfigurationReplicaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppConfigurationReplicaData>)Data).Write(writer, options);
 
-        AppConfigurationReplicaData IJsonModel<AppConfigurationReplicaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppConfigurationReplicaData>)Data).Create(ref reader, options);
+        AppConfigurationReplicaData IJsonModel<AppConfigurationReplicaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppConfigurationReplicaData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AppConfigurationReplicaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppConfigurationReplicaData>(Data, options, AzureResourceManagerAppConfigurationContext.Default);
 
         AppConfigurationReplicaData IPersistableModel<AppConfigurationReplicaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppConfigurationReplicaData>(data, options, AzureResourceManagerAppConfigurationContext.Default);
 
-        string IPersistableModel<AppConfigurationReplicaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppConfigurationReplicaData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AppConfigurationReplicaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppConfigurationReplicaData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

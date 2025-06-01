@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Storage
 {
     public partial class StoragePrivateEndpointConnectionResource : IJsonModel<StoragePrivateEndpointConnectionData>
     {
+        private static StoragePrivateEndpointConnectionData s_dataDeserializationInstance;
+        private static StoragePrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<StoragePrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StoragePrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        StoragePrivateEndpointConnectionData IJsonModel<StoragePrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StoragePrivateEndpointConnectionData>)Data).Create(ref reader, options);
+        StoragePrivateEndpointConnectionData IJsonModel<StoragePrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StoragePrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<StoragePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StoragePrivateEndpointConnectionData>(Data, options, AzureResourceManagerStorageContext.Default);
 
         StoragePrivateEndpointConnectionData IPersistableModel<StoragePrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StoragePrivateEndpointConnectionData>(data, options, AzureResourceManagerStorageContext.Default);
 
-        string IPersistableModel<StoragePrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StoragePrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<StoragePrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StoragePrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

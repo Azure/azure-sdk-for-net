@@ -47,13 +47,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            writer.WritePropertyName("attachedWorkerSelectors"u8);
-            writer.WriteStartArray();
-            foreach (var item in AttachedWorkerSelectors)
+            if (options.Format != "W")
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("attachedWorkerSelectors"u8);
+                writer.WriteStartArray();
+                foreach (var item in AttachedWorkerSelectors)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
         }
 
         AcsRouterJobClassifiedEventData IJsonModel<AcsRouterJobClassifiedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

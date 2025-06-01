@@ -51,7 +51,7 @@ namespace Azure.AI.Agents.Persistent
             }
 #endif
             writer.WritePropertyName("auth"u8);
-            writer.WriteObjectValue(Auth, options);
+            writer.WriteObjectValue(OpenApiAuthentication, options);
             if (Optional.IsCollectionDefined(DefaultParams))
             {
                 writer.WritePropertyName("default_params"u8);
