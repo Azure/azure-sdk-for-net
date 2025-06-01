@@ -206,11 +206,17 @@ namespace MgmtTypeSpec
 
         /// <summary> List Foo resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        public virtual AsyncPageable<FooResource> GetAllAsync(CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        public virtual AsyncPageable<FooResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary> List Foo resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        public virtual Pageable<FooResource> GetAll(CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        public virtual Pageable<FooResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="fooName"> The name of the Foo. </param>
