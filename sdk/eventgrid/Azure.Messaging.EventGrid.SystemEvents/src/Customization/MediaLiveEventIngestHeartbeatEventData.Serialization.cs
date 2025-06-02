@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -10,7 +11,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     [JsonConverter(typeof(MediaLiveEventIngestHeartbeatEventDataConverter))]
     public partial class MediaLiveEventIngestHeartbeatEventData
     {
-        internal static MediaLiveEventIngestHeartbeatEventData DeserializeMediaLiveEventIngestHeartbeatEventData(JsonElement element)
+        internal static MediaLiveEventIngestHeartbeatEventData DeserializeMediaLiveEventIngestHeartbeatEventData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

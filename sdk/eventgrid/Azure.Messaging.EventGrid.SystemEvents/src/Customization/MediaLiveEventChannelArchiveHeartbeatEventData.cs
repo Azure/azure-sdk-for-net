@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="latencyResultCode"> Gets the latency result code. </param>
         internal MediaLiveEventChannelArchiveHeartbeatEventData(string channelLatencyMs, string latencyResultCode)
         {
-            ChannelLatency = channelLatencyMs == "n/a" ? null : TimeSpan.FromMilliseconds(double.Parse(channelLatencyMs, CultureInfo.InvariantCulture));
+            ChannelLatency = channelLatencyMs == Constants.MediaEvents.NotApplicable ? null : TimeSpan.FromMilliseconds(double.Parse(channelLatencyMs, CultureInfo.InvariantCulture));
             LatencyResultCode = latencyResultCode;
         }
         /// <summary> Gets the latency result code. </summary>

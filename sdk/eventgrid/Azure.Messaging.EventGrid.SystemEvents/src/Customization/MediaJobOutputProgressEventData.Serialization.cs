@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -11,7 +12,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     [JsonConverter(typeof(MediaJobOutputProgressEventDataConverter))]
     public partial class MediaJobOutputProgressEventData
     {
-        internal static MediaJobOutputProgressEventData DeserializeMediaJobOutputProgressEventData(JsonElement element)
+        internal static MediaJobOutputProgressEventData DeserializeMediaJobOutputProgressEventData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

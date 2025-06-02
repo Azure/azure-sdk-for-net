@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Router Job Received Job Status. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public Azure.Messaging.EventGrid.Models.AcsRouterJobStatus? JobStatus
+        public Models.AcsRouterJobStatus? JobStatus
         {
             get
             {

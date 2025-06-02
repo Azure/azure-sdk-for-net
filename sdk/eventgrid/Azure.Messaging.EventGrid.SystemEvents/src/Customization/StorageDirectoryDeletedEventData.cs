@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
@@ -28,5 +29,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         }
 
         private bool? _recursive;
+
+        /// <summary>
+        /// For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public object StorageDiagnostics { get; }
     }
 }

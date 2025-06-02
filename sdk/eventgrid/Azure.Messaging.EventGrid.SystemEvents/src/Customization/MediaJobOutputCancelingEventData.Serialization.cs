@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -10,7 +11,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     [JsonConverter(typeof(MediaJobOutputCancelingEventDataConverter))]
     public partial class MediaJobOutputCancelingEventData
     {
-        internal static MediaJobOutputCancelingEventData DeserializeMediaJobOutputCancelingEventData(JsonElement element)
+        internal static MediaJobOutputCancelingEventData DeserializeMediaJobOutputCancelingEventData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
