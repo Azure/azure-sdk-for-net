@@ -46,15 +46,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             writer.WriteStringValue(ObjectName);
             writer.WritePropertyName("Version"u8);
             writer.WriteStringValue(Version);
-            if (Optional.IsDefined(NBF))
+            if (Optional.IsDefined(Nbf))
             {
                 writer.WritePropertyName("NBF"u8);
-                writer.WriteNumberValue(NBF.Value);
+                writer.WriteNumberValue(Nbf.Value);
             }
-            if (Optional.IsDefined(EXP))
+            if (Optional.IsDefined(Exp))
             {
                 writer.WritePropertyName("EXP"u8);
-                writer.WriteNumberValue(EXP.Value);
+                writer.WriteNumberValue(Exp.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
