@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class ApiManagementNearExpiryGatewayTokenProperties : IUtf8JsonSerializable, IJsonModel<ApiManagementNearExpiryGatewayTokenProperties>
+    public partial class ApiManagementGatewayTokenNearExpiryProperties : IUtf8JsonSerializable, IJsonModel<ApiManagementGatewayTokenNearExpiryProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementNearExpiryGatewayTokenProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementGatewayTokenNearExpiryProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ApiManagementNearExpiryGatewayTokenProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApiManagementGatewayTokenNearExpiryProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementNearExpiryGatewayTokenProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayTokenNearExpiryProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementNearExpiryGatewayTokenProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementGatewayTokenNearExpiryProperties)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("expiredAtUtc"u8);
@@ -53,19 +53,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        ApiManagementNearExpiryGatewayTokenProperties IJsonModel<ApiManagementNearExpiryGatewayTokenProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ApiManagementGatewayTokenNearExpiryProperties IJsonModel<ApiManagementGatewayTokenNearExpiryProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementNearExpiryGatewayTokenProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayTokenNearExpiryProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementNearExpiryGatewayTokenProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementGatewayTokenNearExpiryProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApiManagementNearExpiryGatewayTokenProperties(document.RootElement, options);
+            return DeserializeApiManagementGatewayTokenNearExpiryProperties(document.RootElement, options);
         }
 
-        internal static ApiManagementNearExpiryGatewayTokenProperties DeserializeApiManagementNearExpiryGatewayTokenProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ApiManagementGatewayTokenNearExpiryProperties DeserializeApiManagementGatewayTokenNearExpiryProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -89,46 +89,46 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ApiManagementNearExpiryGatewayTokenProperties(expiredAtUtc, serializedAdditionalRawData);
+            return new ApiManagementGatewayTokenNearExpiryProperties(expiredAtUtc, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ApiManagementNearExpiryGatewayTokenProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ApiManagementGatewayTokenNearExpiryProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementNearExpiryGatewayTokenProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayTokenNearExpiryProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementNearExpiryGatewayTokenProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementGatewayTokenNearExpiryProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ApiManagementNearExpiryGatewayTokenProperties IPersistableModel<ApiManagementNearExpiryGatewayTokenProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ApiManagementGatewayTokenNearExpiryProperties IPersistableModel<ApiManagementGatewayTokenNearExpiryProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementNearExpiryGatewayTokenProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayTokenNearExpiryProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeApiManagementNearExpiryGatewayTokenProperties(document.RootElement, options);
+                        return DeserializeApiManagementGatewayTokenNearExpiryProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementNearExpiryGatewayTokenProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementGatewayTokenNearExpiryProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ApiManagementNearExpiryGatewayTokenProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiManagementGatewayTokenNearExpiryProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ApiManagementNearExpiryGatewayTokenProperties FromResponse(Response response)
+        internal static ApiManagementGatewayTokenNearExpiryProperties FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeApiManagementNearExpiryGatewayTokenProperties(document.RootElement);
+            return DeserializeApiManagementGatewayTokenNearExpiryProperties(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

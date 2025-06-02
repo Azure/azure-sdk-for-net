@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="gatewayInfo"> Information related to a given self-hosted gateway deployment. </param>
         /// <param name="tokenInfo"> Information related to a an expired gateway token for a self-hosted gateway deployment. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayInfo"/> or <paramref name="tokenInfo"/> is null. </exception>
-        internal ApiManagementGatewayTokenNearExpiryEventData(ApiManagementGatewayProperties gatewayInfo, ApiManagementNearExpiryGatewayTokenProperties tokenInfo)
+        internal ApiManagementGatewayTokenNearExpiryEventData(ApiManagementGatewayProperties gatewayInfo, ApiManagementGatewayTokenNearExpiryProperties tokenInfo)
         {
             Argument.AssertNotNull(gatewayInfo, nameof(gatewayInfo));
             Argument.AssertNotNull(tokenInfo, nameof(tokenInfo));
@@ -62,7 +62,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="gatewayInfo"> Information related to a given self-hosted gateway deployment. </param>
         /// <param name="tokenInfo"> Information related to a an expired gateway token for a self-hosted gateway deployment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementGatewayTokenNearExpiryEventData(ApiManagementGatewayProperties gatewayInfo, ApiManagementNearExpiryGatewayTokenProperties tokenInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiManagementGatewayTokenNearExpiryEventData(ApiManagementGatewayProperties gatewayInfo, ApiManagementGatewayTokenNearExpiryProperties tokenInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GatewayInfo = gatewayInfo;
             TokenInfo = tokenInfo;
@@ -77,6 +77,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Information related to a given self-hosted gateway deployment. </summary>
         public ApiManagementGatewayProperties GatewayInfo { get; }
         /// <summary> Information related to a an expired gateway token for a self-hosted gateway deployment. </summary>
-        public ApiManagementNearExpiryGatewayTokenProperties TokenInfo { get; }
+        public ApiManagementGatewayTokenNearExpiryProperties TokenInfo { get; }
     }
 }

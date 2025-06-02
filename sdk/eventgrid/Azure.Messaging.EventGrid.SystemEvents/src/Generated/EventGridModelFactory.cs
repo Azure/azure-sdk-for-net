@@ -284,7 +284,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="gatewayInfo"> Information related to a given self-hosted gateway deployment. </param>
         /// <param name="tokenInfo"> Information related to a an expired gateway token for a self-hosted gateway deployment. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementGatewayTokenNearExpiryEventData"/> instance for mocking. </returns>
-        public static ApiManagementGatewayTokenNearExpiryEventData ApiManagementGatewayTokenNearExpiryEventData(ApiManagementGatewayProperties gatewayInfo = null, ApiManagementNearExpiryGatewayTokenProperties tokenInfo = null)
+        public static ApiManagementGatewayTokenNearExpiryEventData ApiManagementGatewayTokenNearExpiryEventData(ApiManagementGatewayProperties gatewayInfo = null, ApiManagementGatewayTokenNearExpiryProperties tokenInfo = null)
         {
             return new ApiManagementGatewayTokenNearExpiryEventData(gatewayInfo, tokenInfo, serializedAdditionalRawData: null);
         }
@@ -298,12 +298,12 @@ namespace Azure.Messaging.EventGrid
             return new ApiManagementGatewayProperties(gatewayId, instanceId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementNearExpiryGatewayTokenProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementGatewayTokenNearExpiryProperties"/>. </summary>
         /// <param name="expiredAtUtc"> Timestamp when the gateway token will expire. </param>
-        /// <returns> A new <see cref="SystemEvents.ApiManagementNearExpiryGatewayTokenProperties"/> instance for mocking. </returns>
-        public static ApiManagementNearExpiryGatewayTokenProperties ApiManagementNearExpiryGatewayTokenProperties(DateTimeOffset expiredAtUtc = default)
+        /// <returns> A new <see cref="SystemEvents.ApiManagementGatewayTokenNearExpiryProperties"/> instance for mocking. </returns>
+        public static ApiManagementGatewayTokenNearExpiryProperties ApiManagementGatewayTokenNearExpiryProperties(DateTimeOffset expiredAtUtc = default)
         {
-            return new ApiManagementNearExpiryGatewayTokenProperties(expiredAtUtc, serializedAdditionalRawData: null);
+            return new ApiManagementGatewayTokenNearExpiryProperties(expiredAtUtc, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementGatewayTokenExpiredEventData"/>. </summary>
@@ -3673,10 +3673,8 @@ namespace Azure.Messaging.EventGrid
         /// <param name="identity"> The identity of the requester that triggered this event. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
         /// <returns> A new <see cref="SystemEvents.StorageBlobDeletedEventData"/> instance for mocking. </returns>
-        public static StorageBlobDeletedEventData StorageBlobDeletedEventData(string api = null, string clientRequestId = null, string requestId = null, string contentType = null, string blobType = null, string url = null, string sequencer = null, string identity = null, IReadOnlyDictionary<string, BinaryData> storageDiagnostics = null)
+        public static StorageBlobDeletedEventData StorageBlobDeletedEventData(string api = null, string clientRequestId = null, string requestId = null, string contentType = null, string blobType = null, string url = null, string sequencer = null, string identity = null, object storageDiagnostics = null)
         {
-            storageDiagnostics ??= new Dictionary<string, BinaryData>();
-
             return new StorageBlobDeletedEventData(
                 api,
                 clientRequestId,
@@ -3700,10 +3698,8 @@ namespace Azure.Messaging.EventGrid
         /// <param name="identity"> The identity of the requester that triggered this event. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
         /// <returns> A new <see cref="SystemEvents.StorageDirectoryCreatedEventData"/> instance for mocking. </returns>
-        public static StorageDirectoryCreatedEventData StorageDirectoryCreatedEventData(string api = null, string clientRequestId = null, string requestId = null, string eTag = null, string url = null, string sequencer = null, string identity = null, IReadOnlyDictionary<string, BinaryData> storageDiagnostics = null)
+        public static StorageDirectoryCreatedEventData StorageDirectoryCreatedEventData(string api = null, string clientRequestId = null, string requestId = null, string eTag = null, string url = null, string sequencer = null, string identity = null, object storageDiagnostics = null)
         {
-            storageDiagnostics ??= new Dictionary<string, BinaryData>();
-
             return new StorageDirectoryCreatedEventData(
                 api,
                 clientRequestId,
@@ -3726,10 +3722,8 @@ namespace Azure.Messaging.EventGrid
         /// <param name="identity"> The identity of the requester that triggered this event. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
         /// <returns> A new <see cref="SystemEvents.StorageBlobRenamedEventData"/> instance for mocking. </returns>
-        public static StorageBlobRenamedEventData StorageBlobRenamedEventData(string api = null, string clientRequestId = null, string requestId = null, string sourceUrl = null, string destinationUrl = null, string sequencer = null, string identity = null, IReadOnlyDictionary<string, BinaryData> storageDiagnostics = null)
+        public static StorageBlobRenamedEventData StorageBlobRenamedEventData(string api = null, string clientRequestId = null, string requestId = null, string sourceUrl = null, string destinationUrl = null, string sequencer = null, string identity = null, object storageDiagnostics = null)
         {
-            storageDiagnostics ??= new Dictionary<string, BinaryData>();
-
             return new StorageBlobRenamedEventData(
                 api,
                 clientRequestId,
@@ -3752,10 +3746,8 @@ namespace Azure.Messaging.EventGrid
         /// <param name="identity"> The identity of the requester that triggered this event. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
         /// <returns> A new <see cref="SystemEvents.StorageDirectoryRenamedEventData"/> instance for mocking. </returns>
-        public static StorageDirectoryRenamedEventData StorageDirectoryRenamedEventData(string api = null, string clientRequestId = null, string requestId = null, string sourceUrl = null, string destinationUrl = null, string sequencer = null, string identity = null, IReadOnlyDictionary<string, BinaryData> storageDiagnostics = null)
+        public static StorageDirectoryRenamedEventData StorageDirectoryRenamedEventData(string api = null, string clientRequestId = null, string requestId = null, string sourceUrl = null, string destinationUrl = null, string sequencer = null, string identity = null, object storageDiagnostics = null)
         {
-            storageDiagnostics ??= new Dictionary<string, BinaryData>();
-
             return new StorageDirectoryRenamedEventData(
                 api,
                 clientRequestId,
@@ -3850,10 +3842,8 @@ namespace Azure.Messaging.EventGrid
         /// <param name="identity"> The identity of the requester that triggered this event. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
         /// <returns> A new <see cref="SystemEvents.StorageAsyncOperationInitiatedEventData"/> instance for mocking. </returns>
-        public static StorageAsyncOperationInitiatedEventData StorageAsyncOperationInitiatedEventData(string api = null, string clientRequestId = null, string requestId = null, string contentType = null, long? contentLength = null, string blobType = null, string url = null, string sequencer = null, string identity = null, IReadOnlyDictionary<string, BinaryData> storageDiagnostics = null)
+        public static StorageAsyncOperationInitiatedEventData StorageAsyncOperationInitiatedEventData(string api = null, string clientRequestId = null, string requestId = null, string contentType = null, long? contentLength = null, string blobType = null, string url = null, string sequencer = null, string identity = null, object storageDiagnostics = null)
         {
-            storageDiagnostics ??= new Dictionary<string, BinaryData>();
-
             return new StorageAsyncOperationInitiatedEventData(
                 api,
                 clientRequestId,

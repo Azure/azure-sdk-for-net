@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Information related to a gateway token that is near expiry for a self-hosted gateway deployment. </summary>
-    public partial class ApiManagementNearExpiryGatewayTokenProperties
+    public partial class ApiManagementGatewayTokenNearExpiryProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,24 +45,24 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementNearExpiryGatewayTokenProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayTokenNearExpiryProperties"/>. </summary>
         /// <param name="expiredAtUtc"> Timestamp when the gateway token will expire. </param>
-        internal ApiManagementNearExpiryGatewayTokenProperties(DateTimeOffset expiredAtUtc)
+        internal ApiManagementGatewayTokenNearExpiryProperties(DateTimeOffset expiredAtUtc)
         {
             ExpiredAtUtc = expiredAtUtc;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementNearExpiryGatewayTokenProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayTokenNearExpiryProperties"/>. </summary>
         /// <param name="expiredAtUtc"> Timestamp when the gateway token will expire. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementNearExpiryGatewayTokenProperties(DateTimeOffset expiredAtUtc, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiManagementGatewayTokenNearExpiryProperties(DateTimeOffset expiredAtUtc, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExpiredAtUtc = expiredAtUtc;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementNearExpiryGatewayTokenProperties"/> for deserialization. </summary>
-        internal ApiManagementNearExpiryGatewayTokenProperties()
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayTokenNearExpiryProperties"/> for deserialization. </summary>
+        internal ApiManagementGatewayTokenNearExpiryProperties()
         {
         }
 

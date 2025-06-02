@@ -144,7 +144,7 @@ using AcsRouterWorkerSelectorState = Azure.Messaging.EventGrid.SystemEvents.AcsR
 [assembly: TypeForwardedTo(typeof(ApiManagementGatewayTokenExpiredEventData))]
 [assembly: TypeForwardedTo(typeof(ApiManagementGatewayTokenNearExpiryEventData))]
 [assembly: TypeForwardedTo(typeof(ApiManagementGatewayUpdatedEventData))]
-[assembly: TypeForwardedTo(typeof(ApiManagementNearExpiryGatewayTokenProperties))]
+[assembly: TypeForwardedTo(typeof(ApiManagementGatewayTokenNearExpiryProperties))]
 [assembly: TypeForwardedTo(typeof(ApiManagementProductCreatedEventData))]
 [assembly: TypeForwardedTo(typeof(ApiManagementProductDeletedEventData))]
 [assembly: TypeForwardedTo(typeof(ApiManagementProductUpdatedEventData))]

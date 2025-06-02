@@ -78,7 +78,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             ApiManagementGatewayProperties gatewayInfo = default;
-            ApiManagementNearExpiryGatewayTokenProperties tokenInfo = default;
+            ApiManagementGatewayTokenNearExpiryProperties tokenInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,7 +90,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("tokenInfo"u8))
                 {
-                    tokenInfo = ApiManagementNearExpiryGatewayTokenProperties.DeserializeApiManagementNearExpiryGatewayTokenProperties(property.Value, options);
+                    tokenInfo = ApiManagementGatewayTokenNearExpiryProperties.DeserializeApiManagementGatewayTokenNearExpiryProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

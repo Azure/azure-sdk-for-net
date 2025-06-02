@@ -67,6 +67,444 @@ namespace Azure.Messaging.EventGrid
             return new MediaJobErroredEventData(previousState, state, correlationData, outputs);
         }
 
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MediaJobStateChangeEventData"/>. </summary>
+        /// <param name="previousState"> The previous state of the Job. </param>
+        /// <param name="state"> The new state of the Job. </param>
+        /// <param name="correlationData"> Gets the Job correlation data. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaJobStateChangeEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaJobStateChangeEventData MediaJobStateChangeEventData(MediaJobState? previousState = null, MediaJobState? state = null, IReadOnlyDictionary<string, string> correlationData = null)
+        {
+            correlationData ??= new Dictionary<string, string>();
+
+            return new MediaJobStateChangeEventData(previousState, state, correlationData);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MediaJobError"/>. </summary>
+        /// <param name="code"> Error code describing the error. </param>
+        /// <param name="message"> A human-readable language-dependent representation of the error. </param>
+        /// <param name="category"> Helps with categorization of errors. </param>
+        /// <param name="retry"> Indicates that it may be possible to retry the Job. If retry is unsuccessful, please contact Azure support via Azure Portal. </param>
+        /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaJobError"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaJobError MediaJobError(MediaJobErrorCode? code = null, string message = null, MediaJobErrorCategory? category = null, MediaJobRetry? retry = null, IEnumerable<MediaJobErrorDetail> details = null)
+        {
+            details ??= new List<MediaJobErrorDetail>();
+
+            return new MediaJobError(code, message, category, retry, details?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MediaJobErrorDetail"/>. </summary>
+        /// <param name="code"> Code describing the error detail. </param>
+        /// <param name="message"> A human-readable representation of the error. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaJobErrorDetail"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaJobErrorDetail MediaJobErrorDetail(string code = null, string message = null)
+        {
+            return new MediaJobErrorDetail(code, message);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MediaJobOutput"/>. </summary>
+        /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="error"> Gets the Job output error. </param>
+        /// <param name="label"> Gets the Job output label. </param>
+        /// <param name="progress"> Gets the Job output progress. </param>
+        /// <param name="state"> Gets the Job output state. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaJobOutput"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaJobOutput MediaJobOutput(string odataType = null, MediaJobError error = null, string label = null, long progress = default, MediaJobState state = default)
+        {
+            return new MediaJobOutput(odataType, error, label, progress, state);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MediaJobOutputAsset"/>. </summary>
+        /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="error"> Gets the Job output error. </param>
+        /// <param name="label"> Gets the Job output label. </param>
+        /// <param name="progress"> Gets the Job output progress. </param>
+        /// <param name="state"> Gets the Job output state. </param>
+        /// <param name="assetName"> Gets the Job output asset name. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaJobOutputAsset"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaJobOutputAsset MediaJobOutputAsset(string odataType = null, MediaJobError error = null, string label = null, long progress = default, MediaJobState state = default, string assetName = null)
+        {
+            return new MediaJobOutputAsset(
+                odataType,
+                error,
+                label,
+                progress,
+                state,
+                assetName);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MediaJobOutputProgressEventData"/>. </summary>
+        /// <param name="label"> Gets the Job output label. </param>
+        /// <param name="progress"> Gets the Job output progress. </param>
+        /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaJobOutputProgressEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaJobOutputProgressEventData MediaJobOutputProgressEventData(string label = null, long? progress = null, IReadOnlyDictionary<string, string> jobCorrelationData = null)
+        {
+            jobCorrelationData ??= new Dictionary<string, string>();
+
+            return new MediaJobOutputProgressEventData(label, progress, jobCorrelationData);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MediaJobOutputStateChangeEventData"/>. </summary>
+        /// <param name="previousState"> The previous state of the Job. </param>
+        /// <param name="output">
+        /// Gets the output.
+        /// Please note <see cref="SystemEvents.MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SystemEvents.MediaJobOutputAsset"/>.
+        /// </param>
+        /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaJobOutputStateChangeEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaJobOutputStateChangeEventData MediaJobOutputStateChangeEventData(MediaJobState? previousState = null, MediaJobOutput output = null, IReadOnlyDictionary<string, string> jobCorrelationData = null)
+        {
+            jobCorrelationData ??= new Dictionary<string, string>();
+
+            return new MediaJobOutputStateChangeEventData(previousState, output, jobCorrelationData);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MediaJobScheduledEventData"/>. </summary>
+        /// <param name="previousState"> The previous state of the Job. </param>
+        /// <param name="state"> The new state of the Job. </param>
+        /// <param name="correlationData"> Gets the Job correlation data. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaJobScheduledEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaJobScheduledEventData MediaJobScheduledEventData(MediaJobState? previousState = null, MediaJobState? state = null, IReadOnlyDictionary<string, string> correlationData = null)
+        {
+            correlationData ??= new Dictionary<string, string>();
+
+            return new MediaJobScheduledEventData(previousState, state, correlationData);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MediaJobProcessingEventData"/>. </summary>
+        /// <param name="previousState"> The previous state of the Job. </param>
+        /// <param name="state"> The new state of the Job. </param>
+        /// <param name="correlationData"> Gets the Job correlation data. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaJobProcessingEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaJobProcessingEventData MediaJobProcessingEventData(MediaJobState? previousState = null, MediaJobState? state = null, IReadOnlyDictionary<string, string> correlationData = null)
+        {
+            correlationData ??= new Dictionary<string, string>();
+
+            return new MediaJobProcessingEventData(previousState, state, correlationData);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MediaJobCancelingEventData"/>. </summary>
+        /// <param name="previousState"> The previous state of the Job. </param>
+        /// <param name="state"> The new state of the Job. </param>
+        /// <param name="correlationData"> Gets the Job correlation data. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaJobCancelingEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaJobCancelingEventData MediaJobCancelingEventData(MediaJobState? previousState = null, MediaJobState? state = null, IReadOnlyDictionary<string, string> correlationData = null)
+        {
+            correlationData ??= new Dictionary<string, string>();
+
+            return new MediaJobCancelingEventData(previousState, state, correlationData);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MediaJobFinishedEventData"/>. </summary>
+        /// <param name="previousState"> The previous state of the Job. </param>
+        /// <param name="state"> The new state of the Job. </param>
+        /// <param name="correlationData"> Gets the Job correlation data. </param>
+        /// <param name="outputs">
+        /// Gets the Job outputs.
+        /// Please note <see cref="SystemEvents.MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SystemEvents.MediaJobOutputAsset"/>.
+        /// </param>
+        /// <returns> A new <see cref="SystemEvents.MediaJobFinishedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaJobFinishedEventData MediaJobFinishedEventData(MediaJobState? previousState = null, MediaJobState? state = null, IReadOnlyDictionary<string, string> correlationData = null, IEnumerable<MediaJobOutput> outputs = null)
+        {
+            correlationData ??= new Dictionary<string, string>();
+            outputs ??= new List<MediaJobOutput>();
+
+            return new MediaJobFinishedEventData(previousState, state, correlationData, outputs?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MediaJobCanceledEventData"/>. </summary>
+        /// <param name="previousState"> The previous state of the Job. </param>
+        /// <param name="state"> The new state of the Job. </param>
+        /// <param name="correlationData"> Gets the Job correlation data. </param>
+        /// <param name="outputs">
+        /// Gets the Job outputs.
+        /// Please note <see cref="SystemEvents.MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SystemEvents.MediaJobOutputAsset"/>.
+        /// </param>
+        /// <returns> A new <see cref="SystemEvents.MediaJobCanceledEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaJobCanceledEventData MediaJobCanceledEventData(MediaJobState? previousState = null, MediaJobState? state = null, IReadOnlyDictionary<string, string> correlationData = null, IEnumerable<MediaJobOutput> outputs = null)
+        {
+            correlationData ??= new Dictionary<string, string>();
+            outputs ??= new List<MediaJobOutput>();
+
+            return new MediaJobCanceledEventData(previousState, state, correlationData, outputs?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MediaJobErroredEventData"/>. </summary>
+        /// <param name="previousState"> The previous state of the Job. </param>
+        /// <param name="state"> The new state of the Job. </param>
+        /// <param name="correlationData"> Gets the Job correlation data. </param>
+        /// <param name="outputs">
+        /// Gets the Job outputs.
+        /// Please note <see cref="SystemEvents.MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SystemEvents.MediaJobOutputAsset"/>.
+        /// </param>
+        /// <returns> A new <see cref="SystemEvents.MediaJobErroredEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaJobErroredEventData MediaJobErroredEventData(MediaJobState? previousState = null, MediaJobState? state = null, IReadOnlyDictionary<string, string> correlationData = null, IEnumerable<MediaJobOutput> outputs = null)
+        {
+            correlationData ??= new Dictionary<string, string>();
+            outputs ??= new List<MediaJobOutput>();
+
+            return new MediaJobErroredEventData(previousState, state, correlationData, outputs?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MediaJobOutputCanceledEventData"/>. </summary>
+        /// <param name="previousState"> The previous state of the Job. </param>
+        /// <param name="output">
+        /// Gets the output.
+        /// Please note <see cref="SystemEvents.MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SystemEvents.MediaJobOutputAsset"/>.
+        /// </param>
+        /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaJobOutputCanceledEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaJobOutputCanceledEventData MediaJobOutputCanceledEventData(MediaJobState? previousState = null, MediaJobOutput output = null, IReadOnlyDictionary<string, string> jobCorrelationData = null)
+        {
+            jobCorrelationData ??= new Dictionary<string, string>();
+
+            return new MediaJobOutputCanceledEventData(previousState, output, jobCorrelationData);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MediaJobOutputCancelingEventData"/>. </summary>
+        /// <param name="previousState"> The previous state of the Job. </param>
+        /// <param name="output">
+        /// Gets the output.
+        /// Please note <see cref="SystemEvents.MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SystemEvents.MediaJobOutputAsset"/>.
+        /// </param>
+        /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaJobOutputCancelingEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaJobOutputCancelingEventData MediaJobOutputCancelingEventData(MediaJobState? previousState = null, MediaJobOutput output = null, IReadOnlyDictionary<string, string> jobCorrelationData = null)
+        {
+            jobCorrelationData ??= new Dictionary<string, string>();
+
+            return new MediaJobOutputCancelingEventData(previousState, output, jobCorrelationData);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MediaJobOutputErroredEventData"/>. </summary>
+        /// <param name="previousState"> The previous state of the Job. </param>
+        /// <param name="output">
+        /// Gets the output.
+        /// Please note <see cref="SystemEvents.MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SystemEvents.MediaJobOutputAsset"/>.
+        /// </param>
+        /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaJobOutputErroredEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaJobOutputErroredEventData MediaJobOutputErroredEventData(MediaJobState? previousState = null, MediaJobOutput output = null, IReadOnlyDictionary<string, string> jobCorrelationData = null)
+        {
+            jobCorrelationData ??= new Dictionary<string, string>();
+
+            return new MediaJobOutputErroredEventData(previousState, output, jobCorrelationData);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MediaJobOutputFinishedEventData"/>. </summary>
+        /// <param name="previousState"> The previous state of the Job. </param>
+        /// <param name="output">
+        /// Gets the output.
+        /// Please note <see cref="SystemEvents.MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SystemEvents.MediaJobOutputAsset"/>.
+        /// </param>
+        /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaJobOutputFinishedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaJobOutputFinishedEventData MediaJobOutputFinishedEventData(MediaJobState? previousState = null, MediaJobOutput output = null, IReadOnlyDictionary<string, string> jobCorrelationData = null)
+        {
+            jobCorrelationData ??= new Dictionary<string, string>();
+
+            return new MediaJobOutputFinishedEventData(previousState, output, jobCorrelationData);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MediaJobOutputProcessingEventData"/>. </summary>
+        /// <param name="previousState"> The previous state of the Job. </param>
+        /// <param name="output">
+        /// Gets the output.
+        /// Please note <see cref="SystemEvents.MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SystemEvents.MediaJobOutputAsset"/>.
+        /// </param>
+        /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaJobOutputProcessingEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaJobOutputProcessingEventData MediaJobOutputProcessingEventData(MediaJobState? previousState = null, MediaJobOutput output = null, IReadOnlyDictionary<string, string> jobCorrelationData = null)
+        {
+            jobCorrelationData ??= new Dictionary<string, string>();
+
+            return new MediaJobOutputProcessingEventData(previousState, output, jobCorrelationData);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MediaJobOutputScheduledEventData"/>. </summary>
+        /// <param name="previousState"> The previous state of the Job. </param>
+        /// <param name="output">
+        /// Gets the output.
+        /// Please note <see cref="SystemEvents.MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SystemEvents.MediaJobOutputAsset"/>.
+        /// </param>
+        /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaJobOutputScheduledEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaJobOutputScheduledEventData MediaJobOutputScheduledEventData(MediaJobState? previousState = null, MediaJobOutput output = null, IReadOnlyDictionary<string, string> jobCorrelationData = null)
+        {
+            jobCorrelationData ??= new Dictionary<string, string>();
+
+            return new MediaJobOutputScheduledEventData(previousState, output, jobCorrelationData);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MediaLiveEventEncoderConnectedEventData"/>. </summary>
+        /// <param name="ingestUrl"> Gets the ingest URL provided by the live event. </param>
+        /// <param name="streamId"> Gets the stream Id. </param>
+        /// <param name="encoderIp"> Gets the remote IP. </param>
+        /// <param name="encoderPort"> Gets the remote port. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaLiveEventEncoderConnectedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaLiveEventEncoderConnectedEventData MediaLiveEventEncoderConnectedEventData(string ingestUrl = null, string streamId = null, string encoderIp = null, string encoderPort = null)
+        {
+            return new MediaLiveEventEncoderConnectedEventData(ingestUrl, streamId, encoderIp, encoderPort);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MediaLiveEventConnectionRejectedEventData"/>. </summary>
+        /// <param name="ingestUrl"> Gets the ingest URL provided by the live event. </param>
+        /// <param name="streamId"> Gets the stream Id. </param>
+        /// <param name="encoderIp"> Gets the remote IP. </param>
+        /// <param name="encoderPort"> Gets the remote port. </param>
+        /// <param name="resultCode"> Gets the result code. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaLiveEventConnectionRejectedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaLiveEventConnectionRejectedEventData MediaLiveEventConnectionRejectedEventData(string ingestUrl = null, string streamId = null, string encoderIp = null, string encoderPort = null, string resultCode = null)
+        {
+            return new MediaLiveEventConnectionRejectedEventData(ingestUrl, streamId, encoderIp, encoderPort, resultCode);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MediaLiveEventEncoderDisconnectedEventData"/>. </summary>
+        /// <param name="ingestUrl"> Gets the ingest URL provided by the live event. </param>
+        /// <param name="streamId"> Gets the stream Id. </param>
+        /// <param name="encoderIp"> Gets the remote IP. </param>
+        /// <param name="encoderPort"> Gets the remote port. </param>
+        /// <param name="resultCode"> Gets the result code. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaLiveEventEncoderDisconnectedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaLiveEventEncoderDisconnectedEventData MediaLiveEventEncoderDisconnectedEventData(string ingestUrl = null, string streamId = null, string encoderIp = null, string encoderPort = null, string resultCode = null)
+        {
+            return new MediaLiveEventEncoderDisconnectedEventData(ingestUrl, streamId, encoderIp, encoderPort, resultCode);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MediaLiveEventIncomingStreamReceivedEventData"/>. </summary>
+        /// <param name="ingestUrl"> Gets the ingest URL provided by the live event. </param>
+        /// <param name="trackType"> Gets the type of the track (Audio / Video). </param>
+        /// <param name="trackName"> Gets the track name. </param>
+        /// <param name="bitrate"> Gets the bitrate of the track. </param>
+        /// <param name="encoderIp"> Gets the remote IP. </param>
+        /// <param name="encoderPort"> Gets the remote port. </param>
+        /// <param name="timestamp"> Gets the first timestamp of the data chunk received. </param>
+        /// <param name="duration"> Gets the duration of the first data chunk. </param>
+        /// <param name="timescale"> Gets the timescale in which timestamp is represented. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaLiveEventIncomingStreamReceivedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaLiveEventIncomingStreamReceivedEventData MediaLiveEventIncomingStreamReceivedEventData(string ingestUrl = null, string trackType = null, string trackName = null, long? bitrate = null, string encoderIp = null, string encoderPort = null, string timestamp = null, string duration = null, string timescale = null)
+        {
+            return new MediaLiveEventIncomingStreamReceivedEventData(
+                ingestUrl,
+                trackType,
+                trackName,
+                bitrate,
+                encoderIp,
+                encoderPort,
+                timestamp,
+                duration,
+                timescale);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MediaLiveEventIncomingStreamsOutOfSyncEventData"/>. </summary>
+        /// <param name="minLastTimestamp"> Gets the minimum last timestamp received. </param>
+        /// <param name="typeOfStreamWithMinLastTimestamp"> Gets the type of stream with minimum last timestamp. </param>
+        /// <param name="maxLastTimestamp"> Gets the maximum timestamp among all the tracks (audio or video). </param>
+        /// <param name="typeOfStreamWithMaxLastTimestamp"> Gets the type of stream with maximum last timestamp. </param>
+        /// <param name="timescaleOfMinLastTimestamp"> Gets the timescale in which "MinLastTimestamp" is represented. </param>
+        /// <param name="timescaleOfMaxLastTimestamp"> Gets the timescale in which "MaxLastTimestamp" is represented. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaLiveEventIncomingStreamsOutOfSyncEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaLiveEventIncomingStreamsOutOfSyncEventData MediaLiveEventIncomingStreamsOutOfSyncEventData(string minLastTimestamp = null, string typeOfStreamWithMinLastTimestamp = null, string maxLastTimestamp = null, string typeOfStreamWithMaxLastTimestamp = null, string timescaleOfMinLastTimestamp = null, string timescaleOfMaxLastTimestamp = null)
+        {
+            return new MediaLiveEventIncomingStreamsOutOfSyncEventData(
+                minLastTimestamp,
+                typeOfStreamWithMinLastTimestamp,
+                maxLastTimestamp,
+                typeOfStreamWithMaxLastTimestamp,
+                timescaleOfMinLastTimestamp,
+                timescaleOfMaxLastTimestamp);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MediaLiveEventIncomingVideoStreamsOutOfSyncEventData"/>. </summary>
+        /// <param name="firstTimestamp"> Gets the first timestamp received for one of the quality levels. </param>
+        /// <param name="firstDuration"> Gets the duration of the data chunk with first timestamp. </param>
+        /// <param name="secondTimestamp"> Gets the timestamp received for some other quality levels. </param>
+        /// <param name="secondDuration"> Gets the duration of the data chunk with second timestamp. </param>
+        /// <param name="timescale"> Gets the timescale in which both the timestamps and durations are represented. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaLiveEventIncomingVideoStreamsOutOfSyncEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaLiveEventIncomingVideoStreamsOutOfSyncEventData MediaLiveEventIncomingVideoStreamsOutOfSyncEventData(string firstTimestamp = null, string firstDuration = null, string secondTimestamp = null, string secondDuration = null, string timescale = null)
+        {
+            return new MediaLiveEventIncomingVideoStreamsOutOfSyncEventData(firstTimestamp, firstDuration, secondTimestamp, secondDuration, timescale);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MediaLiveEventIncomingDataChunkDroppedEventData"/>. </summary>
+        /// <param name="timestamp"> Gets the timestamp of the data chunk dropped. </param>
+        /// <param name="trackType"> Gets the type of the track (Audio / Video). </param>
+        /// <param name="bitrate"> Gets the bitrate of the track. </param>
+        /// <param name="timescale"> Gets the timescale of the Timestamp. </param>
+        /// <param name="resultCode"> Gets the result code for fragment drop operation. </param>
+        /// <param name="trackName"> Gets the name of the track for which fragment is dropped. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaLiveEventIncomingDataChunkDroppedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaLiveEventIncomingDataChunkDroppedEventData MediaLiveEventIncomingDataChunkDroppedEventData(string timestamp = null, string trackType = null, long? bitrate = null, string timescale = null, string resultCode = null, string trackName = null)
+        {
+            return new MediaLiveEventIncomingDataChunkDroppedEventData(
+                timestamp,
+                trackType,
+                bitrate,
+                timescale,
+                resultCode,
+                trackName);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MediaLiveEventTrackDiscontinuityDetectedEventData"/>. </summary>
+        /// <param name="trackType"> Gets the type of the track (Audio / Video). </param>
+        /// <param name="trackName"> Gets the track name. </param>
+        /// <param name="bitrate"> Gets the bitrate. </param>
+        /// <param name="previousTimestamp"> Gets the timestamp of the previous fragment. </param>
+        /// <param name="newTimestamp"> Gets the timestamp of the current fragment. </param>
+        /// <param name="timescale"> Gets the timescale in which both timestamps and discontinuity gap are represented. </param>
+        /// <param name="discontinuityGap"> Gets the discontinuity gap between PreviousTimestamp and NewTimestamp. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaLiveEventTrackDiscontinuityDetectedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaLiveEventTrackDiscontinuityDetectedEventData MediaLiveEventTrackDiscontinuityDetectedEventData(string trackType = null, string trackName = null, long? bitrate = null, string previousTimestamp = null, string newTimestamp = null, string timescale = null, string discontinuityGap = null)
+        {
+            return new MediaLiveEventTrackDiscontinuityDetectedEventData(
+                trackType,
+                trackName,
+                bitrate,
+                previousTimestamp,
+                newTimestamp,
+                timescale,
+                discontinuityGap);
+        }
+
         /// <summary> Initializes new instance of MapsGeofenceEventProperties class. </summary>
         /// <param name="expiredGeofenceGeometryId"> Lists of the geometry ID of the geofence which is expired relative to the user time in the request. </param>
         /// <param name="geometries"> Lists the fence geometries that either fully contain the coordinate position or have an overlap with the searchBuffer around the fence. </param>
