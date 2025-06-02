@@ -104,8 +104,8 @@ stages:
                 dependsOn: TagRepository
 
                 pool:
-                  name: azsdk-pool-mms-ubuntu-2004-general
-                  image: azsdk-pool-mms-ubuntu-2004-1espt
+                  name: azsdk-pool
+                  image: ubuntu-24.04
                   os: linux
 
                 templateContext:
@@ -123,6 +123,7 @@ stages:
                         - task: 1ES.PublishNuget@1
                           displayName: Publish ${{artifact.name}} package to NuGet.org
                           inputs:
+                            useDotNetTask: true
                             packageParentPath: '$(Pipeline.Workspace)'
                             packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)//${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
                             nuGetFeedType: external
@@ -131,6 +132,7 @@ stages:
                         - task: 1ES.PublishNuget@1
                           displayName: Publish to DevOps Feed
                           inputs:
+                            useDotNetTask: true
                             packageParentPath: '$(Pipeline.Workspace)'
                             packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
                             publishVstsFeed: ${{ parameters.DevOpsFeedID }}
@@ -281,39 +283,48 @@ stages:
       - template: /eng/pipelines/templates/variables/image.yml
     dependsOn: Signing
     jobs:
-      - job: PublishPackages
+      - deployment: PublishPackages
         condition: and(succeeded(), or(eq(variables['SetDevVersion'], 'true'), and(eq(variables['Build.Reason'],'Schedule'), eq(variables['System.TeamProject'], 'internal'))))
         displayName: Publish package to daily feed
+        environment: none
+
         pool:
-          name: $(WINDOWSPOOL)
-          image: $(WINDOWSVMIMAGE)
-          os: windows
+          name: azsdk-pool
+          image: ubuntu-24.04
+          os: linux
+
         templateContext:
-          outputParentDirectory: '$(Pipeline.Workspace)'
-          outputs:
-            - ${{ each artifact in parameters.Artifacts }}:
-              - output: nuget
-                displayName: 'Publish to DevOps Feed'
-                packageParentPath: '$(Pipeline.Workspace)'
-                packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
-                publishVstsFeed: $(DevOpsFeedID)
+          type: releaseJob 
+          isProduction: true
+          inputs: 
+            - input: pipelineArtifact
+              artifactName: ${{parameters.ArtifactName}}-signed
+              targetPath: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed
 
-        steps:
-          - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-          - download: current
-            displayName: Download ${{parameters.ArtifactName}}-signed
-            artifact: ${{parameters.ArtifactName}}-signed
-          - pwsh: |
-              # For safety default to publishing to the private feed.
-              # Publish to https://dev.azure.com/azure-sdk/internal/_packaging?_a=feed&feed=azure-sdk-for-net-pr
-              $devopsFeedId = '590cfd2a-581c-4dcb-a12e-6568ce786175/fa8b2d77-74d9-48d7-bb96-badb2b9c6ca4'
-              if ('$(Build.Repository.Name)' -eq 'Azure/azure-sdk-for-net') {
-                $devopsFeedId = '${{ parameters.DevOpsFeedID }}'
-              }
-              echo "##vso[task.setvariable variable=DevOpsFeedID]$devopsFeedId"
-              echo "Using DevopsFeedId = $devopsFeedId"
-            displayName: Setup DevOpsFeedId
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - pwsh: |
+                    # For safety default to publishing to the private feed.
+                    # Publish to https://dev.azure.com/azure-sdk/internal/_packaging?_a=feed&feed=azure-sdk-for-net-pr
+                    $devopsFeedId = '590cfd2a-581c-4dcb-a12e-6568ce786175/fa8b2d77-74d9-48d7-bb96-badb2b9c6ca4'
+                    if ('$(Build.Repository.Name)' -eq 'Azure/azure-sdk-for-net') {
+                      $devopsFeedId = '${{ parameters.DevOpsFeedID }}'
+                    }
+                    echo "##vso[task.setvariable variable=DevOpsFeedID]$devopsFeedId"
+                    echo "Using DevopsFeedId = $devopsFeedId"
+                  displayName: Setup DevOpsFeedId
 
+                - ${{ each artifact in parameters.Artifacts }}:
+                  - task: 1ES.PublishNuget@1
+                    displayName: 'Publish to DevOps Feed'
+                    inputs:
+                      useDotNetTask: true
+                      packageParentPath: '$(Pipeline.Workspace)'
+                      packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
+                      publishVstsFeed: $(DevOpsFeedID)
+                
       - job: PublishDocsToNightlyBranch
         dependsOn: PublishPackages
         condition: and(succeeded(), or(eq(variables['SetDevVersion'], 'true'), and(eq(variables['Build.Reason'],'Schedule'), eq(variables['System.TeamProject'], 'internal'))))
