@@ -299,15 +299,6 @@ stages:
               artifactName: ${{parameters.ArtifactName}}-signed
               targetPath: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed
 
-          outputParentDirectory: '$(Pipeline.Workspace)'
-          outputs:
-            - ${{ each artifact in parameters.Artifacts }}:
-              - output: nuget
-                displayName: 'Publish to DevOps Feed'
-                packageParentPath: '$(Pipeline.Workspace)'
-                packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
-                publishVstsFeed: $(DevOpsFeedID)
-
         strategy:
           runOnce:
             deploy:
@@ -322,6 +313,14 @@ stages:
                     echo "##vso[task.setvariable variable=DevOpsFeedID]$devopsFeedId"
                     echo "Using DevopsFeedId = $devopsFeedId"
                   displayName: Setup DevOpsFeedId
+
+                - ${{ each artifact in parameters.Artifacts }}:
+                  - task: 1ES.PublishNuget@1
+                    displayName: 'Publish to DevOps Feed'
+                    inputs:
+                      packageParentPath: '$(Pipeline.Workspace)'
+                      packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
+                      publishVstsFeed: $(DevOpsFeedID)
                 
       - job: PublishDocsToNightlyBranch
         dependsOn: PublishPackages
