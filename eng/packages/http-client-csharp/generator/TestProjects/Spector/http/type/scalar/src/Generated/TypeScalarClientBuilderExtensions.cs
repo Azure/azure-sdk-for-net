@@ -7,18 +7,18 @@
 
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
-using _Type.Model.Inheritance.SingleDiscriminator;
+using _Type.Scalar;
 
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class _TypeModelInheritanceSingleDiscriminatorClientBuilderExtensions
+    public static partial class TypeScalarClientBuilderExtensions
     {
-        public static IAzureClientBuilder<SingleDiscriminatorClient, SingleDiscriminatorClientOptions> AddSingleDiscriminatorClient<TBuilder>(this TBuilder builder)
+        public static IAzureClientBuilder<ScalarClient, ScalarClientOptions> AddScalarClient<TBuilder>(this TBuilder builder)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<SingleDiscriminatorClient, SingleDiscriminatorClientOptions> AddSingleDiscriminatorClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<ScalarClient, ScalarClientOptions> AddScalarClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
     }
 }

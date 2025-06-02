@@ -7,18 +7,18 @@
 
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
-using _Type.Property.ValueTypes;
+using _Type.Model.Usage;
 
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class _TypePropertyValueTypesClientBuilderExtensions
+    public static partial class TypeModelUsageClientBuilderExtensions
     {
-        public static IAzureClientBuilder<ValueTypesClient, ValueTypesClientOptions> AddValueTypesClient<TBuilder>(this TBuilder builder)
+        public static IAzureClientBuilder<UsageClient, UsageClientOptions> AddUsageClient<TBuilder>(this TBuilder builder)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<ValueTypesClient, ValueTypesClientOptions> AddValueTypesClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<UsageClient, UsageClientOptions> AddUsageClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
     }
 }

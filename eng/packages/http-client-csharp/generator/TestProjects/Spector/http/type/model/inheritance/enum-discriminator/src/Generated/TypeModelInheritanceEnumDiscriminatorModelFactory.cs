@@ -7,7 +7,7 @@
 
 namespace _Type.Model.Inheritance.EnumDiscriminator
 {
-    public static partial class _TypeModelInheritanceEnumDiscriminatorModelFactory
+    public static partial class TypeModelInheritanceEnumDiscriminatorModelFactory
     {
         public static Dog Dog(string kind = default, int weight = default) => throw null;
 

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace _Type._Array
 {
-    public static partial class _Type_ArrayModelFactory
+    public static partial class TypeArrayModelFactory
     {
         public static InnerModel InnerModel(string @property = default, IEnumerable<InnerModel> children = default) => throw null;
     }

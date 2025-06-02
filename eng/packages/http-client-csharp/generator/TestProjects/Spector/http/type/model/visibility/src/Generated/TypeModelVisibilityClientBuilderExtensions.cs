@@ -7,18 +7,18 @@
 
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
-using _Type.Property.Nullable;
+using _Type.Model.Visibility;
 
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class _TypePropertyNullableClientBuilderExtensions
+    public static partial class TypeModelVisibilityClientBuilderExtensions
     {
-        public static IAzureClientBuilder<NullableClient, NullableClientOptions> AddNullableClient<TBuilder>(this TBuilder builder)
+        public static IAzureClientBuilder<VisibilityClient, VisibilityClientOptions> AddVisibilityClient<TBuilder>(this TBuilder builder)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<NullableClient, NullableClientOptions> AddNullableClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<VisibilityClient, VisibilityClientOptions> AddVisibilityClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
     }
 }

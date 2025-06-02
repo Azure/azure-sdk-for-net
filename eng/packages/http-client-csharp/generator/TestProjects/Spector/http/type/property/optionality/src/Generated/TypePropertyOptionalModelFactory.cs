@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace _Type.Property.Optional
 {
-    public static partial class _TypePropertyOptionalModelFactory
+    public static partial class TypePropertyOptionalModelFactory
     {
         public static StringProperty StringProperty(string @property = default) => throw null;
 

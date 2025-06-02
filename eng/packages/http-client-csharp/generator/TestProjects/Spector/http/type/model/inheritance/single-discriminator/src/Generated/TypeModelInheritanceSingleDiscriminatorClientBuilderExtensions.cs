@@ -7,18 +7,18 @@
 
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
-using _Type.Model.Inheritance.Recursive;
+using _Type.Model.Inheritance.SingleDiscriminator;
 
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class _TypeModelInheritanceRecursiveClientBuilderExtensions
+    public static partial class TypeModelInheritanceSingleDiscriminatorClientBuilderExtensions
     {
-        public static IAzureClientBuilder<RecursiveClient, RecursiveClientOptions> AddRecursiveClient<TBuilder>(this TBuilder builder)
+        public static IAzureClientBuilder<SingleDiscriminatorClient, SingleDiscriminatorClientOptions> AddSingleDiscriminatorClient<TBuilder>(this TBuilder builder)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<RecursiveClient, RecursiveClientOptions> AddRecursiveClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<SingleDiscriminatorClient, SingleDiscriminatorClientOptions> AddSingleDiscriminatorClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
     }
 }

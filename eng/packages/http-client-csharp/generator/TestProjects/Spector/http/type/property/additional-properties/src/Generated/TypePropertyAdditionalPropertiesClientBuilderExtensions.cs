@@ -7,18 +7,18 @@
 
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
-using _Type.Scalar;
+using _Type.Property.AdditionalProperties;
 
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class _TypeScalarClientBuilderExtensions
+    public static partial class TypePropertyAdditionalPropertiesClientBuilderExtensions
     {
-        public static IAzureClientBuilder<ScalarClient, ScalarClientOptions> AddScalarClient<TBuilder>(this TBuilder builder)
+        public static IAzureClientBuilder<AdditionalPropertiesClient, AdditionalPropertiesClientOptions> AddAdditionalPropertiesClient<TBuilder>(this TBuilder builder)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<ScalarClient, ScalarClientOptions> AddScalarClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<AdditionalPropertiesClient, AdditionalPropertiesClientOptions> AddAdditionalPropertiesClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
     }
 }

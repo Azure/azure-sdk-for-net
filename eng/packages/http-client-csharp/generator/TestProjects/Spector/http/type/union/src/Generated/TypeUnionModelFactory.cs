@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace _Type.Union
 {
-    public static partial class _TypeUnionModelFactory
+    public static partial class TypeUnionModelFactory
     {
         public static GetResponse GetResponse(GetResponseProp prop = default) => throw null;
 

@@ -7,18 +7,18 @@
 
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
-using _Type.Property.AdditionalProperties;
+using _Type.Model.Inheritance.NestedDiscriminator;
 
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class _TypePropertyAdditionalPropertiesClientBuilderExtensions
+    public static partial class TypeModelInheritanceNestedDiscriminatorClientBuilderExtensions
     {
-        public static IAzureClientBuilder<AdditionalPropertiesClient, AdditionalPropertiesClientOptions> AddAdditionalPropertiesClient<TBuilder>(this TBuilder builder)
+        public static IAzureClientBuilder<NestedDiscriminatorClient, NestedDiscriminatorClientOptions> AddNestedDiscriminatorClient<TBuilder>(this TBuilder builder)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<AdditionalPropertiesClient, AdditionalPropertiesClientOptions> AddAdditionalPropertiesClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<NestedDiscriminatorClient, NestedDiscriminatorClientOptions> AddNestedDiscriminatorClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
     }
 }

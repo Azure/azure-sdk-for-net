@@ -7,18 +7,18 @@
 
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
-using _Type.Model.Inheritance.EnumDiscriminator;
+using _Type._Array;
 
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class _TypeModelInheritanceEnumDiscriminatorClientBuilderExtensions
+    public static partial class TypeArrayClientBuilderExtensions
     {
-        public static IAzureClientBuilder<EnumDiscriminatorClient, EnumDiscriminatorClientOptions> AddEnumDiscriminatorClient<TBuilder>(this TBuilder builder)
+        public static IAzureClientBuilder<ArrayClient, ArrayClientOptions> AddArrayClient<TBuilder>(this TBuilder builder)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<EnumDiscriminatorClient, EnumDiscriminatorClientOptions> AddEnumDiscriminatorClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<ArrayClient, ArrayClientOptions> AddArrayClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
     }
 }

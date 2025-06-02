@@ -7,7 +7,7 @@
 
 namespace _Type.Model.Empty
 {
-    public static partial class _TypeModelEmptyModelFactory
+    public static partial class TypeModelEmptyModelFactory
     {
         public static EmptyInput EmptyInput() => throw null;
 

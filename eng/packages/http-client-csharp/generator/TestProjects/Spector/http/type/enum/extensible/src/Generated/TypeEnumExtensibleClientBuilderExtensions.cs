@@ -7,18 +7,18 @@
 
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
-using _Type.Model.Inheritance.NotDiscriminated;
+using _Type._Enum.Extensible;
 
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class _TypeModelInheritanceNotDiscriminatedClientBuilderExtensions
+    public static partial class TypeEnumExtensibleClientBuilderExtensions
     {
-        public static IAzureClientBuilder<NotDiscriminatedClient, NotDiscriminatedClientOptions> AddNotDiscriminatedClient<TBuilder>(this TBuilder builder)
+        public static IAzureClientBuilder<ExtensibleClient, ExtensibleClientOptions> AddExtensibleClient<TBuilder>(this TBuilder builder)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<NotDiscriminatedClient, NotDiscriminatedClientOptions> AddNotDiscriminatedClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<ExtensibleClient, ExtensibleClientOptions> AddExtensibleClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
     }
 }

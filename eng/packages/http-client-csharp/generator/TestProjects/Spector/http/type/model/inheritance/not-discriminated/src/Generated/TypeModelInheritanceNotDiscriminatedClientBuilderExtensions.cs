@@ -7,18 +7,18 @@
 
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
-using _Type.Dictionary;
+using _Type.Model.Inheritance.NotDiscriminated;
 
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class _TypeDictionaryClientBuilderExtensions
+    public static partial class TypeModelInheritanceNotDiscriminatedClientBuilderExtensions
     {
-        public static IAzureClientBuilder<DictionaryClient, DictionaryClientOptions> AddDictionaryClient<TBuilder>(this TBuilder builder)
+        public static IAzureClientBuilder<NotDiscriminatedClient, NotDiscriminatedClientOptions> AddNotDiscriminatedClient<TBuilder>(this TBuilder builder)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<DictionaryClient, DictionaryClientOptions> AddDictionaryClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<NotDiscriminatedClient, NotDiscriminatedClientOptions> AddNotDiscriminatedClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
     }
 }

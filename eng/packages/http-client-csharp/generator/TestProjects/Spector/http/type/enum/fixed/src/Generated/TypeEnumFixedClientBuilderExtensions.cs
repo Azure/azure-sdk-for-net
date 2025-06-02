@@ -7,18 +7,18 @@
 
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
-using _Type.Model.Empty;
+using _Type._Enum.Fixed;
 
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class _TypeModelEmptyClientBuilderExtensions
+    public static partial class TypeEnumFixedClientBuilderExtensions
     {
-        public static IAzureClientBuilder<EmptyClient, EmptyClientOptions> AddEmptyClient<TBuilder>(this TBuilder builder)
+        public static IAzureClientBuilder<FixedClient, FixedClientOptions> AddFixedClient<TBuilder>(this TBuilder builder)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<EmptyClient, EmptyClientOptions> AddEmptyClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<FixedClient, FixedClientOptions> AddFixedClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
     }
 }

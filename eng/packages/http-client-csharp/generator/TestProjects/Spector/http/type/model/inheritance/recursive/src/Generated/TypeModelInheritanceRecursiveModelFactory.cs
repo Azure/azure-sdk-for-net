@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.Recursive
 {
-    public static partial class _TypeModelInheritanceRecursiveModelFactory
+    public static partial class TypeModelInheritanceRecursiveModelFactory
     {
         public static Extension Extension(IEnumerable<Extension> extension = default, sbyte level = default) => throw null;
 

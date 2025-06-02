@@ -18,7 +18,7 @@ namespace Azure.Generator.Utilities
         /// </summary>
         public static string GetResourceProviderName()
         {
-            var packageName = AzureClientGenerator.Instance.TypeFactory.PrimaryNamespace;
+            var packageName = AzureClientGenerator.Instance.Configuration.PackageName;
             var segments = packageName.Split('.');
             if (packageName.StartsWith(AzurePackageNamespacePrefix))
             {

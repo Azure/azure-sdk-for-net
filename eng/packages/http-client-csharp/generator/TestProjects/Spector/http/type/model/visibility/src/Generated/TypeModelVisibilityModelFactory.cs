@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Visibility
 {
-    public static partial class _TypeModelVisibilityModelFactory
+    public static partial class TypeModelVisibilityModelFactory
     {
         public static VisibilityModel VisibilityModel(string readProp = default, int queryProp = default, IEnumerable<string> createProp = default, IEnumerable<int> updateProp = default, bool deleteProp = default) => throw null;
 
