@@ -52,5 +52,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> the tags on the resource for which the event is being emitted. </summary>
         [CodeGenMember("Tags")]
         public IReadOnlyDictionary<string, string> ResourceTags { get; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        [CodeGenMember("Properties")]
+        public IReadOnlyDictionary<string, BinaryData> ResourceProperties { get; internal set; }
+
+        public IReadOnlyDictionary<string, object> Properties
+        {
+            get
+            {
+                
+            }
+        }
     }
 }

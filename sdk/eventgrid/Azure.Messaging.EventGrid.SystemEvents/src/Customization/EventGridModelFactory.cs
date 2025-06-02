@@ -126,7 +126,7 @@ namespace Azure.Messaging.EventGrid
             properties ??= new Dictionary<string, object>();
             participants ??= new List<AcsChatThreadParticipantProperties>();
 
-            return new AcsChatThreadCreatedWithUserEventData(recipientCommunicationIdentifier, transactionId, threadId, createTime, version, createdByCommunicationIdentifier, properties, new Dictionary<string, string>(), participants?.ToList());
+            return AcsChatThreadCreatedWithUserEventData(recipientCommunicationIdentifier, transactionId, threadId, createTime, version, createdByCommunicationIdentifier, properties, new Dictionary<string, string>(), participants?.ToList());
         }
 
         /// <summary> Initializes a new instance of AcsChatThreadParticipantProperties. </summary>
@@ -722,7 +722,7 @@ namespace Azure.Messaging.EventGrid
         {
             properties ??= new Dictionary<string, object>();
 
-            return new ResourceNotificationsResourceUpdatedDetails(id, name, resourceType, location,
+            return ResourceNotificationsResourceUpdatedDetails(id, name, resourceType, location,
                 new Dictionary<string, string>(), properties)
             {
                 Tags = tags
