@@ -264,9 +264,9 @@ namespace Azure.Messaging.EventGrid
         /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementCircuitBreakerProperties"/>. </summary>
         /// <param name="rules"> Overview of all configured rules and respective details. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementCircuitBreakerProperties"/> instance for mocking. </returns>
-        public static ApiManagementCircuitBreakerProperties ApiManagementCircuitBreakerProperties(IReadOnlyDictionary<string, IDictionary<string, BinaryData>> rules = null)
+        public static ApiManagementCircuitBreakerProperties ApiManagementCircuitBreakerProperties(IReadOnlyDictionary<string, object> rules = null)
         {
-            rules ??= new Dictionary<string, IDictionary<string, BinaryData>>();
+            rules ??= new Dictionary<string, object>();
 
             return new ApiManagementCircuitBreakerProperties(rules, serializedAdditionalRawData: null);
         }
