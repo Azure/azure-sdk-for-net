@@ -311,12 +311,17 @@ extends:
             matrix: $[dependencies.Initialize.outputs['generate_matrix.matrix']]
           variables:
             matrixArtifactsPath: $(Pipeline.Workspace)/matrix_artifacts
+            AzureSdkRepoName: $[format('azure-sdk/{0}', split(variables['Build.Repository.Name'], '/')[1])]
           steps:
           - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
             parameters:
               Paths:
               - "/*"
               - "!SessionRecords"
+              Repositories:
+              - Name: $(AzureSdkRepoName)
+                Commitish: $(branchName)
+                WorkingDirectory: $(System.DefaultWorkingDirectory)  
 
           - task: UseNode@1
             displayName: 'Install Node.js'
