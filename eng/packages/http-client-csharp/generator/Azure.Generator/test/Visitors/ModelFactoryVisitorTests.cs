@@ -17,7 +17,7 @@ namespace Azure.Generator.Tests.Visitors
         public void DataPlaneModelFactoryIsNamedCorrectly()
         {
             var model = InputFactory.Model("SomeModel");
-            var plugin = MockHelpers.LoadMockPlugin(inputModels: () => [model], configurationJson: "{ \"package-name\": \"Azure.Messaging.SomeService\" }");
+            var plugin = MockHelpers.LoadMockPlugin(inputModels: () => [model], inputNamespace: "Azure.Messaging.SomeService");
 
             var visitor = new TestModelFactoryVisitor();
             visitor.InvokeVisitLibrary(plugin.Object.OutputLibrary);
@@ -32,7 +32,7 @@ namespace Azure.Generator.Tests.Visitors
         public void MgmtPlaneModelFactoryIsNamedCorrectly()
         {
             var model = InputFactory.Model("SomeModel");
-            var plugin = MockHelpers.LoadMockPlugin(inputModels: () => [model], configurationJson: "{ \"package-name\": \"Azure.ResourceManager.SomeService\" }");
+            var plugin = MockHelpers.LoadMockPlugin(inputModels: () => [model], inputNamespace: "Azure.ResourceManager.SomeService");
 
             var visitor = new TestModelFactoryVisitor();
             visitor.InvokeVisitLibrary(plugin.Object.OutputLibrary);
