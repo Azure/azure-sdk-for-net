@@ -111,6 +111,7 @@
     <PackageReference Remove="System.Text.Json" />
     <PackageReference Remove="System.Threading.Channels" />
     <PackageReference Remove="System.Threading.Tasks.Extensions" />
+    <PackageReferences Remove="System.Memory" />
   </ItemGroup>
 
   <!-- Add Package Icon to DataPlane Packages -->
